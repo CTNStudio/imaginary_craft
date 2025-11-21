@@ -1,5 +1,6 @@
 package ctn.singularity.lib.init;
 
+import ctn.singularity.lib.common.attribute.BasicAttribute;
 import ctn.singularity.lib.common.attribute.MinAttribute;
 import ctn.singularity.lib.core.LibMain;
 import ctn.singularity.lib.init.util.AttributeRegisterUtil;
@@ -52,6 +53,28 @@ public final class LibAttributes extends AttributeRegisterUtil {
    */
   public static final DeferredHolder<Attribute, MinAttribute> RATIONALITY_RECOVERY_AMOUNT = registerMin("rationality_recovery_amount",function ->
       function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 1, 0);
+
+  /// 四徳
+  /**
+   * 勇气
+   */
+  public static final DeferredHolder<Attribute, BasicAttribute> FORTITUDE_POINTS = register("fortitude_points",function ->
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0);
+  /**
+   * 谨慎
+   */
+  public static final DeferredHolder<Attribute, BasicAttribute> PRUDENCE_POINTS = register("prudence_points",function ->
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0);
+  /**
+   * 自律
+   */
+  public static final DeferredHolder<Attribute, BasicAttribute> TEMPERANCE_POINTS = register("temperance_points",function ->
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0);
+  /**
+   * 正义
+   */
+  public static final DeferredHolder<Attribute, BasicAttribute> JUSTICE_POINTS = register("justice_points",function ->
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0);
 
   // 部门属性
   /**

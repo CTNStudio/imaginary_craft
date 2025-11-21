@@ -2,12 +2,11 @@ package ctn.singularity.lib.api.lobotomycorporation.virtue;
 
 import ctn.singularity.lib.core.LibMain;
 import ctn.singularity.lib.init.LibAttachments;
-import net.minecraft.core.Holder;
+import ctn.singularity.lib.init.LibAttributes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -44,11 +43,16 @@ public final class TemperanceAttachment extends AbstractVirtueAttachment {
   }
 
   @Override
-  public Set<Holder<Attribute>> getCorrelationAttributesHolder() {
-    return Set.of(
-      Attributes.BLOCK_BREAK_SPEED,
-      Attributes.ATTACK_KNOCKBACK
+  public Map<AttributeInstance, Float> getCorrelationAttributesHolder() {
+    return Map.ofEntries(
+      getAttributeAndValue(Attributes.BLOCK_BREAK_SPEED, 1f),
+      getAttributeAndValue(Attributes.ATTACK_KNOCKBACK, 1f)
     );
+  }
+
+  @Override
+  public AttributeInstance getPointsAttributeInstance() {
+    return getAttribute(LibAttributes.TEMPERANCE_POINTS);
   }
 
   @Override
@@ -72,6 +76,7 @@ public final class TemperanceAttachment extends AbstractVirtueAttachment {
 
   @Override
   public void updatePoints(final int newPoints) {
+    // TODO 需要提供随机处理
     // 挖掘速度
     setAttributeModifier(Attributes.BLOCK_BREAK_SPEED, newPoints * TEMPERANCE_BLOCK_BREAK_SPEED, AttributeModifier.Operation.ADD_VALUE);
     // 击退

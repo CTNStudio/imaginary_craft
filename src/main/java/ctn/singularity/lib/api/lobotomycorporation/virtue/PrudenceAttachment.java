@@ -2,12 +2,10 @@ package ctn.singularity.lib.api.lobotomycorporation.virtue;
 
 import ctn.singularity.lib.core.LibMain;
 import ctn.singularity.lib.init.LibAttributes;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.player.Player;
@@ -40,20 +38,20 @@ public final class PrudenceAttachment extends AbstractVirtueAttachment {
   }
 
   @Override
-  public Set<Holder<Attribute>> getCorrelationAttributesHolder() {
-    return Set.of(
-      LibAttributes.MAX_RATIONALITY
+  public Map<AttributeInstance, Float> getCorrelationAttributesHolder() {
+    return Map.ofEntries(
+      getAttributeAndValue(LibAttributes.MAX_RATIONALITY, 1f)
     );
+  }
+
+  @Override
+  public AttributeInstance getPointsAttributeInstance() {
+    return getAttribute(LibAttributes.PRUDENCE_POINTS);
   }
 
   @Override
   public ResourceLocation getAmplitudeId() {
     return AMPLITUDE_ID;
-  }
-
-  @Override
-  public int getRatingPoints() {
-    return 0; // TODO
   }
 
   @Override

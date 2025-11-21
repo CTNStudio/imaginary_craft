@@ -1,12 +1,11 @@
 package ctn.singularity.lib.api.lobotomycorporation.virtue;
 
 import ctn.singularity.lib.core.LibMain;
-import net.minecraft.core.Holder;
+import ctn.singularity.lib.init.LibAttributes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -51,22 +50,22 @@ public final class JusticeAttachment extends AbstractVirtueAttachment {
   }
 
   @Override
-  public Set<Holder<Attribute>> getCorrelationAttributesHolder() {
-    return Set.of(
-      Attributes.MOVEMENT_SPEED,
-      Attributes.ATTACK_SPEED,
-      NeoForgeMod.SWIM_SPEED
+  public Map<AttributeInstance, Float> getCorrelationAttributesHolder() {
+    return Map.ofEntries(
+      getAttributeAndValue(Attributes.MOVEMENT_SPEED, 1f),
+      getAttributeAndValue(Attributes.ATTACK_SPEED, 1f),
+      getAttributeAndValue(NeoForgeMod.SWIM_SPEED, 1f)
     );
+  }
+
+  @Override
+  public AttributeInstance getPointsAttributeInstance() {
+    return getAttribute(LibAttributes.JUSTICE_POINTS);
   }
 
   @Override
   public ResourceLocation getAmplitudeId() {
     return AMPLITUDE_ID;
-  }
-
-  @Override
-  public int getRatingPoints() {
-    return 0; // TODO
   }
 
   @Override
@@ -96,8 +95,8 @@ public final class JusticeAttachment extends AbstractVirtueAttachment {
     syncData();
   }
 
+  // TODO 重构飞行速度加成
   private void updateFlightSpeedBonus(double newFlightSpeedBonus) {
-    // TODO 很明显不对
 //    var abilities = getPlayer().getAbilities();
 //    abilities.setFlyingSpeed(abilities.getFlyingSpeed() + (float) (newFlightSpeedBonus * JUSTICE_FLIGHT_SPEED));
   }

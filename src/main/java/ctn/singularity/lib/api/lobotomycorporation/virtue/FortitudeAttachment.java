@@ -2,12 +2,10 @@ package ctn.singularity.lib.api.lobotomycorporation.virtue;
 
 import ctn.singularity.lib.core.LibMain;
 import ctn.singularity.lib.init.LibAttributes;
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -41,15 +39,15 @@ public final class FortitudeAttachment extends AbstractVirtueAttachment {
   }
 
   @Override
-  public Set<Holder<Attribute>> getCorrelationAttributesHolder() {
-    return Set.of(
-      Attributes.MAX_HEALTH
+  public Map<AttributeInstance, Float> getCorrelationAttributesHolder() {
+    return Map.ofEntries(
+      getAttributeAndValue(Attributes.MAX_HEALTH, 1f)
     );
   }
 
   @Override
-  public int getRatingPoints() {
-    return 0; // TODO
+  public AttributeInstance getPointsAttributeInstance() {
+    return getPlayer().getAttribute(LibAttributes.FORTITUDE_POINTS);
   }
 
   @Override
@@ -63,6 +61,7 @@ public final class FortitudeAttachment extends AbstractVirtueAttachment {
 
   @Override
   public void updatePoints(final int newPoints) {
+    // TODO 需要提供随机处理
     setAttributeModifier(Attributes.MAX_HEALTH, newPoints, AttributeModifier.Operation.ADD_VALUE);
   }
 

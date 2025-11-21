@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.attachment.AttachmentSyncHandler;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
@@ -21,10 +22,12 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
+import java.util.stream.DoubleStream;
+import java.util.stream.IntStream;
+import java.util.stream.Stream;
 
 public abstract class AbstractVirtueAttachment implements IVirtueAttachment {
   private final Player player;
-  private int points;
 
   protected AbstractVirtueAttachment(Player holder) {
     this.player = holder;
@@ -36,17 +39,21 @@ public abstract class AbstractVirtueAttachment implements IVirtueAttachment {
   }
 
   @Override
-  public int getPoints() {
-    return points;
-  }
-
-  @Override
   public void setPoints(final int points) {
     if (getPoints() == points) {
       return;
     }
+    setPoints(points, getAmplitudeId());
+  }
+
+  @Override
+  public void setPoints(final int points, final ResourceLocation modifierId) {
+    if (getPoints() == points) {
+      return;
+    }
     updatePoints(points);
-    this.points = points;
+    AttributeModifier modifier = new AttributeModifier(modifierId, points, AttributeModifier.Operation.ADD_VALUE);
+    getPointsAttributeInstance().addOrReplacePermanentModifier(modifier);
     updateTrigger();
     if (!getPlayer().level().isClientSide()) {
       syncData();
@@ -58,7 +65,22 @@ public abstract class AbstractVirtueAttachment implements IVirtueAttachment {
     if (points == 0) {
       return;
     }
-    setPoints(getPoints() + points);
+    setPoints(getPoints() + points, getAmplitudeId());
+  }
+
+  @Override
+  public void modifyPoints(final int points, final ResourceLocation modifierId) {
+    if (points == 0) {
+      return;
+    }
+    setPoints(getPoints() + points, modifierId);
+  }
+
+  @Override
+  public int getRatingPoints() {
+    return (int) getCorrelationAttributesHolder().entrySet().stream()
+      .flatMapToDouble(entry -> DoubleStream.of(entry.getValue() * entry.getKey().getBaseValue()))
+      .sum();
   }
 
   @Override
@@ -72,6 +94,11 @@ public abstract class AbstractVirtueAttachment implements IVirtueAttachment {
       return;
     }
     getPlayer().syncData(getVirtue().getAttachmentTypeHolder().value());
+  }
+
+  @Override
+  public int getPoints() {
+    return (int) getPointsAttributeInstance().getValue();
   }
 
   /**
@@ -109,6 +136,10 @@ public abstract class AbstractVirtueAttachment implements IVirtueAttachment {
    */
   protected AttributeModifier getAttributeModifier(Holder<Attribute> attributeHolder, ResourceLocation modifierId) {
     return getAttribute(attributeHolder).getModifier(modifierId);
+  }
+
+  protected Map.Entry<AttributeInstance, Float> getAttributeAndValue(Holder<Attribute> attributeHolder, Float value) {
+    return Map.entry(getAttribute(attributeHolder), value);
   }
 
   /**
@@ -158,17 +189,13 @@ public abstract class AbstractVirtueAttachment implements IVirtueAttachment {
 
     @Override
     public @NotNull T read(final @NotNull IAttachmentHolder holder, final @NotNull CompoundTag nbt, final HolderLookup.@NotNull Provider provider) {
-      T attachment = createAttachment(holder, nbt, provider);
-      ((AbstractVirtueAttachment) attachment).points = nbt.getInt("points");
-      return attachment;
+      return createAttachment(holder, nbt, provider);
     }
 
     @Override
     @NotNull
     public CompoundTag write(final @NotNull T attachment, final HolderLookup.@NotNull Provider provider) {
-      var nbt = new CompoundTag();
-      nbt.putInt("points", ((AbstractVirtueAttachment) attachment).points);
-      return nbt;
+      return new CompoundTag();
     }
   }
 
@@ -178,15 +205,12 @@ public abstract class AbstractVirtueAttachment implements IVirtueAttachment {
 
     @Override
     public void write(final @NotNull RegistryFriendlyByteBuf buf, final @NotNull T attachment, final boolean initialSync) {
-      buf.writeInt(((AbstractVirtueAttachment) attachment).points);
     }
 
     @Override
     @NotNull
     public T read(final @NotNull IAttachmentHolder holder, final @NotNull RegistryFriendlyByteBuf buf, @Nullable T attachment) {
-      T newAttachment = createAttachment(holder, buf, attachment);
-      ((AbstractVirtueAttachment) newAttachment).points = buf.readInt();
-      return newAttachment;
+      return createAttachment(holder, buf, attachment);
     }
   }
 }

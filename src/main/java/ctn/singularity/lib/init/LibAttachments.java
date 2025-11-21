@@ -35,7 +35,7 @@ public final class LibAttachments extends AttachmentRegisterUtil {
       .sync(ByteBufCodecs.INT)
       .copyOnDeath());
 
-  // 四徳
+  /// 四徳
   /**
    * 勇气
    */

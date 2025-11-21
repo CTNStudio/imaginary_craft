@@ -71,6 +71,13 @@ runs {
     systemProperty 'forge.logging.console.level', 'debug'
 
     modSource project.sourceSets.main
+
+    jvmArguments.addAll([
+      // 忽略无效指令，避免有的人没安装 JetBrain Runtime 无法启动游戏
+      "-XX:+IgnoreUnrecognizedVMOptions",
+      // 启用 JetBrain Runtime 热重载功能
+      "-XX:+AllowEnhancedClassRedefinition"
+    ])
   }
 
   client {
@@ -100,8 +107,8 @@ configurations {
 }
 
 dependencies {
-  implementation libs.neoforge
-  implementation "thedarkcolour:kotlinforforge-neoforge:$kff_version"
+  implementation "net.neoforged:neoforge:${neo_version}"
+  implementation "thedarkcolour:kotlinforforge-neoforge:${kff_version}"
 
   jarJar(implementation(group: "com.github.CTNStudio", name: "Ctn-Api")) {
     version { prefer ctn_api_version }
@@ -113,10 +120,10 @@ dependencies {
     version { prefer ak4j_version }
   }
 
-  libraries libs.aj4j
-  libraries libs.ak4j
-  api libs.aj4j
-  api libs.ak4j
+  libraries "club.snowlyicewolf:amarok-json-for-java:${aj4j_version}"
+  libraries "club.snowlyicewolf:amarok-kdl-for-java:${ak4j_version}"
+  api "club.snowlyicewolf:amarok-json-for-java:${aj4j_version}"
+  api "club.snowlyicewolf:amarok-kdl-for-java:${ak4j_version}"
 
   compileOnly "org.jetbrains.kotlin:kotlin-stdlib"
   compileOnly "org.jetbrains.kotlin:kotlin-reflect"
