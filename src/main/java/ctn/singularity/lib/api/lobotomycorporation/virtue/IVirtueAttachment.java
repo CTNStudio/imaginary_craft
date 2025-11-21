@@ -1,0 +1,97 @@
+package ctn.singularity.lib.api.lobotomycorporation.virtue;
+
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+
+import java.util.Map;
+import java.util.Set;
+
+/**
+ * 脑叶数据附件接口
+ */
+public interface IVirtueAttachment {
+  /**
+   * 获取对应的心核四德类型
+   * @return 四德类型
+   */
+  Virtue getVirtue();
+
+  /**
+   * 获取会影响的属性实例和修改
+   *
+   * @return 属性实例和修改
+   */
+  Map<AttributeInstance, Set<AttributeModifier>> getAffectedAttributeAndModifiers();
+
+  /**
+   * 获取会关联属性Holder
+   *
+   * @return 关联属性Holder
+   */
+  Set<Holder<Attribute>> getCorrelationAttributesHolder();
+
+  /**
+   * 获取评级
+   * @return 评级
+   */
+  VirtueRating getRating();
+
+  /**
+   * 获取数据附件处理者
+   * @return 数据附件处理者
+   */
+  Player getPlayer();
+
+  /**
+   * 获取点数
+   *
+   * @return 点数
+   */
+  int getPoints();
+
+  /**
+   * 获取评级点数
+   * @return 评级点数
+   */
+  int getRatingPoints();
+
+  /**
+   * 设置点数
+   * @param points 点数
+   */
+  void setPoints(int points);
+
+  /**
+   * 获取振幅ID
+   * @return 振幅ID
+   */
+  ResourceLocation getAmplitudeId();
+
+  /**
+   * 同步数据
+   */
+  void syncData();
+
+  /**
+   * 更新触发
+   * <p>
+   * 在修改相关的时候触发（打事件）
+   */
+  void updateTrigger();
+
+  /**
+   * 更新点数
+   * @param newPoints 新的点数
+   */
+  void updatePoints(int newPoints);
+
+   /**
+   * 在原来的基础上修改点数
+   * @param points 要修改的点数
+   */
+  void modifyPoints(int points);
+}

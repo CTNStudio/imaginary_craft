@@ -1,0 +1,182 @@
+plugins {
+  id 'java-library'
+  id 'maven-publish'
+  id 'net.neoforged.gradle.userdev' version '7.1.4'
+
+  id "org.jetbrains.kotlin.jvm" version "2.0.0"
+  id "org.jetbrains.kotlin.plugin.serialization" version "2.0.0"
+}
+
+tasks.named('wrapper', Wrapper).configure {
+  distributionType = Wrapper.DistributionType.BIN
+}
+
+version = mod_version
+group = mod_group_id
+
+repositories {
+  mavenLocal()
+  mavenCentral()
+
+  maven {
+    name = "NeoForged"
+    url = "https://maven.neoforged.net/releases"
+  }
+
+  // KotlinForForge
+  maven {
+    name = "Kotlin for Forge"
+    url = "https://thedarkcolour.github.io/KotlinForForge/"
+    content { includeGroup "thedarkcolour" }
+  }
+
+  // Jitpack
+  maven {
+    name = "JitPack"
+    url = 'https://jitpack.io'
+  }
+
+  // Modrinth
+  maven {
+    url = uri("https://api.modrinth.com/maven")
+  }
+
+  // BlameJared
+  maven {
+    url = uri("https://maven.blamejared.com/")
+  }
+
+  // CurseForge
+  maven {
+    url = uri("https://www.cursemaven.com")
+    content { includeGroup "curse.maven" }
+  }
+
+  // GeckoLib
+  maven {
+    url = uri("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
+    content { includeGroup("software.bernie.geckolib") }
+  }
+}
+
+base {
+  archivesName = mod_id
+}
+
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
+
+runs {
+  configureEach {
+    systemProperty 'forge.logging.markers', 'REGISTRIES'
+    systemProperty 'forge.logging.console.level', 'debug'
+
+    modSource project.sourceSets.main
+  }
+
+  client {
+    systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+  }
+
+  server {
+    systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+    argument '--nogui'
+  }
+
+  gameTestServer {
+    systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+  }
+
+  data {
+    arguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+  }
+}
+
+sourceSets.main.resources { srcDir 'src/generated/resources' }
+
+configurations {
+  libraries
+  implementation.extendsFrom libraries
+  runtimeClasspath.extendsFrom localRuntime
+}
+
+dependencies {
+  implementation libs.neoforge
+  implementation "thedarkcolour:kotlinforforge-neoforge:$kff_version"
+
+  jarJar(implementation(group: "com.github.CTNStudio", name: "Ctn-Api")) {
+    version { prefer ctn_api_version }
+  }
+  jarJar(implementation(group: "club.snowlyicewolf", name: "amarok-json-for-java")) {
+    version { prefer aj4j_version }
+  }
+  jarJar(implementation(group: "club.snowlyicewolf", name: "amarok-kdl-for-java")) {
+    version { prefer ak4j_version }
+  }
+
+  libraries libs.aj4j
+  libraries libs.ak4j
+  api libs.aj4j
+  api libs.ak4j
+
+  compileOnly "org.jetbrains.kotlin:kotlin-stdlib"
+  compileOnly "org.jetbrains.kotlin:kotlin-reflect"
+  compileOnly "org.jetbrains.kotlinx:kotlinx-coroutines-core"
+
+  implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
+
+  implementation "maven.modrinth:jade:${jade_version}+neoforge"
+  compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+  compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+  localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
+}
+
+minecraft {
+  accessTransformers {
+    file 'src/main/resources/META-INF/accesstransformer.cfg'
+  }
+}
+
+tasks.withType(ProcessResources).configureEach {
+  var replaceProperties = [
+    minecraft_version      : minecraft_version,
+    minecraft_version_range: minecraft_version_range,
+    neo_version            : neo_version,
+    loader_version_range   : loader_version_range,
+    mod_id                 : mod_id,
+    mod_name               : mod_name,
+    mod_license            : mod_license,
+    mod_version            : mod_version,
+    mod_authors            : mod_authors,
+    mod_description        : mod_description,
+    geckolib_version       : geckolib_version,
+  ]
+  inputs.properties replaceProperties
+
+  filesMatching(['META-INF/neoforge.mods.toml']) {
+    expand replaceProperties
+  }
+}
+
+publishing {
+  publications {
+    register('mavenJava', MavenPublication) {
+      from components.java
+    }
+  }
+  repositories {
+    maven {
+      url "file://${project.projectDir}/repo"
+    }
+  }
+}
+
+tasks.withType(JavaCompile).configureEach {
+  options.encoding = 'UTF-8'
+}
+
+idea {
+  module {
+    downloadSources = true
+    downloadJavadoc = true
+  }
+}
