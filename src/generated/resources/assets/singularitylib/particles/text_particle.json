@@ -1,10 +1,11 @@
 {
   "textures": [
-    "singularitylib:physics",
-    "singularitylib:spirit",
-    "singularitylib:erosion",
-    "singularitylib:the_soul",
-    "singularitylib:add_prudence",
-    "singularitylib:reduce_prudence"
+    "singularitylib:damage_type/physics",
+    "singularitylib:damage_type/spirit",
+    "singularitylib:damage_type/erosion",
+    "singularitylib:damage_type/the_soul",
+    "singularitylib:damage_type/rationality_add",
+    "singularitylib:damage_type/rationality_reduce",
+    "singularitylib:damage_type/magic"
   ]
 }

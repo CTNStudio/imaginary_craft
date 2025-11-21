@@ -1,5 +1,6 @@
 package ctn.singularity.lib.client.particle;
 
+import com.google.common.collect.HashBiMap;
 import ctn.ctnapi.client.util.ColorUtil;
 import ctn.singularity.lib.api.lobotomycorporation.LcDamage;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -18,15 +19,16 @@ import java.util.Map;
 import static ctn.singularity.lib.api.lobotomycorporation.LcDamage.PHYSICS;
 
 public record TextParticleProvider(SpriteSet spriteSet) implements ParticleProvider<TextParticleOptions> {
-  public static final Map<Integer, String> TEXTURE_MAP = Map.of(
-    0, "damage_type/physics",
-    1, "damage_type/spirit",
-    2, "damage_type/erosion",
-    3, "damage_type/the_soul",
-    4, "damage_type/rationality_add",
-    5, "damage_type/rationality_reduce",
-    6, "damage_type/magic"
-  );
+  public static final Map<Integer, String> TEXTURE_MAP = HashBiMap.create();
+  static {
+    TEXTURE_MAP.put(0, "damage_type/physics");
+    TEXTURE_MAP.put(1, "damage_type/spirit");
+    TEXTURE_MAP.put(2, "damage_type/erosion");
+    TEXTURE_MAP.put(3, "damage_type/the_soul");
+    TEXTURE_MAP.put(4, "damage_type/rationality_add");
+    TEXTURE_MAP.put(5, "damage_type/rationality_reduce");
+    TEXTURE_MAP.put(6, "damage_type/magic");
+  }
 
   @Override
   @NotNull

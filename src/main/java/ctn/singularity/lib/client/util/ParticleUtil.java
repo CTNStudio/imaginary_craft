@@ -76,10 +76,9 @@ public final class ParticleUtil {
     double y = pos.y + entity.getBbHeight();
     double z = pos.z;
     AABB aabb = entity.getHitbox();
-    double xOffset = aabb.maxX - aabb.minX;
-    double zOffset = aabb.maxZ - aabb.minZ;
-    double yOffset = aabb.maxY - entity.getRandom().nextFloat() * 0.1;
-    createTextParticles(serverLevel, component, damageType, fontColor, strokeColor, isRationality, isHeal, isTexture, x, y, z, xOffset, yOffset, zOffset);
+    double xOffset = (aabb.maxX - aabb.minX) / 2;
+    double zOffset = (aabb.maxZ - aabb.minZ) / 2;
+    createTextParticles(serverLevel, component, damageType, fontColor, strokeColor, isRationality, isHeal, isTexture, x, y, z, xOffset, 0, zOffset);
   }
 
   public static @NotNull MutableComponent getText(float value) {
