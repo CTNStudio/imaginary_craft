@@ -2,21 +2,21 @@ package ctn.imaginarycraft.client.particle;
 
 import com.google.common.collect.HashBiMap;
 import ctn.ctnapi.client.util.ColorUtil;
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamage;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleEngine;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.resources.ResourceKey;
+import net.minecraft.core.Holder;
 import net.minecraft.world.damagesource.DamageType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-import static ctn.imaginarycraft.api.lobotomycorporation.LcDamage.PHYSICS;
+import static ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType.PHYSICS;
 
 public record TextParticleProvider(SpriteSet spriteSet) implements ParticleProvider<TextParticleOptions> {
   public static final Map<Integer, String> TEXTURE_MAP = HashBiMap.create();
@@ -49,7 +49,7 @@ public record TextParticleProvider(SpriteSet spriteSet) implements ParticleProvi
       return new Result(isTexture, getSprite(index), fontColor, strokeColor);
     }
 
-    ResourceKey<DamageType> damageTypeResourceKey = type.damageType().orElse(null);
+    Holder<DamageType> damageTypeResourceKey = type.damageType().orElse(null);
 
     if (damageTypeResourceKey == null) {
       return new Result(false, getSprite(0), type.fontColor(), type.strokeColor());
@@ -64,20 +64,20 @@ public record TextParticleProvider(SpriteSet spriteSet) implements ParticleProvi
     int index;
     int fontColor;
     int strokeColor;
-    LcDamage lcDamage = LcDamage.byDamageType(damageTypeResourceKey);
-    switch (lcDamage) {
+    LcDamageType lcDamageType = LcDamageType.byDamageType(damageTypeResourceKey);
+    switch (lcDamageType) {
       case SPIRIT -> {
-        fontColor = lcDamage.getColourValue();
+        fontColor = lcDamageType.getColourValue();
         strokeColor = ColorUtil.rgbColor("#9c4e80");
         index = 1;
       }
       case EROSION -> {
-        fontColor = lcDamage.getColourValue();
+        fontColor = lcDamageType.getColourValue();
         strokeColor = ColorUtil.rgbColor("#28054a");
         index = 2;
       }
       case THE_SOUL -> {
-        fontColor = lcDamage.getColourValue();
+        fontColor = lcDamageType.getColourValue();
         strokeColor = ColorUtil.rgbColor("#074161");
         index = 3;
       }

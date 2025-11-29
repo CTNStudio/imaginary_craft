@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.capability.block;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
 import net.minecraft.world.level.block.state.BlockState;
 
 import javax.annotation.CheckForNull;

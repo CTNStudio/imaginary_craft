@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.linkage.jade;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import snownee.jade.api.EntityAccessor;

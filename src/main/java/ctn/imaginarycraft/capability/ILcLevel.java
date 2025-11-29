@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.capability;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
 import ctn.imaginarycraft.init.ModCapabilitys;
 import net.minecraft.world.item.ItemStack;
 

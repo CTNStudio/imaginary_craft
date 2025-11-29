@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.lobotomycorporation;
+package ctn.imaginarycraft.api.lobotomycorporation.virtue;
 
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
@@ -11,7 +11,7 @@ import java.util.Set;
 /**
  * 脑叶数据附件接口
  */
-public interface IVirtueAttachment {
+public interface IVirtue {
   /**
    * 获取对应的心核四德类型
    * @return 四德类型

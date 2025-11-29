@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.core;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamage;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.init.world.ModAttachments;
 import ctn.imaginarycraft.init.world.ModAttributes;
@@ -36,7 +36,7 @@ public final class ImaginaryCraft {
   }
 
   private void commonSetup(FMLCommonSetupEvent event) {
-    LcDamage.init();
+    LcDamageType.init();
   }
 
   @Contract("_ -> new")

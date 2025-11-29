@@ -1,7 +1,7 @@
-package ctn.imaginarycraft.api.lobotomycorporation.util;
+package ctn.imaginarycraft.api.lobotomycorporation.damage.util;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamage;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
+import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
 import ctn.imaginarycraft.mixinextend.IDamageSource;
 import net.minecraft.core.Holder;
 import net.minecraft.world.damagesource.DamageSource;
@@ -49,17 +49,6 @@ public final class LcDamageUtil {
       case -4 -> 2.0F;
       default -> 0.0F;
     };
-  }
-
-  /**
-   * 获取颜色伤害类型
-   */
-  public static LcDamage getColorDamageType(LcDamage lcDamage, Holder<DamageType> type) {
-    if (lcDamage != null) {
-      return lcDamage;
-    }
-
-    return LcDamage.byDamageType(type);
   }
 
   /**

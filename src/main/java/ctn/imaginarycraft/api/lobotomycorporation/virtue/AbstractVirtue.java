@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.lobotomycorporation;
+package ctn.imaginarycraft.api.lobotomycorporation.virtue;
 
 import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 import net.minecraft.core.Holder;
@@ -23,10 +23,10 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.DoubleStream;
 
-public abstract class AbstractVirtueAttachment implements IVirtueAttachment {
+public abstract class AbstractVirtue implements IVirtue {
   private final Player player;
 
-  protected AbstractVirtueAttachment(Player holder) {
+  protected AbstractVirtue(Player holder) {
     this.player = holder;
   }
 
@@ -180,7 +180,7 @@ public abstract class AbstractVirtueAttachment implements IVirtueAttachment {
     setAttributeModifier(getAmplitudeId(), attribute, value, operation);
   }
 
-  public static abstract class AbstractSerialize<T extends AbstractVirtueAttachment> implements IAttachmentSerializer<CompoundTag, T> {
+  public static abstract class AbstractSerialize<T extends AbstractVirtue> implements IAttachmentSerializer<CompoundTag, T> {
 
     public abstract T createAttachment(final IAttachmentHolder holder, final CompoundTag nbt, final HolderLookup.Provider provider);
 
@@ -196,7 +196,7 @@ public abstract class AbstractVirtueAttachment implements IVirtueAttachment {
     }
   }
 
-  public static abstract class AbstractSync<T extends AbstractVirtueAttachment> implements AttachmentSyncHandler<T> {
+  public static abstract class AbstractSync<T extends AbstractVirtue> implements AttachmentSyncHandler<T> {
 
     public abstract T createAttachment(final IAttachmentHolder holder, final RegistryFriendlyByteBuf buf, @Nullable T attachment);
 

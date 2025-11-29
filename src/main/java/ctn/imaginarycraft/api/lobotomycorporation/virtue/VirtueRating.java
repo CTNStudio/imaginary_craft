@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.lobotomycorporation;
+package ctn.imaginarycraft.api.lobotomycorporation.virtue;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.util.StringRepresentable;

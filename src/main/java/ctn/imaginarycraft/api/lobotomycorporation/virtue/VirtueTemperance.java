@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.lobotomycorporation;
+package ctn.imaginarycraft.api.lobotomycorporation.virtue;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.world.ModAttachments;
@@ -20,12 +20,12 @@ import java.util.Set;
 /**
  * 自律
  */
-public final class TemperanceAttachment extends AbstractVirtueAttachment {
+public final class VirtueTemperance extends AbstractVirtue {
   public static final ResourceLocation AMPLITUDE_ID = ImaginaryCraft.modRl("temperance_amplitude");
   private static final double TEMPERANCE_BLOCK_BREAK_SPEED = 0.02;
   private static final double TEMPERANCE_KNOCKBACK_SPEED = 0.015;
 
-  public TemperanceAttachment(final Player holder) {
+  public VirtueTemperance(final Player holder) {
     super(holder);
   }
 
@@ -83,19 +83,19 @@ public final class TemperanceAttachment extends AbstractVirtueAttachment {
     setAttributeModifier(Attributes.ATTACK_KNOCKBACK, newPoints * TEMPERANCE_KNOCKBACK_SPEED, AttributeModifier.Operation.ADD_VALUE);
   }
 
-  public static class Serialize extends AbstractSerialize<TemperanceAttachment> {
+  public static class Serialize extends AbstractSerialize<VirtueTemperance> {
 
     @Override
-    public TemperanceAttachment createAttachment(final IAttachmentHolder holder, final CompoundTag nbt, final HolderLookup.Provider provider) {
-      return new TemperanceAttachment((Player) holder);
+    public VirtueTemperance createAttachment(final IAttachmentHolder holder, final CompoundTag nbt, final HolderLookup.Provider provider) {
+      return new VirtueTemperance((Player) holder);
     }
   }
 
-  public static class Sync extends AbstractSync<TemperanceAttachment> {
+  public static class Sync extends AbstractSync<VirtueTemperance> {
 
     @Override
-    public TemperanceAttachment createAttachment(final IAttachmentHolder holder, final RegistryFriendlyByteBuf buf, @Nullable final TemperanceAttachment attachment) {
-      return new TemperanceAttachment((Player) holder);
+    public VirtueTemperance createAttachment(final IAttachmentHolder holder, final RegistryFriendlyByteBuf buf, @Nullable final VirtueTemperance attachment) {
+      return new VirtueTemperance((Player) holder);
     }
   }
 }

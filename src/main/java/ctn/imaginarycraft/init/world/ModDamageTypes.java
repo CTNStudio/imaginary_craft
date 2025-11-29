@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.init.world;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamage;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.util.DamageTypeRegisterUtil;
 import ctn.imaginarycraft.mixinextend.IDamageSource;
@@ -11,7 +11,7 @@ import net.minecraft.world.damagesource.DamageType;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
 /**
- * 尽量用{@link IDamageSource#setLcDamage(LcDamage)}
+ * 尽量用{@link IDamageSource#setLcDamageType(LcDamageType)}
  */
 public final class ModDamageTypes extends DamageTypeRegisterUtil {
   public static final DeferredRegister<DamageType> REGISTRY = ImaginaryCraft.modRegister(Registries.DAMAGE_TYPE);

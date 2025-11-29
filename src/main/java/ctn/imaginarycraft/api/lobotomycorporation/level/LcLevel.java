@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.lobotomycorporation;
+package ctn.imaginarycraft.api.lobotomycorporation.level;
 
 import ctn.ctnapi.client.util.ColorUtil;
 import ctn.imaginarycraft.api.ColourText;

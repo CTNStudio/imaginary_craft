@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.lobotomycorporation;
+package ctn.imaginarycraft.api.lobotomycorporation.virtue;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.world.ModAttributes;
@@ -21,7 +21,7 @@ import java.util.Set;
 /**
  * 正义
  */
-public final class JusticeAttachment extends AbstractVirtueAttachment {
+public final class VirtueJustice extends AbstractVirtue {
   private static final ResourceLocation AMPLITUDE_ID = ImaginaryCraft.modRl("justice_amplitude");
   private static final double JUSTICE_MOVEMENT_SPEED = 0.001;
   private static final double JUSTICE_ATTACK_SPEED = 0.01;
@@ -31,7 +31,7 @@ public final class JusticeAttachment extends AbstractVirtueAttachment {
 
   private double flightSpeedBonus;
 
-  public JusticeAttachment(final Player holder) {
+  public VirtueJustice(final Player holder) {
     super(holder);
   }
 
@@ -101,42 +101,42 @@ public final class JusticeAttachment extends AbstractVirtueAttachment {
 //    abilities.setFlyingSpeed(abilities.getFlyingSpeed() + (float) (newFlightSpeedBonus * JUSTICE_FLIGHT_SPEED));
   }
 
-  public static class Serialize extends AbstractSerialize<JusticeAttachment> {
+  public static class Serialize extends AbstractSerialize<VirtueJustice> {
 
     @Override
-    public JusticeAttachment createAttachment(final IAttachmentHolder holder, final CompoundTag nbt, final HolderLookup.Provider provider) {
-      return new JusticeAttachment((Player) holder);
+    public VirtueJustice createAttachment(final IAttachmentHolder holder, final CompoundTag nbt, final HolderLookup.Provider provider) {
+      return new VirtueJustice((Player) holder);
     }
 
     @Override
-    public @NotNull JusticeAttachment read(final @NotNull IAttachmentHolder holder, final @NotNull CompoundTag nbt, final HolderLookup.@NotNull Provider provider) {
+    public @NotNull VirtueJustice read(final @NotNull IAttachmentHolder holder, final @NotNull CompoundTag nbt, final HolderLookup.@NotNull Provider provider) {
       var attachment = super.read(holder, nbt, provider);
       attachment.flightSpeedBonus = nbt.getDouble("flightSpeedBonus");
       return attachment;
     }
 
     @Override
-    public @NotNull CompoundTag write(final @NotNull JusticeAttachment attachment, final HolderLookup.@NotNull Provider provider) {
+    public @NotNull CompoundTag write(final @NotNull VirtueJustice attachment, final HolderLookup.@NotNull Provider provider) {
       var nbt = super.write(attachment, provider);
       nbt.putDouble("flightSpeedBonus", attachment.flightSpeedBonus);
       return nbt;
     }
   }
 
-  public static class Sync extends AbstractSync<JusticeAttachment> {
+  public static class Sync extends AbstractSync<VirtueJustice> {
     @Override
-    public JusticeAttachment createAttachment(final IAttachmentHolder holder, final RegistryFriendlyByteBuf buf, @Nullable final JusticeAttachment attachment) {
-      return new JusticeAttachment((Player) holder);
+    public VirtueJustice createAttachment(final IAttachmentHolder holder, final RegistryFriendlyByteBuf buf, @Nullable final VirtueJustice attachment) {
+      return new VirtueJustice((Player) holder);
     }
 
     @Override
-    public void write(final @NotNull RegistryFriendlyByteBuf buf, final @NotNull JusticeAttachment attachment, final boolean initialSync) {
+    public void write(final @NotNull RegistryFriendlyByteBuf buf, final @NotNull VirtueJustice attachment, final boolean initialSync) {
       super.write(buf, attachment, initialSync);
       buf.writeDouble(attachment.flightSpeedBonus);
     }
 
     @Override
-    public @NotNull JusticeAttachment read(final @NotNull IAttachmentHolder holder, final @NotNull RegistryFriendlyByteBuf buf, @Nullable JusticeAttachment attachment) {
+    public @NotNull VirtueJustice read(final @NotNull IAttachmentHolder holder, final @NotNull RegistryFriendlyByteBuf buf, @Nullable VirtueJustice attachment) {
       var newAttachment = super.read(holder, buf, attachment);
       newAttachment.flightSpeedBonus = buf.readDouble();
       return newAttachment;

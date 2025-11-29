@@ -1,10 +1,10 @@
 package ctn.imaginarycraft.init.world;
 
 import com.mojang.serialization.Codec;
-import ctn.imaginarycraft.api.lobotomycorporation.FortitudeAttachment;
-import ctn.imaginarycraft.api.lobotomycorporation.JusticeAttachment;
-import ctn.imaginarycraft.api.lobotomycorporation.PrudenceAttachment;
-import ctn.imaginarycraft.api.lobotomycorporation.TemperanceAttachment;
+import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueFortitude;
+import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueJustice;
+import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtuePrudence;
+import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueTemperance;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.util.AttachmentRegisterUtil;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -37,33 +37,33 @@ public final class ModAttachments extends AttachmentRegisterUtil {
   /**
    * 勇气
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<FortitudeAttachment>> FORTITUDE = register("fortitude",
-    FortitudeAttachment::new, builder -> builder
-      .serialize(new FortitudeAttachment.Serialize())
-      .sync(new FortitudeAttachment.Sync())
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<VirtueFortitude>> FORTITUDE = register("fortitude",
+    VirtueFortitude::new, builder -> builder
+      .serialize(new VirtueFortitude.Serialize())
+      .sync(new VirtueFortitude.Sync())
       .copyOnDeath());
   /**
    * 谨慎
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<PrudenceAttachment>> PRUDENCE = register("prudence",
-    PrudenceAttachment::new, builder -> builder
-      .serialize(new PrudenceAttachment.Serialize())
-      .sync(new PrudenceAttachment.Sync())
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<VirtuePrudence>> PRUDENCE = register("prudence",
+    VirtuePrudence::new, builder -> builder
+      .serialize(new VirtuePrudence.Serialize())
+      .sync(new VirtuePrudence.Sync())
       .copyOnDeath());
   /**
    * 自律
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<TemperanceAttachment>> TEMPERANCE = register("temperance",
-    TemperanceAttachment::new, builder -> builder
-      .serialize(new TemperanceAttachment.Serialize())
-      .sync(new TemperanceAttachment.Sync())
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<VirtueTemperance>> TEMPERANCE = register("temperance",
+    VirtueTemperance::new, builder -> builder
+      .serialize(new VirtueTemperance.Serialize())
+      .sync(new VirtueTemperance.Sync())
       .copyOnDeath());
   /**
    * 正义
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<JusticeAttachment>> JUSTICE = register("justice",
-    JusticeAttachment::new, builder -> builder
-      .serialize(new JusticeAttachment.Serialize())
-      .sync(new JusticeAttachment.Sync())
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<VirtueJustice>> JUSTICE = register("justice",
+    VirtueJustice::new, builder -> builder
+      .serialize(new VirtueJustice.Serialize())
+      .sync(new VirtueJustice.Sync())
       .copyOnDeath());
 }

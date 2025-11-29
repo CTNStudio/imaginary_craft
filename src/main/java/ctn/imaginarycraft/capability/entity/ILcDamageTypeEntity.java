@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.capability.entity;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamage;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
 import net.minecraft.world.entity.Entity;
 
 public interface ILcDamageTypeEntity {
-  LcDamage getDamageType(Entity entity);
+  LcDamageType getDamageType(Entity entity);
 }

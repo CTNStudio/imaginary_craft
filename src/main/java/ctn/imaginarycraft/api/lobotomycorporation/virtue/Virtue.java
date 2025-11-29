@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.lobotomycorporation;
+package ctn.imaginarycraft.api.lobotomycorporation.virtue;
 
 import com.mojang.serialization.Codec;
 import ctn.ctnapi.client.util.ColorUtil;

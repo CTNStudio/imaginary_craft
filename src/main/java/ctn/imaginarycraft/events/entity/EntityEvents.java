@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.events.entity;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamage;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
-import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
+import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.util.LcDamageUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -63,11 +63,10 @@ public final class EntityEvents {
     DamageSource damageSource = event.getSource();
     IDamageSource modDamageSource = (IDamageSource) damageSource;
     LcLevel lcDamageLevel = modDamageSource.getLcDamageLevel();
-    LcDamage lcDamage = modDamageSource.getLcDamage();
+    LcDamageType lcDamageType = modDamageSource.getLcDamageType();
     LivingEntity entity = event.getEntity();
-
     if (entity.level() instanceof ServerLevel serverLevel) {
-      LcDamageEventExecutes.vulnerableTreatment(event, damageSource, entity, lcDamageLevel, lcDamage);
+      LcDamageEventExecutes.vulnerableTreatment(event, damageSource, entity, lcDamageLevel, lcDamageType);
     }
   }
 
@@ -82,19 +81,19 @@ public final class EntityEvents {
     Entity directEntity = source.getDirectEntity();
     Entity causingEntity = source.getEntity();
     Holder<DamageType> damageTypeHolder = source.typeHolder();
-    LcDamage lcDamage = LcDamage.byDamageType(damageTypeHolder);
+    LcDamageType lcDamageType = LcDamageType.byDamageType(damageTypeHolder);
     // 建议在每个有返回值的方法执行后再获取一次以求准确
     float newDamage = event.getNewDamage();
-    boolean modifyRationality = lcDamage == LcDamage.SPIRIT || lcDamage == LcDamage.EROSION;
+    boolean modifyRationality = lcDamageType == LcDamageType.SPIRIT || lcDamageType == LcDamageType.EROSION;
 
-    if (lcDamage == LcDamage.THE_SOUL) {
+    if (lcDamageType == LcDamageType.THE_SOUL) {
       newDamage = LcDamageUtil.theSoulDamage(newDamage, entity, directEntity == null ? causingEntity : directEntity, source);
     }
 
     if (newDamage > 0) {
       if (entity instanceof Player player && modifyRationality) {
         RationalityUtil.modifyValue(player, -newDamage, true);
-        if (lcDamage == LcDamage.SPIRIT){
+        if (lcDamageType == LcDamageType.SPIRIT){
 //          ParticleUtil.createTextParticles(player, newDamage, true, false);
           event.getContainer().setPostAttackInvulnerabilityTicks(0);
           event.setNewDamage(0);

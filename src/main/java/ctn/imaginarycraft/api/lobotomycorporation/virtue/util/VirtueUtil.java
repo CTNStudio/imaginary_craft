@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.lobotomycorporation.util;
+package ctn.imaginarycraft.api.lobotomycorporation.virtue.util;
 
 import ctn.imaginarycraft.init.world.ModAttachments;
 import net.minecraft.util.Mth;

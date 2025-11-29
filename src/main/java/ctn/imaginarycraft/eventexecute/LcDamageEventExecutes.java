@@ -1,14 +1,13 @@
 package ctn.imaginarycraft.eventexecute;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamage;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
-import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
+import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.util.LcDamageUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.capability.ILcLevel;
 import ctn.imaginarycraft.capability.entity.IAbnos;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.mixinextend.IDamageSource;
-import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -44,13 +43,10 @@ public final class LcDamageEventExecutes {
   public static void vulnerableTreatment(LivingIncomingDamageEvent event,
                                          DamageSource damageSource,
                                          LivingEntity entity,
-                                         @Nullable LcLevel damageLcLevel,
-                                         @Nullable LcDamage lcDamageTypes) {
-    Holder<DamageType> damageTypeHolder = damageSource.typeHolder();
-    for (final ResourceKey<DamageType> damageType : LcDamage.getBypassKeys()) {
-      if (damageTypeHolder.is(damageType)) {
-        return;
-      }
+                                         LcLevel damageLcLevel,
+                                         @Nullable LcDamageType lcDamageTypeTypes) {
+    if (LcDamageType.byDamageType(damageSource.typeHolder()) == null && lcDamageTypeTypes == null) {
+      return;
     }
 
     // 新伤害
@@ -79,11 +75,6 @@ public final class LcDamageEventExecutes {
       }
     }
 
-    // 等级处理 判断实体是否有护甲如果没有就用实体的等级
-    if (damageLcLevel == null) {
-      damageLcLevel = LcLevel.ZAYIN;
-    }
-
     // 盔甲判断
     if (isArmorItemStackEmpty) {
       newDamageAmount *= LcDamageUtil.getDamageMultiple(LcLevel.getEntityLevel(entity), damageLcLevel);
@@ -93,9 +84,9 @@ public final class LcDamageEventExecutes {
     }
 
     // 伤害类型
-    if (lcDamageTypes != null) {
+    if (lcDamageTypeTypes != null) {
       // 抗性处理
-      var attributeInstance = entity.getAttribute(lcDamageTypes.getVulnerable());
+      var attributeInstance = entity.getAttribute(lcDamageTypeTypes.getVulnerable());
       if (attributeInstance != null) {
         newDamageAmount *= (float) attributeInstance.getValue();
       }
@@ -114,15 +105,15 @@ public final class LcDamageEventExecutes {
 
     // 低抗缓慢
     AttributeInstance attributeInstance;
-    @Nullable LcDamage lcDamage = IDamageSource.of(source).getLcDamage();
-    if (lcDamage != null &&
-      (attributeInstance = entity.getAttribute(lcDamage.getVulnerable())) != null &&
+    @Nullable LcDamageType lcDamageType = IDamageSource.of(source).getLcDamageType();
+    if (lcDamageType != null &&
+      (attributeInstance = entity.getAttribute(lcDamageType.getVulnerable())) != null &&
       attributeInstance.getValue() > 1.0) {
       entity.addEffect(new MobEffectInstance(MOVEMENT_SLOWDOWN, 20, 2));
     }
 
     // 生成粒子
-    @Nullable ResourceKey<DamageType> damageType = lcDamage != null ? lcDamage.getDamageType() : source.typeHolder().getKey();
+    @Nullable ResourceKey<DamageType> damageType = lcDamageType != null ? lcDamageType.getDamageType() : source.typeHolder().getKey();
     // TODO 需要改良
 //    @Nullable Vec3 sourcePosition = source.getSourcePosition();
 //    @Nullable Entity entity1 = source.getEntity();

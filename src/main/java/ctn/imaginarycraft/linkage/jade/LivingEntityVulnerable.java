@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.linkage.jade;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamage;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.core.Holder;
@@ -43,19 +43,19 @@ public enum LivingEntityVulnerable implements IEntityComponentProvider {
     iTooltip.add(Component.translatable(ATTRIBUTE_DESCRIPTION_KEY));
     if (isPhysics) {
       iTooltip.add(getSprite(elements, "physics8x"));
-      iTooltip.append(getComponent(entity, PHYSICS_KEY, LcDamage.PHYSICS.getColourValue(), ModAttributes.PHYSICS_VULNERABLE));
+      iTooltip.append(getComponent(entity, PHYSICS_KEY, LcDamageType.PHYSICS.getColourValue(), ModAttributes.PHYSICS_VULNERABLE));
     }
     if (isSpirit) {
       iTooltip.add(getSprite(elements, "spirit8x"));
-      iTooltip.append(getComponent(entity, SPIRIT_KEY, LcDamage.SPIRIT.getColourValue(), ModAttributes.SPIRIT_VULNERABLE));
+      iTooltip.append(getComponent(entity, SPIRIT_KEY, LcDamageType.SPIRIT.getColourValue(), ModAttributes.SPIRIT_VULNERABLE));
     }
     if (isErosion) {
       iTooltip.add(getSprite(elements, "erosion8x"));
-      iTooltip.append(getComponent(entity, EROSION_KEY, LcDamage.EROSION.getColourValue(), ModAttributes.EROSION_VULNERABLE));
+      iTooltip.append(getComponent(entity, EROSION_KEY, LcDamageType.EROSION.getColourValue(), ModAttributes.EROSION_VULNERABLE));
     }
     if (isTheSoul) {
       iTooltip.add(getSprite(elements, "the_soul8x"));
-      iTooltip.append(getComponent(entity, THE_SOUL_KEY, LcDamage.THE_SOUL.getColourValue(), ModAttributes.THE_SOUL_VULNERABLE));
+      iTooltip.append(getComponent(entity, THE_SOUL_KEY, LcDamageType.THE_SOUL.getColourValue(), ModAttributes.THE_SOUL_VULNERABLE));
     }
   }
 

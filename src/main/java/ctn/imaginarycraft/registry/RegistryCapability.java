@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.registry;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
 import ctn.imaginarycraft.capability.ILcLevel;
 import ctn.imaginarycraft.capability.IRandomDamage;
 import ctn.imaginarycraft.capability.entity.IInvincibleTickEntity;

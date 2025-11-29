@@ -1,6 +1,9 @@
 package ctn.imaginarycraft.datagen;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.datagen.tag.DatagenBlockTag;
+import ctn.imaginarycraft.datagen.tag.DatagenDamageTypeTag;
+import ctn.imaginarycraft.datagen.tag.DatagenItemTag;
 import net.minecraft.DetectedVersion;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.DataGenerator;
@@ -45,6 +48,10 @@ public final class ModDatagen {
 
     // 服务端数据生成
     buildServer(event, generator, new DatagenDatapackBuiltinEntries(output, completableFuture));
+    DatagenBlockTag blockTag = new DatagenBlockTag(output, completableFuture, fileHelper);
+    buildServer(event, generator, blockTag);
+    buildServer(event, generator, new DatagenItemTag(output, completableFuture, blockTag.contentsGetter(), fileHelper));
+    buildServer(event, generator, new DatagenDamageTypeTag(output, completableFuture, fileHelper));
   }
 
   private static <T extends DataProvider> @NotNull T buildClient(GatherDataEvent event,

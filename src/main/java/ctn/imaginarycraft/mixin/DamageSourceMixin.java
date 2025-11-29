@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.mixin;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamage;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
-import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
+import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.util.LcDamageUtil;
 import ctn.imaginarycraft.capability.ILcLevel;
 import ctn.imaginarycraft.capability.entity.IInvincibleTickEntity;
 import ctn.imaginarycraft.capability.entity.ILcDamageTypeEntity;
@@ -34,14 +34,13 @@ import javax.annotation.Nullable;
 public abstract class DamageSourceMixin implements IDamageSource {
   @Unique
   @Nullable
-  private LcDamage imaginaryCraft$ColorType;
+  private LcDamageType imaginaryCraft$lcDamageTypeType;
 
   @Unique
-  @Nullable
-  private LcLevel imaginaryCraft$damageLevel;
+  private LcLevel imaginaryCraft$lcDamageLevel;
 
   @Unique
-  private int imaginaryCraft$invincibleTick = -1;
+  private int imaginaryCraft$invincibleTick;
 
   @Inject(method = "<init>(Lnet/minecraft/core/Holder;" +
     "Lnet/minecraft/world/entity/Entity;" +
@@ -50,74 +49,74 @@ public abstract class DamageSourceMixin implements IDamageSource {
   private void imaginaryCraft$DamageSource(Holder<DamageType> type, Entity directEntity, Entity causingEntity, Vec3 damageSourcePosition, CallbackInfo ci) {
     DamageSource damageSource = (DamageSource) (Object) this;
     ItemStack itemStack = LcDamageUtil.getDamageItemStack(damageSource);
-    ILcLevel level;
+    ILcLevel iLcLevel;
+    ILcDamageTypeEntity iLcDamageTypeEntity;
+    IInvincibleTickEntity iInvincibleTickEntity;
+    LcDamageType lcDamageType = null;
+    LcLevel lcDamageLevel = null;
+    int invincibleTick = -1;
+
     if (itemStack != null) {
       ILcDamageTypeItem colorDamageTypeItem = itemStack.getCapability(ModCapabilitys.LcDamageType.LC_DAMAGE_TYPE_ITEM);
       IInvincibleTickItem invincibleTickItem = itemStack.getCapability(ModCapabilitys.InvincibleTick.INVINCIBLE_TICK_ITEM);
-      level = itemStack.getCapability(ModCapabilitys.LcLevel.LC_LEVEL_ITEM);
+
       if (colorDamageTypeItem != null) {
-        this.imaginaryCraft$ColorType = colorDamageTypeItem.getColorDamageType(itemStack);
+        lcDamageType = colorDamageTypeItem.getLcDamageColorDamageType(itemStack);
       }
       if (invincibleTickItem != null) {
-        this.imaginaryCraft$invincibleTick = invincibleTickItem.getInvincibleTick(itemStack);
+        invincibleTick = invincibleTickItem.getInvincibleTick(itemStack);
       }
-      if (level != null) {
-        this.imaginaryCraft$damageLevel = level.getItemLevel();
-      }
-    }
 
-    imaginaryCraft$getEntityAttribute(directEntity);
-    imaginaryCraft$getEntityAttribute(causingEntity);
-
-    this.imaginaryCraft$ColorType = LcDamageUtil.getColorDamageType(this.imaginaryCraft$ColorType, type);
-
-    if (this.imaginaryCraft$damageLevel == null) {
-      this.imaginaryCraft$damageLevel = LcLevel.ZAYIN;
-    }
-
-    if (this.imaginaryCraft$invincibleTick == -1) {
-      this.imaginaryCraft$invincibleTick = 20;
-    }
-  }
-
-  @Unique
-  private void imaginaryCraft$getEntityAttribute(Entity entity) {
-    ILcDamageTypeEntity colorDamageTypeEntity;
-    IInvincibleTickEntity invincibleTickEntity;
-    ILcLevel level;
-    if (entity == null) {
-      return;
-    }
-
-    colorDamageTypeEntity = entity.getCapability(ModCapabilitys.LcDamageType.LC_DAMAGE_TYPE_ENTITY);
-    invincibleTickEntity = entity.getCapability(ModCapabilitys.InvincibleTick.INVINCIBLE_TICK_ENTITY);
-
-    if (imaginaryCraft$ColorType == null) {
-      if (colorDamageTypeEntity != null) {
-        imaginaryCraft$ColorType = colorDamageTypeEntity.getDamageType(entity);
+      // 等级处理 判断实体是否有护甲如果没有就用实体的等级
+      iLcLevel = itemStack.getCapability(ModCapabilitys.LcLevel.LC_LEVEL_ITEM);
+      if (iLcLevel != null) {
+        lcDamageLevel = iLcLevel.getItemLevel();
       }
     }
 
-    if (imaginaryCraft$invincibleTick != -1 && invincibleTickEntity != null) {
-      imaginaryCraft$invincibleTick = invincibleTickEntity.getInvincibleTick(entity);
+    Entity entity = directEntity == null ? causingEntity : directEntity;
+    if (entity != null) {
+      iLcDamageTypeEntity = entity.getCapability(ModCapabilitys.LcDamageType.LC_DAMAGE_TYPE_ENTITY);
+      iInvincibleTickEntity = entity.getCapability(ModCapabilitys.InvincibleTick.INVINCIBLE_TICK_ENTITY);
+
+      if (lcDamageType == null && iLcDamageTypeEntity != null) {
+        lcDamageType = iLcDamageTypeEntity.getDamageType(entity);
+      }
+
+      if (invincibleTick != -1 && iInvincibleTickEntity != null) {
+        invincibleTick = iInvincibleTickEntity.getInvincibleTick(entity);
+      }
+
+      iLcLevel = entity.getCapability(ModCapabilitys.LcLevel.LC_LEVEL_ENTITY);
+      if (iLcLevel != null) {
+        lcDamageLevel = iLcLevel.getItemLevel();
+      }
     }
 
-    level = entity.getCapability(ModCapabilitys.LcLevel.LC_LEVEL_ENTITY);
-    if (level != null) {
-      imaginaryCraft$damageLevel = level.getItemLevel();
+    if (lcDamageLevel == null) {
+      lcDamageLevel = LcLevel.ZAYIN;
     }
+
+    if (invincibleTick == -1) {
+      invincibleTick = 20;
+    }
+
+    this.imaginaryCraft$lcDamageLevel = lcDamageLevel;
+    this.imaginaryCraft$invincibleTick = invincibleTick;
+    this.imaginaryCraft$lcDamageTypeType = lcDamageType == null ?
+      LcDamageType.byDamageType(type) : lcDamageType;
   }
 
   @Unique
   @Nullable
-  public LcDamage iSingularityLib$getLcDamage() {
-    return imaginaryCraft$ColorType;
+  public LcDamageType iSingularityLib$getLcDamageType() {
+    return imaginaryCraft$lcDamageTypeType;
   }
 
   @Unique
   @Nullable
   public LcLevel iSingularityLib$getLcDamageLevel() {
-    return imaginaryCraft$damageLevel;
+    return imaginaryCraft$lcDamageLevel;
   }
 
   @Unique
@@ -126,13 +125,13 @@ public abstract class DamageSourceMixin implements IDamageSource {
   }
 
   @Unique
-  public void iSingularityLib$setLcDamage(LcDamage type) {
-    this.imaginaryCraft$ColorType = type;
+  public void iSingularityLib$setLcDamageType(LcDamageType type) {
+    this.imaginaryCraft$lcDamageTypeType = type;
   }
 
   @Unique
   public void iSingularityLib$setDamageLevel(LcLevel level) {
-    this.imaginaryCraft$damageLevel = level;
+    this.imaginaryCraft$lcDamageLevel = level;
   }
 
   @Unique
