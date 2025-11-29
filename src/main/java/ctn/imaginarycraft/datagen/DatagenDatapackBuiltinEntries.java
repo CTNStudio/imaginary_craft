@@ -16,6 +16,8 @@ import java.util.concurrent.CompletableFuture;
  */
 public final class DatagenDatapackBuiltinEntries extends DatapackBuiltinEntriesProvider {
   public DatagenDatapackBuiltinEntries(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-    super(output, registries, new RegistrySetBuilder(), Set.of(ImaginaryCraft.ID));
+    super(output, registries, new RegistrySetBuilder()
+      .add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap),
+      Set.of(ImaginaryCraft.ID));
   }
 }

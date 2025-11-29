@@ -49,8 +49,7 @@ public final class ModDatagen {
     buildClient(event, generator, new DatagenParticle(output, fileHelper));
 
     // 服务端数据生成
-//    buildServer(event, generator, new DatagenDatapackBuiltinEntries(output, completableFuture));
-    event.createDatapackRegistryObjects(new RegistrySetBuilder().add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap));
+    buildServer(event, generator, new DatagenDatapackBuiltinEntries(output, completableFuture));
     DatagenBlockTag blockTag = new DatagenBlockTag(output, completableFuture, fileHelper);
     buildServer(event, generator, blockTag);
     buildServer(event, generator, new DatagenItemTag(output, completableFuture, blockTag.contentsGetter(), fileHelper));
