@@ -4,8 +4,11 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.tag.DatagenBlockTag;
 import ctn.imaginarycraft.datagen.tag.DatagenDamageTypeTag;
 import ctn.imaginarycraft.datagen.tag.DatagenItemTag;
+import ctn.imaginarycraft.init.world.ModDamageTypes;
 import net.minecraft.DetectedVersion;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
@@ -31,7 +34,6 @@ public final class ModDatagen {
 
   @SubscribeEvent
   public static void gatherData(GatherDataEvent event) {
-    boolean client = event.includeClient();
     DataGenerator generator = event.getGenerator();
     DataGenerator.PackGenerator packGenerator = generator.getVanillaPack(event.includeServer());
     PackOutput output = generator.getPackOutput();
@@ -47,7 +49,8 @@ public final class ModDatagen {
     buildClient(event, generator, new DatagenParticle(output, fileHelper));
 
     // 服务端数据生成
-    buildServer(event, generator, new DatagenDatapackBuiltinEntries(output, completableFuture));
+//    buildServer(event, generator, new DatagenDatapackBuiltinEntries(output, completableFuture));
+    event.createDatapackRegistryObjects(new RegistrySetBuilder().add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap));
     DatagenBlockTag blockTag = new DatagenBlockTag(output, completableFuture, fileHelper);
     buildServer(event, generator, blockTag);
     buildServer(event, generator, new DatagenItemTag(output, completableFuture, blockTag.contentsGetter(), fileHelper));
@@ -57,12 +60,12 @@ public final class ModDatagen {
   private static <T extends DataProvider> @NotNull T buildClient(GatherDataEvent event,
                                                                  DataGenerator generator,
                                                                  T provider) {
-    return generator.addProvider(event.includeClient(), provider);
+    return generator.addProvider(true, provider);
   }
 
   private static <T extends DataProvider> @NotNull T buildServer(GatherDataEvent event,
                                                                  DataGenerator generator,
                                                                  T provider) {
-    return generator.addProvider(event.includeServer(), provider);
+    return generator.addProvider(true, provider);
   }
 }

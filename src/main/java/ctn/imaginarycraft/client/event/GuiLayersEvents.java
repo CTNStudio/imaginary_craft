@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.client.event;
 
+import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -13,7 +14,8 @@ public final class GuiLayersEvents {
   @SubscribeEvent
   public static void renderGuiLayerEventPre(RenderGuiLayerEvent.Pre event) {
     final ResourceLocation name = event.getName();
-    if (name.equals(VanillaGuiLayers.PLAYER_HEALTH)) {
+    // 关闭原版的血条
+    if (ModConfig.CLIENT.enableNewHealthBar.get() && name.equals(VanillaGuiLayers.PLAYER_HEALTH)) {
       event.setCanceled(true);
     }
   }

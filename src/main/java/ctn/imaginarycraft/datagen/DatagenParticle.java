@@ -1,6 +1,7 @@
 package ctn.imaginarycraft.datagen;
 
 import ctn.imaginarycraft.client.particle.TextParticleProvider;
+import ctn.imaginarycraft.client.particle.TextParticlesType;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import net.minecraft.core.particles.ParticleOptions;
@@ -12,6 +13,7 @@ import net.neoforged.neoforge.common.data.ParticleDescriptionProvider;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.function.Supplier;
 
@@ -26,7 +28,8 @@ public final class DatagenParticle extends ParticleDescriptionProvider {
 
   @Override
   protected void addDescriptions() {
-    createSprite(ModParticleTypes.TEXT_PARTICLE_TYPE, TextParticleProvider.TEXTURE_MAP.values().toArray(String[]::new));
+    createSprite(ModParticleTypes.TEXT_PARTICLE_TYPE, Arrays.stream(TextParticlesType.values())
+      .map(TextParticlesType::getTexturePl).toArray(String[]::new));
   }
 
   private <p extends ParticleOptions> void createSprite(Supplier<ParticleType<p>> type, String name) {

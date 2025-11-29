@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.client.particle;
 
-import com.google.common.collect.HashBiMap;
 import ctn.ctnapi.client.util.ColorUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -14,21 +13,9 @@ import net.minecraft.world.damagesource.DamageType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Map;
-
 import static ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType.PHYSICS;
 
 public record TextParticleProvider(SpriteSet spriteSet) implements ParticleProvider<TextParticleOptions> {
-  public static final Map<Integer, String> TEXTURE_MAP = HashBiMap.create();
-  static {
-    TEXTURE_MAP.put(0, "damage_type/physics");
-    TEXTURE_MAP.put(1, "damage_type/spirit");
-    TEXTURE_MAP.put(2, "damage_type/erosion");
-    TEXTURE_MAP.put(3, "damage_type/the_soul");
-    TEXTURE_MAP.put(4, "damage_type/rationality_add");
-    TEXTURE_MAP.put(5, "damage_type/rationality_reduce");
-    TEXTURE_MAP.put(6, "damage_type/magic");
-  }
 
   @Override
   @NotNull
@@ -37,62 +24,64 @@ public record TextParticleProvider(SpriteSet spriteSet) implements ParticleProvi
     return new TextParticle(level, result.isTexture() ? result.textureAtlasSprite() : null, x, y, z, type.component(), result.fontColor(), result.strokeColor(), type.isHeal());
   }
 
-  private Result getResult(@NotNull TextParticleOptions type) {
-    boolean isTexture = type.isTexture();
-    boolean isRationality = type.isRationality();
-    boolean isHeal = type.isHeal();
+  private Result getResult(@NotNull TextParticleOptions options) {
+    boolean isTexture = options.isTexture();
+    boolean isRationality = options.isRationality();
+    boolean isHeal = options.isHeal();
 
     if (isRationality) {
-      int index = isHeal ? 4 : 5;
+      TextParticlesType index = isHeal ? TextParticlesType.RATIONALITY_ADD : TextParticlesType.RATIONALITY_REDUCE;
       int fontColor = ColorUtil.rgbColor(isHeal ? "#78f5ff" : "#a81919");
       int strokeColor = ColorUtil.rgbColor(isHeal ? "#2c80d0" : "#4d0000");
       return new Result(isTexture, getSprite(index), fontColor, strokeColor);
     }
 
-    Holder<DamageType> damageTypeResourceKey = type.damageType().orElse(null);
+    @Nullable Holder<DamageType> damageTypeResourceKey = options.damageType().orElse(null);
+    @Nullable LcDamageType lcDamageTypeResourceKey = options.lcDamageType().orElse(null);
 
     if (damageTypeResourceKey == null) {
-      return new Result(false, getSprite(0), type.fontColor(), type.strokeColor());
+      return new Result(false, getSprite(TextParticlesType.PHYSICS), options.fontColor(), options.strokeColor());
     }
 
     if (isHeal) {
-      return new Result(false, getSprite(0), ColorUtil.rgbColor("#89ff6a"), ColorUtil.rgbColor("#1c501f"));
+      return new Result(false, getSprite(TextParticlesType.PHYSICS), ColorUtil.rgbColor("#89ff6a"), ColorUtil.rgbColor("#1c501f"));
     }
 
     // TODO 补充魔法类型
 
-    int index;
+    TextParticlesType type;
     int fontColor;
     int strokeColor;
-    LcDamageType lcDamageType = LcDamageType.byDamageType(damageTypeResourceKey);
+    LcDamageType lcDamageType = lcDamageTypeResourceKey != null ?
+      lcDamageTypeResourceKey : LcDamageType.byDamageType(damageTypeResourceKey);
     switch (lcDamageType) {
       case SPIRIT -> {
         fontColor = lcDamageType.getColourValue();
         strokeColor = ColorUtil.rgbColor("#9c4e80");
-        index = 1;
+        type = TextParticlesType.SPIRIT;
       }
       case EROSION -> {
         fontColor = lcDamageType.getColourValue();
         strokeColor = ColorUtil.rgbColor("#28054a");
-        index = 2;
+        type = TextParticlesType.EROSION;
       }
       case THE_SOUL -> {
         fontColor = lcDamageType.getColourValue();
         strokeColor = ColorUtil.rgbColor("#074161");
-        index = 3;
+        type = TextParticlesType.THE_SOUL;
       }
       case null, default -> {
         fontColor = PHYSICS.getColourValue();
         strokeColor = ColorUtil.rgbColor("#4d0000");
-        index = 0;
+        type = TextParticlesType.PHYSICS;
       }
     }
 
-    return new Result(isTexture, getSprite(index), fontColor, strokeColor);
+    return new Result(isTexture, getSprite(type), fontColor, strokeColor);
   }
 
-  private TextureAtlasSprite getSprite(int index) {
-    return ((ParticleEngine.MutableSpriteSet) this.spriteSet).sprites.get(index);
+  private TextureAtlasSprite getSprite(TextParticlesType index) {
+    return ((ParticleEngine.MutableSpriteSet) this.spriteSet).sprites.get(index.getIndex());
   }
 
   private record Result(boolean isTexture, @Nullable TextureAtlasSprite textureAtlasSprite, int fontColor, int strokeColor) { }

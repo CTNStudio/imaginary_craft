@@ -85,7 +85,7 @@ public final class ModDamageSources extends DamageSources {
     return new DamageSource(causer.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(damageTypes), causer);
   }
 
-  public static BiFunction<LivingEntity, LivingEntity, ? extends ModDamageSources> getDamageSource() {
+  public static BiFunction<Entity, Entity, ? extends ModDamageSources> getDamageSource() {
     return (attacker, target) -> new ModDamageSources(attacker.level().registryAccess());
   }
 

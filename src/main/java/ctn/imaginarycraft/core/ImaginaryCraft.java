@@ -32,11 +32,6 @@ public final class ImaginaryCraft {
     ModDamageTypes.REGISTRY.register(eventBus);
     ModAttachments.REGISTRY.register(eventBus);
     ModParticleTypes.REGISTRY.register(eventBus);
-    eventBus.addListener(this::commonSetup);
-  }
-
-  private void commonSetup(FMLCommonSetupEvent event) {
-    LcDamageType.init();
   }
 
   @Contract("_ -> new")

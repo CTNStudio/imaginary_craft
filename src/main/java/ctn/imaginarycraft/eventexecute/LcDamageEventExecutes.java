@@ -7,12 +7,15 @@ import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.capability.ILcLevel;
 import ctn.imaginarycraft.capability.entity.IAbnos;
 import ctn.imaginarycraft.client.util.ParticleUtil;
+import ctn.imaginarycraft.init.world.ModDamageSources;
 import ctn.imaginarycraft.mixinextend.IDamageSource;
+import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
@@ -22,6 +25,7 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import javax.annotation.Nullable;
 import java.util.Iterator;
+import java.util.function.BiFunction;
 
 import static net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN;
 
@@ -113,7 +117,8 @@ public final class LcDamageEventExecutes {
     }
 
     // 生成粒子
-    @Nullable ResourceKey<DamageType> damageType = lcDamageType != null ? lcDamageType.getDamageType() : source.typeHolder().getKey();
+    Holder<DamageType> damageType = source.typeHolder();
+
     // TODO 需要改良
 //    @Nullable Vec3 sourcePosition = source.getSourcePosition();
 //    @Nullable Entity entity1 = source.getEntity();
@@ -127,6 +132,6 @@ public final class LcDamageEventExecutes {
 //        ParticleUtil.getText(newDamage, false), damageType, false, false, true, x, y, z);
 //      return;
 //    }
-    ParticleUtil.createTextParticles(entity, damageType, newDamage, false, false);
+    ParticleUtil.createTextParticles(entity, damageType, lcDamageType, newDamage, false, false);
   }
 }

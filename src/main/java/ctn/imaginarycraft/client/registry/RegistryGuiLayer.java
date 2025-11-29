@@ -14,9 +14,8 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 public final class RegistryGuiLayer {
   @SubscribeEvent
   public static void register(RegisterGuiLayersEvent event) {
-    // TODO 我先去医院回来再写
-//    event.registerAbove(VanillaGuiLayers.PLAYER_HEALTH, ModGuiLayers.RATIONALITY_BAR, RationalityBarLayer.INSTANCE);
-//    event.registerAbove(VanillaGuiLayers.ARMOR_LEVEL, ModGuiLayers.NEW_HEALTH_BAR, NewHealthBarLayer.INSTANCE);
+    event.registerAbove(VanillaGuiLayers.PLAYER_HEALTH, ModGuiLayers.RATIONALITY_BAR, RationalityBarLayer.INSTANCE);
+    event.registerAbove(VanillaGuiLayers.ARMOR_LEVEL, ModGuiLayers.NEW_HEALTH_BAR, NewHealthBarLayer.INSTANCE);
 //    event.wrapLayer(VanillaGuiLayers.PLAYER_HEALTH, (o) -> {
 //      return o;
 //    });

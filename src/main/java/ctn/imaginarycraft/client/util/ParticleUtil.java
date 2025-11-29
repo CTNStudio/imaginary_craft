@@ -1,7 +1,9 @@
 package ctn.imaginarycraft.client.util;
 
 import ctn.ctnapi.util.TextUtil;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
 import ctn.imaginarycraft.client.particle.TextParticleOptions;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceKey;
@@ -19,7 +21,8 @@ public final class ParticleUtil {
 
   public static void createTextParticles(ServerLevel world,
                                          Component component,
-                                         @Nullable ResourceKey<DamageType> damageType,
+                                         @Nullable Holder<DamageType> damageType,
+                                         @Nullable LcDamageType lcDamageType,
                                          int fontColor,
                                          int strokeColor,
                                          boolean isRationality,
@@ -27,31 +30,33 @@ public final class ParticleUtil {
                                          boolean isTexture,
                                          double x, double y, double z,
                                          double xOffset, double yOffset, double zOffset) {
-    var options = new TextParticleOptions(component, Optional.ofNullable(damageType), fontColor, strokeColor, isRationality, isHeal, isTexture);
+    var options = new TextParticleOptions(component, Optional.ofNullable(damageType), Optional.ofNullable(lcDamageType), fontColor, strokeColor, isRationality, isHeal, isTexture);
     world.sendParticles(options, x, y, z, 1, xOffset, yOffset, zOffset, 0);
   }
 
   public static void randomColorTextParticles(ServerLevel world,
                                               Component component,
-                                              @Nullable ResourceKey<DamageType> damageType,
+                                              @Nullable Holder<DamageType> damageType,
+                                              @Nullable LcDamageType lcDamageType,
                                               int fontColor,
                                               int strokeColor,
                                               boolean isRationality,
                                               boolean isHeal,
                                               boolean isTexture,
                                               double x, double y, double z) {
-    createTextParticles(world, component, damageType, fontColor, strokeColor, isRationality, isHeal, isTexture,
+    createTextParticles(world, component, damageType, lcDamageType, fontColor, strokeColor, isRationality, isHeal, isTexture,
       x, y, z, 0.1, 0.1, 0.1);
   }
 
   public static void randomColorTextParticles(ServerLevel world,
                                               Component component,
-                                              @Nullable ResourceKey<DamageType> damageType,
+                                              @Nullable Holder<DamageType> damageType,
+                                              @Nullable LcDamageType lcDamageType,
                                               boolean isRationality,
                                               boolean isHeal,
                                               boolean isTexture,
                                               double x, double y, double z) {
-    randomColorTextParticles(world, component, damageType, -1, -1, isRationality, isHeal, isTexture,
+    randomColorTextParticles(world, component, damageType, lcDamageType, -1, -1, isRationality, isHeal, isTexture,
       x, y, z);
   }
 
@@ -61,43 +66,46 @@ public final class ParticleUtil {
                                               boolean isHeal,
                                               boolean isTexture,
                                               double x, double y, double z) {
-    randomColorTextParticles(world, component, null, -1, -1, isRationality, isHeal, isTexture,
+    randomColorTextParticles(world, component, null, null, -1, -1, isRationality, isHeal, isTexture,
       x, y, z);
   }
 
   public static void createTextParticles(LivingEntity entity,
                                          Component component,
-                                         @Nullable ResourceKey<DamageType> damageType,
+                                         @Nullable Holder<DamageType> damageType,
+                                         @Nullable LcDamageType lcDamageType,
                                          boolean isRationality,
                                          boolean isHeal) {
-    createTextParticles(entity, component, damageType, -1, -1, isRationality, isHeal, true);
+    createTextParticles(entity, component, damageType, lcDamageType, -1, -1, isRationality, isHeal, true);
   }
 
   public static void createTextParticles(LivingEntity entity,
                                          Component component,
                                          boolean isRationality,
                                          boolean isHeal) {
-    createTextParticles(entity, component, null, 0, 0, isRationality, isHeal, true);
+    createTextParticles(entity, component, null,null, 0, 0, isRationality, isHeal, true);
   }
 
   public static void createTextParticles(LivingEntity entity,
                                          float value,
                                          boolean isRationality,
                                          boolean isHeal) {
-    createTextParticles(entity, getText(value, isHeal), null, -1, -1, isRationality, isHeal, true);
+    createTextParticles(entity, getText(value, isHeal), null, null, -1, -1, isRationality, isHeal, true);
   }
 
   public static void createTextParticles(LivingEntity entity,
-                                         @Nullable ResourceKey<DamageType> damageType,
+                                         @Nullable Holder<DamageType> damageType,
+                                         @Nullable LcDamageType lcDamageType,
                                          float value,
                                          boolean isRationality,
                                          boolean isHeal) {
-    createTextParticles(entity, getText(value, isHeal), damageType, -1, -1, isRationality, isHeal, true);
+    createTextParticles(entity, getText(value, isHeal), damageType, lcDamageType, -1, -1, isRationality, isHeal, true);
   }
 
   public static void createTextParticles(LivingEntity entity,
                                          Component component,
-                                         @Nullable ResourceKey<DamageType> damageType,
+                                         @Nullable Holder<DamageType> damageType,
+                                         @Nullable LcDamageType lcDamageType,
                                          int fontColor,
                                          int strokeColor,
                                          boolean isRationality,
@@ -114,7 +122,7 @@ public final class ParticleUtil {
     double x = pos.x;
     double y = pos.y + yOffset;
     double z = pos.z;
-    createTextParticles(serverLevel, component, damageType, fontColor, strokeColor, isRationality, isHeal, isTexture,
+    createTextParticles(serverLevel, component, damageType, lcDamageType, fontColor, strokeColor, isRationality, isHeal, isTexture,
       x, y, z, xOffset / 2, yOffset / 2, zOffset / 2);
   }
 

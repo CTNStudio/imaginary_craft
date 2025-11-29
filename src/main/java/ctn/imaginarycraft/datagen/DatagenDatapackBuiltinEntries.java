@@ -15,10 +15,7 @@ import java.util.concurrent.CompletableFuture;
  * 创建一个数据包内置条目
  */
 public final class DatagenDatapackBuiltinEntries extends DatapackBuiltinEntriesProvider {
-  public static final RegistrySetBuilder BUILDER = new RegistrySetBuilder()
-    .add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap);
-
   public DatagenDatapackBuiltinEntries(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-    super(output, registries, BUILDER, Set.of(ImaginaryCraft.ID));
+    super(output, registries, new RegistrySetBuilder(), Set.of(ImaginaryCraft.ID));
   }
 }
