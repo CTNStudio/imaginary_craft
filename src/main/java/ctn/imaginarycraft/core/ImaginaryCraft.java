@@ -4,7 +4,6 @@ import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import ctn.imaginarycraft.init.world.ModAttachments;
 import ctn.imaginarycraft.init.world.ModAttributes;
-import ctn.imaginarycraft.init.world.ModDamageTypes;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

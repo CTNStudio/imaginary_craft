@@ -1,21 +1,13 @@
 package ctn.imaginarycraft.datagen.tag;
 
-import com.google.common.collect.Maps;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.world.ModDamageTypes;
 import ctn.imaginarycraft.init.world.tag.ModDamageTypeTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.DamageTypeTagsProvider;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagBuilder;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 
 public final class DatagenDamageTypeTag extends DamageTypeTagsProvider {
