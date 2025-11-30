@@ -49,5 +49,7 @@ public class HorizontalStatusBar extends ImageProgressBar.Horizontal {
     return getRenderValue() / getMaxValue() * this.internal.height();
   }
 
-  public record TextureLayer(int xPos, int yPos, int uPos, int vPos, int width, int height, int interval) {}
+  public record TextureLayer(int xPos, int yPos, int uPos, int vPos, int width, int height,
+                             int interval) {
+  }
 }

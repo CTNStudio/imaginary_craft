@@ -45,7 +45,7 @@ public enum VirtueRating implements StringRepresentable {
    * @return 对应的评级
    */
   public static VirtueRating getRating(int value) {
-    for (VirtueRating virtueRating : REVERSE_LIST){
+    for (VirtueRating virtueRating : REVERSE_LIST) {
       if (value < virtueRating.minValue) {
         continue;
       }
@@ -79,6 +79,6 @@ public enum VirtueRating implements StringRepresentable {
   @Contract(pure = true)
   @Override
   public @NotNull String getSerializedName() {
-    return ImaginaryCraft.ID + "." +  getName();
+    return ImaginaryCraft.ID + "." + getName();
   }
 }

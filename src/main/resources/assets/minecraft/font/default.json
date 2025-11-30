@@ -2,7 +2,7 @@
   "providers": [
     {
       "type": "bitmap",
-      "file": "singularitylib:gui/sprites/physics8x.png",
+      "file": "imaginarycraft:gui/sprites/physics8x.png",
       "ascent": 8,
       "height": 8,
       "chars": [
@@ -11,7 +11,7 @@
     },
     {
       "type": "bitmap",
-      "file": "singularitylib:gui/sprites/spirit8x.png",
+      "file": "imaginarycraft:gui/sprites/spirit8x.png",
       "ascent": 8,
       "height": 8,
       "chars": [
@@ -20,7 +20,7 @@
     },
     {
       "type": "bitmap",
-      "file": "singularitylib:gui/sprites/erosion8x.png",
+      "file": "imaginarycraft:gui/sprites/erosion8x.png",
       "ascent": 8,
       "height": 8,
       "chars": [
@@ -29,7 +29,7 @@
     },
     {
       "type": "bitmap",
-      "file": "singularitylib:gui/sprites/the_soul8x.png",
+      "file": "imaginarycraft:gui/sprites/the_soul8x.png",
       "ascent": 8,
       "height": 8,
       "chars": [

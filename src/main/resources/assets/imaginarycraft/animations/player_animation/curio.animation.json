@@ -2,7 +2,7 @@
 	"format_version": "1.8.0",
 	"animations": {
 		"curio": {
-			"geckoResource": "singularitylib:curio",
+			"geckoResource": "imaginarycraft:curio",
 			"animation_length": 0.05,
 			"bones": {
 				"bone": {

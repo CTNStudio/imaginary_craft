@@ -22,7 +22,9 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 import java.util.List;
 
 
-/** 注册能力 */
+/**
+ * 注册能力
+ */
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class RegistryCapability {
   public static final List<ItemLike> ITEM_ZAYIN = List.of(

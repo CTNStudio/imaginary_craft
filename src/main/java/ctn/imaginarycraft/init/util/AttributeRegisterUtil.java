@@ -21,11 +21,11 @@ public abstract class AttributeRegisterUtil {
     return ModAttributes.REGISTRY.register(name, () -> (T) function.apply(attribute));
   }
 
-  protected static@NotNull DeferredHolder<Attribute, RangedAttribute> register(String name,
-                                                                               Function<RangedAttribute, Attribute> function,
-                                                                               double defaultValue,
-                                                                               double minValue,
-                                                                               double maxValue) {
+  protected static @NotNull DeferredHolder<Attribute, RangedAttribute> register(String name,
+                                                                                Function<RangedAttribute, Attribute> function,
+                                                                                double defaultValue,
+                                                                                double minValue,
+                                                                                double maxValue) {
     return register(name, function, new RangedAttribute(descriptionId(name), defaultValue, minValue, maxValue));
   }
 
@@ -36,9 +36,9 @@ public abstract class AttributeRegisterUtil {
     return register(name, function, minValue, minValue, maxValue);
   }
 
-  protected static@NotNull DeferredHolder<Attribute, BasicAttribute> register(String name,
-                                                                              Function<BasicAttribute, Attribute> function,
-                                                                              double value) {
+  protected static @NotNull DeferredHolder<Attribute, BasicAttribute> register(String name,
+                                                                               Function<BasicAttribute, Attribute> function,
+                                                                               double value) {
     return register(name, function, new BasicAttribute(descriptionId(name), value));
   }
 
@@ -49,16 +49,16 @@ public abstract class AttributeRegisterUtil {
     return register(name, function, new MinAttribute(descriptionId(name), defaultValue, minValue));
   }
 
-  protected static@NotNull DeferredHolder<Attribute, MaxAttribute> registerMax(String name,
-                                                                               Function<MaxAttribute, Attribute> function,
-                                                                               double defaultValue,
-                                                                               double maxValue) {
+  protected static @NotNull DeferredHolder<Attribute, MaxAttribute> registerMax(String name,
+                                                                                Function<MaxAttribute, Attribute> function,
+                                                                                double defaultValue,
+                                                                                double maxValue) {
     return register(name, function, new MaxAttribute(descriptionId(name), defaultValue, maxValue));
   }
 
-  protected static@NotNull DeferredHolder<Attribute, BooleanAttribute> register(String name,
-                                                                                Function<BooleanAttribute, Attribute> function,
-                                                                                boolean defaultValue) {
+  protected static @NotNull DeferredHolder<Attribute, BooleanAttribute> register(String name,
+                                                                                 Function<BooleanAttribute, Attribute> function,
+                                                                                 boolean defaultValue) {
     return register(name, function, new BooleanAttribute(descriptionId(name), defaultValue));
   }
 

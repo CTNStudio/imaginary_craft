@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.mixin;
 
 import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
 import ctn.imaginarycraft.api.lobotomycorporation.damage.util.LcDamageUtil;
+import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
 import ctn.imaginarycraft.capability.ILcLevel;
 import ctn.imaginarycraft.capability.entity.IInvincibleTickEntity;
 import ctn.imaginarycraft.capability.entity.ILcDamageTypeEntity;
@@ -30,7 +30,7 @@ import javax.annotation.Nullable;
  * @author 尽
  */
 @Mixin(DamageSource.class)
-@Implements(@Interface(iface = IDamageSource.class, prefix = "iSingularityLib$"))
+@Implements(@Interface(iface = IDamageSource.class, prefix = "iimaginarycraft$"))
 public abstract class DamageSourceMixin implements IDamageSource {
   @Unique
   @Nullable
@@ -109,33 +109,33 @@ public abstract class DamageSourceMixin implements IDamageSource {
 
   @Unique
   @Nullable
-  public LcDamageType iSingularityLib$getLcDamageType() {
+  public LcDamageType iimaginarycraft$getLcDamageType() {
     return imaginaryCraft$lcDamageTypeType;
   }
 
   @Unique
   @Nullable
-  public LcLevel iSingularityLib$getLcDamageLevel() {
+  public LcLevel iimaginarycraft$getLcDamageLevel() {
     return imaginaryCraft$lcDamageLevel;
   }
 
   @Unique
-  public int iSingularityLib$getInvincibleTick() {
+  public int iimaginarycraft$getInvincibleTick() {
     return imaginaryCraft$invincibleTick;
   }
 
   @Unique
-  public void iSingularityLib$setLcDamageType(LcDamageType type) {
+  public void iimaginarycraft$setLcDamageType(LcDamageType type) {
     this.imaginaryCraft$lcDamageTypeType = type;
   }
 
   @Unique
-  public void iSingularityLib$setDamageLevel(LcLevel level) {
+  public void iimaginarycraft$setDamageLevel(LcLevel level) {
     this.imaginaryCraft$lcDamageLevel = level;
   }
 
   @Unique
-  public void iSingularityLib$setInvincibleTick(int tick) {
+  public void iimaginarycraft$setInvincibleTick(int tick) {
     this.imaginaryCraft$invincibleTick = tick;
   }
 }

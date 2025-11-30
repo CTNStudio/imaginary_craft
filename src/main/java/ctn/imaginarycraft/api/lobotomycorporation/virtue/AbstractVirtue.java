@@ -100,6 +100,7 @@ public abstract class AbstractVirtue implements IVirtue {
 
   /**
    * 获取属性值
+   *
    * @param attributeHolder 属性
    * @return 属性值
    */
@@ -109,6 +110,7 @@ public abstract class AbstractVirtue implements IVirtue {
 
   /**
    * 获取属性
+   *
    * @param attributeHolder 属性
    * @return 属性
    */
@@ -118,6 +120,7 @@ public abstract class AbstractVirtue implements IVirtue {
 
   /**
    * 获取属性基础值
+   *
    * @param attributeHolder 属性
    * @return 属性基础值
    */
@@ -127,8 +130,9 @@ public abstract class AbstractVirtue implements IVirtue {
 
   /**
    * 获取属性修改器
+   *
    * @param attributeHolder 属性
-   * @param modifierId 属性修改器id
+   * @param modifierId      属性修改器id
    * @return 属性修改器
    */
   protected AttributeModifier getAttributeModifier(Holder<Attribute> attributeHolder, ResourceLocation modifierId) {
@@ -141,6 +145,7 @@ public abstract class AbstractVirtue implements IVirtue {
 
   /**
    * 获取属性和属性修改器
+   *
    * @param attributeHolder 属性
    * @param modifierIdArray 属性修改器id
    * @return 属性和属性修改器
@@ -172,7 +177,7 @@ public abstract class AbstractVirtue implements IVirtue {
     addModifyAttributeModifier(getAmplitudeId(), attribute, value);
   }
 
-  protected void setAttributeModifier(ResourceLocation amplitudeId, Holder<Attribute> attribute, double value,AttributeModifier.Operation operation) {
+  protected void setAttributeModifier(ResourceLocation amplitudeId, Holder<Attribute> attribute, double value, AttributeModifier.Operation operation) {
     getAttribute(attribute).addOrUpdateTransientModifier(new AttributeModifier(amplitudeId, value, operation));
   }
 

@@ -10,8 +10,8 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID, value = Dist.CLIENT)
 public final class RegistryParticleProviders {
-	@SubscribeEvent
-	public static void registry(RegisterParticleProvidersEvent event) {
+  @SubscribeEvent
+  public static void registry(RegisterParticleProvidersEvent event) {
     event.registerSpriteSet(ModParticleTypes.TEXT_PARTICLE_TYPE.get(), TextParticleProvider::new);
-	}
+  }
 }

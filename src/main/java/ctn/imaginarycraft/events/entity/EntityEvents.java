@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.events.entity;
 
 import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
 import ctn.imaginarycraft.api.lobotomycorporation.damage.util.LcDamageUtil;
+import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -32,32 +32,34 @@ import net.neoforged.neoforge.event.tick.EntityTickEvent;
  */
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class EntityEvents {
-	/**
-	 * 实体死亡事件
-	 */
-	@SubscribeEvent
-	public static void deathEvent(LivingDeathEvent event) {
-	}
+  /**
+   * 实体死亡事件
+   */
+  @SubscribeEvent
+  public static void deathEvent(LivingDeathEvent event) {
+  }
 
-	@SubscribeEvent
-	public static void addSpiritAttribute(EntityJoinLevelEvent event) {
-	}
+  @SubscribeEvent
+  public static void addSpiritAttribute(EntityJoinLevelEvent event) {
+  }
 
-	@SubscribeEvent
-	public static void entityTickEvent(EntityTickEvent.Pre event) {
-	}
+  @SubscribeEvent
+  public static void entityTickEvent(EntityTickEvent.Pre event) {
+  }
 
-	@SubscribeEvent
-	public static void entityHealEvent(LivingHealEvent event) {
-		float amount = event.getAmount();
-		LivingEntity entity = event.getEntity();
+  @SubscribeEvent
+  public static void entityHealEvent(LivingHealEvent event) {
+    float amount = event.getAmount();
+    LivingEntity entity = event.getEntity();
 
-		if (amount > 0) {
+    if (amount > 0) {
       ParticleUtil.createTextParticles(entity, ParticleUtil.getText(amount), false, true);
-		}
-	}
+    }
+  }
 
-  /** 即将受到伤害但还没处理 */
+  /**
+   * 即将受到伤害但还没处理
+   */
   @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void livingIncomingDamageEvent(LivingIncomingDamageEvent event) {
     DamageSource damageSource = event.getSource();
@@ -93,7 +95,7 @@ public final class EntityEvents {
     if (newDamage > 0) {
       if (entity instanceof Player player && modifyRationality) {
         RationalityUtil.modifyValue(player, -newDamage, true);
-        if (lcDamageType == LcDamageType.SPIRIT){
+        if (lcDamageType == LcDamageType.SPIRIT) {
 //          ParticleUtil.createTextParticles(player, newDamage, true, false);
           event.getContainer().setPostAttackInvulnerabilityTicks(0);
           event.setNewDamage(0);
@@ -123,7 +125,9 @@ public final class EntityEvents {
     LcDamageEventExecutes.heal(event, newDamage, entity);
   }
 
-  /** 已应用伤害至实体事件 */
+  /**
+   * 已应用伤害至实体事件
+   */
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void appliedDamageToEntityEvent(LivingDamageEvent.Post event) {
     LivingEntity entity = event.getEntity();

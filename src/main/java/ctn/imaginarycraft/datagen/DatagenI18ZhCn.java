@@ -40,8 +40,8 @@ public final class DatagenI18ZhCn extends LanguageProvider {
     add("config.jade.plugin_imaginarycraft.level", "等级");
     add("config.jade.plugin_imaginarycraft.vulnerable", "易伤");
     add(LivingEntityVulnerable.ATTRIBUTE_DESCRIPTION_KEY, "易伤");
-    add(LivingEntityVulnerable.PHYSICS_KEY,"物理易伤");
-    add(LivingEntityVulnerable.SPIRIT_KEY,"精神易伤");
+    add(LivingEntityVulnerable.PHYSICS_KEY, "物理易伤");
+    add(LivingEntityVulnerable.SPIRIT_KEY, "精神易伤");
     add(LivingEntityVulnerable.EROSION_KEY, "侵蚀易伤");
     add(LivingEntityVulnerable.THE_SOUL_KEY, "灵魂易伤");
     add(ModConfig.CLIENT.enableNewHealthBar, "是否开启新玩家生命条");
@@ -63,7 +63,9 @@ public final class DatagenI18ZhCn extends LanguageProvider {
     add(dataComponentType.toString(), name);
   }
 
-  /** 生物属性翻译 */
+  /**
+   * 生物属性翻译
+   */
   public void addAttribute(Attribute attributeHolder, String name) {
     add(attributeHolder.getDescriptionId(), name);
   }

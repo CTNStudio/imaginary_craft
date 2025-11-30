@@ -30,7 +30,7 @@ public final class RationalityUtil {
    * 修改理智值
    */
   public static void modifyValue(Player player, float value, final boolean isEvent) {
-    setValue(player, getValue(player) + value,isEvent);
+    setValue(player, getValue(player) + value, isEvent);
   }
 
   /**
@@ -54,7 +54,7 @@ public final class RationalityUtil {
   public static void setValue(final Player player, final float value, final boolean isEvent) {
     float oldData = getValue(player);
     float newValue = value;
-    if (isEvent){
+    if (isEvent) {
       Map.Entry<Boolean, Float> pre = ModEventHooks.sourceRationalityPre(player, oldData, value);
       newValue = pre.getValue();
       if (pre.getKey()) {

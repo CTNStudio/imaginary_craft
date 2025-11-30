@@ -1,21 +1,18 @@
 package ctn.imaginarycraft.eventexecute;
 
 import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
 import ctn.imaginarycraft.api.lobotomycorporation.damage.util.LcDamageUtil;
+import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.capability.ILcLevel;
 import ctn.imaginarycraft.capability.entity.IAbnos;
 import ctn.imaginarycraft.client.util.ParticleUtil;
-import ctn.imaginarycraft.init.world.ModDamageSources;
 import ctn.imaginarycraft.mixinextend.IDamageSource;
 import net.minecraft.core.Holder;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
@@ -25,7 +22,6 @@ import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import javax.annotation.Nullable;
 import java.util.Iterator;
-import java.util.function.BiFunction;
 
 import static net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN;
 

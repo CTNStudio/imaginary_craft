@@ -9,7 +9,7 @@ import net.minecraft.client.player.LocalPlayer;
 
 import java.util.Objects;
 
-public abstract class BasicDrawLayer implements LayeredDraw.Layer{
+public abstract class BasicDrawLayer implements LayeredDraw.Layer {
   protected final Minecraft minecraft;
   protected LocalPlayer player;
   protected final Font font;

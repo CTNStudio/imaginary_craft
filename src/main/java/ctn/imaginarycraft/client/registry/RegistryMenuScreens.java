@@ -8,7 +8,7 @@ import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID, value = Dist.CLIENT)
 public final class RegistryMenuScreens {
-	@SubscribeEvent
-	public static void registry(RegisterMenuScreensEvent event) {
-	}
+  @SubscribeEvent
+  public static void registry(RegisterMenuScreensEvent event) {
+  }
 }

@@ -15,7 +15,8 @@ import org.jetbrains.annotations.Nullable;
 
 import static ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType.PHYSICS;
 
-public record TextParticleProvider(SpriteSet spriteSet) implements ParticleProvider<TextParticleOptions> {
+public record TextParticleProvider(
+  SpriteSet spriteSet) implements ParticleProvider<TextParticleOptions> {
 
   @Override
   @NotNull
@@ -84,5 +85,7 @@ public record TextParticleProvider(SpriteSet spriteSet) implements ParticleProvi
     return ((ParticleEngine.MutableSpriteSet) this.spriteSet).sprites.get(index.getIndex());
   }
 
-  private record Result(boolean isTexture, @Nullable TextureAtlasSprite textureAtlasSprite, int fontColor, int strokeColor) { }
+  private record Result(boolean isTexture, @Nullable TextureAtlasSprite textureAtlasSprite,
+                        int fontColor, int strokeColor) {
+  }
 }

@@ -10,8 +10,8 @@ public interface IRandomDamage {
    * 获取指定范围随机伤害值
    *
    * @param randomSource 随机数源
-   * @param maxDamage 最大伤害值
-   * @param minDamage 最小伤害值
+   * @param maxDamage    最大伤害值
+   * @param minDamage    最小伤害值
    * @return 随机伤害值
    */
   static int countDamageValue(RandomSource randomSource, int maxDamage, int minDamage) {

@@ -6,7 +6,6 @@ import ctn.imaginarycraft.client.particle.TextParticleOptions;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.resources.ResourceKey;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.LivingEntity;
@@ -83,7 +82,7 @@ public final class ParticleUtil {
                                          Component component,
                                          boolean isRationality,
                                          boolean isHeal) {
-    createTextParticles(entity, component, null,null, 0, 0, isRationality, isHeal, true);
+    createTextParticles(entity, component, null, null, 0, 0, isRationality, isHeal, true);
   }
 
   public static void createTextParticles(LivingEntity entity,

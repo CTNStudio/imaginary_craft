@@ -26,7 +26,7 @@ public final class ModDamageTypeTags {
   /**
    * 绕过脑叶伤害
    */
-  public static final TagKey<DamageType> BYPASS_LC = createTag("bypass_lobotomy_corporation");
+  public static final TagKey<DamageType> BYPASS_LC = createTag("bypass_lobotomy_corporation_damage");
 
   private static TagKey<DamageType> createTag(String name) {
     return createTag(ImaginaryCraft.modRl(name));

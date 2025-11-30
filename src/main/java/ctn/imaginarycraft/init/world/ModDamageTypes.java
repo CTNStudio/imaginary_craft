@@ -1,20 +1,14 @@
 package ctn.imaginarycraft.init.world;
 
-import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
-import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.util.DamageTypeRegisterUtil;
-import ctn.imaginarycraft.mixinextend.IDamageSource;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageEffects;
+import net.minecraft.world.damagesource.DamageScaling;
 import net.minecraft.world.damagesource.DamageType;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraft.world.damagesource.DeathMessageType;
 
-/**
- * 尽量用{@link IDamageSource#setLcDamageType(LcDamageType)}
- */
 public final class ModDamageTypes extends DamageTypeRegisterUtil {
-  public static final DeferredRegister<DamageType> REGISTRY = ImaginaryCraft.modRegister(Registries.DAMAGE_TYPE);
   /**
    * 物理
    */
@@ -43,11 +37,11 @@ public final class ModDamageTypes extends DamageTypeRegisterUtil {
   public static final ResourceKey<DamageType> EGO = register("ego");
 
   public static void bootstrap(BootstrapContext<DamageType> context) {
-    register(context, ModDamageTypes.PHYSICS, 0.1f);
-    register(context, ModDamageTypes.SPIRIT, 0.2f);
-    register(context, ModDamageTypes.EROSION, 0.3f);
-    register(context, ModDamageTypes.THE_SOUL, 0.4f);
-    register(context, ModDamageTypes.ABNOS, 0.3f);
-    register(context, ModDamageTypes.EGO, 0.3f);
+    register(context, "physics", ModDamageTypes.PHYSICS, DamageScaling.ALWAYS, 0.1f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+    register(context, "spirit", ModDamageTypes.SPIRIT, DamageScaling.ALWAYS, 0.2f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+    register(context, "erosion", ModDamageTypes.EROSION, DamageScaling.ALWAYS, 0.3f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+    register(context, "theSoul", ModDamageTypes.THE_SOUL, DamageScaling.ALWAYS, 0.4f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+    register(context, "abnos", ModDamageTypes.ABNOS, DamageScaling.ALWAYS, 0.3f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+    register(context, "ego", ModDamageTypes.EGO, DamageScaling.ALWAYS, 0.3f, DamageEffects.HURT, DeathMessageType.DEFAULT);
   }
 }

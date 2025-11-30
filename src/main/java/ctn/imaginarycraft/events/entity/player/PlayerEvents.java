@@ -17,12 +17,12 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
  */
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class PlayerEvents {
-	/**
-	 * 玩家重生或维度切换后
-	 */
-	@SubscribeEvent
-	public static void reset(PlayerEvent.Clone event) {
-		Player player = event.getEntity();
+  /**
+   * 玩家重生或维度切换后
+   */
+  @SubscribeEvent
+  public static void reset(PlayerEvent.Clone event) {
+    Player player = event.getEntity();
     Level level = player.level();
 
     if (event.isWasDeath()) {
@@ -33,12 +33,12 @@ public final class PlayerEvents {
     }
   }
 
-	@SubscribeEvent
-	public static void tick(PlayerTickEvent.Pre event) {
-		Player player = event.getEntity();
+  @SubscribeEvent
+  public static void tick(PlayerTickEvent.Pre event) {
+    Player player = event.getEntity();
 
-		if (player instanceof ServerPlayer serverPlayer) {
+    if (player instanceof ServerPlayer serverPlayer) {
       RationalityEventExecutes.refreshRationalityValue(serverPlayer);
-		}
-	}
+    }
+  }
 }

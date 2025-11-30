@@ -4,112 +4,62 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageSources;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.function.BiFunction;
+import javax.annotation.Nullable;
 
 /**
  * 伤害来源
  */
-public final class ModDamageSources extends DamageSources {
-  private final DamageSource physics;
-  private final DamageSource spirit;
-  private final DamageSource erosion;
-  private final DamageSource theSoul;
-  private final DamageSource abnos;
-  private final DamageSource ego;
+public final class ModDamageSources {
 
-  public ModDamageSources(RegistryAccess registry) {
-    super(registry);
-    physics = source(ModDamageTypes.PHYSICS);
-    spirit = source(ModDamageTypes.SPIRIT);
-    erosion = source(ModDamageTypes.EROSION);
-    theSoul = source(ModDamageTypes.THE_SOUL);
-    abnos = source(ModDamageTypes.ABNOS);
-    ego = source(ModDamageTypes.EGO);
+  @Contract("_ -> new")
+  public static @NotNull DamageSource spiritDamage(Entity causer) {
+    return createDamage(ModDamageTypes.SPIRIT, causer);
   }
 
-  public static BiFunction<LivingEntity, LivingEntity, ? extends DamageSource> physicsDamage() {
-    return (attacker, target) -> getDamageSource().apply(attacker, target).physics();
+  @Contract("_ -> new")
+  public static @NotNull DamageSource erosionDamage(Entity causer) {
+    return createDamage(ModDamageTypes.EROSION, causer);
   }
 
-  public static BiFunction<LivingEntity, LivingEntity, ? extends DamageSource> spiritDamage() {
-    return (attacker, target) -> getDamageSource().apply(attacker, target).spirit();
+  @Contract("_ -> new")
+  public static @NotNull DamageSource theSoulDamage(Entity causer) {
+    return createDamage(ModDamageTypes.THE_SOUL, causer);
   }
 
-  public static BiFunction<LivingEntity, LivingEntity, ? extends DamageSource> erosionDamage() {
-    return (attacker, target) -> getDamageSource().apply(attacker, target).erosion();
+  @Contract("_ -> new")
+  public static @NotNull DamageSource physicsDamage(Entity causer) {
+    return createDamage(ModDamageTypes.PHYSICS, causer);
   }
 
-  public static BiFunction<LivingEntity, LivingEntity, ? extends DamageSource> theSoulDamage() {
-    return (attacker, target) -> getDamageSource().apply(attacker, target).theSoul();
+  @Contract("_ -> new")
+  public static @NotNull DamageSource abnosDamage(Entity causer) {
+    return createDamage(ModDamageTypes.ABNOS, causer);
   }
 
-  public static BiFunction<LivingEntity, LivingEntity, ? extends DamageSource> abnosDamage() {
-    return (attacker, target) -> getDamageSource().apply(attacker, target).abnos();
+  @Contract("_ -> new")
+  public static @NotNull DamageSource egoDamage(Entity causer) {
+    return createDamage(ModDamageTypes.EGO, causer);
   }
 
-  public static BiFunction<LivingEntity, LivingEntity, ? extends DamageSource> egoDamage() {
-    return (attacker, target) -> getDamageSource().apply(attacker, target).ego();
+  public static @NotNull DamageSource createDamage(ResourceKey<DamageType> damageTypes, Entity causingEntity) {
+    return createDamage(damageTypes, causingEntity, causingEntity, null);
   }
 
-  public static DamageSource spiritDamage(Entity causer) {
-    return createDamage(causer, ModDamageTypes.SPIRIT);
+  public static @NotNull DamageSource createDamage(ResourceKey<DamageType> damageTypes, @Nullable Entity directEntity, @NotNull Entity causingEntity) {
+    return createDamage(damageTypes, directEntity, causingEntity, null);
   }
 
-  public static DamageSource erosionDamage(Entity causer) {
-    return createDamage(causer, ModDamageTypes.EROSION);
+  public static @NotNull DamageSource createDamage(ResourceKey<DamageType> damageTypes, @Nullable Entity directEntity, @NotNull Entity causingEntity, Vec3 damageSourcePosition) {
+    return createDamage(causingEntity.level().registryAccess(), damageTypes, directEntity, causingEntity, damageSourcePosition);
   }
 
-  public static DamageSource theSoulDamage(Entity causer) {
-    return createDamage(causer, ModDamageTypes.THE_SOUL);
-  }
-
-  public static DamageSource physicsDamage(Entity causer) {
-    return createDamage(causer, ModDamageTypes.PHYSICS);
-  }
-
-  public static DamageSource abnosDamage(Entity causer) {
-    return createDamage(causer, ModDamageTypes.ABNOS);
-  }
-
-  public static DamageSource egoDamage(Entity causer) {
-    return createDamage(causer, ModDamageTypes.EGO);
-  }
-
-  private static @NotNull DamageSource createDamage(Entity causer, ResourceKey<DamageType> damageTypes) {
-    return new DamageSource(causer.level().registryAccess().registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(damageTypes), causer);
-  }
-
-  public static BiFunction<Entity, Entity, ? extends ModDamageSources> getDamageSource() {
-    return (attacker, target) -> new ModDamageSources(attacker.level().registryAccess());
-  }
-
-  public DamageSource physics() {
-    return physics;
-  }
-
-  public DamageSource spirit() {
-    return spirit;
-  }
-
-  public DamageSource erosion() {
-    return erosion;
-  }
-
-  public DamageSource theSoul() {
-    return theSoul;
-  }
-
-  public DamageSource abnos() {
-    return abnos;
-  }
-
-  public DamageSource ego() {
-    return ego;
+  public static @NotNull DamageSource createDamage(RegistryAccess registryAccess, ResourceKey<DamageType> damageTypes, @Nullable Entity directEntity, @Nullable Entity causingEntity, Vec3 damageSourcePosition) {
+    return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(damageTypes), directEntity, causingEntity, damageSourcePosition);
   }
 }

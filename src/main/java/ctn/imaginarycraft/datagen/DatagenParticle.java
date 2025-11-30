@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.datagen;
 
-import ctn.imaginarycraft.client.particle.TextParticleProvider;
 import ctn.imaginarycraft.client.particle.TextParticlesType;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModParticleTypes;

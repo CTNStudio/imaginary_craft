@@ -14,18 +14,18 @@ import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class RegistryEntityAttribute {
 
-	/**
-	 * 注册实体属性
-	 */
-	@SubscribeEvent
-	public static void registry(EntityAttributeCreationEvent event) {
-	}
+  /**
+   * 注册实体属性
+   */
+  @SubscribeEvent
+  public static void registry(EntityAttributeCreationEvent event) {
+  }
 
   /**
-   *  添加或修改属性 等级在{@link RegistryCapability}类注册
+   * 添加或修改属性 等级在{@link RegistryCapability}类注册
    */
-	@SubscribeEvent(priority = EventPriority.LOWEST)
-	public static void registry(EntityAttributeModificationEvent event) {
+  @SubscribeEvent(priority = EventPriority.LOWEST)
+  public static void registry(EntityAttributeModificationEvent event) {
     // 对所有实体打入基础属性
     event.getTypes().forEach(entityType -> {
       lcAttributesVulnerable(event, entityType);
@@ -33,9 +33,9 @@ public final class RegistryEntityAttribute {
 
     vanilla(event);
     addPlayerAttributes(event, EntityType.PLAYER);
-	}
+  }
 
-  private static void vanilla(EntityAttributeModificationEvent event){
+  private static void vanilla(EntityAttributeModificationEvent event) {
     lcAttributesVulnerable(event, EntityType.WARDEN, 0.6, 1.2, 0.8, 0.2);
     lcAttributesVulnerable(event, EntityType.ENDER_DRAGON, 0.5, 0.5, 0.5, 0.5);
     lcAttributesVulnerable(event, EntityType.WITHER, 0.5, 0.7, -1.0, 1.0);
@@ -77,37 +77,38 @@ public final class RegistryEntityAttribute {
 
   /**
    * 脑叶属性抗性
+   *
    * @param physics 物理
-   * @param spirit 精神
+   * @param spirit  精神
    * @param erosion 侵蚀
    * @param theSoul 灵魂
    */
-	private static void lcAttributesVulnerable(EntityAttributeModificationEvent event, EntityType<? extends LivingEntity> entityType, double physics, double spirit, double erosion, double theSoul) {
-		event.add(entityType, ModAttributes.PHYSICS_VULNERABLE, physics);
-		event.add(entityType, ModAttributes.SPIRIT_VULNERABLE, spirit);
-		event.add(entityType, ModAttributes.EROSION_VULNERABLE, erosion);
-		event.add(entityType, ModAttributes.THE_SOUL_VULNERABLE, theSoul);
-	}
+  private static void lcAttributesVulnerable(EntityAttributeModificationEvent event, EntityType<? extends LivingEntity> entityType, double physics, double spirit, double erosion, double theSoul) {
+    event.add(entityType, ModAttributes.PHYSICS_VULNERABLE, physics);
+    event.add(entityType, ModAttributes.SPIRIT_VULNERABLE, spirit);
+    event.add(entityType, ModAttributes.EROSION_VULNERABLE, erosion);
+    event.add(entityType, ModAttributes.THE_SOUL_VULNERABLE, theSoul);
+  }
 
   /**
    * 脑叶属性抗性
    */
-	private static void lcAttributesVulnerable(EntityAttributeModificationEvent event, EntityType<? extends LivingEntity> entityType) {
-		event.add(entityType, ModAttributes.PHYSICS_VULNERABLE);
-		event.add(entityType, ModAttributes.SPIRIT_VULNERABLE);
-		event.add(entityType, ModAttributes.EROSION_VULNERABLE);
-		event.add(entityType, ModAttributes.THE_SOUL_VULNERABLE);
-	}
+  private static void lcAttributesVulnerable(EntityAttributeModificationEvent event, EntityType<? extends LivingEntity> entityType) {
+    event.add(entityType, ModAttributes.PHYSICS_VULNERABLE);
+    event.add(entityType, ModAttributes.SPIRIT_VULNERABLE);
+    event.add(entityType, ModAttributes.EROSION_VULNERABLE);
+    event.add(entityType, ModAttributes.THE_SOUL_VULNERABLE);
+  }
 
   /**
    * 添加玩家属性
    */
-	private static void addPlayerAttributes(EntityAttributeModificationEvent event, EntityType<? extends Player> entityType) {
-		event.add(entityType, ModAttributes.MAX_RATIONALITY);
-		event.add(entityType, ModAttributes.RATIONALITY_NATURAL_RECOVERY_RATE);
-		event.add(entityType, ModAttributes.RATIONALITY_RECOVERY_AMOUNT);
+  private static void addPlayerAttributes(EntityAttributeModificationEvent event, EntityType<? extends Player> entityType) {
+    event.add(entityType, ModAttributes.MAX_RATIONALITY);
+    event.add(entityType, ModAttributes.RATIONALITY_NATURAL_RECOVERY_RATE);
+    event.add(entityType, ModAttributes.RATIONALITY_RECOVERY_AMOUNT);
 
-		event.add(entityType, ModAttributes.INFORMATION);
+    event.add(entityType, ModAttributes.INFORMATION);
 
     event.add(entityType, ModAttributes.PHYSICS_VULNERABLE);
     event.add(entityType, ModAttributes.SPIRIT_VULNERABLE);
@@ -118,5 +119,5 @@ public final class RegistryEntityAttribute {
     event.add(entityType, ModAttributes.PRUDENCE_POINTS);
     event.add(entityType, ModAttributes.TEMPERANCE_POINTS);
     event.add(entityType, ModAttributes.JUSTICE_POINTS);
-	}
+  }
 }

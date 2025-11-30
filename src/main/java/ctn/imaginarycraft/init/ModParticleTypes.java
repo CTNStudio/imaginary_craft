@@ -9,9 +9,11 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-/** 粒子类型 */
+/**
+ * 粒子类型
+ */
 public final class ModParticleTypes extends ParticleTypeRegisterUtil {
-	public static final DeferredRegister<ParticleType<?>> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.PARTICLE_TYPE);
+  public static final DeferredRegister<ParticleType<?>> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.PARTICLE_TYPE);
 
   public static final Supplier<ParticleType<TextParticleOptions>> TEXT_PARTICLE_TYPE = register("text_particle",
     false, TextParticleOptions.CODEC, TextParticleOptions.STREAM_CODEC);

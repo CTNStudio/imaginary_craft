@@ -14,7 +14,7 @@ import org.jetbrains.annotations.NotNull;
  * 脑叶等级
  */
 public enum LcLevel implements ColourText, StringRepresentable {
-  ZAYIN (1, "zayin", "#00ff00"),
+  ZAYIN(1, "zayin", "#00ff00"),
   TETH(2, "teth", "#1e90ff"),
   HE(3, "he", "#ffff00"),
   WAW(4, "waw", "#8a2be2"),

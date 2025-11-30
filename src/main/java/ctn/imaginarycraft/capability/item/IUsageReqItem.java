@@ -4,7 +4,8 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 
-/** 带有需求的物品 如果不满足要求则触发
+/**
+ * 带有需求的物品 如果不满足要求则触发
  * <p>
  * TODO 一般捆绑{@link ItemColorUsageReq}或{@link PmItemDataComponents#ITEM_COLOR_USAGE_REQ}
  */

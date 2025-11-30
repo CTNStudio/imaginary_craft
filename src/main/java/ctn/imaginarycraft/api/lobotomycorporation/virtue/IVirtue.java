@@ -14,6 +14,7 @@ import java.util.Set;
 public interface IVirtue {
   /**
    * 获取对应的心核四德类型
+   *
    * @return 四德类型
    */
   Virtue getVirtue();
@@ -34,18 +35,21 @@ public interface IVirtue {
 
   /**
    * 获取点数属性实例
+   *
    * @return 点数属性实例
    */
   AttributeInstance getPointsAttributeInstance();
 
   /**
    * 获取评级
+   *
    * @return 评级
    */
   VirtueRating getRating();
 
   /**
    * 获取数据附件处理者
+   *
    * @return 数据附件处理者
    */
   Player getPlayer();
@@ -59,27 +63,31 @@ public interface IVirtue {
 
   /**
    * 获取评级点数
+   *
    * @return 评级点数
    */
   int getRatingPoints();
 
   /**
    * 获取振幅ID
+   *
    * @return 振幅ID
    */
   ResourceLocation getAmplitudeId();
 
   /**
    * 设置点数
+   *
    * @param points 点数
    */
   void setPoints(int points);
 
   /**
    * 设置点数
+   *
    * @param points 点数
    */
-  void setPoints(int points,ResourceLocation modifierId);
+  void setPoints(int points, ResourceLocation modifierId);
 
   /**
    * 同步数据
@@ -95,12 +103,14 @@ public interface IVirtue {
 
   /**
    * 更新点数
+   *
    * @param newPoints 新的点数
    */
   void updatePoints(int newPoints);
 
-   /**
+  /**
    * 在原来的基础上修改点数
+   *
    * @param points 要修改的点数
    */
   void modifyPoints(int points);

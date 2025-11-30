@@ -19,6 +19,6 @@ public final class ImaginaryCraftClient {
 
   @SubscribeEvent
   static void onClientSetup(FMLClientSetupEvent event) {
-    ImaginaryCraft.LOGGER.debug("Client {}", ImaginaryCraft.LIB_NAME);
+    ImaginaryCraft.LOGGER.debug("Client {}", ImaginaryCraft.NAME);
   }
 }

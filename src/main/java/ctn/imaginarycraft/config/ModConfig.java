@@ -29,7 +29,7 @@ public final class ModConfig extends ConfigUtil {
   }
 
   public static void init(ModContainer modContainer) {
-    ImaginaryCraft.LOGGER.debug("Initialize the {} config files", ImaginaryCraft.LIB_NAME);
+    ImaginaryCraft.LOGGER.debug("Initialize the {} config files", ImaginaryCraft.NAME);
     modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModConfig.COMMON_SPEC);
     modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.SERVER, ModConfig.SERVER_SPEC);
     modContainer.registerConfig(net.neoforged.fml.config.ModConfig.Type.CLIENT, ModConfig.CLIENT_SPEC);
@@ -37,11 +37,11 @@ public final class ModConfig extends ConfigUtil {
 
   @SubscribeEvent
   public static void onLoad(final ModConfigEvent.Loading configEvent) {
-    ImaginaryCraft.LOGGER.debug("Loaded {} config file {}", ImaginaryCraft.LIB_NAME, configEvent.getConfig().getFileName());
+    ImaginaryCraft.LOGGER.debug("Loaded {} config file {}", ImaginaryCraft.NAME, configEvent.getConfig().getFileName());
   }
 
   @SubscribeEvent
   public static void onFileChange(final ModConfigEvent.Reloading configEvent) {
-    ImaginaryCraft.LOGGER.debug("{} config just got changed on the file system!", ImaginaryCraft.LIB_NAME);
+    ImaginaryCraft.LOGGER.debug("{} config just got changed on the file system!", ImaginaryCraft.NAME);
   }
 }

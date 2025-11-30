@@ -80,8 +80,8 @@ public class TextParticle extends TextureSheetParticle {
     float size = sizeFactor * maxSize;
     float fontWidth = font.getSplitter().stringWidth(this.textComponent);
     int height = font.lineHeight;
-    float textX = - fontWidth / 2f;
-    float textY = - height / 2f;
+    float textX = -fontWidth / 2f;
+    float textY = -height / 2f;
 
     poseStack.pushPose();
 

@@ -18,8 +18,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(DamageContainer.class)
 public abstract class DamageContainerMixin {
 
-	@Shadow
-	public abstract void setPostAttackInvulnerabilityTicks(int ticks);
+  @Shadow
+  public abstract void setPostAttackInvulnerabilityTicks(int ticks);
 
   @Shadow
   public abstract void setNewDamage(final float damage);
@@ -27,26 +27,26 @@ public abstract class DamageContainerMixin {
   /**
    * 处理随机伤害及伤害无敌
    */
-	@Inject(method = "<init>", at = @At("RETURN"))
-	private void imaginaryCraft$DamageContainer(DamageSource source, float originalDamage, CallbackInfo ci) {
-		setPostAttackInvulnerabilityTicks(IDamageSource.of(source).getInvincibleTick());
+  @Inject(method = "<init>", at = @At("RETURN"))
+  private void imaginaryCraft$DamageContainer(DamageSource source, float originalDamage, CallbackInfo ci) {
+    setPostAttackInvulnerabilityTicks(IDamageSource.of(source).getInvincibleTick());
 
     IRandomDamage capability = null;
-		ItemStack stack = LcDamageUtil.getDamageItemStack(source);
-		if (stack != null) {
+    ItemStack stack = LcDamageUtil.getDamageItemStack(source);
+    if (stack != null) {
       capability = stack.getCapability(ModCapabilitys.RANDOM_DAMAGE_ITEM);
-		}
+    }
 
     // TODO 后续引入其他可以造成随机伤害的
     if (capability == null) {
       return;
     }
 
-		RandomSource randomSource;
-		Entity entity = source.getEntity();
-		if (entity == null) {
+    RandomSource randomSource;
+    Entity entity = source.getEntity();
+    if (entity == null) {
       entity = source.getDirectEntity();
-		}
+    }
 
     if (entity != null) {
       randomSource = entity.getRandom();
@@ -55,5 +55,5 @@ public abstract class DamageContainerMixin {
     }
 
     setNewDamage(capability.getDamageValue(randomSource) + (originalDamage - capability.getMaxDamage()));
-	}
+  }
 }

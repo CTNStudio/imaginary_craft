@@ -4,6 +4,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 
 public class MaxAttribute extends Attribute {
   private final double maxValue;
+
   public MaxAttribute(final String descriptionId, final double defaultValue, final double maxValue) {
     super(descriptionId, defaultValue);
     assert defaultValue < maxValue : "Max value [" + maxValue + "] must be greater than default value [" + defaultValue + "]";

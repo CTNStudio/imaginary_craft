@@ -14,13 +14,13 @@ public final class ModPlugin implements IWailaPlugin {
   public static final ResourceLocation LEVEL = ImaginaryCraft.modRl("level");
   public static final ResourceLocation VULNERABLE = ImaginaryCraft.modRl("vulnerable");
 
-	@Override
-	public void register(IWailaCommonRegistration registration) {
-	}
+  @Override
+  public void register(IWailaCommonRegistration registration) {
+  }
 
-	@Override
-	public void registerClient(IWailaClientRegistration registration) {
-		registration.registerEntityComponent(EntityLcLevel.INSTANCE, Entity.class);
-		registration.registerEntityComponent(LivingEntityVulnerable.INSTANCE, LivingEntity.class);
-	}
+  @Override
+  public void registerClient(IWailaClientRegistration registration) {
+    registration.registerEntityComponent(EntityLcLevel.INSTANCE, Entity.class);
+    registration.registerEntityComponent(LivingEntityVulnerable.INSTANCE, LivingEntity.class);
+  }
 }

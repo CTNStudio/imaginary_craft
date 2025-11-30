@@ -15,6 +15,7 @@ public final class VirtueUtil {
    * 获取综合评级
    * <p>
    * 计算并返回四个基本属性评级之和的综合评价。
+   *
    * @return 综合评级
    */
   public static int getCompositeRatting(Player player) {
