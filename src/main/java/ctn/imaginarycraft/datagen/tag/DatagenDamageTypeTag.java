@@ -1,6 +1,7 @@
 package ctn.imaginarycraft.datagen.tag;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.init.world.ModDamageTypes;
 import ctn.imaginarycraft.init.world.tag.ModDamageTypeTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
@@ -39,21 +40,21 @@ public final class DatagenDamageTypeTag extends DamageTypeTagsProvider {
       DamageTypes.BAD_RESPAWN_POINT,
       DamageTypes.FALL,
       DamageTypes.FIREBALL,
-      DamageTypes.FLY_INTO_WALL/*,
-      ModDamageTypes.PHYSICS*/);
+      DamageTypes.FLY_INTO_WALL,
+      ModDamageTypes.PHYSICS);
     // 精神伤害
     tag(ModDamageTypeTags.SPIRIT).add(
-      DamageTypes.MOB_PROJECTILE/*,
-      ModDamageTypes.SPIRIT*/);
+      DamageTypes.MOB_PROJECTILE,
+      ModDamageTypes.SPIRIT);
     // 侵蚀伤害
     tag(ModDamageTypeTags.EROSION).add(
       DamageTypes.WITHER_SKULL,
-      DamageTypes.WITHER/*,
-      ModDamageTypes.EROSION*/);
+      DamageTypes.WITHER,
+      ModDamageTypes.EROSION);
     // 灵魂伤害
     tag(ModDamageTypeTags.THE_SOUL).add(
-      DamageTypes.SONIC_BOOM/*,
-      ModDamageTypes.THE_SOUL*/);
+      DamageTypes.SONIC_BOOM,
+      ModDamageTypes.THE_SOUL);
     // 绕过
     tag(ModDamageTypeTags.BYPASS_LC).add(
       DamageTypes.IN_WALL,
@@ -64,8 +65,8 @@ public final class DatagenDamageTypeTag extends DamageTypeTagsProvider {
       DamageTypes.FELL_OUT_OF_WORLD,
       DamageTypes.OUTSIDE_BORDER,
       DamageTypes.STARVE,
-      DamageTypes.CRAMMING/*,
-      DamageTypes.GENERIC_KILL*/);
+      DamageTypes.CRAMMING,
+      DamageTypes.GENERIC_KILL);
   }
 
   @Override

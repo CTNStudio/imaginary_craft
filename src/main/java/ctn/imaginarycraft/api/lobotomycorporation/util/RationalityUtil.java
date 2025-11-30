@@ -52,10 +52,10 @@ public final class RationalityUtil {
    * 设置理智值
    */
   public static void setValue(final Player player, final float value, final boolean isEvent) {
-    float oldData = getValue(player);
+    float oldValue = getValue(player);
     float newValue = value;
     if (isEvent) {
-      Map.Entry<Boolean, Float> pre = ModEventHooks.sourceRationalityPre(player, oldData, value);
+      Map.Entry<Boolean, Float> pre = ModEventHooks.sourceRationalityPre(player, oldValue, value);
       newValue = pre.getValue();
       if (pre.getKey()) {
         return;
@@ -63,12 +63,13 @@ public final class RationalityUtil {
     }
 
     float maxRationalityValue = getMaxValue(player);
-    if (newValue != 0) {
+
+    if (oldValue != newValue) {
       player.setData(ModAttachments.RATIONALITY, Math.clamp(newValue, -maxRationalityValue, maxRationalityValue));
     }
 
     if (isEvent) {
-      ModEventHooks.sourceRationalityPost(player, oldData, newValue);
+      ModEventHooks.sourceRationalityPost(player, oldValue, newValue);
     }
   }
 

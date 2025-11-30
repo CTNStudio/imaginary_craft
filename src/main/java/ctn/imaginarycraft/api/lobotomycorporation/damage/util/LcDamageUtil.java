@@ -57,6 +57,7 @@ public final class LcDamageUtil {
                                     LivingEntity entity,
                                     @Nullable Entity source,
                                     DamageSource damageSource) {
+    damage /= 100;
     double maxHealth = 0;
     LcLevel entityLevel = LcLevel.getEntityLevel(entity);
     @Nullable LcLevel lcDamageLevel = IDamageSource.of(damageSource).getLcDamageLevel();
@@ -71,7 +72,7 @@ public final class LcDamageUtil {
 
     // 根据伤害等级差异计算最终伤害
     if (lcDamageLevel != null) {
-      return (float) (damage * (LcLevel.leveDifferenceValue(entityLevel, lcDamageLevel) + 1) * maxHealth);
+      return (float) (damage * (LcLevel.leveDifferenceValue(lcDamageLevel, entityLevel) + 1) * maxHealth);
     }
 
     return (float) (damage * maxHealth);

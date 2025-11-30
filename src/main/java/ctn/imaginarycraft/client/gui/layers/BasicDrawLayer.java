@@ -58,13 +58,13 @@ public abstract class BasicDrawLayer implements LayeredDraw.Layer {
     this.player = newPlayer;
   }
 
-  protected void sizeChange(final boolean isWidthChange, final boolean isHeightChange, final int oldScreenWidth, final int oldScreenHeight) {
+  protected void sizeChange(final boolean isWidthChange, final boolean isHeightChange, final int width, final int height) {
     if (isHeightChange) {
-      this.screenWidth = oldScreenWidth;
+      this.screenWidth = width;
     }
 
     if (isWidthChange) {
-      this.screenHeight = oldScreenHeight;
+      this.screenHeight = height;
     }
   }
 }

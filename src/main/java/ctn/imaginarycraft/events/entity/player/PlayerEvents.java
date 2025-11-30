@@ -1,12 +1,9 @@
 package ctn.imaginarycraft.events.entity.player;
 
-import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.eventexecute.RationalityEventExecutes;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
@@ -23,12 +20,12 @@ public final class PlayerEvents {
   @SubscribeEvent
   public static void reset(PlayerEvent.Clone event) {
     Player player = event.getEntity();
-    Level level = player.level();
-
-    if (event.isWasDeath()) {
-      if (level instanceof ServerLevel serverLevel) {
-        RationalityUtil.setValue(player, 0, false);
-        RationalityUtil.setRecoveryTick(player, 0);
+    if (player instanceof ServerPlayer serverPlayer) {
+      if (event.isWasDeath()) {
+        // 因为数据附件的同步机制在这之后所以需要手动处理
+        // 目前采用默认值
+//        RationalityUtil.setValue(player, 0, false);
+//        RationalityUtil.setRecoveryTick(player, 0);
       }
     }
   }

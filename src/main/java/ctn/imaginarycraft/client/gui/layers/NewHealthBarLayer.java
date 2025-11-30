@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.client.gui.layers;
 
-import ctn.imaginarycraft.client.gui.widget.HorizontalStatusBar;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.Gui;
@@ -18,23 +17,23 @@ public class NewHealthBarLayer extends BasicDrawLayer {
 
   private float hp;
   private float maxHp;
-  private final HorizontalStatusBar statusBar;
-  private final HorizontalStatusBar shieldStatusBar;
+  //  private final HorizontalStatusBar statusBar;
+//  private final HorizontalStatusBar shieldStatusBar;
   private Gui.HeartType heartType = Gui.HeartType.NORMAL;
 
   public NewHealthBarLayer() {
-    this.statusBar = new HorizontalStatusBar(WIDTH, HEIGHT,
-      new HorizontalStatusBar.TextureLayer(0, 0, 43, 36, 80, 9, 5),
-      new HorizontalStatusBar.TextureLayer(2, 2, 51, 3, 80, 78, 7),
-      new HorizontalStatusBar.TextureLayer(0, 0, 209, 16, 80, 9, 5),
-      512, 128,
-      TEXTURE);
-    this.shieldStatusBar = new HorizontalStatusBar(SHIELD_WIDTH, SHIELD_HEIGHT,
-      new HorizontalStatusBar.TextureLayer(0, 0, 42, 1, 82, 11, 0),
-      new HorizontalStatusBar.TextureLayer(0, 0, 125, 1, 82, 11, 0),
-      new HorizontalStatusBar.TextureLayer(0, 0, 208, 1, 82, 11, 0),
-      512, 128,
-      TEXTURE);
+//    this.statusBar = new HorizontalStatusBar(WIDTH, HEIGHT,
+//      new HorizontalStatusBar.TextureLayer(0, 0, 43, 36, 80, 9, 5),
+//      new HorizontalStatusBar.TextureLayer(2, 2, 51, 3, 80, 78, 7),
+//      new HorizontalStatusBar.TextureLayer(0, 0, 209, 16, 80, 9, 5),
+//      512, 128,
+//      TEXTURE);
+//    this.shieldStatusBar = new HorizontalStatusBar(SHIELD_WIDTH, SHIELD_HEIGHT,
+//      new HorizontalStatusBar.TextureLayer(0, 0, 42, 1, 82, 11, 0),
+//      new HorizontalStatusBar.TextureLayer(0, 0, 125, 1, 82, 11, 0),
+//      new HorizontalStatusBar.TextureLayer(0, 0, 208, 1, 82, 11, 0),
+//      512, 128,
+//      TEXTURE);
   }
 
   @Override

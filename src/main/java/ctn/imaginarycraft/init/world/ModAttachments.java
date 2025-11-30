@@ -22,16 +22,14 @@ public final class ModAttachments extends AttachmentRegisterUtil {
   public static final DeferredHolder<AttachmentType<?>, AttachmentType<Float>> RATIONALITY = register("rationality",
     (player) -> 0f, builder -> builder
       .serialize(Codec.FLOAT)
-      .sync(ByteBufCodecs.FLOAT)
-      .copyOnDeath());
+      .sync(ByteBufCodecs.FLOAT));
   /**
    * 理智值暂停恢复tick
    */
   public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> RATIONALITY_PAUSE_RECOVERY_TICK = register("rationality_pause_recovery_tick",
     (player) -> 0, builder -> builder
       .serialize(Codec.INT)
-      .sync(ByteBufCodecs.INT)
-      .copyOnDeath());
+      .sync(ByteBufCodecs.INT));
 
   /// 四徳
   /**
