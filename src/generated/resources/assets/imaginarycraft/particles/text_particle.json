@@ -1,0 +1,11 @@
+{
+  "textures": [
+    "imaginarycraft:damage_type/physics",
+    "imaginarycraft:damage_type/spirit",
+    "imaginarycraft:damage_type/erosion",
+    "imaginarycraft:damage_type/the_soul",
+    "imaginarycraft:damage_type/rationality_add",
+    "imaginarycraft:damage_type/rationality_reduce",
+    "imaginarycraft:damage_type/magic"
+  ]
+}
