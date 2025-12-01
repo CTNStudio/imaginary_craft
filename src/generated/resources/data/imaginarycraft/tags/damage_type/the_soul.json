@@ -1,5 +1,9 @@
 {
   "values": [
-    "minecraft:sonic_boom"
+    "minecraft:sonic_boom",
+    {
+      "id": "imaginarycraft:the_soul",
+      "required": false
+    }
   ]
 }

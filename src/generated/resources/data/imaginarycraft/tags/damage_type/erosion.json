@@ -1,6 +1,10 @@
 {
   "values": [
     "minecraft:wither_skull",
-    "minecraft:wither"
+    "minecraft:wither",
+    {
+      "id": "imaginarycraft:erosion",
+      "required": false
+    }
   ]
 }

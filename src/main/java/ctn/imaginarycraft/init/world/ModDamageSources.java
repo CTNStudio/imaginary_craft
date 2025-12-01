@@ -38,8 +38,8 @@ public final class ModDamageSources {
   }
 
   @Contract("_ -> new")
-  public static @NotNull DamageSource abnosDamage(Entity causer) {
-    return createDamage(ModDamageTypes.ABNOS, causer);
+  public static @NotNull DamageSource abnormalitiesDamage(Entity causer) {
+    return createDamage(ModDamageTypes.ABNORMALITIES, causer);
   }
 
   @Contract("_ -> new")

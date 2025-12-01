@@ -32,7 +32,7 @@ import java.util.concurrent.CompletableFuture;
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class ModDatagen {
   @SubscribeEvent
-  public static void gatherData(GatherDataEvent event) {
+  public static void gatherData(@NotNull GatherDataEvent event) {
     DataGenerator generator = event.getGenerator();
     PackOutput output = generator.getPackOutput();
     CompletableFuture<HolderLookup.Provider> completableFuture = event.getLookupProvider();
@@ -57,14 +57,14 @@ public final class ModDatagen {
     buildClient(event, generator, new DatagenParticle(output, existingFileHelper));
   }
 
-  private static <T extends DataProvider> @NotNull T buildClient(GatherDataEvent event,
-                                                                 DataGenerator generator,
+  private static <T extends DataProvider> @NotNull T buildClient(@NotNull GatherDataEvent event,
+                                                                 @NotNull DataGenerator generator,
                                                                  T provider) {
     return generator.addProvider(event.includeClient(), provider);
   }
 
-  private static <T extends DataProvider> @NotNull T buildServer(GatherDataEvent event,
-                                                                 DataGenerator generator,
+  private static <T extends DataProvider> @NotNull T buildServer(@NotNull GatherDataEvent event,
+                                                                 @NotNull DataGenerator generator,
                                                                  T provider) {
     return generator.addProvider(event.includeServer(), provider);
   }

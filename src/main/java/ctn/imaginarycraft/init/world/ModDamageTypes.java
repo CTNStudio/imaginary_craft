@@ -26,22 +26,22 @@ public final class ModDamageTypes extends DamageTypeRegisterUtil {
    */
   public static final ResourceKey<DamageType> THE_SOUL = register("the_soul");
   /**
-   * ABNORMALITIES 异想体
+   * 异想体
    */
-  public static final ResourceKey<DamageType> ABNOS = register("abnos");
+  public static final ResourceKey<DamageType> ABNORMALITIES = register("abnormalities");
   /**
-   * EGO
+   * E.G.O
    * <p>
    * Extermination of Geometrical Organ 是的没错这玩意的全称就是这么长
    */
   public static final ResourceKey<DamageType> EGO = register("ego");
 
   public static void bootstrap(BootstrapContext<DamageType> context) {
-    register(context, "physics", ModDamageTypes.PHYSICS, DamageScaling.ALWAYS, 0.1f, DamageEffects.HURT, DeathMessageType.DEFAULT);
-    register(context, "spirit", ModDamageTypes.SPIRIT, DamageScaling.ALWAYS, 0.2f, DamageEffects.HURT, DeathMessageType.DEFAULT);
-    register(context, "erosion", ModDamageTypes.EROSION, DamageScaling.ALWAYS, 0.3f, DamageEffects.HURT, DeathMessageType.DEFAULT);
-    register(context, "theSoul", ModDamageTypes.THE_SOUL, DamageScaling.ALWAYS, 0.4f, DamageEffects.HURT, DeathMessageType.DEFAULT);
-    register(context, "abnos", ModDamageTypes.ABNOS, DamageScaling.ALWAYS, 0.3f, DamageEffects.HURT, DeathMessageType.DEFAULT);
-    register(context, "ego", ModDamageTypes.EGO, DamageScaling.ALWAYS, 0.3f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+    register(context, "physics", ModDamageTypes.PHYSICS, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.1f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+    register(context, "spirit", ModDamageTypes.SPIRIT, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.2f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+    register(context, "erosion", ModDamageTypes.EROSION, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.3f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+    register(context, "theSoul", ModDamageTypes.THE_SOUL, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.4f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+    register(context, "abnormalities", ModDamageTypes.ABNORMALITIES, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.3f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+    register(context, "ego", ModDamageTypes.EGO, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.3f, DamageEffects.HURT, DeathMessageType.DEFAULT);
   }
 }

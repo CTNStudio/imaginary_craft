@@ -22,7 +22,7 @@ public final class DatagenI18ZhCn extends LanguageProvider {
 
   @Override
   protected void addTranslations() {
-    add("pack.imaginarycraft.description", "奇点Lib");
+    add("pack.imaginarycraft.description", "异想工艺");
     addPlayerDeathMessage(ModDamageTypes.PHYSICS, "%s死于%s的造成的物理伤害");
     addPlayerDeathMessage(ModDamageTypes.SPIRIT, "%s死于%s的造成的精神污染");
     addPlayerDeathMessage(ModDamageTypes.EROSION, "%s死于%s的造成的侵蚀伤害");

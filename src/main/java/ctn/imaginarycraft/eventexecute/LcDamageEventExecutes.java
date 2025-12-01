@@ -5,7 +5,7 @@ import ctn.imaginarycraft.api.lobotomycorporation.damage.util.LcDamageUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.capability.ILcLevel;
-import ctn.imaginarycraft.capability.entity.IAbnos;
+import ctn.imaginarycraft.capability.entity.IAbnormalities;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.mixinextend.IDamageSource;
 import net.minecraft.core.Holder;
@@ -61,7 +61,7 @@ public final class LcDamageEventExecutes {
     Iterator<ItemStack> aitor = entity.getArmorAndBodyArmorSlots().iterator();
     ItemStack[] armorSlots = new ItemStack[4];
     for (int i = 0; aitor.hasNext(); i++) {
-      armorSlots[i] = !(entity instanceof IAbnos) ?
+      armorSlots[i] = !(entity instanceof IAbnormalities) ?
         aitor.next() :
         ItemStack.EMPTY;
     }

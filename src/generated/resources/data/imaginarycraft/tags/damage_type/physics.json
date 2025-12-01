@@ -20,6 +20,10 @@
     "minecraft:bad_respawn_point",
     "minecraft:fall",
     "minecraft:fireball",
-    "minecraft:fly_into_wall"
+    "minecraft:fly_into_wall",
+    {
+      "id": "imaginarycraft:physics",
+      "required": false
+    }
   ]
 }

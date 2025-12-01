@@ -27,7 +27,7 @@ public abstract class DamageTypeRegisterUtil {
     return register(context, name, damageType, DamageScaling.ALWAYS, exhaustion, DamageEffects.HURT, DeathMessageType.DEFAULT);
   }
 
-  protected static Holder.@NotNull Reference<DamageType> register(final BootstrapContext<DamageType> context, final ResourceKey<DamageType> damageType, final DamageType damageType1) {
+  protected static Holder.@NotNull Reference<DamageType> register(final @NotNull BootstrapContext<DamageType> context, final ResourceKey<DamageType> damageType, final DamageType damageType1) {
     return context.register(damageType, damageType1);
   }
 }

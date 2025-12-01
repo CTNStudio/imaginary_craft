@@ -8,6 +8,8 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.DamageTypeTagsProvider;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -40,21 +42,21 @@ public final class DatagenDamageTypeTag extends DamageTypeTagsProvider {
       DamageTypes.BAD_RESPAWN_POINT,
       DamageTypes.FALL,
       DamageTypes.FIREBALL,
-      DamageTypes.FLY_INTO_WALL,
-      ModDamageTypes.PHYSICS);
+      DamageTypes.FLY_INTO_WALL
+    ).addOptional(ModDamageTypes.PHYSICS.location());
     // 精神伤害
     tag(ModDamageTypeTags.SPIRIT).add(
-      DamageTypes.MOB_PROJECTILE,
-      ModDamageTypes.SPIRIT);
+      DamageTypes.MOB_PROJECTILE
+    ).addOptional(ModDamageTypes.SPIRIT.location());
     // 侵蚀伤害
     tag(ModDamageTypeTags.EROSION).add(
       DamageTypes.WITHER_SKULL,
-      DamageTypes.WITHER,
-      ModDamageTypes.EROSION);
+      DamageTypes.WITHER
+    ).addOptional(ModDamageTypes.EROSION.location());
     // 灵魂伤害
     tag(ModDamageTypeTags.THE_SOUL).add(
-      DamageTypes.SONIC_BOOM,
-      ModDamageTypes.THE_SOUL);
+      DamageTypes.SONIC_BOOM
+    ).addOptional(ModDamageTypes.THE_SOUL.location());
     // 绕过
     tag(ModDamageTypeTags.BYPASS_LC).add(
       DamageTypes.IN_WALL,
@@ -69,8 +71,9 @@ public final class DatagenDamageTypeTag extends DamageTypeTagsProvider {
       DamageTypes.GENERIC_KILL);
   }
 
+  @Contract(pure = true)
   @Override
-  public String getName() {
+  public @NotNull String getName() {
     return ImaginaryCraft.NAME + " Damage Type Tags";
   }
 }

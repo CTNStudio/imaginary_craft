@@ -5,6 +5,7 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.damagesource.DamageType;
+import org.jetbrains.annotations.NotNull;
 
 public final class ModDamageTypeTags {
   /**
@@ -28,19 +29,19 @@ public final class ModDamageTypeTags {
    */
   public static final TagKey<DamageType> BYPASS_LC = createTag("bypass_lobotomy_corporation_damage");
 
-  private static TagKey<DamageType> createTag(String name) {
+  private static @NotNull TagKey<DamageType> createTag(String name) {
     return createTag(ImaginaryCraft.modRl(name));
   }
 
-  private static TagKey<DamageType> createTag(ResourceLocation location) {
+  private static @NotNull TagKey<DamageType> createTag(ResourceLocation location) {
     return TagKey.create(Registries.DAMAGE_TYPE, location);
   }
 
-  private static TagKey<DamageType> createCTag(String name) {
+  private static @NotNull TagKey<DamageType> createCTag(String name) {
     return createTag(ResourceLocation.fromNamespaceAndPath("c", name));
   }
 
-  private static TagKey<DamageType> createMcTag(String name) {
+  private static @NotNull TagKey<DamageType> createMcTag(String name) {
     return createTag(ResourceLocation.withDefaultNamespace(name));
   }
 }

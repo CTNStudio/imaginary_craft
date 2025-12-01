@@ -3,5 +3,5 @@ package ctn.imaginarycraft.capability.entity;
 /**
  * 异想体
  */
-public interface IAbnos {
+public interface IAbnormalities {
 }
