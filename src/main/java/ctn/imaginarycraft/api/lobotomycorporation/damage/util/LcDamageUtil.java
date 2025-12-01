@@ -53,16 +53,13 @@ public final class LcDamageUtil {
    *
    * @return 计算后的灵魂伤害值
    */
-  public static float theSoulDamage(float damage,
-                                    LivingEntity entity,
-                                    @Nullable Entity source,
-                                    DamageSource damageSource) {
+  public static float theSoulDamage(float damage, LivingEntity entity, @Nullable Entity source, DamageSource damageSource) {
     damage /= 100;
-    double maxHealth = 0;
+    float maxHealth = 0;
     LcLevel entityLevel = LcLevel.getEntityLevel(entity);
     @Nullable LcLevel lcDamageLevel = IDamageSource.of(damageSource).getLcDamageLevel();
     if (source instanceof LivingEntity living) {
-      maxHealth = living.getAttributeValue(Attributes.MAX_HEALTH);
+      maxHealth = (float) living.getAttributeValue(Attributes.MAX_HEALTH);
     }
 
     // 如果未获取到最大生命值，则使用默认值20
@@ -72,9 +69,9 @@ public final class LcDamageUtil {
 
     // 根据伤害等级差异计算最终伤害
     if (lcDamageLevel != null) {
-      return (float) (damage * (LcLevel.leveDifferenceValue(lcDamageLevel, entityLevel) + 1) * maxHealth);
+      return damage * getDamageMultiple(entityLevel, lcDamageLevel) * maxHealth;
     }
 
-    return (float) (damage * maxHealth);
+    return damage * maxHealth;
   }
 }
