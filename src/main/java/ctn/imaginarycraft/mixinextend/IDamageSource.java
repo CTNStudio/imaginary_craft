@@ -16,7 +16,6 @@ public interface IDamageSource {
 
   void setLcDamageType(LcDamageType type);
 
-  @Nullable
   LcLevel getLcDamageLevel();
 
   void setDamageLevel(LcLevel pmLevel);

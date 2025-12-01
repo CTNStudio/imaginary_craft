@@ -1,12 +1,13 @@
 package ctn.imaginarycraft.client.gui.widget;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import ctn.imaginarycraft.util.GuiUtil;
+import ctn.imaginarycraft.client.util.GuiUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
 import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 public class HorizontalStatusBar extends AbstractWidget {
@@ -15,8 +16,10 @@ public class HorizontalStatusBar extends AbstractWidget {
   private final @NotNull TextureLayer light;
   private boolean isLight;
   private float lightTick;
-  private double value;
-  private double maxValue;
+  private float lightWidth;
+  private float value;
+  private float oldValue;
+  private float maxValue;
 
   public HorizontalStatusBar(
     int width,
@@ -40,65 +43,51 @@ public class HorizontalStatusBar extends AbstractWidget {
       layer.width, layer.height);
   }
 
-
-  /**
-   * 同时设置当前值和最大值。
-   *
-   * @param energy  当前进度值
-   * @param maxTick 最大进度值
-   */
-  public void setValue(double energy, double maxTick) {
-    this.setValue(energy);
-    this.setMaxValue(maxTick);
+  public float getOldValue() {
+    return this.oldValue;
   }
 
-  /**
-   * 获取当前进度值。
-   *
-   * @return 当前进度值
-   */
-  public double getValue() {
+  public void setOldValue(float value) {
+    this.oldValue = value;
+  }
+
+  public float getValue() {
     return this.value;
   }
 
-  /**
-   * 设置当前进度值。
-   *
-   * @param value 新的进度值
-   */
-  public void setValue(double value) {
+  public void setValue(float value) {
     this.value = value;
   }
 
-  /**
-   * 获取最大进度值。
-   *
-   * @return 最大进度值
-   */
-  public double getMaxValue() {
+  public void setLightWidth(float oldValue, float newValue) {
+    float renderValue = oldValue - newValue;
+    int maxWidth = this.internal.width;
+    this.lightWidth += Math.clamp(renderValue / this.maxValue * maxWidth, -maxWidth + 1, maxWidth - 1);
+    if (this.lightWidth <= 0) {
+      this.lightWidth = 0;
+    }
+    this.value = newValue;
+  }
+
+  public void setLightWidth(float value) {
+    this.lightWidth = value;
+  }
+
+  public float getMaxValue() {
     return maxValue;
   }
 
-  /**
-   * 设置最大进度值。
-   *
-   * @param maxValue 新的最大进度值
-   */
-  public void setMaxValue(double maxValue) {
+  public void setMaxValue(float maxValue) {
     this.maxValue = maxValue;
   }
 
-  /**
-   * 获取要渲染的进度值，确保不小于 0。
-   *
-   * @return 渲染用的进度值
-   */
-  public double getRenderValue() {
-    return Math.min(Math.max(0, this.getValue()), this.getMaxValue());
+  public float getClampValue() {
+    return Math.clamp(this.getOldValue(), 0, this.getMaxValue());
   }
 
-  public void setLight(boolean light) {
-    isLight = true;
+  public void setLight() {
+    this.isLight = true;
+    this.lightTick = 1;
   }
 
   @Override
@@ -109,13 +98,7 @@ public class HorizontalStatusBar extends AbstractWidget {
 
     renderLayer(guiGraphics, this.bottom, x, y);
 
-    GuiUtil.blitSprite(
-      guiGraphics,
-      this.internal.texture,
-      x + this.internal.xPos,
-      y + this.internal.yPos,
-      (float) (getRenderValue() / getMaxValue() * this.internal.width()),
-      this.internal.height);
+    renderInternal(guiGraphics, partialTick, x, y);
 
     if (this.isLight) {
       renderLayer(guiGraphics, this.light, x, y);
@@ -129,9 +112,43 @@ public class HorizontalStatusBar extends AbstractWidget {
     }
   }
 
+  private void renderInternal(final GuiGraphics guiGraphics, final float partialTick, final int x, final int y) {
+    final int maxWidth = this.internal.width;
+    float value = getClampValue();
+    // 使用更平滑的插值算法
+    float maxValue = getMaxValue();
+
+    float internalHeight = this.internal.height;
+    float internalUWidth = value / maxValue * maxWidth;
+
+    float posX = x + this.internal.xPos;
+    float posY = y + this.internal.yPos;
+
+    if (this.lightWidth > 0) {
+      float v = this.value / maxValue * maxWidth;
+      float minX = Math.clamp(v, 0, posX + maxWidth);
+      float maxX = Math.clamp(minX + this.lightWidth, 0, posX + maxWidth);
+      float maxY = posY + internalHeight;
+      int color = 255 << 24 | 255 << 16 | 255 << 8 | 255 / 2;
+      if (this.isLight) {
+        color = 0xffffffff;
+      }
+      GuiUtil.fill(guiGraphics, Math.clamp(posX + minX, posX + 1, posX + maxValue - 1), posY + 1, posX + maxX, maxY - 1, color);
+      this.lightWidth = Mth.lerp(Math.clamp(partialTick * 0.2f, 0, 1), this.lightWidth, 0);
+    }
+
+    GuiUtil.blitSprite(guiGraphics, this.internal.texture, maxWidth, internalHeight,
+      0, 0, posX, posY, internalUWidth, internalHeight);
+  }
+
   @Override
   protected void updateWidgetNarration(final NarrationElementOutput narrationElementOutput) {
 
+  }
+
+  public void reset() {
+    this.oldValue = 0;
+    this.lightWidth = 0;
   }
 
   public record TextureLayer(

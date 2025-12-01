@@ -2,7 +2,7 @@ package ctn.imaginarycraft.linkage.jade;
 
 import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.world.ModAttributes;
+import ctn.imaginarycraft.init.ModAttributes;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

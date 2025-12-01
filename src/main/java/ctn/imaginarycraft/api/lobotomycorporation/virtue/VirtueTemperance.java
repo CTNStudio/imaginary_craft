@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.api.lobotomycorporation.virtue;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.world.ModAttachments;
-import ctn.imaginarycraft.init.world.ModAttributes;
+import ctn.imaginarycraft.init.ModAttachments;
+import ctn.imaginarycraft.init.ModAttributes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;

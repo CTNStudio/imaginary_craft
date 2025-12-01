@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init.world;
+package ctn.imaginarycraft.init;
 
 import ctn.imaginarycraft.init.util.DamageTypeRegisterUtil;
 import net.minecraft.data.worldgen.BootstrapContext;

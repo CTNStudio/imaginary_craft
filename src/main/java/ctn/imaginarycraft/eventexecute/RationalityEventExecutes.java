@@ -2,7 +2,6 @@ package ctn.imaginarycraft.eventexecute;
 
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.config.ModConfig;
-import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.server.level.ServerPlayer;
 
 public final class RationalityEventExecutes {
@@ -26,12 +25,12 @@ public final class RationalityEventExecutes {
       return;
     }
 
-    float recoveryAmount = (float) player.getAttributeValue(ModAttributes.RATIONALITY_RECOVERY_AMOUNT);
+    float recoveryAmount = RationalityUtil.getRationalityRecoveryAmount(player);
     if (recoveryAmount > 0) {
       RationalityUtil.modifyValue(player, recoveryAmount, true);
     }
 
-    int value = (int) (20 * player.getAttributeValue(ModAttributes.RATIONALITY_NATURAL_RECOVERY_RATE));
+    int value = (int) (20 * RationalityUtil.getNaturalRecoveryRate(player));
     RationalityUtil.setRecoveryTick(player, value);
   }
 }

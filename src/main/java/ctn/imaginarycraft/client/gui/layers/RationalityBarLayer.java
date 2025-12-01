@@ -7,6 +7,7 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageWidget;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class RationalityBarLayer extends BasicDrawLayer {
   public static final ResourceLocation DEFAULT_TEXTURE = ImaginaryCraft.modRl("hud_bar/rationality/rationality");
@@ -25,8 +26,10 @@ public class RationalityBarLayer extends BasicDrawLayer {
 
   public static final RationalityBarLayer INSTANCE = new RationalityBarLayer();
 
-  private double rationality;
-  private double maxRationality;
+  private float rationality;
+  private float renderRationality;
+  private float oldRationality;
+  private float maxRationality;
   private final HorizontalStatusBar defaultBar;
   private final HorizontalStatusBar lowBar;
   private final ImageWidget lowDynamicBar;
@@ -50,46 +53,72 @@ public class RationalityBarLayer extends BasicDrawLayer {
 
   @Override
   public void renderDrawLayer(final GuiGraphics guiGraphics, final DeltaTracker deltaTracker) {
-    float gameTimeDeltaTicks = deltaTracker.getGameTimeDeltaTicks();
+    float gameTimeDeltaTicks = deltaTracker.getRealtimeDeltaTicks();
 
-    if (rationality == maxRationality) {
+    if (this.renderRationality >= this.maxRationality * 0.7) {
       this.tallBar.render(guiGraphics, 0, 0, gameTimeDeltaTicks);
       return;
     }
 
-    if (rationality > 0) {
+    if (this.renderRationality <= -this.maxRationality * 0.99) {
+      this.lowDynamicBar.render(guiGraphics, 0, 0, gameTimeDeltaTicks);
+      return;
+    }
+
+    if (this.renderRationality >= 0) {
       this.defaultBar.render(guiGraphics, 0, 0, gameTimeDeltaTicks);
       return;
     }
 
-    if (rationality < 0) {
+    if (this.renderRationality < 0) {
       this.lowBar.render(guiGraphics, 0, 0, gameTimeDeltaTicks);
-      return;
-    }
-
-    if (rationality <= -this.maxRationality) {
-      this.lowDynamicBar.render(guiGraphics, 0, 0, gameTimeDeltaTicks);
     }
   }
 
   @Override
-  public void init(final GuiGraphics guiGraphics) {
-    super.init(guiGraphics);
+  public void init(final GuiGraphics guiGraphics, final DeltaTracker deltaTracker) {
+    super.init(guiGraphics, deltaTracker);
 
-    var newRationality = RationalityUtil.getValue(this.player);
     var newMaxRationality = RationalityUtil.getMaxValue(this.player);
-    if (newRationality != this.rationality) {
-      this.rationality = newRationality;
-      this.defaultBar.setValue(this.rationality);
-      this.lowBar.setValue(this.rationality);
-      this.tallBar.setValue(this.rationality);
-    }
-
     if (newMaxRationality != this.maxRationality) {
       this.maxRationality = newMaxRationality;
-      this.defaultBar.setMaxValue(this.maxRationality);
-      this.lowBar.setMaxValue(this.maxRationality);
-      this.tallBar.setMaxValue(this.maxRationality);
+      this.defaultBar.setMaxValue(Math.abs(this.maxRationality));
+      this.lowBar.setMaxValue(Math.abs(this.maxRationality));
+      this.tallBar.setMaxValue(Math.abs(this.maxRationality));
+    }
+
+    float gameTimeDeltaTicks = deltaTracker.getRealtimeDeltaTicks();
+    var newRationality = RationalityUtil.getValue(this.player);
+    var oldRationality = this.rationality;
+
+    if (newRationality != oldRationality) {
+      this.rationality = newRationality;
+      this.defaultBar.setLight();
+      this.lowBar.setLight();
+      this.tallBar.setLight();
+    }
+
+    this.renderRationality = Mth.lerp(Math.clamp(gameTimeDeltaTicks, 0, 1), this.oldRationality, this.rationality);
+
+    float renderValue = Math.abs(this.renderRationality);
+    this.defaultBar.setOldValue(renderValue);
+    this.lowBar.setOldValue(renderValue);
+    this.tallBar.setOldValue(renderValue);
+
+    if (this.renderRationality < 0) {
+      float v = Math.abs(oldRationality);
+      float v1 = Math.abs(this.rationality);
+      this.defaultBar.setLightWidth(v, v1);
+      this.lowBar.setLightWidth(v, v1);
+      this.tallBar.setLightWidth(v, v1);
+    } else {
+      this.defaultBar.setLightWidth(0);
+      this.lowBar.setLightWidth(0);
+      this.tallBar.setLightWidth(0);
+    }
+
+    if (this.oldRationality != this.renderRationality) {
+      this.oldRationality = this.renderRationality;
     }
   }
 

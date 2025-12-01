@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init.world;
+package ctn.imaginarycraft.init;
 
 import com.mojang.serialization.Codec;
 import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueFortitude;

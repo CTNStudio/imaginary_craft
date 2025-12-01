@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.common.world.entity.abnormalities;
+package ctn.imaginarycraft.common.entity.abnormalities;
 
 import ctn.imaginarycraft.capability.entity.IAbnormalities;
 import net.minecraft.world.entity.EntityType;

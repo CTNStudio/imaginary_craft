@@ -1,18 +1,20 @@
-package ctn.imaginarycraft.util;
+package ctn.imaginarycraft.client.util;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 /**
  * GUI工具类，提供各种绘制精灵图的方法
  */
-public class GuiUtil {
+public final class GuiUtil {
 
   /**
    * 绘制精灵图
@@ -25,7 +27,7 @@ public class GuiUtil {
    * @param height      绘制高度
    */
   public static void blitSprite(
-    GuiGraphics guiGraphics,
+    @NotNull GuiGraphics guiGraphics,
     ResourceLocation sprite,
     float x,
     float y,
@@ -47,7 +49,7 @@ public class GuiUtil {
    * @param height      绘制高度
    */
   public static void blitSprite(
-    GuiGraphics guiGraphics,
+    @NotNull GuiGraphics guiGraphics,
     ResourceLocation sprite,
     float x,
     float y,
@@ -85,9 +87,9 @@ public class GuiUtil {
    * @param height      绘制高度
    */
   public static void blitNineSlicedSprite(
-    GuiGraphics guiGraphics,
+    @NotNull GuiGraphics guiGraphics,
     TextureAtlasSprite sprite,
-    GuiSpriteScaling.NineSlice nineSlice,
+    GuiSpriteScaling.@NotNull NineSlice nineSlice,
     float x,
     float y,
     float blitOffset,
@@ -246,7 +248,7 @@ public class GuiUtil {
    * @param nineSliceHeight 九宫格切片高度
    */
   public static void blitTiledSprite(
-    GuiGraphics guiGraphics,
+    @NotNull GuiGraphics guiGraphics,
     TextureAtlasSprite sprite,
     float x,
     float y,
@@ -293,7 +295,7 @@ public class GuiUtil {
    * @param vHeight       UV坐标的v高度
    */
   public static void blitSprite(
-    GuiGraphics guiGraphics,
+    @NotNull GuiGraphics guiGraphics,
     ResourceLocation sprite,
     float textureWidth,
     float textureHeight,
@@ -323,7 +325,7 @@ public class GuiUtil {
    * @param vHeight       UV坐标的v高度
    */
   public static void blitSprite(
-    GuiGraphics guiGraphics,
+    @NotNull GuiGraphics guiGraphics,
     ResourceLocation sprite,
     float textureWidth,
     float textureHeight,
@@ -361,7 +363,7 @@ public class GuiUtil {
    * @param vHeight       UV坐标的v高度
    */
   public static void blitSprite(
-    GuiGraphics guiGraphics,
+    @NotNull GuiGraphics guiGraphics,
     TextureAtlasSprite sprite,
     float textureWidth,
     float textureHeight,
@@ -445,7 +447,7 @@ public class GuiUtil {
    * @param maxV          最大V坐标
    */
   private static void innerBlit(
-    GuiGraphics guiGraphics,
+    @NotNull GuiGraphics guiGraphics,
     ResourceLocation atlasLocation,
     float x1,
     float x2,
@@ -466,5 +468,71 @@ public class GuiUtil {
       .addVertex(matrix4f, x2, y2, blitOffset).setUv(maxU, maxV)
       .addVertex(matrix4f, x2, y1, blitOffset).setUv(maxU, minV);
     BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
+  }
+
+  public static void fill(@NotNull GuiGraphics guiGraphics, float minX, float minY, float maxX, float maxY, int color) {
+    fill(guiGraphics, minX, minY, maxX, maxY, 0, color);
+  }
+
+  public static void fill(@NotNull GuiGraphics guiGraphics, float minX, float minY, float maxX, float maxY, float z, int color) {
+    fill(guiGraphics, RenderType.gui(), minX, minY, maxX, maxY, z, color);
+  }
+
+  public static void fill(@NotNull GuiGraphics guiGraphics, RenderType renderType, float minX, float minY, float maxX, float maxY, int color) {
+    fill(guiGraphics, renderType, minX, minY, maxX, maxY, 0, color);
+  }
+
+  public static void fill(@NotNull GuiGraphics guiGraphics, RenderType renderType, float minX, float minY, float maxX, float maxY, float z, int color) {
+    Matrix4f matrix4f = guiGraphics.pose().last().pose();
+    if (minX < maxX) {
+      float i = minX;
+      minX = maxX;
+      maxX = i;
+    }
+
+    if (minY < maxY) {
+      float j = minY;
+      minY = maxY;
+      maxY = j;
+    }
+
+    VertexConsumer vertexconsumer = guiGraphics.bufferSource().getBuffer(renderType);
+    vertexconsumer.addVertex(matrix4f, minX, minY, z).setColor(color);
+    vertexconsumer.addVertex(matrix4f, minX, maxY, z).setColor(color);
+    vertexconsumer.addVertex(matrix4f, maxX, maxY, z).setColor(color);
+    vertexconsumer.addVertex(matrix4f, maxX, minY, z).setColor(color);
+    guiGraphics.flushIfUnmanaged();
+  }
+
+  public static void fillGradient(@NotNull GuiGraphics guiGraphics, float x1, float y1, float x2, float y2, int colorFrom, int colorTo) {
+    fillGradient(guiGraphics, x1, y1, x2, y2, 0, colorFrom, colorTo);
+  }
+
+  public static void fillGradient(@NotNull GuiGraphics guiGraphics, float x1, float y1, float x2, float y2, float z, int colorFrom, int colorTo) {
+    fillGradient(guiGraphics, RenderType.gui(), x1, y1, x2, y2, colorFrom, colorTo, z);
+  }
+
+  public static void fillGradient(@NotNull GuiGraphics guiGraphics, RenderType renderType, float x1, float y1, float x2, float y2, int colorFrom, int colorTo, float z) {
+    VertexConsumer vertexconsumer = guiGraphics.bufferSource().getBuffer(renderType);
+    fillGradient(guiGraphics, vertexconsumer, x1, y1, x2, y2, z, colorFrom, colorTo);
+    guiGraphics.flushIfUnmanaged();
+  }
+
+  public static void fillGradient(@NotNull GuiGraphics guiGraphics, VertexConsumer consumer, float x1, float y1, float x2, float y2, float z, int colorFrom, int colorTo) {
+    Matrix4f matrix4f = guiGraphics.pose().last().pose();
+    consumer.addVertex(matrix4f, x1, y1, z).setColor(colorFrom);
+    consumer.addVertex(matrix4f, x1, y2, z).setColor(colorTo);
+    consumer.addVertex(matrix4f, x2, y2, z).setColor(colorTo);
+    consumer.addVertex(matrix4f, x2, y1, z).setColor(colorFrom);
+  }
+
+  public static void fillRenderType(@NotNull GuiGraphics guiGraphics, RenderType renderType, float x1, float y1, float x2, float y2, float z) {
+    Matrix4f matrix4f = guiGraphics.pose().last().pose();
+    VertexConsumer vertexconsumer = guiGraphics.bufferSource().getBuffer(renderType);
+    vertexconsumer.addVertex(matrix4f, x1, y1, z);
+    vertexconsumer.addVertex(matrix4f, x1, y2, z);
+    vertexconsumer.addVertex(matrix4f, x2, y2, z);
+    vertexconsumer.addVertex(matrix4f, x2, y1, z);
+    guiGraphics.flushIfUnmanaged();
   }
 }

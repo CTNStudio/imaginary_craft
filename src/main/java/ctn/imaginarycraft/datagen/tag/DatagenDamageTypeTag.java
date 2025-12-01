@@ -1,8 +1,7 @@
 package ctn.imaginarycraft.datagen.tag;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.world.ModDamageTypes;
-import ctn.imaginarycraft.init.world.tag.ModDamageTypeTags;
+import ctn.imaginarycraft.init.ModDamageTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.DamageTypeTagsProvider;
@@ -21,7 +20,7 @@ public final class DatagenDamageTypeTag extends DamageTypeTagsProvider {
   @Override
   protected void addTags(final HolderLookup.Provider provider) {
     // 物理伤害
-    tag(ModDamageTypeTags.PHYSICS).add(
+    tag(ctn.imaginarycraft.init.world.tag.ModDamageTypeTags.PHYSICS).add(
       DamageTypes.FALLING_ANVIL,
       DamageTypes.FALLING_BLOCK,
       DamageTypes.FALLING_STALACTITE,
@@ -45,20 +44,20 @@ public final class DatagenDamageTypeTag extends DamageTypeTagsProvider {
       DamageTypes.FLY_INTO_WALL
     ).addOptional(ModDamageTypes.PHYSICS.location());
     // 精神伤害
-    tag(ModDamageTypeTags.SPIRIT).add(
+    tag(ctn.imaginarycraft.init.world.tag.ModDamageTypeTags.SPIRIT).add(
       DamageTypes.MOB_PROJECTILE
     ).addOptional(ModDamageTypes.SPIRIT.location());
     // 侵蚀伤害
-    tag(ModDamageTypeTags.EROSION).add(
+    tag(ctn.imaginarycraft.init.world.tag.ModDamageTypeTags.EROSION).add(
       DamageTypes.WITHER_SKULL,
       DamageTypes.WITHER
     ).addOptional(ModDamageTypes.EROSION.location());
     // 灵魂伤害
-    tag(ModDamageTypeTags.THE_SOUL).add(
+    tag(ctn.imaginarycraft.init.world.tag.ModDamageTypeTags.THE_SOUL).add(
       DamageTypes.SONIC_BOOM
     ).addOptional(ModDamageTypes.THE_SOUL.location());
     // 绕过
-    tag(ModDamageTypeTags.BYPASS_LC).add(
+    tag(ctn.imaginarycraft.init.world.tag.ModDamageTypeTags.BYPASS_LC).add(
       DamageTypes.IN_WALL,
       DamageTypes.GENERIC,
       DamageTypes.FREEZE,

@@ -70,7 +70,7 @@ public abstract class DamageSourceMixin implements IDamageSource {
       // 等级处理 判断实体是否有护甲如果没有就用实体的等级
       iLcLevel = itemStack.getCapability(ModCapabilitys.LcLevel.LC_LEVEL_ITEM);
       if (iLcLevel != null) {
-        lcDamageLevel = iLcLevel.getItemLevel();
+        lcDamageLevel = iLcLevel.getLcLevel();
       }
     }
 
@@ -89,7 +89,7 @@ public abstract class DamageSourceMixin implements IDamageSource {
 
       iLcLevel = entity.getCapability(ModCapabilitys.LcLevel.LC_LEVEL_ENTITY);
       if (iLcLevel != null) {
-        lcDamageLevel = iLcLevel.getItemLevel();
+        lcDamageLevel = iLcLevel.getLcLevel();
       }
     }
 
@@ -114,7 +114,6 @@ public abstract class DamageSourceMixin implements IDamageSource {
   }
 
   @Unique
-  @Nullable
   public LcLevel iimaginarycraft$getLcDamageLevel() {
     return imaginaryCraft$lcDamageLevel;
   }

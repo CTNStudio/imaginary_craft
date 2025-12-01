@@ -1,4 +1,7 @@
 {
-  "height": 98,
-  "width": 14
+  "animation": {
+    "width": 98,
+    "height": 14,
+    "frametime": 1
+  }
 }

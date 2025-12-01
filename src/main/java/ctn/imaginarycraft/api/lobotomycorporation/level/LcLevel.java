@@ -7,6 +7,7 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModCapabilitys;
 import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,25 +34,22 @@ public enum LcLevel implements ColourText, StringRepresentable {
   }
 
   @NotNull
-  public static LcLevel getEntityLevel(@NotNull Entity entity) {
+  public static LcLevel getLevel(@NotNull Entity entity) {
     ILcLevel capability = entity.getCapability(ModCapabilitys.LcLevel.LC_LEVEL_ENTITY);
+    return capability != null ? capability.getLcLevel() : ZAYIN;
+  }
 
-    if (capability == null) {
-      return LcLevel.ZAYIN;
-    }
-
-    LcLevel lcLevel = capability.getItemLevel();
-    if (lcLevel == null) {
-      lcLevel = LcLevel.ZAYIN;
-    }
-    return lcLevel;
+  @NotNull
+  public static LcLevel getLevel(@NotNull ItemStack item) {
+    ILcLevel capability = item.getCapability(ModCapabilitys.LcLevel.LC_LEVEL_ITEM);
+    return capability != null ? capability.getLcLevel() : ZAYIN;
   }
 
   /**
    * 返回实体或物品之间的等级差值
    */
-  public static int leveDifferenceValue(@NotNull LcLevel pmLevel, @NotNull LcLevel pmLevel2) {
-    return pmLevel.getLevel() - pmLevel2.getLevel();
+  public static int leveDifferenceValue(@NotNull LcLevel pmLevel, @NotNull LcLevel pmLevel1) {
+    return pmLevel.getLevel() - pmLevel1.getLevel();
   }
 
   public String getName() {

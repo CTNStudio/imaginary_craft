@@ -1,10 +1,11 @@
 package ctn.imaginarycraft.datagen;
 
+import ctn.imaginarycraft.common.command.RationalityCommands;
 import ctn.imaginarycraft.config.ConfigUtil;
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.world.ModAttributes;
-import ctn.imaginarycraft.init.world.ModDamageTypes;
+import ctn.imaginarycraft.init.ModAttributes;
+import ctn.imaginarycraft.init.ModDamageTypes;
 import ctn.imaginarycraft.linkage.jade.LivingEntityVulnerable;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.data.PackOutput;
@@ -48,6 +49,20 @@ public final class DatagenI18ZhCn extends LanguageProvider {
     add(ModConfig.CLIENT.enableFourColorDamageFilter, "是否开启玩家遭受四色伤害滤镜");
     add(ModConfig.CLIENT.enableLowRationalityFilter, "是否开启玩家低理智滤镜");
     add(ModConfig.SERVER.enableNaturalRationalityRationality, "是否开启自然恢复理智值");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.SET_KEY, RationalityCommands.ProcessType.VALUE.getName()), "已设置%s的理智值为：%d");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.SET_KEY, RationalityCommands.ProcessType.MAX_VALUE.getName()), "已设置%s的最大理智基础值为：%d");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.SET_KEY, RationalityCommands.ProcessType.NATURAL_RECOVERY_RATE.getName()), "已设置%s的基础理智值自然恢复效率为：每%d tick 一次");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.SET_KEY, RationalityCommands.ProcessType.RATIONALITY_RECOVERY_AMOUNT.getName()), "已设置%s的基础理智恢复为：每次%d");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.GET_KEY, RationalityCommands.ProcessType.VALUE.getName()), "%s的理智值为：%d");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.GET_KEY, RationalityCommands.ProcessType.MAX_VALUE.getName()), "%s的最大理智值为：%d");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.GET_KEY, RationalityCommands.ProcessType.NATURAL_RECOVERY_RATE.getName()), "%s的理智值自然恢复效率为：每%d tick 一次");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.GET_KEY, RationalityCommands.ProcessType.RATIONALITY_RECOVERY_AMOUNT.getName()), "%s的理智值自然恢复量为：每次%d点");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.RESET_KEY, RationalityCommands.ProcessType.VALUE.getName()), "已重置%s的理智值为：%d");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.RESET_KEY, RationalityCommands.ProcessType.MAX_VALUE.getName()), "已重置%s的最大理智基础值为：%d");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.RESET_KEY, RationalityCommands.ProcessType.NATURAL_RECOVERY_RATE.getName()), "已重置%s的基础理智值自然恢复效率为：每%d tick 一次");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.RESET_KEY, RationalityCommands.ProcessType.RATIONALITY_RECOVERY_AMOUNT.getName()), "已重置%s的基础理智值自然恢复量为：每次%d点");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.RESET_KEY), "已重置%s的理智");
+
   }
 
   private void add(ModConfigSpec.ConfigValue<?> configValue, String value) {

@@ -14,7 +14,7 @@ public enum EntityLcLevel implements IEntityComponentProvider {
 
   @Override
   public void appendTooltip(ITooltip iTooltip, EntityAccessor entityAccessor, IPluginConfig iPluginConfig) {
-    LcLevel level = LcLevel.getEntityLevel(entityAccessor.getEntity());
+    LcLevel level = LcLevel.getLevel(entityAccessor.getEntity());
     if (level == null) {
       return;
     }

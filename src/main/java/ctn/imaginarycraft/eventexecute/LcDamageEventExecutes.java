@@ -3,8 +3,8 @@ package ctn.imaginarycraft.eventexecute;
 import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.damage.util.LcDamageUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.level.util.LcLevelUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
-import ctn.imaginarycraft.capability.ILcLevel;
 import ctn.imaginarycraft.capability.entity.IAbnormalities;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.mixinextend.IDamageSource;
@@ -70,14 +70,14 @@ public final class LcDamageEventExecutes {
     for (ItemStack armorItemStack : armorSlots) {
       if (armorItemStack != null && !armorItemStack.isEmpty()) {
         isArmorItemStackEmpty = false;
-        armorItemStackLaval += ILcLevel.getItemLevelValue(armorItemStack);
+        armorItemStackLaval += LcLevelUtil.getLcLevelValue(armorItemStack);
         number++;
       }
     }
 
     // 盔甲判断
     if (isArmorItemStackEmpty) {
-      newDamageAmount *= LcDamageUtil.getDamageMultiple(LcLevel.getEntityLevel(entity), damageLcLevel);
+      newDamageAmount *= LcDamageUtil.getDamageMultiple(LcLevel.getLevel(entity), damageLcLevel);
     } else {
       armorItemStackLaval /= number;
       newDamageAmount *= LcDamageUtil.getDamageMultiple(armorItemStackLaval - damageLcLevel.getLevel());

@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.common.world.attribute;
+package ctn.imaginarycraft.common.attribute;
 
 import net.minecraft.world.entity.ai.attributes.Attribute;
 

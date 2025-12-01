@@ -28,7 +28,7 @@ public abstract class BasicDrawLayer implements LayeredDraw.Layer {
     if (this.minecraft.options.hideGui) {
       return;
     }
-    init(guiGraphics);
+    init(guiGraphics, deltaTracker);
 
     renderDrawLayer(guiGraphics, deltaTracker);
   }
@@ -38,7 +38,7 @@ public abstract class BasicDrawLayer implements LayeredDraw.Layer {
    */
   protected abstract void renderDrawLayer(final GuiGraphics guiGraphics, final DeltaTracker deltaTracker);
 
-  public void init(final GuiGraphics guiGraphics) {
+  public void init(final GuiGraphics guiGraphics, final DeltaTracker deltaTracker) {
     int oldScreenWidth = guiGraphics.guiWidth();
     int oldScreenHeight = guiGraphics.guiHeight();
 

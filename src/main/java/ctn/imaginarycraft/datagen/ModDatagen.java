@@ -4,7 +4,7 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.tag.DatagenBlockTag;
 import ctn.imaginarycraft.datagen.tag.DatagenDamageTypeTag;
 import ctn.imaginarycraft.datagen.tag.DatagenItemTag;
-import ctn.imaginarycraft.init.world.ModDamageTypes;
+import ctn.imaginarycraft.init.ModDamageTypes;
 import net.minecraft.DetectedVersion;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;

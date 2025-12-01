@@ -18,98 +18,114 @@ import java.util.Optional;
 
 public final class ParticleUtil {
 
-  public static void createTextParticles(ServerLevel world,
-                                         Component component,
-                                         @Nullable Holder<DamageType> damageType,
-                                         @Nullable LcDamageType lcDamageType,
-                                         int fontColor,
-                                         int strokeColor,
-                                         boolean isRationality,
-                                         boolean isHeal,
-                                         boolean isTexture,
-                                         double x, double y, double z,
-                                         double xOffset, double yOffset, double zOffset) {
-    var options = new TextParticleOptions(component, Optional.ofNullable(damageType), Optional.ofNullable(lcDamageType), fontColor, strokeColor, isRationality, isHeal, isTexture);
+  public static void createTextParticles(
+    ServerLevel world,
+    Component component,
+    @Nullable Holder<DamageType> damageType,
+    @Nullable LcDamageType lcDamageType,
+    int fontColor,
+    int strokeColor,
+    boolean isRationality,
+    boolean isHeal,
+    boolean isTexture,
+    double x,
+    double y,
+    double z,
+    double xOffset, double yOffset, double zOffset
+  ) {
+    TextParticleOptions options = new TextParticleOptions(component, Optional.ofNullable(damageType), Optional.ofNullable(lcDamageType), fontColor, strokeColor, isRationality, isHeal, isTexture);
     world.sendParticles(options, x, y, z, 1, xOffset, yOffset, zOffset, 0);
   }
 
-  public static void randomColorTextParticles(ServerLevel world,
-                                              Component component,
-                                              @Nullable Holder<DamageType> damageType,
-                                              @Nullable LcDamageType lcDamageType,
-                                              int fontColor,
-                                              int strokeColor,
-                                              boolean isRationality,
-                                              boolean isHeal,
-                                              boolean isTexture,
-                                              double x, double y, double z) {
+  public static void randomColorTextParticles(
+    ServerLevel world,
+    Component component,
+    @Nullable Holder<DamageType> damageType,
+    @Nullable LcDamageType lcDamageType,
+    int fontColor,
+    int strokeColor,
+    boolean isRationality,
+    boolean isHeal,
+    boolean isTexture,
+    double x,
+    double y,
+    double z
+  ) {
     createTextParticles(world, component, damageType, lcDamageType, fontColor, strokeColor, isRationality, isHeal, isTexture,
       x, y, z, 0.1, 0.1, 0.1);
   }
 
-  public static void randomColorTextParticles(ServerLevel world,
-                                              Component component,
-                                              @Nullable Holder<DamageType> damageType,
-                                              @Nullable LcDamageType lcDamageType,
-                                              boolean isRationality,
-                                              boolean isHeal,
-                                              boolean isTexture,
-                                              double x, double y, double z) {
+  public static void randomColorTextParticles(
+    ServerLevel world,
+    Component component,
+    @Nullable Holder<DamageType> damageType,
+    @Nullable LcDamageType lcDamageType,
+    boolean isRationality,
+    boolean isHeal,
+    boolean isTexture,
+    double x,
+    double y,
+    double z
+  ) {
     randomColorTextParticles(world, component, damageType, lcDamageType, -1, -1, isRationality, isHeal, isTexture,
       x, y, z);
   }
 
-  public static void randomColorTextParticles(ServerLevel world,
-                                              Component component,
-                                              boolean isRationality,
-                                              boolean isHeal,
-                                              boolean isTexture,
-                                              double x, double y, double z) {
+  public static void randomColorTextParticles(
+    ServerLevel world,
+    Component component,
+    boolean isRationality,
+    boolean isHeal,
+    boolean isTexture,
+    double x,
+    double y,
+    double z
+  ) {
     randomColorTextParticles(world, component, null, null, -1, -1, isRationality, isHeal, isTexture,
       x, y, z);
   }
 
-  public static void createTextParticles(LivingEntity entity,
-                                         Component component,
-                                         @Nullable Holder<DamageType> damageType,
-                                         @Nullable LcDamageType lcDamageType,
-                                         boolean isRationality,
-                                         boolean isHeal) {
+  public static void createTextParticles(
+    LivingEntity entity,
+    Component component,
+    @Nullable Holder<DamageType> damageType,
+    @Nullable LcDamageType lcDamageType,
+    boolean isRationality,
+    boolean isHeal
+  ) {
     createTextParticles(entity, component, damageType, lcDamageType, -1, -1, isRationality, isHeal, true);
   }
 
-  public static void createTextParticles(LivingEntity entity,
-                                         Component component,
-                                         boolean isRationality,
-                                         boolean isHeal) {
+  public static void createTextParticles(LivingEntity entity, Component component, boolean isRationality, boolean isHeal) {
     createTextParticles(entity, component, null, null, 0, 0, isRationality, isHeal, true);
   }
 
-  public static void createTextParticles(LivingEntity entity,
-                                         float value,
-                                         boolean isRationality,
-                                         boolean isHeal) {
+  public static void createTextParticles(LivingEntity entity, float value, boolean isRationality, boolean isHeal) {
     createTextParticles(entity, getText(value, isHeal), null, null, -1, -1, isRationality, isHeal, true);
   }
 
-  public static void createTextParticles(LivingEntity entity,
-                                         @Nullable Holder<DamageType> damageType,
-                                         @Nullable LcDamageType lcDamageType,
-                                         float value,
-                                         boolean isRationality,
-                                         boolean isHeal) {
+  public static void createTextParticles(
+    LivingEntity entity,
+    @Nullable Holder<DamageType> damageType,
+    @Nullable LcDamageType lcDamageType,
+    float value,
+    boolean isRationality,
+    boolean isHeal
+  ) {
     createTextParticles(entity, getText(value, isHeal), damageType, lcDamageType, -1, -1, isRationality, isHeal, true);
   }
 
-  public static void createTextParticles(LivingEntity entity,
-                                         Component component,
-                                         @Nullable Holder<DamageType> damageType,
-                                         @Nullable LcDamageType lcDamageType,
-                                         int fontColor,
-                                         int strokeColor,
-                                         boolean isRationality,
-                                         boolean isHeal,
-                                         boolean isTexture) {
+  public static void createTextParticles(
+    LivingEntity entity,
+    Component component,
+    @Nullable Holder<DamageType> damageType,
+    @Nullable LcDamageType lcDamageType,
+    int fontColor,
+    int strokeColor,
+    boolean isRationality,
+    boolean isHeal,
+    boolean isTexture
+  ) {
     if (!(entity.level() instanceof ServerLevel serverLevel)) {
       return;
     }

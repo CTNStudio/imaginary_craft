@@ -37,8 +37,8 @@ public class NewHealthBarLayer extends BasicDrawLayer {
   }
 
   @Override
-  public void init(final GuiGraphics guiGraphics) {
-    super.init(guiGraphics);
+  public void init(final GuiGraphics guiGraphics, final DeltaTracker deltaTracker) {
+    super.init(guiGraphics, deltaTracker);
 
     LocalPlayer player = this.player;
     float newHp = player.getHealth();

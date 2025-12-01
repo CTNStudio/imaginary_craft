@@ -25,14 +25,14 @@ public final class LcDamageUtil {
   }
 
   /**
-   * 返回实体或物品的伤害倍数
+   * 获取伤害比例
    */
-  public static float getDamageMultiple(@NotNull LcLevel laval, @NotNull LcLevel laval2) {
-    return getDamageMultiple(LcLevel.leveDifferenceValue(laval, laval2));
+  public static float getDamageMultiple(@NotNull LcLevel laval, @NotNull LcLevel laval1) {
+    return getDamageMultiple(LcLevel.leveDifferenceValue(laval, laval1));
   }
 
   /**
-   * 获取伤害倍数
+   * 获取伤害比例
    */
   public static float getDamageMultiple(int i) {
     return switch (Math.clamp(i, -4, 4)) {
@@ -56,8 +56,8 @@ public final class LcDamageUtil {
   public static float theSoulDamage(float damage, LivingEntity entity, @Nullable Entity source, DamageSource damageSource) {
     damage /= 100;
     float maxHealth = 0;
-    LcLevel entityLevel = LcLevel.getEntityLevel(entity);
-    @Nullable LcLevel lcDamageLevel = IDamageSource.of(damageSource).getLcDamageLevel();
+    LcLevel entityLevel = LcLevel.getLevel(entity);
+    LcLevel lcDamageLevel = IDamageSource.of(damageSource).getLcDamageLevel();
     if (source instanceof LivingEntity living) {
       maxHealth = (float) living.getAttributeValue(Attributes.MAX_HEALTH);
     }
@@ -68,10 +68,6 @@ public final class LcDamageUtil {
     }
 
     // 根据伤害等级差异计算最终伤害
-    if (lcDamageLevel != null) {
-      return damage * getDamageMultiple(entityLevel, lcDamageLevel) * maxHealth;
-    }
-
-    return damage * maxHealth;
+    return damage * getDamageMultiple(entityLevel, lcDamageLevel) * maxHealth;
   }
 }

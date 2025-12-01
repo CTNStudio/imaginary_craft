@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.registry;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.world.ModAttributes;
+import ctn.imaginarycraft.init.ModAttributes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;

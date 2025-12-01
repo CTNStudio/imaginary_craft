@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.core;
 
 import ctn.imaginarycraft.config.ModConfig;
+import ctn.imaginarycraft.init.ModAttachments;
+import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.ModParticleTypes;
-import ctn.imaginarycraft.init.world.ModAttachments;
-import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;

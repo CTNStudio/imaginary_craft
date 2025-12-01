@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.api.lobotomycorporation.util;
 
 import ctn.imaginarycraft.core.ModEventHooks;
-import ctn.imaginarycraft.init.world.ModAttachments;
-import ctn.imaginarycraft.init.world.ModAttributes;
+import ctn.imaginarycraft.init.ModAttachments;
+import ctn.imaginarycraft.init.ModAttributes;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
@@ -78,6 +78,41 @@ public final class RationalityUtil {
    */
   public static float getMaxValue(Player entity) {
     return (float) entity.getAttributeValue(ModAttributes.MAX_RATIONALITY);
+  }
+
+  /**
+   * 设置基本最大理智值
+   */
+  public static void setBaseMaxValue(Player entity, float value) {
+    entity.getAttributes().getInstance(ModAttributes.MAX_RATIONALITY).setBaseValue(value);
+  }
+
+  /**
+   * 获取理智值自然恢复效率
+   */
+  public static float getNaturalRecoveryRate(Player entity) {
+    return (float) entity.getAttributeValue(ModAttributes.RATIONALITY_NATURAL_RECOVERY_RATE);
+  }
+
+  /**
+   * 设置基本理智值自然恢复效率
+   */
+  public static void setBaseNaturalRecoveryRate(Player entity, float value) {
+    entity.getAttributes().getInstance(ModAttributes.RATIONALITY_NATURAL_RECOVERY_RATE).setBaseValue(value);
+  }
+
+  /**
+   * 获取理智值自然恢复量
+   */
+  public static float getRationalityRecoveryAmount(Player entity) {
+    return (float) entity.getAttributeValue(ModAttributes.RATIONALITY_RECOVERY_AMOUNT);
+  }
+
+  /**
+   * 设置基本理智值自然恢复量
+   */
+  public static void setBaseRationalityRecoveryAmount(Player entity, float value) {
+    entity.getAttributes().getInstance(ModAttributes.RATIONALITY_RECOVERY_AMOUNT).setBaseValue(value);
   }
 
   /**

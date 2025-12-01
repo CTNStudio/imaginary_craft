@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.api.lobotomycorporation.virtue.util;
 
-import ctn.imaginarycraft.init.world.ModAttachments;
+import ctn.imaginarycraft.init.ModAttachments;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 

@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init.world;
+package ctn.imaginarycraft.init;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;

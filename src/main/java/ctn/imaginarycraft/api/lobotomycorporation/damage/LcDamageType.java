@@ -5,9 +5,8 @@ import com.mojang.serialization.DataResult;
 import ctn.ctnapi.client.util.ColorUtil;
 import ctn.imaginarycraft.api.ColourText;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.world.ModAttributes;
-import ctn.imaginarycraft.init.world.ModDamageTypes;
-import ctn.imaginarycraft.init.world.tag.ModDamageTypeTags;
+import ctn.imaginarycraft.init.ModAttributes;
+import ctn.imaginarycraft.init.ModDamageTypes;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
 import net.minecraft.network.codec.ByteBufCodecs;
@@ -97,19 +96,19 @@ public enum LcDamageType implements ColourText, StringRepresentable {
    */
   @Nullable
   public static LcDamageType byDamageType(@NotNull Holder<DamageType> damageType) {
-    if (damageType.is(ModDamageTypeTags.BYPASS_LC)) {
+    if (damageType.is(ctn.imaginarycraft.init.world.tag.ModDamageTypeTags.BYPASS_LC)) {
       return null;
     }
-    if (damageType.is(ModDamageTypeTags.PHYSICS)) {
+    if (damageType.is(ctn.imaginarycraft.init.world.tag.ModDamageTypeTags.PHYSICS)) {
       return PHYSICS;
     }
-    if (damageType.is(ModDamageTypeTags.SPIRIT)) {
+    if (damageType.is(ctn.imaginarycraft.init.world.tag.ModDamageTypeTags.SPIRIT)) {
       return SPIRIT;
     }
-    if (damageType.is(ModDamageTypeTags.EROSION)) {
+    if (damageType.is(ctn.imaginarycraft.init.world.tag.ModDamageTypeTags.EROSION)) {
       return EROSION;
     }
-    if (damageType.is(ModDamageTypeTags.THE_SOUL)) {
+    if (damageType.is(ctn.imaginarycraft.init.world.tag.ModDamageTypeTags.THE_SOUL)) {
       return THE_SOUL;
     }
     // 默认为物理伤害

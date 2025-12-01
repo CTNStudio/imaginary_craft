@@ -1,7 +1,7 @@
-package ctn.imaginarycraft.init.world;
+package ctn.imaginarycraft.init;
 
-import ctn.imaginarycraft.common.world.attribute.BasicAttribute;
-import ctn.imaginarycraft.common.world.attribute.MinAttribute;
+import ctn.imaginarycraft.common.attribute.BasicAttribute;
+import ctn.imaginarycraft.common.attribute.MinAttribute;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.util.AttributeRegisterUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
