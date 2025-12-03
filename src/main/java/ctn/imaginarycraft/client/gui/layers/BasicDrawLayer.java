@@ -39,13 +39,13 @@ public abstract class BasicDrawLayer implements LayeredDraw.Layer {
   protected abstract void renderDrawLayer(final GuiGraphics guiGraphics, final DeltaTracker deltaTracker);
 
   public void init(final GuiGraphics guiGraphics, final DeltaTracker deltaTracker) {
-    int oldScreenWidth = guiGraphics.guiWidth();
-    int oldScreenHeight = guiGraphics.guiHeight();
+    int newScreenWidth = guiGraphics.guiWidth();
+    int newScreenHeight = guiGraphics.guiHeight();
 
-    boolean isWidthChange = oldScreenWidth != this.screenWidth;
-    boolean isHeightChange = oldScreenHeight != this.screenHeight;
+    boolean isWidthChange = newScreenWidth != this.screenWidth;
+    boolean isHeightChange = newScreenHeight != this.screenHeight;
     if (isWidthChange || isHeightChange) {
-      sizeChange(isWidthChange, isHeightChange, oldScreenWidth, oldScreenHeight);
+      sizeChange(isWidthChange, isHeightChange, newScreenWidth, newScreenHeight);
     }
 
     var newPlayer = Objects.requireNonNull(this.minecraft.player);
@@ -58,13 +58,13 @@ public abstract class BasicDrawLayer implements LayeredDraw.Layer {
     this.player = newPlayer;
   }
 
-  protected void sizeChange(final boolean isWidthChange, final boolean isHeightChange, final int width, final int height) {
+  protected void sizeChange(final boolean isWidthChange, final boolean isHeightChange, final int newScreenWidth, final int newScreenHeight) {
     if (isHeightChange) {
-      this.screenWidth = width;
+      this.screenWidth = newScreenWidth;
     }
 
     if (isWidthChange) {
-      this.screenHeight = height;
+      this.screenHeight = newScreenHeight;
     }
   }
 }

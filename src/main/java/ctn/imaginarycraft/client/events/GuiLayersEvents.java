@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.client.event;
+package ctn.imaginarycraft.client.events;
 
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.core.ImaginaryCraft;

@@ -91,14 +91,14 @@ public final class RationalityUtil {
    * 获取理智值自然恢复效率
    */
   public static float getNaturalRecoveryRate(Player entity) {
-    return (float) entity.getAttributeValue(ModAttributes.RATIONALITY_NATURAL_RECOVERY_RATE);
+    return (float) entity.getAttributeValue(ModAttributes.RATIONALITY_NATURAL_RECOVERY_WAIT_TIME);
   }
 
   /**
    * 设置基本理智值自然恢复效率
    */
   public static void setBaseNaturalRecoveryRate(Player entity, float value) {
-    entity.getAttributes().getInstance(ModAttributes.RATIONALITY_NATURAL_RECOVERY_RATE).setBaseValue(value);
+    entity.getAttributes().getInstance(ModAttributes.RATIONALITY_NATURAL_RECOVERY_WAIT_TIME).setBaseValue(value);
   }
 
   /**

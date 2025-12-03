@@ -1,5 +1,9 @@
 package ctn.imaginarycraft.api.lobotomycorporation.virtue.util;
 
+import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueFortitude;
+import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueJustice;
+import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtuePrudence;
+import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueTemperance;
 import ctn.imaginarycraft.init.ModAttachments;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
@@ -27,18 +31,34 @@ public final class VirtueUtil {
   }
 
   public static int getJusticeRating(final Player player) {
-    return player.getData(ModAttachments.JUSTICE).getRatingPoints();
+    return getJustice(player).getRatingPoints();
   }
 
   public static int getTemperanceRating(final Player player) {
-    return player.getData(ModAttachments.TEMPERANCE).getRatingPoints();
+    return getTemperance(player).getRatingPoints();
   }
 
   public static int getPrudenceRating(final Player player) {
-    return player.getData(ModAttachments.PRUDENCE).getRatingPoints();
+    return getPrudence(player).getRatingPoints();
   }
 
   public static int getFortitudeRating(final Player player) {
-    return player.getData(ModAttachments.FORTITUDE).getRatingPoints();
+    return getFortitude(player).getRatingPoints();
+  }
+
+  public static VirtueJustice getJustice(final Player player) {
+    return player.getData(ModAttachments.JUSTICE);
+  }
+
+  public static VirtueTemperance getTemperance(final Player player) {
+    return player.getData(ModAttachments.TEMPERANCE);
+  }
+
+  public static VirtuePrudence getPrudence(final Player player) {
+    return player.getData(ModAttachments.PRUDENCE);
+  }
+
+  public static VirtueFortitude getFortitude(final Player player) {
+    return player.getData(ModAttachments.FORTITUDE);
   }
 }

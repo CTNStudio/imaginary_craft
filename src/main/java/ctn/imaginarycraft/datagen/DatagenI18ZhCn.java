@@ -51,15 +51,15 @@ public final class DatagenI18ZhCn extends LanguageProvider {
     add(ModConfig.SERVER.enableNaturalRationalityRationality, "是否开启自然恢复理智值");
     add(RationalityCommands.getFormattedKey(RationalityCommands.SET_KEY, RationalityCommands.ProcessType.VALUE.getName()), "已设置%s的理智值为：%d");
     add(RationalityCommands.getFormattedKey(RationalityCommands.SET_KEY, RationalityCommands.ProcessType.MAX_VALUE.getName()), "已设置%s的最大理智基础值为：%d");
-    add(RationalityCommands.getFormattedKey(RationalityCommands.SET_KEY, RationalityCommands.ProcessType.NATURAL_RECOVERY_RATE.getName()), "已设置%s的基础理智值自然恢复效率为：每%d tick 一次");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.SET_KEY, RationalityCommands.ProcessType.NATURAL_RECOVERY_RATE.getName()), "已设置%s的基础理智值理智值自然恢复等待时间为：20*%d Tick");
     add(RationalityCommands.getFormattedKey(RationalityCommands.SET_KEY, RationalityCommands.ProcessType.RATIONALITY_RECOVERY_AMOUNT.getName()), "已设置%s的基础理智恢复为：每次%d");
     add(RationalityCommands.getFormattedKey(RationalityCommands.GET_KEY, RationalityCommands.ProcessType.VALUE.getName()), "%s的理智值为：%d");
     add(RationalityCommands.getFormattedKey(RationalityCommands.GET_KEY, RationalityCommands.ProcessType.MAX_VALUE.getName()), "%s的最大理智值为：%d");
-    add(RationalityCommands.getFormattedKey(RationalityCommands.GET_KEY, RationalityCommands.ProcessType.NATURAL_RECOVERY_RATE.getName()), "%s的理智值自然恢复效率为：每%d tick 一次");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.GET_KEY, RationalityCommands.ProcessType.NATURAL_RECOVERY_RATE.getName()), "%s的理智值理智值自然恢复等待时间为：20*%d Tick");
     add(RationalityCommands.getFormattedKey(RationalityCommands.GET_KEY, RationalityCommands.ProcessType.RATIONALITY_RECOVERY_AMOUNT.getName()), "%s的理智值自然恢复量为：每次%d点");
     add(RationalityCommands.getFormattedKey(RationalityCommands.RESET_KEY, RationalityCommands.ProcessType.VALUE.getName()), "已重置%s的理智值为：%d");
     add(RationalityCommands.getFormattedKey(RationalityCommands.RESET_KEY, RationalityCommands.ProcessType.MAX_VALUE.getName()), "已重置%s的最大理智基础值为：%d");
-    add(RationalityCommands.getFormattedKey(RationalityCommands.RESET_KEY, RationalityCommands.ProcessType.NATURAL_RECOVERY_RATE.getName()), "已重置%s的基础理智值自然恢复效率为：每%d tick 一次");
+    add(RationalityCommands.getFormattedKey(RationalityCommands.RESET_KEY, RationalityCommands.ProcessType.NATURAL_RECOVERY_RATE.getName()), "已重置%s的基础理智值理智值自然恢复等待时间为：20*%dTick");
     add(RationalityCommands.getFormattedKey(RationalityCommands.RESET_KEY, RationalityCommands.ProcessType.RATIONALITY_RECOVERY_AMOUNT.getName()), "已重置%s的基础理智值自然恢复量为：每次%d点");
     add(RationalityCommands.getFormattedKey(RationalityCommands.RESET_KEY), "已重置%s的理智");
 

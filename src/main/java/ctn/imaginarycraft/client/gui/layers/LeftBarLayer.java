@@ -1,0 +1,43 @@
+package ctn.imaginarycraft.client.gui.layers;
+
+import com.mojang.blaze3d.vertex.PoseStack;
+import ctn.imaginarycraft.config.ModConfig;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphics;
+
+public final class LeftBarLayer extends CompositeLayer {
+  public static final LeftBarLayer INSTANCE = new LeftBarLayer();
+  public final RationalityBarLayer RATIONALITY = new RationalityBarLayer();
+  public final NewHealthBarLayer NEW_HEALTH = new NewHealthBarLayer();
+
+  public LeftBarLayer() {
+    addLayer(this.NEW_HEALTH,
+      () -> !this.minecraft.options.hideGui && ModConfig.CLIENT.enableNewHealthBar.get() && this.player != null && !this.player.isCreative());
+    addLayer(this.RATIONALITY,
+      () -> !this.minecraft.options.hideGui && this.player != null);
+  }
+
+  @Override
+  protected void updatePos(final boolean isWidthChange, final boolean isHeightChange, final int newScreenWidth, final int newScreenHeight) {
+    super.updatePos(isWidthChange, isHeightChange, newScreenWidth, newScreenHeight);
+    if (isWidthChange) {
+      this.leftPos = newScreenWidth / 2 - 105;
+    }
+    if (isHeightChange) {
+      this.topPos = newScreenHeight - 30;
+    }
+  }
+
+  @Override
+  protected void renderSubLayer(final GuiGraphics guiGraphics, final DeltaTracker deltaTracker) {
+    PoseStack pose = guiGraphics.pose();
+    pose.pushPose();
+    if (this.player.isCreative()) {
+      pose.translate(0, 5, 0);
+    } else if (!ModConfig.CLIENT.enableNewHealthBar.get()) {
+      pose.translate(0, -10, 0);
+    }
+    super.renderSubLayer(guiGraphics, deltaTracker);
+    pose.popPose();
+  }
+}

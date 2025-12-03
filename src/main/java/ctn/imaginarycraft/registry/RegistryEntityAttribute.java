@@ -105,7 +105,7 @@ public final class RegistryEntityAttribute {
    */
   private static void addPlayerAttributes(EntityAttributeModificationEvent event, EntityType<? extends Player> entityType) {
     event.add(entityType, ModAttributes.MAX_RATIONALITY);
-    event.add(entityType, ModAttributes.RATIONALITY_NATURAL_RECOVERY_RATE);
+    event.add(entityType, ModAttributes.RATIONALITY_NATURAL_RECOVERY_WAIT_TIME);
     event.add(entityType, ModAttributes.RATIONALITY_RECOVERY_AMOUNT);
 
     event.add(entityType, ModAttributes.INFORMATION);

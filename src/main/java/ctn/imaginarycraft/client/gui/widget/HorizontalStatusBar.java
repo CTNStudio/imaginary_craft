@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.client.gui.widget;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import ctn.imaginarycraft.client.util.GuiUtil;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractWidget;
@@ -11,9 +10,9 @@ import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
 public class HorizontalStatusBar extends AbstractWidget {
-  private final @NotNull TextureLayer bottom;
-  private final @NotNull TextureLayer internal;
-  private final @NotNull TextureLayer light;
+  private final @NotNull TextureLayer bottomLayer;
+  private final @NotNull TextureLayer internalLayer;
+  private final @NotNull TextureLayer lightLayer;
   private boolean isLight;
   private float lightTick;
   private float lightWidth;
@@ -21,26 +20,15 @@ public class HorizontalStatusBar extends AbstractWidget {
   private float oldValue;
   private float maxValue;
 
-  public HorizontalStatusBar(
-    int width,
-    int height,
-    @NotNull TextureLayer bottom,
-    @NotNull TextureLayer internal,
-    @NotNull TextureLayer light
-  ) {
+  public HorizontalStatusBar(int width, int height, @NotNull TextureLayer bottomLayer, @NotNull TextureLayer internalLayer, @NotNull TextureLayer lightLayer) {
     super(0, 0, width, height, Component.empty());
-    this.bottom = bottom;
-    this.internal = internal;
-    this.light = light;
+    this.bottomLayer = bottomLayer;
+    this.internalLayer = internalLayer;
+    this.lightLayer = lightLayer;
   }
 
   private void renderLayer(final @NotNull GuiGraphics guiGraphics, final TextureLayer layer, int x, int y) {
-    GuiUtil.blitSprite(
-      guiGraphics,
-      layer.texture,
-      x + layer.xPos,
-      y + layer.yPos,
-      layer.width, layer.height);
+    GuiUtil.blitSprite(guiGraphics, layer.texture, x + layer.xPos, y + layer.yPos, layer.width, layer.height);
   }
 
   public float getOldValue() {
@@ -61,16 +49,25 @@ public class HorizontalStatusBar extends AbstractWidget {
 
   public void setLightWidth(float oldValue, float newValue) {
     float renderValue = oldValue - newValue;
-    int maxWidth = this.internal.width;
-    this.lightWidth += Math.clamp(renderValue / this.maxValue * maxWidth, -maxWidth + 1, maxWidth - 1);
-    if (this.lightWidth <= 0) {
+    int maxWidth = this.internalLayer.width;
+    float clamp = Math.clamp(renderValue / this.maxValue * maxWidth, -maxWidth, maxWidth);
+    if (clamp != 0) {
+      this.lightWidth += clamp;
+    }
+    if (this.lightWidth < 0) {
       this.lightWidth = 0;
     }
-    this.value = newValue;
+    if (this.value != newValue) {
+      this.value = newValue;
+    }
   }
 
   public void setLightWidth(float value) {
     this.lightWidth = value;
+  }
+
+  public float getLightWidth() {
+    return this.lightWidth;
   }
 
   public float getMaxValue() {
@@ -87,76 +84,113 @@ public class HorizontalStatusBar extends AbstractWidget {
 
   public void setLight() {
     this.isLight = true;
-    this.lightTick = 1;
+    this.lightTick = 2;
   }
 
   @Override
-  protected void renderWidget(final GuiGraphics guiGraphics, final int mouseX, final int mouseY, final float partialTick) {
-    PoseStack pose = guiGraphics.pose();
+  protected void renderWidget(final @NotNull GuiGraphics guiGraphics, final int mouseX, final int mouseY, final float partialTick) {
     int x = getX();
     int y = getY();
 
-    renderLayer(guiGraphics, this.bottom, x, y);
-
+    renderLayer(guiGraphics, this.bottomLayer, x, y);
     renderInternal(guiGraphics, partialTick, x, y);
-
     if (this.isLight) {
-      renderLayer(guiGraphics, this.light, x, y);
+      float cyclePosition = this.lightTick;
+      if ((cyclePosition > 1.5 && cyclePosition <= 2) || (cyclePosition > 0 && cyclePosition <= 0.5)) {
+        renderLayer(guiGraphics, this.lightLayer, x, y);
+      }
     }
 
     if (this.lightTick <= 0) {
       this.lightTick = 0;
       isLight = false;
-    } else {
-      this.lightTick -= partialTick;
+      return;
     }
+    this.lightTick -= partialTick;
   }
 
   private void renderInternal(final GuiGraphics guiGraphics, final float partialTick, final int x, final int y) {
-    final int maxWidth = this.internal.width;
+    final int maxWidth = this.internalLayer.width;
     float value = getClampValue();
     // 使用更平滑的插值算法
     float maxValue = getMaxValue();
 
-    float internalHeight = this.internal.height;
+    float internalHeight = this.internalLayer.height;
     float internalUWidth = value / maxValue * maxWidth;
 
-    float posX = x + this.internal.xPos;
-    float posY = y + this.internal.yPos;
+    float posX = x + this.internalLayer.xPos;
+    float posY = y + this.internalLayer.yPos;
 
     if (this.lightWidth > 0) {
       float v = this.value / maxValue * maxWidth;
       float minX = Math.clamp(v, 0, posX + maxWidth);
       float maxX = Math.clamp(minX + this.lightWidth, 0, posX + maxWidth);
       float maxY = posY + internalHeight;
-      int color = 255 << 24 | 255 << 16 | 255 << 8 | 255 / 2;
+      int color = (int) (255 * 0.7) << 24 | 255 << 16 | 255 << 8 | 255;
       if (this.isLight) {
         color = 0xffffffff;
       }
-      GuiUtil.fill(guiGraphics, Math.clamp(posX + minX, posX + 1, posX + maxValue - 1), posY + 1, posX + maxX, maxY - 1, color);
+      GuiUtil.fill(guiGraphics, Math.clamp(posX + minX, posX, posX + maxValue), posY, posX + maxX, maxY, color);
       this.lightWidth = Mth.lerp(Math.clamp(partialTick * 0.2f, 0, 1), this.lightWidth, 0);
     }
 
-    GuiUtil.blitSprite(guiGraphics, this.internal.texture, maxWidth, internalHeight,
+    GuiUtil.blitSprite(guiGraphics, this.internalLayer.texture, maxWidth, internalHeight,
       0, 0, posX, posY, internalUWidth, internalHeight);
   }
 
   @Override
-  protected void updateWidgetNarration(final NarrationElementOutput narrationElementOutput) {
-
+  protected void updateWidgetNarration(final @NotNull NarrationElementOutput narrationElementOutput) {
   }
 
-  public void reset() {
-    this.oldValue = 0;
-    this.lightWidth = 0;
+  public @NotNull TextureLayer getBottomLayer() {
+    return bottomLayer;
   }
 
-  public record TextureLayer(
-    float xPos,
-    float yPos,
-    int width,
-    int height,
-    @NotNull ResourceLocation texture
-  ) {
+  public @NotNull TextureLayer getInternalLayer() {
+    return internalLayer;
+  }
+
+  public @NotNull TextureLayer getLightLayer() {
+    return lightLayer;
+  }
+
+  public static final class TextureLayer {
+    private final float xPos;
+    private final float yPos;
+    private final int width;
+    private final int height;
+    private @NotNull ResourceLocation texture;
+
+    public TextureLayer(float xPos, float yPos, int width, int height, @NotNull ResourceLocation texture) {
+      this.xPos = xPos;
+      this.yPos = yPos;
+      this.width = width;
+      this.height = height;
+      this.texture = texture;
+    }
+
+    public float xPos() {
+      return xPos;
+    }
+
+    public float yPos() {
+      return yPos;
+    }
+
+    public int width() {
+      return width;
+    }
+
+    public int height() {
+      return height;
+    }
+
+    public @NotNull ResourceLocation texture() {
+      return texture;
+    }
+
+    public void setTexture(@NotNull ResourceLocation texture) {
+      this.texture = texture;
+    }
   }
 }

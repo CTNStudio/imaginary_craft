@@ -19,7 +19,7 @@ public abstract class RationalityEvent extends PlayerEvent implements IModBusEve
    * 获取自然恢复效率
    */
   public AttributeInstance getNaturalRecoveryRate() {
-    return getEntity().getAttribute(ModAttributes.RATIONALITY_NATURAL_RECOVERY_RATE);
+    return getEntity().getAttribute(ModAttributes.RATIONALITY_NATURAL_RECOVERY_WAIT_TIME);
   }
 
   /**

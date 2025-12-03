@@ -1,20 +1,22 @@
 package ctn.imaginarycraft.api.lobotomycorporation.level.util;
 
 import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
+import ctn.imaginarycraft.capability.ILcLevel;
+import ctn.imaginarycraft.init.ModCapabilitys;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 public final class LcLevelUtil {
-  /**
-   * 获取等级差值
-   */
-  public static int leveDifferenceValue(ItemStack item, ItemStack item2) {
-    return getLcLevelValue(item) - getLcLevelValue(item2);
+  @NotNull
+  public static LcLevel getLevel(@NotNull Entity entity) {
+    ILcLevel capability = entity.getCapability(ModCapabilitys.LcLevel.LC_LEVEL_ENTITY);
+    return capability != null ? capability.getLcLevel() : LcLevel.ZAYIN;
   }
 
-  /**
-   * 返回物品等级
-   */
-  public static int getLcLevelValue(ItemStack item) {
-    return LcLevel.getLevel(item).getLevel();
+  @NotNull
+  public static LcLevel getLevel(@NotNull ItemStack item) {
+    ILcLevel capability = item.getCapability(ModCapabilitys.LcLevel.LC_LEVEL_ITEM);
+    return capability != null ? capability.getLcLevel() : LcLevel.ZAYIN;
   }
 }

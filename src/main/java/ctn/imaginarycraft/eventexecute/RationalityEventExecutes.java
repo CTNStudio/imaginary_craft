@@ -21,7 +21,8 @@ public final class RationalityEventExecutes {
       return;
     }
 
-    if (RationalityUtil.getValue(player) >= RationalityUtil.getMaxValue(player)) {
+    float value = RationalityUtil.getValue(player);
+    if (value < 0 || value >= RationalityUtil.getMaxValue(player)) {
       return;
     }
 
@@ -30,7 +31,9 @@ public final class RationalityEventExecutes {
       RationalityUtil.modifyValue(player, recoveryAmount, true);
     }
 
-    int value = (int) (20 * RationalityUtil.getNaturalRecoveryRate(player));
-    RationalityUtil.setRecoveryTick(player, value);
+    float naturalRecoveryRate = RationalityUtil.getNaturalRecoveryRate(player);
+    if (naturalRecoveryRate > 0) {
+      RationalityUtil.setRecoveryTick(player, (int) (20 * naturalRecoveryRate));
+    }
   }
 }

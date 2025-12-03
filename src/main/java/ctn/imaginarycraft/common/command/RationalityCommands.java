@@ -46,7 +46,7 @@ public class RationalityCommands {
             ServerPlayer player = EntityArgument.getPlayer(context, "target");
             RationalityUtil.setValue(player, 0, false);
             RationalityUtil.setBaseMaxValue(player, (float) ModAttributes.MAX_RATIONALITY.value().getDefaultValue());
-            RationalityUtil.setBaseNaturalRecoveryRate(player, (float) ModAttributes.RATIONALITY_NATURAL_RECOVERY_RATE.value().getDefaultValue());
+            RationalityUtil.setBaseNaturalRecoveryRate(player, (float) ModAttributes.RATIONALITY_NATURAL_RECOVERY_WAIT_TIME.value().getDefaultValue());
             RationalityUtil.setBaseRationalityRecoveryAmount(player, (float) ModAttributes.RATIONALITY_RECOVERY_AMOUNT.value().getDefaultValue());
             context.getSource().sendSuccess(() ->
               Component.translatable(getFormattedKey(RESET_KEY), player.getName()), true);
@@ -72,7 +72,7 @@ public class RationalityCommands {
         case MAX_VALUE ->
           RationalityUtil.setBaseMaxValue(player, value = (float) ModAttributes.MAX_RATIONALITY.value().getDefaultValue());
         case NATURAL_RECOVERY_RATE ->
-          RationalityUtil.setBaseNaturalRecoveryRate(player, value = (float) ModAttributes.RATIONALITY_NATURAL_RECOVERY_RATE.value().getDefaultValue());
+          RationalityUtil.setBaseNaturalRecoveryRate(player, value = (float) ModAttributes.RATIONALITY_NATURAL_RECOVERY_WAIT_TIME.value().getDefaultValue());
         case RATIONALITY_RECOVERY_AMOUNT ->
           RationalityUtil.setBaseRationalityRecoveryAmount(player, value = (float) ModAttributes.RATIONALITY_RECOVERY_AMOUNT.value().getDefaultValue());
       }

@@ -44,10 +44,10 @@ public final class ModAttributes extends AttributeRegisterUtil {
   public static final DeferredHolder<Attribute, MinAttribute> MAX_RATIONALITY = registerMin("max_rationality", function ->
     function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 20, 0);
   /**
-   * 理智值自然恢复效率
+   * 理智值自然恢复等待时间
    */
-  public static final DeferredHolder<Attribute, MinAttribute> RATIONALITY_NATURAL_RECOVERY_RATE = registerMin("rationality_natural_recovery_rate", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0.5, 0);
+  public static final DeferredHolder<Attribute, MinAttribute> RATIONALITY_NATURAL_RECOVERY_WAIT_TIME = registerMin("rationality_natural_recovery_wait_time", function ->
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), 0.5, 0);
   /**
    * 理智值自然恢复量
    */

@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.client.util;
 
-import ctn.ctnapi.util.TextUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
 import ctn.imaginarycraft.client.particle.TextParticleOptions;
+import ctn.imaginarycraft.util.TextUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

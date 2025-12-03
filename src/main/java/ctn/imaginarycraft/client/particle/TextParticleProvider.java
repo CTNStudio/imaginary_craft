@@ -17,7 +17,6 @@ import static ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType.PHY
 
 public record TextParticleProvider(
   SpriteSet spriteSet) implements ParticleProvider<TextParticleOptions> {
-
   @Override
   @NotNull
   public Particle createParticle(@NotNull TextParticleOptions type, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
@@ -37,15 +36,15 @@ public record TextParticleProvider(
       return new Result(isTexture, getSprite(index), fontColor, strokeColor);
     }
 
+    if (isHeal) {
+      return new Result(false, getSprite(TextParticlesType.PHYSICS), ColorUtil.rgbColor("#89ff6a"), ColorUtil.rgbColor("#1c501f"));
+    }
+
     @Nullable Holder<DamageType> damageTypeResourceKey = options.damageType().orElse(null);
     @Nullable LcDamageType lcDamageTypeResourceKey = options.lcDamageType().orElse(null);
 
     if (damageTypeResourceKey == null) {
       return new Result(false, getSprite(TextParticlesType.PHYSICS), options.fontColor(), options.strokeColor());
-    }
-
-    if (isHeal) {
-      return new Result(false, getSprite(TextParticlesType.PHYSICS), ColorUtil.rgbColor("#89ff6a"), ColorUtil.rgbColor("#1c501f"));
     }
 
     // TODO 补充魔法类型

@@ -78,10 +78,10 @@ public final class EntityEvents {
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void dealingWithDamageEffects(LivingDamageEvent.Pre event) {
     DamageContainer container = event.getContainer();
-    LivingEntity entity = event.getEntity();
+    LivingEntity attackedEntity = event.getEntity();
     DamageSource source = event.getSource();
-    Entity directEntity = source.getDirectEntity();
-    Entity causingEntity = source.getEntity();
+    Entity sourceDirectEntity = source.getDirectEntity();
+    Entity sourceCausingEntity = source.getEntity();
     Holder<DamageType> damageTypeHolder = source.typeHolder();
     LcDamageType lcDamageType = LcDamageType.byDamageType(damageTypeHolder);
     // 建议在每个有返回值的方法执行后再获取一次以求准确
@@ -89,11 +89,11 @@ public final class EntityEvents {
     boolean modifyRationality = lcDamageType == LcDamageType.SPIRIT || lcDamageType == LcDamageType.EROSION;
 
     if (lcDamageType == LcDamageType.THE_SOUL) {
-      newDamage = LcDamageUtil.theSoulDamage(newDamage, entity, directEntity == null ? causingEntity : directEntity, source);
+      newDamage = LcDamageUtil.theSoulDamage(newDamage, attackedEntity, sourceDirectEntity == null ? sourceCausingEntity : sourceDirectEntity, source);
     }
 
     if (newDamage > 0) {
-      if (entity instanceof Player player && modifyRationality) {
+      if (attackedEntity instanceof Player player && modifyRationality) {
         RationalityUtil.modifyValue(player, -newDamage, true);
         if (lcDamageType == LcDamageType.SPIRIT) {
 //          ParticleUtil.createTextParticles(player, newDamage, true, false);
@@ -117,12 +117,12 @@ public final class EntityEvents {
     event.setNewDamage(0);
     newDamage = -newDamage;
 
-    if (entity instanceof Player player && modifyRationality) {
+    if (attackedEntity instanceof Player player && modifyRationality) {
       RationalityUtil.modifyValue(player, newDamage, true);
       ParticleUtil.createTextParticles(player, newDamage, true, true);
     }
 
-    LcDamageEventExecutes.heal(event, newDamage, entity);
+    LcDamageEventExecutes.heal(event, newDamage, attackedEntity);
   }
 
   /**

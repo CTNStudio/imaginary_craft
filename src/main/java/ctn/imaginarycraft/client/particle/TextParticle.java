@@ -11,7 +11,6 @@ import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.OutlineBufferSource;
 import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.renderer.texture.TextureManager;
@@ -22,6 +21,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.joml.Matrix4f;
 
+// TODO 拆分成伤害，BOSS说话文本，普通文本
 public class TextParticle extends TextureSheetParticle {
   public static final ParticleRenderType RENDER_TYPE = new ParticleRenderType() {
     @Override
@@ -70,7 +70,6 @@ public class TextParticle extends TextureSheetParticle {
   @Override
   public void render(@NotNull VertexConsumer vertexConsumer, Camera camera, float partialTicks) {
     Minecraft minecraft = Minecraft.getInstance();
-    OutlineBufferSource bufferSource = minecraft.renderBuffers().outlineBufferSource();
     Font font = minecraft.font;
     Vec3 camPos = camera.getPosition();
     int getLightColor = getLightColor(partialTicks);
@@ -82,6 +81,10 @@ public class TextParticle extends TextureSheetParticle {
     int height = font.lineHeight;
     float textX = -fontWidth / 2f;
     float textY = -height / 2f;
+
+    if (this.sprite != null) {
+      super.render(vertexConsumer, camera, partialTicks);
+    }
 
     poseStack.pushPose();
 
@@ -97,14 +100,12 @@ public class TextParticle extends TextureSheetParticle {
     poseStack.scale(quadSize, quadSize, quadSize);
     poseStack.translate(fontWidth / 2 + 7, 0, 0);
     Matrix4f matrix = poseStack.last().pose();
+    var bufferSource = minecraft.renderBuffers().crumblingBufferSource();
 
     font.drawInBatch(this.textComponent, textX + 1, textY + 1, this.strokeColor, false, matrix, bufferSource, Font.DisplayMode.SEE_THROUGH, this.strokeColor, getLightColor);
     font.drawInBatch(this.textComponent, textX, textY, this.fontColor, false, matrix.translate(0, 0, -0.5f), bufferSource, Font.DisplayMode.SEE_THROUGH, this.fontColor, getLightColor);
 
-    bufferSource.endOutlineBatch();
-    if (sprite != null) {
-      super.render(vertexConsumer, camera, partialTicks);
-    }
+//    bufferSource.endBatch();
 
     poseStack.popPose();
   }

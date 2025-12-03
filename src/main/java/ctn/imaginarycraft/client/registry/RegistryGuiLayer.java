@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.client.registry;
 
+import com.mojang.blaze3d.vertex.PoseStack;
 import ctn.imaginarycraft.client.ModGuiLayers;
-import ctn.imaginarycraft.client.gui.layers.NewHealthBarLayer;
-import ctn.imaginarycraft.client.gui.layers.RationalityBarLayer;
+import ctn.imaginarycraft.client.gui.layers.LeftBarLayer;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -14,13 +14,13 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 public final class RegistryGuiLayer {
   @SubscribeEvent
   public static void register(RegisterGuiLayersEvent event) {
-    event.registerAbove(VanillaGuiLayers.PLAYER_HEALTH, ModGuiLayers.RATIONALITY_BAR, RationalityBarLayer.INSTANCE);
-    event.registerAbove(VanillaGuiLayers.ARMOR_LEVEL, ModGuiLayers.NEW_HEALTH_BAR, NewHealthBarLayer.INSTANCE);
-//    event.wrapLayer(VanillaGuiLayers.PLAYER_HEALTH, (o) -> {
-//      return o;
-//    });
-//    event.wrapLayer(VanillaGuiLayers.ARMOR_LEVEL, (o) -> {
-//      return o;
-//    });
+    event.registerAbove(VanillaGuiLayers.PLAYER_HEALTH, ModGuiLayers.LEFT_BAR, LeftBarLayer.INSTANCE);
+    event.wrapLayer(VanillaGuiLayers.ARMOR_LEVEL, (layer) -> (guiGraphics, deltaTracker) -> {
+      PoseStack pose = guiGraphics.pose();
+      pose.pushPose();
+      pose.translate(0, -(LeftBarLayer.INSTANCE.getHeight() + 1), 0);
+      layer.render(guiGraphics, deltaTracker);
+      pose.popPose();
+    });
   }
 }
