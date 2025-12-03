@@ -3,13 +3,11 @@
 ## 目录
 
 <!-- TOC -->
-
 * [奇点](#奇点)
   * [目录](#目录)
   * [开发人员(不分顺序)](#开发人员不分顺序)
   * [贡献者](#贡献者)
   * [本MOD前置](#本mod前置)
-
 <!-- TOC -->
 
 ## 开发人员(不分顺序)
@@ -42,9 +40,11 @@
 <p>
 这些MOD链接都是github的但大部分在MCMOD百科或者其他MOD发布平台也有（搜名称）
 
-| 前置链接及名称                                          | 功能     |
-|--------------------------------------------------|--------|
-| [GeckoLib](https://github.com/bernie-g/geckolib) | 基岩版模型库 |
+| 前置链接及名称                                                                        | 功能     |
+|--------------------------------------------------------------------------------|--------|
+| [GeckoLib](https://github.com/bernie-g/geckolib)                               | 基岩版模型库 |
+| [Curios](https://github.com/TheIllusiveC4/Curios)                              | 饰品     |
+| [PlayerAnimationLibNeo](https://github.com/ZigyTheBird/PlayerAnimationLibrary) | 玩家动画库  |
 
 注：已内置[CTN api](https://github.com/CTNStudio/Ctn-Api)(就是一个工具库)
 
