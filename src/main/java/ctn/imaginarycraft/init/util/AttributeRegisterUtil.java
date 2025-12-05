@@ -15,50 +15,64 @@ import java.util.function.Function;
 
 public abstract class AttributeRegisterUtil {
 
-  protected static @NotNull <T extends Attribute> DeferredHolder<Attribute, T> register(String name,
-                                                                                        Function<T, Attribute> function,
-                                                                                        T attribute) {
+  protected static @NotNull <T extends Attribute> DeferredHolder<Attribute, T> register(
+    final String name,
+    final Function<T, Attribute> function,
+    final T attribute
+  ) {
     return ModAttributes.REGISTRY.register(name, () -> (T) function.apply(attribute));
   }
 
-  protected static @NotNull DeferredHolder<Attribute, RangedAttribute> register(String name,
-                                                                                Function<RangedAttribute, Attribute> function,
-                                                                                double defaultValue,
-                                                                                double minValue,
-                                                                                double maxValue) {
+  protected static @NotNull DeferredHolder<Attribute, RangedAttribute> register(
+    final String name,
+    final Function<RangedAttribute, Attribute> function,
+    final double defaultValue,
+    final double minValue,
+    final double maxValue
+  ) {
     return register(name, function, new RangedAttribute(descriptionId(name), defaultValue, minValue, maxValue));
   }
 
-  protected static @NotNull DeferredHolder<Attribute, RangedAttribute> register(String name,
-                                                                                Function<RangedAttribute, Attribute> function,
-                                                                                double minValue,
-                                                                                double maxValue) {
+  protected static @NotNull DeferredHolder<Attribute, RangedAttribute> register(
+    final String name,
+    final Function<RangedAttribute, Attribute> function,
+    final double minValue,
+    final double maxValue
+  ) {
     return register(name, function, minValue, minValue, maxValue);
   }
 
-  protected static @NotNull DeferredHolder<Attribute, BasicAttribute> register(String name,
-                                                                               Function<BasicAttribute, Attribute> function,
-                                                                               double value) {
+  protected static @NotNull DeferredHolder<Attribute, BasicAttribute> register(
+    final String name,
+    final Function<BasicAttribute, Attribute> function,
+    final double value
+  ) {
     return register(name, function, new BasicAttribute(descriptionId(name), value));
   }
 
-  protected static @NotNull DeferredHolder<Attribute, MinAttribute> registerMin(String name,
-                                                                                Function<MinAttribute, Attribute> function,
-                                                                                double defaultValue,
-                                                                                double minValue) {
+  protected static @NotNull DeferredHolder<Attribute, MinAttribute> registerMin(
+    final String name,
+    final Function<MinAttribute, Attribute> function,
+    final double defaultValue,
+    final double minValue
+  ) {
     return register(name, function, new MinAttribute(descriptionId(name), defaultValue, minValue));
   }
 
-  protected static @NotNull DeferredHolder<Attribute, MaxAttribute> registerMax(String name,
-                                                                                Function<MaxAttribute, Attribute> function,
-                                                                                double defaultValue,
-                                                                                double maxValue) {
+  protected static @NotNull DeferredHolder<Attribute, MaxAttribute> registerMax(
+    final String name,
+    final Function<MaxAttribute, Attribute> function,
+    final double defaultValue,
+    final double maxValue
+  ) {
     return register(name, function, new MaxAttribute(descriptionId(name), defaultValue, maxValue));
   }
 
-  protected static @NotNull DeferredHolder<Attribute, BooleanAttribute> register(String name,
-                                                                                 Function<BooleanAttribute, Attribute> function,
-                                                                                 boolean defaultValue) {
+  protected static @NotNull DeferredHolder<Attribute, BooleanAttribute> register(
+    final String name,
+    final Function<BooleanAttribute, Attribute> function,
+    final boolean defaultValue
+  ) {
     return register(name, function, new BooleanAttribute(descriptionId(name), defaultValue));
   }
 

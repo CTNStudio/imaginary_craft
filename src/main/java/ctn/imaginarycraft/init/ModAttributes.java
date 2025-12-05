@@ -82,6 +82,6 @@ public final class ModAttributes extends AttributeRegisterUtil {
    * <p>
    * TODO 未完成
    */
-  public static final DeferredHolder<Attribute, BooleanAttribute> INFORMATION = register("player.intelligence_department_activation", function ->
+  public static final DeferredHolder<Attribute, BooleanAttribute> INTELLIGENCE_DEPARTMENT_ACTIVATION = register("player.intelligence_department_activation", function ->
     function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), false);
 }

@@ -30,8 +30,8 @@ public final class VirtueTemperance extends AbstractVirtue {
   }
 
   @Override
-  public Virtue getVirtue() {
-    return Virtue.TEMPERANCE;
+  public VirtueType getVirtue() {
+    return VirtueType.TEMPERANCE;
   }
 
   @Override
@@ -58,11 +58,6 @@ public final class VirtueTemperance extends AbstractVirtue {
   @Override
   public ResourceLocation getAmplitudeId() {
     return AMPLITUDE_ID;
-  }
-
-  @Override
-  public int getRatingPoints() {
-    return 0; // TODO
   }
 
   @Override

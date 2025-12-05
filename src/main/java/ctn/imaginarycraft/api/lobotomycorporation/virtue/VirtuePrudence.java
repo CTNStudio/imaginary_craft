@@ -26,8 +26,8 @@ public final class VirtuePrudence extends AbstractVirtue {
   }
 
   @Override
-  public Virtue getVirtue() {
-    return Virtue.PRUDENCE;
+  public VirtueType getVirtue() {
+    return VirtueType.PRUDENCE;
   }
 
   @Override

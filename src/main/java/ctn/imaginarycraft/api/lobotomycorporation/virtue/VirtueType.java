@@ -20,7 +20,7 @@ import java.util.function.IntFunction;
 /**
  * 心核四德 简称 四德
  */
-public enum Virtue implements ColourText, StringRepresentable {
+public enum VirtueType implements ColourText, StringRepresentable {
   /**
    * 勇气 - 影响最大生命值
    */
@@ -37,13 +37,16 @@ public enum Virtue implements ColourText, StringRepresentable {
    * 正义 - 影响移动速度和攻击速度
    */
   JUSTICE(3, "justice", ModAttachments.JUSTICE, "#00ffff"),
-  ;
+  /**
+   * 综合评级
+   */
+  COMPOSITE_RATING(-1, "composite_rating", null, null);
 
-  public static final Codec<Virtue> CODEC = StringRepresentable
-    .fromEnum(Virtue::values);
-  private static final IntFunction<Virtue> BY_ID = ByIdMap
+  public static final Codec<VirtueType> CODEC = StringRepresentable
+    .fromEnum(VirtueType::values);
+  private static final IntFunction<VirtueType> BY_ID = ByIdMap
     .continuous(type -> type.id, values(), ByIdMap.OutOfBoundsStrategy.ZERO);
-  public static final StreamCodec<ByteBuf, Virtue> STREAM_CODEC = ByteBufCodecs
+  public static final StreamCodec<ByteBuf, VirtueType> STREAM_CODEC = ByteBufCodecs
     .idMapper(BY_ID, type -> type.id);
 
   private final int id;
@@ -54,7 +57,7 @@ public enum Virtue implements ColourText, StringRepresentable {
   private final String colour;
   private final int colourValue;
 
-  Virtue(int id, String name, @Nullable Holder<AttachmentType<?>> attachmentTypeHolder, @Nullable String colour) {
+  VirtueType(int id, String name, @Nullable Holder<AttachmentType<?>> attachmentTypeHolder, @Nullable String colour) {
     this.id = id;
     this.name = name;
     this.attachmentTypeHolder = attachmentTypeHolder;
@@ -76,10 +79,9 @@ public enum Virtue implements ColourText, StringRepresentable {
   }
 
   @Nullable
-  public Holder<AttachmentType<?>> getAttachmentTypeHolder() {
-    return attachmentTypeHolder;
+  public <T extends AbstractVirtue> Holder<AttachmentType<T>> getAttachmentTypeHolder() {
+    return (Holder<AttachmentType<T>>) (Holder) attachmentTypeHolder;
   }
-
 
   @Override
   public int getColourValue() {
@@ -93,6 +95,7 @@ public enum Virtue implements ColourText, StringRepresentable {
   }
 
   @Override
+  @Nullable
   public String getColourName() {
     return name;
   }

@@ -11,10 +11,9 @@ import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.common.data.ParticleDescriptionProvider;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public final class DatagenParticle extends ParticleDescriptionProvider {
   public DatagenParticle(PackOutput output, ExistingFileHelper fileHelper) {
@@ -28,7 +27,8 @@ public final class DatagenParticle extends ParticleDescriptionProvider {
   @Override
   protected void addDescriptions() {
     createSprite(ModParticleTypes.TEXT_PARTICLE_TYPE, Arrays.stream(TextParticlesType.values())
-      .map(TextParticlesType::getTexturePl).toArray(String[]::new));
+      .map(TextParticlesType::getTexturePl)
+      .toArray(String[]::new));
   }
 
   private <p extends ParticleOptions> void createSprite(Supplier<ParticleType<p>> type, String name) {
@@ -36,10 +36,8 @@ public final class DatagenParticle extends ParticleDescriptionProvider {
   }
 
   private <p extends ParticleOptions> void createSprite(Supplier<ParticleType<p>> type, String... names) {
-    List<ResourceLocation> list = new ArrayList<>();
-    for (String name : names) {
-      list.add(getPath(name));
-    }
-    spriteSet(type.get(), list);
+    spriteSet(type.get(), Arrays.stream(names)
+      .map(DatagenParticle::getPath)
+      .collect(Collectors.toList()));
   }
 }

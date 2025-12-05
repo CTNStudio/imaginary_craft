@@ -11,8 +11,8 @@ import snownee.jade.api.WailaPlugin;
 
 @WailaPlugin
 public final class ModPlugin implements IWailaPlugin {
-  public static final ResourceLocation LEVEL = ImaginaryCraft.modRl("level");
-  public static final ResourceLocation VULNERABLE = ImaginaryCraft.modRl("vulnerable");
+  public static final ResourceLocation ENTITY_LC_LEVEL = ImaginaryCraft.modRl("level");
+  public static final ResourceLocation ENTITY_LC_VULNERABLE = ImaginaryCraft.modRl("vulnerable");
 
   @Override
   public void register(IWailaCommonRegistration registration) {

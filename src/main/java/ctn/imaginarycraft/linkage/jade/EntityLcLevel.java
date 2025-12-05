@@ -21,6 +21,6 @@ public enum EntityLcLevel implements IEntityComponentProvider {
 
   @Override
   public ResourceLocation getUid() {
-    return ModPlugin.LEVEL;
+    return ModPlugin.ENTITY_LC_LEVEL;
   }
 }

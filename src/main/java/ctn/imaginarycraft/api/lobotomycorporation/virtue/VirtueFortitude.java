@@ -27,8 +27,8 @@ public final class VirtueFortitude extends AbstractVirtue {
   }
 
   @Override
-  public Virtue getVirtue() {
-    return Virtue.FORTITUDE;
+  public VirtueType getVirtue() {
+    return VirtueType.FORTITUDE;
   }
 
   @Override

@@ -40,7 +40,6 @@ public final class ModCapabilitys {
 
     public static final BlockCapability<ILevelBlock, Void> LC_LEVEL_BLOCK =
       BlockCapability.createVoid(ImaginaryCraft.modRl("lobotomy_corporation_level_block"), ILevelBlock.class);
-
   }
 
   /**

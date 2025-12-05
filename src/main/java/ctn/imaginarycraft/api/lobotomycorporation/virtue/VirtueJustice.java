@@ -36,8 +36,8 @@ public final class VirtueJustice extends AbstractVirtue {
   }
 
   @Override
-  public Virtue getVirtue() {
-    return Virtue.JUSTICE;
+  public VirtueType getVirtue() {
+    return VirtueType.JUSTICE;
   }
 
   @Override

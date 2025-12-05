@@ -65,7 +65,7 @@ public class RationalityBarLayer extends StatusBarLayer {
     HorizontalStatusBar.TextureLayer lightLayer = statusBar.getLightLayer();
 
     // 最低理智-动态
-    if (rationality <= -maxRationalityValue * 0.99f) {
+    if (rationality <= maxRationalityValue * -0.99f) {
       statusBar.visible = false;
       dynamicBar.visible = true;
       return;
@@ -76,22 +76,25 @@ public class RationalityBarLayer extends StatusBarLayer {
 
     // 高理智
     if (rationality >= maxRationalityValue * 0.7f) {
-      bottomLayer.setTexture(TALL_BOTTOM_TEXTURE);
+      bottomLayer.set(TALL_BOTTOM_TEXTURE, 0, 0, 93, 11);
+
       internalLayer.setTexture(TALL_TEXTURE);
       lightLayer.setTexture(TALL_LIGHT_TEXTURE);
       return;
     }
 
     // 默认理智
-    if (rationality >= 0) {
-      bottomLayer.setTexture(DEFAULT_BOTTOM_TEXTURE);
+    if (rationality >= -0.99f) {
+      bottomLayer.set(DEFAULT_BOTTOM_TEXTURE, 0, 0, 93, 11);
+
       internalLayer.setTexture(DEFAULT_TEXTURE);
       lightLayer.setTexture(DEFAULT_LIGHT_TEXTURE);
       return;
     }
 
     // 低理智
-    bottomLayer.setTexture(LOW_BOTTOM_TEXTURE);
+    bottomLayer.set(LOW_BOTTOM_TEXTURE, -1, -2, 94, 14);
+
     internalLayer.setTexture(LOW_TEXTURE);
     lightLayer.setTexture(LOW_LIGHT_TEXTURE);
   }

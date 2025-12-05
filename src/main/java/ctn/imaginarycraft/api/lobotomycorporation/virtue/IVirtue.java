@@ -9,7 +9,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * 脑叶数据附件接口
+ * 心核四德接口
  */
 public interface IVirtue {
   /**
@@ -17,7 +17,7 @@ public interface IVirtue {
    *
    * @return 四德类型
    */
-  Virtue getVirtue();
+  VirtueType getVirtue();
 
   /**
    * 获取会影响的属性实例和属性修改器
@@ -97,7 +97,7 @@ public interface IVirtue {
   /**
    * 更新触发
    * <p>
-   * 在修改相关的时候触发（打事件）
+   * 在修改相关的时候触发
    */
   void updateTrigger();
 

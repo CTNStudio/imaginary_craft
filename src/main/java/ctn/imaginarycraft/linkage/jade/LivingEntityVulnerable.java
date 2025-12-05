@@ -77,6 +77,6 @@ public enum LivingEntityVulnerable implements IEntityComponentProvider {
 
   @Override
   public ResourceLocation getUid() {
-    return ModPlugin.VULNERABLE;
+    return ModPlugin.ENTITY_LC_VULNERABLE;
   }
 }

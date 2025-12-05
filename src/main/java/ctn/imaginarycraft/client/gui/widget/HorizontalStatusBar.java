@@ -155,10 +155,10 @@ public class HorizontalStatusBar extends AbstractWidget {
   }
 
   public static final class TextureLayer {
-    private final float xPos;
-    private final float yPos;
-    private final int width;
-    private final int height;
+    private float xPos;
+    private float yPos;
+    private int width;
+    private int height;
     private @NotNull ResourceLocation texture;
 
     public TextureLayer(float xPos, float yPos, int width, int height, @NotNull ResourceLocation texture) {
@@ -169,28 +169,69 @@ public class HorizontalStatusBar extends AbstractWidget {
       this.texture = texture;
     }
 
-    public float xPos() {
-      return xPos;
-    }
-
-    public float yPos() {
-      return yPos;
-    }
-
-    public int width() {
+    public int getWidth() {
       return width;
     }
 
-    public int height() {
+    public int getHeight() {
       return height;
     }
 
-    public @NotNull ResourceLocation texture() {
+    public @NotNull ResourceLocation getTexture() {
       return texture;
     }
 
     public void setTexture(@NotNull ResourceLocation texture) {
       this.texture = texture;
+    }
+
+    public void setPos(float xPos, float yPos) {
+      this.xPos = xPos;
+      this.yPos = yPos;
+    }
+
+    public void setSize(int width, int height) {
+      this.width = width;
+      this.height = height;
+    }
+
+    public void setPosAndSize(float xPos, float yPos, int width, int height) {
+      this.xPos = xPos;
+      this.yPos = yPos;
+      this.width = width;
+      this.height = height;
+    }
+
+    public void set(ResourceLocation texture, float xPos, float yPos, int width, int height) {
+      this.texture = texture;
+      this.xPos = xPos;
+      this.yPos = yPos;
+      this.width = width;
+      this.height = height;
+    }
+
+    public float getXPos() {
+      return xPos;
+    }
+
+    public void setXPos(float xPos) {
+      this.xPos = xPos;
+    }
+
+    public float getYPos() {
+      return yPos;
+    }
+
+    public void setYPos(float yPos) {
+      this.yPos = yPos;
+    }
+
+    public void setWidth(int width) {
+      this.width = width;
+    }
+
+    public void setHeight(int height) {
+      this.height = height;
     }
   }
 }

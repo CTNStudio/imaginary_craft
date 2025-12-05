@@ -27,6 +27,7 @@ public final class LcDamageUtil {
 
   /**
    * 获取伤害比例
+   *
    * @param attackedLevel 被攻击的等级
    * @param attackerLevel 攻击者的等级
    */

@@ -11,10 +11,12 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Supplier;
 
 public abstract class ParticleTypeRegisterUtil {
-  protected static <T extends ParticleOptions> @NotNull Supplier<ParticleType<T>> register(String id,
-                                                                                           boolean overrideLimiter,
-                                                                                           MapCodec<T> mapCodec,
-                                                                                           StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
+  protected static <T extends ParticleOptions> @NotNull Supplier<ParticleType<T>> register(
+    String id,
+    boolean overrideLimiter,
+    MapCodec<T> mapCodec,
+    StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec
+  ) {
     return ModParticleTypes.REGISTRY.register(
       id, () -> new SpecialParticleType<>(overrideLimiter, mapCodec, streamCodec));
   }
@@ -23,7 +25,11 @@ public abstract class ParticleTypeRegisterUtil {
     private final StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec;
     private final MapCodec<T> codec;
 
-    protected SpecialParticleType(final boolean overrideLimitter, MapCodec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec) {
+    protected SpecialParticleType(
+      final boolean overrideLimitter,
+      MapCodec<T> codec,
+      StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec
+    ) {
       super(overrideLimitter);
       this.codec = codec;
       this.streamCodec = streamCodec;

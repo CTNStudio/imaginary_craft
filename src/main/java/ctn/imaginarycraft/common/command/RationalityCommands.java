@@ -6,7 +6,6 @@ import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
 import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
-import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModAttributes;
 import net.minecraft.commands.CommandSourceStack;
 import net.minecraft.commands.Commands;
@@ -16,6 +15,8 @@ import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
+
+import static ctn.imaginarycraft.datagen.i18.DatagenI18.getFormattedKey;
 
 public class RationalityCommands {
   public static final String SET_KEY = "set_rationality";
@@ -136,14 +137,6 @@ public class RationalityCommands {
         Component.translatable(getFormattedKey(isSet ? SET_KEY : GET_KEY, name), player.getName(), finalValue), true);
       return 1;
     };
-  }
-
-  public static @NotNull String getFormattedKey(String key, String key2) {
-    return "%s.commands.%s.%s".formatted(ImaginaryCraft.ID, key, key2);
-  }
-
-  public static @NotNull String getFormattedKey(String key) {
-    return "%s.commands.%s".formatted(ImaginaryCraft.ID, key);
   }
 
   //TODO

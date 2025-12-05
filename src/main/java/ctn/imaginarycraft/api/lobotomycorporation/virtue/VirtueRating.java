@@ -29,12 +29,12 @@ public enum VirtueRating implements StringRepresentable {
   }
 
   private final String name;
-  private final int velue;
+  private final int value;
   private final int minValue;
 
-  VirtueRating(String name, int velue, int minValue) {
+  VirtueRating(String name, int value, int minValue) {
     this.name = name;
-    this.velue = velue;
+    this.value = value;
     this.minValue = minValue;
   }
 
@@ -65,7 +65,7 @@ public enum VirtueRating implements StringRepresentable {
   }
 
   public int getValue() {
-    return velue;
+    return value;
   }
 
   public int getMinValue() {

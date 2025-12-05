@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init.world.tag;
+package ctn.imaginarycraft.init.tag;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.core.registries.Registries;

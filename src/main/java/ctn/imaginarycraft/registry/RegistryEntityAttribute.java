@@ -108,7 +108,7 @@ public final class RegistryEntityAttribute {
     event.add(entityType, ModAttributes.RATIONALITY_NATURAL_RECOVERY_WAIT_TIME);
     event.add(entityType, ModAttributes.RATIONALITY_RECOVERY_AMOUNT);
 
-    event.add(entityType, ModAttributes.INFORMATION);
+    event.add(entityType, ModAttributes.INTELLIGENCE_DEPARTMENT_ACTIVATION);
 
     event.add(entityType, ModAttributes.PHYSICS_VULNERABLE);
     event.add(entityType, ModAttributes.SPIRIT_VULNERABLE);

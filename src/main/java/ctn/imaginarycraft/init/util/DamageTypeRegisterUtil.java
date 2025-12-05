@@ -19,15 +19,32 @@ public abstract class DamageTypeRegisterUtil {
     return ResourceKey.create(Registries.DAMAGE_TYPE, ImaginaryCraft.modRl(name));
   }
 
-  protected static Holder.@NotNull Reference<DamageType> register(BootstrapContext<DamageType> context, String name, ResourceKey<DamageType> damageType, DamageScaling damageScaling, float exhaustion, DamageEffects damageEffects, DeathMessageType deathMessageType) {
+  protected static Holder.@NotNull Reference<DamageType> register(
+    final BootstrapContext<DamageType> context,
+    final String name,
+    final ResourceKey<DamageType> damageType,
+    final DamageScaling damageScaling,
+    final float exhaustion,
+    final DamageEffects damageEffects,
+    final DeathMessageType deathMessageType
+  ) {
     return register(context, damageType, new DamageType(name, damageScaling, exhaustion, damageEffects, deathMessageType));
   }
 
-  protected static Holder.@NotNull Reference<DamageType> register(BootstrapContext<DamageType> context, String name, ResourceKey<DamageType> damageType, float exhaustion) {
+  protected static Holder.@NotNull Reference<DamageType> register(
+    final BootstrapContext<DamageType> context,
+    final String name,
+    final ResourceKey<DamageType> damageType,
+    float exhaustion
+  ) {
     return register(context, name, damageType, DamageScaling.ALWAYS, exhaustion, DamageEffects.HURT, DeathMessageType.DEFAULT);
   }
 
-  protected static Holder.@NotNull Reference<DamageType> register(final @NotNull BootstrapContext<DamageType> context, final ResourceKey<DamageType> damageType, final DamageType damageType1) {
+  protected static Holder.@NotNull Reference<DamageType> register(
+    final @NotNull BootstrapContext<DamageType> context,
+    final ResourceKey<DamageType> damageType,
+    final DamageType damageType1
+  ) {
     return context.register(damageType, damageType1);
   }
 }
