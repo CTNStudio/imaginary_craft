@@ -87,7 +87,7 @@ public final class EntityEvents {
     // 建议在每个有返回值的方法执行后再获取一次以求准确
     float newDamage = event.getNewDamage();
     boolean modifyRationality = lcDamageType == LcDamageType.SPIRIT || lcDamageType == LcDamageType.EROSION;
-
+    // TODO 添加免疫，吸收，无效处理
     if (lcDamageType == LcDamageType.THE_SOUL) {
       newDamage = LcDamageUtil.theSoulDamage(newDamage, attackedEntity, sourceDirectEntity == null ? sourceCausingEntity : sourceDirectEntity, source);
     }

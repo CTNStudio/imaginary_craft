@@ -49,7 +49,6 @@ public final class LcDamageEventExecutes {
     if (LcDamageType.byDamageType(damageSource.typeHolder()) == null && lcDamageTypeTypes == null) {
       return;
     }
-    // TODO 等级压制不生效
     // 新伤害
     float newDamageAmount = armorJudgment(entity, attackerLevel, event.getAmount());
 
@@ -78,7 +77,6 @@ public final class LcDamageEventExecutes {
     if (entity instanceof IAbnormalities) {
       return ontologyCalculate(entity, attackerLevel, damage);
     }
-
     // 盔甲等级
     int armorItemStackLaval = 0;
     // 护甲数量
@@ -86,24 +84,27 @@ public final class LcDamageEventExecutes {
     int voidNumber = 0;
     // 盔甲
     for (final ItemStack armorItemStack : entity.getArmorAndBodyArmorSlots()) {
-      // 盔甲等级
-      if (armorItemStack != null && !armorItemStack.isEmpty()) {
-        LcLevel level = LcLevelUtil.getLevel(armorItemStack);
-        if (level == LcLevel.VOID) {
-          voidNumber++;
-        } else {
-          armorItemStackLaval += level.getLevelValue();
-        }
+      if (armorItemStack == null || armorItemStack.isEmpty()) {
+        continue;
       }
-      number++;
-    }
 
-    if (voidNumber == number) {
-      armorItemStackLaval = -1;
+      // 盔甲等级
+      LcLevel level = LcLevelUtil.getLevel(armorItemStack);
+      if (level == LcLevel.VOID) {
+        voidNumber++;
+      } else {
+        armorItemStackLaval += level.getLevelValue();
+      }
+
+      number++;
     }
 
     if (number == 0) {
       return ontologyCalculate(entity, attackerLevel, damage);
+    }
+
+    if (voidNumber == number) {
+      armorItemStackLaval = -1;
     }
 
     // 获取平均等级
