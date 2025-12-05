@@ -2,7 +2,7 @@ package ctn.imaginarycraft.init.item;
 
 import ctn.imaginarycraft.common.item.ego.EgoCurioItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.datagen.i18.zhcn.ZhCn;
+import ctn.imaginarycraft.datagen.i18.ZhCn;
 import ctn.imaginarycraft.datagen.tag.DatagenItemTag;
 import net.minecraft.world.entity.EntityType;
 import net.neoforged.bus.api.IEventBus;

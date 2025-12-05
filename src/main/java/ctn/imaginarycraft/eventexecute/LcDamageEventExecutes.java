@@ -39,15 +39,17 @@ public final class LcDamageEventExecutes {
   /**
    * 伤害计算
    */
-  public static void vulnerableTreatment(LivingIncomingDamageEvent event,
-                                         DamageSource damageSource,
-                                         LivingEntity entity,
-                                         LcLevel attackerLevel,
-                                         @Nullable LcDamageType lcDamageTypeTypes) {
+  public static void vulnerableTreatment(
+      LivingIncomingDamageEvent event,
+      DamageSource damageSource,
+      LivingEntity entity,
+      LcLevel attackerLevel,
+      @Nullable LcDamageType lcDamageTypeTypes
+  ) {
     if (LcDamageType.byDamageType(damageSource.typeHolder()) == null && lcDamageTypeTypes == null) {
       return;
     }
-
+    // TODO 等级压制不生效
     // 新伤害
     float newDamageAmount = armorJudgment(entity, attackerLevel, event.getAmount());
 

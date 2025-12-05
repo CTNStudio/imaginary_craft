@@ -40,7 +40,7 @@ public enum VirtueType implements ColourText, StringRepresentable {
   /**
    * 综合评级
    */
-  COMPOSITE_RATING(-1, "composite_rating", null, null);
+  COMPOSITE_RATING(4, "composite_rating", null, null);
 
   public static final Codec<VirtueType> CODEC = StringRepresentable
     .fromEnum(VirtueType::values);

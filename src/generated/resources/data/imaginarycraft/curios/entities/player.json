@@ -1,0 +1,21 @@
+{
+  "entities": [
+    "minecraft:player"
+  ],
+  "slots": [
+    "ego_curios_headwear",
+    "ego_curios_head",
+    "ego_curios_hindbrain",
+    "ego_curios_eye_area",
+    "ego_curios_face",
+    "ego_curios_cheek",
+    "ego_curios_mask",
+    "ego_curios_mouth",
+    "ego_curios_neck",
+    "ego_curios_chest",
+    "ego_curios_hand",
+    "ego_curios_glove",
+    "ego_curios_right_back",
+    "ego_curios_left_back"
+  ]
+}

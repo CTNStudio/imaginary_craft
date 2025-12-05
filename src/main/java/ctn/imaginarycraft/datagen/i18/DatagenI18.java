@@ -2,7 +2,6 @@ package ctn.imaginarycraft.datagen.i18;
 
 import ctn.imaginarycraft.config.ConfigUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.datagen.i18.zhcn.*;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.data.PackOutput;
@@ -30,12 +29,6 @@ public abstract class DatagenI18 extends LanguageProvider {
   public static List<LanguageProvider> init(PackOutput output) {
     List<LanguageProvider> list = new ArrayList<>();
     list.add(new ZhCn(output));
-    list.add(new ZhCnAttributes(output));
-    list.add(new ZhCnCommand(output));
-    list.add(new ZhCnConfig(output));
-    list.add(new ZhCnCurio(output));
-    list.add(new ZhCnDamageType(output));
-    list.add(new ZhCnTag(output));
     return list;
   }
 

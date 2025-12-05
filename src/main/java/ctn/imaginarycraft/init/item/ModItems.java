@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.init.item;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.datagen.i18.zhcn.ZhCn;
+import ctn.imaginarycraft.datagen.i18.ZhCn;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
