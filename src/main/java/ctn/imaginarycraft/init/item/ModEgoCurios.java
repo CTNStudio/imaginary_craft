@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.init.item;
 
-import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
+import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.common.item.ego.EgoCurioItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;

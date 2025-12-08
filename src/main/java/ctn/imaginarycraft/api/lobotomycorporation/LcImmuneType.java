@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.lobotomycorporation.damage;
+package ctn.imaginarycraft.api.lobotomycorporation;
 
 import net.minecraft.util.StringRepresentable;
 import org.jetbrains.annotations.NotNull;

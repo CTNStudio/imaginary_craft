@@ -1,6 +1,6 @@
-package ctn.imaginarycraft.api.lobotomycorporation.level.util;
+package ctn.imaginarycraft.api.lobotomycorporation.util;
 
-import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
 import ctn.imaginarycraft.capability.ILcLevel;
 import ctn.imaginarycraft.init.ModCapabilitys;
 import net.minecraft.world.entity.Entity;

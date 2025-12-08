@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.eventexecute;
 
-import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.damage.util.LcDamageUtil;
-import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
-import ctn.imaginarycraft.api.lobotomycorporation.level.util.LcLevelUtil;
+import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
+import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.capability.entity.IAbnormalities;
 import ctn.imaginarycraft.client.util.ParticleUtil;

@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.lobotomycorporation.level;
+package ctn.imaginarycraft.api.lobotomycorporation;
 
 import ctn.ctnapi.client.util.ColorUtil;
 import ctn.imaginarycraft.api.ColourText;
@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
+// TODO 对于药水需要做特殊处理
 /**
  * 脑叶等级
  */

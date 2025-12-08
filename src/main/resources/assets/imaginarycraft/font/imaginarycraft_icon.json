@@ -3,7 +3,7 @@
     {
       "type": "bitmap",
       "file": "imaginarycraft:particle/damage_type/physics.png",
-      "ascent": 16,
+      "ascent": 12,
       "height": 16,
       "chars": [
         "\uf000"
@@ -21,7 +21,7 @@
     {
       "type": "bitmap",
       "file": "imaginarycraft:particle/damage_type/spirit.png",
-      "ascent": 16,
+      "ascent": 12,
       "height": 16,
       "chars": [
         "\uf002"
@@ -39,7 +39,7 @@
     {
       "type": "bitmap",
       "file": "imaginarycraft:particle/damage_type/rationality_add.png",
-      "ascent": 16,
+      "ascent": 12,
       "height": 16,
       "chars": [
         "\uf004"
@@ -48,7 +48,7 @@
     {
       "type": "bitmap",
       "file": "imaginarycraft:particle/damage_type/rationality_reduce.png",
-      "ascent": 16,
+      "ascent": 12,
       "height": 16,
       "chars": [
         "\uf005"
@@ -57,7 +57,7 @@
     {
       "type": "bitmap",
       "file": "imaginarycraft:particle/damage_type/erosion.png",
-      "ascent": 16,
+      "ascent": 12,
       "height": 16,
       "chars": [
         "\uf006"
@@ -75,7 +75,7 @@
     {
       "type": "bitmap",
       "file": "imaginarycraft:particle/damage_type/the_soul.png",
-      "ascent": 16,
+      "ascent": 12,
       "height": 16,
       "chars": [
         "\uf008"
@@ -93,7 +93,7 @@
     {
       "type": "bitmap",
       "file": "imaginarycraft:particle/damage_type/magic.png",
-      "ascent": 16,
+      "ascent": 12,
       "height": 16,
       "chars": [
         "\uf010"

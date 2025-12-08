@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.mixin;
 
-import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.damage.util.LcDamageUtil;
-import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
 import ctn.imaginarycraft.capability.ILcLevel;
 import ctn.imaginarycraft.capability.entity.IInvincibleTickEntity;
 import ctn.imaginarycraft.capability.entity.ILcDamageTypeEntity;

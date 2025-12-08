@@ -1,7 +1,6 @@
-package ctn.imaginarycraft.api.lobotomycorporation.damage.util;
+package ctn.imaginarycraft.api.lobotomycorporation.util;
 
-import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
-import ctn.imaginarycraft.api.lobotomycorporation.level.util.LcLevelUtil;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
 import ctn.imaginarycraft.mixinextend.IDamageSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;

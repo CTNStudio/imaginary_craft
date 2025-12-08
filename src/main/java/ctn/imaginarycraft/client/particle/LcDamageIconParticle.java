@@ -8,7 +8,7 @@ import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
+import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;

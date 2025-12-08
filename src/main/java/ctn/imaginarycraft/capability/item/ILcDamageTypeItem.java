@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.capability.item;
 
-import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
+import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
 

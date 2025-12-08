@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.client.util;
 
-import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
+import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.client.ModFontIcon;
 import ctn.imaginarycraft.client.particle.text.DamageTextParticle;
 import ctn.imaginarycraft.client.particle.text.TextParticle;
@@ -17,7 +17,7 @@ import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType.PHYSICS;
+import static ctn.imaginarycraft.api.lobotomycorporation.LcDamageType.PHYSICS;
 
 public final class ParticleUtil {
 
@@ -36,8 +36,11 @@ public final class ParticleUtil {
     double zOffset
   ) {
     TextParticle.Options built = getBuild(component, damageTypeHolder, lcDamageType, isRationality, isHeal)
+      .align(TextParticle.AlignType.CENTER)
       .targetingPlayers()
       .durationTick(isHeal ? 20 : 20 * 3)
+      .shadow()
+      .seeThrough()
       .buildOptions();
     DamageTextParticle.Options options = new DamageTextParticle.Options(built, isHeal);
     world.sendParticles(options, x, y, z, 1, xOffset, yOffset, zOffset, 0);

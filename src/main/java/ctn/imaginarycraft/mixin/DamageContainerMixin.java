@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.mixin;
 
-import ctn.imaginarycraft.api.lobotomycorporation.damage.util.LcDamageUtil;
+import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
 import ctn.imaginarycraft.capability.IRandomDamage;
 import ctn.imaginarycraft.init.ModCapabilitys;
 import ctn.imaginarycraft.mixinextend.IDamageSource;

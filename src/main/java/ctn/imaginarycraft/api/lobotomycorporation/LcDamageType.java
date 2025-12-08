@@ -1,10 +1,10 @@
-package ctn.imaginarycraft.api.lobotomycorporation.damage;
+package ctn.imaginarycraft.api.lobotomycorporation;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import ctn.ctnapi.client.util.ColorUtil;
 import ctn.imaginarycraft.api.ColourText;
-import ctn.imaginarycraft.api.lobotomycorporation.damage.util.LcDamageUtil;
+import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
 import ctn.imaginarycraft.client.ModFontIcon;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModAttributes;
@@ -29,6 +29,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Arrays;
 import java.util.function.IntFunction;
 
+// TODO 对于药水需要做特殊处理
 /**
  * 脑叶伤害类型
  */

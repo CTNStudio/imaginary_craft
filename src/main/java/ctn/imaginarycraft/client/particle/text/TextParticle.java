@@ -10,7 +10,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import ctn.imaginarycraft.network.codec.CompositeStreamCodecBuilder;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.Util;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.StringSplitter;
@@ -20,10 +19,8 @@ import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.OutlineBufferSource;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -40,19 +37,16 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 import java.util.List;
-import java.util.function.Function;
 import java.util.function.IntFunction;
 
 // TODO 拆分成伤害，BOSS说话文本，普通文本
 public class TextParticle extends TextureSheetParticle {
-  private static final Function<Tesselator, BufferBuilder> RENDER_TYPE_MEMOIZE = Util.memoize((Tesselator tesselator) ->
-    tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE));
   public static final ParticleRenderType RENDER_TYPE = new ParticleRenderType() {
     @Override
     public BufferBuilder begin(Tesselator tesselator, TextureManager textureManager) {
-      RenderSystem.setShader(GameRenderer::getParticleShader);
-      RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES);
-      return RENDER_TYPE_MEMOIZE.apply(tesselator);
+      RenderSystem.depthMask(true);
+      RenderSystem.disableBlend();
+      return tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
     }
 
     @Override
@@ -65,7 +59,7 @@ public class TextParticle extends TextureSheetParticle {
 
   protected final List<Component> textComponentList;
   protected final int fontColor;
-  protected final int strokeColor;
+  protected final int shadowColor;
   protected final int durationTick;
   protected final float size;
   /**
@@ -81,7 +75,11 @@ public class TextParticle extends TextureSheetParticle {
   /**
    * 是否有阴影
    */
-  protected final boolean shadow;
+  protected final boolean isShadow;
+  /**
+   * 是否穿透
+   */
+  protected final boolean isSeeThrough;
 
   protected TextParticle(
     final ClientLevel level,
@@ -95,14 +93,15 @@ public class TextParticle extends TextureSheetParticle {
     this.font = this.minecraft.font;
     this.textComponentList = build.textComponent;
     this.fontColor = build.fontColor;
-    this.strokeColor = build.strokeColor;
+    this.shadowColor = build.strokeColor;
     this.durationTick = build.durationTick;
     this.size = build.size;
     this.align = build.align;
     this.xRot = build.xRot;
     this.yRot = build.yRot;
     this.isTargetingPlayers = build.isTargetingPlayers;
-    this.shadow = build.shadow;
+    this.isShadow = build.isShadow;
+    this.isSeeThrough = build.isSeeThrough;
   }
 
   @Override
@@ -146,23 +145,26 @@ public class TextParticle extends TextureSheetParticle {
     poseStack.popPose();
   }
 
-  public void renderText(Component text, final Font font, final float textX, final float textY, final Matrix4f matrix, OutlineBufferSource outlineBufferSource, final int getLightColor) {
-    float x1 = textX + 1;
-    float y1 = textY + 1;
-    int strokeColor = this.strokeColor;
-    font.drawInBatch(text, x1, y1, strokeColor, false, matrix, outlineBufferSource, Font.DisplayMode.SEE_THROUGH, strokeColor, getLightColor);
-    font.drawInBatch(text, x1, y1, strokeColor, false, matrix, outlineBufferSource, Font.DisplayMode.NORMAL, strokeColor, getLightColor);
-    if (!this.shadow) {
-      return;
+  protected void renderText(Component text, final Font font, final float textX, final float textY, final Matrix4f matrix, OutlineBufferSource outlineBufferSource, final int getLightColor) {
+    if (this.isShadow) {
+      renderTextShadow(font, textX + 1, textY + 1, matrix, outlineBufferSource, getLightColor, text);
     }
-    renderTextShadow(font, textX, textY, matrix, outlineBufferSource, getLightColor, text);
+    int fontColor = this.fontColor;
+    renderText(text, font, textX, textY, matrix, outlineBufferSource, getLightColor, fontColor);
   }
 
-  private void renderTextShadow(final Font font, final float textX, final float textY, final Matrix4f matrix, final OutlineBufferSource outlineBufferSource, final int getLightColor, final Component text) {
-    matrix.translate(0, 0, -0.03f);
-    int fontColor = this.fontColor;
-    font.drawInBatch(text, textX, textY, fontColor, false, matrix, outlineBufferSource, Font.DisplayMode.SEE_THROUGH, fontColor, getLightColor);
+  protected void renderTextShadow(final Font font, final float textX, final float textY, final Matrix4f matrix, final OutlineBufferSource outlineBufferSource, final int getLightColor, final Component text) {
+    matrix.translate(0, 0, 0.03f);
+    int shadowColor = this.shadowColor;
+    renderText(text, font, textX, textY, matrix, outlineBufferSource, getLightColor, shadowColor);
+  }
+
+  protected void renderText(final Component text, final Font font, final float textX, final float textY, final Matrix4f matrix, final OutlineBufferSource outlineBufferSource, final int getLightColor, final int fontColor) {
     font.drawInBatch(text, textX, textY, fontColor, false, matrix, outlineBufferSource, Font.DisplayMode.NORMAL, fontColor, getLightColor);
+    if (this.isSeeThrough) {
+      font.drawInBatch(text, textX, textY, fontColor, false, matrix, outlineBufferSource, Font.DisplayMode.SEE_THROUGH, fontColor, getLightColor);
+      font.drawInBatch(text, textX, textY, fontColor, false, matrix, outlineBufferSource, Font.DisplayMode.SEE_THROUGH, fontColor, getLightColor);
+    }
   }
 
   protected double getX(float partialTicks) {
@@ -200,12 +202,13 @@ public class TextParticle extends TextureSheetParticle {
     protected int fontColor = 0xffffff;
     protected int strokeColor = 0xafafafaf;
     protected int durationTick = 20 * 3;
-    protected float size = 0.135f;
+    protected float size = 0.025f;
     protected AlignType align = AlignType.LEFT;
     protected float xRot;
     protected float yRot;
     protected boolean isTargetingPlayers;
-    protected boolean shadow;
+    protected boolean isShadow;
+    protected boolean isSeeThrough;
 
     private Build(
       final List<Component> textComponent,
@@ -217,7 +220,8 @@ public class TextParticle extends TextureSheetParticle {
       final float xRot,
       final float yRot,
       final boolean isTargetingPlayers,
-      final boolean shadow
+      final boolean isShadow,
+      final boolean isSeeThrough
     ) {
       this.textComponent = textComponent;
       this.fontColor = fontColor;
@@ -228,7 +232,8 @@ public class TextParticle extends TextureSheetParticle {
       this.xRot = xRot;
       this.yRot = yRot;
       this.isTargetingPlayers = isTargetingPlayers;
-      this.shadow = shadow;
+      this.isShadow = isShadow;
+      this.isSeeThrough = isSeeThrough;
     }
 
     public Build(Component... textComponent) {
@@ -261,12 +266,22 @@ public class TextParticle extends TextureSheetParticle {
     }
 
     public Build shadow() {
-      this.shadow = true;
+      this.isShadow = true;
       return this;
     }
 
     public Build shadow(boolean shadow) {
-      this.shadow = shadow;
+      this.isShadow = shadow;
+      return this;
+    }
+
+    public Build seeThrough() {
+      this.isSeeThrough = true;
+      return this;
+    }
+
+    public Build seeThrough(boolean isSeeThrough) {
+      this.isSeeThrough = isSeeThrough;
       return this;
     }
 
@@ -310,7 +325,8 @@ public class TextParticle extends TextureSheetParticle {
         this.xRot,
         this.yRot,
         this.isTargetingPlayers,
-        this.shadow
+        this.isShadow,
+        this.isSeeThrough
       );
     }
   }
@@ -357,7 +373,8 @@ public class TextParticle extends TextureSheetParticle {
     float xRot,
     float yRot,
     boolean isTargetingPlayers,
-    boolean shadow
+    boolean isShadow,
+    boolean isSeeThrough
   ) implements ParticleOptions {
     public static final MapCodec<Options> CODEC = RecordCodecBuilder.mapCodec((thisOptionsInstance) -> thisOptionsInstance.group(
       Codec.list(ComponentSerialization.CODEC).fieldOf("textComponentList").forGetter(Options::textComponent),
@@ -369,7 +386,8 @@ public class TextParticle extends TextureSheetParticle {
       Codec.FLOAT.fieldOf("xRot").forGetter(Options::xRot),
       Codec.FLOAT.fieldOf("yRot").forGetter(Options::yRot),
       Codec.BOOL.fieldOf("isTargetingPlayers").forGetter(Options::isTargetingPlayers),
-      Codec.BOOL.fieldOf("shadow").forGetter(Options::shadow)
+      Codec.BOOL.fieldOf("shadow").forGetter(Options::isShadow),
+      Codec.BOOL.fieldOf("isSeeThrough").forGetter(Options::isSeeThrough)
     ).apply(thisOptionsInstance, Options::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, Options> STREAM_CODEC = CompositeStreamCodecBuilder.<RegistryFriendlyByteBuf, Options>builder()
@@ -382,7 +400,8 @@ public class TextParticle extends TextureSheetParticle {
       .withComponent(ByteBufCodecs.FLOAT, Options::xRot)
       .withComponent(ByteBufCodecs.FLOAT, Options::yRot)
       .withComponent(ByteBufCodecs.BOOL, Options::isTargetingPlayers)
-      .withComponent(ByteBufCodecs.BOOL, Options::shadow)
+      .withComponent(ByteBufCodecs.BOOL, Options::isShadow)
+      .withComponent(ByteBufCodecs.BOOL, Options::isSeeThrough)
       .decoderFactory(components -> new Options(
         (List<Component>) components.next(),
         (int) components.next(),
@@ -392,6 +411,7 @@ public class TextParticle extends TextureSheetParticle {
         (AlignType) components.next(),
         (float) components.next(),
         (float) components.next(),
+        (boolean) components.next(),
         (boolean) components.next(),
         (boolean) components.next()
       )).build();
@@ -407,7 +427,8 @@ public class TextParticle extends TextureSheetParticle {
         this.xRot,
         this.yRot,
         this.isTargetingPlayers,
-        this.shadow
+        this.isShadow,
+        this.isSeeThrough
       );
     }
 

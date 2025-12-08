@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.mixinextend;
 
-import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.level.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
 import net.minecraft.world.damagesource.DamageSource;
 
 import javax.annotation.Nullable;
