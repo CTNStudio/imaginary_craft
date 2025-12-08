@@ -22,8 +22,8 @@ import java.util.Set;
  */
 public final class VirtueTemperance extends AbstractVirtue {
   public static final ResourceLocation AMPLITUDE_ID = ImaginaryCraft.modRl("temperance_amplitude");
-  private static final double TEMPERANCE_BLOCK_BREAK_SPEED = 0.02;
-  private static final double TEMPERANCE_KNOCKBACK_SPEED = 0.015;
+  public static final double BLOCK_BREAK_SPEED = 0.02;
+  public static final double ATTACK_KNOCKBACK_SPEED = 0.015;
 
   public VirtueTemperance(final Player holder) {
     super(holder);
@@ -73,9 +73,9 @@ public final class VirtueTemperance extends AbstractVirtue {
   public void updatePoints(final int newPoints) {
     // TODO 需要提供随机处理
     // 挖掘速度
-    setAttributeModifier(Attributes.BLOCK_BREAK_SPEED, newPoints * TEMPERANCE_BLOCK_BREAK_SPEED, AttributeModifier.Operation.ADD_VALUE);
+    setAttributeModifier(Attributes.BLOCK_BREAK_SPEED, newPoints * BLOCK_BREAK_SPEED, AttributeModifier.Operation.ADD_VALUE);
     // 击退
-    setAttributeModifier(Attributes.ATTACK_KNOCKBACK, newPoints * TEMPERANCE_KNOCKBACK_SPEED, AttributeModifier.Operation.ADD_VALUE);
+    setAttributeModifier(Attributes.ATTACK_KNOCKBACK, newPoints * ATTACK_KNOCKBACK_SPEED, AttributeModifier.Operation.ADD_VALUE);
   }
 
   public static class Serialize extends AbstractSerialize<VirtueTemperance> {

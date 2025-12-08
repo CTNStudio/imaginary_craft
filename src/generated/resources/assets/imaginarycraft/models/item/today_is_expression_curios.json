@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "imaginarycraft:item/curios/today_is_expression_curios"
+  }
+}

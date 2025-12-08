@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "imaginarycraft:item/curios/red_eyes_curios"
+  }
+}

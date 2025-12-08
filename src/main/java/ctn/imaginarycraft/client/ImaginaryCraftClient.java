@@ -13,6 +13,7 @@ import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 @Mod(value = ImaginaryCraft.ID, dist = Dist.CLIENT)
 @EventBusSubscriber(modid = ImaginaryCraft.ID, value = Dist.CLIENT)
 public final class ImaginaryCraftClient {
+
   public ImaginaryCraftClient(ModContainer container) {
     container.registerExtensionPoint(IConfigScreenFactory.class, ConfigurationScreen::new);
   }

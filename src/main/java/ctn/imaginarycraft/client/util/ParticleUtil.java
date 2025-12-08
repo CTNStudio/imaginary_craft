@@ -1,7 +1,9 @@
 package ctn.imaginarycraft.client.util;
 
 import ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType;
-import ctn.imaginarycraft.client.particle.TextParticleOptions;
+import ctn.imaginarycraft.client.ModFontIcon;
+import ctn.imaginarycraft.client.particle.text.DamageTextParticle;
+import ctn.imaginarycraft.client.particle.text.TextParticle;
 import ctn.imaginarycraft.util.TextUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
@@ -11,48 +13,105 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
+import static ctn.imaginarycraft.api.lobotomycorporation.damage.LcDamageType.PHYSICS;
 
 public final class ParticleUtil {
 
   public static void createTextParticles(
     ServerLevel world,
     Component component,
-    @Nullable Holder<DamageType> damageType,
+    @Nullable Holder<DamageType> damageTypeHolder,
     @Nullable LcDamageType lcDamageType,
-    int fontColor,
-    int strokeColor,
     boolean isRationality,
     boolean isHeal,
-    boolean isTexture,
     double x,
     double y,
     double z,
-    double xOffset, double yOffset, double zOffset
+    double xOffset,
+    double yOffset,
+    double zOffset
   ) {
-    TextParticleOptions options = new TextParticleOptions(component, Optional.ofNullable(damageType), Optional.ofNullable(lcDamageType), fontColor, strokeColor, isRationality, isHeal, isTexture);
+    TextParticle.Options built = getBuild(component, damageTypeHolder, lcDamageType, isRationality, isHeal)
+      .targetingPlayers()
+      .durationTick(isHeal ? 20 : 20 * 3)
+      .buildOptions();
+    DamageTextParticle.Options options = new DamageTextParticle.Options(built, isHeal);
     world.sendParticles(options, x, y, z, 1, xOffset, yOffset, zOffset, 0);
   }
 
-  public static void randomColorTextParticles(
-    ServerLevel world,
-    Component component,
-    @Nullable Holder<DamageType> damageType,
-    @Nullable LcDamageType lcDamageType,
-    int fontColor,
-    int strokeColor,
-    boolean isRationality,
-    boolean isHeal,
-    boolean isTexture,
-    double x,
-    double y,
-    double z
+  private static TextParticle.Build getBuild(
+    final Component component,
+    final @Nullable Holder<DamageType> damageTypeHolder,
+    final @Nullable LcDamageType lcDamageType,
+    final boolean isRationality,
+    final boolean isHeal
   ) {
-    createTextParticles(world, component, damageType, lcDamageType, fontColor, strokeColor, isRationality, isHeal, isTexture,
-      x, y, z, 0.1, 0.1, 0.1);
+    TextParticle.Build build = new TextParticle.Build();
+    Component iconComponent;
+    int fontColor;
+    int strokeColor;
+    if (isRationality) {
+      if (isHeal) {
+        iconComponent = ModFontIcon.RATIONALITY_ADD.getComponent();
+        fontColor = 0x78f5ff;
+        strokeColor = 0x2c80d0;
+      } else {
+        iconComponent = ModFontIcon.RATIONALITY_REDUCE.getComponent();
+        fontColor = 0xA81919;
+        strokeColor = 0x4d0000;
+      }
+      return build.textComponent(Component.empty()
+          .append(iconComponent)
+          .append(component))
+        .fontColor(fontColor)
+        .strokeColor(strokeColor);
+    }
+    if (isHeal) {
+      return build.textComponent(component)
+        .strokeColor(0x1c501f)
+        .fontColor(0x89ff6a);
+    }
+
+    final LcDamageType type;
+    if (lcDamageType != null) {
+      type = lcDamageType;
+    } else {
+      if (damageTypeHolder != null) {
+        type = LcDamageType.byDamageType(damageTypeHolder);
+      } else {
+        type = null;
+      }
+    }
+
+    if (type != null) {
+      iconComponent = type.getChar().getComponent();
+      fontColor = type.getColourValue();
+      strokeColor = switch (type) {
+        case SPIRIT -> 0x9c4e80;
+        case EROSION -> 0x28054a;
+        case THE_SOUL -> 0x074161;
+        case PHYSICS -> 0x4d0000;
+      };
+    } else {
+      if (damageTypeHolder != null && damageTypeHolder.is(Tags.DamageTypes.IS_MAGIC)) {
+        iconComponent = ModFontIcon.MAGIC.getComponent();
+        fontColor = 0x8a2be2;
+        strokeColor = 0x28054a;
+      } else {
+        iconComponent = PHYSICS.getChar().getComponent();
+        fontColor = PHYSICS.getColourValue();
+        strokeColor = 0x4d0000;
+      }
+    }
+
+    return build.textComponent(Component.empty().append(iconComponent)
+        .append(component))
+      .fontColor(fontColor)
+      .strokeColor(strokeColor);
   }
 
   public static void randomColorTextParticles(
@@ -62,13 +121,11 @@ public final class ParticleUtil {
     @Nullable LcDamageType lcDamageType,
     boolean isRationality,
     boolean isHeal,
-    boolean isTexture,
     double x,
     double y,
     double z
   ) {
-    randomColorTextParticles(world, component, damageType, lcDamageType, -1, -1, isRationality, isHeal, isTexture,
-      x, y, z);
+    createTextParticles(world, component, damageType, lcDamageType, isRationality, isHeal, x, y, z, 0.1, 0.1, 0.1);
   }
 
   public static void randomColorTextParticles(
@@ -76,32 +133,19 @@ public final class ParticleUtil {
     Component component,
     boolean isRationality,
     boolean isHeal,
-    boolean isTexture,
     double x,
     double y,
     double z
   ) {
-    randomColorTextParticles(world, component, null, null, -1, -1, isRationality, isHeal, isTexture,
-      x, y, z);
-  }
-
-  public static void createTextParticles(
-    LivingEntity entity,
-    Component component,
-    @Nullable Holder<DamageType> damageType,
-    @Nullable LcDamageType lcDamageType,
-    boolean isRationality,
-    boolean isHeal
-  ) {
-    createTextParticles(entity, component, damageType, lcDamageType, -1, -1, isRationality, isHeal, true);
+    randomColorTextParticles(world, component, null, null, isRationality, isHeal, x, y, z);
   }
 
   public static void createTextParticles(LivingEntity entity, Component component, boolean isRationality, boolean isHeal) {
-    createTextParticles(entity, component, null, null, 0, 0, isRationality, isHeal, true);
+    createTextParticles(entity, component, null, null, isRationality, isHeal);
   }
 
   public static void createTextParticles(LivingEntity entity, float value, boolean isRationality, boolean isHeal) {
-    createTextParticles(entity, getText(value, isHeal), null, null, -1, -1, isRationality, isHeal, true);
+    createTextParticles(entity, getText(value, isHeal), null, null, isRationality, isHeal);
   }
 
   public static void createTextParticles(
@@ -112,7 +156,7 @@ public final class ParticleUtil {
     boolean isRationality,
     boolean isHeal
   ) {
-    createTextParticles(entity, getText(value, isHeal), damageType, lcDamageType, -1, -1, isRationality, isHeal, true);
+    createTextParticles(entity, getText(value, isHeal), damageType, lcDamageType, isRationality, isHeal);
   }
 
   public static void createTextParticles(
@@ -120,11 +164,8 @@ public final class ParticleUtil {
     Component component,
     @Nullable Holder<DamageType> damageType,
     @Nullable LcDamageType lcDamageType,
-    int fontColor,
-    int strokeColor,
     boolean isRationality,
-    boolean isHeal,
-    boolean isTexture
+    boolean isHeal
   ) {
     if (!(entity.level() instanceof ServerLevel serverLevel)) {
       return;
@@ -137,7 +178,7 @@ public final class ParticleUtil {
     double x = pos.x;
     double y = pos.y + yOffset;
     double z = pos.z;
-    createTextParticles(serverLevel, component, damageType, lcDamageType, fontColor, strokeColor, isRationality, isHeal, isTexture,
+    createTextParticles(serverLevel, component, damageType, lcDamageType, isRationality, isHeal,
       x, y, z, xOffset / 2, yOffset / 2, zOffset / 2);
   }
 

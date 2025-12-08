@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "imaginarycraft:item/curios/those_who_know_the_cruelty_of_winter_and_the_aroma_of_roses_curios"
+  }
+}

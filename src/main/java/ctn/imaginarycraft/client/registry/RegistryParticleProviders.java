@@ -1,6 +1,7 @@
 package ctn.imaginarycraft.client.registry;
 
-import ctn.imaginarycraft.client.particle.TextParticleProvider;
+import ctn.imaginarycraft.client.particle.LcDamageIconParticle;
+import ctn.imaginarycraft.client.particle.text.TextParticle;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import net.neoforged.api.distmarker.Dist;
@@ -12,6 +13,7 @@ import net.neoforged.neoforge.client.event.RegisterParticleProvidersEvent;
 public final class RegistryParticleProviders {
   @SubscribeEvent
   public static void registry(RegisterParticleProvidersEvent event) {
-    event.registerSpriteSet(ModParticleTypes.TEXT_PARTICLE_TYPE.get(), TextParticleProvider::new);
+    event.registerSpecial(ModParticleTypes.TEXT.get(), new TextParticle.Provider());
+    event.registerSpriteSet(ModParticleTypes.LC_DAMAGE_ICON.get(), LcDamageIconParticle.Provider::new);
   }
 }

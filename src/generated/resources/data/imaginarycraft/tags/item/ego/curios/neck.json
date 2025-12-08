@@ -1,3 +1,13 @@
 {
-  "values": []
+  "values": [
+    "imaginarycraft:our_galaxy_curios",
+    "imaginarycraft:harvest_curios",
+    "imaginarycraft:moonlight_curios",
+    "imaginarycraft:noise_curios",
+    "imaginarycraft:pleasure_curios",
+    "imaginarycraft:green_stem_curios",
+    "imaginarycraft:fragments_from_somewhere_curios",
+    "imaginarycraft:beak_curios",
+    "imaginarycraft:logging_curios"
+  ]
 }

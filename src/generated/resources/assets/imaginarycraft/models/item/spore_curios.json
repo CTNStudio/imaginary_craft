@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "imaginarycraft:item/curios/spore_curios"
+  }
+}

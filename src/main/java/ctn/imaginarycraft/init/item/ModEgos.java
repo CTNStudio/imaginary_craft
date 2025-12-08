@@ -2,7 +2,7 @@ package ctn.imaginarycraft.init.item;
 
 import ctn.imaginarycraft.common.item.ego.EgoItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.datagen.i18.ZhCn;
+import ctn.imaginarycraft.datagen.i18n.ZhCn;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -35,7 +35,7 @@ public final class ModEgos {
     Item.Properties properties
   ) {
     DeferredItem<I> deferredItem = REGISTRY.registerItem(name, item, properties);
-    ZhCn.ITEM.put(deferredItem, zhName);
+    ZhCn.ITEMS.put(deferredItem, zhName);
     return deferredItem;
   }
 

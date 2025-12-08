@@ -16,7 +16,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Arrays;
 
-import static ctn.imaginarycraft.datagen.i18.DatagenI18.getFormattedKey;
+import static ctn.imaginarycraft.datagen.i18n.DatagenI18n.getFormattedKey;
 
 public class RationalityCommands {
   public static final String SET_KEY = "set_rationality";

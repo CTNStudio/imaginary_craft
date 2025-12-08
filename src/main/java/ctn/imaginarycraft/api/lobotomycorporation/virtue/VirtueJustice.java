@@ -23,11 +23,11 @@ import java.util.Set;
  */
 public final class VirtueJustice extends AbstractVirtue {
   private static final ResourceLocation AMPLITUDE_ID = ImaginaryCraft.modRl("justice_amplitude");
-  private static final double JUSTICE_MOVEMENT_SPEED = 0.001;
-  private static final double JUSTICE_ATTACK_SPEED = 0.01;
-  private static final double JUSTICE_SWIM_SPEED = 0.01;
-  private static final double JUSTICE_FLIGHT_SPEED = 0.00013;
-  private static final float VANILLA_FLYING_SPEED = 0.05f;
+  public static final double MOVEMENT_SPEED = 0.001;
+  public static final double ATTACK_SPEED = 0.01;
+  public static final double SWIM_SPEED = 0.01;
+  public static final double JUSTICE_FLIGHT_SPEED = 0.00013;
+  public static final float VANILLA_FLYING_SPEED = 0.05f;
 
   private double flightSpeedBonus;
 
@@ -75,9 +75,9 @@ public final class VirtueJustice extends AbstractVirtue {
   @Override
   public void updatePoints(final int newPoints) {
     // TODO 需要提供随机处理
-    setAttributeModifier(Attributes.MOVEMENT_SPEED, newPoints * JUSTICE_MOVEMENT_SPEED, AttributeModifier.Operation.ADD_VALUE);
-    setAttributeModifier(Attributes.ATTACK_SPEED, newPoints * JUSTICE_ATTACK_SPEED, AttributeModifier.Operation.ADD_VALUE);
-    setAttributeModifier(NeoForgeMod.SWIM_SPEED, newPoints * JUSTICE_SWIM_SPEED, AttributeModifier.Operation.ADD_VALUE);
+    setAttributeModifier(Attributes.MOVEMENT_SPEED, newPoints * MOVEMENT_SPEED, AttributeModifier.Operation.ADD_VALUE);
+    setAttributeModifier(Attributes.ATTACK_SPEED, newPoints * ATTACK_SPEED, AttributeModifier.Operation.ADD_VALUE);
+    setAttributeModifier(NeoForgeMod.SWIM_SPEED, newPoints * SWIM_SPEED, AttributeModifier.Operation.ADD_VALUE);
     setFlightSpeedBonus(newPoints);
   }
 

@@ -45,7 +45,7 @@ public final class ModItemTags {
   /**
    * E.G.O饰品 眼部
    */
-  public static final TagKey<Item> EGO_CURIOS_EYE_AREA = createTag("ego/curios/eye_area");
+  public static final TagKey<Item> EGO_CURIOS_EYE = createTag("ego/curios/eye");
   /**
    * E.G.O饰品 脸
    */
@@ -67,9 +67,9 @@ public final class ModItemTags {
    */
   public static final TagKey<Item> EGO_CURIOS_NECK = createTag("ego/curios/neck");
   /**
-   * E.G.O饰品 胸部
+   * E.G.O饰品 胸针
    */
-  public static final TagKey<Item> EGO_CURIOS_CHEST = createTag("ego/curios/chest");
+  public static final TagKey<Item> EGO_CURIOS_BROOCH = createTag("ego/curios/brooch");
   /**
    * E.G.O饰品 手部
    */

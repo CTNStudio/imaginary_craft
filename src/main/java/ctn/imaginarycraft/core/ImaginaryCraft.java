@@ -2,10 +2,7 @@ package ctn.imaginarycraft.core;
 
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.datagen.DatagenCuriosTest;
-import ctn.imaginarycraft.init.ModAttachments;
-import ctn.imaginarycraft.init.ModAttributes;
-import ctn.imaginarycraft.init.ModDataComponents;
-import ctn.imaginarycraft.init.ModParticleTypes;
+import ctn.imaginarycraft.init.*;
 import ctn.imaginarycraft.init.item.ModItems;
 import ctn.imaginarycraft.init.tag.ModItemTags;
 import net.minecraft.core.Registry;
@@ -39,6 +36,7 @@ public final class ImaginaryCraft {
     ModDataComponents.REGISTRY.register(eventBus);
     ModItems.init(eventBus);
 
+    ModCreativeModeTabs.REGISTRY.register(eventBus);
     createValidators();
   }
 
@@ -70,13 +68,13 @@ public final class ImaginaryCraft {
     createValidators(DatagenCuriosTest.EGO_CURIOS_HEADWEAR_VALIDATOR, ModItemTags.EGO_CURIOS_HEADWEAR);
     createValidators(DatagenCuriosTest.EGO_CURIOS_HEAD_VALIDATOR, ModItemTags.EGO_CURIOS_HEAD);
     createValidators(DatagenCuriosTest.EGO_CURIOS_HINDBRAIN_VALIDATOR, ModItemTags.EGO_CURIOS_HINDBRAIN);
-    createValidators(DatagenCuriosTest.EGO_CURIOS_EYE_AREA_VALIDATOR, ModItemTags.EGO_CURIOS_EYE_AREA);
+    createValidators(DatagenCuriosTest.EGO_CURIOS_EYE_VALIDATOR, ModItemTags.EGO_CURIOS_EYE);
     createValidators(DatagenCuriosTest.EGO_CURIOS_FACE_VALIDATOR, ModItemTags.EGO_CURIOS_FACE);
     createValidators(DatagenCuriosTest.EGO_CURIOS_CHEEK_VALIDATOR, ModItemTags.EGO_CURIOS_CHEEK);
     createValidators(DatagenCuriosTest.EGO_CURIOS_MASK_VALIDATOR, ModItemTags.EGO_CURIOS_MASK);
     createValidators(DatagenCuriosTest.EGO_CURIOS_MOUTH_VALIDATOR, ModItemTags.EGO_CURIOS_MOUTH);
     createValidators(DatagenCuriosTest.EGO_CURIOS_NECK_VALIDATOR, ModItemTags.EGO_CURIOS_NECK);
-    createValidators(DatagenCuriosTest.EGO_CURIOS_CHEST_VALIDATOR, ModItemTags.EGO_CURIOS_CHEST);
+    createValidators(DatagenCuriosTest.EGO_CURIOS_BROOCH_VALIDATOR, ModItemTags.EGO_CURIOS_BROOCH);
     createValidators(DatagenCuriosTest.EGO_CURIOS_HAND_VALIDATOR, ModItemTags.EGO_CURIOS_HAND);
     createValidators(DatagenCuriosTest.EGO_CURIOS_GLOVE_VALIDATOR, ModItemTags.EGO_CURIOS_GLOVE);
     createValidators(DatagenCuriosTest.EGO_CURIOS_RIGHT_BACK_VALIDATOR, ModItemTags.EGO_CURIOS_RIGHT_BACK);

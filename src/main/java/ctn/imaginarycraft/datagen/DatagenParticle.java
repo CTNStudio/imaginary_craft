@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.datagen;
 
-import ctn.imaginarycraft.client.particle.TextParticlesType;
+import ctn.imaginarycraft.client.particle.LcDamageIconParticle;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import net.minecraft.core.particles.ParticleOptions;
@@ -26,8 +26,8 @@ public final class DatagenParticle extends ParticleDescriptionProvider {
 
   @Override
   protected void addDescriptions() {
-    createSprite(ModParticleTypes.TEXT_PARTICLE_TYPE, Arrays.stream(TextParticlesType.values())
-      .map(TextParticlesType::getTexturePl)
+    createSprite(ModParticleTypes.LC_DAMAGE_ICON, Arrays.stream(LcDamageIconParticle.Type.values())
+      .map(LcDamageIconParticle.Type::getTexturePl)
       .toArray(String[]::new));
   }
 

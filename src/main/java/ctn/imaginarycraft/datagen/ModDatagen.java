@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.datagen;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.datagen.i18.DatagenI18;
+import ctn.imaginarycraft.datagen.i18n.DatagenI18n;
 import ctn.imaginarycraft.datagen.tag.DatagenBlockTag;
 import ctn.imaginarycraft.datagen.tag.DatagenDamageTypeTag;
 import ctn.imaginarycraft.datagen.tag.DatagenItemTag;
@@ -55,8 +55,9 @@ public final class ModDatagen {
     buildServer(event, generator, new DatagenCuriosTest(output, existingFileHelper, completableFuture));
 
     // 客户端数据生成
-    DatagenI18.init(output).forEach(i18 -> buildClient(event, generator, i18));
+    DatagenI18n.init(output).forEach(i18 -> buildClient(event, generator, i18));
     buildClient(event, generator, new DatagenParticle(output, existingFileHelper));
+    buildClient(event, generator, new DatagenItem(output, existingFileHelper));
   }
 
   private static <T extends DataProvider> @NotNull T buildClient(@NotNull GatherDataEvent event,

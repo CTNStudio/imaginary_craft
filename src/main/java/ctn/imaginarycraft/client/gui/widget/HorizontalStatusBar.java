@@ -123,14 +123,17 @@ public class HorizontalStatusBar extends AbstractWidget {
 
     if (this.lightWidth > 0) {
       float v = this.value / maxValue * maxWidth;
-      float minX = Math.clamp(v, 0, posX + maxWidth);
-      float maxX = Math.clamp(minX + this.lightWidth, 0, posX + maxWidth);
+      float max = posX + maxWidth;
+      float minX = Math.clamp(v, 0, max);
+      float maxX = Math.clamp(minX + this.lightWidth, 0, max);
       float maxY = posY + internalHeight;
-      int color = (int) (255 * 0.7) << 24 | 255 << 16 | 255 << 8 | 255;
+      int color = 0xb2ffffff;
       if (this.isLight) {
         color = 0xffffffff;
       }
-      GuiUtil.fill(guiGraphics, Math.clamp(posX + minX, posX, posX + maxValue), posY, posX + maxX, maxY, color);
+      float x1 = Math.clamp(posX + minX, posX, max);
+      float x2 = Math.clamp(posX + maxX, posX, max);
+      GuiUtil.fill(guiGraphics, x1, posY, x2, maxY, color);
       this.lightWidth = Mth.lerp(Math.clamp(partialTick * 0.2f, 0, 1), this.lightWidth, 0);
     }
 

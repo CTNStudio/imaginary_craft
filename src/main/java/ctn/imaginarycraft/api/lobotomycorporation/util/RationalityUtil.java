@@ -12,7 +12,6 @@ import java.util.Map;
  * 理智工具
  */
 public final class RationalityUtil {
-
   /**
    * 遭受精神伤害
    * <p>
@@ -36,9 +35,16 @@ public final class RationalityUtil {
   /**
    * 限制理智
    */
-  private static void restrictValue(Player entity, final boolean isEvent) {
+  public static void restrictValue(Player entity, final boolean isEvent) {
+    restrictValue(entity, getValue(entity), isEvent);
+  }
+
+  /**
+   * 限制理智
+   */
+  public static void restrictValue(Player entity, float value, final boolean isEvent) {
     float maxRationalityValue = getMaxValue(entity);
-    setValue(entity, Math.clamp(getValue(entity), maxRationalityValue, -maxRationalityValue), isEvent);
+    setValue(entity, Math.clamp(value, -maxRationalityValue, maxRationalityValue), isEvent);
   }
 
   /**
@@ -105,6 +111,7 @@ public final class RationalityUtil {
    * 获取理智值自然恢复量
    */
   public static float getRationalityRecoveryAmount(Player entity) {
+    restrictValue(entity, true);
     return (float) entity.getAttributeValue(ModAttributes.RATIONALITY_RECOVERY_AMOUNT);
   }
 

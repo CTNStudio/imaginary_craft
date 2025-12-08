@@ -19,10 +19,10 @@ public final class RationalityModifyEvents {
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void sourceRationalityPost(RationalityModifyEvent.Post event) {
     Player player = event.getEntity();
-    float difference = event.getNewValue() - event.getOldValue();
+    float difference = event.getOldValue() - event.getNewValue();
 
-    if (player instanceof ServerPlayer serverPlayer || difference > 0) {
-      ParticleUtil.createTextParticles(player, difference, true, true);
+    if (player instanceof ServerPlayer serverPlayer && difference != 0) {
+      ParticleUtil.createTextParticles(player, difference, true, difference < 0);
     }
   }
 }

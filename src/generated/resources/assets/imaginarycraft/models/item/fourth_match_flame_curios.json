@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "imaginarycraft:item/curios/fourth_match_flame_curios"
+  }
+}

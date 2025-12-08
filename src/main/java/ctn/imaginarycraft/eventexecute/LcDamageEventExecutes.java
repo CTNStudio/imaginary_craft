@@ -40,11 +40,11 @@ public final class LcDamageEventExecutes {
    * 伤害计算
    */
   public static void vulnerableTreatment(
-      LivingIncomingDamageEvent event,
-      DamageSource damageSource,
-      LivingEntity entity,
-      LcLevel attackerLevel,
-      @Nullable LcDamageType lcDamageTypeTypes
+    LivingIncomingDamageEvent event,
+    DamageSource damageSource,
+    LivingEntity entity,
+    LcLevel attackerLevel,
+    @Nullable LcDamageType lcDamageTypeTypes
   ) {
     if (LcDamageType.byDamageType(damageSource.typeHolder()) == null && lcDamageTypeTypes == null) {
       return;

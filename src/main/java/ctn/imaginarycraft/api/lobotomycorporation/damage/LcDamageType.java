@@ -4,6 +4,8 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import ctn.ctnapi.client.util.ColorUtil;
 import ctn.imaginarycraft.api.ColourText;
+import ctn.imaginarycraft.api.lobotomycorporation.damage.util.LcDamageUtil;
+import ctn.imaginarycraft.client.ModFontIcon;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.ModDamageTypes;
@@ -15,7 +17,10 @@ import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -31,26 +36,23 @@ public enum LcDamageType implements ColourText, StringRepresentable {
   /**
    * 物理
    */
-  PHYSICS(0, "physics", ModAttributes.PHYSICS_VULNERABLE, ModDamageTypes.PHYSICS, "#ff0000"),
+  PHYSICS(0, "physics", ModFontIcon.PHYSICS, ModFontIcon.PHYSICS_8X, ModAttributes.PHYSICS_VULNERABLE, ModDamageTypes.PHYSICS, "#ff0000"),
   /**
    * 精神
    */
-  SPIRIT(1, "spirit", ModAttributes.SPIRIT_VULNERABLE, ModDamageTypes.SPIRIT, "#ffffff"),
+  SPIRIT(1, "spirit", ModFontIcon.SPIRIT, ModFontIcon.SPIRIT_8X, ModAttributes.SPIRIT_VULNERABLE, ModDamageTypes.SPIRIT, "#ffffff"),
   /**
    * 侵蚀
    * <p>
    * 同时造成物理和精神伤害
    */
-  EROSION(2, "erosion", ModAttributes.EROSION_VULNERABLE, ModDamageTypes.EROSION, "#8a2be2"),
+  EROSION(2, "erosion", ModFontIcon.EROSION, ModFontIcon.EROSION_8X, ModAttributes.EROSION_VULNERABLE, ModDamageTypes.EROSION, "#8a2be2"),
   /**
    * 灵魂
    * <p>
-   * 造成的伤害为：<br/>
-   * 伤害*造成的伤害的生物的生命上限百分之一*生物等级差<br/>
-   * 如果该生物没有生命上限，则伤害为：<br/>
-   * 造成的伤害的生物的伤害*20*0.01*生物等级差
+   * 伤害计算参考 {@link LcDamageUtil#theSoulDamage(float, LivingEntity, Entity, DamageSource)}
    */
-  THE_SOUL(3, "the_soul", ModAttributes.THE_SOUL_VULNERABLE, ModDamageTypes.THE_SOUL, "#00ffff"),
+  THE_SOUL(3, "the_soul", ModFontIcon.THE_SOUL, ModFontIcon.THE_SOUL_8X, ModAttributes.THE_SOUL_VULNERABLE, ModDamageTypes.THE_SOUL, "#00ffff"),
   ;
 
   public static final StringRepresentable.EnumCodec<LcDamageType> CODEC = StringRepresentable.fromEnum(LcDamageType::values);
@@ -60,6 +62,8 @@ public enum LcDamageType implements ColourText, StringRepresentable {
 
   private final int index;
   private final String name;
+  private final ModFontIcon charIcon;
+  private final ModFontIcon char8xIcon;
   /**
    * 对应的抗性属性
    */
@@ -68,13 +72,17 @@ public enum LcDamageType implements ColourText, StringRepresentable {
   private final String colour;
   private final int colourValue;
 
-  LcDamageType(int index,
-               String name,
-               Holder<Attribute> vulnerable,
-               ResourceKey<DamageType> damageType,
-               String colour) {
+  LcDamageType(final int index,
+               final String name,
+               final ModFontIcon charIcon,
+               final ModFontIcon char8xIcon,
+               final Holder<Attribute> vulnerable,
+               final ResourceKey<DamageType> damageType,
+               final String colour) {
     this.index = index;
     this.name = name;
+    this.charIcon = charIcon;
+    this.char8xIcon = char8xIcon;
     this.vulnerable = vulnerable;
     this.damageTypeResourceKey = damageType;
     this.colour = colour;
@@ -147,5 +155,13 @@ public enum LcDamageType implements ColourText, StringRepresentable {
   @Override
   public @NotNull String getSerializedName() {
     return ImaginaryCraft.modRlText(getName());
+  }
+
+  public ModFontIcon getChar() {
+    return charIcon;
+  }
+
+  public ModFontIcon getChar8x() {
+    return char8xIcon;
   }
 }
