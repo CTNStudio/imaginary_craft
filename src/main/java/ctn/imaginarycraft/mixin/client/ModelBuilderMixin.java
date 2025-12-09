@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.mixin.client;
 
-import ctn.imaginarycraft.mixinextend.client.IModelBuilderMixin;
+import ctn.imaginarycraft.api.client.IModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelBuilder;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -10,7 +10,7 @@ import org.spongepowered.asm.mixin.Unique;
 import java.util.Map;
 
 @Mixin(ModelBuilder.class)
-public abstract class ModelBuilderMixin<T extends ModelBuilder<T>> implements IModelBuilderMixin<T> {
+public abstract class ModelBuilderMixin<T extends ModelBuilder<T>> implements IModelBuilder<T> {
   @Shadow
   @Final
   protected Map<String, String> textures;

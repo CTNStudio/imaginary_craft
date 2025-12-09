@@ -2,20 +2,16 @@ package ctn.imaginarycraft.linkage.jade;
 
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.ModAttributes;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
-import org.jetbrains.annotations.NotNull;
 import snownee.jade.JadeInternals;
 import snownee.jade.api.EntityAccessor;
 import snownee.jade.api.IEntityComponentProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
-import snownee.jade.api.ui.IElement;
 import snownee.jade.api.ui.IElementHelper;
 
 public enum LivingEntityVulnerable implements IEntityComponentProvider {
@@ -32,43 +28,27 @@ public enum LivingEntityVulnerable implements IEntityComponentProvider {
     if (!(entityAccessor.getEntity() instanceof LivingEntity entity)) {
       return;
     }
-    boolean isPhysics = hasAttribute(entity, ModAttributes.PHYSICS_VULNERABLE);
-    boolean isSpirit = hasAttribute(entity, ModAttributes.SPIRIT_VULNERABLE);
-    boolean isErosion = hasAttribute(entity, ModAttributes.EROSION_VULNERABLE);
-    boolean isTheSoul = hasAttribute(entity, ModAttributes.THE_SOUL_VULNERABLE);
-    if (!isPhysics && !isSpirit && !isErosion && !isTheSoul) {
-      return;
-    }
     IElementHelper elements = JadeInternals.getElementHelper();
     iTooltip.add(Component.translatable(ATTRIBUTE_DESCRIPTION_KEY));
-    if (isPhysics) {
-      iTooltip.add(getSprite(elements, "physics8x"));
-      iTooltip.append(getComponent(entity, PHYSICS_KEY, LcDamageType.PHYSICS.getColourValue(), ModAttributes.PHYSICS_VULNERABLE));
-    }
-    if (isSpirit) {
-      iTooltip.add(getSprite(elements, "spirit8x"));
-      iTooltip.append(getComponent(entity, SPIRIT_KEY, LcDamageType.SPIRIT.getColourValue(), ModAttributes.SPIRIT_VULNERABLE));
-    }
-    if (isErosion) {
-      iTooltip.add(getSprite(elements, "erosion8x"));
-      iTooltip.append(getComponent(entity, EROSION_KEY, LcDamageType.EROSION.getColourValue(), ModAttributes.EROSION_VULNERABLE));
-    }
-    if (isTheSoul) {
-      iTooltip.add(getSprite(elements, "the_soul8x"));
-      iTooltip.append(getComponent(entity, THE_SOUL_KEY, LcDamageType.THE_SOUL.getColourValue(), ModAttributes.THE_SOUL_VULNERABLE));
-    }
+    add(iTooltip, PHYSICS_KEY, "physics8x", LcDamageType.PHYSICS, entity, elements);
+    add(iTooltip, SPIRIT_KEY, "spirit8x", LcDamageType.SPIRIT, entity, elements);
+    add(iTooltip, EROSION_KEY, "erosion8x", LcDamageType.EROSION, entity, elements);
+    add(iTooltip, THE_SOUL_KEY, "the_soul8x", LcDamageType.THE_SOUL, entity, elements);
   }
 
-  private static IElement getSprite(IElementHelper elements, String physics8x) {
-    return elements.sprite(ImaginaryCraft.modRl(physics8x), 8, 8);
-  }
-
-  private static @NotNull MutableComponent getComponent(LivingEntity entity, String key, int color, Holder<Attribute> attribute) {
-    return Component.translatable(key).withColor(color).append(getAttributeValue(entity, attribute)).withColor(color);
-  }
-
-  private static @NotNull String getAttributeValue(LivingEntity entity, Holder<Attribute> attribute) {
-    return String.format(" %.2f", entity.getAttributeValue(attribute));
+  private static void add(
+    final ITooltip iTooltip,
+    final String key,
+    final String spriteRl,
+    final LcDamageType damageType,
+    final LivingEntity entity,
+    final IElementHelper elements
+  ) {
+    iTooltip.add(elements.sprite(ImaginaryCraft.modRl(spriteRl), 8, 8));
+    Holder<Attribute> vulnerable = damageType.getVulnerable();
+    double text = hasAttribute(entity, vulnerable) ? entity.getAttributeValue(vulnerable) : vulnerable.value().getDefaultValue();
+    int colour = damageType.getColourValue();
+    iTooltip.append(Component.translatable(key).append(String.format(" %.2f", text)).withColor(colour));
   }
 
   private static boolean hasAttribute(final LivingEntity entity, Holder<Attribute> attribute) {

@@ -1,11 +1,9 @@
 package ctn.imaginarycraft.mixin;
 
-import ctn.imaginarycraft.mixinextend.ILivingDamageEvent$Post;
+import ctn.imaginarycraft.api.ILivingDamageEvent$Post;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import org.spongepowered.asm.mixin.Implements;
-import org.spongepowered.asm.mixin.Interface;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -13,7 +11,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(LivingDamageEvent.Post.class)
-@Implements(@Interface(iface = ILivingDamageEvent$Post.class, prefix = "projectMoonInt$"))
 public abstract class LivingDamageEvent$PostMixin implements ILivingDamageEvent$Post {
   @Unique
   private DamageContainer projectMoon$damageContainer;
@@ -24,7 +21,8 @@ public abstract class LivingDamageEvent$PostMixin implements ILivingDamageEvent$
   }
 
   @Unique
-  public DamageContainer projectMoonInt$getDamageContainer() {
+  @Override
+  public DamageContainer getImaginaryCraft$DamageContainer() {
     return projectMoon$damageContainer;
   }
 }

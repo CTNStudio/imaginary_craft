@@ -1,9 +1,9 @@
 {
   "values": [
-    "imaginarycraft:exuviae_curios",
+    "imaginarycraft:gaze_curios",
+    "imaginarycraft:wingbeat_curios",
     "imaginarycraft:wrist_cutter_curios",
     "imaginarycraft:spore_curios",
-    "imaginarycraft:gaze_curios",
-    "imaginarycraft:wingbeat_curios"
+    "imaginarycraft:exuviae_curios"
   ]
 }

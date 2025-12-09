@@ -1,24 +1,25 @@
 package ctn.imaginarycraft.eventexecute;
 
+import ctn.imaginarycraft.api.IDamageContainer;
+import ctn.imaginarycraft.api.IDamageSource;
+import ctn.imaginarycraft.api.capability.entity.IEntityAbnormalities;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
-import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
-import ctn.imaginarycraft.capability.entity.IAbnormalities;
 import ctn.imaginarycraft.client.util.ParticleUtil;
-import ctn.imaginarycraft.mixinextend.IDamageSource;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 
 import javax.annotation.Nullable;
 
@@ -40,42 +41,45 @@ public final class LcDamageEventExecutes {
    * 伤害计算
    */
   public static void vulnerableTreatment(
-    LivingIncomingDamageEvent event,
-    DamageSource damageSource,
+    IDamageContainer damageContainer,
     LivingEntity entity,
-    LcLevel attackerLevel,
+    @Nullable LcLevel attackerLevel,
     @Nullable LcDamageType lcDamageTypeTypes
   ) {
-    if (LcDamageType.byDamageType(damageSource.typeHolder()) == null && lcDamageTypeTypes == null) {
-      return;
-    }
-    // 新伤害
-    float newDamageAmount = armorJudgment(entity, attackerLevel, event.getAmount());
+    DamageContainer container = damageContainer.getImaginaryCraft$This();
+    float newDamageAmount = levelJudgment(entity, attackerLevel, container.getNewDamage());
 
     // 伤害类型
     if (lcDamageTypeTypes != null) {
-      // 抗性处理
-      var attributeInstance = entity.getAttribute(lcDamageTypeTypes.getVulnerable());
+      // 易伤处理
+      Holder<Attribute> vulnerable = lcDamageTypeTypes.getVulnerable();
+      AttributeInstance attributeInstance = entity.getAttribute(vulnerable);
       if (attributeInstance != null) {
         newDamageAmount *= (float) attributeInstance.getValue();
+      } else {
+        newDamageAmount *= (float) vulnerable.value().getDefaultValue();
       }
     }
 
-    event.setAmount(newDamageAmount);
+    container.setNewDamage(newDamageAmount);
   }
 
   /**
-   * 盔甲判断
+   * 等级判断
    *
    * @param entity        目标
    * @param attackerLevel 攻击者等级
    * @param damage        伤害
    * @return 新伤害
    */
-  private static float armorJudgment(final LivingEntity entity, final LcLevel attackerLevel, final float damage) {
+  private static float levelJudgment(final LivingEntity entity, @Nullable final LcLevel attackerLevel, final float damage) {
+    if (attackerLevel == null) {
+      return damage;
+    }
+
     // 盔甲判断
-    if (entity instanceof IAbnormalities) {
-      return ontologyCalculate(entity, attackerLevel, damage);
+    if (entity instanceof IEntityAbnormalities) {
+      return ontologyLevelCalculate(entity, attackerLevel, damage);
     }
     // 盔甲等级
     int armorItemStackLaval = 0;
@@ -89,8 +93,8 @@ public final class LcDamageEventExecutes {
       }
 
       // 盔甲等级
-      LcLevel level = LcLevelUtil.getLevel(armorItemStack);
-      if (level == LcLevel.VOID) {
+      @Nullable LcLevel level = LcLevelUtil.getLevel(armorItemStack);
+      if (level == null) {
         voidNumber++;
       } else {
         armorItemStackLaval += level.getLevelValue();
@@ -100,7 +104,7 @@ public final class LcDamageEventExecutes {
     }
 
     if (number == 0) {
-      return ontologyCalculate(entity, attackerLevel, damage);
+      return ontologyLevelCalculate(entity, attackerLevel, damage);
     }
 
     if (voidNumber == number) {
@@ -111,7 +115,7 @@ public final class LcDamageEventExecutes {
     if (armorItemStackLaval != -1) {
       armorItemStackLaval /= number;
     }
-    return damage * LcDamageUtil.getDamageMultiple(LcLevel.byLevel(armorItemStackLaval), attackerLevel);
+    return damage * LcLevelUtil.getDamageMultiple(LcLevel.byLevel(armorItemStackLaval), attackerLevel);
   }
 
   /**
@@ -122,8 +126,8 @@ public final class LcDamageEventExecutes {
    * @param damage        伤害
    * @return 新伤害
    */
-  private static float ontologyCalculate(final LivingEntity entity, final LcLevel attackerLevel, final float damage) {
-    return damage * LcDamageUtil.getDamageMultiple(LcLevelUtil.getLevel(entity), attackerLevel);
+  private static float ontologyLevelCalculate(final LivingEntity entity, @Nullable final LcLevel attackerLevel, final float damage) {
+    return damage * LcLevelUtil.getDamageMultiple(LcLevelUtil.getLevel(entity), attackerLevel);
   }
 
   /**
@@ -136,7 +140,7 @@ public final class LcDamageEventExecutes {
 
     // 低抗缓慢
     AttributeInstance attributeInstance;
-    @Nullable LcDamageType lcDamageType = IDamageSource.of(source).getLcDamageType();
+    @Nullable LcDamageType lcDamageType = IDamageSource.of(source).getImaginaryCraft$LcDamageType();
     if (lcDamageType != null &&
       (attributeInstance = entity.getAttribute(lcDamageType.getVulnerable())) != null &&
       attributeInstance.getValue() > 1.0) {

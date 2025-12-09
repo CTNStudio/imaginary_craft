@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.api.lobotomycorporation.util;
 
+import ctn.imaginarycraft.api.IDamageSource;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
-import ctn.imaginarycraft.mixinextend.IDamageSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -17,37 +17,7 @@ public final class LcDamageUtil {
    */
   @Nullable
   public static ItemStack getDamageItemStack(@NotNull DamageSource damageSource) {
-    ItemStack itemStack = damageSource.getWeaponItem();
-    if (itemStack == null && damageSource.getEntity() != null) {
-      itemStack = damageSource.getEntity().getWeaponItem();
-    }
-    return itemStack;
-  }
-
-  /**
-   * 获取伤害比例
-   *
-   * @param attackedLevel 被攻击的等级
-   * @param attackerLevel 攻击者的等级
-   */
-  public static float getDamageMultiple(@NotNull LcLevel attackedLevel, @NotNull LcLevel attackerLevel) {
-    if (attackedLevel == LcLevel.VOID || attackerLevel == LcLevel.VOID) {
-      return 1.0f;
-    }
-    int attackedLevelValue = attackedLevel.getLevelValue();
-    int attackerLevelValue = attackerLevel.getLevelValue();
-    int i = attackedLevelValue - attackerLevelValue;
-    return switch (i) {
-      case 4 -> 0.4F;
-      case 3 -> 0.6F;
-      case 2 -> 0.7F;
-      case 1 -> 0.8F;
-      case 0, -1 -> 1.0F;
-      case -2 -> 1.2F;
-      case -3 -> 1.5F;
-      case -4 -> 2.0F;
-      default -> throw new IllegalArgumentException("Invalid levelValue difference: " + i);
-    };
+    return damageSource.getWeaponItem();
   }
 
   /**
@@ -58,8 +28,8 @@ public final class LcDamageUtil {
   public static float theSoulDamage(float damage, LivingEntity attackedEntity, @Nullable Entity sourceEntity, DamageSource damageSource) {
     damage /= 100;
     float maxHealth = 0;
-    LcLevel attackedLevel = LcLevelUtil.getLevel(attackedEntity);
-    LcLevel attackerLevel = IDamageSource.of(damageSource).getLcDamageLevel();
+    @Nullable LcLevel attackedLevel = LcLevelUtil.getLevel(attackedEntity);
+    @Nullable LcLevel attackerLevel = IDamageSource.of(damageSource).getImaginaryCraft$LcDamageLevel();
     if (sourceEntity instanceof LivingEntity living) {
       maxHealth = (float) living.getAttributeValue(Attributes.MAX_HEALTH);
     }
@@ -70,6 +40,6 @@ public final class LcDamageUtil {
     }
 
     // 根据伤害等级差异计算最终伤害
-    return damage * (maxHealth / 5) * getDamageMultiple(attackedLevel, attackerLevel);
+    return damage * (maxHealth / 5) * LcLevelUtil.getDamageMultiple(attackedLevel, attackerLevel);
   }
 }

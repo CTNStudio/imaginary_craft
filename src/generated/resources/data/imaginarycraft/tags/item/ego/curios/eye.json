@@ -1,14 +1,14 @@
 {
   "values": [
-    "imaginarycraft:tough_curios",
     "imaginarycraft:da_capo_curios",
     "imaginarycraft:grinder_mk4_curios",
-    "imaginarycraft:red_eyes_curios",
-    "imaginarycraft:justitia_curios",
-    "imaginarycraft:today_is_expression_curios",
-    "imaginarycraft:sound_of_a_star_curios",
-    "imaginarycraft:censored_curios",
     "imaginarycraft:solitude_curios",
+    "imaginarycraft:justitia_curios",
+    "imaginarycraft:sound_of_a_star_curios",
+    "imaginarycraft:red_eyes_curios",
+    "imaginarycraft:censored_curios",
+    "imaginarycraft:today_is_expression_curios",
+    "imaginarycraft:tough_curios",
     "imaginarycraft:smile_curios"
   ]
 }

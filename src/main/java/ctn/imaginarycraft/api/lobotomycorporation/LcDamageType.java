@@ -30,6 +30,7 @@ import java.util.Arrays;
 import java.util.function.IntFunction;
 
 // TODO 对于药水需要做特殊处理
+
 /**
  * 脑叶伤害类型
  */
@@ -66,7 +67,7 @@ public enum LcDamageType implements ColourText, StringRepresentable {
   private final ModFontIcon charIcon;
   private final ModFontIcon char8xIcon;
   /**
-   * 对应的抗性属性
+   * 对应的易伤属性
    */
   private final Holder<Attribute> vulnerable;
   private final ResourceKey<DamageType> damageTypeResourceKey;

@@ -202,7 +202,7 @@ public class TextParticle extends TextureSheetParticle {
     protected int fontColor = 0xffffff;
     protected int strokeColor = 0xafafafaf;
     protected int durationTick = 20 * 3;
-    protected float size = 0.025f;
+    protected float size = 0.02f;
     protected AlignType align = AlignType.LEFT;
     protected float xRot;
     protected float yRot;

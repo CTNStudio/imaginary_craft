@@ -10,14 +10,11 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Arrays;
 
 // TODO 对于药水需要做特殊处理
+
 /**
  * 脑叶等级
  */
 public enum LcLevel implements ColourText, StringRepresentable {
-  /**
-   * 此伤害无视等级减免
-   */
-  VOID(-1, "void", "#000000"),
   ZAYIN(1, "zayin", "#00ff00"),
   TETH(2, "teth", "#1e90ff"),
   HE(3, "he", "#ffff00"),
@@ -40,13 +37,11 @@ public enum LcLevel implements ColourText, StringRepresentable {
     return name;
   }
 
-  public static LcLevel byLevel(int level) {
-    return Arrays.stream(values()).filter(value -> value.levelValue == level).findFirst().orElse(ZAYIN);
+  public static @NotNull LcLevel byLevel(int level) {
+    final int finalLevel = Math.clamp(level, ZAYIN.getLevelValue(), ALEPH.getLevelValue());
+    return Arrays.stream(values()).filter(value -> value.levelValue == finalLevel).findFirst().orElse(ZAYIN);
   }
 
-  /**
-   * @return 返回 {@link -1} 代表无视等级抗性
-   */
   public int getLevelValue() {
     return levelValue;
   }

@@ -4,6 +4,7 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.block.Block;
 import snownee.jade.api.IWailaClientRegistration;
 import snownee.jade.api.IWailaCommonRegistration;
 import snownee.jade.api.IWailaPlugin;
@@ -11,8 +12,9 @@ import snownee.jade.api.WailaPlugin;
 
 @WailaPlugin
 public final class ModPlugin implements IWailaPlugin {
-  public static final ResourceLocation ENTITY_LC_LEVEL = ImaginaryCraft.modRl("level");
-  public static final ResourceLocation ENTITY_LC_VULNERABLE = ImaginaryCraft.modRl("vulnerable");
+  public static final ResourceLocation ENTITY_LC_LEVEL = ImaginaryCraft.modRl("entity_level");
+  public static final ResourceLocation BLOCK_LC_LEVEL = ImaginaryCraft.modRl("block_level");
+  public static final ResourceLocation ENTITY_LC_VULNERABLE = ImaginaryCraft.modRl("entity_vulnerable");
 
   @Override
   public void register(IWailaCommonRegistration registration) {
@@ -21,6 +23,7 @@ public final class ModPlugin implements IWailaPlugin {
   @Override
   public void registerClient(IWailaClientRegistration registration) {
     registration.registerEntityComponent(EntityLcLevel.INSTANCE, Entity.class);
+    registration.registerBlockComponent(BlockLcLevel.INSTANCE, Block.class);
     registration.registerEntityComponent(LivingEntityVulnerable.INSTANCE, LivingEntity.class);
   }
 }

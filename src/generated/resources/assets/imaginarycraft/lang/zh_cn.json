@@ -1,6 +1,7 @@
 {
-  "config.jade.plugin_imaginarycraft.level": "生物等级",
-  "config.jade.plugin_imaginarycraft.vulnerable": "生物易伤",
+  "config.jade.plugin_imaginarycraft.block_level": "方块等级",
+  "config.jade.plugin_imaginarycraft.entity_level": "生物等级",
+  "config.jade.plugin_imaginarycraft.entity_vulnerable": "生物易伤",
   "curios.identifier.ego_curios_brooch": "胸针",
   "curios.identifier.ego_curios_cheek": "脸颊",
   "curios.identifier.ego_curios_eye": "眼部",

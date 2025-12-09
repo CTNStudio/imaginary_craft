@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.datagen;
 
+import ctn.imaginarycraft.api.client.IModelBuilder;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.item.ModEgoCurios;
-import ctn.imaginarycraft.mixinextend.client.IModelBuilderMixin;
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
@@ -17,7 +17,7 @@ public final class DatagenItem extends ItemModelProvider {
   protected void registerModels() {
     ModEgoCurios.REGISTRY.getEntries().forEach(item -> {
       ItemModelBuilder itemModelBuilder = this.withExistingParent(item.getId().getPath(), "item/generated");
-      IModelBuilderMixin.of(itemModelBuilder).imaginarycraft$getTexture()
+      IModelBuilder.of(itemModelBuilder).imaginarycraft$getTexture()
         .put("layer0", item.getId().withPrefix("item/curios/").toString());
     });
   }

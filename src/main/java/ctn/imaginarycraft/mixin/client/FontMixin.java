@@ -2,8 +2,8 @@ package ctn.imaginarycraft.mixin.client;
 
 import com.mojang.blaze3d.font.GlyphInfo;
 import com.mojang.blaze3d.vertex.VertexConsumer;
+import ctn.imaginarycraft.api.client.IFont;
 import ctn.imaginarycraft.client.gui.ModStringRenderOutput;
-import ctn.imaginarycraft.mixinextend.client.IFontMixin;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.font.FontSet;
 import net.minecraft.network.chat.Component;
@@ -21,7 +21,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 
 @Mixin(Font.class)
-public abstract class FontMixin implements IFontExtension, IFontMixin {
+public abstract class FontMixin implements IFontExtension, IFont {
 
   @Shadow
   @Final

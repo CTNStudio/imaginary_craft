@@ -32,6 +32,7 @@ public final class ZhCn extends DatagenI18n {
     addItemList(ITEMS);
     MAP.forEach(this::add);
     addJadePlugin(ModPlugin.ENTITY_LC_LEVEL, "生物等级");
+    addJadePlugin(ModPlugin.BLOCK_LC_LEVEL, "方块等级");
     addJadePlugin(ModPlugin.ENTITY_LC_VULNERABLE, "生物易伤");
     add(LivingEntityVulnerable.ATTRIBUTE_DESCRIPTION_KEY, "易伤");
     add(LivingEntityVulnerable.PHYSICS_KEY, "物理易伤");

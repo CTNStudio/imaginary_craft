@@ -1,5 +1,7 @@
 package ctn.imaginarycraft.events.entity;
 
+import ctn.imaginarycraft.api.IDamageContainer;
+import ctn.imaginarycraft.api.IDamageSource;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
@@ -7,7 +9,6 @@ import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.eventexecute.LcDamageEventExecutes;
-import ctn.imaginarycraft.mixinextend.IDamageSource;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
@@ -26,6 +27,7 @@ import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import net.neoforged.neoforge.event.tick.EntityTickEvent;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 实体事件
@@ -63,12 +65,14 @@ public final class EntityEvents {
   @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void livingIncomingDamageEvent(LivingIncomingDamageEvent event) {
     DamageSource damageSource = event.getSource();
-    IDamageSource modDamageSource = (IDamageSource) damageSource;
-    LcLevel lcDamageLevel = modDamageSource.getLcDamageLevel();
-    LcDamageType lcDamageType = modDamageSource.getLcDamageType();
+    DamageContainer damageContainer = event.getContainer();
+    IDamageSource iDamageSource = IDamageSource.of(damageSource);
+    IDamageContainer iDamageContainer = IDamageContainer.of(damageContainer);
+    @Nullable LcLevel lcDamageLevel = iDamageSource.getImaginaryCraft$LcDamageLevel();
+    LcDamageType lcDamageType = iDamageSource.getImaginaryCraft$LcDamageType();
     LivingEntity entity = event.getEntity();
     if (entity.level() instanceof ServerLevel serverLevel) {
-      LcDamageEventExecutes.vulnerableTreatment(event, damageSource, entity, lcDamageLevel, lcDamageType);
+      LcDamageEventExecutes.vulnerableTreatment(iDamageContainer, entity, lcDamageLevel, lcDamageType);
     }
   }
 
