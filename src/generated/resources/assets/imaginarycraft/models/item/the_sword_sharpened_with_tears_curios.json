@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:item/generated",
-  "textures": {
-    "layer0": "imaginarycraft:item/curios/the_sword_sharpened_with_tears_curios"
-  }
-}

@@ -1,7 +1,0 @@
-{
-  "add_cosmetic": true,
-  "drop_rule": "ALWAYS_KEEP",
-  "validators": [
-    "imaginarycraft:ego_curios_headwear_tag"
-  ]
-}

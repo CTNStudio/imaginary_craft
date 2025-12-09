@@ -7,6 +7,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.DamageTypeTagsProvider;
 import net.minecraft.world.damagesource.DamageTypes;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -64,11 +65,13 @@ public final class DatagenDamageTypeTag extends DamageTypeTagsProvider {
       DamageTypes.FREEZE,
       DamageTypes.DRAGON_BREATH,
       DamageTypes.MAGIC,
+      DamageTypes.INDIRECT_MAGIC,
       DamageTypes.FELL_OUT_OF_WORLD,
       DamageTypes.OUTSIDE_BORDER,
       DamageTypes.STARVE,
       DamageTypes.CRAMMING,
-      DamageTypes.GENERIC_KILL);
+      DamageTypes.GENERIC_KILL
+    ).addTag(Tags.DamageTypes.IS_MAGIC);
   }
 
   @Contract(pure = true)

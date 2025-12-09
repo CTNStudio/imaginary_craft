@@ -1,9 +1,0 @@
-{
-  "values": [
-    "minecraft:sonic_boom",
-    {
-      "id": "imaginarycraft:the_soul",
-      "required": false
-    }
-  ]
-}

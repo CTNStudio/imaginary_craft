@@ -4,6 +4,8 @@ import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
 import org.jetbrains.annotations.Nullable;
 import snownee.jade.api.EntityAccessor;
 import snownee.jade.api.IEntityComponentProvider;
@@ -16,7 +18,11 @@ public enum EntityLcLevel implements IEntityComponentProvider {
 
   @Override
   public void appendTooltip(ITooltip iTooltip, EntityAccessor entityAccessor, IPluginConfig iPluginConfig) {
-    @Nullable LcLevel level = LcLevelUtil.getLevel(entityAccessor.getEntity());
+    Entity entity = entityAccessor.getEntity();
+    if (entity instanceof ItemEntity) {
+      return;
+    }
+    @Nullable LcLevel level = LcLevelUtil.getLevel(entity);
     if (level == null) {
       return;
     }

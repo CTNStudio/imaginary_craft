@@ -1,9 +1,0 @@
-{
-  "values": [
-    "minecraft:mob_projectile",
-    {
-      "id": "imaginarycraft:spirit",
-      "required": false
-    }
-  ]
-}
