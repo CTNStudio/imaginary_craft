@@ -1,7 +1,7 @@
-package ctn.imaginarycraft.init.item;
+package ctn.imaginarycraft.init.item.ego;
 
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
-import ctn.imaginarycraft.common.item.ego.EgoCurioItem;
+import ctn.imaginarycraft.common.item.ego.curio.EgoCurioItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
 import ctn.imaginarycraft.datagen.tag.DatagenItemTag;
@@ -14,7 +14,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.Set;
 import java.util.function.Function;
 
-public final class ModEgoCurios {
+public final class EgoCurioItems {
   public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(ImaginaryCraft.ID);
 
   //region 头饰
@@ -901,7 +901,7 @@ public final class ModEgoCurios {
     return deferredItem;
   }
 
-  public static void init(IEventBus bus) {
+  static void init(IEventBus bus) {
     REGISTRY.register(bus);
   }
 

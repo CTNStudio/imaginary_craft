@@ -105,9 +105,8 @@ public final class RegistryCapability {
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void registerLowest(RegisterCapabilitiesEvent event) {
     for (Item item : BuiltInRegistries.ITEM) {
-      registerItem(event, item, IItemRandomDamage.class, ModCapabilitys.RANDOM_DAMAGE_ITEM);
       registerItem(event, item, IItemInvincibleTick.class, ModCapabilitys.InvincibleTick.INVINCIBLE_TICK_ITEM);
-      registerItem(event, item, IItemLcDamageType.class, ModCapabilitys.LcDamageType.LC_DAMAGE_TYPE_ITEM);
+      registerItem(event, item, IItemLcDamageType.class, ModCapabilitys.LC_DAMAGE_TYPE_ITEM);
       registerItem(event, item, IItemUsageReq.class, ModCapabilitys.USAGE_REQ_ITEM);
       registerItem(event, item, IItemLcLevel.class, ModCapabilitys.LcLevel.LC_LEVEL_ITEM);
     }

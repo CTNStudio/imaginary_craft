@@ -1,78 +1,79 @@
 package ctn.imaginarycraft.common.components;
 
 import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import ctn.ctnapi.client.util.ColorUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueRating;
 import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueType;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModAttributes;
+import ctn.imaginarycraft.init.ModDataComponents;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ByIdMap;
+import net.minecraft.util.StringRepresentable;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipProvider;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
+import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
-
-// TODO 要重置
+import java.util.function.Consumer;
 
 /**
  * 物品四色属性能力使用要求提示
  * <p>
  * 当一个最后一个值为-1就是包括大于
  */
-public class ItemVirtueUsageReq extends ToTooltip {
-  public static final StreamCodec<ByteBuf, ItemVirtueUsageReq> STREAM_CODEC = StreamCodec.composite(
-    ByteBufCodecs.map(LinkedHashMap::new, VirtueType.STREAM_CODEC, ByteBufCodecs.INT.apply(ByteBufCodecs.list())),
-    ItemVirtueUsageReq::apply,
-    ItemVirtueUsageReq::new
-  );
-  private static final String PREFIX = ImaginaryCraft.ID + ":data_components.item_color_usage_req.";
-  public static final String All = PREFIX + "all";
-  public static final String REQUIREMENT = PREFIX + "requirement";
-  public static final String INTERVAL = PREFIX + "interval";
-  public static final String NOT_TO_EXCEED = PREFIX + "not_to_exceed";
-  public static final String NOT_LOWER_THAN = PREFIX + "not_lower_than";
+public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> prudence,
+                                 List<UsageReq> temperance, List<UsageReq> justice,
+                                 List<UsageReq> composite) implements TooltipProvider {
+  public static final String PREFIX = ImaginaryCraft.modRlText("data_components.item_virtue_usage_req.");
+  /**
+   * 使用条件
+   */
   public static final String USE_CONDITION = PREFIX + "use_condition";
-  private static final Codec<LinkedHashMap<VirtueType, List<Integer>>> LEVELS_CODEC = Codec
-    .unboundedMap(VirtueType.CODEC, Codec.list(Codec.INT))
-    .xmap(LinkedHashMap::new, Function.identity());
-  private static final Codec<ItemVirtueUsageReq> FULL_CODEC = RecordCodecBuilder
-    .create(instance -> instance
-      .group(LEVELS_CODEC.fieldOf("require")
-        .forGetter(req -> req.requireMap))
-      .apply(instance, ItemVirtueUsageReq::new));
-  public static final Codec<ItemVirtueUsageReq> CODEC = Codec
-    .withAlternative(FULL_CODEC, LEVELS_CODEC, ItemVirtueUsageReq::new);
+  /**
+   * 需求
+   */
+  public static final String REQUIREMENT = PREFIX + "requirement";
+  /**
+   * 区间
+   */
+  public static final String INTERVAL = PREFIX + "interval";
+  /**
+   * 不超过
+   */
+  public static final String NOT_TO_EXCEED = PREFIX + "not_to_exceed";
+  /**
+   * 不低于
+   */
+  public static final String NOT_LOWER_THAN = PREFIX + "not_lower_than";
+  public static final StreamCodec<ByteBuf, ItemVirtueUsageReq> STREAM_CODEC = StreamCodec.composite(
+    UsageReq.STREAM_CODEC.apply(ByteBufCodecs.list()), ItemVirtueUsageReq::fortitude,
+    UsageReq.STREAM_CODEC.apply(ByteBufCodecs.list()), ItemVirtueUsageReq::prudence,
+    UsageReq.STREAM_CODEC.apply(ByteBufCodecs.list()), ItemVirtueUsageReq::temperance,
+    UsageReq.STREAM_CODEC.apply(ByteBufCodecs.list()), ItemVirtueUsageReq::justice,
+    UsageReq.STREAM_CODEC.apply(ByteBufCodecs.list()), ItemVirtueUsageReq::composite,
+    ItemVirtueUsageReq::new);
+  public static final Codec<ItemVirtueUsageReq> CODEC = RecordCodecBuilder.create(instance -> instance.group(
+      Codec.list(UsageReq.CODEC).fieldOf("fortitude").forGetter(ItemVirtueUsageReq::fortitude),
+      Codec.list(UsageReq.CODEC).fieldOf("prudence").forGetter(ItemVirtueUsageReq::prudence),
+      Codec.list(UsageReq.CODEC).fieldOf("temperance").forGetter(ItemVirtueUsageReq::temperance),
+      Codec.list(UsageReq.CODEC).fieldOf("justice").forGetter(ItemVirtueUsageReq::justice),
+      Codec.list(UsageReq.CODEC).fieldOf("composite").forGetter(ItemVirtueUsageReq::composite))
+    .apply(instance, ItemVirtueUsageReq::new));
 
-  private final LinkedHashMap<VirtueType, List<Integer>> requireMap;
-
-  public ItemVirtueUsageReq(LinkedHashMap<VirtueType, List<Integer>> map) {
-    this.requireMap = map;
-  }
-
-  private static LinkedHashMap<VirtueType, List<Integer>> apply(ItemVirtueUsageReq p_340784_) {
-    return p_340784_.requireMap;
-  }
-
-  public static ItemVirtueUsageReq empty() {
-    LinkedHashMap<VirtueType, List<Integer>> map = new LinkedHashMap<>();
-    map.put(VirtueType.FORTITUDE, new ArrayList<>());
-    map.put(VirtueType.PRUDENCE, new ArrayList<>());
-    map.put(VirtueType.TEMPERANCE, new ArrayList<>());
-    map.put(VirtueType.JUSTICE, new ArrayList<>());
-    map.put(VirtueType.COMPOSITE_RATING, new ArrayList<>());
-    return new ItemVirtueUsageReq(map);
-  }
+  public static final ItemVirtueUsageReq EMPTY = new Builder().build();
 
   private static void validateCompositeRatingValue(VirtueType attribute, int value) {
     assert attribute != VirtueType.COMPOSITE_RATING || value != 6 :
@@ -83,347 +84,369 @@ public class ItemVirtueUsageReq extends ToTooltip {
     return detailed ? Component.literal(String.valueOf(value)) : Component.translatable(VirtueRating.getRating(value).getName());
   }
 
-  /// 至少 推荐使用方法
-  public static ItemVirtueUsageReq notToExceed(VirtueRating fortitudeRating, VirtueRating prudenceRating, VirtueRating temperanceRating, VirtueRating justiceRating, VirtueRating compositeRating) {
-    final ItemVirtueUsageReq empty = ItemVirtueUsageReq.empty();
-    if (fortitudeRating != null) {
-      empty.setNotToExceedValue(VirtueType.FORTITUDE, fortitudeRating);
-    }
-    if (prudenceRating != null) {
-      empty.setNotToExceedValue(VirtueType.PRUDENCE, prudenceRating);
-    }
-    if (temperanceRating != null) {
-      empty.setNotToExceedValue(VirtueType.TEMPERANCE, temperanceRating);
-    }
-    if (justiceRating != null) {
-      empty.setNotToExceedValue(VirtueType.JUSTICE, justiceRating);
-    }
-    setNotToExceedValue(compositeRating, VirtueType.COMPOSITE_RATING, empty);
-    return empty;
-  }
-
-  private static void setNotToExceedValue(final VirtueRating compositeRating, VirtueType virtueType, final ItemVirtueUsageReq empty) {
-    if (compositeRating == null) {
-      return;
-    }
-    empty.setNotToExceedValue(virtueType, compositeRating);
-  }
-
-  //没什么特殊要求的建议使用这个
-
-  /// 至多
-  public static ItemVirtueUsageReq notLowerThan(VirtueRating fortitudeRating, VirtueRating prudenceRating, VirtueRating temperanceRating, VirtueRating justiceRating, VirtueRating compositeRating) {
-    final ItemVirtueUsageReq empty = ItemVirtueUsageReq.empty();
-    if (fortitudeRating != null) {
-      empty.setNotLowerThanValue(VirtueType.FORTITUDE, fortitudeRating);
-    }
-    if (prudenceRating != null) {
-      empty.setNotLowerThanValue(VirtueType.PRUDENCE, prudenceRating);
-    }
-    if (temperanceRating != null) {
-      empty.setNotLowerThanValue(VirtueType.TEMPERANCE, temperanceRating);
-    }
-    if (justiceRating != null) {
-      empty.setNotLowerThanValue(VirtueType.JUSTICE, justiceRating);
-    }
-    if (compositeRating != null) {
-      empty.setNotLowerThanValue(VirtueType.COMPOSITE_RATING, compositeRating);
-    }
-    return empty;
-  }
-
-  public List<Integer> getValue(VirtueType attribute) {
-    return getAttributeList(attribute);
-  }
-
-  /**
-   * 至少
-   */
-  public ItemVirtueUsageReq setNotToExceedValue(VirtueType attribute, VirtueRating rating) {
-    assert attribute != VirtueType.COMPOSITE_RATING || rating != VirtueRating.EX :
-      "Composite Rating must be between I and V. Currently, it is: %s".formatted(rating);
-    List<Integer> list = getAttributeList(attribute);
-    list.clear();
-    list.add(rating.getMinValue());
-    list.add(-1);
-    return this;
-  }
-
-  /**
-   * 至多
-   */
-  public ItemVirtueUsageReq setNotLowerThanValue(VirtueType attribute, VirtueRating rating) {
-    assert attribute != VirtueType.COMPOSITE_RATING || rating != VirtueRating.EX :
-      "Composite Rating must be between I and V. Currently, it is: %s".formatted(rating);
-    List<Integer> list = getAttributeList(attribute);
-    list.clear();
-    list.add(-1);
-    list.add(rating.getMinValue());
-    return this;
-  }
-
-  public ItemVirtueUsageReq setValue(VirtueType attribute, VirtueRating... ratings) {
-    if (attribute == VirtueType.COMPOSITE_RATING) {
-      for (VirtueRating rating : ratings) {
-        assert rating != VirtueRating.EX :
-          "Composite Rating must be between I and V. Currently, it is: %s".formatted(rating);
-      }
-    }
-    List<Integer> list = getAttributeList(attribute);
-    Arrays.sort(ratings);
-    list.clear();
-    list.add(ratings[0].getMinValue());
-    list.add(ratings[1].getMinValue());
-    return this;
-  }
-
-  /**
-   * 适合仅对应的值可用 -1代表没有限制
-   * <p>
-   * 注意{@link VirtueType#COMPOSITE_RATING}只有6个值（-1、1、2、3、4、5）
-   */
-  public ItemVirtueUsageReq setValue(VirtueType attribute, int... values) {
-    if (attribute == VirtueType.COMPOSITE_RATING) {
-      for (int value : values) {
-        assert value != 6 :
-          "Composite Rating must be between [-1, 1, 2, 3, 4, 5]. Currently, it is: %d".formatted(value);
-      }
-    }
-    List<Integer> list = getAttributeList(attribute);
-    list.clear();
-    if (values.length == 0) {
-      list.add(-1);
-      return this;
-    }
-    Arrays.sort(values);
-    for (int value : values) {
-      if (value == -1) {
-        list.clear();
-        list.add(-1);
-        return this;
-      }
-      list.add(value);
-    }
-    return this;
-  }
-
-  public ItemVirtueUsageReq setMinValue(VirtueType attribute, int value) {
-    validateCompositeRatingValue(attribute, value);
-    List<Integer> list = getAttributeList(attribute);
-    list.clear();
-    if (value == 0 || value == -1) {
-      list.add(-1);
-      return this;
-    }
-    list.add(value);
-    list.add(-1);
-    return this;
-  }
-
-  public ItemVirtueUsageReq setMaxValue(VirtueType attribute, int value) {
-    validateCompositeRatingValue(attribute, value);
-    List<Integer> list = getAttributeList(attribute);
-    list.clear();
-    if (value == 0 || value == -1) {
-      list.add(-1);
-      return this;
-    }
-    list.add(-1);
-    list.add(value);
-    return this;
-  }
-
-  @Override
-  public boolean equals(Object obj) {
-    if (this == obj) {
-      return true;
-    }
-
-    if (obj instanceof ItemVirtueUsageReq itemVirtueUsageReq) {
-      return itemVirtueUsageReq.requireMap.equals(requireMap);
-    }
-    return false;
-  }
-
-  @Override
-  public int hashCode() {
-    return requireMap.hashCode() * VirtueType.values().length;
-  }
-
-  private List<Integer> getAttributeList(VirtueType attribute) {
-    if (requireMap.get(attribute) == null) {
-      requireMap.put(attribute, new ArrayList<>());
-    }
-    return requireMap.get(attribute);
-  }
-
-  public ItemVirtueUsageReq clearAttributeList(VirtueType attribute) {
-    getAttributeList(attribute).clear();
-    return this;
-  }
-
-  /**
-   * 列表是否为空
-   */
-  public boolean isListEmpty(List<Integer> list) {
-    if (list.isEmpty()) {
-      return true;
-    }
-    return list.size() == 1 && list.get(0) == -1;
+  private List<UsageReq> getAttributeList(VirtueType attribute) {
+    return switch (attribute) {
+      case FORTITUDE -> this.fortitude;
+      case PRUDENCE -> this.prudence;
+      case TEMPERANCE -> this.temperance;
+      case JUSTICE -> this.justice;
+      case COMPOSITE_RATING -> this.composite;
+    };
   }
 
   /**
    * 获取属性对应的使用要求
    */
-  public Component analysisUsageReq(VirtueType attribute, boolean detailed) {
-    List<Integer> list = getAttributeList(attribute);
+  @Nullable
+  public Component analysisUsageReq(VirtueType attribute, boolean isDetailed) {
+    List<UsageReq> list = getAttributeList(attribute);
+    if (list.isEmpty()) {
+      return null;
+    }
+
     if (attribute == VirtueType.COMPOSITE_RATING) {
-      detailed = false;
-    }
-    int color = attribute.getColourValue();
-
-    // 根据类型生成
-    MutableComponent component = attribute != VirtueType.COMPOSITE_RATING ?
-      Component.literal(attribute.getName()).setStyle(Style.EMPTY.withColor(color)) :
-      Component.translatable(VirtueType.COMPOSITE_RATING.getSerializedName());
-
-    if (isListEmpty(list)) {
-      component.append(Component.translatable(All));
-      return component;
+      isDetailed = false;
     }
 
+    return Component.translatable(PREFIX + attribute.getName())
+      .append(getUsageReqComponent(list, isDetailed));
+  }
+
+  /**
+   * 根据使用需求列表生成对应的文本组件
+   *
+   * @param list       使用需求列表
+   * @param isDetailed 是否显示详细信息（true时显示具体数值，false时显示等级名称）
+   * @return 包含使用需求描述的文本组件
+   */
+  private MutableComponent getUsageReqComponent(List<UsageReq> list, boolean isDetailed) {
+    MutableComponent component;
     int size = list.size();
-    if (size > 2) {
-      component.append(Component.translatable(REQUIREMENT));
-      for (int i : list) {
-        component
-          .append(" ")
-          .append(getParameterComponent(detailed, i));
-      }
-      return component;
+    UsageReq lastUsageReq = list.getLast();
+    int lastValue = lastUsageReq.value;
+    Object object = isDetailed ? lastValue : VirtueRating.getRating(lastValue).getName();
+    UsageReq.Type type = lastUsageReq.type;
+
+    // 检查非法的使用需求类型组合
+    if (size >= 2 && type == UsageReq.Type.NOT_TO_EXCEED) {
+      throw new IllegalArgumentException("Invalid UsageReq type: " + type + ", list: " + list);
     }
 
-    int first = list.get(0);
+    // 处理单个使用需求的情况
     if (size == 1) {
-      if (first == -1) {
-        return component;
+      // 不超过
+      if (type == UsageReq.Type.NOT_TO_EXCEED) {
+        component = Component.translatable(NOT_TO_EXCEED, object);
+        return component.withColor(0xAAAAAA);
       }
-      component.append(Component.translatable(REQUIREMENT))
-        .append(" ")
-        .append(getParameterComponent(detailed, first));
-      return component;
-    }
-
-    if (first == -1) {
-      component.append(Component.translatable(NOT_TO_EXCEED))
-        .append(" ")
-        .append(getParameterComponent(detailed, list.get(1)));
-      return component;
-    }
-
-    if (list.get(1) == -1) {
-      component.append(Component.translatable(NOT_LOWER_THAN))
-        .append(" ")
-        .append(getParameterComponent(detailed, first));
-      return component;
-    }
-
-    component.append(Component.translatable(INTERVAL,
-      getParameterComponent(detailed, first),
-      getParameterComponent(detailed, list.get(1))));
-    return component;
-  }
-
-  public boolean isAccord(VirtueType attribute, int value) {
-    List<Integer> attributeUsageReq = getAttributeList(attribute);
-    if (isListEmpty(attributeUsageReq)) {
-      return true;
-    }
-    final int i1 = attributeUsageReq.get(0);
-    return switch (attributeUsageReq.size()) {
-      case 1 -> i1 == value;
-      // 在这 -1 等于 <= 或 >=
-      case 2 -> {
-        final int i2 = attributeUsageReq.get(1);
-        if (i1 == -1 && i2 == -1) {
-          yield true;
-        }
-        if (i1 == -1) {
-          yield value <= i2;
-        }
-        if (i2 == -1) {
-          yield value >= i1;
-        }
-        yield i2 >= value && value >= i1;
+      // 不低于
+      if (type == UsageReq.Type.NOT_LOWER_THAN) {
+        component = Component.translatable(NOT_LOWER_THAN, object);
+        return component.withColor(0xAAAAAA);
       }
-      // 在这理论上不应该有-1
-      default -> {
-        for (int i : attributeUsageReq) {
-          if (i != value) {
-            continue;
-          }
-          yield true;
-        }
-        yield false;
+    } else if (size == 2) {
+      // 处理区间范围的情况
+      if (type != UsageReq.Type.NOT_LOWER_THAN) {
+        int value = list.get(1).value;
+        Object object1 = isDetailed ? value : VirtueRating.getRating(value).getName();
+        component = Component.translatable(INTERVAL, object, object1);
+        return component.withColor(0xAAAAAA);
       }
-    };
-  }
+    }
 
-  @Override
-  public String toString() {
-    return analysisUsageReq(VirtueType.FORTITUDE, true).tryCollapseToString() + "," +
-      analysisUsageReq(VirtueType.PRUDENCE, true).tryCollapseToString() + "," +
-      analysisUsageReq(VirtueType.TEMPERANCE, true).tryCollapseToString() + "," +
-      analysisUsageReq(VirtueType.JUSTICE, true).tryCollapseToString();
+    // 处理多个离散值的情况
+    component = Component.translatable(REQUIREMENT);
+    for (UsageReq usageReq : list) {
+      int value = usageReq.value;
+      Object object1 = isDetailed ? value : VirtueRating.getRating(value).getName();
+      component.append(Component.literal(" " + object1));
+    }
+    return component.withColor(0xAAAAAA);
   }
 
   public boolean isEmpty() {
-    int i = 0;
-    for (VirtueType type : VirtueType.values()) {
-      if (isListEmpty(getAttributeList(type))) {
-        i++;
-      }
-    }
-    return i == VirtueType.values().length;
+    return this.fortitude.isEmpty() && this.prudence.isEmpty() && this.temperance.isEmpty() && this.justice.isEmpty() && this.composite.isEmpty();
   }
 
   @Override
-  public void getToTooltip(List<Component> components) {
+  public void addToTooltip(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag) {
     if (isEmpty()) {
       return;
     }
-    Minecraft minecraft = Minecraft.getInstance();
-    Player player = minecraft.player;
+    Player player = Minecraft.getInstance().player;
+    tooltipAdder.accept(Component.literal(USE_CONDITION).withColor(0xAAAAAA));
 
-    components.add(Component.literal(USE_CONDITION).setStyle(Style.EMPTY.withColor(ColorUtil.rgbColor("#AAAAAA"))));
-
-    boolean detailed = player != null && (player.getAttributeValue(ModAttributes.INTELLIGENCE_DEPARTMENT_ACTIVATION) == 1 ||
-      player.isCreative() && Screen.hasShiftDown());
+    boolean detailed = player != null &&
+      (tooltipFlag.isCreative() && tooltipFlag.hasShiftDown() ||
+        player.getAttributeValue(ModAttributes.INTELLIGENCE_DEPARTMENT_ACTIVATION) >= 1);
     for (VirtueType type : VirtueType.values()) {
-      if (isListEmpty(getAttributeList(type))) {
+      Component component = analysisUsageReq(type, detailed);
+      if (component == null) {
         continue;
       }
-      components.add(Component.literal(" ").append(analysisUsageReq(type, detailed)));
+      tooltipAdder.accept(Component.literal(" ").append(component));
     }
   }
 
-  public List<Integer> getFortitudeUsageReq() {
-    return getAttributeList(VirtueType.FORTITUDE);
+  public static class Builder {
+    private final List<UsageReq> fortitude = new ArrayList<>();
+    private final List<UsageReq> prudence = new ArrayList<>();
+    private final List<UsageReq> temperance = new ArrayList<>();
+    private final List<UsageReq> justice = new ArrayList<>();
+    private final List<UsageReq> composite = new ArrayList<>();
+
+    public static void add(final Item.Properties properties, final ItemVirtueUsageReq.Builder builder) {
+      if (builder == null || (builder.isEmpty())) {
+        return;
+      }
+
+      properties.component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, builder.build());
+    }
+
+    public Builder fortitude(int value, boolean isMin) {
+      return updateList(fortitude, value, isMin);
+    }
+
+    public Builder fortitude(VirtueRating value, boolean isMin) {
+      return updateList(fortitude, value.getRating(), isMin);
+    }
+
+    public Builder fortitude(int min, int max) {
+      return updateListRange(fortitude, min, max);
+    }
+
+    public Builder fortitude(VirtueRating min, VirtueRating max) {
+      return updateListRange(fortitude, min.getRating(), max.getRating());
+    }
+
+    public Builder fortitude(int... values) {
+      return updateListValues(fortitude, values);
+    }
+
+    public Builder fortitude(VirtueRating... values) {
+      return updateListValues(fortitude, values);
+    }
+
+    public Builder prudence(int value, boolean isMin) {
+      return updateList(prudence, value, isMin);
+    }
+
+    public Builder prudence(VirtueRating value, boolean isMin) {
+      return updateList(prudence, value.getRating(), isMin);
+    }
+
+    public Builder prudence(int min, int max) {
+      return updateListRange(prudence, min, max);
+    }
+
+    public Builder prudence(VirtueRating min, VirtueRating max) {
+      return updateListRange(prudence, min.getRating(), max.getRating());
+    }
+
+    public Builder prudence(int... values) {
+      return updateListValues(prudence, values);
+    }
+
+    public Builder prudence(VirtueRating... values) {
+      return updateListValues(prudence, values);
+    }
+
+    public Builder temperance(int value, boolean isMin) {
+      return updateList(temperance, value, isMin);
+    }
+
+    public Builder temperance(VirtueRating value, boolean isMin) {
+      return updateList(temperance, value.getRating(), isMin);
+    }
+
+    public Builder temperance(int min, int max) {
+      return updateListRange(temperance, min, max);
+    }
+
+    public Builder temperance(VirtueRating min, VirtueRating max) {
+      return updateListRange(temperance, min.getRating(), max.getRating());
+    }
+
+    public Builder temperance(int... values) {
+      return updateListValues(temperance, values);
+    }
+
+    public Builder temperance(VirtueRating... values) {
+      return updateListValues(temperance, values);
+    }
+
+    public Builder justice(int value, boolean isMin) {
+      return updateList(justice, value, isMin);
+    }
+
+    public Builder justice(VirtueRating value, boolean isMin) {
+      return updateList(justice, value.getRating(), isMin);
+    }
+
+    public Builder justice(int min, int max) {
+      return updateListRange(justice, min, max);
+    }
+
+    public Builder justice(VirtueRating min, VirtueRating max) {
+      return updateListRange(justice, min.getRating(), max.getRating());
+    }
+
+    public Builder justice(int... values) {
+      return updateListValues(justice, values);
+    }
+
+    public Builder justice(VirtueRating... values) {
+      return updateListValues(justice, values);
+    }
+
+    public Builder composite(int value, boolean isMin) {
+      return updateList(composite, value, isMin);
+    }
+
+    public Builder composite(VirtueRating value, boolean isMin) {
+      return updateList(composite, value.getRating(), isMin);
+    }
+
+    public Builder composite(int min, int max) {
+      return updateListRange(composite, min, max);
+    }
+
+    public Builder composite(VirtueRating min, VirtueRating max) {
+      return updateListRange(composite, min.getRating(), max.getRating());
+    }
+
+    public Builder composite(int... values) {
+      return updateListValues(composite, values);
+    }
+
+    public Builder composite(VirtueRating... values) {
+      return updateListValues(composite, values);
+    }
+
+    private Builder updateList(List<UsageReq> list, int value, boolean isMin) {
+      list.clear();
+      list.add(new UsageReq(value, isMin ? UsageReq.Type.NOT_TO_EXCEED : UsageReq.Type.NOT_LOWER_THAN));
+      return this;
+    }
+
+    private Builder updateListRange(List<UsageReq> list, int min, int max) {
+      list.clear();
+      list.add(new UsageReq(min, UsageReq.Type.NOT_TO_EXCEED));
+      list.add(new UsageReq(max, UsageReq.Type.NOT_LOWER_THAN));
+      return this;
+    }
+
+    private Builder updateListValues(List<UsageReq> list, int... values) {
+      list.clear();
+      for (int value : values) {
+        list.add(new UsageReq(value, UsageReq.Type.EQUAL));
+      }
+      return this;
+    }
+
+    private Builder updateListValues(List<UsageReq> list, VirtueRating... values) {
+      list.clear();
+      for (VirtueRating value : values) {
+        list.add(new UsageReq(value.getRating(), UsageReq.Type.EQUAL));
+      }
+      return this;
+    }
+
+    public ItemVirtueUsageReq build() {
+      return new ItemVirtueUsageReq(
+        Collections.unmodifiableList(this.fortitude),
+        Collections.unmodifiableList(this.prudence),
+        Collections.unmodifiableList(this.temperance),
+        Collections.unmodifiableList(this.justice),
+        Collections.unmodifiableList(this.composite));
+    }
+
+    public boolean isEmpty() {
+      return this.fortitude.isEmpty() &&
+        this.prudence.isEmpty() &&
+        this.temperance.isEmpty() &&
+        this.justice.isEmpty() &&
+        this.composite.isEmpty();
+    }
   }
 
-  public List<Integer> getPrudenceUsageReq() {
-    return getAttributeList(VirtueType.PRUDENCE);
-  }
+  public record UsageReq(int value, Type type) {
+    public static final MapCodec<UsageReq> MAP_CODEC = RecordCodecBuilder.mapCodec((thisOptionsInstance) -> thisOptionsInstance.group(
+      Codec.INT.fieldOf("value").forGetter(UsageReq::value),
+      Type.CODEC.fieldOf("type").forGetter(UsageReq::type)
+    ).apply(thisOptionsInstance, UsageReq::new));
+    public static final Codec<UsageReq> CODEC = MAP_CODEC.codec();
 
-  public List<Integer> getTemperanceUsageReq() {
-    return getAttributeList(VirtueType.TEMPERANCE);
-  }
+    public static final StreamCodec<ByteBuf, UsageReq> STREAM_CODEC = StreamCodec.composite(
+      ByteBufCodecs.INT, UsageReq::value,
+      Type.STREAM_CODEC, UsageReq::type,
+      UsageReq::new);
 
-  public List<Integer> getJusticeUsageReq() {
-    return getAttributeList(VirtueType.JUSTICE);
-  }
+    public enum Type implements StringRepresentable {
+      /**
+       * 无限制
+       */
+      NONE(0, "none", ' '),
+      /**
+       * 不超过
+       */
+      NOT_TO_EXCEED(1, "not_to_exceed", ']'),
+      /**
+       * 不低于
+       */
+      NOT_LOWER_THAN(2, "not_lower_than", '['),
+      /**
+       * 等于
+       */
+      EQUAL(3, "equal", '='),
+      ;
 
-  public List<Integer> getCompositeRatingUsageReq() {
-    return getAttributeList(VirtueType.COMPOSITE_RATING);
+      private final int index;
+      private final String name;
+      private final char symbol;
+
+      public static final Codec<Type> CODEC = StringRepresentable
+        .fromEnum(Type::values).validate(DataResult::success);
+      public static final StreamCodec<ByteBuf, Type> STREAM_CODEC = ByteBufCodecs
+        .idMapper(ByIdMap.continuous(Type::getIndex, values(), ByIdMap.OutOfBoundsStrategy.WRAP), Type::getIndex);
+
+
+      Type(final int index, final String name, final char symbol) {
+        this.index = index;
+        this.name = name;
+        this.symbol = symbol;
+      }
+
+      @Override
+      public @NotNull String getSerializedName() {
+        return name;
+      }
+
+      public int getIndex() {
+        return index;
+      }
+
+      public static Type byName(String name) {
+        for (Type value : values()) {
+          if (value.name.equals(name)) {
+            return value;
+          }
+        }
+        return NONE;
+      }
+
+      public static Type byIndex(int index) {
+        for (Type value : values()) {
+          if (value.index == index) {
+            return value;
+          }
+        }
+        return NONE;
+      }
+
+      public char getSymbol() {
+        return symbol;
+      }
+    }
   }
 }

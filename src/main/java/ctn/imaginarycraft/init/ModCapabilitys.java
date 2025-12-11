@@ -3,7 +3,10 @@ package ctn.imaginarycraft.init;
 import ctn.imaginarycraft.api.IDamageSource;
 import ctn.imaginarycraft.api.capability.block.IBlockLcLevel;
 import ctn.imaginarycraft.api.capability.entity.IEntityLcLevel;
-import ctn.imaginarycraft.api.capability.item.*;
+import ctn.imaginarycraft.api.capability.item.IItemInvincibleTick;
+import ctn.imaginarycraft.api.capability.item.IItemLcDamageType;
+import ctn.imaginarycraft.api.capability.item.IItemLcLevel;
+import ctn.imaginarycraft.api.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.mixin.DamageSourceMixin;
 import net.neoforged.neoforge.capabilities.BlockCapability;
@@ -12,16 +15,13 @@ import net.neoforged.neoforge.capabilities.ItemCapability;
 
 public final class ModCapabilitys {
   /**
-   * 随机伤害
-   */
-  public static final ItemCapability<IItemRandomDamage, Void> RANDOM_DAMAGE_ITEM =
-    ItemCapability.createVoid(ImaginaryCraft.modRl("random_damage"), IItemRandomDamage.class);
-
-  /**
    * 物品使用条件
    */
   public static final ItemCapability<IItemUsageReq, Void> USAGE_REQ_ITEM =
     ItemCapability.createVoid(ImaginaryCraft.modRl("usage_req_item"), IItemUsageReq.class);
+
+  public static final ItemCapability<IItemLcDamageType, Void> LC_DAMAGE_TYPE_ITEM =
+    ItemCapability.createVoid(ImaginaryCraft.modRl("lobotomy_corporation_damage_type_item"), IItemLcDamageType.class);
 
   /**
    * 等级
@@ -46,13 +46,5 @@ public final class ModCapabilitys {
      */
     public static final ItemCapability<IItemInvincibleTick, Void> INVINCIBLE_TICK_ITEM =
       ItemCapability.createVoid(ImaginaryCraft.modRl("invincible_tick_item"), IItemInvincibleTick.class);
-  }
-
-  /**
-   * 脑叶伤害
-   */
-  public static class LcDamageType {
-    public static final ItemCapability<IItemLcDamageType, Void> LC_DAMAGE_TYPE_ITEM =
-      ItemCapability.createVoid(ImaginaryCraft.modRl("lobotomy_corporation_damage_type_item"), IItemLcDamageType.class);
   }
 }

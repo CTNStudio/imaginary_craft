@@ -9,7 +9,6 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageWidget;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
@@ -75,7 +74,7 @@ public class NewHealthBarLayer extends StatusBarLayer {
     float absorbingHp = this.absorbingHp;
     if (absorbingHp > 0) {
       String text = "+%s".formatted(TextUtil.formatNumber(absorbingHp, 2));
-      value.append(Component.literal(text).setStyle(Style.EMPTY.withColor(0xffe400)));
+      value.append(Component.literal(text).withColor(0xffe400));
     }
 
     return value;

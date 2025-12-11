@@ -3,6 +3,7 @@ package ctn.imaginarycraft.core;
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.datagen.DatagenCuriosTest;
 import ctn.imaginarycraft.init.*;
+import ctn.imaginarycraft.init.entiey.ModEntityTypes;
 import ctn.imaginarycraft.init.item.ModItems;
 import ctn.imaginarycraft.init.tag.ModItemTags;
 import net.minecraft.core.Registry;
@@ -35,6 +36,7 @@ public final class ImaginaryCraft {
     ModParticleTypes.REGISTRY.register(eventBus);
     ModDataComponents.REGISTRY.register(eventBus);
     ModItems.init(eventBus);
+    ModEntityTypes.init(eventBus);
 
     ModCreativeModeTabs.REGISTRY.register(eventBus);
     createValidators();

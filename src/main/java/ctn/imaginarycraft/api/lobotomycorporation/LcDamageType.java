@@ -27,7 +27,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
-import java.util.function.IntFunction;
 
 // TODO 对于药水需要做特殊处理
 
@@ -57,10 +56,10 @@ public enum LcDamageType implements ColourText, StringRepresentable {
   THE_SOUL(3, "the_soul", ModFontIcon.THE_SOUL, ModFontIcon.THE_SOUL_8X, ModAttributes.THE_SOUL_VULNERABLE, ModDamageTypes.THE_SOUL, "#00ffff"),
   ;
 
-  public static final StringRepresentable.EnumCodec<LcDamageType> CODEC = StringRepresentable.fromEnum(LcDamageType::values);
-  public static final Codec<LcDamageType> VERTICAL_CODEC = CODEC.validate(DataResult::success);
-  public static final IntFunction<LcDamageType> BY_ID = ByIdMap.continuous(LcDamageType::getIndex, values(), ByIdMap.OutOfBoundsStrategy.WRAP);
-  public static final StreamCodec<ByteBuf, LcDamageType> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, LcDamageType::getIndex);
+  public static final Codec<LcDamageType> CODEC = StringRepresentable
+    .fromEnum(LcDamageType::values).validate(DataResult::success);
+  public static final StreamCodec<ByteBuf, LcDamageType> STREAM_CODEC = ByteBufCodecs
+    .idMapper(ByIdMap.continuous(LcDamageType::getIndex, values(), ByIdMap.OutOfBoundsStrategy.WRAP), LcDamageType::getIndex);
 
   private final int index;
   private final String name;

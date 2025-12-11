@@ -41,7 +41,7 @@ public class LcDamageIconParticle extends TextureSheetParticle {
 
     @Override
     public String toString() {
-      return "LC_DAMAGE_ICON_PARTICLE";
+      return "LOBOTOMY_CORPORATION_DAMAGE_ICON_PARTICLE";
     }
   };
   private final int durationTick;

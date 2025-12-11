@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.init;
 
+import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.util.DataComponentsRegisterUtil;
@@ -11,17 +12,16 @@ import java.util.function.Supplier;
 
 public final class ModDataComponents extends DataComponentsRegisterUtil {
   public static final DeferredRegister<DataComponentType<?>> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.DATA_COMPONENT_TYPE);
-
-  public static final Supplier<DataComponentType<Boolean>> MODE_BOOLEAN = recordBoolean("mode_boolean");
+  public static final Supplier<DataComponentType<LcDamageType>> LC_DAMAGE_TYPE = register("lobotomy_corporation_damage_type",
+    LcDamageType.CODEC, LcDamageType.STREAM_CODEC, true);
+  public static final Supplier<DataComponentType<Boolean>> MODE_BOOLEAN = recordBoolean("mode_boolean", true);
   /**
    * 是否正在受到抑制器的影响属性
    */
-  public static final Supplier<DataComponentType<Boolean>> IS_RESTRAIN = recordBoolean("is_restrain");
+  public static final Supplier<DataComponentType<Boolean>> IS_RESTRAIN = recordBoolean("is_restrain", true);
   /**
    * 物品四德属性能力使用要求
    */
-  public static final Supplier<DataComponentType<ItemVirtueUsageReq>> ITEM_VIRTUE_USAGE_REQ = register("item_virtue_usage_req", builder ->
-    builder.persistent(ItemVirtueUsageReq.CODEC)
-      .networkSynchronized(ItemVirtueUsageReq.STREAM_CODEC)
-      .cacheEncoding());
+  public static final Supplier<DataComponentType<ItemVirtueUsageReq>> ITEM_VIRTUE_USAGE_REQ = register("item_virtue_usage_req",
+    ItemVirtueUsageReq.CODEC, ItemVirtueUsageReq.STREAM_CODEC, true);
 }

@@ -2,6 +2,7 @@ package ctn.imaginarycraft.init.item;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
+import ctn.imaginarycraft.init.item.ego.EgoItems;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -15,8 +16,9 @@ public final class ModItems {
 
   public static void init(IEventBus bus) {
     REGISTRY.register(bus);
-    ModEgos.init(bus);
-    ModEgoCurios.init(bus);
+    WeaponItems.init(bus);
+    ArmorItems.init(bus);
+    EgoItems.init(bus);
   }
 
   @NotNull

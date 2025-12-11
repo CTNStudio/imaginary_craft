@@ -1,12 +1,14 @@
 package ctn.imaginarycraft.datagen.i18n;
 
+import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueType;
 import ctn.imaginarycraft.common.command.RationalityCommands;
-import ctn.imaginarycraft.common.item.ego.EgoCurioItem;
+import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
+import ctn.imaginarycraft.common.item.ego.curio.EgoCurioItem;
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.datagen.DatagenCuriosTest;
 import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.ModDamageTypes;
-import ctn.imaginarycraft.init.item.ModEgoCurios;
+import ctn.imaginarycraft.init.item.ego.EgoCurioItems;
 import ctn.imaginarycraft.init.tag.ModItemTags;
 import ctn.imaginarycraft.linkage.jade.LivingEntityVulnerable;
 import ctn.imaginarycraft.linkage.jade.ModPlugin;
@@ -93,7 +95,7 @@ public final class ZhCn extends DatagenI18n {
     addCurios(DatagenCuriosTest.EGO_CURIOS_GLOVE, "手套", "E.G.O饰品-手套");
     addCurios(DatagenCuriosTest.EGO_CURIOS_RIGHT_BACK, "右背", "E.G.O饰品-右背");
     addCurios(DatagenCuriosTest.EGO_CURIOS_LEFT_BACK, "右背", "E.G.O饰品-右背");
-    ModEgoCurios.REGISTRY.getEntries().stream()
+    EgoCurioItems.REGISTRY.getEntries().stream()
       .map(DeferredHolder::get)
       .filter(EgoCurioItem.class::isInstance)
       .map(EgoCurioItem.class::cast)
@@ -134,6 +136,19 @@ public final class ZhCn extends DatagenI18n {
     add(ModItemTags.EGO_CURIOS_GLOVE, "E.G.O饰品-手套");
     add(ModItemTags.EGO_CURIOS_RIGHT_BACK, "E.G.O饰品-右背");
     add(ModItemTags.EGO_CURIOS_LEFT_BACK, "E.G.O饰品-左背");
+    //endregion
+
+    //region tooltip
+    add(ItemVirtueUsageReq.USE_CONDITION, "E.G.O");
+    add(ItemVirtueUsageReq.REQUIREMENT, "E.G.O");
+    add(ItemVirtueUsageReq.INTERVAL, "E.G.O");
+    add(ItemVirtueUsageReq.NOT_TO_EXCEED, "E.G.O");
+    add(ItemVirtueUsageReq.NOT_LOWER_THAN, "E.G.O");
+    add(ItemVirtueUsageReq.PREFIX + VirtueType.FORTITUDE, "勇气");
+    add(ItemVirtueUsageReq.PREFIX + VirtueType.PRUDENCE, "谨慎");
+    add(ItemVirtueUsageReq.PREFIX + VirtueType.TEMPERANCE, "自律");
+    add(ItemVirtueUsageReq.PREFIX + VirtueType.JUSTICE, "正义");
+    add(ItemVirtueUsageReq.PREFIX + VirtueType.COMPOSITE_RATING, "综合");
     //endregion
   }
 }

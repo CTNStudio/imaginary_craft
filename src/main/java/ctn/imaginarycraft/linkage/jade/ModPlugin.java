@@ -12,9 +12,9 @@ import snownee.jade.api.WailaPlugin;
 
 @WailaPlugin
 public final class ModPlugin implements IWailaPlugin {
-  public static final ResourceLocation ENTITY_LC_LEVEL = ImaginaryCraft.modRl("entity_level");
-  public static final ResourceLocation BLOCK_LC_LEVEL = ImaginaryCraft.modRl("block_level");
-  public static final ResourceLocation ENTITY_LC_VULNERABLE = ImaginaryCraft.modRl("entity_vulnerable");
+  public static final ResourceLocation ENTITY_LC_LEVEL = ImaginaryCraft.modRl("entity_lobotomy_corporation_level");
+  public static final ResourceLocation BLOCK_LC_LEVEL = ImaginaryCraft.modRl("block_lobotomy_corporation_level");
+  public static final ResourceLocation ENTITY_LC_VULNERABLE = ImaginaryCraft.modRl("entity_lobotomy_corporation_vulnerable");
 
   @Override
   public void register(IWailaCommonRegistration registration) {

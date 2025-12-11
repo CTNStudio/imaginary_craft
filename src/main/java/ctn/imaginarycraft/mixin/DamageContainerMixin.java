@@ -2,13 +2,8 @@ package ctn.imaginarycraft.mixin;
 
 import ctn.imaginarycraft.api.IDamageContainer;
 import ctn.imaginarycraft.api.IDamageSource;
-import ctn.imaginarycraft.api.capability.item.IItemRandomDamage;
 import ctn.imaginarycraft.api.lobotomycorporation.LcImmuneType;
-import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
-import ctn.imaginarycraft.init.ModCapabilitys;
-import net.minecraft.util.RandomSource;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -36,18 +31,6 @@ public abstract class DamageContainerMixin implements IDamageContainer {
   @Inject(method = "<init>", at = @At("RETURN"))
   private void imaginaryCraft$DamageContainer(DamageSource source, float originalDamage, CallbackInfo ci) {
     setPostAttackInvulnerabilityTicks(IDamageSource.of(source).getImaginaryCraft$InvincibleTick());
-
-    IItemRandomDamage capability = null;
-    ItemStack stack = LcDamageUtil.getDamageItemStack(source);
-    if (stack != null) {
-      capability = stack.getCapability(ModCapabilitys.RANDOM_DAMAGE_ITEM);
-    }
-
-    if (capability == null) {
-      return;
-    }
-
-    setNewDamage(capability.countBidirectionalFluctuationDamageValue(this.originalDamage, stack, RandomSource.create()));
   }
 
   @Unique

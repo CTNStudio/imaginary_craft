@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.init;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.item.ModEgoCurios;
+import ctn.imaginarycraft.init.item.ego.EgoCurioItems;
 import ctn.imaginarycraft.init.util.CreativeModeTabRegisterUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.CreativeModeTab;
@@ -25,8 +25,8 @@ public final class ModCreativeModeTabs extends CreativeModeTabRegisterUtil {
 
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EGO_CURIOS = register(
     "ego_curios", "E.G.O 饰品", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
-      ModEgoCurios.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get())), () ->
-      ModEgoCurios.BENEDICTION.get().getDefaultInstance()));
+      EgoCurioItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get())), () ->
+      EgoCurioItems.BENEDICTION.get().getDefaultInstance()));
 
 //  public static final DeferredHolder<CreativeModeTab, CreativeModeTab> CREATIVE_TOOL =
 //    register("creative_tool", (name) -> createCreativeModeTab(

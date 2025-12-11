@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.datagen.tag;
 
-import ctn.imaginarycraft.common.item.ego.EgoCurioItem;
 import ctn.imaginarycraft.common.item.ego.EgoItem;
+import ctn.imaginarycraft.common.item.ego.curio.EgoCurioItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.tag.ModItemTags;
 import net.minecraft.core.HolderLookup;

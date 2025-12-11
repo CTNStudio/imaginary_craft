@@ -37,7 +37,6 @@ import org.jetbrains.annotations.NotNull;
 import org.joml.Matrix4f;
 
 import java.util.List;
-import java.util.function.IntFunction;
 
 // TODO 拆分成伤害，BOSS说话文本，普通文本
 public class TextParticle extends TextureSheetParticle {
@@ -339,10 +338,10 @@ public class TextParticle extends TextureSheetParticle {
     private final int index;
     private final String name;
 
-    public static final StringRepresentable.EnumCodec<AlignType> CODEC = StringRepresentable.fromEnum(AlignType::values);
-    public static final Codec<AlignType> VERTICAL_CODEC = CODEC.validate(DataResult::success);
-    public static final IntFunction<AlignType> BY_ID = ByIdMap.continuous(AlignType::getIndex, values(), ByIdMap.OutOfBoundsStrategy.WRAP);
-    public static final StreamCodec<ByteBuf, AlignType> STREAM_CODEC = ByteBufCodecs.idMapper(BY_ID, AlignType::getIndex);
+    public static final Codec<AlignType> CODEC = StringRepresentable
+      .fromEnum(AlignType::values).validate(DataResult::success);
+    public static final StreamCodec<ByteBuf, AlignType> STREAM_CODEC = ByteBufCodecs
+      .idMapper(ByIdMap.continuous(AlignType::getIndex, values(), ByIdMap.OutOfBoundsStrategy.WRAP), AlignType::getIndex);
 
     AlignType(int index, String name) {
       this.index = index;

@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init.item;
+package ctn.imaginarycraft.init.item.ego;
 
 import ctn.imaginarycraft.common.item.ego.EgoItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -11,15 +11,17 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
-public final class ModEgos {
+public final class EgoItems {
   public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(ImaginaryCraft.ID);
 
   public static void init(IEventBus bus) {
     REGISTRY.register(bus);
+    EgoCurioItems.init(bus);
+    EgoWeaponItems.init(bus);
+    EgoArmorItems.init(bus);
   }
 
-
-  private static DeferredItem<EgoItem> registerEgo(
+  private static DeferredItem<EgoItem> register(
     String name,
     String zhName,
     Item.Properties properties
@@ -38,5 +40,4 @@ public final class ModEgos {
     ZhCn.ITEMS.put(deferredItem, zhName);
     return deferredItem;
   }
-
 }

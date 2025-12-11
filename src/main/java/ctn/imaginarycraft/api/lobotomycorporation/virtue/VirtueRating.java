@@ -6,7 +6,6 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -20,21 +19,15 @@ public enum VirtueRating implements StringRepresentable {
   V("five", 5, 85),
   EX("maxed", 6, 101),
   ;
-  public static final List<VirtueRating> REVERSE_LIST;
-
-  static {
-    var values = new LinkedList<>(List.of(VirtueRating.values()));
-    Collections.reverse(values);
-    REVERSE_LIST = Collections.unmodifiableList(values);
-  }
+  public static final List<VirtueRating> REVERSE_LIST = Collections.unmodifiableList(List.of(VirtueRating.values()).reversed());
 
   private final String name;
-  private final int value;
+  private final int rating;
   private final int minValue;
 
-  VirtueRating(String name, int value, int minValue) {
+  VirtueRating(String name, int rating, int minValue) {
     this.name = name;
-    this.value = value;
+    this.rating = rating;
     this.minValue = minValue;
   }
 
@@ -61,11 +54,11 @@ public enum VirtueRating implements StringRepresentable {
    * @return 对应的评级值
    */
   public static int getRatingValue(int value) {
-    return getRating(value).getValue();
+    return getRating(value).getRating();
   }
 
-  public int getValue() {
-    return value;
+  public int getRating() {
+    return rating;
   }
 
   public int getMinValue() {

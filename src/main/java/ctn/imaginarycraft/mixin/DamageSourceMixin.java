@@ -65,7 +65,7 @@ public abstract class DamageSourceMixin implements IDamageSource {
 
     // 从物品获取信息
     if (itemStack != null) {
-      IItemLcDamageType colorDamageTypeItem = itemStack.getCapability(ModCapabilitys.LcDamageType.LC_DAMAGE_TYPE_ITEM);
+      IItemLcDamageType colorDamageTypeItem = itemStack.getCapability(ModCapabilitys.LC_DAMAGE_TYPE_ITEM);
       if (colorDamageTypeItem != null) {
         lcDamageType = colorDamageTypeItem.getLcDamageColorDamageType(itemStack);
       }

@@ -1,8 +1,14 @@
 package ctn.imaginarycraft.api.lobotomycorporation;
 
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
 import ctn.ctnapi.client.util.ColorUtil;
 import ctn.imaginarycraft.api.ColourText;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ByIdMap;
 import net.minecraft.util.StringRepresentable;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -15,16 +21,21 @@ import java.util.Arrays;
  * 脑叶等级
  */
 public enum LcLevel implements ColourText, StringRepresentable {
-  ZAYIN(1, "zayin", "#00ff00"),
-  TETH(2, "teth", "#1e90ff"),
-  HE(3, "he", "#ffff00"),
-  WAW(4, "waw", "#8a2be2"),
-  ALEPH(5, "aleph", "#ff0000");
+  ZAYIN(0, "zayin", "#00ff00"),
+  TETH(1, "teth", "#1e90ff"),
+  HE(2, "he", "#ffff00"),
+  WAW(3, "waw", "#8a2be2"),
+  ALEPH(4, "aleph", "#ff0000");
 
   private final String name;
   private final int levelValue;
   private final String colour;
   private final int colourValue;
+
+  public static final Codec<LcLevel> CODEC = StringRepresentable
+    .fromEnum(LcLevel::values).validate(DataResult::success);
+  public static final StreamCodec<ByteBuf, LcLevel> STREAM_CODEC = ByteBufCodecs
+    .idMapper(ByIdMap.continuous(Enum::ordinal, values(), ByIdMap.OutOfBoundsStrategy.WRAP), Enum::ordinal);
 
   LcLevel(int levelValue, String name, String colour) {
     this.name = name;

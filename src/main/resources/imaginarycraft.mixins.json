@@ -5,6 +5,7 @@
   "mixins": [
     "DamageContainerMixin",
     "DamageSourceMixin",
+    "ItemStackMixin",
     "LivingDamageEvent$PostMixin",
     "client.ModelBuilderMixin"
   ],

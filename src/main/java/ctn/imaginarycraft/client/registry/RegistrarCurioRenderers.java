@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.client.registry;
 
 import ctn.imaginarycraft.client.renderer.curios.BasicCuriosRenderer;
-import ctn.imaginarycraft.common.item.ego.EgoCurioItem;
+import ctn.imaginarycraft.common.item.ego.curio.EgoCurioItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.item.ModEgoCurios;
+import ctn.imaginarycraft.init.item.ego.EgoCurioItems;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -18,7 +18,7 @@ public final class RegistrarCurioRenderers {
    */
   @SubscribeEvent
   public static void onClientSetup(FMLClientSetupEvent event) {
-    ModEgoCurios.REGISTRY.getEntries().stream()
+    EgoCurioItems.REGISTRY.getEntries().stream()
       .map(DeferredHolder::get)
       .filter(EgoCurioItem.class::isInstance)
       .map(EgoCurioItem.class::cast)

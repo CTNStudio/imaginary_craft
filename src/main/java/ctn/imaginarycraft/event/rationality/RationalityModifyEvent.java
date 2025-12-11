@@ -17,6 +17,9 @@ public abstract class RationalityModifyEvent extends RationalityEvent {
 
   public abstract float getNewValue();
 
+  /**
+   * 可取消
+   */
   public static class Pre extends RationalityModifyEvent implements ICancellableEvent {
     private float newValue;
 
