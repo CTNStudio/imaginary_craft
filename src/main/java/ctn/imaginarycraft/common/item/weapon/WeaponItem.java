@@ -29,9 +29,7 @@ public abstract class WeaponItem extends Item implements IItemInvincibleTick {
   }
 
   public WeaponItem(Properties properties, Builder builder) {
-    super(properties
-      .attributes(builder.getItemAttributeModifiers())
-      .stacksTo(1));
+    super(properties.attributes(builder.getItemAttributeModifiers()).stacksTo(1));
     this.invincibleTick = builder.invincibleTick;
   }
 
@@ -44,7 +42,8 @@ public abstract class WeaponItem extends Item implements IItemInvincibleTick {
   }
 
   @Override
-  public boolean canAttackBlock(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player) {
+  public boolean canAttackBlock(@NotNull BlockState state, @NotNull Level level,
+      @NotNull BlockPos pos, Player player) {
     return !player.isCreative();
   }
 
@@ -80,10 +79,15 @@ public abstract class WeaponItem extends Item implements IItemInvincibleTick {
 
     public ItemAttributeModifiers getItemAttributeModifiers() {
       ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
-      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_ID, this.damage, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
-      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ATTACK_SPEED, BASE_ATTACK_SPEED_ID, this.attackSpeed, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
-      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ENTITY_INTERACTION_RANGE, ENTITY_RANGE, this.attackDistance, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
-      ItemBuilderUtil.addAttributeModifier(builder, Attributes.BLOCK_INTERACTION_RANGE, BLOCK_RANGE, this.attackDistance, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
+      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_ID,
+          this.damage, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
+      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ATTACK_SPEED, BASE_ATTACK_SPEED_ID,
+          this.attackSpeed, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
+      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ENTITY_INTERACTION_RANGE,
+          ENTITY_RANGE, this.attackDistance, AttributeModifier.Operation.ADD_VALUE,
+          EquipmentSlotGroup.HAND);
+      ItemBuilderUtil.addAttributeModifier(builder, Attributes.BLOCK_INTERACTION_RANGE, BLOCK_RANGE,
+          this.attackDistance, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
       return builder.build();
     }
 
