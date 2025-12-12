@@ -144,11 +144,11 @@ public final class ZhCn extends DatagenI18n {
     add(ItemVirtueUsageReq.INTERVAL, "E.G.O");
     add(ItemVirtueUsageReq.NOT_TO_EXCEED, "E.G.O");
     add(ItemVirtueUsageReq.NOT_LOWER_THAN, "E.G.O");
-    add(ItemVirtueUsageReq.PREFIX + VirtueType.FORTITUDE, "勇气");
-    add(ItemVirtueUsageReq.PREFIX + VirtueType.PRUDENCE, "谨慎");
-    add(ItemVirtueUsageReq.PREFIX + VirtueType.TEMPERANCE, "自律");
-    add(ItemVirtueUsageReq.PREFIX + VirtueType.JUSTICE, "正义");
-    add(ItemVirtueUsageReq.PREFIX + VirtueType.COMPOSITE_RATING, "综合");
+    add(VirtueType.FORTITUDE.getTooltipName(), "勇气");
+    add(VirtueType.PRUDENCE.getTooltipName(), "谨慎");
+    add(VirtueType.TEMPERANCE.getTooltipName(), "自律");
+    add(VirtueType.JUSTICE.getTooltipName(), "正义");
+    add(VirtueType.COMPOSITE.getTooltipName(), "综合");
     //endregion
   }
 }

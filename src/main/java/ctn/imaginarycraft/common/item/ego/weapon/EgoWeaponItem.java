@@ -37,7 +37,7 @@ import java.util.function.Consumer;
 /**
  * EGO武器
  */
-public abstract class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageType, IItemUsageReq, GeoItem, IItemInvincibleTick {
+public class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageType, IItemUsageReq, GeoItem, IItemInvincibleTick {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
   private final int invincibleTick;
   private final @Nullable Set<LcDamageType> canCauseLcDamageTypes;
@@ -46,11 +46,7 @@ public abstract class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLc
   protected @Nullable GeoModel<EgoWeaponItem> guiModel;
 
   public EgoWeaponItem(Builder builder) {
-    this(builder.buildProperties(), builder);
-  }
-
-  public EgoWeaponItem(Properties properties, Builder builder) {
-    super(properties.attributes(builder.getItemAttributeModifiers())
+    super(builder.buildProperties().attributes(builder.getItemAttributeModifiers())
       .stacksTo(1)
       .component(ModDataComponents.IS_RESTRAIN, false));
     this.meleeLcDamageType = builder.meleeLcDamageType;
@@ -146,9 +142,10 @@ public abstract class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLc
 
   /// 武器属性构造器
   public static class Builder {
+    private Properties properties = new Properties();
+    protected ItemVirtueUsageReq.Builder virtueUsageReqBuilder;
     protected @Nullable LcDamageType meleeLcDamageType;
     protected @Nullable Set<LcDamageType> canCauseLcDamageTypes;
-    protected ItemVirtueUsageReq.Builder virtueUsageReqBuilder;
     protected @Nullable GeoModel<EgoWeaponItem> model;
     protected @Nullable GeoModel<EgoWeaponItem> guiModel;
     /**
@@ -168,8 +165,6 @@ public abstract class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLc
      */
     protected int durability;
     protected int invincibleTick;
-    protected Properties properties = new Properties();
-
 
     public Builder damage(float damage) {
       this.damage = damage;

@@ -22,21 +22,21 @@ public final class EgoItems {
   }
 
   private static DeferredItem<EgoItem> register(
-    String name,
+    String id,
     String zhName,
     Item.Properties properties
   ) {
-    return register(name, zhName, EgoItem::new, properties);
+    return register(id, zhName, EgoItem::new, properties);
   }
 
   @NotNull
   private static <I extends EgoItem> DeferredItem<I> register(
-    String name,
+    String id,
     String zhName,
     Function<Item.Properties, ? extends I> item,
     Item.Properties properties
   ) {
-    DeferredItem<I> deferredItem = REGISTRY.registerItem(name, item, properties);
+    DeferredItem<I> deferredItem = REGISTRY.registerItem(id, item, properties);
     ZhCn.ITEMS.put(deferredItem, zhName);
     return deferredItem;
   }

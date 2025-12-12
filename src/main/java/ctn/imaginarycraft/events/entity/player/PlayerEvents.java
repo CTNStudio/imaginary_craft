@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.events.entity.player;
 
+import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.eventexecute.RationalityEventExecutes;
 import net.minecraft.server.level.ServerPlayer;
@@ -20,6 +21,7 @@ public final class PlayerEvents {
   @SubscribeEvent
   public static void reset(PlayerEvent.Clone event) {
     Player player = event.getEntity();
+    RationalityUtil.restrictValue(player, true);
     if (player instanceof ServerPlayer serverPlayer) {
       if (event.isWasDeath()) {
         // 因为数据附件的同步机制在这之后所以需要手动处理

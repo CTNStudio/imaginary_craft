@@ -4,7 +4,6 @@ import ctn.imaginarycraft.core.ModEventHooks;
 import ctn.imaginarycraft.init.ModAttachments;
 import ctn.imaginarycraft.init.ModAttributes;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 import java.util.Map;
 
@@ -12,19 +11,6 @@ import java.util.Map;
  * 理智工具
  */
 public final class RationalityUtil {
-  /**
-   * 遭受精神伤害
-   * <p>
-   * 如果受伤者有理智，则仅减少理智
-   */
-  public static void handleSpirit(LivingDamageEvent.Pre event, Player player) {
-    if (!(event.getEntity() instanceof Player)) {
-      return;
-    }
-    modifyValue(player, -event.getNewDamage(), true);
-    event.setNewDamage(0);
-  }
-
   /**
    * 修改理智值
    */

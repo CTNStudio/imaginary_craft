@@ -14,11 +14,12 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import org.jetbrains.annotations.NotNull;
 
+// TODO 等待完成
 public class DamageTextParticle extends TextParticle {
   protected final boolean isHeal;
 
-  protected DamageTextParticle(final ClientLevel level, final double x, final double y, final double z, final Build build, final boolean isHeal) {
-    super(level, x, y, z, build);
+  protected DamageTextParticle(final ClientLevel level, final double x, final double y, final double z, final Builder builder, final boolean isHeal) {
+    super(level, x, y, z, builder);
     this.isHeal = isHeal;
   }
 

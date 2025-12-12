@@ -6,8 +6,6 @@ import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
-import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
 import ctn.imaginarycraft.client.event.AddItemDataComponentTooltipEvent;
 import ctn.imaginarycraft.init.ModDataComponents;
 import net.minecraft.core.component.DataComponentHolder;
@@ -36,7 +34,8 @@ public abstract class ItemStackMixin implements DataComponentHolder, net.neoforg
                                                                             Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag,
                                                                             Operation<Void> original,
                                                                             @Local(argsOnly = true) DataComponentType<T> component) {
-    if (new AddItemDataComponentTooltipEvent.Up<>(getImaginarycraft$itemStack(), component, context, tooltipAdder, tooltipFlag).isCanceled()) {
+    var event = new AddItemDataComponentTooltipEvent.Up<>(getImaginarycraft$itemStack(), component, context, tooltipAdder, tooltipFlag);
+    if (!event.isCanceled()) {
       return;
     }
     original.call(instance, context, tooltipAdder, tooltipFlag);
@@ -49,12 +48,6 @@ public abstract class ItemStackMixin implements DataComponentHolder, net.neoforg
   @ModifyExpressionValue(method = "getTooltipLines", at = @At("MIXINEXTRAS:EXPRESSION"))
   private boolean addTooltip(boolean original, @Local Consumer<Component> instance, @Local(argsOnly = true) Item.TooltipContext tooltipContext,
                              @Local(argsOnly = true) TooltipFlag tooltipFlag) {
-    ItemStack itemStack = getImaginarycraft$itemStack();
-    // 添加物品等级
-    LcLevel lcLevel = LcLevelUtil.getLevel(itemStack);
-    if (lcLevel != null) {
-      instance.accept(Component.literal(lcLevel.getName().toUpperCase()).withColor(lcLevel.getColourValue()));
-    }
     // 添加物品使用要求
     addToTooltip(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, tooltipContext, instance, tooltipFlag);
     return original;

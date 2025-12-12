@@ -24,23 +24,23 @@ public enum VirtueType implements ColourText, StringRepresentable {
   /**
    * 勇气 - 影响最大生命值
    */
-  FORTITUDE(0, "fortitude", ModAttachments.FORTITUDE, "#ff0000"),
+  FORTITUDE(0, "fortitude", ModAttachments.FORTITUDE, ImaginaryCraft.modRlText("tooltip.fortitude"), "#ff0000"),
   /**
    * 谨慎 - 影响最大精神
    */
-  PRUDENCE(1, "prudence", ModAttachments.PRUDENCE, "#ffffff"),
+  PRUDENCE(1, "prudence", ModAttachments.PRUDENCE, ImaginaryCraft.modRlText("tooltip.prudence"), "#ffffff"),
   /**
    * 自律 - 影响挖掘速度 TODO 补充
    */
-  TEMPERANCE(2, "temperance", ModAttachments.TEMPERANCE, "#8a2be2"),
+  TEMPERANCE(2, "temperance", ModAttachments.TEMPERANCE, ImaginaryCraft.modRlText("tooltip.temperance"), "#8a2be2"),
   /**
    * 正义 - 影响移动速度和攻击速度
    */
-  JUSTICE(3, "justice", ModAttachments.JUSTICE, "#00ffff"),
+  JUSTICE(3, "justice", ModAttachments.JUSTICE, ImaginaryCraft.modRlText("tooltip.justice"), "#00ffff"),
   /**
-   * 综合评级
+   * 综合
    */
-  COMPOSITE_RATING(4, "composite_rating", null, null);
+  COMPOSITE(4, "composite", null, ImaginaryCraft.modRlText("tooltip.composite_rating"), null);
 
   public static final Codec<VirtueType> CODEC = StringRepresentable
     .fromEnum(VirtueType::values);
@@ -51,16 +51,18 @@ public enum VirtueType implements ColourText, StringRepresentable {
 
   private final int id;
   private final String name;
+  private final String tooltipName;
   @Nullable
   private final Holder<AttachmentType<?>> attachmentTypeHolder;
   @Nullable
   private final String colour;
   private final int colourValue;
 
-  VirtueType(int id, String name, @Nullable Holder<AttachmentType<?>> attachmentTypeHolder, @Nullable String colour) {
+  VirtueType(int id, String name, @Nullable Holder<AttachmentType<?>> attachmentTypeHolder, String tooltipName, @Nullable String colour) {
     this.id = id;
     this.name = name;
     this.attachmentTypeHolder = attachmentTypeHolder;
+    this.tooltipName = tooltipName;
     this.colour = colour;
     this.colourValue = colour == null ? 0 : ColorUtil.rgbColor(colour);
   }
@@ -98,5 +100,9 @@ public enum VirtueType implements ColourText, StringRepresentable {
   @Nullable
   public String getColourName() {
     return name;
+  }
+
+  public String getTooltipName() {
+    return tooltipName;
   }
 }

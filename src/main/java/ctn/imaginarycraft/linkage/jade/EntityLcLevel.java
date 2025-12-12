@@ -12,17 +12,16 @@ import snownee.jade.api.IEntityComponentProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
 
-// 实体等级显示
 public enum EntityLcLevel implements IEntityComponentProvider {
   INSTANCE;
 
   @Override
   public void appendTooltip(ITooltip iTooltip, EntityAccessor entityAccessor, IPluginConfig iPluginConfig) {
     Entity entity = entityAccessor.getEntity();
-    if (entity instanceof ItemEntity) {
-      return;
-    }
     @Nullable LcLevel level = LcLevelUtil.getLevel(entity);
+    if (entity instanceof ItemEntity itemEntity) {
+      level = LcLevelUtil.getLevel(itemEntity.getItem());
+    }
     if (level == null) {
       return;
     }

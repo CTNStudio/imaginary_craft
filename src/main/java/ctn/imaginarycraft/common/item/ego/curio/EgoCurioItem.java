@@ -2,7 +2,7 @@ package ctn.imaginarycraft.common.item.ego.curio;
 
 import com.google.common.collect.Multimap;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
-import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueAddAttribute;
+import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueAttributeModifier;
 import ctn.imaginarycraft.client.model.GeoCurioModel;
 import ctn.imaginarycraft.client.renderer.curios.BasicCuriosRenderer;
 import ctn.imaginarycraft.init.ModDataComponents;
@@ -47,7 +47,7 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem {
   private @Nullable List<String> tooltipsI18n;
 
   private final List<Component> tooltips = new ArrayList<>();
-  private final VirtueAddAttribute virtueAddAttribute;
+  private final VirtueAttributeModifier virtueAddAttribute;
   private final boolean isEnderMask;
   private final @Nullable GeoCurioModel<EgoCurioItem> model;
   private @Nullable BasicCuriosRenderer curiosRenderer;
@@ -76,19 +76,17 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem {
   @Override
   public void onUnequip(final SlotContext slotContext, final ItemStack newStack, final ItemStack stack) {
     ICurioItem.super.onUnequip(slotContext, newStack, stack);
-    if (!(slotContext.entity() instanceof Player player)) {
-      return;
+    if (slotContext.entity() instanceof Player player) {
+      RationalityUtil.restrictValue(player, true);
     }
-    RationalityUtil.restrictValue(player, true);
   }
 
   @Override
   public void onEquip(final SlotContext slotContext, final ItemStack prevStack, final ItemStack stack) {
     ICurioItem.super.onEquip(slotContext, prevStack, stack);
-    if (!(slotContext.entity() instanceof Player player)) {
-      return;
+    if (slotContext.entity() instanceof Player player) {
+      RationalityUtil.restrictValue(player, true);
     }
-    RationalityUtil.restrictValue(player, true);
   }
 
   @Override
@@ -141,7 +139,7 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem {
   @Override
   public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
     Multimap<Holder<Attribute>, AttributeModifier> modifier = ICurioItem.super.getAttributeModifiers(slotContext, id, stack);
-    modifier.putAll(this.virtueAddAttribute.getAttribute(slotContext.entity(), id, stack));
+    modifier.putAll(this.virtueAddAttribute.getAttributeModifiers(slotContext.entity(), id, stack));
     return modifier;
   }
 
@@ -181,7 +179,7 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem {
   }
 
   public static class Builder {
-    private final VirtueAddAttribute.Builder virtueAddAttribute = new VirtueAddAttribute.Builder();
+    private final VirtueAttributeModifier.Builder virtueAddAttribute = new VirtueAttributeModifier.Builder();
     private boolean isEnderMask;
     private Properties properties = new Properties();
     private final List<String> tooltips = new ArrayList<>();

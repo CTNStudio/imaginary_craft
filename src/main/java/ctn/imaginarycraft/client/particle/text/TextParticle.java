@@ -59,7 +59,6 @@ public class TextParticle extends TextureSheetParticle {
   protected final List<Component> textComponentList;
   protected final int fontColor;
   protected final int shadowColor;
-  protected final int durationTick;
   protected final float size;
   /**
    * 文字对齐方式
@@ -80,27 +79,21 @@ public class TextParticle extends TextureSheetParticle {
    */
   protected final boolean isSeeThrough;
 
-  protected TextParticle(
-    final ClientLevel level,
-    final double x,
-    final double y,
-    final double z,
-    Build build
-  ) {
+  protected TextParticle(final ClientLevel level, final double x, final double y, final double z, Builder builder) {
     super(level, x, y, z);
+    setLifetime(builder.particleLifeTime);
     this.minecraft = Minecraft.getInstance();
     this.font = this.minecraft.font;
-    this.textComponentList = build.textComponent;
-    this.fontColor = build.fontColor;
-    this.shadowColor = build.strokeColor;
-    this.durationTick = build.durationTick;
-    this.size = build.size;
-    this.align = build.align;
-    this.xRot = build.xRot;
-    this.yRot = build.yRot;
-    this.isTargetingPlayers = build.isTargetingPlayers;
-    this.isShadow = build.isShadow;
-    this.isSeeThrough = build.isSeeThrough;
+    this.textComponentList = builder.textComponent;
+    this.fontColor = builder.fontColor;
+    this.shadowColor = builder.strokeColor;
+    this.size = builder.size;
+    this.align = builder.align;
+    this.xRot = builder.xRot;
+    this.yRot = builder.yRot;
+    this.isTargetingPlayers = builder.isTargetingPlayers;
+    this.isShadow = builder.isShadow;
+    this.isSeeThrough = builder.isSeeThrough;
   }
 
   @Override
@@ -184,23 +177,15 @@ public class TextParticle extends TextureSheetParticle {
   }
 
   @Override
-  public void tick() {
-    this.age++;
-    if (this.age > this.durationTick) {
-      remove();
-    }
-  }
-
-  @Override
   public @NotNull ParticleRenderType getRenderType() {
     return RENDER_TYPE;
   }
 
-  public static class Build {
+  public static class Builder {
     protected List<Component> textComponent;
     protected int fontColor = 0xffffff;
     protected int strokeColor = 0xafafafaf;
-    protected int durationTick = 20 * 3;
+    protected int particleLifeTime = 20 * 3;
     protected float size = 0.02f;
     protected AlignType align = AlignType.LEFT;
     protected float xRot;
@@ -209,23 +194,14 @@ public class TextParticle extends TextureSheetParticle {
     protected boolean isShadow;
     protected boolean isSeeThrough;
 
-    private Build(
-      final List<Component> textComponent,
-      final int fontColor,
-      final int strokeColor,
-      final int durationTick,
-      final float size,
-      final AlignType align,
-      final float xRot,
-      final float yRot,
-      final boolean isTargetingPlayers,
-      final boolean isShadow,
-      final boolean isSeeThrough
+    private Builder(final List<Component> textComponent, final int fontColor, final int strokeColor, final int particleLifeTime,
+                    final float size, final AlignType align, final float xRot, final float yRot, final boolean isTargetingPlayers,
+                    final boolean isShadow, final boolean isSeeThrough
     ) {
       this.textComponent = textComponent;
       this.fontColor = fontColor;
       this.strokeColor = strokeColor;
-      this.durationTick = durationTick;
+      this.particleLifeTime = particleLifeTime;
       this.size = size;
       this.align = align;
       this.xRot = xRot;
@@ -235,76 +211,76 @@ public class TextParticle extends TextureSheetParticle {
       this.isSeeThrough = isSeeThrough;
     }
 
-    public Build(Component... textComponent) {
+    public Builder(Component... textComponent) {
       this.textComponent = List.of(textComponent);
     }
 
-    public Build textComponent(Component... textComponent) {
+    public Builder textComponent(Component... textComponent) {
       this.textComponent = List.of(textComponent);
       return this;
     }
 
-    public Build align(AlignType type) {
+    public Builder align(AlignType type) {
       this.align = type;
       return this;
     }
 
-    public Build fontColor(int fontColor) {
+    public Builder fontColor(int fontColor) {
       this.fontColor = fontColor;
       return this;
     }
 
-    public Build strokeColor(int strokeColor) {
+    public Builder strokeColor(int strokeColor) {
       this.strokeColor = strokeColor;
       return this;
     }
 
-    public Build durationTick(int durationTick) {
-      this.durationTick = durationTick;
+    public Builder particleLifeTime(int particleLifeTime) {
+      this.particleLifeTime = particleLifeTime;
       return this;
     }
 
-    public Build shadow() {
+    public Builder shadow() {
       this.isShadow = true;
       return this;
     }
 
-    public Build shadow(boolean shadow) {
+    public Builder shadow(boolean shadow) {
       this.isShadow = shadow;
       return this;
     }
 
-    public Build seeThrough() {
+    public Builder seeThrough() {
       this.isSeeThrough = true;
       return this;
     }
 
-    public Build seeThrough(boolean isSeeThrough) {
+    public Builder seeThrough(boolean isSeeThrough) {
       this.isSeeThrough = isSeeThrough;
       return this;
     }
 
-    public Build size(float size) {
+    public Builder size(float size) {
       this.size = size;
       return this;
     }
 
-    public Build xRot(float xRot) {
+    public Builder xRot(float xRot) {
       this.xRot = xRot;
       return this;
     }
 
-    public Build yRot(float yRot) {
+    public Builder yRot(float yRot) {
       this.yRot = yRot;
       return this;
     }
 
-    public Build targetingPlayers() {
+    public Builder targetingPlayers() {
       this.isTargetingPlayers = true;
       return this;
     }
 
-    public Build targetingPlayers(boolean targetingPlayers) {
+    public Builder targetingPlayers(boolean targetingPlayers) {
       this.isTargetingPlayers = targetingPlayers;
       return this;
     }
@@ -314,19 +290,8 @@ public class TextParticle extends TextureSheetParticle {
     }
 
     public Options buildOptions() {
-      return new Options(
-        this.textComponent,
-        this.fontColor,
-        this.strokeColor,
-        this.durationTick,
-        this.size,
-        this.align,
-        this.xRot,
-        this.yRot,
-        this.isTargetingPlayers,
-        this.isShadow,
-        this.isSeeThrough
-      );
+      return new Options(this.textComponent, this.fontColor, this.strokeColor, this.particleLifeTime,
+          this.size, this.align, this.xRot, this.yRot, this.isTargetingPlayers, this.isShadow, this.isSeeThrough);
     }
   }
 
@@ -362,24 +327,15 @@ public class TextParticle extends TextureSheetParticle {
     }
   }
 
-  public record Options(
-    List<Component> textComponent,
-    int fontColor,
-    int strokeColor,
-    int durationTick,
-    float size,
-    AlignType align,
-    float xRot,
-    float yRot,
-    boolean isTargetingPlayers,
-    boolean isShadow,
-    boolean isSeeThrough
-  ) implements ParticleOptions {
+  public record Options(List<Component> textComponent, int fontColor, int strokeColor,
+                        int particleLifeTime, float size, AlignType align, float xRot,
+                        float yRot, boolean isTargetingPlayers, boolean isShadow,
+                        boolean isSeeThrough) implements ParticleOptions {
     public static final MapCodec<Options> CODEC = RecordCodecBuilder.mapCodec((thisOptionsInstance) -> thisOptionsInstance.group(
       Codec.list(ComponentSerialization.CODEC).fieldOf("textComponentList").forGetter(Options::textComponent),
       Codec.INT.fieldOf("fontColor").forGetter(Options::fontColor),
       Codec.INT.fieldOf("strokeColor").forGetter(Options::strokeColor),
-      Codec.INT.fieldOf("durationTick").forGetter(Options::durationTick),
+        Codec.INT.fieldOf("particleLifeTime").forGetter(Options::particleLifeTime),
       Codec.FLOAT.fieldOf("size").forGetter(Options::size),
       AlignType.CODEC.fieldOf("align").forGetter(Options::align),
       Codec.FLOAT.fieldOf("xRot").forGetter(Options::xRot),
@@ -393,7 +349,7 @@ public class TextParticle extends TextureSheetParticle {
       .withComponent(ComponentSerialization.STREAM_CODEC.apply(ByteBufCodecs.list()), Options::textComponent)
       .withComponent(ByteBufCodecs.INT, Options::fontColor)
       .withComponent(ByteBufCodecs.INT, Options::strokeColor)
-      .withComponent(ByteBufCodecs.INT, Options::durationTick)
+        .withComponent(ByteBufCodecs.INT, Options::particleLifeTime)
       .withComponent(ByteBufCodecs.FLOAT, Options::size)
       .withComponent(AlignType.STREAM_CODEC, Options::align)
       .withComponent(ByteBufCodecs.FLOAT, Options::xRot)
@@ -415,20 +371,9 @@ public class TextParticle extends TextureSheetParticle {
         (boolean) components.next()
       )).build();
 
-    public Build getBuild() {
-      return new Build(
-        this.textComponent,
-        this.fontColor,
-        this.strokeColor,
-        this.durationTick,
-        this.size,
-        this.align,
-        this.xRot,
-        this.yRot,
-        this.isTargetingPlayers,
-        this.isShadow,
-        this.isSeeThrough
-      );
+    public Builder getBuild() {
+      return new Builder(this.textComponent, this.fontColor, this.strokeColor, this.particleLifeTime,
+          this.size, this.align, this.xRot, this.yRot, this.isTargetingPlayers, this.isShadow, this.isSeeThrough);
     }
 
     @Override

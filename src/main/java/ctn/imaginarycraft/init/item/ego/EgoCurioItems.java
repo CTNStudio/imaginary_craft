@@ -878,24 +878,16 @@ public final class EgoCurioItems {
   );
   //endregion
 
-  private static <T extends EgoCurioItem> DeferredItem<T> register(
-    EntityType<?> entityType,
-    String zhName,
-    CuriosType type,
-    Function<EgoCurioItem.Builder, ? extends T> item,
-    EgoCurioItem.Builder builder
-  ) {
+  private static <T extends EgoCurioItem> DeferredItem<T> register(EntityType<?> entityType, String zhName, CuriosType type,
+                                                                   Function<EgoCurioItem.Builder, ? extends T> item,
+                                                                   EgoCurioItem.Builder builder) {
     return register("%s_curios_%s".formatted(entityType.getDescriptionId(), type), zhName, type, item, builder);
   }
 
-  private static <T extends EgoCurioItem> DeferredItem<T> register(
-    String name,
-    String zhName,
-    CuriosType type,
-    Function<EgoCurioItem.Builder, ? extends T> item,
-    EgoCurioItem.Builder builder
-  ) {
-    DeferredItem<T> deferredItem = REGISTRY.register(name, () -> item.apply(builder));
+  private static <T extends EgoCurioItem> DeferredItem<T> register(String id, String zhName, CuriosType type,
+                                                                   Function<EgoCurioItem.Builder, ? extends T> item,
+                                                                   EgoCurioItem.Builder builder) {
+    DeferredItem<T> deferredItem = REGISTRY.register(id, () -> item.apply(builder));
     type.addCurio(deferredItem);
     ZhCn.ITEMS.put(deferredItem, zhName);
     return deferredItem;

@@ -10,7 +10,6 @@ import snownee.jade.api.IBlockComponentProvider;
 import snownee.jade.api.ITooltip;
 import snownee.jade.api.config.IPluginConfig;
 
-// 实体等级显示
 public enum BlockLcLevel implements IBlockComponentProvider {
   INSTANCE;
 

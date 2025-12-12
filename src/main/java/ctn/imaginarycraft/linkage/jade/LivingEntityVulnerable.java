@@ -36,14 +36,7 @@ public enum LivingEntityVulnerable implements IEntityComponentProvider {
     add(iTooltip, THE_SOUL_KEY, "the_soul8x", LcDamageType.THE_SOUL, entity, elements);
   }
 
-  private static void add(
-    final ITooltip iTooltip,
-    final String key,
-    final String spriteRl,
-    final LcDamageType damageType,
-    final LivingEntity entity,
-    final IElementHelper elements
-  ) {
+  private static void add(ITooltip iTooltip, String key, String spriteRl, LcDamageType damageType, LivingEntity entity, IElementHelper elements) {
     iTooltip.add(elements.sprite(ImaginaryCraft.modRl(spriteRl), 8, 8));
     Holder<Attribute> vulnerable = damageType.getVulnerable();
     double text = hasAttribute(entity, vulnerable) ? entity.getAttributeValue(vulnerable) : vulnerable.value().getDefaultValue();

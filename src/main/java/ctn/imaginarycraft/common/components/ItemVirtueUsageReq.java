@@ -37,27 +37,26 @@ import java.util.function.Consumer;
 public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> prudence,
                                  List<UsageReq> temperance, List<UsageReq> justice,
                                  List<UsageReq> composite) implements TooltipProvider {
-  public static final String PREFIX = ImaginaryCraft.modRlText("data_components.item_virtue_usage_req.");
   /**
    * 使用条件
    */
-  public static final String USE_CONDITION = PREFIX + "use_condition";
+  public static final String USE_CONDITION = ImaginaryCraft.modRlText("tooltip.use_condition");
   /**
    * 需求
    */
-  public static final String REQUIREMENT = PREFIX + "requirement";
+  public static final String REQUIREMENT = ImaginaryCraft.modRlText("tooltip.requirement");
   /**
    * 区间
    */
-  public static final String INTERVAL = PREFIX + "interval";
+  public static final String INTERVAL = ImaginaryCraft.modRlText("tooltip.interval");
   /**
    * 不超过
    */
-  public static final String NOT_TO_EXCEED = PREFIX + "not_to_exceed";
+  public static final String NOT_TO_EXCEED = ImaginaryCraft.modRlText("tooltip.not_to_exceed");
   /**
    * 不低于
    */
-  public static final String NOT_LOWER_THAN = PREFIX + "not_lower_than";
+  public static final String NOT_LOWER_THAN = ImaginaryCraft.modRlText("tooltip.not_lower_than");
   public static final StreamCodec<ByteBuf, ItemVirtueUsageReq> STREAM_CODEC = StreamCodec.composite(
     UsageReq.STREAM_CODEC.apply(ByteBufCodecs.list()), ItemVirtueUsageReq::fortitude,
     UsageReq.STREAM_CODEC.apply(ByteBufCodecs.list()), ItemVirtueUsageReq::prudence,
@@ -76,7 +75,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
   public static final ItemVirtueUsageReq EMPTY = new Builder().build();
 
   private static void validateCompositeRatingValue(VirtueType attribute, int value) {
-    assert attribute != VirtueType.COMPOSITE_RATING || value != 6 :
+    assert attribute != VirtueType.COMPOSITE || value != 6 :
       "Composite Rating must be between [-1, 1, 2, 3, 4, 5]. Currently, it is: %d".formatted(value);
   }
 
@@ -90,7 +89,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
       case PRUDENCE -> this.prudence;
       case TEMPERANCE -> this.temperance;
       case JUSTICE -> this.justice;
-      case COMPOSITE_RATING -> this.composite;
+      case COMPOSITE -> this.composite;
     };
   }
 
@@ -98,17 +97,17 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
    * 获取属性对应的使用要求
    */
   @Nullable
-  public Component analysisUsageReq(VirtueType attribute, boolean isDetailed) {
-    List<UsageReq> list = getAttributeList(attribute);
+  public Component analysisUsageReq(VirtueType virtueType, boolean isDetailed) {
+    List<UsageReq> list = getAttributeList(virtueType);
     if (list.isEmpty()) {
       return null;
     }
 
-    if (attribute == VirtueType.COMPOSITE_RATING) {
+    if (virtueType == VirtueType.COMPOSITE) {
       isDetailed = false;
     }
 
-    return Component.translatable(PREFIX + attribute.getName())
+    return Component.translatable(virtueType.getTooltipName())
       .append(getUsageReqComponent(list, isDetailed));
   }
 

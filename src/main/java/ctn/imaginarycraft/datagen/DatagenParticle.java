@@ -29,6 +29,8 @@ public final class DatagenParticle extends ParticleDescriptionProvider {
     createSprite(ModParticleTypes.LC_DAMAGE_ICON, Arrays.stream(LcDamageIconParticle.Type.values())
       .map(LcDamageIconParticle.Type::getTexturePl)
       .toArray(String[]::new));
+    createSprite(ModParticleTypes.DYEING_MAGIC_CIRCLE, "magic_circle/magic_circle16x", "magic_circle/magic_circle32x", "magic_circle/magic_circle128x");
+    createSprite(ModParticleTypes.MAGIC_BULLET_MAGIC_CIRCLE, "magic_bullet/magic_circle16x", "magic_bullet/magic_circle32x", "magic_bullet/magic_circle128x");
   }
 
   private <p extends ParticleOptions> void createSprite(Supplier<ParticleType<p>> type, String name) {

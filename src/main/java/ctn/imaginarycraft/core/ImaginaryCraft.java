@@ -4,6 +4,7 @@ import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.datagen.DatagenCuriosTest;
 import ctn.imaginarycraft.init.*;
 import ctn.imaginarycraft.init.entiey.ModEntityTypes;
+import ctn.imaginarycraft.init.item.ModArmorMaterials;
 import ctn.imaginarycraft.init.item.ModItems;
 import ctn.imaginarycraft.init.tag.ModItemTags;
 import net.minecraft.core.Registry;
@@ -31,10 +32,12 @@ public final class ImaginaryCraft {
   public ImaginaryCraft(IEventBus eventBus, ModContainer container) {
     LOGGER.info("Server {}", NAME);
     ModConfig.init(container);
+    ModSoundEvents.REGISTRY.register(eventBus);
     ModAttributes.REGISTRY.register(eventBus);
     ModAttachments.REGISTRY.register(eventBus);
     ModParticleTypes.REGISTRY.register(eventBus);
     ModDataComponents.REGISTRY.register(eventBus);
+    ModArmorMaterials.REGISTRY.register(eventBus);
     ModItems.init(eventBus);
     ModEntityTypes.init(eventBus);
 

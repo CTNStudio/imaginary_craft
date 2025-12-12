@@ -1,6 +1,8 @@
 package ctn.imaginarycraft.client.registry;
 
+import ctn.imaginarycraft.client.particle.DyeingMagicCircleParticle;
 import ctn.imaginarycraft.client.particle.LcDamageIconParticle;
+import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
 import ctn.imaginarycraft.client.particle.text.DamageTextParticle;
 import ctn.imaginarycraft.client.particle.text.TextParticle;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -17,5 +19,11 @@ public final class RegistryParticleProviders {
     event.registerSpecial(ModParticleTypes.TEXT.get(), new TextParticle.Provider());
     event.registerSpecial(ModParticleTypes.DAMAGE_TEXT.get(), new DamageTextParticle.Provider());
     event.registerSpriteSet(ModParticleTypes.LC_DAMAGE_ICON.get(), LcDamageIconParticle.Provider::new);
+    event.registerSpriteSet(ModParticleTypes.DYEING_MAGIC_CIRCLE.get(), DyeingMagicCircleParticle.Provider16x::new);
+    event.registerSpriteSet(ModParticleTypes.DYEING_MAGIC_CIRCLE.get(), DyeingMagicCircleParticle.Provider32x::new);
+    event.registerSpriteSet(ModParticleTypes.DYEING_MAGIC_CIRCLE.get(), DyeingMagicCircleParticle.Provider128x::new);
+    event.registerSpriteSet(ModParticleTypes.MAGIC_BULLET_MAGIC_CIRCLE.get(), MagicBulletMagicCircleParticle.Provider16x::new);
+    event.registerSpriteSet(ModParticleTypes.MAGIC_BULLET_MAGIC_CIRCLE.get(), MagicBulletMagicCircleParticle.Provider32x::new);
+    event.registerSpriteSet(ModParticleTypes.MAGIC_BULLET_MAGIC_CIRCLE.get(), MagicBulletMagicCircleParticle.Provider128x::new);
   }
 }

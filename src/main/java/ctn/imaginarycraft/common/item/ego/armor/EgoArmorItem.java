@@ -25,14 +25,14 @@ import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, IItemEgo {
-  protected final ModGeoArmourRenderProvider.GeoBuilder<EgoArmorItem> geoBuilder;
+  protected final ModGeoArmourRenderProvider.GeoBuilder<EgoArmorItem> renderProviderBuilder;
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-  public EgoArmorItem(Builder builder, ModGeoArmourRenderProvider.GeoBuilder<EgoArmorItem> geoBuilder) {
+  public EgoArmorItem(Builder builder) {
     super(builder.material, builder.type, builder.properties
       .stacksTo(1)
       .component(ModDataComponents.IS_RESTRAIN, false));
-    this.geoBuilder = geoBuilder;
+    this.renderProviderBuilder = builder.renderProviderBuilder;
   }
 
   @Override
@@ -71,23 +71,29 @@ public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, I
   }
 
   public static class Builder {
+    private Properties properties = new Properties();
+    protected ItemVirtueUsageReq.Builder virtueUsageReqBuilder;
     protected final Holder<ArmorMaterial> material;
     protected final ArmorItem.Type type;
-    protected final Properties properties;
     protected double physicsVulnerable;
     protected double rationalityVulnerable;
     protected double erosionVulnerable;
     protected double theSoulVulnerable;
-    protected ItemVirtueUsageReq.Builder virtueUsageReqBuilder;
+    protected final ModGeoArmourRenderProvider.GeoBuilder<EgoArmorItem> renderProviderBuilder;
     /**
      * 耐久
      */
     protected int durability;
 
-    public Builder(Holder<ArmorMaterial> material, ArmorItem.Type type, Properties properties) {
+    public Builder(Holder<ArmorMaterial> material, ArmorItem.Type type, ModGeoArmourRenderProvider.GeoBuilder<EgoArmorItem> renderProviderBuilder) {
       this.material = material;
       this.type = type;
+      this.renderProviderBuilder = renderProviderBuilder;
+    }
+
+    public Builder properties(Properties properties) {
       this.properties = properties;
+      return this;
     }
 
     public Properties buildProperties() {
