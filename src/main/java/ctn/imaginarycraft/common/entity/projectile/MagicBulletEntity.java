@@ -36,38 +36,47 @@ public class MagicBulletEntity extends ModBulletEntity {
    */
   private static final float TURN_RATE = 0.6f;
   private static final float BULLET_SPEED = 1.0f;
+
   /**
    * 追踪距离
    */
   private final float distance = 30.0f;
+
   /**
    * 可存在时间
    */
   private final int durationTicks = 100;
+
   /**
    * 追踪是否可用 TODO：看看是否加入配置文件，或删除
    */
   private final boolean canTrack = true;
+
   /**
    * 追踪距离（水平）
    */
   private final float trackingDistance = 4.0f;
+
   /**
    * 已跟踪过的生物列表
    */
   private final ArrayList<LivingEntity> hasTracked = new ArrayList<>();
+
   /**
    * 伤害
    */
   private float damage;
+
   /**
    * 无目标时是否可以穿墙
    */
   private boolean canGoThroughWallsWhenNoTarget = false;
+
   /**
    * 是否对盟友造成伤害
    */
   private boolean dealDamageToAllies = false;
+
   /**
    * 正在追踪的目标
    */
