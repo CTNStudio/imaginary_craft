@@ -66,10 +66,10 @@ public abstract class WeaponItem extends Item implements IItemInvincibleTick {
      */
     protected int durability;
     protected int invincibleTick;
-    protected Properties properties = new Properties();
+    protected Item.Properties properties = new Item.Properties();
 
-    public Properties buildProperties() {
-      Properties properties = this.properties;
+    public Item.Properties buildProperties() {
+      Item.Properties properties = this.properties;
       int durability = this.durability;
       properties.attributes(getItemAttributeModifiers());
       if (durability > 0) {

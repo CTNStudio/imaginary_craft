@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.common.item.weapon;
 
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 
