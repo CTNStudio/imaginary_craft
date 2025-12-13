@@ -87,6 +87,27 @@ public final class ModItemTags {
    */
   public static final TagKey<Item> EGO_CURIOS_LEFT_BACK = createTag("ego/curios/left_back");
   //endregion
+
+  //region 武器类型
+  /**
+   * 特殊武器
+   */
+  public static final TagKey<Item> SPECIAL = createTag("weapon_type/special");
+
+  /**
+   * 远程武器
+   */
+  public static final TagKey<Item> REMOTE = createTag("weapon_type/remote");
+  /**
+   * 近战武器
+   */
+  public static final TagKey<Item> MELEE = createTag("weapon_type/melee");
+
+  /**
+   * 枪
+   */
+  public static final TagKey<Item> GUN = createTag("weapon_type/gun");
+  //endregion
   //endregion
 
   private static TagKey<Item> createTag(String name) {

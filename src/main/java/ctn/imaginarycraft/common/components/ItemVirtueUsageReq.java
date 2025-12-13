@@ -194,6 +194,12 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
     private final List<UsageReq> justice = new ArrayList<>();
     private final List<UsageReq> composite = new ArrayList<>();
 
+    /**
+     * 将构建器添加到物品属性中
+     *
+     * @param properties 物品属性
+     * @param builder    品德使用要求构建器
+     */
     public static void add(final Item.Properties properties, final ItemVirtueUsageReq.Builder builder) {
       if (builder == null || (builder.isEmpty())) {
         return;
@@ -202,132 +208,434 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
       properties.component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, builder.build());
     }
 
-    public Builder fortitude(int value, boolean isMin) {
-      return updateList(fortitude, value, isMin);
+    /**
+     * 设置勇气属性要求
+     *
+     * @param value         要求值
+     * @param isNotToExceed true表示不超过该值，false表示不低于该值
+     * @return 构建器本身
+     */
+    public Builder fortitude(int value, boolean isNotToExceed) {
+      return updateList(fortitude, value, isNotToExceed);
     }
 
-    public Builder fortitude(VirtueRating value, boolean isMin) {
-      return updateList(fortitude, value.getRating(), isMin);
+    /**
+     * 设置勇气属性要求
+     *
+     * @param value         要求等级
+     * @param isNotToExceed true表示不超过该值，false表示不低于该值
+     * @return 构建器本身
+     */
+    public Builder fortitude(VirtueRating value, boolean isNotToExceed) {
+      return updateList(fortitude, value.getRating(), isNotToExceed);
     }
 
+    /**
+     * 设置勇气属性区间要求
+     *
+     * @param min 最小值
+     * @param max 最大值
+     * @return 构建器本身
+     */
     public Builder fortitude(int min, int max) {
       return updateListRange(fortitude, min, max);
     }
 
+    /**
+     * 设置勇气属性区间要求
+     *
+     * @param min 最小等级
+     * @param max 最大等级
+     * @return 构建器本身
+     */
     public Builder fortitude(VirtueRating min, VirtueRating max) {
       return updateListRange(fortitude, min.getRating(), max.getRating());
     }
 
-    public Builder fortitude(int... values) {
+    /**
+     * 设置勇气属性要求（不低于）
+     *
+     * @param value 要求值
+     * @return 构建器本身
+     */
+    public Builder fortitude(int value) {
+      return updateList(fortitude, value, true);
+    }
+
+    /**
+     * 设置勇气属性要求（不低于）
+     *
+     * @param value 要求等级
+     * @return 构建器本身
+     */
+    public Builder fortitude(VirtueRating value) {
+      return updateList(fortitude, value.getRating(), true);
+    }
+
+    /**
+     * 设置勇气属性多个特定值要求
+     *
+     * @param values 特定值数组
+     * @return 构建器本身
+     */
+    public Builder fortitudeOf(int... values) {
       return updateListValues(fortitude, values);
     }
 
-    public Builder fortitude(VirtueRating... values) {
+    /**
+     * 设置勇气属性多个特定等级要求
+     *
+     * @param values 特定等级数组
+     * @return 构建器本身
+     */
+    public Builder fortitudeOf(VirtueRating... values) {
       return updateListValues(fortitude, values);
     }
 
-    public Builder prudence(int value, boolean isMin) {
-      return updateList(prudence, value, isMin);
+    /**
+     * 设置谨慎属性要求
+     *
+     * @param value         要求值
+     * @param isNotToExceed true表示不超过该值，false表示不低于该值
+     * @return 构建器本身
+     */
+    public Builder prudence(int value, boolean isNotToExceed) {
+      return updateList(prudence, value, isNotToExceed);
     }
 
-    public Builder prudence(VirtueRating value, boolean isMin) {
-      return updateList(prudence, value.getRating(), isMin);
+    /**
+     * 设置谨慎属性要求
+     *
+     * @param value         要求等级
+     * @param isNotToExceed true表示不超过该值，false表示不低于该值
+     * @return 构建器本身
+     */
+    public Builder prudence(VirtueRating value, boolean isNotToExceed) {
+      return updateList(prudence, value.getRating(), isNotToExceed);
     }
 
+    /**
+     * 设置谨慎属性区间要求
+     *
+     * @param min 最小值
+     * @param max 最大值
+     * @return 构建器本身
+     */
     public Builder prudence(int min, int max) {
       return updateListRange(prudence, min, max);
     }
 
+    /**
+     * 设置谨慎属性区间要求
+     *
+     * @param min 最小等级
+     * @param max 最大等级
+     * @return 构建器本身
+     */
     public Builder prudence(VirtueRating min, VirtueRating max) {
       return updateListRange(prudence, min.getRating(), max.getRating());
     }
 
-    public Builder prudence(int... values) {
+    /**
+     * 设置谨慎属性要求（不低于）
+     *
+     * @param value 要求值
+     * @return 构建器本身
+     */
+    public Builder prudence(int value) {
+      return updateList(prudence, value, true);
+    }
+
+    /**
+     * 设置谨慎属性要求（不低于）
+     *
+     * @param value 要求等级
+     * @return 构建器本身
+     */
+    public Builder prudence(VirtueRating value) {
+      return updateList(prudence, value.getRating(), true);
+    }
+
+    /**
+     * 设置谨慎属性多个特定值要求
+     *
+     * @param values 特定值数组
+     * @return 构建器本身
+     */
+    public Builder prudenceOf(int... values) {
       return updateListValues(prudence, values);
     }
 
-    public Builder prudence(VirtueRating... values) {
+    /**
+     * 设置谨慎属性多个特定等级要求
+     *
+     * @param values 特定等级数组
+     * @return 构建器本身
+     */
+    public Builder prudenceOf(VirtueRating... values) {
       return updateListValues(prudence, values);
     }
 
-    public Builder temperance(int value, boolean isMin) {
-      return updateList(temperance, value, isMin);
+    /**
+     * 设置自律属性要求
+     *
+     * @param value         要求值
+     * @param isNotToExceed true表示不超过该值，false表示不低于该值
+     * @return 构建器本身
+     */
+    public Builder temperance(int value, boolean isNotToExceed) {
+      return updateList(temperance, value, isNotToExceed);
     }
 
-    public Builder temperance(VirtueRating value, boolean isMin) {
-      return updateList(temperance, value.getRating(), isMin);
+    /**
+     * 设置自律属性要求
+     *
+     * @param value         要求等级
+     * @param isNotToExceed true表示不超过该值，false表示不低于该值
+     * @return 构建器本身
+     */
+    public Builder temperance(VirtueRating value, boolean isNotToExceed) {
+      return updateList(temperance, value.getRating(), isNotToExceed);
     }
 
+    /**
+     * 设置自律属性区间要求
+     *
+     * @param min 最小值
+     * @param max 最大值
+     * @return 构建器本身
+     */
     public Builder temperance(int min, int max) {
       return updateListRange(temperance, min, max);
     }
 
+    /**
+     * 设置自律属性区间要求
+     *
+     * @param min 最小等级
+     * @param max 最大等级
+     * @return 构建器本身
+     */
     public Builder temperance(VirtueRating min, VirtueRating max) {
       return updateListRange(temperance, min.getRating(), max.getRating());
     }
 
-    public Builder temperance(int... values) {
+    /**
+     * 设置自律属性要求（不低于）
+     *
+     * @param value 要求值
+     * @return 构建器本身
+     */
+    public Builder temperance(int value) {
+      return updateList(temperance, value, true);
+    }
+
+    /**
+     * 设置自律属性要求（不低于）
+     *
+     * @param value 要求等级
+     * @return 构建器本身
+     */
+    public Builder temperance(VirtueRating value) {
+      return updateList(temperance, value.getRating(), true);
+    }
+
+    /**
+     * 设置自律属性多个特定值要求
+     *
+     * @param values 特定值数组
+     * @return 构建器本身
+     */
+    public Builder temperanceOf(int... values) {
       return updateListValues(temperance, values);
     }
 
-    public Builder temperance(VirtueRating... values) {
+    /**
+     * 设置自律属性多个特定等级要求
+     *
+     * @param values 特定等级数组
+     * @return 构建器本身
+     */
+    public Builder temperanceOf(VirtueRating... values) {
       return updateListValues(temperance, values);
     }
 
-    public Builder justice(int value, boolean isMin) {
-      return updateList(justice, value, isMin);
+    /**
+     * 设置正义属性要求
+     *
+     * @param value         要求值
+     * @param isNotToExceed true表示不超过该值，false表示不低于该值
+     * @return 构建器本身
+     */
+    public Builder justice(int value, boolean isNotToExceed) {
+      return updateList(justice, value, isNotToExceed);
     }
 
-    public Builder justice(VirtueRating value, boolean isMin) {
-      return updateList(justice, value.getRating(), isMin);
+    /**
+     * 设置正义属性要求
+     *
+     * @param value         要求等级
+     * @param isNotToExceed true表示不超过该值，false表示不低于该值
+     * @return 构建器本身
+     */
+    public Builder justice(VirtueRating value, boolean isNotToExceed) {
+      return updateList(justice, value.getRating(), isNotToExceed);
     }
 
+    /**
+     * 设置正义属性区间要求
+     *
+     * @param min 最小值
+     * @param max 最大值
+     * @return 构建器本身
+     */
     public Builder justice(int min, int max) {
       return updateListRange(justice, min, max);
     }
 
+    /**
+     * 设置正义属性区间要求
+     *
+     * @param min 最小等级
+     * @param max 最大等级
+     * @return 构建器本身
+     */
     public Builder justice(VirtueRating min, VirtueRating max) {
       return updateListRange(justice, min.getRating(), max.getRating());
     }
 
-    public Builder justice(int... values) {
+    /**
+     * 设置正义属性要求（不低于）
+     *
+     * @param value 要求值
+     * @return 构建器本身
+     */
+    public Builder justice(int value) {
+      return updateList(justice, value, true);
+    }
+
+    /**
+     * 设置正义属性要求（不低于）
+     *
+     * @param value 要求等级
+     * @return 构建器本身
+     */
+    public Builder justice(VirtueRating value) {
+      return updateList(justice, value.getRating(), true);
+    }
+
+    /**
+     * 设置正义属性多个特定值要求
+     *
+     * @param values 特定值数组
+     * @return 构建器本身
+     */
+    public Builder justiceOf(int... values) {
       return updateListValues(justice, values);
     }
 
-    public Builder justice(VirtueRating... values) {
+    /**
+     * 设置正义属性多个特定等级要求
+     *
+     * @param values 特定等级数组
+     * @return 构建器本身
+     */
+    public Builder justiceOf(VirtueRating... values) {
       return updateListValues(justice, values);
     }
 
-    public Builder composite(int value, boolean isMin) {
-      return updateList(composite, value, isMin);
+    /**
+     * 设置综合属性要求
+     *
+     * @param value         要求值
+     * @param isNotToExceed true表示不超过该值，false表示不低于该值
+     * @return 构建器本身
+     */
+    public Builder composite(int value, boolean isNotToExceed) {
+      return updateList(composite, value, isNotToExceed);
     }
 
-    public Builder composite(VirtueRating value, boolean isMin) {
-      return updateList(composite, value.getRating(), isMin);
+    /**
+     * 设置综合属性要求
+     *
+     * @param value         要求等级
+     * @param isNotToExceed true表示不超过该值，false表示不低于该值
+     * @return 构建器本身
+     */
+    public Builder composite(VirtueRating value, boolean isNotToExceed) {
+      return updateList(composite, value.getRating(), isNotToExceed);
     }
 
+    /**
+     * 设置综合属性要求（不低于）
+     *
+     * @param value 要求值
+     * @return 构建器本身
+     */
+    public Builder composite(int value) {
+      return updateList(composite, value, true);
+    }
+
+    /**
+     * 设置综合属性要求（不低于）
+     *
+     * @param value 要求等级
+     * @return 构建器本身
+     */
+    public Builder composite(VirtueRating value) {
+      return updateList(composite, value.getRating(), true);
+    }
+
+    /**
+     * 设置综合属性区间要求
+     *
+     * @param min 最小值
+     * @param max 最大值
+     * @return 构建器本身
+     */
     public Builder composite(int min, int max) {
       return updateListRange(composite, min, max);
     }
 
+    /**
+     * 设置综合属性区间要求
+     *
+     * @param min 最小等级
+     * @param max 最大等级
+     * @return 构建器本身
+     */
     public Builder composite(VirtueRating min, VirtueRating max) {
       return updateListRange(composite, min.getRating(), max.getRating());
     }
 
-    public Builder composite(int... values) {
+    /**
+     * 设置综合属性多个特定值要求
+     *
+     * @param values 特定值数组
+     * @return 构建器本身
+     */
+    public Builder compositeOf(int... values) {
       return updateListValues(composite, values);
     }
 
-    public Builder composite(VirtueRating... values) {
+    /**
+     * 设置综合属性多个特定等级要求
+     *
+     * @param values 特定等级数组
+     * @return 构建器本身
+     */
+    public Builder compositeOf(VirtueRating... values) {
       return updateListValues(composite, values);
     }
 
-    private Builder updateList(List<UsageReq> list, int value, boolean isMin) {
+    // 更新单个值列表
+    private Builder updateList(List<UsageReq> list, int value, boolean isNotToExceed) {
       list.clear();
-      list.add(new UsageReq(value, isMin ? UsageReq.Type.NOT_TO_EXCEED : UsageReq.Type.NOT_LOWER_THAN));
+      list.add(new UsageReq(value, isNotToExceed ? UsageReq.Type.NOT_TO_EXCEED : UsageReq.Type.NOT_LOWER_THAN));
       return this;
     }
 
+    // 更新区间值列表
     private Builder updateListRange(List<UsageReq> list, int min, int max) {
       list.clear();
       list.add(new UsageReq(min, UsageReq.Type.NOT_TO_EXCEED));
@@ -335,6 +643,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
       return this;
     }
 
+    // 更新多个特定值列表（整数版本）
     private Builder updateListValues(List<UsageReq> list, int... values) {
       list.clear();
       for (int value : values) {
@@ -343,6 +652,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
       return this;
     }
 
+    // 更新多个特定值列表（等级版本）
     private Builder updateListValues(List<UsageReq> list, VirtueRating... values) {
       list.clear();
       for (VirtueRating value : values) {
@@ -351,6 +661,11 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
       return this;
     }
 
+    /**
+     * 构建品德使用要求对象
+     *
+     * @return 品德使用要求对象
+     */
     public ItemVirtueUsageReq build() {
       return new ItemVirtueUsageReq(
         Collections.unmodifiableList(this.fortitude),
@@ -360,6 +675,11 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
         Collections.unmodifiableList(this.composite));
     }
 
+    /**
+     * 判断是否为空（没有任何属性要求）
+     *
+     * @return 如果没有设置任何属性要求则返回true，否则返回false
+     */
     public boolean isEmpty() {
       return this.fortitude.isEmpty() &&
         this.prudence.isEmpty() &&

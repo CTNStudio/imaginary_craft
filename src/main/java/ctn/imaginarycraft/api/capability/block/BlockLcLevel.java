@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.api.capability.block;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
@@ -9,38 +9,38 @@ import org.jetbrains.annotations.Nullable;
 public enum BlockLcLevel implements IBlockLcLevel {
   NULL() {
     @Override
-    public @Nullable LcLevel getLcLevel(final Level level, final BlockPos pos) {
+    public @Nullable LcLevelType getLcLevel(final Level level, final BlockPos pos) {
       return null;
     }
   },
   ZAYIN() {
     @Override
-    public @NotNull LcLevel getLcLevel(final Level level, final BlockPos pos) {
-      return LcLevel.ZAYIN;
+    public @NotNull LcLevelType getLcLevel(final Level level, final BlockPos pos) {
+      return LcLevelType.ZAYIN;
     }
   },
   TETH() {
     @Override
-    public @NotNull LcLevel getLcLevel(final Level level, final BlockPos pos) {
-      return LcLevel.TETH;
+    public @NotNull LcLevelType getLcLevel(final Level level, final BlockPos pos) {
+      return LcLevelType.TETH;
     }
   },
   HE() {
     @Override
-    public @NotNull LcLevel getLcLevel(final Level level, final BlockPos pos) {
-      return LcLevel.HE;
+    public @NotNull LcLevelType getLcLevel(final Level level, final BlockPos pos) {
+      return LcLevelType.HE;
     }
   },
   WAW() {
     @Override
-    public @NotNull LcLevel getLcLevel(final Level level, final BlockPos pos) {
-      return LcLevel.WAW;
+    public @NotNull LcLevelType getLcLevel(final Level level, final BlockPos pos) {
+      return LcLevelType.WAW;
     }
   },
   ALEPH() {
     @Override
-    public @NotNull LcLevel getLcLevel(final Level level, final BlockPos pos) {
-      return LcLevel.ALEPH;
+    public @NotNull LcLevelType getLcLevel(final Level level, final BlockPos pos) {
+      return LcLevelType.ALEPH;
     }
   }
 }

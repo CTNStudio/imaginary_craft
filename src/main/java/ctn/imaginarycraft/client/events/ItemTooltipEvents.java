@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.client.events;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.network.chat.Component;
@@ -26,11 +26,11 @@ public class ItemTooltipEvents {
     int size = toolTip.size();
 
     // 添加物品等级 ToolTip
-    LcLevel lcLevel = LcLevelUtil.getLevel(itemStack);
-    if (lcLevel != null) {
+    LcLevelType lcLevelType = LcLevelUtil.getLevel(itemStack);
+    if (lcLevelType != null) {
       toolTip.add(Math.clamp(size, 0, 1), Component
-        .literal(lcLevel.getName().toUpperCase())
-        .withColor(lcLevel.getColourValue()));
+        .literal(lcLevelType.getName().toUpperCase())
+        .withColor(lcLevelType.getColourValue()));
     }
   }
 

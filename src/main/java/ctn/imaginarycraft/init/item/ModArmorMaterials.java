@@ -11,7 +11,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class ModArmorMaterials extends ArmorMaterialsRegisterUtil {
   public static final DeferredRegister<ArmorMaterial> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.ARMOR_MATERIAL);
 
-  // EGO护甲
+  // EGO 护甲
   public static final Holder<ArmorMaterial> ZAYIN = register(
     "zayin", 1, 2, 3, 1, 3, 9,
     ModSoundEvents.ARMOR_EQUIP_ZAYIN, 0.5F, 0.0F);

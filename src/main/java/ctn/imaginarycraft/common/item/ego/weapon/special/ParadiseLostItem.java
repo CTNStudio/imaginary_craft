@@ -3,7 +3,7 @@ package ctn.imaginarycraft.common.item.ego.weapon.special;
 import ctn.imaginarycraft.api.client.IPlayerAnim;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.common.entity.projectile.ParadiseLostSpikeweed;
-import ctn.imaginarycraft.common.item.ego.weapon.EgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.GeoEgoWeaponItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -28,7 +28,7 @@ import java.util.Set;
 /**
  * 失乐园武器
  */
-public class ParadiseLostItem extends EgoWeaponItem {
+public class ParadiseLostItem extends GeoEgoWeaponItem {
   public static final String ATTACK = "player.paradise_lost.attack";
   public static final String CONTINUOUS_ATTACK = "player.paradise_lost.continuous_attack";
   public static final String END = "player.paradise_lost.end";

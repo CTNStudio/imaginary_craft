@@ -21,9 +21,7 @@ public class ChaosKnifeItem extends EgoWeaponItem {
   public static final String KEY = ImaginaryCraft.ID + ".item_tooltip.geo_describe.damage_type";
 
   public ChaosKnifeItem(Properties properties, Builder builder) {
-    super(properties.component(ModDataComponents.LC_DAMAGE_TYPE.get(), LcDamageType.PHYSICS), builder
-      .damage(7)
-      .attackSpeed(-1.4F));
+    super(properties.component(ModDataComponents.LC_DAMAGE_TYPE.get(), LcDamageType.PHYSICS), builder);
   }
 
   @Override

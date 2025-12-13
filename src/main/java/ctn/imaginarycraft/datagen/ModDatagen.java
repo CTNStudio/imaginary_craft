@@ -57,7 +57,8 @@ public final class ModDatagen {
     // 客户端数据生成
     DatagenI18n.init(output).forEach(i18 -> buildClient(event, generator, i18));
     buildClient(event, generator, new DatagenParticle(output, existingFileHelper));
-    buildClient(event, generator, new DatagenItem(output, existingFileHelper));
+    buildClient(event, generator, new DatagenItemModel(output, existingFileHelper));
+    buildClient(event, generator, new DatagenBlockState(output, existingFileHelper));
   }
 
   private static <T extends DataProvider> @NotNull T buildClient(@NotNull GatherDataEvent event,

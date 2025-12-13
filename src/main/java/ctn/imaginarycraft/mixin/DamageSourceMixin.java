@@ -4,7 +4,7 @@ import ctn.imaginarycraft.api.IDamageSource;
 import ctn.imaginarycraft.api.capability.item.IItemInvincibleTick;
 import ctn.imaginarycraft.api.capability.item.IItemLcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
 import ctn.imaginarycraft.init.ModCapabilitys;
@@ -33,7 +33,7 @@ public abstract class DamageSourceMixin implements IDamageSource {
 
   @Unique
   @Nullable
-  private LcLevel imaginaryCraft$lcDamageLevel;
+  private LcLevelType imaginaryCraft$lcDamageLevel;
 
   @Unique
   private boolean imaginaryCraft$isLcLevelNull;
@@ -60,7 +60,7 @@ public abstract class DamageSourceMixin implements IDamageSource {
 
     // 初始化默认值
     LcDamageType lcDamageType = null;
-    LcLevel lcDamageLevel = null;
+    LcLevelType lcDamageLevel = null;
     int invincibleTick = 20;
 
     // 从物品获取信息
@@ -104,7 +104,7 @@ public abstract class DamageSourceMixin implements IDamageSource {
   @Unique
   @Nullable
   @Override
-  public LcLevel getImaginaryCraft$LcDamageLevel() {
+  public LcLevelType getImaginaryCraft$LcDamageLevel() {
     return imaginaryCraft$lcDamageLevel;
   }
 
@@ -122,7 +122,7 @@ public abstract class DamageSourceMixin implements IDamageSource {
 
   @Unique
   @Override
-  public void setImaginaryCraft$DamageLevel(@Nullable LcLevel level) {
+  public void setImaginaryCraft$DamageLevel(@Nullable LcLevelType level) {
     this.imaginaryCraft$lcDamageLevel = level;
   }
 

@@ -20,7 +20,7 @@ import java.util.Arrays;
 /**
  * 脑叶等级
  */
-public enum LcLevel implements ColourText, StringRepresentable {
+public enum LcLevelType implements ColourText, StringRepresentable {
   ZAYIN(0, "zayin", "#00ff00"),
   TETH(1, "teth", "#1e90ff"),
   HE(2, "he", "#ffff00"),
@@ -32,12 +32,12 @@ public enum LcLevel implements ColourText, StringRepresentable {
   private final String colour;
   private final int colourValue;
 
-  public static final Codec<LcLevel> CODEC = StringRepresentable
-    .fromEnum(LcLevel::values).validate(DataResult::success);
-  public static final StreamCodec<ByteBuf, LcLevel> STREAM_CODEC = ByteBufCodecs
+  public static final Codec<LcLevelType> CODEC = StringRepresentable
+    .fromEnum(LcLevelType::values).validate(DataResult::success);
+  public static final StreamCodec<ByteBuf, LcLevelType> STREAM_CODEC = ByteBufCodecs
     .idMapper(ByIdMap.continuous(Enum::ordinal, values(), ByIdMap.OutOfBoundsStrategy.WRAP), Enum::ordinal);
 
-  LcLevel(int levelValue, String name, String colour) {
+  LcLevelType(int levelValue, String name, String colour) {
     this.name = name;
     this.levelValue = levelValue;
     this.colour = colour;
@@ -48,7 +48,7 @@ public enum LcLevel implements ColourText, StringRepresentable {
     return name;
   }
 
-  public static @NotNull LcLevel byLevel(int level) {
+  public static @NotNull LcLevelType byLevel(int level) {
     final int finalLevel = Math.clamp(level, ZAYIN.getLevelValue(), ALEPH.getLevelValue());
     return Arrays.stream(values()).filter(value -> value.levelValue == finalLevel).findFirst().orElse(ZAYIN);
   }

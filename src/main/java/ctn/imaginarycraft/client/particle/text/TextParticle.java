@@ -291,7 +291,7 @@ public class TextParticle extends TextureSheetParticle {
 
     public Options buildOptions() {
       return new Options(this.textComponent, this.fontColor, this.strokeColor, this.particleLifeTime,
-          this.size, this.align, this.xRot, this.yRot, this.isTargetingPlayers, this.isShadow, this.isSeeThrough);
+        this.size, this.align, this.xRot, this.yRot, this.isTargetingPlayers, this.isShadow, this.isSeeThrough);
     }
   }
 
@@ -335,7 +335,7 @@ public class TextParticle extends TextureSheetParticle {
       Codec.list(ComponentSerialization.CODEC).fieldOf("textComponentList").forGetter(Options::textComponent),
       Codec.INT.fieldOf("fontColor").forGetter(Options::fontColor),
       Codec.INT.fieldOf("strokeColor").forGetter(Options::strokeColor),
-        Codec.INT.fieldOf("particleLifeTime").forGetter(Options::particleLifeTime),
+      Codec.INT.fieldOf("particleLifeTime").forGetter(Options::particleLifeTime),
       Codec.FLOAT.fieldOf("size").forGetter(Options::size),
       AlignType.CODEC.fieldOf("align").forGetter(Options::align),
       Codec.FLOAT.fieldOf("xRot").forGetter(Options::xRot),
@@ -349,7 +349,7 @@ public class TextParticle extends TextureSheetParticle {
       .withComponent(ComponentSerialization.STREAM_CODEC.apply(ByteBufCodecs.list()), Options::textComponent)
       .withComponent(ByteBufCodecs.INT, Options::fontColor)
       .withComponent(ByteBufCodecs.INT, Options::strokeColor)
-        .withComponent(ByteBufCodecs.INT, Options::particleLifeTime)
+      .withComponent(ByteBufCodecs.INT, Options::particleLifeTime)
       .withComponent(ByteBufCodecs.FLOAT, Options::size)
       .withComponent(AlignType.STREAM_CODEC, Options::align)
       .withComponent(ByteBufCodecs.FLOAT, Options::xRot)
@@ -373,7 +373,7 @@ public class TextParticle extends TextureSheetParticle {
 
     public Builder getBuild() {
       return new Builder(this.textComponent, this.fontColor, this.strokeColor, this.particleLifeTime,
-          this.size, this.align, this.xRot, this.yRot, this.isTargetingPlayers, this.isShadow, this.isSeeThrough);
+        this.size, this.align, this.xRot, this.yRot, this.isTargetingPlayers, this.isShadow, this.isSeeThrough);
     }
 
     @Override

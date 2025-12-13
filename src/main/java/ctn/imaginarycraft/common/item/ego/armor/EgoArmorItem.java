@@ -2,6 +2,7 @@ package ctn.imaginarycraft.common.item.ego.armor;
 
 import ctn.imaginarycraft.api.capability.item.IItemEgo;
 import ctn.imaginarycraft.api.capability.item.IItemUsageReq;
+import ctn.imaginarycraft.client.model.ModGeoArmorModel;
 import ctn.imaginarycraft.client.renderer.providers.ModGeoArmourRenderProvider;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
 import ctn.imaginarycraft.init.ModAttributes;
@@ -25,14 +26,18 @@ import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, IItemEgo {
-  protected final ModGeoArmourRenderProvider.GeoBuilder<EgoArmorItem> renderProviderBuilder;
+  protected final ModGeoArmourRenderProvider<EgoArmorItem> renderProvider;
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
   public EgoArmorItem(Builder builder) {
     super(builder.material, builder.type, builder.properties
       .stacksTo(1)
       .component(ModDataComponents.IS_RESTRAIN, false));
-    this.renderProviderBuilder = builder.renderProviderBuilder;
+    this.renderProvider = builder.renderProvider;
+  }
+
+  public EgoArmorItem(Properties properties, Builder builder) {
+    this(builder.properties(properties));
   }
 
   @Override
@@ -73,26 +78,52 @@ public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, I
   public static class Builder {
     private Properties properties = new Properties();
     protected ItemVirtueUsageReq.Builder virtueUsageReqBuilder;
-    protected final Holder<ArmorMaterial> material;
-    protected final ArmorItem.Type type;
+    protected Holder<ArmorMaterial> material;
+    protected ArmorItem.Type type;
     protected double physicsVulnerable;
-    protected double rationalityVulnerable;
+    protected double spiritVulnerable;
     protected double erosionVulnerable;
     protected double theSoulVulnerable;
-    protected final ModGeoArmourRenderProvider.GeoBuilder<EgoArmorItem> renderProviderBuilder;
+    protected ModGeoArmourRenderProvider<EgoArmorItem> renderProvider;
     /**
      * 耐久
      */
     protected int durability;
 
-    public Builder(Holder<ArmorMaterial> material, ArmorItem.Type type, ModGeoArmourRenderProvider.GeoBuilder<EgoArmorItem> renderProviderBuilder) {
+    public Builder() {
+    }
+
+    public Builder init(Holder<ArmorMaterial> material, ArmorItem.Type type, ModGeoArmourRenderProvider<EgoArmorItem> renderProvider) {
       this.material = material;
       this.type = type;
-      this.renderProviderBuilder = renderProviderBuilder;
+      this.renderProvider = renderProvider;
+      return this;
+    }
+
+    public Builder init(Holder<ArmorMaterial> material, ArmorItem.Type type, ModGeoArmorModel<EgoArmorItem> model) {
+      this.material = material;
+      this.type = type;
+      this.renderProvider = new ModGeoArmourRenderProvider<>(model, null);
+      return this;
     }
 
     public Builder properties(Properties properties) {
       this.properties = properties;
+      return this;
+    }
+
+    public Builder material(Holder<ArmorMaterial> material) {
+      this.material = material;
+      return this;
+    }
+
+    public Builder type(ArmorItem.Type type) {
+      this.type = type;
+      return this;
+    }
+
+    public Builder renderProvider(ModGeoArmourRenderProvider<EgoArmorItem> renderProvider) {
+      this.renderProvider = renderProvider;
       return this;
     }
 
@@ -114,7 +145,7 @@ public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, I
       EquipmentSlotGroup dropLocation = EquipmentSlotGroup.bySlot(armorType.getSlot());
       ResourceLocation id = getArmorModifierId(armorType);
       ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.PHYSICS_VULNERABLE, id, this.physicsVulnerable, AttributeModifier.Operation.ADD_VALUE, dropLocation);
-      ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.SPIRIT_VULNERABLE, id, this.rationalityVulnerable, AttributeModifier.Operation.ADD_VALUE, dropLocation);
+      ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.SPIRIT_VULNERABLE, id, this.spiritVulnerable, AttributeModifier.Operation.ADD_VALUE, dropLocation);
       ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.EROSION_VULNERABLE, id, this.erosionVulnerable, AttributeModifier.Operation.ADD_VALUE, dropLocation);
       ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.THE_SOUL_VULNERABLE, id, this.theSoulVulnerable, AttributeModifier.Operation.ADD_VALUE, dropLocation);
 
@@ -124,7 +155,7 @@ public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, I
       return builder.build();
     }
 
-    public Builder virtueUsageReq(ItemVirtueUsageReq.Builder virtueUsageReqBuilder) {
+    public Builder virtueUsageReqBuilder(ItemVirtueUsageReq.Builder virtueUsageReqBuilder) {
       this.virtueUsageReqBuilder = virtueUsageReqBuilder;
       return this;
     }
@@ -136,9 +167,9 @@ public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, I
     /**
      * 易伤
      */
-    public Builder vulnerable(double physics, double rationality, double erosion, double theSoul) {
+    public Builder vulnerable(double physics, double spirit, double erosion, double theSoul) {
       this.physicsVulnerable = physics;
-      this.rationalityVulnerable = rationality;
+      this.spiritVulnerable = spirit;
       this.erosionVulnerable = erosion;
       this.theSoulVulnerable = theSoul;
       return this;

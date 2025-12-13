@@ -3,7 +3,7 @@ package ctn.imaginarycraft.events.entity;
 import ctn.imaginarycraft.api.IDamageContainer;
 import ctn.imaginarycraft.api.IDamageSource;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.client.util.ParticleUtil;
@@ -68,7 +68,7 @@ public final class EntityEvents {
     DamageContainer damageContainer = event.getContainer();
     IDamageSource iDamageSource = IDamageSource.of(damageSource);
     IDamageContainer iDamageContainer = IDamageContainer.of(damageContainer);
-    @Nullable LcLevel lcDamageLevel = iDamageSource.getImaginaryCraft$LcDamageLevel();
+    @Nullable LcLevelType lcDamageLevel = iDamageSource.getImaginaryCraft$LcDamageLevel();
     LcDamageType lcDamageType = iDamageSource.getImaginaryCraft$LcDamageType();
     LivingEntity entity = event.getEntity();
     if (entity.level() instanceof ServerLevel serverLevel) {

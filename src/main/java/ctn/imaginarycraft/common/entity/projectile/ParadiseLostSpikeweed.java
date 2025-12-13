@@ -2,7 +2,7 @@ package ctn.imaginarycraft.common.entity.projectile;
 
 import ctn.imaginarycraft.api.IDamageSource;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.client.model.ModGeoEntityModel;
 import ctn.imaginarycraft.init.ModDamageTypes;
@@ -160,7 +160,7 @@ public class ParadiseLostSpikeweed extends Entity implements TraceableEntity, Ge
     DamageSource source = damageSources().source(THE_SOUL, this, livingentity);
     IDamageSource damageSource = (IDamageSource) source;
     damageSource.setImaginaryCraft$LcDamageType(LcDamageType.THE_SOUL);
-    damageSource.setImaginaryCraft$DamageLevel(LcLevel.ALEPH);
+    damageSource.setImaginaryCraft$DamageLevel(LcLevelType.ALEPH);
     damageSource.setImaginaryCraft$InvincibleTick(10);
     damageSource.setImaginaryCraft$InvincibleTick(10);
     return source;

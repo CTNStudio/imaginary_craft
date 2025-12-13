@@ -27,10 +27,7 @@ public final class RegistryEntityAttribute {
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void registry(EntityAttributeModificationEvent event) {
     // 对所有实体打入基础属性
-    event.getTypes().forEach(entityType -> {
-      lcAttributesVulnerable(event, entityType);
-    });
-
+    event.getTypes().forEach(entityType -> lcAttributesVulnerable(event, entityType));
     vanilla(event);
     addPlayerAttributes(event, EntityType.PLAYER);
   }

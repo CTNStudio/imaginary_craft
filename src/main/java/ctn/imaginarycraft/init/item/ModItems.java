@@ -16,6 +16,7 @@ public final class ModItems {
 
   public static void init(IEventBus bus) {
     REGISTRY.register(bus);
+    ToolItems.init(bus);
     WeaponItems.init(bus);
     ArmorItems.init(bus);
     EgoItems.init(bus);
@@ -27,12 +28,9 @@ public final class ModItems {
   }
 
   @NotNull
-  private static <I extends Item> DeferredItem<I> register(
-    String name,
-    String zhName,
-    Function<Item.Properties, ? extends I> item,
-    Item.Properties properties
-  ) {
+  private static <I extends Item> DeferredItem<I> register(String name, String zhName,
+                                                           Function<Item.Properties, ? extends I> item,
+                                                           Item.Properties properties) {
     DeferredItem<I> deferredItem = REGISTRY.registerItem(name, item, properties);
     ZhCn.ITEMS.put(deferredItem, zhName);
     return deferredItem;
