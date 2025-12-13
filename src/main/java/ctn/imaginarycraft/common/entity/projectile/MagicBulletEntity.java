@@ -2,7 +2,7 @@ package ctn.imaginarycraft.common.entity.projectile;
 
 import ctn.imaginarycraft.api.IDamageSource;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.init.ModDamageTypes;
 import ctn.imaginarycraft.init.entiey.AbnormalitiesEntityTypes;
 import net.minecraft.core.particles.ParticleOptions;
@@ -267,7 +267,7 @@ public class MagicBulletEntity extends ModBulletEntity {
       DamageSource source = damageSources().source(erosion, this, livingentity);
       IDamageSource damageSource = (IDamageSource) source;
       damageSource.setImaginaryCraft$LcDamageType(LcDamageType.EROSION);
-      damageSource.setImaginaryCraft$DamageLevel(LcLevel.WAW);
+      damageSource.setImaginaryCraft$DamageLevel(LcLevelType.WAW);
       target.hurt(source, getDamage());
     }
   }

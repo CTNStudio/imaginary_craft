@@ -4,6 +4,7 @@ import ctn.imaginarycraft.client.renderer.curios.BasicCuriosRenderer;
 import ctn.imaginarycraft.common.item.ego.curio.EgoCurioItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.item.ego.EgoCurioItems;
+import net.minecraft.world.item.Item;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -18,11 +19,11 @@ public final class RegistrarCurioRenderers {
    */
   @SubscribeEvent
   public static void onClientSetup(FMLClientSetupEvent event) {
-    EgoCurioItems.REGISTRY.getEntries().stream()
-      .map(DeferredHolder::get)
-      .filter(EgoCurioItem.class::isInstance)
-      .map(EgoCurioItem.class::cast)
-      .forEach(RegistrarCurioRenderers::register);
+    for (DeferredHolder<Item, ? extends Item> itemDeferredHolder : EgoCurioItems.REGISTRY.getEntries()) {
+      if (itemDeferredHolder.get() instanceof EgoCurioItem egoCurioItem) {
+        register(egoCurioItem);
+      }
+    }
   }
 
   private static void register(EgoCurioItem item) {

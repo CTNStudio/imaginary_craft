@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.linkage.jade;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -20,7 +20,7 @@ public enum BlockLcLevel implements IBlockComponentProvider {
 
   @Override
   public void appendTooltip(final ITooltip tooltip, final BlockAccessor accessor, final IPluginConfig config) {
-    @Nullable LcLevel level = LcLevelUtil.getLevel(accessor.getLevel(), accessor.getPosition());
+    @Nullable LcLevelType level = LcLevelUtil.getLevel(accessor.getLevel(), accessor.getPosition());
     if (level == null) {
       return;
     }

@@ -5,8 +5,8 @@ import ctn.imaginarycraft.api.capability.item.IItemInvincibleTick;
 import ctn.imaginarycraft.api.capability.item.IItemLcDamageType;
 import ctn.imaginarycraft.api.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueRating;
 import ctn.imaginarycraft.client.model.ModGeoItemModel;
-import ctn.imaginarycraft.client.renderer.providers.ModGeoItemRenderProvider;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
 import ctn.imaginarycraft.common.item.ego.EgoItem;
 import ctn.imaginarycraft.common.item.weapon.WeaponItem;
@@ -24,26 +24,17 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.animatable.client.GeoRenderProvider;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.Set;
-import java.util.function.Consumer;
 
 /**
  * EGO武器
  */
-public class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageType, IItemUsageReq, GeoItem, IItemInvincibleTick {
-  private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+public class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageType, IItemUsageReq, IItemInvincibleTick {
   private final int invincibleTick;
   private final @Nullable Set<LcDamageType> canCauseLcDamageTypes;
   private final @Nullable LcDamageType meleeLcDamageType;
-  protected @Nullable GeoModel<EgoWeaponItem> model;
-  protected @Nullable GeoModel<EgoWeaponItem> guiModel;
 
   public EgoWeaponItem(Builder builder) {
     super(builder.buildProperties().attributes(builder.getItemAttributeModifiers())
@@ -51,9 +42,11 @@ public class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageTyp
       .component(ModDataComponents.IS_RESTRAIN, false));
     this.meleeLcDamageType = builder.meleeLcDamageType;
     this.invincibleTick = builder.invincibleTick;
-    this.model = builder.model;
-    this.guiModel = builder.guiModel;
     this.canCauseLcDamageTypes = builder.canCauseLcDamageTypes;
+  }
+
+  public EgoWeaponItem(Properties properties, Builder builder) {
+    this(builder.properties(properties));
   }
 
   /**
@@ -117,27 +110,10 @@ public class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageTyp
     return invincibleTick;
   }
 
-  /// 创建GEO模型渲染
-  @Override
-  public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
-    consumer.accept(new ModGeoItemRenderProvider<>(this.model, this.guiModel));
-  }
-
   /// 是否可以挖掘方块
   @Override
   public boolean canAttackBlock(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player) {
     return !player.isCreative();
-  }
-
-  /// 创建动画控制器
-  @Override
-  public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-  }
-
-  /// 获取动画实例缓存
-  @Override
-  public AnimatableInstanceCache getAnimatableInstanceCache() {
-    return cache;
   }
 
   /// 武器属性构造器
@@ -146,28 +122,37 @@ public class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageTyp
     protected ItemVirtueUsageReq.Builder virtueUsageReqBuilder;
     protected @Nullable LcDamageType meleeLcDamageType;
     protected @Nullable Set<LcDamageType> canCauseLcDamageTypes;
-    protected @Nullable GeoModel<EgoWeaponItem> model;
-    protected @Nullable GeoModel<EgoWeaponItem> guiModel;
-    /**
-     * 基本伤害
-     */
+    protected @Nullable GeoModel<GeoEgoWeaponItem> model;
+    protected @Nullable GeoModel<GeoEgoWeaponItem> guiModel;
     protected float damage;
+    protected float remoteDamage;
     /**
      * 攻击速度
      */
     protected float attackSpeed;
+    protected float remoteAttackSpeed;
     /**
      * 近战攻击距离 & 可以摸到方块的距离
      */
     protected float attackDistance;
+    protected float remoteAttackDistance;
     /**
      * 耐久
      */
     protected int durability;
-    protected int invincibleTick;
+    protected int invincibleTick = 20;
+    protected int remoteInvincibleTick = 20;
+    protected boolean isRemote;
 
     public Builder damage(float damage) {
       this.damage = damage;
+      this.remoteDamage = damage;
+      return this;
+    }
+
+    public Builder damage(float damage, float remoteDamage) {
+      this.damage = damage;
+      this.remoteDamage = remoteDamage;
       return this;
     }
 
@@ -177,17 +162,29 @@ public class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageTyp
       return this;
     }
 
-    public Builder model(GeoModel<EgoWeaponItem> model) {
+    public Builder meleeLcDamageType(LcDamageType meleeLcDamageType, LcDamageType... canCauseLcDamageTypes) {
+      this.meleeLcDamageType = meleeLcDamageType;
+      this.canCauseLcDamageTypes = Set.of(canCauseLcDamageTypes);
+      return this;
+    }
+
+    public Builder meleeLcDamageType(LcDamageType meleeLcDamageType) {
+      this.meleeLcDamageType = meleeLcDamageType;
+      this.canCauseLcDamageTypes = Set.of(meleeLcDamageType);
+      return this;
+    }
+
+    public Builder model(GeoModel<GeoEgoWeaponItem> model) {
       this.model = model;
       return this;
     }
 
-    public Builder guiModel(GeoModel<EgoWeaponItem> model) {
+    public Builder guiModel(GeoModel<GeoEgoWeaponItem> model) {
       this.guiModel = model;
       return this;
     }
 
-    public Builder model(GeoModel<EgoWeaponItem> model, GeoModel<EgoWeaponItem> guiModel) {
+    public Builder model(GeoModel<GeoEgoWeaponItem> model, GeoModel<GeoEgoWeaponItem> guiModel) {
       this.model = model;
       this.guiModel = guiModel;
       return this;
@@ -209,6 +206,11 @@ public class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageTyp
       return this;
     }
 
+    public Builder remote() {
+      this.isRemote = true;
+      return this;
+    }
+
     public Properties buildProperties() {
       Properties properties = this.properties;
       int durability = this.durability;
@@ -222,6 +224,60 @@ public class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageTyp
 
     public Builder virtueUsageReq(ItemVirtueUsageReq.Builder virtueUsageReqBuilder) {
       this.virtueUsageReqBuilder = virtueUsageReqBuilder;
+      return this;
+    }
+
+    /**
+     * @param fortitude  勇气
+     * @param prudence   谨慎
+     * @param temperance 自律
+     * @param justice    正义
+     * @param composite  综合等级
+     */
+    public Builder virtueUsageReq(VirtueRating fortitude, VirtueRating prudence, VirtueRating temperance, VirtueRating justice, VirtueRating composite) {
+      this.virtueUsageReqBuilder = new ItemVirtueUsageReq.Builder();
+      if (fortitude != null) {
+        this.virtueUsageReqBuilder.fortitude(fortitude);
+      }
+      if (prudence != null) {
+        this.virtueUsageReqBuilder.prudence(prudence);
+      }
+      if (temperance != null) {
+        this.virtueUsageReqBuilder.temperance(temperance);
+      }
+      if (justice != null) {
+        this.virtueUsageReqBuilder.justice(justice);
+      }
+      if (composite != null) {
+        this.virtueUsageReqBuilder.composite(composite);
+      }
+      return this;
+    }
+
+    /**
+     * @param fortitude  勇气
+     * @param prudence   谨慎
+     * @param temperance 自律
+     * @param justice    正义
+     * @param composite  综合等级
+     */
+    public Builder virtueUsageReq(int fortitude, int prudence, int temperance, int justice, int composite) {
+      this.virtueUsageReqBuilder = new ItemVirtueUsageReq.Builder();
+      if (fortitude != 0) {
+        this.virtueUsageReqBuilder.fortitude(fortitude);
+      }
+      if (prudence != 0) {
+        this.virtueUsageReqBuilder.prudence(prudence);
+      }
+      if (temperance != 0) {
+        this.virtueUsageReqBuilder.temperance(temperance);
+      }
+      if (justice != 0) {
+        this.virtueUsageReqBuilder.justice(justice);
+      }
+      if (composite != 0) {
+        this.virtueUsageReqBuilder.composite(composite);
+      }
       return this;
     }
 
@@ -245,22 +301,59 @@ public class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageTyp
 
     public Builder invincibleTick(int invincibleTick) {
       this.invincibleTick = invincibleTick;
+      this.remoteInvincibleTick = invincibleTick;
+      return this;
+    }
+
+    public Builder invincibleTick(int invincibleTick, int remoteInvincibleTick) {
+      this.invincibleTick = invincibleTick;
+      this.remoteInvincibleTick = remoteInvincibleTick;
       return this;
     }
 
     public Builder attackSpeed(float attackSpeed) {
       this.attackSpeed = attackSpeed;
+      this.remoteAttackSpeed = attackSpeed;
+      return this;
+    }
+
+    public Builder attackSpeed(float attackSpeed, float remoteAttackSpeed) {
+      this.attackSpeed = attackSpeed;
+      this.remoteAttackSpeed = remoteAttackSpeed;
       return this;
     }
 
     public Builder attackDistance(float attackDistance) {
       this.attackDistance = attackDistance;
+      this.remoteAttackDistance = attackDistance;
+      return this;
+    }
+
+    public Builder attackDistance(float attackDistance, float remoteAttackDistance) {
+      this.attackDistance = attackDistance;
+      this.remoteAttackDistance = remoteAttackDistance;
       return this;
     }
 
     public Builder properties(Properties properties) {
       this.properties = properties;
       return this;
+    }
+
+    public int getRemoteInvincibleTick() {
+      return remoteInvincibleTick;
+    }
+
+    public float getRemoteDamage() {
+      return remoteDamage;
+    }
+
+    public boolean isRemote() {
+      return isRemote;
+    }
+
+    public float getRemoteAttackDistance() {
+      return remoteAttackDistance;
     }
   }
 }

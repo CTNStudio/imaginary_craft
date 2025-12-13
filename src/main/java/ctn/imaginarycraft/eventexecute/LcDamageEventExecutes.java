@@ -4,7 +4,7 @@ import ctn.imaginarycraft.api.IDamageContainer;
 import ctn.imaginarycraft.api.IDamageSource;
 import ctn.imaginarycraft.api.capability.entity.IEntityAbnormalities;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.client.util.ParticleUtil;
@@ -43,7 +43,7 @@ public final class LcDamageEventExecutes {
   public static void vulnerableTreatment(
     IDamageContainer damageContainer,
     LivingEntity entity,
-    @Nullable LcLevel attackerLevel,
+    @Nullable LcLevelType attackerLevel,
     @Nullable LcDamageType lcDamageTypeTypes
   ) {
     DamageContainer container = damageContainer.getImaginaryCraft$This();
@@ -72,7 +72,7 @@ public final class LcDamageEventExecutes {
    * @param damage        伤害
    * @return 新伤害
    */
-  private static float levelJudgment(final LivingEntity entity, @Nullable final LcLevel attackerLevel, final float damage) {
+  private static float levelJudgment(final LivingEntity entity, @Nullable final LcLevelType attackerLevel, final float damage) {
     if (attackerLevel == null) {
       return damage;
     }
@@ -93,7 +93,7 @@ public final class LcDamageEventExecutes {
       }
 
       // 盔甲等级
-      @Nullable LcLevel level = LcLevelUtil.getLevel(armorItemStack);
+      @Nullable LcLevelType level = LcLevelUtil.getLevel(armorItemStack);
       if (level == null) {
         voidNumber++;
       } else {
@@ -115,7 +115,7 @@ public final class LcDamageEventExecutes {
     if (armorItemStackLaval != -1) {
       armorItemStackLaval /= number;
     }
-    return damage * LcLevelUtil.getDamageMultiple(LcLevel.byLevel(armorItemStackLaval), attackerLevel);
+    return damage * LcLevelUtil.getDamageMultiple(LcLevelType.byLevel(armorItemStackLaval), attackerLevel);
   }
 
   /**
@@ -126,7 +126,7 @@ public final class LcDamageEventExecutes {
    * @param damage        伤害
    * @return 新伤害
    */
-  private static float ontologyLevelCalculate(final LivingEntity entity, @Nullable final LcLevel attackerLevel, final float damage) {
+  private static float ontologyLevelCalculate(final LivingEntity entity, @Nullable final LcLevelType attackerLevel, final float damage) {
     return damage * LcLevelUtil.getDamageMultiple(LcLevelUtil.getLevel(entity), attackerLevel);
   }
 

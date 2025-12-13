@@ -1,1 +1,1 @@
-package ctn.imaginarycraft.init.world.tag;
+package ctn.imaginarycraft.init.tag;

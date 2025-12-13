@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.api.lobotomycorporation.util;
 
 import ctn.imaginarycraft.api.IDamageSource;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -28,8 +28,8 @@ public final class LcDamageUtil {
   public static float theSoulDamage(float damage, LivingEntity attackedEntity, @Nullable Entity sourceEntity, DamageSource damageSource) {
     damage /= 100;
     float maxHealth = 0;
-    @Nullable LcLevel attackedLevel = LcLevelUtil.getLevel(attackedEntity);
-    @Nullable LcLevel attackerLevel = IDamageSource.of(damageSource).getImaginaryCraft$LcDamageLevel();
+    @Nullable LcLevelType attackedLevel = LcLevelUtil.getLevel(attackedEntity);
+    @Nullable LcLevelType attackerLevel = IDamageSource.of(damageSource).getImaginaryCraft$LcDamageLevel();
     if (sourceEntity instanceof LivingEntity living) {
       maxHealth = (float) living.getAttributeValue(Attributes.MAX_HEALTH);
     }

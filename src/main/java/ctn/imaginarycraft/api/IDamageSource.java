@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.api;
 
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import net.minecraft.world.damagesource.DamageSource;
 import org.spongepowered.asm.mixin.Unique;
 
@@ -18,9 +18,9 @@ public interface IDamageSource {
   void setImaginaryCraft$LcDamageType(LcDamageType type);
 
   @Nullable
-  LcLevel getImaginaryCraft$LcDamageLevel();
+  LcLevelType getImaginaryCraft$LcDamageLevel();
 
-  void setImaginaryCraft$DamageLevel(@Nullable LcLevel pmLevel);
+  void setImaginaryCraft$DamageLevel(@Nullable LcLevelType pmLevel);
 
   int getImaginaryCraft$InvincibleTick();
 

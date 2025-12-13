@@ -24,21 +24,21 @@ public class CreativeRationalityToolItem extends Item {
   @Override
   public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand usedHand) {
     ItemStack itemStack = player.getItemInHand(usedHand);
-    if (player.isCreative()) {
-      if (player.isShiftKeyDown()) {
-        itemStack.set(ModDataComponents.MODE_BOOLEAN, Boolean.FALSE.equals(itemStack.get(ModDataComponents.MODE_BOOLEAN)));
-        return InteractionResultHolder.success(itemStack);
-      }
-      if (!level.isClientSide()) {
-        if (Boolean.TRUE.equals(itemStack.get(ModDataComponents.MODE_BOOLEAN))) {
-          RationalityUtil.modifyValue(player, -1, false);
-        } else {
-          RationalityUtil.modifyValue(player, 1, false);
-        }
-        return InteractionResultHolder.success(itemStack);
-      }
+    if (!player.isCreative()) {
+      return InteractionResultHolder.fail(itemStack);
     }
-    return InteractionResultHolder.fail(itemStack);
+
+    if (player.isShiftKeyDown()) {
+      itemStack.set(ModDataComponents.MODE_BOOLEAN, Boolean.FALSE.equals(itemStack.get(ModDataComponents.MODE_BOOLEAN)));
+      return InteractionResultHolder.success(itemStack);
+    }
+
+    if (level.isClientSide()) {
+      return InteractionResultHolder.fail(itemStack);
+    }
+
+    RationalityUtil.modifyValue(player, Boolean.TRUE == itemStack.get(ModDataComponents.MODE_BOOLEAN) ? -1 : 1, false);
+    return InteractionResultHolder.success(itemStack);
   }
 
   @Override

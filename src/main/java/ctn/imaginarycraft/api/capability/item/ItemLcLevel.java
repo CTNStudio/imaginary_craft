@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.api.capability.item;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -8,38 +8,38 @@ import org.jetbrains.annotations.Nullable;
 public enum ItemLcLevel implements IItemLcLevel {
   NULL() {
     @Override
-    public @Nullable LcLevel getLcLevel(final ItemStack stack) {
+    public @Nullable LcLevelType getLcLevel(final ItemStack stack) {
       return null;
     }
   },
   ZAYIN() {
     @Override
-    public @NotNull LcLevel getLcLevel(final ItemStack stack) {
-      return LcLevel.ZAYIN;
+    public @NotNull LcLevelType getLcLevel(final ItemStack stack) {
+      return LcLevelType.ZAYIN;
     }
   },
   TETH() {
     @Override
-    public @NotNull LcLevel getLcLevel(final ItemStack stack) {
-      return LcLevel.TETH;
+    public @NotNull LcLevelType getLcLevel(final ItemStack stack) {
+      return LcLevelType.TETH;
     }
   },
   HE() {
     @Override
-    public @NotNull LcLevel getLcLevel(final ItemStack stack) {
-      return LcLevel.HE;
+    public @NotNull LcLevelType getLcLevel(final ItemStack stack) {
+      return LcLevelType.HE;
     }
   },
   WAW() {
     @Override
-    public @NotNull LcLevel getLcLevel(final ItemStack stack) {
-      return LcLevel.WAW;
+    public @NotNull LcLevelType getLcLevel(final ItemStack stack) {
+      return LcLevelType.WAW;
     }
   },
   ALEPH() {
     @Override
-    public @NotNull LcLevel getLcLevel(final ItemStack stack) {
-      return LcLevel.ALEPH;
+    public @NotNull LcLevelType getLcLevel(final ItemStack stack) {
+      return LcLevelType.ALEPH;
     }
   }
 }

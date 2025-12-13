@@ -1,11 +1,11 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
-import ctn.imaginarycraft.common.item.ego.weapon.EgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.GeoEgoWeaponItem;
 
 /**
  * 远程EGO武器
  */
-public abstract class RemoteEgoWeaponItem extends EgoWeaponItem {
+public abstract class RemoteEgoWeaponItem extends GeoEgoWeaponItem {
   private final boolean isConsumingBullets;
 
   public RemoteEgoWeaponItem(Properties properties, Builder builder, boolean isConsumingBullets) {

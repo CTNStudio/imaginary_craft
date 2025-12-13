@@ -1,44 +1,44 @@
 package ctn.imaginarycraft.api.capability.entity;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevel;
+import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 public enum EntityLcLevel implements IEntityLcLevel {
   NULL() {
     @Override
-    public @Nullable LcLevel getLcLevel() {
+    public @Nullable LcLevelType getLcLevel() {
       return null;
     }
   },
   ZAYIN() {
     @Override
-    public @NotNull LcLevel getLcLevel() {
-      return LcLevel.ZAYIN;
+    public @NotNull LcLevelType getLcLevel() {
+      return LcLevelType.ZAYIN;
     }
   },
   TETH() {
     @Override
-    public @NotNull LcLevel getLcLevel() {
-      return LcLevel.TETH;
+    public @NotNull LcLevelType getLcLevel() {
+      return LcLevelType.TETH;
     }
   },
   HE() {
     @Override
-    public @NotNull LcLevel getLcLevel() {
-      return LcLevel.HE;
+    public @NotNull LcLevelType getLcLevel() {
+      return LcLevelType.HE;
     }
   },
   WAW() {
     @Override
-    public @NotNull LcLevel getLcLevel() {
-      return LcLevel.WAW;
+    public @NotNull LcLevelType getLcLevel() {
+      return LcLevelType.WAW;
     }
   },
   ALEPH() {
     @Override
-    public @NotNull LcLevel getLcLevel() {
-      return LcLevel.ALEPH;
+    public @NotNull LcLevelType getLcLevel() {
+      return LcLevelType.ALEPH;
     }
   }
 }
