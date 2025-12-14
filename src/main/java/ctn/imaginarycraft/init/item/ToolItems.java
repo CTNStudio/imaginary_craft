@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.init.item;
 
 import ctn.imaginarycraft.common.item.CreativeRationalityToolItem;
-import ctn.imaginarycraft.common.item.ego.weapon.EgoWeaponItem;
-import ctn.imaginarycraft.common.item.ego.weapon.close.ChaosKnifeItem;
+import ctn.imaginarycraft.common.item.ego.weapon.melee.ChaosKnifeItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
 import net.minecraft.world.item.Item;

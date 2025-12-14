@@ -1,6 +1,7 @@
-package ctn.imaginarycraft.common.item.ego.weapon.remote;
+package ctn.imaginarycraft.common.item.ego.weapon.special;
 
 import ctn.imaginarycraft.common.entity.projectile.MagicBulletEntity;
+import ctn.imaginarycraft.common.item.ego.weapon.template.remote.RemoteEgoWeaponItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;

@@ -6,7 +6,7 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.item.ToolItems;
 import ctn.imaginarycraft.init.item.ego.EgoArmorItems;
 import ctn.imaginarycraft.init.item.ego.EgoCurioItems;
-import ctn.imaginarycraft.init.item.ego.weapon.EgoSpecialWeaponItems;
+import ctn.imaginarycraft.init.item.ego.weapon.EgoWeaponItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -46,7 +46,7 @@ public class DatagenItemModel extends ItemModelProvider {
   protected void registerModels() {
     withExistingParent(EgoCurioItems.REGISTRY, "item/curios/");
     withExistingParent(EgoArmorItems.REGISTRY, "item/armor/");
-    EgoSpecialWeaponItems.REGISTRY.getEntries().stream().map(DeferredHolder::get).forEach(this::geoItem);
+    EgoWeaponItems.REGISTRY.getEntries().stream().map(DeferredHolder::get).forEach(this::geoItem);
     creativeRationalityTool(ToolItems.CREATIVE_RATIONALITY_TOOL.get());
     chaosSword(ToolItems.CHAOS_SWORD.get());
   }

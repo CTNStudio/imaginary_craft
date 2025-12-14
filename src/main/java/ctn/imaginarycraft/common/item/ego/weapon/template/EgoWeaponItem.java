@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.common.item.ego.weapon;
+package ctn.imaginarycraft.common.item.ego.weapon.template;
 
 import ctn.imaginarycraft.api.capability.item.IItemEgo;
 import ctn.imaginarycraft.api.capability.item.IItemInvincibleTick;
@@ -119,30 +119,30 @@ public class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageTyp
   /// 武器属性构造器
   public static class Builder {
     private Properties properties = new Properties();
-    protected ItemVirtueUsageReq.Builder virtueUsageReqBuilder;
-    protected @Nullable LcDamageType meleeLcDamageType;
-    protected @Nullable Set<LcDamageType> canCauseLcDamageTypes;
-    protected @Nullable GeoModel<GeoEgoWeaponItem> model;
-    protected @Nullable GeoModel<GeoEgoWeaponItem> guiModel;
-    protected float damage;
-    protected float remoteDamage;
+    private ItemVirtueUsageReq.Builder virtueUsageReqBuilder;
+    private @Nullable LcDamageType meleeLcDamageType;
+    private @Nullable Set<LcDamageType> canCauseLcDamageTypes;
+    private @Nullable GeoModel<GeoEgoWeaponItem> model;
+    private @Nullable GeoModel<GeoEgoWeaponItem> guiModel;
+    private float damage;
+    private float remoteDamage;
     /**
      * 攻击速度
      */
-    protected float attackSpeed;
-    protected float remoteAttackSpeed;
+    private float attackSpeed;
+    private float remoteAttackSpeed;
     /**
      * 近战攻击距离 & 可以摸到方块的距离
      */
-    protected float attackDistance;
-    protected float remoteAttackDistance;
+    private float attackDistance;
+    private float remoteAttackDistance;
     /**
      * 耐久
      */
-    protected int durability;
-    protected int invincibleTick = 20;
-    protected int remoteInvincibleTick = 20;
-    protected boolean isRemote;
+    private int durability;
+    private int invincibleTick = 20;
+    private int remoteInvincibleTick = 20;
+    private boolean isRemote;
 
     public Builder damage(float damage) {
       this.damage = damage;
@@ -354,6 +354,50 @@ public class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageTyp
 
     public float getRemoteAttackDistance() {
       return remoteAttackDistance;
+    }
+
+    public Properties getProperties() {
+      return properties;
+    }
+
+    public ItemVirtueUsageReq.Builder getVirtueUsageReqBuilder() {
+      return virtueUsageReqBuilder;
+    }
+
+    public @Nullable Set<LcDamageType> getCanCauseLcDamageTypes() {
+      return canCauseLcDamageTypes;
+    }
+
+    public @Nullable GeoModel<GeoEgoWeaponItem> getModel() {
+      return model;
+    }
+
+    public @Nullable GeoModel<GeoEgoWeaponItem> getGuiModel() {
+      return guiModel;
+    }
+
+    public float getDamage() {
+      return damage;
+    }
+
+    public float getAttackSpeed() {
+      return attackSpeed;
+    }
+
+    public float getRemoteAttackSpeed() {
+      return remoteAttackSpeed;
+    }
+
+    public float getAttackDistance() {
+      return attackDistance;
+    }
+
+    public int getDurability() {
+      return durability;
+    }
+
+    public int getInvincibleTick() {
+      return invincibleTick;
     }
   }
 }

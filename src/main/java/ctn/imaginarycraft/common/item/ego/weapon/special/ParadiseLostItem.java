@@ -3,7 +3,7 @@ package ctn.imaginarycraft.common.item.ego.weapon.special;
 import ctn.imaginarycraft.api.client.IPlayerAnim;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.common.entity.projectile.ParadiseLostSpikeweed;
-import ctn.imaginarycraft.common.item.ego.weapon.GeoEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.GeoEgoWeaponItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;

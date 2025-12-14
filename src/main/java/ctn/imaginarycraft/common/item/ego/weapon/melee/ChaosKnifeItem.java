@@ -1,7 +1,7 @@
-package ctn.imaginarycraft.common.item.ego.weapon.close;
+package ctn.imaginarycraft.common.item.ego.weapon.melee;
 
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
-import ctn.imaginarycraft.common.item.ego.weapon.EgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.melee.SwordsEgoWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModDataComponents;
 import net.minecraft.network.chat.Component;
@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Set;
 
 /// 混沌刀
-public class ChaosKnifeItem extends EgoWeaponItem {
+public class ChaosKnifeItem extends SwordsEgoWeaponItem {
   public static final String KEY = ImaginaryCraft.ID + ".item_tooltip.geo_describe.damage_type";
 
   public ChaosKnifeItem(Properties properties, Builder builder) {
