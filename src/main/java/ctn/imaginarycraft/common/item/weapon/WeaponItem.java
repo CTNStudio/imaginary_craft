@@ -1,5 +1,7 @@
 package ctn.imaginarycraft.common.item.weapon;
 
+import org.jetbrains.annotations.NotNull;
+
 import ctn.imaginarycraft.api.capability.item.IItemInvincibleTick;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.util.ItemBuilderUtil;
@@ -14,7 +16,6 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
-import org.jetbrains.annotations.NotNull;
 
 /**
  * 武器基类
