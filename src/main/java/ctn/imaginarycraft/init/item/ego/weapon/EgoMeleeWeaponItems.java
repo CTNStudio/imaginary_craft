@@ -1,13 +1,19 @@
 package ctn.imaginarycraft.init.item.ego.weapon;
 
-
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.client.model.ModGeoItemModel;
 import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.GeoEgoWeaponItem;
-import ctn.imaginarycraft.common.item.ego.weapon.template.melee.*;
-import net.neoforged.bus.api.IEventBus;
+import ctn.imaginarycraft.common.item.ego.weapon.template.melee.AxeEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.melee.FistEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.melee.GeoMeleeEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.melee.HammerEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.melee.KnifeEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.melee.MaceEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.melee.MeleeEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.melee.SpearEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.melee.SwordsEgoWeaponItem;
 import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 
@@ -431,7 +437,7 @@ public final class EgoMeleeWeaponItems {
       case KNIFE -> KnifeEgoWeaponItem::new;
       case MACE -> MaceEgoWeaponItem::new;
       case SPEAR -> SpearEgoWeaponItem::new;
-      case SWORDS -> SwordsEgoWeaponItem::new;
+      case SWORDS -> SwordsEgoWeaponItem::new
     }, builder);
   }
 

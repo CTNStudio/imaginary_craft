@@ -12,6 +12,8 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Function;
 
+import static ctn.imaginarycraft.init.item.ego.weapon.EgoWeaponItems.minuteToSpeedConversion;
+
 // TODO 根据类型切换类
 // TODO 远程武器的近战攻击采用物理伤害
 // TODO 远程攻击速度采用近战攻击速度
@@ -287,9 +289,5 @@ public final class EgoRemoteWeaponItems {
                                                                           Function<EgoWeaponItem.Builder, I> item,
                                                                           EgoWeaponItem.Builder builder) {
     return EgoWeaponItems.register(id, zhName, lcLevelType, templateType, item, builder);
-  }
-
-  private static float minuteToSpeedConversion(float attacksPerMinute) {
-    return 20 * (attacksPerMinute / 60);
   }
 }
