@@ -5,7 +5,7 @@ import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.client.model.ModGeoItemModel;
 import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.GeoEgoWeaponItem;
-import ctn.imaginarycraft.common.item.ego.weapon.template.remote.RemoteEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.remote.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
@@ -20,7 +20,7 @@ import static ctn.imaginarycraft.init.item.ego.weapon.EgoWeaponItems.minuteToSpe
 // TODO 在远程攻击中近战攻击距离是弹道偏移
 public final class EgoRemoteWeaponItems {
 
-  public static final DeferredItem<RemoteEgoWeaponItem> SODA = register(
+  public static final DeferredItem<RemoteEgoWeaponItem> SODA = registerTemplate(
     "soda_weapon", "美味苏打",
     LcLevelType.ZAYIN, Type.RemoteTemplateType.PISTOL,
     new GeoEgoWeaponItem.Builder()
@@ -38,10 +38,9 @@ public final class EgoRemoteWeaponItems {
         null,
         null,
         null)
-      .model(new ModGeoItemModel<>("soda")),
-    GeoEgoWeaponItem::new);
+      .model(new ModGeoItemModel<>("soda")));
 
-  public static final DeferredItem<RemoteEgoWeaponItem> FOURTH_MATCH_FLAME = register(
+  public static final DeferredItem<RemoteEgoWeaponItem> FOURTH_MATCH_FLAME = registerTemplate(
     "fourth_match_flame_weapon", "终末火柴之光",
     LcLevelType.TETH, Type.RemoteTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -59,10 +58,9 @@ public final class EgoRemoteWeaponItems {
         null,
         null,
         null)
-      .model(new ModGeoItemModel<>("fourth_match_flame")),
-    GeoEgoWeaponItem::new);
+      .model(new ModGeoItemModel<>("fourth_match_flame")));
 
-  public static final DeferredItem<RemoteEgoWeaponItem> SOLITUDE = register(
+  public static final DeferredItem<RemoteEgoWeaponItem> SOLITUDE = registerTemplate(
     "solitude_weapon", "孤独",
     LcLevelType.TETH, Type.RemoteTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -80,10 +78,9 @@ public final class EgoRemoteWeaponItems {
         null,
         null,
         null)
-      .model(new ModGeoItemModel<>("solitude")),
-    GeoEgoWeaponItem::new);
+      .model(new ModGeoItemModel<>("solitude")));
 
-  public static final DeferredItem<RemoteEgoWeaponItem> BEAK = register(
+  public static final DeferredItem<RemoteEgoWeaponItem> BEAK = registerTemplate(
     "beak_weapon", "小喙",
     LcLevelType.TETH, Type.RemoteTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -101,10 +98,9 @@ public final class EgoRemoteWeaponItems {
         null,
         null,
         null)
-      .model(new ModGeoItemModel<>("beak")),
-    GeoEgoWeaponItem::new);
+      .model(new ModGeoItemModel<>("beak")));
 
-  public static final DeferredItem<RemoteEgoWeaponItem> TODAY_IS_EXPRESSION = register(
+  public static final DeferredItem<RemoteEgoWeaponItem> TODAY_IS_EXPRESSION = registerTemplate(
     "today_is_expression_weapon", "此刻的神色",
     LcLevelType.TETH, Type.RemoteTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -122,10 +118,9 @@ public final class EgoRemoteWeaponItems {
         null,
         null,
         null)
-      .model(new ModGeoItemModel<>("today_is_expression")),
-    GeoEgoWeaponItem::new);
+      .model(new ModGeoItemModel<>("today_is_expression")));
 
-  public static final DeferredItem<RemoteEgoWeaponItem> TOUGH = register(
+  public static final DeferredItem<RemoteEgoWeaponItem> TOUGH = registerTemplate(
     "tough_weapon", "谢顶之灾",
     LcLevelType.TETH, Type.RemoteTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -143,10 +138,9 @@ public final class EgoRemoteWeaponItems {
         null,
         null,
         null)
-      .model(new ModGeoItemModel<>("tough")),
-    GeoEgoWeaponItem::new);
+      .model(new ModGeoItemModel<>("tough")));
 
-  public static final DeferredItem<RemoteEgoWeaponItem> SCREAMING_WEDGE = register(
+  public static final DeferredItem<RemoteEgoWeaponItem> SCREAMING_WEDGE = registerTemplate(
     "screaming_wedge", "刺耳嚎叫",
     LcLevelType.TETH, Type.RemoteTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -164,10 +158,9 @@ public final class EgoRemoteWeaponItems {
         null,
         null,
         null)
-      .model(new ModGeoItemModel<>("screaming_wedge")),
-    GeoEgoWeaponItem::new);
+      .model(new ModGeoItemModel<>("screaming_wedge")));
 
-  public static final DeferredItem<RemoteEgoWeaponItem> HARMONY = register(
+  public static final DeferredItem<RemoteEgoWeaponItem> HARMONY = registerTemplate(
     "harmony_weapon", "谐奏放射器",
     LcLevelType.TETH, Type.RemoteTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -185,10 +178,9 @@ public final class EgoRemoteWeaponItems {
         null,
         null,
         null)
-      .model(new ModGeoItemModel<>("harmony")),
-    GeoEgoWeaponItem::new);
+      .model(new ModGeoItemModel<>("harmony")));
 
-  public static final DeferredItem<RemoteEgoWeaponItem> LAETITIA = register(
+  public static final DeferredItem<RemoteEgoWeaponItem> LAETITIA = registerTemplate(
     "laetitia_weapon", "蕾蒂希娅",
     LcLevelType.HE, Type.RemoteTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -206,10 +198,9 @@ public final class EgoRemoteWeaponItems {
         null,
         null,
         null)
-      .model(new ModGeoItemModel<>("laetitia")),
-    GeoEgoWeaponItem::new);
+      .model(new ModGeoItemModel<>("laetitia")));
 
-  public static final DeferredItem<RemoteEgoWeaponItem> HORNET = register(
+  public static final DeferredItem<RemoteEgoWeaponItem> HORNET = registerTemplate(
     "hornet_weapon", "黄蜂",
     LcLevelType.WAW, Type.RemoteTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -227,10 +218,9 @@ public final class EgoRemoteWeaponItems {
         null,
         null,
         null)
-      .model(new ModGeoItemModel<>("hornet")),
-    GeoEgoWeaponItem::new);
+      .model(new ModGeoItemModel<>("hornet")));
 
-  public static final DeferredItem<RemoteEgoWeaponItem> FAINT_AROMA = register(
+  public static final DeferredItem<RemoteEgoWeaponItem> FAINT_AROMA = registerTemplate(
     "faint_aroma_weapon", "余香",
     LcLevelType.WAW, Type.RemoteTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -248,10 +238,9 @@ public final class EgoRemoteWeaponItems {
         null,
         null,
         null)
-      .model(new ModGeoItemModel<>("faint_aroma")),
-    GeoEgoWeaponItem::new);
+      .model(new ModGeoItemModel<>("faint_aroma")));
 
-  public static final DeferredItem<RemoteEgoWeaponItem> EXUVIAE = register(
+  public static final DeferredItem<RemoteEgoWeaponItem> EXUVIAE = registerTemplate(
     "exuviae_weapon", "脱落之皮",
     LcLevelType.WAW, Type.RemoteTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -269,10 +258,34 @@ public final class EgoRemoteWeaponItems {
         null,
         null,
         null)
-      .model(new ModGeoItemModel<>("exuviae")),
-    GeoEgoWeaponItem::new);
+      .model(new ModGeoItemModel<>("exuviae")));
 
   public static void init(IEventBus bus) {
+  }
+
+  private static DeferredItem<RemoteEgoWeaponItem> registerTemplate(String id, String zhName,
+                                                                    LcLevelType lcLevelType,
+                                                                    Type.RemoteTemplateType remoteTemplateType,
+                                                                    EgoWeaponItem.Builder builder) {
+    return registerTemplate(id, zhName, lcLevelType, remoteTemplateType, builder, switch (remoteTemplateType) {
+      case CANNON -> CannonEgoWeaponItem::new;
+      case PISTOL -> PistolEgoWeaponItem::new;
+      case RIFLE -> RifleEgoWeaponItem::new;
+      case CROSSBOW -> CrossbowEgoWeaponItem::new;
+      default ->
+        throw new IllegalStateException("Other types should be custom classes type: " + remoteTemplateType);
+    });
+  }
+
+  private static <I extends RemoteEgoWeaponItem> DeferredItem<I> registerTemplate(String id, String zhName,
+                                                                                  LcLevelType lcLevelType,
+                                                                                  Type.RemoteTemplateType remoteTemplateType,
+                                                                                  EgoWeaponItem.Builder builder,
+                                                                                  Function<EgoWeaponItem.Builder, I> item) {
+    return register(id, zhName, lcLevelType, remoteTemplateType, item, builder
+      .attackSpeed(remoteTemplateType.getAttackSpeed())
+      .attackDistance(remoteTemplateType.getAttackDistance())
+      .invincibleTick(remoteTemplateType.getInvincibleTick()));
   }
 
   private static <I extends RemoteEgoWeaponItem> DeferredItem<I> register(String id, String zhName,
