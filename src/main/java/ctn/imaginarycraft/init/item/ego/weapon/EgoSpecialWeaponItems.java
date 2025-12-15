@@ -679,14 +679,14 @@ public final class EgoSpecialWeaponItems {
                                                                     LcLevelType lcLevelType,
                                                                     Type.SpecialTemplateType templateType,
                                                                     EgoWeaponItem.Builder builder,
-                                                                    Function<EgoWeaponItem.Builder, ? extends I> item) {
+                                                                    Function<EgoWeaponItem.Builder, I> item) {
     return register(id, zhName, lcLevelType, templateType, item, builder);
   }
 
   @NotNull
   private static <I extends EgoWeaponItem> DeferredItem<I> register(String id, String zhName, LcLevelType lcLevelType,
                                                                     Type.SpecialTemplateType templateType,
-                                                                    Function<EgoWeaponItem.Builder, ? extends I> item,
+                                                                    Function<EgoWeaponItem.Builder, I> item,
                                                                     EgoWeaponItem.Builder builder) {
     return EgoWeaponItems.register(id, zhName, lcLevelType, templateType, item, builder);
   }

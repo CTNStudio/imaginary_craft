@@ -1,9 +1,12 @@
 package ctn.imaginarycraft.init.item.ego.weapon;
 
+
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.client.model.ModGeoItemModel;
+import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.GeoEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.melee.*;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
@@ -19,7 +22,7 @@ import static ctn.imaginarycraft.init.item.ego.weapon.EgoWeaponItems.minuteToSpe
 public final class EgoMeleeWeaponItems {
 
   // TODO	如果持有者的正义等级高于2级,每次攻击都有5%的概率恢复10点精神值。
-  public static final DeferredItem<GeoEgoWeaponItem> PENITENCE = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> PENITENCE = register(
     "penitence_weapon", "忏悔",
     LcLevelType.ZAYIN, Type.MeleeTemplateType.MACE,
     new GeoEgoWeaponItem.Builder()
@@ -37,7 +40,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("penitence")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> WINGBEAT = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> WINGBEAT = register(
     "wingbeat_weapon", "翅振",
     LcLevelType.ZAYIN, Type.MeleeTemplateType.MACE,
     new GeoEgoWeaponItem.Builder()
@@ -55,7 +58,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("wingbeat")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> RED_EYES = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> RED_EYES = register(
     "red_eyes_weapon", "赤瞳",
     LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -73,7 +76,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("red_eyes")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> HORN = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> HORN = register(
     "horn_weapon", "犄角",
     LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -91,7 +94,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("horn")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> WRIST_CUTTER = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> WRIST_CUTTER = register(
     "wrist_cutter_weapon", "割腕者",
     LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -109,7 +112,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("wrist_cutter")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> REGRET = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> REGRET = register(
     "regret_weapon", "悔恨",
     LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -127,7 +130,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("regret")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> FRAGMENTS_FROM_SOMEWHERE = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> FRAGMENTS_FROM_SOMEWHERE = register(
     "fragments_from_somewhere_weapon", "彼方的裂片",
     LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -145,7 +148,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("fragments_from_somewhere")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> LANTERN = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> LANTERN = register(
     "lantern_weapon", "诱捕幻灯",
     LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -163,7 +166,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("lantern")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> SO_CUTE = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> SO_CUTE = register(
     "so_cute_weapon", "超特么可爱！！！",
     LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -181,7 +184,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("so_cute")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> BEAR_PAWS = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> BEAR_PAWS = register(
     "bear_paws_weapon", "熊熊抱",
     LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -199,7 +202,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("bear_paws")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> SANGUINE_DESIRE = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> SANGUINE_DESIRE = register(
     "sanguine_desire", "血之渴望",
     LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -217,7 +220,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("sanguine_desire")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> LOGGING = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> LOGGING = register(
     "logging_weapon", "伐木者",
     LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -235,7 +238,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("logging")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> FROST_SPLINTER = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> FROST_SPLINTER = register(
     "frost_splinter", "霜之碎片",
     LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -253,7 +256,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("frost_splinter")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> CHRISTMAS = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> CHRISTMAS = register(
     "christmas_weapon", "悲惨圣诞",
     LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -271,7 +274,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("christmas")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> HARVEST = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> HARVEST = register(
     "harvest_weapon", "猎头长耙",
     LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -289,7 +292,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("harvest")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> LAMP = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> LAMP = register(
     "lamp_weapon", "目灯",
     LcLevelType.WAW, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -307,7 +310,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("lamp")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> GREEN_STEM = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> GREEN_STEM = register(
     "green_stem_weapon", "绿色枝干",
     LcLevelType.WAW, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -325,7 +328,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("green_stem")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> SPORE = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> SPORE = register(
     "spore_weapon", "荧光菌孢",
     LcLevelType.WAW, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -343,7 +346,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("spore")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> HEAVEN = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> HEAVEN = register(
     "heaven_weapon", "穿刺极乐",
     LcLevelType.WAW, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -361,7 +364,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("heaven")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> DIFFRACTION = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> DIFFRACTION = register(
     "diffraction_weapon", "虚无衍射体",
     LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -379,7 +382,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("diffraction")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> HYPOCRISY = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> HYPOCRISY = register(
     "hypocrisy_weapon", "伪善",
     LcLevelType.WAW, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -397,7 +400,7 @@ public final class EgoMeleeWeaponItems {
       .model(new ModGeoItemModel<>("hypocrisy")),
     GeoEgoWeaponItem::new);
 
-  public static final DeferredItem<GeoEgoWeaponItem> STANDARD_TRAINING_EGO = register(
+  public static final DeferredItem<MeleeEgoWeaponItem> STANDARD_TRAINING_EGO = register(
     "standard_training_ego_weapon", "教学用E.G.O武器",
     LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
     new GeoEgoWeaponItem.Builder()
@@ -418,18 +421,39 @@ public final class EgoMeleeWeaponItems {
   public static void init(IEventBus bus) {
   }
 
-  private static <I extends GeoEgoWeaponItem> DeferredItem<I> register(String id, String zhName, LcLevelType lcLevelType,
-                                                                       Type.MeleeTemplateType remoteTemplateType,
-                                                                       GeoEgoWeaponItem.Builder builder,
-                                                                       Function<GeoEgoWeaponItem.Builder, ? extends I> item) {
+  private static DeferredItem<? extends MeleeEgoWeaponItem> registerTemplate(String id, String zhName, LcLevelType lcLevelType,
+                                                                             Type.MeleeTemplateType remoteTemplateType,
+                                                                             GeoEgoWeaponItem.Builder builder) {
+    return register(id, zhName, lcLevelType, remoteTemplateType, switch (remoteTemplateType) {
+      case AXE -> AxeEgoWeaponItem::new;
+      case FIST -> FistEgoWeaponItem::new;
+      case HAMMER -> HammerEgoWeaponItem::new;
+      case KNIFE -> KnifeEgoWeaponItem::new;
+      case MACE -> MaceEgoWeaponItem::new;
+      case SPEAR -> SpearEgoWeaponItem::new;
+      case SWORDS -> SwordsEgoWeaponItem::new;
+    }, builder);
+  }
+
+  private static <I extends MeleeEgoWeaponItem> DeferredItem<I> registerTemplate(String id, String zhName, LcLevelType lcLevelType,
+                                                                                 Type.MeleeTemplateType remoteTemplateType,
+                                                                                 GeoEgoWeaponItem.Builder builder,
+                                                                                 Function<GeoEgoWeaponItem.Builder, I> item) {
+    return register(id, zhName, lcLevelType, remoteTemplateType, item, builder);
+  }
+
+  private static <I extends MeleeEgoWeaponItem> DeferredItem<I> register(String id, String zhName, LcLevelType lcLevelType,
+                                                                         Type.MeleeTemplateType remoteTemplateType,
+                                                                         GeoEgoWeaponItem.Builder builder,
+                                                                         Function<GeoEgoWeaponItem.Builder, I> item) {
     return register(id, zhName, lcLevelType, remoteTemplateType, item, builder);
   }
 
   @NotNull
-  private static <I extends GeoEgoWeaponItem> DeferredItem<I> register(String id, String zhName, LcLevelType lcLevelType,
-                                                                       Type.MeleeTemplateType remoteTemplateType,
-                                                                       Function<GeoEgoWeaponItem.Builder, ? extends I> item,
-                                                                       GeoEgoWeaponItem.Builder builder) {
+  private static <I extends MeleeEgoWeaponItem> DeferredItem<I> register(String id, String zhName, LcLevelType lcLevelType,
+                                                                         Type.MeleeTemplateType remoteTemplateType,
+                                                                         Function<GeoEgoWeaponItem.Builder, I> item,
+                                                                         EgoWeaponItem.Builder builder) {
     return EgoWeaponItems.register(id, zhName, lcLevelType, remoteTemplateType, item, builder);
   }
 }
