@@ -2,6 +2,7 @@ package ctn.imaginarycraft.init.item.ego.weapon;
 
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
+import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueRating;
 import ctn.imaginarycraft.client.model.ModGeoItemModel;
 import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.melee.*;
@@ -13,6 +14,20 @@ import java.util.function.Function;
 
 // TODO 根据类型切换类
 public final class EgoMeleeWeaponItems {
+
+  public static final DeferredItem<MeleeEgoWeaponItem> STANDARD_TRAINING_EGO = registerTemplate(
+    "standard_training_ego_weapon", "教学用E.G.O武器",
+    LcLevelType.TETH, Type.MeleeTemplateType.MACE,
+    new EgoWeaponItem.Builder()
+      .damage(6)
+      .meleeLcDamageType(LcDamageType.SPIRIT)
+      .virtueUsageReq(
+        null,
+        null,
+        null,
+        null,
+        null)
+      .model(new ModGeoItemModel<>("standard_training_ego")));
 
   // TODO	如果持有者的正义等级高于2级,每次攻击都有5%的概率恢复10点精神值。
   public static final DeferredItem<MeleeEgoWeaponItem> PENITENCE = registerTemplate(
@@ -43,11 +58,12 @@ public final class EgoMeleeWeaponItems {
         null)
       .model(new ModGeoItemModel<>("wingbeat")));
 
+  // TODO 如果持有者的勇气等级高于2级，进入战斗后会提高2.5点移动速度。
   public static final DeferredItem<MeleeEgoWeaponItem> RED_EYES = registerTemplate(
     "red_eyes_weapon", "赤瞳",
-    LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.TETH, Type.MeleeTemplateType.MACE,
     new EgoWeaponItem.Builder()
-      .damage(0)
+      .damage(8)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(
         null,
@@ -59,9 +75,9 @@ public final class EgoMeleeWeaponItems {
 
   public static final DeferredItem<MeleeEgoWeaponItem> HORN = registerTemplate(
     "horn_weapon", "犄角",
-    LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.TETH, Type.MeleeTemplateType.SPEAR,
     new EgoWeaponItem.Builder()
-      .damage(0)
+      .damage(7)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(
         null,
@@ -73,10 +89,10 @@ public final class EgoMeleeWeaponItems {
 
   public static final DeferredItem<MeleeEgoWeaponItem> WRIST_CUTTER = registerTemplate(
     "wrist_cutter_weapon", "割腕者",
-    LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.TETH, Type.MeleeTemplateType.KNIFE,
     new EgoWeaponItem.Builder()
-      .damage(0)
-      .meleeLcDamageType(LcDamageType.PHYSICS)
+      .damage(2.5f)
+      .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(
         null,
         null,
@@ -87,9 +103,9 @@ public final class EgoMeleeWeaponItems {
 
   public static final DeferredItem<MeleeEgoWeaponItem> REGRET = registerTemplate(
     "regret_weapon", "悔恨",
-    LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.TETH, Type.MeleeTemplateType.HAMMER,
     new EgoWeaponItem.Builder()
-      .damage(0)
+      .damage(15)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(
         null,
@@ -99,12 +115,13 @@ public final class EgoMeleeWeaponItems {
         null)
       .model(new ModGeoItemModel<>("regret")));
 
+  // TODO 如果持有者的谨慎等级低于5级，进入战斗后有10%的概率提升40%的最大精神值。该效果持续30秒。
   public static final DeferredItem<MeleeEgoWeaponItem> FRAGMENTS_FROM_SOMEWHERE = registerTemplate(
     "fragments_from_somewhere_weapon", "彼方的裂片",
-    LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.TETH, Type.MeleeTemplateType.SPEAR,
     new EgoWeaponItem.Builder()
-      .damage(0)
-      .meleeLcDamageType(LcDamageType.PHYSICS)
+      .damage(7)
+      .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(
         null,
         null,
@@ -115,10 +132,10 @@ public final class EgoMeleeWeaponItems {
 
   public static final DeferredItem<MeleeEgoWeaponItem> LANTERN = registerTemplate(
     "lantern_weapon", "诱捕幻灯",
-    LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.TETH, Type.MeleeTemplateType.HAMMER,
     new EgoWeaponItem.Builder()
-      .damage(0)
-      .meleeLcDamageType(LcDamageType.PHYSICS)
+      .damage(15)
+      .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(
         null,
         null,
@@ -129,9 +146,9 @@ public final class EgoMeleeWeaponItems {
 
   public static final DeferredItem<MeleeEgoWeaponItem> SO_CUTE = registerTemplate(
     "so_cute_weapon", "超特么可爱！！！",
-    LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.TETH, Type.MeleeTemplateType.FIST,
     new EgoWeaponItem.Builder()
-      .damage(0)
+      .damage(5)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(
         null,
@@ -143,23 +160,24 @@ public final class EgoMeleeWeaponItems {
 
   public static final DeferredItem<MeleeEgoWeaponItem> BEAR_PAWS = registerTemplate(
     "bear_paws_weapon", "熊熊抱",
-    LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.HE, Type.MeleeTemplateType.FIST,
     new EgoWeaponItem.Builder()
-      .damage(0)
+      .damage(7)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(
-        null,
+        VirtueRating.II,
         null,
         null,
         null,
         null)
       .model(new ModGeoItemModel<>("bear_paws")));
 
+  // TODO 如果持有者的自律等级低于3级，每次攻击都会提高最大与最小攻击力。但代价是每次攻击都会丧失等同于最大精神值4%的精神值。
   public static final DeferredItem<MeleeEgoWeaponItem> SANGUINE_DESIRE = registerTemplate(
     "sanguine_desire", "血之渴望",
-    LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.HE, Type.MeleeTemplateType.AXE,
     new EgoWeaponItem.Builder()
-      .damage(0)
+      .damage(6)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(
         null,
@@ -171,24 +189,25 @@ public final class EgoMeleeWeaponItems {
 
   public static final DeferredItem<MeleeEgoWeaponItem> LOGGING = registerTemplate(
     "logging_weapon", "伐木者",
-    LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.HE, Type.MeleeTemplateType.HAMMER,
     new EgoWeaponItem.Builder()
-      .damage(0)
+      .damage(17)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(
         null,
         null,
-        null,
+        VirtueRating.II,
         null,
         null)
       .model(new ModGeoItemModel<>("logging")));
 
+  // TODO 被这支武器刺中的目标会减少30%的移动速度，持续3秒。需要单独效果。
   public static final DeferredItem<MeleeEgoWeaponItem> FROST_SPLINTER = registerTemplate(
     "frost_splinter", "霜之碎片",
-    LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.HE, Type.MeleeTemplateType.SPEAR,
     new EgoWeaponItem.Builder()
-      .damage(0)
-      .meleeLcDamageType(LcDamageType.PHYSICS)
+      .damage(7)
+      .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(
         null,
         null,
@@ -199,10 +218,10 @@ public final class EgoMeleeWeaponItems {
 
   public static final DeferredItem<MeleeEgoWeaponItem> CHRISTMAS = registerTemplate(
     "christmas_weapon", "悲惨圣诞",
-    LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.HE, Type.MeleeTemplateType.MACE,
     new EgoWeaponItem.Builder()
-      .damage(0)
-      .meleeLcDamageType(LcDamageType.PHYSICS)
+      .damage(12)
+      .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(
         null,
         null,
@@ -213,10 +232,10 @@ public final class EgoMeleeWeaponItems {
 
   public static final DeferredItem<MeleeEgoWeaponItem> HARVEST = registerTemplate(
     "harvest_weapon", "猎头长耙",
-    LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.HE, Type.MeleeTemplateType.SPEAR,
     new EgoWeaponItem.Builder()
-      .damage(0)
-      .meleeLcDamageType(LcDamageType.PHYSICS)
+      .damage(8)
+      .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(
         null,
         null,
@@ -225,15 +244,16 @@ public final class EgoMeleeWeaponItems {
         null)
       .model(new ModGeoItemModel<>("harvest")));
 
+  // TODO 攻击时有25%的概率给目标添加一个易伤效果，使其受到的侵蚀伤害加深。
   public static final DeferredItem<MeleeEgoWeaponItem> LAMP = registerTemplate(
     "lamp_weapon", "目灯",
-    LcLevelType.WAW, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.WAW, Type.MeleeTemplateType.HAMMER,
     new EgoWeaponItem.Builder()
-      .damage(0)
-      .meleeLcDamageType(LcDamageType.PHYSICS)
+      .damage(24)
+      .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(
-        null,
-        null,
+        VirtueRating.III,
+        VirtueRating.III,
         null,
         null,
         null)
@@ -241,87 +261,60 @@ public final class EgoMeleeWeaponItems {
 
   public static final DeferredItem<MeleeEgoWeaponItem> GREEN_STEM = registerTemplate(
     "green_stem_weapon", "绿色枝干",
-    LcLevelType.WAW, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.WAW, Type.MeleeTemplateType.SPEAR,
     new EgoWeaponItem.Builder()
-      .damage(0)
-      .meleeLcDamageType(LcDamageType.PHYSICS)
+      .damage(12)
+      .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(
         null,
         null,
-        null,
+        VirtueRating.III,
         null,
         null)
       .model(new ModGeoItemModel<>("green_stem")));
 
+  // TODO 持有者攻击时有25%的概率给目标添加一个易伤效果，使其受到的精神伤害加深。
   public static final DeferredItem<MeleeEgoWeaponItem> SPORE = registerTemplate(
     "spore_weapon", "荧光菌孢",
-    LcLevelType.WAW, Type.MeleeTemplateType.SPECIAL,
+    LcLevelType.WAW, Type.MeleeTemplateType.SPEAR,
     new EgoWeaponItem.Builder()
-      .damage(0)
-      .meleeLcDamageType(LcDamageType.PHYSICS)
-      .virtueUsageReq(
-        null,
-        null,
-        null,
-        null,
-        null)
-      .model(new ModGeoItemModel<>("spore")));
-
-  public static final DeferredItem<MeleeEgoWeaponItem> HEAVEN = registerTemplate(
-    "heaven_weapon", "穿刺极乐",
-    LcLevelType.WAW, Type.MeleeTemplateType.SPECIAL,
-    new EgoWeaponItem.Builder()
-      .damage(0)
-      .meleeLcDamageType(LcDamageType.PHYSICS)
-      .virtueUsageReq(
-        null,
-        null,
-        null,
-        null,
-        null)
-      .model(new ModGeoItemModel<>("heaven")));
-
-  public static final DeferredItem<MeleeEgoWeaponItem> DIFFRACTION = registerTemplate(
-    "diffraction_weapon", "虚无衍射体",
-    LcLevelType.HE, Type.MeleeTemplateType.SPECIAL,
-    new EgoWeaponItem.Builder()
-      .damage(0)
-      .meleeLcDamageType(LcDamageType.PHYSICS)
-      .virtueUsageReq(
-        null,
-        null,
-        null,
-        null,
-        null)
-      .model(new ModGeoItemModel<>("diffraction")));
-
-  public static final DeferredItem<MeleeEgoWeaponItem> HYPOCRISY = registerTemplate(
-    "hypocrisy_weapon", "伪善",
-    LcLevelType.WAW, Type.MeleeTemplateType.SPECIAL,
-    new EgoWeaponItem.Builder()
-      .damage(0)
-      .meleeLcDamageType(LcDamageType.PHYSICS)
-      .virtueUsageReq(
-        null,
-        null,
-        null,
-        null,
-        null)
-      .model(new ModGeoItemModel<>("hypocrisy")));
-
-  public static final DeferredItem<MeleeEgoWeaponItem> STANDARD_TRAINING_EGO = registerTemplate(
-    "standard_training_ego_weapon", "教学用E.G.O武器",
-    LcLevelType.TETH, Type.MeleeTemplateType.SPECIAL,
-    new EgoWeaponItem.Builder()
-      .damage(6)
+      .damage(12)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(
         null,
         null,
+        VirtueRating.II,
+        null,
+        VirtueRating.II)
+      .model(new ModGeoItemModel<>("spore")));
+
+  public static final DeferredItem<MeleeEgoWeaponItem> HEAVEN = registerTemplate(
+    "heaven_weapon", "穿刺极乐",
+    LcLevelType.WAW, Type.MeleeTemplateType.SPEAR,
+    new EgoWeaponItem.Builder()
+      .damage(10)
+      .meleeLcDamageType(LcDamageType.PHYSICS)
+      .virtueUsageReq(
+        null,
+        null,
+        null,
+        null,
+        VirtueRating.III)
+      .model(new ModGeoItemModel<>("heaven")));
+
+  public static final DeferredItem<MeleeEgoWeaponItem> DIFFRACTION = registerTemplate(
+    "diffraction_weapon", "虚无衍射体",
+    LcLevelType.WAW, Type.MeleeTemplateType.MACE,
+    new EgoWeaponItem.Builder()
+      .damage(16)
+      .meleeLcDamageType(LcDamageType.SPIRIT)
+      .virtueUsageReq(
+        null,
+        VirtueRating.III,
         null,
         null,
         null)
-      .model(new ModGeoItemModel<>("standard_training_ego")));
+      .model(new ModGeoItemModel<>("diffraction")));
 
   public static void init(IEventBus bus) {
   }

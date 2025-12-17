@@ -628,6 +628,12 @@ public final class EgoArmorItems {
     return deferredItem;
   }
 
+  /**
+   *
+   * @param chestplate 胸
+   * @param leggings   腿
+   * @param boots      脚
+   */
   public record EgoArmor(DeferredItem<EgoArmorItem> chestplate, DeferredItem<EgoArmorItem> leggings,
                          DeferredItem<EgoArmorItem> boots) {
   }
