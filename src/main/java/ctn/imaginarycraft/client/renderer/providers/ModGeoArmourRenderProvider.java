@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.client.renderer.providers;
 
-import ctn.imaginarycraft.client.model.ModGeoArmorModel;
 import ctn.imaginarycraft.client.renderer.armor.RoughAndSlimArmorRenderer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.EquipmentSlot;
@@ -9,6 +8,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.GeoRenderProvider;
+import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 import javax.annotation.Nullable;
 
@@ -16,12 +17,17 @@ import javax.annotation.Nullable;
  * 盔甲渲染提供程序
  */
 public class ModGeoArmourRenderProvider<T extends Item & GeoItem> implements GeoRenderProvider {
-  protected final ModGeoArmorModel<T> model;
-  private @Nullable RoughAndSlimArmorRenderer<T> renderer;
+  protected final GeoModel<T> model;
+  private @Nullable GeoArmorRenderer<T> renderer;
 
-  public ModGeoArmourRenderProvider(ModGeoArmorModel<T> model, @Nullable RoughAndSlimArmorRenderer<T> renderer) {
+  public ModGeoArmourRenderProvider(GeoModel<T> model, @Nullable GeoArmorRenderer<T> renderer) {
     this.model = model;
     this.renderer = renderer;
+  }
+
+  public ModGeoArmourRenderProvider(GeoModel<T> model) {
+    this.model = model;
+    this.renderer = null;
   }
 
   @Nullable

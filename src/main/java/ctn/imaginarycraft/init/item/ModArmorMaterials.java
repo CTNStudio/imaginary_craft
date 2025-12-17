@@ -20,10 +20,10 @@ public final class ModArmorMaterials extends ArmorMaterialsRegisterUtil {
     ModSoundEvents.ARMOR_EQUIP_TETH, 1.0F, 0.0F);
   public static final Holder<ArmorMaterial> HE = register(
     "he", 3, 6, 8, 3, 11, 9,
-    ModSoundEvents.ARMOR_EQUIP_HE, 2.0F, 0.0F);
+    ModSoundEvents.ARMOR_EQUIP_HE, 2.0F, 0.025F);
   public static final Holder<ArmorMaterial> WAW = register(
     "waw", 4, 7, 9, 4, 12, 9,
-    ModSoundEvents.ARMOR_EQUIP_WAW, 3.0F, 0.1F);
+    ModSoundEvents.ARMOR_EQUIP_WAW, 3.0F, 0.05F);
   public static final Holder<ArmorMaterial> ALEPH = register(
     "aleph", 4, 8, 10, 5, 13, 9,
     ModSoundEvents.ARMOR_EQUIP_ALEPH, 4.0F, 0.1F);
