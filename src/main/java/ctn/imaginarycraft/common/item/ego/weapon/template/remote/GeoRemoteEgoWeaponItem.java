@@ -1,7 +1,8 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template.remote;
 
+import ctn.imaginarycraft.client.model.GuiItemModel;
+import ctn.imaginarycraft.client.model.ModGeoItemModel;
 import ctn.imaginarycraft.client.renderer.providers.ModGeoItemRenderProvider;
-import ctn.imaginarycraft.common.item.ego.weapon.template.GeoEgoWeaponItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -18,17 +19,17 @@ import java.util.function.Consumer;
  */
 public abstract class GeoRemoteEgoWeaponItem extends RemoteEgoWeaponItem implements GeoItem {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-  private final GeoModel<GeoEgoWeaponItem> model;
-  private final @Nullable GeoModel<GeoEgoWeaponItem> guiModel;
+  private final GeoModel<GeoRemoteEgoWeaponItem> model;
+  private final @Nullable GeoModel<GeoRemoteEgoWeaponItem> guiModel;
 
-  public GeoRemoteEgoWeaponItem(Properties properties, Builder builder) {
+  public GeoRemoteEgoWeaponItem(Properties properties, Builder builder, GeoModel<GeoRemoteEgoWeaponItem> model, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
     super(properties, builder);
-    this.model = builder.getModel();
-    this.guiModel = builder.getGuiModel();
+    this.model = model;
+    this.guiModel = guiModel;
   }
 
-  public GeoRemoteEgoWeaponItem(Builder builder) {
-    this(builder.buildProperties(), builder);
+  public GeoRemoteEgoWeaponItem(Properties properties, Builder builder, String modPath) {
+    this(properties, builder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
   }
 
   public void createGeoRenderer(@NotNull Consumer<GeoRenderProvider> consumer) {
@@ -42,5 +43,4 @@ public abstract class GeoRemoteEgoWeaponItem extends RemoteEgoWeaponItem impleme
   public AnimatableInstanceCache getAnimatableInstanceCache() {
     return cache;
   }
-
 }

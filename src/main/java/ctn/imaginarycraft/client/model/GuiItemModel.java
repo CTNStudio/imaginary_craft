@@ -5,20 +5,21 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 
 public class GuiItemModel<T extends GeoAnimatable> extends ModGeoItemModel<T> {
-  private final String path;
+  private static final ResourceLocation MODELLED_PATH = modelPath("gui_item_model");
+  private final ResourceLocation resourceLocation;
 
   public GuiItemModel(String path) {
     super(path);
-    this.path = path;
+    this.resourceLocation = ImaginaryCraft.modRl("textures/item/" + path + ".png");
   }
 
   @Override
   public ResourceLocation getModelResource(T animatable) {
-    return modelPath("gui_item_model");
+    return MODELLED_PATH;
   }
 
   @Override
   public ResourceLocation getTextureResource(T animatable) {
-    return ImaginaryCraft.modRl("textures/item/" + path + ".png");
+    return resourceLocation;
   }
 }

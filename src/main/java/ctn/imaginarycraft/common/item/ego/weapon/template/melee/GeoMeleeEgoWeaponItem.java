@@ -1,7 +1,8 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template.melee;
 
+import ctn.imaginarycraft.client.model.GuiItemModel;
+import ctn.imaginarycraft.client.model.ModGeoItemModel;
 import ctn.imaginarycraft.client.renderer.providers.ModGeoItemRenderProvider;
-import ctn.imaginarycraft.common.item.ego.weapon.template.GeoEgoWeaponItem;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
@@ -15,17 +16,17 @@ import java.util.function.Consumer;
 
 public abstract class GeoMeleeEgoWeaponItem extends MeleeEgoWeaponItem implements GeoItem {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-  private final GeoModel<GeoEgoWeaponItem> model;
-  private final @Nullable GeoModel<GeoEgoWeaponItem> guiModel;
+  private final GeoModel<GeoMeleeEgoWeaponItem> model;
+  private final @Nullable GeoModel<GeoMeleeEgoWeaponItem> guiModel;
 
-  public GeoMeleeEgoWeaponItem(Builder builder) {
-    this(builder.buildProperties(), builder);
+  public GeoMeleeEgoWeaponItem(Properties properties, Builder builder, GeoModel<GeoMeleeEgoWeaponItem> model, GeoModel<GeoMeleeEgoWeaponItem> guiModel) {
+    super(properties, builder);
+    this.model = model;
+    this.guiModel = guiModel;
   }
 
-  public GeoMeleeEgoWeaponItem(Properties properties, Builder builder) {
-    super(properties, builder);
-    this.model = builder.getModel();
-    this.guiModel = builder.getGuiModel();
+  public GeoMeleeEgoWeaponItem(Properties properties, Builder builder, String modPath) {
+    this(properties, builder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
   }
 
   @Override

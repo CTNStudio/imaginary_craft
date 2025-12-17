@@ -555,15 +555,15 @@ public final class EgoArmorItems {
                                                                                                                 Function<EgoArmorItem.Builder, ? extends L> leggingsFunction,
                                                                                                                 Function<EgoArmorItem.Builder, ? extends B> bootsFunction) {
 
-    double[] physicsArray = splitIntoThreeUnequalParts(physics - ModAttributes.PHYSICS_VULNERABLE.get().getDefaultValue());
-    double[] spiritArray = splitIntoThreeUnequalParts(spirit - ModAttributes.SPIRIT_VULNERABLE.get().getDefaultValue());
-    double[] erosionArray = splitIntoThreeUnequalParts(erosion - ModAttributes.EROSION_VULNERABLE.get().getDefaultValue());
-    double[] theSoulArray = splitIntoThreeUnequalParts(theSoul - ModAttributes.THE_SOUL_VULNERABLE.get().getDefaultValue());
+    double[] physicsArray = splitIntoThreeUnequalParts(physics - ModAttributes.PHYSICS_VULNERABLE_DEFAULT_VALUE);
+    double[] spiritArray = splitIntoThreeUnequalParts(spirit - ModAttributes.SPIRIT_VULNERABLE_DEFAULT_VALUE);
+    double[] erosionArray = splitIntoThreeUnequalParts(erosion - ModAttributes.EROSION_VULNERABLE_DEFAULT_VALUE);
+    double[] theSoulArray = splitIntoThreeUnequalParts(theSoul - ModAttributes.THE_SOUL_VULNERABLE_DEFAULT_VALUE);
     return new EgoArmor(
       getArmorItemDeferredItem(id, zhName, lcLevelType, ArmorItem.Type.CHESTPLATE,
         virtueUsageReqBuilder, builder, material, renderProvider, chestplateFunction,
         physicsArray[2], spiritArray[2], erosionArray[2], theSoulArray[2]),
-      getArmorItemDeferredItem(id, zhName, lcLevelType, ArmorItem.Type.BOOTS,
+      getArmorItemDeferredItem(id, zhName, lcLevelType, ArmorItem.Type.LEGGINGS,
         virtueUsageReqBuilder, builder, material, renderProvider, leggingsFunction,
         physicsArray[1], spiritArray[1], erosionArray[1], theSoulArray[1]),
       getArmorItemDeferredItem(id, zhName, lcLevelType, ArmorItem.Type.BOOTS,

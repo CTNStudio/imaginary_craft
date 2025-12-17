@@ -1,9 +1,9 @@
-package ctn.imaginarycraft.common.item.ego.weapon.special;
+package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
 import ctn.imaginarycraft.api.client.IPlayerAnim;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.common.entity.projectile.ParadiseLostSpikeweed;
-import ctn.imaginarycraft.common.item.ego.weapon.template.GeoEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -20,6 +20,8 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.model.GeoModel;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -28,15 +30,24 @@ import java.util.Set;
 /**
  * 失乐园武器
  */
-public class ParadiseLostItem extends GeoEgoWeaponItem {
+public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
   public static final String ATTACK = "player.paradise_lost.attack";
   public static final String CONTINUOUS_ATTACK = "player.paradise_lost.continuous_attack";
   public static final String END = "player.paradise_lost.end";
   private final int NORMAL_ATTACK_TICK = 8;
   private final int CHARGING_ATTACK_TICK = 10;
 
-  public ParadiseLostItem(Builder builder) {
-    super(builder.buildProperties(), builder);
+  public ParadiseLostWeaponItem(Properties properties, Builder builder, GeoModel<GeoRemoteEgoWeaponItem> model, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
+    super(properties, builder, model, guiModel);
+  }
+
+  public ParadiseLostWeaponItem(Properties properties, Builder builder, String modPath) {
+    super(properties, builder, modPath);
+  }
+
+  @Override
+  public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+
   }
 
   /**

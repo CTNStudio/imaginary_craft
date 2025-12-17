@@ -15,27 +15,31 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 public final class ModAttributes extends AttributeRegisterUtil {
   public static final DeferredRegister<Attribute> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.ATTRIBUTE);
 
-  /// 易伤 值越大越受到的伤害倍数越高
+  public static final double PHYSICS_VULNERABLE_DEFAULT_VALUE = 1.0;
+  public static final double SPIRIT_VULNERABLE_DEFAULT_VALUE = 1.0;
+  public static final double EROSION_VULNERABLE_DEFAULT_VALUE = 1.5;
+  public static final double THE_SOUL_VULNERABLE_DEFAULT_VALUE = 2.0;
+
   /**
    * 物理易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> PHYSICS_VULNERABLE = register("physics_vulnerable", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), 1.0, -10, 10);
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), PHYSICS_VULNERABLE_DEFAULT_VALUE, -10, 10);
   /**
    * 精神易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> SPIRIT_VULNERABLE = register("spirit_vulnerable", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), 1.0, -10, 10);
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), SPIRIT_VULNERABLE_DEFAULT_VALUE, -10, 10);
   /**
    * 侵蚀易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> EROSION_VULNERABLE = register("erosion_vulnerable", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), 1.5, -10, 10);
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), EROSION_VULNERABLE_DEFAULT_VALUE, -10, 10);
   /**
    * 灵魂易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> THE_SOUL_VULNERABLE = register("the_soul_vulnerable", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), 2.0, -10, 10);
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), THE_SOUL_VULNERABLE_DEFAULT_VALUE, -10, 10);
 
   /// 理智
   /**

@@ -3,9 +3,6 @@ package ctn.imaginarycraft.init.item.ego;
 import ctn.imaginarycraft.common.item.ego.EgoItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
-import ctn.imaginarycraft.init.item.ego.weapon.EgoMeleeWeaponItems;
-import ctn.imaginarycraft.init.item.ego.weapon.EgoRemoteWeaponItems;
-import ctn.imaginarycraft.init.item.ego.weapon.EgoSpecialWeaponItems;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
@@ -20,9 +17,7 @@ public final class EgoItems {
   public static void init(IEventBus bus) {
     REGISTRY.register(bus);
     EgoCurioItems.init(bus);
-    EgoMeleeWeaponItems.init(bus);
-    EgoRemoteWeaponItems.init(bus);
-    EgoSpecialWeaponItems.init(bus);
+    EgoWeaponItems.init(bus);
     EgoArmorItems.init(bus);
   }
 

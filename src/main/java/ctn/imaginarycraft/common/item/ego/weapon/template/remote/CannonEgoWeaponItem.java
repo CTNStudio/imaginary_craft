@@ -1,14 +1,16 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template.remote;
 
 import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.model.GeoModel;
 
 public class CannonEgoWeaponItem extends GeoRemoteEgoWeaponItem {
-  public CannonEgoWeaponItem(Properties properties, Builder builder) {
-    super(properties, builder);
+
+  public CannonEgoWeaponItem(Properties properties, Builder builder, GeoModel<GeoRemoteEgoWeaponItem> model, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
+    super(properties, builder, model, guiModel);
   }
 
-  public CannonEgoWeaponItem(Builder builder) {
-    super(builder);
+  public CannonEgoWeaponItem(Properties properties, Builder builder, String modPath) {
+    super(properties, builder, modPath);
   }
 
   @Override

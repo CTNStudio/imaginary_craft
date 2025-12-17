@@ -6,7 +6,7 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.item.ToolItems;
 import ctn.imaginarycraft.init.item.ego.EgoArmorItems;
 import ctn.imaginarycraft.init.item.ego.EgoCurioItems;
-import ctn.imaginarycraft.init.item.ego.weapon.EgoWeaponItems;
+import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
@@ -86,7 +86,7 @@ public class DatagenItemModel extends ItemModelProvider {
     map.put(0.1F, "spirit");
     map.put(0.2F, "erosion");
     map.put(0.3F, "the_soul");
-    createModelFileWithParent(item, map, getParent("item/handheld"), ItemPropertyEvents.CURRENT_LC_DAMAGE_TYPE);
+    createModelFileWithParent(item, "weapon/", map, getParent("item/handheld"), ItemPropertyEvents.CURRENT_LC_DAMAGE_TYPE);
   }
 
   /**
@@ -99,7 +99,7 @@ public class DatagenItemModel extends ItemModelProvider {
     LinkedHashMap<Float, String> map = new LinkedHashMap<>();
     map.put(0F, "add");
     map.put(1F, "decrease");
-    createModelFile(item, map, ItemPropertyEvents.MODE_BOOLEAN);
+    createModelFile(item, "tool/", map, ItemPropertyEvents.MODE_BOOLEAN);
   }
 
   /**
@@ -117,11 +117,16 @@ public class DatagenItemModel extends ItemModelProvider {
    * 根据提供的纹理映射和谓词创建多个模型变体
    *
    * @param item       物品实例
+   * @param prefix       前缀
    * @param textures   纹理映射，键为浮点数值，值为纹理名称
    * @param predicates 谓词资源位置数组，用于确定何时使用哪个模型变体
    */
-  public void createModelFile(Item item, @NotNull Map<Float, String> textures, ResourceLocation... predicates) {
-    ItemModelBuilder modelBuilder = basicItem(item);
+  public void createModelFile(Item item, String prefix, @NotNull Map<Float, String> textures, ResourceLocation... predicates) {
+    ResourceLocation resourceLocation = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item));
+    ResourceLocation path = fromNamespaceAndPath(resourceLocation.getNamespace(), "item/" + prefix + resourceLocation.getPath());
+    ItemModelBuilder modelBuilder = getBuilder(item.toString())
+      .parent(new ModelFile.UncheckedModelFile("item/generated"))
+      .texture("layer0", path);
 
     int index = 0;
     for (Map.Entry<Float, String> entry : textures.entrySet()) {
@@ -134,7 +139,10 @@ public class DatagenItemModel extends ItemModelProvider {
         .predicate(predicate, key)
         .end();
 
-      specialItem(item, value);
+      ResourceLocation path1 = fromNamespaceAndPath(resourceLocation.getNamespace(), "item/" + prefix + resourceLocation.getPath() + "_" + value);
+      getBuilder(item.toString())
+        .parent(new ModelFile.UncheckedModelFile("item/generated"))
+        .texture("layer0", path1);
       index++;
     }
   }
@@ -144,13 +152,18 @@ public class DatagenItemModel extends ItemModelProvider {
    * 根据提供的纹理映射和谓词创建多个模型变体，并指定一个父模型
    *
    * @param item       物品实例
+   * @param prefix     前缀
    * @param textures   纹理映射，键为浮点数值，值为纹理名称
    * @param parent     父模型文件
    * @param predicates 谓词资源位置数组，用于确定何时使用哪个模型变体
    */
-  public void createModelFileWithParent(Item item, @NotNull Map<Float, String> textures, ModelFile parent,
+  public void createModelFileWithParent(Item item, String prefix, @NotNull Map<Float, String> textures, ModelFile parent,
                                         ResourceLocation... predicates) {
-    ItemModelBuilder modelBuilder = basicItem(item).parent(parent);
+    ResourceLocation resourceLocation = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item));
+    ResourceLocation path = fromNamespaceAndPath(resourceLocation.getNamespace(), "item/" + prefix + resourceLocation.getPath());
+    ItemModelBuilder modelBuilder = getBuilder(item.toString())
+      .parent(parent)
+      .texture("layer0", path);
 
     int index = 0;
     for (Map.Entry<Float, String> entry : textures.entrySet()) {
@@ -163,7 +176,10 @@ public class DatagenItemModel extends ItemModelProvider {
         .predicate(predicate, key)
         .end();
 
-      specialItem(item, value).parent(parent);
+      ResourceLocation path1 = fromNamespaceAndPath(resourceLocation.getNamespace(), "item/" + prefix + resourceLocation.getPath() + "_" + value);
+      getBuilder(item.toString())
+        .parent(parent)
+        .texture("layer0", path1);
       index++;
     }
   }

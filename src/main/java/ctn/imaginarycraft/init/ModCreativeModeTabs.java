@@ -3,8 +3,7 @@ package ctn.imaginarycraft.init;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.item.ego.EgoArmorItems;
 import ctn.imaginarycraft.init.item.ego.EgoCurioItems;
-import ctn.imaginarycraft.init.item.ego.weapon.EgoSpecialWeaponItems;
-import ctn.imaginarycraft.init.item.ego.weapon.EgoWeaponItems;
+import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
 import ctn.imaginarycraft.init.util.CreativeModeTabRegisterUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.item.CreativeModeTab;
@@ -24,7 +23,7 @@ public final class ModCreativeModeTabs extends CreativeModeTabRegisterUtil {
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EGO_WEAPON = register(
     "ego_weapon", "E.G.O 武器", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
       EgoWeaponItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get())), () ->
-      EgoSpecialWeaponItems.IN_THE_NAME_OF_LOVE_AND_HATE.get().getDefaultInstance()));
+      EgoWeaponItems.IN_THE_NAME_OF_LOVE_AND_HATE.get().getDefaultInstance()));
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EGO_ARMOR = register(
     "ego_armor", "E.G.O 护甲", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
       EgoArmorItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get())), () ->

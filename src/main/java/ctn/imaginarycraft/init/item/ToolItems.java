@@ -2,7 +2,7 @@ package ctn.imaginarycraft.init.item;
 
 import ctn.imaginarycraft.common.item.CreativeRationalityToolItem;
 import ctn.imaginarycraft.common.item.ego.weapon.melee.ChaosKnifeItem;
-import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.melee.MeleeEgoWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
 import net.minecraft.world.item.Item;
@@ -19,7 +19,7 @@ public final class ToolItems {
   public static final DeferredItem<Item> CREATIVE_RATIONALITY_TOOL = register(
     "creative_rationality_tool", "理智控制器", CreativeRationalityToolItem::new);
   public static final DeferredItem<Item> CHAOS_SWORD = register(
-    "chaos_sword", "混沌刃", properties -> new ChaosKnifeItem(properties, new EgoWeaponItem.Builder()
+    "chaos_sword", "混沌刃", properties -> new ChaosKnifeItem(properties, new MeleeEgoWeaponItem.Builder()
       .damage(7)
       .attackSpeed(-1.4F)));
 

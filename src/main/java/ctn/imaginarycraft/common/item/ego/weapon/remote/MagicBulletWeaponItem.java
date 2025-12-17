@@ -1,7 +1,7 @@
-package ctn.imaginarycraft.common.item.ego.weapon.special;
+package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
 import ctn.imaginarycraft.common.entity.projectile.MagicBulletEntity;
-import ctn.imaginarycraft.common.item.ego.weapon.template.remote.RemoteEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
@@ -12,13 +12,15 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.model.GeoModel;
 
 /**
  * 魔弹武器
  *
  * @author dusttt
  */
-public class MagicBulletItem extends RemoteEgoWeaponItem {
+public class MagicBulletWeaponItem extends GeoRemoteEgoWeaponItem {
   public static final int DAMAGE = 22;
   public static final int DAMAGE1 = 20;
   private final float BULLET_SPEED = 1.0f;// 子弹速度
@@ -26,8 +28,17 @@ public class MagicBulletItem extends RemoteEgoWeaponItem {
   private final int CHARGING_ATTACK_TICK = 10;
   private int shootCount = 0;
 
-  public MagicBulletItem(Builder builder) {
-    super(builder.buildProperties(), builder, false);
+  public MagicBulletWeaponItem(Properties properties, Builder builder, GeoModel<GeoRemoteEgoWeaponItem> model, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
+    super(properties, builder, model, guiModel);
+  }
+
+  public MagicBulletWeaponItem(Properties properties, Builder builder, String modPath) {
+    super(properties, builder, modPath);
+  }
+
+  @Override
+  public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+
   }
 
   /**

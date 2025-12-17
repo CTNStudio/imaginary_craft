@@ -1,14 +1,16 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template.melee;
 
 import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.model.GeoModel;
 
 public class MaceEgoWeaponItem extends GeoMeleeEgoWeaponItem {
-  public MaceEgoWeaponItem(Builder builder) {
-    super(builder);
+
+  public MaceEgoWeaponItem(Properties properties, Builder builder, GeoModel<GeoMeleeEgoWeaponItem> model, GeoModel<GeoMeleeEgoWeaponItem> guiModel) {
+    super(properties, builder, model, guiModel);
   }
 
-  public MaceEgoWeaponItem(Properties properties, Builder builder) {
-    super(properties, builder);
+  public MaceEgoWeaponItem(Properties properties, Builder builder, String modPath) {
+    super(properties, builder, modPath);
   }
 
   @Override
