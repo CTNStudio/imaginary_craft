@@ -5,7 +5,7 @@ import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 
 public class GuiItemModel<T extends GeoAnimatable> extends ModGeoItemModel<T> {
-  private static final ResourceLocation MODELLED_PATH = modelPath("gui_item_model");
+  private static final ResourceLocation MODELLED_PATH = modelPath("item/gui_item_model");
   private final ResourceLocation resourceLocation;
 
   public GuiItemModel(String path) {
