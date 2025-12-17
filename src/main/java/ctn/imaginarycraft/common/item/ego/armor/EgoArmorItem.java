@@ -72,7 +72,7 @@ public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, I
 
   @Override
   public AnimatableInstanceCache getAnimatableInstanceCache() {
-    return null;
+    return cache;
   }
 
   public static class Builder {
