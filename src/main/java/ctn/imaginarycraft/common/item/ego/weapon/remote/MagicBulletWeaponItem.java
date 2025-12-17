@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
-import ctn.imaginarycraft.common.entity.projectile.MagicBulletEntity;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.InteractionHand;
@@ -182,9 +181,9 @@ public class MagicBulletWeaponItem extends GeoRemoteEgoWeaponItem {
   private void normalShoot(Player shooter, ItemStack gunStack, float damage) {
     Level level = shooter.level();
 
-    MagicBulletEntity magicBullet = MagicBulletEntity.create(level, shooter, damage);
-    magicBullet.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, BULLET_SPEED, 1.0F);
-    level.addFreshEntity(magicBullet);
+//    MagicBulletEntity magicBullet = MagicBulletEntity.create(level, shooter, damage);
+//    magicBullet.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot(), 0.0F, BULLET_SPEED, 1.0F);
+//    level.addFreshEntity(magicBullet);
 
     //TODO:播放音效
 
@@ -200,27 +199,27 @@ public class MagicBulletWeaponItem extends GeoRemoteEgoWeaponItem {
    * @param damage   伤害
    */
   private void SeventhShoot(Player shooter, ItemStack gunStack, float damage) {
-    Level level = shooter.level();
-
-    MagicBulletEntity seventh_bullet = MagicBulletEntity.create(level, shooter, damage);
-
-    // 使其会追踪队友
-    seventh_bullet.setDealDamageToAllies(true);
-    seventh_bullet.setCanGoThroughWallsWhenNoTarget(true);//无目标时可穿墙
-
-    Vec3 playerLook = shooter.getLookAngle().normalize();
-    seventh_bullet.setPos(shooter.getEyePosition().subtract(playerLook.scale(3.0f)));//生成于玩家脑后
-
-    // 玩家可攻击时追踪玩家
-    if (!shooter.isCreative() && !shooter.isSpectator() && shooter.isAlive() && shooter.isAttackable()) {
-      seventh_bullet.setTrackingTarget(shooter);
-    }
-    seventh_bullet.shoot(playerLook.x, playerLook.y, playerLook.z, BULLET_SPEED, 0.5f);
-    level.addFreshEntity(seventh_bullet);
-
-    //TODO:播放音效
-
-    addShootCount();
+//    Level level = shooter.level();
+//
+//    MagicBulletEntity seventh_bullet = MagicBulletEntity.create(level, shooter, damage);
+//
+//    // 使其会追踪队友
+////    seventh_bullet.setDealDamageToAllies(true);
+////    seventh_bullet.setCanGoThroughWallsWhenNoTarget(true);//无目标时可穿墙
+//
+//    Vec3 playerLook = shooter.getLookAngle().normalize();
+//    seventh_bullet.setPos(shooter.getEyePosition().subtract(playerLook.scale(3.0f)));//生成于玩家脑后
+//
+//    // 玩家可攻击时追踪玩家
+//    if (!shooter.isCreative() && !shooter.isSpectator() && shooter.isAlive() && shooter.isAttackable()) {
+////      seventh_bullet.setTrackingTarget(shooter);
+//    }
+//    seventh_bullet.shoot(playerLook.x, playerLook.y, playerLook.z, BULLET_SPEED, 0.5f);
+//    level.addFreshEntity(seventh_bullet);
+//
+//    //TODO:播放音效
+//
+//    addShootCount();
   }
 
   /**
@@ -258,31 +257,31 @@ public class MagicBulletWeaponItem extends GeoRemoteEgoWeaponItem {
         .add(planeUp.scale(fanWidth / 2.0f * Math.sin(i * 0.628f))); // 添加垂直波动
 
       // 创建并发射子弹（全部朝玩家视线方向）
-      MagicBulletEntity bullet = MagicBulletEntity.create(level, player, damage);
+//      MagicBulletEntity bullet = MagicBulletEntity.create(level, player, damage);
 
       //  选用：设置无目标时可穿墙(否则容易被墙挡)
-      bullet.setCanGoThroughWallsWhenNoTarget(true);
+//      bullet.setCanGoThroughWallsWhenNoTarget(true);
 
-      bullet.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
-      bullet.shoot(
-        playerLook.x,
-        playerLook.y,
-        playerLook.z,
-        BULLET_SPEED,
-        0.5f
-      );
-      level.addFreshEntity(bullet);
+//      bullet.setPos(spawnPos.x, spawnPos.y, spawnPos.z);
+//      bullet.shoot(
+//        playerLook.x,
+//        playerLook.y,
+//        playerLook.z,
+//        BULLET_SPEED,
+//        0.5f
+//      );
+//      level.addFreshEntity(bullet);
     }
     // 第七发魔弹：穿透玩家(大致于普通攻击的第七发相同)
-    MagicBulletEntity seventh_bullet = MagicBulletEntity.create(level, player, damage);
-    seventh_bullet.setDealDamageToAllies(true);
-    seventh_bullet.setPos(backwardPos.subtract(playerLook.scale(1.5)));
+//    MagicBulletEntity seventh_bullet = MagicBulletEntity.create(level, player, damage);
+//    seventh_bullet.setDealDamageToAllies(true);
+//    seventh_bullet.setPos(backwardPos.subtract(playerLook.scale(1.5)));
     if (!player.isCreative() && player.isAlive() && player.isAttackable()) {
-      seventh_bullet.setTrackingTarget(player);
+//      seventh_bullet.setTrackingTarget(player);
     }
-    seventh_bullet.setCanGoThroughWallsWhenNoTarget(true);//无目标时可穿墙
-    seventh_bullet.shoot(playerLook.x, playerLook.y, playerLook.z, BULLET_SPEED, 0.5f);
-    level.addFreshEntity(seventh_bullet);
+//    seventh_bullet.setCanGoThroughWallsWhenNoTarget(true);//无目标时可穿墙
+//    seventh_bullet.shoot(playerLook.x, playerLook.y, playerLook.z, BULLET_SPEED, 0.5f);
+//    level.addFreshEntity(seventh_bullet);
 
     // TODO:播放音效
 
