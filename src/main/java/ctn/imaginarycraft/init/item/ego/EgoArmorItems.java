@@ -2,6 +2,7 @@ package ctn.imaginarycraft.init.item.ego;
 
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.client.model.ModGeoArmorModel;
+import ctn.imaginarycraft.client.renderer.providers.ModGeoArmourRenderProvider;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
 import ctn.imaginarycraft.common.item.ego.armor.EgoArmorItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -19,7 +20,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("penitence"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("penitence")),
     0.9, 0.8, 0.9, 2.0);
 
   public static final EgoArmor SODA = registerSuit(
@@ -27,7 +28,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("soda"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("soda")),
     0.8, 1.0, 1.0, 2.0);
 
   public static final EgoArmor WINGBEAT = registerSuit(
@@ -35,7 +36,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("wingbeat"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("wingbeat")),
     0.8, 0.8, 1.0, 2.0);
   //endregion
 
@@ -46,7 +47,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("standard_training_ego"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("standard_training_ego")),
     0.5, 1.0, 1.5, 2.0);
 
   public static final EgoArmor FOURTH_MATCH_FLAME = registerSuit(
@@ -54,7 +55,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("fourth_match_flame"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("fourth_match_flame")),
     0.6, 1.0, 1.5, 2.0);
 
   public static final EgoArmor IN_THE_NAME_OF_LOVE_AND_HATE = registerSuit(
@@ -62,7 +63,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("in_the_name_of_love_and_hate"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("in_the_name_of_love_and_hate")),
     0.7, 0.8, 0.4, 2.0);
 
   public static final EgoArmor RED_EYES = registerSuit(
@@ -70,7 +71,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("red_eyes"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("red_eyes")),
     0.8, 0.8, 0.8, 2.0);
 
   public static final EgoArmor HORN = registerSuit(
@@ -78,7 +79,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("horn"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("horn")),
     0.8, 0.8, 1.5, 2.0);
 
   public static final EgoArmor SOLITUDE = registerSuit(
@@ -86,7 +87,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("solitude"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("solitude")),
     1.5, 0.8, 0.8, 2.0);
 
   public static final EgoArmor SCREAMING_WEDGE = registerSuit(
@@ -94,7 +95,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("screaming_wedge"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("screaming_wedge")),
     1.2, 0.6, 1.0, 2.0);
 
   public static final EgoArmor NOISE = registerSuit(
@@ -102,7 +103,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("noise"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("noise")),
     1.2, 0.7, 0.6, 2.0);
 
   public static final EgoArmor WRIST_CUTTER = registerSuit(
@@ -110,7 +111,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("wrist_cutter"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("wrist_cutter")),
     1.0, 0.6, 1.2, 2.0);
 
   public static final EgoArmor FRAGMENTS_FROM_SOMEWHERE = registerSuit(
@@ -118,7 +119,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("fragments_from_somewhere"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("fragments_from_somewhere")),
     1.0, 1.2, 0.6, 2.0);
 
   public static final EgoArmor REGRET = registerSuit(
@@ -126,7 +127,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("regret"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("regret")),
     0.7, 1.2, 0.8, 2.0);
 
   public static final EgoArmor BEAK = registerSuit(
@@ -134,7 +135,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("beak"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("beak")),
     0.7, 0.8, 1.2, 2.0);
 
   public static final EgoArmor LANTERN = registerSuit(
@@ -142,7 +143,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("lantern"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("lantern")),
     0.8, 0.7, 1.2, 2.0);
 
   public static final EgoArmor TODAY_IS_EXPRESSION = registerSuit(
@@ -150,7 +151,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("today_is_expression"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("today_is_expression")),
     0.7, 0.6, 1.5, 2.0);
 
   public static final EgoArmor SO_CUTE = registerSuit(
@@ -158,7 +159,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("so_cute"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("so_cute")),
     0.8, 1.5, 0.8, 2.0);
 
   public static final EgoArmor LIFE_FOR_A_DAREDEVIL = registerSuit(
@@ -166,7 +167,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("life_for_a_daredevil"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("life_for_a_daredevil")),
     0.6, 0.9, 0.9, 2.0);
 
   public static final EgoArmor ENGULFING_DREAM = registerSuit(
@@ -174,7 +175,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("engulfing_dream"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("engulfing_dream")),
     1.2, 0.8, 0.7, 2.0);
 
   public static final EgoArmor CHERRY_BLOSSOMS = registerSuit(
@@ -182,7 +183,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("cherry_blossoms"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("cherry_blossoms")),
     1.2, 0.6, 0.7, 2.0);
 
   public static final EgoArmor TOUGH = registerSuit(
@@ -190,7 +191,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("tough"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("tough")),
     1.0, 1.0, 0.8, 2.0);
   //endregion
 
@@ -201,7 +202,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("bear_paws"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("bear_paws")),
     0.8, 1.0, 1.0, 1.5);
 
   public static final EgoArmor SANGUINE_DESIRE = registerSuit(
@@ -209,7 +210,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("sanguine_desire"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("sanguine_desire")),
     0.5, 1.2, 0.8, 1.5);
 
   public static final EgoArmor SYRINX = registerSuit(
@@ -217,7 +218,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("syrinx"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("syrinx")),
     1.2, 0.5, 0.8, 1.5);
 
   public static final EgoArmor DA_CAPO = registerSuit(
@@ -225,7 +226,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("da_capo"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("da_capo")),
     0.5, 0.2, 0.5, 1.5);
 
   public static final EgoArmor LOGGING = registerSuit(
@@ -233,7 +234,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("logging"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("logging")),
     0.8, 1.2, 0.8, 1.5);
 
   public static final EgoArmor FROST_SPLINTER = registerSuit(
@@ -241,7 +242,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("frost_splinter"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("frost_splinter")),
     1.3, 0.6, 0.8, 1.5);
 
   public static final EgoArmor GRINDER_MK4 = registerSuit(
@@ -249,7 +250,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("grinder_mk4"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("grinder_mk4")),
     0.6, 1.3, 0.9, 1.5);
 
   public static final EgoArmor CHRISTMAS = registerSuit(
@@ -257,7 +258,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("christmas"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("christmas")),
     0.8, 0.6, 1.3, 1.5);
 
   public static final EgoArmor HORNET = registerSuit(
@@ -265,7 +266,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("hornet"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("hornet")),
     0.7, 0.7, 0.7, 1.5);
 
   public static final EgoArmor OUR_GALAXY = registerSuit(
@@ -273,7 +274,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("our_galaxy"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("our_galaxy")),
     0.8, 0.8, 1.2, 1.5);
 
   public static final EgoArmor LAETITIA = registerSuit(
@@ -281,7 +282,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("laetitia"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("laetitia")),
     0.7, 0.7, 0.7, 1.5);
 
   public static final EgoArmor SOLEMN_LAMENT = registerSuit(
@@ -289,7 +290,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("solemn_lament"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("solemn_lament")),
     1.2, 0.8, 0.5, 1.5);
 
   public static final EgoArmor MAGIC_BULLET = registerSuit(
@@ -297,7 +298,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("magic_bullet"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("magic_bullet")),
     0.7, 0.7, 0.7, 1.5);
 
   public static final EgoArmor BLACK_SWAN = registerSuit(
@@ -305,7 +306,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("black_swan"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("black_swan")),
     0.6, 1.2, 0.8, 1.5);
 
   public static final EgoArmor PLEASURE = registerSuit(
@@ -313,7 +314,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("pleasure"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("pleasure")),
     1.2, 0.8, 0.8, 1.5);
 
   public static final EgoArmor GAZE = registerSuit(
@@ -321,7 +322,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("gaze"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("gaze")),
     1.0, 0.8, 1.0, 1.5);
 
   public static final EgoArmor HARVEST = registerSuit(
@@ -329,7 +330,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("harvest"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("harvest")),
     0.6, 0.8, 1.3, 1.5);
   //endregion
 
@@ -340,7 +341,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("lamp"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("lamp")),
     0.8, 0.7, 0.4, 1.5);
 
   public static final EgoArmor GREEN_STEM = registerSuit(
@@ -348,7 +349,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("green_stem"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("green_stem")),
     0.8, 1.2, 0.6, 1.5);
 
   public static final EgoArmor CRIMSON_SCAR = registerSuit(
@@ -356,7 +357,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("crimson_scar"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("crimson_scar")),
     0.6, 0.6, 0.6, 1.5);
 
   public static final EgoArmor COBALT_SCAR = registerSuit(
@@ -364,7 +365,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("cobalt_scar"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("cobalt_scar")),
     0.4, 0.8, 0.7, 2.0);
 
   public static final EgoArmor FAINT_AROMA = registerSuit(
@@ -372,7 +373,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("faint_aroma"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("faint_aroma")),
     1.2, 0.6, 0.8, 1.5);
 
   public static final EgoArmor GOLD_RUSH = registerSuit(
@@ -380,7 +381,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("gold_rush"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("gold_rush")),
     0.4, 0.7, 0.8, 2.0);
 
   public static final EgoArmor SPORE = registerSuit(
@@ -388,7 +389,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("spore"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("spore")),
     0.8, 0.6, 1.2, 1.5);
 
   public static final EgoArmor ECSTASY = registerSuit(
@@ -396,7 +397,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("ecstasy"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("ecstasy")),
     0.8, 0.8, 0.8, 1.5);
 
   public static final EgoArmor HEAVEN = registerSuit(
@@ -404,7 +405,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("heaven"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("heaven")),
     1.2, 0.8, 0.6, 1.5);
 
   public static final EgoArmor THE_SWORD_SHARPENED_WITH_TEARS = registerSuit(
@@ -412,7 +413,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("the_sword_sharpened_with_tears"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("the_sword_sharpened_with_tears")),
     0.8, 0.8, 0.8, 0.8);
 
   public static final EgoArmor EXUVIAE = registerSuit(
@@ -420,7 +421,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("exuviae"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("exuviae")),
     0.6, 0.8, 1.2, 1.5);
 
   public static final EgoArmor FEATHER_OF_HONOR = registerSuit(
@@ -428,7 +429,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("feather_of_honor"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("feather_of_honor")),
     0.6, 0.6, 1.3, 2.0);
 
   public static final EgoArmor DISCORD = registerSuit(
@@ -436,7 +437,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("discord"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("discord")),
     1.2, 0.8, 0.6, 1.5);
 
   public static final EgoArmor MOONLIGHT = registerSuit(
@@ -444,7 +445,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("moonlight"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("moonlight")),
     0.8, 0.4, 0.7, 2.0);
 
   public static final EgoArmor HYPOCRISY = registerSuit(
@@ -452,7 +453,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("hypocrisy"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("hypocrisy")),
     0.7, 0.5, 1.3, 1.5);
 
   public static final EgoArmor AMITA = registerSuit(
@@ -460,7 +461,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("amita"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("amita")),
     0.5, 1.3, 0.7, 1.5);
   //endregion
 
@@ -471,7 +472,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("mimicry"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("mimicry")),
     0.2, 0.5, 0.5, 1.0);
 
   public static final EgoArmor PARADISE_LOST = registerSuit(
@@ -479,7 +480,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("paradise_lost"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("paradise_lost")),
     0.5, 0.5, 0.5, 0.3);
 
   public static final EgoArmor JUSTITIA = registerSuit(
@@ -487,7 +488,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("justitia"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("justitia")),
     0.5, 0.5, 0.5, 0.5);
 
   public static final EgoArmor TWILIGHT = registerSuit(
@@ -495,7 +496,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("twilight"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("twilight")),
     0.3, 0.3, 0.3, 0.5);
 
   public static final EgoArmor SMILE = registerSuit(
@@ -503,7 +504,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("smile"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("smile")),
     0.5, 0.5, 0.2, 1.0);
 
   public static final EgoArmor SOUND_OF_A_STAR = registerSuit(
@@ -511,7 +512,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("sound_of_a_star"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("sound_of_a_star")),
     0.4, 0.4, 0.4, 1.0);
 
   public static final EgoArmor ADORATION = registerSuit(
@@ -519,7 +520,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("adoration"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("adoration")),
     0.3, 0.6, 0.3, 1.0);
 
   public static final EgoArmor PINK = registerSuit(
@@ -527,7 +528,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
-    new ModGeoArmorModel<>("pink"),
+    new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("pink")),
     0.5, 0.3, 0.4, 1.0);
   //endregion
 

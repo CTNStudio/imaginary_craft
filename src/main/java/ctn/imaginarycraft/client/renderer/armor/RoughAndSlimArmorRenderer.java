@@ -27,7 +27,7 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
   /**
    * 是否是细手臂渲染
    */
-  protected boolean isSlim;
+  public boolean isSlim;
 
   public RoughAndSlimArmorRenderer(GeoModel<T> model) {
     super(model);
@@ -35,12 +35,20 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
 
   @Override
   protected void grabRelevantBones(BakedGeoModel bakedModel) {
-    super.grabRelevantBones(bakedModel);
-
     if (this.lastModel == bakedModel) {
       return;
     }
+
     GeoModel<T> model = getGeoModel();
+    this.lastModel = bakedModel;
+    this.head = getHeadBone(model);
+    this.body = getBodyBone(model);
+    this.rightArm = getRightArmBone(model);
+    this.leftArm = getLeftArmBone(model);
+    this.rightLeg = getRightLegBone(model);
+    this.leftLeg = getLeftLegBone(model);
+    this.rightBoot = getRightBootBone(model);
+    this.leftBoot = getLeftBootBone(model);
 
     // 细模型部分
     this.slimRightArm = getFineRightArmBone(model);
@@ -59,12 +67,20 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
 
   @Override
   public void applyBoneVisibilityByPart(EquipmentSlot currentSlot, ModelPart currentPart, HumanoidModel<?> model) {
-    super.applyBoneVisibilityByPart(currentSlot, currentPart, model);
+    setAllVisible(false);
 
     currentPart.visible = true;
     GeoBone bone = null;
 
-    if (currentPart == model.leftArm && isABoolean(this.slimRightArm)) {
+    if (currentPart == model.hat || currentPart == model.head) {
+      bone = this.head;
+    } else if (currentPart == model.body) {
+      bone = this.body;
+    } else if (currentPart == model.leftLeg) {
+      bone = currentSlot == EquipmentSlot.FEET ? this.leftBoot : this.leftLeg;
+    } else if (currentPart == model.rightLeg) {
+      bone = currentSlot == EquipmentSlot.FEET ? this.rightBoot : this.rightLeg;
+    } else if (currentPart == model.leftArm && isABoolean(this.slimRightArm)) {
       bone = this.leftArm;
     } else if (currentPart == model.rightArm && isABoolean(this.slimLeftArm)) {
       bone = this.rightArm;
@@ -112,7 +128,7 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
     super.prepForRender(entity, stack, slot, baseModel, bufferSource, partialTick, limbSwing, limbSwingAmount, netHeadYaw, headPitch);
     if (getCurrentEntity() instanceof AbstractClientPlayer player &&
       (this.slimRightArm != null || this.slimLeftArm != null)) {
-      this.isSlim = player.getSkin().model() != PlayerSkin.Model.SLIM;
+      this.isSlim = player.getSkin().model() == PlayerSkin.Model.SLIM;
     }
   }
 
@@ -124,16 +140,30 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
 
   @Override
   protected void applyBoneVisibilityBySlot(EquipmentSlot currentSlot) {
-    super.applyBoneVisibilityBySlot(currentSlot);
-    if (currentSlot != EquipmentSlot.CHEST) {
-      return;
-    }
+    setAllBonesVisible(false);
     HumanoidModel<?> model = this;
 
-    setBoneVisible(this.rightArm, model.rightArm.visible && !this.isSlim);
-    setBoneVisible(this.leftArm, model.leftArm.visible && !this.isSlim);
-    setBoneVisible(this.slimRightArm, model.rightArm.visible && this.isSlim);
-    setBoneVisible(this.slimLeftArm, model.leftArm.visible && this.isSlim);
+    switch (currentSlot) {
+      case HEAD -> setBoneVisible(this.head, model.head.visible);
+      case CHEST -> {
+        setBoneVisible(this.body, model.body.visible);
+        setBoneVisible(this.rightArm, model.rightArm.visible && !this.isSlim);
+        setBoneVisible(this.leftArm, model.leftArm.visible && !this.isSlim);
+
+        setBoneVisible(this.slimRightArm, model.rightArm.visible && this.isSlim);
+        setBoneVisible(this.slimLeftArm, model.leftArm.visible && this.isSlim);
+      }
+      case LEGS -> {
+        setBoneVisible(this.rightLeg, model.rightLeg.visible);
+        setBoneVisible(this.leftLeg, model.leftLeg.visible);
+      }
+      case FEET -> {
+        setBoneVisible(this.rightBoot, model.rightLeg.visible);
+        setBoneVisible(this.leftBoot, model.leftLeg.visible);
+      }
+      default -> {
+      }
+    }
   }
 
   private boolean isABoolean(@Nullable GeoBone slimArm) {

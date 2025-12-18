@@ -8,7 +8,6 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.GatherEffectScreenTooltipsEvent;
 import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 
 import java.util.List;
@@ -17,7 +16,7 @@ import java.util.List;
  * 物品提示/描述处理
  */
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
-public class ItemTooltipEvents {
+public final class ItemTooltipEvents {
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void itemTooltip(final ItemTooltipEvent event) {
@@ -32,9 +31,5 @@ public class ItemTooltipEvents {
         .literal(lcLevelType.getName().toUpperCase())
         .withColor(lcLevelType.getColourValue()));
     }
-  }
-
-  @SubscribeEvent
-  public static void gatherEffectScreenTooltipsEvent(GatherEffectScreenTooltipsEvent event) {
   }
 }

@@ -1,12 +1,5 @@
 package ctn.imaginarycraft.common.entity.projectile;
 
-import java.util.Objects;
-
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-
 import ctn.imaginarycraft.init.entiey.AbnormalitiesEntityTypes;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
@@ -15,6 +8,12 @@ import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+
+import javax.annotation.CheckForNull;
+import javax.annotation.CheckForSigned;
+import javax.annotation.Nonnegative;
+import javax.annotation.Nonnull;
+import java.util.Objects;
 
 public class MagicBulletEntity extends ModBulletEntity {
   @CheckForSigned
@@ -34,7 +33,7 @@ public class MagicBulletEntity extends ModBulletEntity {
   }
 
   public static MagicBulletEntity create(@Nonnull Level level, @Nonnull LivingEntity shooter,
-      @Nonnegative float damage, @Nonnull LivingEntity target) {
+                                         @Nonnegative float damage, @Nonnull LivingEntity target) {
     MagicBulletEntity entity = new MagicBulletEntity(level, shooter);
     entity.setOwner(shooter);
     entity.setDamage(damage);

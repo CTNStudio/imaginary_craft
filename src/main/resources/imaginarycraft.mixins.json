@@ -16,8 +16,7 @@
     "requireAnnotations": true
   },
   "client": [
-    "client.FontMixin",
-    "client.StringRenderOutputMixin"
+    "client.FontMixin"
   ],
   "mixinextras": {
     "minVersion": "0.5.0"

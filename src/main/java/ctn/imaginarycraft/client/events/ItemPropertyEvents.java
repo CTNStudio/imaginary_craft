@@ -16,7 +16,7 @@ import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
  * 物品渲染附加
  */
 @EventBusSubscriber(modid = ImaginaryCraft.ID, value = Dist.CLIENT)
-public class ItemPropertyEvents {
+public final class ItemPropertyEvents {
   public static final ResourceLocation MODE_BOOLEAN = ImaginaryCraft.modRl("mode_boolean");
   public static final ResourceLocation CURRENT_LC_DAMAGE_TYPE = ImaginaryCraft.modRl("current_lobotomy_corporation_damage_type");
 

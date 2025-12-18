@@ -10,12 +10,17 @@ import ctn.imaginarycraft.datagen.tag.DatagenItemTag;
 import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.item.ModArmorMaterials;
 import net.minecraft.core.Holder;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib.animatable.client.GeoRenderProvider;
+
+import java.util.Iterator;
+import java.util.Map;
+import java.util.Set;
 
 public abstract class EgoArmorRegisterUtil {
   protected static EgoArmor registerSuit(
@@ -25,14 +30,14 @@ public abstract class EgoArmorRegisterUtil {
     ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
     EgoArmorItem.Builder builder,
     Item.Properties properties,
-    GeoModel<EgoArmorItem> model,
+    GeoRenderProvider renderProvider,
     double physics,
     double spirit,
     double erosion,
     double theSoul
   ) {
     return registerSuit(id, zhName, lcLevelType, virtueUsageReqBuilder,
-      builder, properties, model, physics, spirit, erosion, theSoul, EgoArmorItem::new);
+      builder, properties, renderProvider, physics, spirit, erosion, theSoul, EgoArmorItem::new);
   }
 
   public static Holder<ArmorMaterial> getArmorMaterialHolder(LcLevelType lcLevelType) {
@@ -53,14 +58,14 @@ public abstract class EgoArmorRegisterUtil {
     ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
     EgoArmorItem.Builder builder,
     Item.Properties properties,
-    GeoModel<EgoArmorItem> model,
+    GeoRenderProvider renderProvider,
     double physics,
     double spirit,
     double erosion,
     double theSoul
   ) {
     return registerSuit(id, zhName, lcLevelType, material, virtueUsageReqBuilder,
-      builder, properties, model, physics, spirit, erosion, theSoul, EgoArmorItem::new);
+      builder, properties, renderProvider, physics, spirit, erosion, theSoul, EgoArmorItem::new);
   }
 
   protected static <C extends EgoArmorItem> EgoArmor registerSuit(
@@ -71,15 +76,15 @@ public abstract class EgoArmorRegisterUtil {
     ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
     EgoArmorItem.Builder builder,
     Item.Properties properties,
-    GeoModel<EgoArmorItem> model,
+    GeoRenderProvider renderProvider,
     double physics,
     double spirit,
     double erosion,
     double theSoul,
-    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoModel<EgoArmorItem>, ? extends C> function
+    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoRenderProvider, ? extends C> function
   ) {
     return registerSuit(id, zhName, lcLevelType, material, virtueUsageReqBuilder, builder, properties,
-      model, physics, spirit, erosion, theSoul, function, function, function);
+      renderProvider, physics, spirit, erosion, theSoul, function, function, function);
   }
 
   protected static <C extends EgoArmorItem> EgoArmor registerSuit(
@@ -89,15 +94,15 @@ public abstract class EgoArmorRegisterUtil {
     ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
     EgoArmorItem.Builder builder,
     Item.Properties properties,
-    GeoModel<EgoArmorItem> model,
+    GeoRenderProvider renderProvider,
     double physics,
     double spirit,
     double erosion,
     double theSoul,
-    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoModel<EgoArmorItem>, ? extends C> function
+    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoRenderProvider, ? extends C> function
   ) {
     return registerSuit(id, zhName, lcLevelType, getArmorMaterialHolder(lcLevelType), virtueUsageReqBuilder,
-      builder, properties, model, physics, spirit, erosion, theSoul, function, function, function);
+      builder, properties, renderProvider, physics, spirit, erosion, theSoul, function, function, function);
   }
 
   protected static <C extends EgoArmorItem, L extends EgoArmorItem, B extends EgoArmorItem> EgoArmor registerSuit(
@@ -108,23 +113,23 @@ public abstract class EgoArmorRegisterUtil {
     ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
     EgoArmorItem.Builder builder,
     Item.Properties properties,
-    GeoModel<EgoArmorItem> model,
+    GeoRenderProvider renderProvider,
     double physics,
     double spirit,
     double erosion,
     double theSoul,
-    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoModel<EgoArmorItem>, ? extends C> chestplateFunction,
-    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoModel<EgoArmorItem>, ? extends L> leggingsFunction,
-    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoModel<EgoArmorItem>, ? extends B> bootsFunction
+    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoRenderProvider, ? extends C> chestplateFunction,
+    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoRenderProvider, ? extends L> leggingsFunction,
+    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoRenderProvider, ? extends B> bootsFunction
   ) {
     double[] physicsArray = splitIntoThreeUnequalParts(physics - ModAttributes.PHYSICS_VULNERABLE_DEFAULT_VALUE);
     double[] spiritArray = splitIntoThreeUnequalParts(spirit - ModAttributes.SPIRIT_VULNERABLE_DEFAULT_VALUE);
     double[] erosionArray = splitIntoThreeUnequalParts(erosion - ModAttributes.EROSION_VULNERABLE_DEFAULT_VALUE);
     double[] theSoulArray = splitIntoThreeUnequalParts(theSoul - ModAttributes.THE_SOUL_VULNERABLE_DEFAULT_VALUE);
     return new EgoArmor(
-      register(id + "_" + ArmorItem.Type.CHESTPLATE.getName(), zhName, lcLevelType, ArmorItem.Type.CHESTPLATE, material, virtueUsageReqBuilder, builder, properties, model, physicsArray[2], spiritArray[2], erosionArray[2], theSoulArray[2], chestplateFunction),
-      register(id + "_" + ArmorItem.Type.LEGGINGS.getName(), zhName, lcLevelType, ArmorItem.Type.LEGGINGS, material, virtueUsageReqBuilder, builder, properties, model, physicsArray[1], spiritArray[1], erosionArray[1], theSoulArray[1], leggingsFunction),
-      register(id + "_" + ArmorItem.Type.BOOTS.getName(), zhName, lcLevelType, ArmorItem.Type.BOOTS, material, virtueUsageReqBuilder, builder, properties, model, physicsArray[0], spiritArray[0], erosionArray[0], theSoulArray[0], bootsFunction));
+      register(id + "_" + ArmorItem.Type.CHESTPLATE.getName(), zhName, lcLevelType, ArmorItem.Type.CHESTPLATE, material, virtueUsageReqBuilder, builder, properties, renderProvider, physicsArray[2], spiritArray[2], erosionArray[2], theSoulArray[2], chestplateFunction),
+      register(id + "_" + ArmorItem.Type.LEGGINGS.getName(), zhName, lcLevelType, ArmorItem.Type.LEGGINGS, material, virtueUsageReqBuilder, builder, properties, renderProvider, physicsArray[1], spiritArray[1], erosionArray[1], theSoulArray[1], leggingsFunction),
+      register(id + "_" + ArmorItem.Type.BOOTS.getName(), zhName, lcLevelType, ArmorItem.Type.BOOTS, material, virtueUsageReqBuilder, builder, properties, renderProvider, physicsArray[0], spiritArray[0], erosionArray[0], theSoulArray[0], bootsFunction));
   }
 
   /**
@@ -152,16 +157,16 @@ public abstract class EgoArmorRegisterUtil {
     ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
     EgoArmorItem.Builder builder,
     Item.Properties properties,
-    GeoModel<EgoArmorItem> model,
+    GeoRenderProvider renderProvider,
     double physics,
     double spirit,
     double erosion,
     double theSoul,
-    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoModel<EgoArmorItem>, ? extends I> item
+    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoRenderProvider, ? extends I> item
   ) {
     DeferredItem<I> deferredItem = EgoArmorItems.REGISTRY.register(id, () -> item.apply(material, armorItemType, properties, builder
       .virtueUsageReqBuilder(virtueUsageReqBuilder)
-      .vulnerable(physics, spirit, erosion, theSoul), model));
+      .vulnerable(physics, spirit, erosion, theSoul), renderProvider));
     LcLevelUtil.addItemLcLevelCapability(lcLevelType, deferredItem);
     switch (armorItemType) {
       case HELMET -> DatagenItemTag.HEAD_ARMOR.add(deferredItem);
@@ -185,7 +190,23 @@ public abstract class EgoArmorRegisterUtil {
   public record EgoArmor(
     DeferredItem<EgoArmorItem> chestplate,
     DeferredItem<EgoArmorItem> leggings,
-    DeferredItem<EgoArmorItem> boots) {
+    DeferredItem<EgoArmorItem> boots) implements Iterable<DeferredItem<EgoArmorItem>> {
+    @Override
+    public @NotNull Iterator<DeferredItem<EgoArmorItem>> iterator() {
+      return getSet().iterator();
+    }
+
+    public @NotNull Set<DeferredItem<EgoArmorItem>> getSet() {
+      return Set.of(this.chestplate, this.leggings, this.boots);
+    }
+
+    public @NotNull Map<EquipmentSlot, DeferredItem<EgoArmorItem>> getMap() {
+      return Map.of(
+        EquipmentSlot.CHEST, this.chestplate,
+        EquipmentSlot.LEGS, this.leggings,
+        EquipmentSlot.BODY, this.boots
+      );
+    }
   }
 
   /**

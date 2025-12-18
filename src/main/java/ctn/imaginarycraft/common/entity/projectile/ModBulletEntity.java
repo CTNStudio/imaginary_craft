@@ -13,11 +13,11 @@ public abstract class ModBulletEntity extends ThrowableProjectile {
 
   protected ModBulletEntity(EntityType<? extends ThrowableProjectile> entityType,
                             double x, double y, double z, Level level) {
-    super(entityType, x, y, z, level);  
+    super(entityType, x, y, z, level);
   }
 
   protected ModBulletEntity(EntityType<? extends ThrowableProjectile> entityType,
-      LivingEntity shooter, Level level) {
+                            LivingEntity shooter, Level level) {
     super(entityType, shooter, level);
   }
 

@@ -11,10 +11,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class RationalityModifyEvents {
-  @SubscribeEvent
-  public static void sourceRationalityPre(RationalityModifyEvent.Pre event) {
-
-  }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void sourceRationalityPost(RationalityModifyEvent.Post event) {

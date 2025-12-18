@@ -19,9 +19,4 @@ public final class GuiLayersEvents {
       event.setCanceled(true);
     }
   }
-
-  @SubscribeEvent
-  public static void renderGuiLayerEventPost(RenderGuiLayerEvent.Post event) {
-
-  }
 }

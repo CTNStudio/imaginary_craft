@@ -3,7 +3,7 @@
   "minecraft:geometry": [
     {
       "description": {
-        "identifier": "geometry.magic_bullet_armor",
+        "identifier": "geometry.magic_bullet",
         "texture_width": 64,
         "texture_height": 64,
         "visible_bounds_width": 3,
@@ -100,11 +100,47 @@
             -5,
             22,
             0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -8,
+                12,
+                -2
+              ],
+              "size": [
+                4,
+                12,
+                4
+              ],
+              "inflate": 0.05,
+              "uv": [
+                24,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -8,
+                11.5,
+                -2
+              ],
+              "size": [
+                4,
+                12,
+                4
+              ],
+              "inflate": 0.2,
+              "uv": [
+                0,
+                32
+              ]
+            }
           ]
         },
         {
-          "name": "alixR",
-          "parent": "armorRightArm",
+          "name": "armorFineRightArm",
+          "parent": "bipedRightArm",
           "pivot": [
             -5,
             22,
@@ -264,51 +300,6 @@
           ]
         },
         {
-          "name": "steveR",
-          "parent": "armorRightArm",
-          "pivot": [
-            -5,
-            22,
-            0
-          ],
-          "cubes": [
-            {
-              "origin": [
-                -8,
-                12,
-                -2
-              ],
-              "size": [
-                4,
-                12,
-                4
-              ],
-              "inflate": 0.05,
-              "uv": [
-                24,
-                0
-              ]
-            },
-            {
-              "origin": [
-                -8,
-                11.5,
-                -2
-              ],
-              "size": [
-                4,
-                12,
-                4
-              ],
-              "inflate": 0.2,
-              "uv": [
-                0,
-                32
-              ]
-            }
-          ]
-        },
-        {
           "name": "bipedLeftArm",
           "pivot": [
             5,
@@ -323,11 +314,47 @@
             5,
             22,
             0
+          ],
+          "cubes": [
+            {
+              "origin": [
+                4,
+                11.5,
+                -2
+              ],
+              "size": [
+                4,
+                12,
+                4
+              ],
+              "inflate": 0.2,
+              "uv": [
+                16,
+                32
+              ]
+            },
+            {
+              "origin": [
+                4,
+                12,
+                -2
+              ],
+              "size": [
+                4,
+                12,
+                4
+              ],
+              "inflate": 0.05,
+              "uv": [
+                24,
+                16
+              ]
+            }
           ]
         },
         {
-          "name": "alixL",
-          "parent": "armorLeftArm",
+          "name": "armorFineLeftArm",
+          "parent": "bipedLeftArm",
           "pivot": [
             5,
             22,
@@ -483,51 +510,6 @@
                   ]
                 }
               }
-            }
-          ]
-        },
-        {
-          "name": "steveL",
-          "parent": "armorLeftArm",
-          "pivot": [
-            5,
-            22,
-            0
-          ],
-          "cubes": [
-            {
-              "origin": [
-                4,
-                11.5,
-                -2
-              ],
-              "size": [
-                4,
-                12,
-                4
-              ],
-              "inflate": 0.2,
-              "uv": [
-                16,
-                32
-              ]
-            },
-            {
-              "origin": [
-                4,
-                12,
-                -2
-              ],
-              "size": [
-                4,
-                12,
-                4
-              ],
-              "inflate": 0.05,
-              "uv": [
-                24,
-                16
-              ]
             }
           ]
         },

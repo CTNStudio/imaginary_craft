@@ -13,12 +13,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-// TODO 远程类不应该使用attackDistance增加攻击距离
 // TODO dot：在计时器正常运作的前提下，每1秒受到x点指定种类的无来源伤害。该伤害不受等级压制影响。
-
-// TODO 远程武器的近战攻击采用物理伤害
-// TODO 远程攻击速度采用近战攻击速度
-// TODO 在远程攻击中近战攻击距离是弹道偏移
 public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
   public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(ImaginaryCraft.ID);
 
@@ -28,7 +23,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.ZAYIN, RemoteTemplateType.PISTOL,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(0.667f)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, null),
@@ -61,7 +55,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.TETH, RemoteTemplateType.CANNON,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(25)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, null),
@@ -72,7 +65,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.TETH, RemoteTemplateType.PISTOL,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(2.5f)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null),
@@ -83,7 +75,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.TETH, RemoteTemplateType.PISTOL,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(2.5f)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, null),
@@ -94,7 +85,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.TETH, RemoteTemplateType.PISTOL,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(2.5f)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, null, null, null),
@@ -107,7 +97,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.TETH, RemoteTemplateType.PISTOL,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(3)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null), // TODO 光头（
@@ -119,10 +108,9 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.TETH, SpecialTemplateType.REMOTE,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(1.5f)
       .attackInterval(minuteToSpeedConversion(1))
-      .attackPrecise(8 - 3)
+      .attackPrecise(8)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null),
@@ -134,10 +122,9 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.TETH, SpecialTemplateType.REMOTE,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(1.5f)
       .attackInterval(minuteToSpeedConversion(1))
-      .attackPrecise(5 - 3)
+      .attackPrecise(5)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null),
@@ -232,7 +219,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.HE, RemoteTemplateType.CROSSBOW,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(12)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, VirtueRating.II, null, null, null),
@@ -244,7 +230,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.HE, RemoteTemplateType.CANNON,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(40)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(VirtueRating.II, null, null, null, VirtueRating.II),
@@ -255,7 +240,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.HE, RemoteTemplateType.RIFLE,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(5.5f)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, VirtueRating.II, null, null),
@@ -266,10 +250,9 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.HE, SpecialTemplateType.REMOTE,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(3)
       .attackInterval(minuteToSpeedConversion(0.5f))
-      .attackPrecise(10 - 3)
+      .attackPrecise(10)
       .invincibleTick(10)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, VirtueRating.III, null, null),
@@ -283,7 +266,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(1.5f)
       .attackSpeed(minuteToSpeedConversion(1.67f))
-      .attackDistance(4 - 3)
+      .attackDistance(4)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.II, null, null, null, null),
@@ -296,7 +279,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(11)
       .attackSpeed(minuteToSpeedConversion(2))
-      .attackDistance(8 - 3)
+      .attackDistance(8)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, VirtueRating.II, null, null, VirtueRating.II),
@@ -309,7 +292,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(8)
       .attackSpeed(minuteToSpeedConversion(1.33f))
-      .attackDistance(4 - 3)
+      .attackDistance(4)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.THE_SOUL)
       .virtueUsageReq(null, null, null, VirtueRating.II, null),
@@ -324,7 +307,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(3)
       .attackSpeed(minuteToSpeedConversion(2.9f))
-      .attackDistance(4 - 3)
+      .attackDistance(4)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, VirtueRating.II, VirtueRating.II, null, null),
@@ -338,7 +321,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(2.5f)
       .attackSpeed(minuteToSpeedConversion(1.67f))
-      .attackDistance(5 - 3)
+      .attackDistance(5)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, VirtueRating.III, null, null),
@@ -413,7 +396,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.WAW, RemoteTemplateType.RIFLE,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(7.5f)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.III, null, null, null, null),
@@ -424,7 +406,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.WAW, RemoteTemplateType.CROSSBOW,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(15)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, VirtueRating.III, null, null, null),
@@ -436,7 +417,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.WAW, RemoteTemplateType.CANNON,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(42.5f)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, VirtueRating.IV),
@@ -447,7 +427,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.WAW, RemoteTemplateType.CROSSBOW,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(15)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, VirtueRating.III, null, null, null),
@@ -459,10 +438,9 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.WAW, SpecialTemplateType.REMOTE,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(6.5f)
       .attackInterval(minuteToSpeedConversion(0.83f))
-      .attackPrecise(80 - 3)
+      .attackPrecise(80)
       .invincibleTick((int) (20 * 0.83f))
       .meleeLcDamageType(null, LcDamageType.PHYSICS, LcDamageType.SPIRIT, LcDamageType.EROSION, LcDamageType.THE_SOUL)
       .virtueUsageReq(VirtueRating.III, null, null, VirtueRating.III, VirtueRating.IV),
@@ -496,19 +474,29 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .virtueUsageReq(VirtueRating.III, null, VirtueRating.III, null, VirtueRating.II),
     (p, b) -> new CobaltScarWeaponItem(p, b, "cobalt_scar"));
 
-  // TODO 该物品需要分成黑枪和白枪俩个物品
-  // TODO 和面板不同，这把武器攻击时也会造成2-2的侵蚀伤害，伤害造成顺序略晚于精神伤害。
-  public static final DeferredItem<SolemnLamentWeaponItem> SOLEMN_LAMENT = register(
-    "solemn_lament_weapon", "圣宣",
+  public static final DeferredItem<SolemnLamentWeaponItem> SOLEMN_LAMENT_BLACK = register(
+    "solemn_lament_black_weapon", "圣宣-黑",
     LcLevelType.WAW, SpecialTemplateType.REMOTE,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(2)
       .attackInterval(minuteToSpeedConversion(0.5f))
-      .attackPrecise(10 - 3)
+      .attackPrecise(10)
       .invincibleTick((int) (20 * 0.5f))
-      .meleeLcDamageType(null, LcDamageType.PHYSICS, LcDamageType.EROSION)
+      .meleeLcDamageType(LcDamageType.EROSION)
+      .virtueUsageReq(null, null, null, VirtueRating.III, null),
+    (p, b) -> new SolemnLamentWeaponItem(p, b, "solemn_lament"));
+
+  public static final DeferredItem<SolemnLamentWeaponItem> SOLEMN_LAMENT_WHITE = register(
+    "solemn_lament_white_weapon", "圣宣-白",
+    LcLevelType.WAW, SpecialTemplateType.REMOTE,
+    new Item.Properties(),
+    new RemoteEgoWeaponItem.Builder()
+      .damage(2)
+      .attackInterval(minuteToSpeedConversion(0.5f))
+      .attackPrecise(10)
+      .invincibleTick((int) (20 * 0.5f))
+      .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, null, VirtueRating.III, null),
     (p, b) -> new SolemnLamentWeaponItem(p, b, "solemn_lament"));
 
@@ -517,12 +505,11 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.WAW, SpecialTemplateType.REMOTE,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(21)
       .attackInterval(minuteToSpeedConversion(2.33f))
-      .attackPrecise(50 - 3)
+      .attackPrecise(50)
       .invincibleTick(20)
-      .meleeLcDamageType(LcDamageType.PHYSICS)
+      .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(
         null,
         null,
@@ -553,7 +540,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(3)
       .attackSpeed(minuteToSpeedConversion(0.83f))
-      .attackDistance(10 - 3)
+      .attackDistance(10)
       .invincibleTick((int) (20 * 0.83f))
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(VirtueRating.II, null, null, null, VirtueRating.II),
@@ -567,7 +554,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(10.5f)
       .attackSpeed(minuteToSpeedConversion(1.33f))
-      .attackDistance(4 - 3)
+      .attackDistance(4)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, VirtueRating.IV),
@@ -578,10 +565,9 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.WAW, SpecialTemplateType.REMOTE,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(4.5f)
       .attackInterval(minuteToSpeedConversion(0.5f))
-      .attackPrecise(15 - 3)
+      .attackPrecise(15)
       .invincibleTick((int) (20 * 0.5f))
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(VirtueRating.III, null, null, null, null),
@@ -595,7 +581,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(9)
       .attackSpeed(minuteToSpeedConversion(1.33f))
-      .attackDistance(5 - 3)
+      .attackDistance(5)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(
@@ -629,7 +615,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(3.5f)
       .attackSpeed(minuteToSpeedConversion(2.33f))
-      .attackDistance(4 - 3)
+      .attackDistance(4)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(
@@ -701,7 +687,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(12)
       .attackSpeed(minuteToSpeedConversion(1.7f))
-      .attackDistance(4 - 3)
+      .attackDistance(4)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(
@@ -720,7 +706,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(3)
       .attackSpeed(minuteToSpeedConversion(2))
-      .attackDistance(4 - 3)
+      .attackDistance(4)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.THE_SOUL)
       .virtueUsageReq(null, null, null, VirtueRating.V, VirtueRating.V),
@@ -734,10 +720,9 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.ALEPH, SpecialTemplateType.REMOTE,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(24)
       .attackInterval(minuteToSpeedConversion(2))
-      .attackPrecise(80 - 3)
+      .attackPrecise(80)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.THE_SOUL)
       .virtueUsageReq(VirtueRating.V, VirtueRating.V, VirtueRating.V, VirtueRating.V, null),
@@ -753,7 +738,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(14)
       .attackSpeed(minuteToSpeedConversion(2))
-      .attackDistance(6 - 3)
+      .attackDistance(6)
       .invincibleTick(20)
       .meleeLcDamageType(null,
         LcDamageType.PHYSICS,
@@ -772,7 +757,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(5.5f)
       .attackSpeed(minuteToSpeedConversion(1.5f))
-      .attackDistance(2 - 3)
+      .attackDistance(2)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.V, null, null, null, VirtueRating.V),
@@ -789,7 +774,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     new MeleeEgoWeaponItem.Builder()
       .damage(13)
       .attackSpeed(minuteToSpeedConversion(1.5f))
-      .attackDistance(5 - 3)
+      .attackDistance(5)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, VirtueRating.V, null, VirtueRating.V),
@@ -821,10 +806,9 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.ALEPH, SpecialTemplateType.REMOTE,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(9)
       .attackInterval(minuteToSpeedConversion(1.67f))
-      .attackPrecise(25 - 3)
+      .attackPrecise(25)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, VirtueRating.V, VirtueRating.V, null, VirtueRating.V),
@@ -836,10 +820,9 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.ALEPH, SpecialTemplateType.REMOTE,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(22)
       .attackInterval(minuteToSpeedConversion(2))
-      .attackPrecise(35 - 3)
+      .attackPrecise(35)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, VirtueRating.V, null, null, VirtueRating.V),
@@ -852,10 +835,9 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
     LcLevelType.ALEPH, SpecialTemplateType.REMOTE,
     new Item.Properties(),
     new RemoteEgoWeaponItem.Builder()
-      .remote()
       .damage(33)
       .attackInterval(minuteToSpeedConversion(3.47f))
-      .attackPrecise(15 - 3)
+      .attackPrecise(15)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, VirtueRating.V, null, VirtueRating.V),

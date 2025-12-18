@@ -12,22 +12,24 @@ import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.GeoArmorRenderer;
 
 import javax.annotation.Nullable;
+import java.util.function.Function;
 
 /**
  * 盔甲渲染提供程序
  */
 public class ModGeoArmourRenderProvider<T extends Item & GeoItem> implements GeoRenderProvider {
   protected final GeoModel<T> model;
+  private final Function<GeoModel<T>, GeoArmorRenderer<T>> rendererFunction;
   private @Nullable GeoArmorRenderer<T> renderer;
 
-  public ModGeoArmourRenderProvider(GeoModel<T> model, @Nullable GeoArmorRenderer<T> renderer) {
+  public ModGeoArmourRenderProvider(GeoModel<T> model, Function<GeoModel<T>, GeoArmorRenderer<T>> rendererFunction) {
     this.model = model;
-    this.renderer = renderer;
+    this.rendererFunction = rendererFunction;
   }
 
   public ModGeoArmourRenderProvider(GeoModel<T> model) {
     this.model = model;
-    this.renderer = null;
+    this.rendererFunction = RoughAndSlimArmorRenderer::new;
   }
 
   @Nullable
@@ -35,8 +37,9 @@ public class ModGeoArmourRenderProvider<T extends Item & GeoItem> implements Geo
   public <E extends LivingEntity> HumanoidModel<?> getGeoArmorRenderer(@Nullable E livingEntity, ItemStack itemStack,
                                                                        @Nullable EquipmentSlot equipmentSlot,
                                                                        @Nullable HumanoidModel<E> original) {
+
     if (this.renderer == null) {
-      this.renderer = new RoughAndSlimArmorRenderer<>(this.model);
+      this.renderer = rendererFunction.apply(this.model);
     }
     return this.renderer;
   }

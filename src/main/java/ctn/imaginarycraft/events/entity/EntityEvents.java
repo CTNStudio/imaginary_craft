@@ -21,12 +21,9 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
-import net.neoforged.neoforge.event.entity.EntityJoinLevelEvent;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -34,20 +31,6 @@ import org.jetbrains.annotations.Nullable;
  */
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class EntityEvents {
-  /**
-   * 实体死亡事件
-   */
-  @SubscribeEvent
-  public static void deathEvent(LivingDeathEvent event) {
-  }
-
-  @SubscribeEvent
-  public static void addSpiritAttribute(EntityJoinLevelEvent event) {
-  }
-
-  @SubscribeEvent
-  public static void entityTickEvent(EntityTickEvent.Pre event) {
-  }
 
   @SubscribeEvent
   public static void entityHealEvent(LivingHealEvent event) {

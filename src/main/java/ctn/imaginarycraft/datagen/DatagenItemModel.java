@@ -117,7 +117,7 @@ public class DatagenItemModel extends ItemModelProvider {
    * 根据提供的纹理映射和谓词创建多个模型变体
    *
    * @param item       物品实例
-   * @param prefix       前缀
+   * @param prefix     前缀
    * @param textures   纹理映射，键为浮点数值，值为纹理名称
    * @param predicates 谓词资源位置数组，用于确定何时使用哪个模型变体
    */

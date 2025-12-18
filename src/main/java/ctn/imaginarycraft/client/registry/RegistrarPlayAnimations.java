@@ -17,7 +17,6 @@ public final class RegistrarPlayAnimations {
 
   @SubscribeEvent
   public static void register(FMLClientSetupEvent event) {
-    //
     PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(STANDBY, 500,
       player -> new PlayerAnimationController(player,
         (controller, state, animSetter) -> PlayState.STOP

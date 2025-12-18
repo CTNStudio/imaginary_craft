@@ -19,10 +19,4 @@ public class ModGeoArmorModel<T extends GeoAnimatable> extends BasicGeoModel<T> 
   protected ResourceLocation getDefaultModelResource() {
     return modelPath("armor/default");
   }
-
-  @NotNull
-  @Override
-  protected ResourceLocation getDefaultTextureResource() {
-    return texturePath("armor/default");
-  }
 }

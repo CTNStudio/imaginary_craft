@@ -54,7 +54,7 @@ public abstract class BasicGeoModel<T extends GeoAnimatable> extends GeoModel<T>
 
   @Override
   public ResourceLocation getTextureResource(T animatable) {
-    return GeckoLibCache.getBakedModels().get(this.texturePath) == null ? getDefaultTextureResource() : this.texturePath;
+    return texturePath;
   }
 
   @Override
@@ -65,10 +65,5 @@ public abstract class BasicGeoModel<T extends GeoAnimatable> extends GeoModel<T>
   @NotNull
   protected ResourceLocation getDefaultModelResource() {
     return modelPath("item/default");
-  }
-
-  @NotNull
-  protected ResourceLocation getDefaultTextureResource() {
-    return texturePath("item/default");
   }
 }

@@ -2,7 +2,6 @@ package ctn.imaginarycraft.common.item.ego.armor;
 
 import ctn.imaginarycraft.api.capability.item.IItemEgo;
 import ctn.imaginarycraft.api.capability.item.IItemUsageReq;
-import ctn.imaginarycraft.client.renderer.providers.ModGeoArmourRenderProvider;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
 import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.ModDataComponents;
@@ -24,23 +23,22 @@ import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.GeoRenderProvider;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
 public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, IItemEgo {
-  protected final GeoModel<EgoArmorItem> model;
+  protected final GeoRenderProvider renderProvider;
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
   public EgoArmorItem(Holder<ArmorMaterial> material, ArmorItem.Type type, Item.Properties properties,
-                      Builder builder, GeoModel<EgoArmorItem> model) {
+                      Builder builder, GeoRenderProvider renderProvider) {
     super(material, type, properties
       .stacksTo(1)
       .attributes(builder.getItemAttributeModifiers(type, material))
       .component(ModDataComponents.IS_RESTRAIN, false)
       .component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, builder.virtueUsageReqBuilder.build()));
-    this.model = model;
+    this.renderProvider = renderProvider;
   }
 
   @Override
@@ -75,7 +73,7 @@ public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, I
 
   @Override
   public void createGeoRenderer(Consumer<GeoRenderProvider> consumer) {
-    consumer.accept(new ModGeoArmourRenderProvider<>(this.model));
+    consumer.accept(this.renderProvider);
   }
 
   @Override
