@@ -293,6 +293,7 @@ public final class EgoArmorItems extends EgoArmorRegisterUtil {
     new ModGeoArmourRenderProvider<>(new ModGeoArmorModel<>("solemn_lament")),
     1.2, 0.8, 0.5, 1.5);
 
+  // TODO 披风适配
   public static final EgoArmor MAGIC_BULLET = registerSuit(
     "magic_bullet", "魔弹", LcLevelType.HE,
     new ItemVirtueUsageReq.Builder(),

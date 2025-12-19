@@ -99,7 +99,6 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
   protected void setAllBonesVisible(boolean visible) {
     super.setAllBonesVisible(visible);
 
-    // 添加细手支持
     setBoneVisible(this.slimRightArm, visible);
     setBoneVisible(this.slimLeftArm, visible);
   }
@@ -147,11 +146,7 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
       case HEAD -> setBoneVisible(this.head, model.head.visible);
       case CHEST -> {
         setBoneVisible(this.body, model.body.visible);
-        setBoneVisible(this.rightArm, model.rightArm.visible && !this.isSlim);
-        setBoneVisible(this.leftArm, model.leftArm.visible && !this.isSlim);
-
-        setBoneVisible(this.slimRightArm, model.rightArm.visible && this.isSlim);
-        setBoneVisible(this.slimLeftArm, model.leftArm.visible && this.isSlim);
+        HandApplyBoneVisibilityBySlot(model);
       }
       case LEGS -> {
         setBoneVisible(this.rightLeg, model.rightLeg.visible);
@@ -161,9 +156,15 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
         setBoneVisible(this.rightBoot, model.rightLeg.visible);
         setBoneVisible(this.leftBoot, model.leftLeg.visible);
       }
-      default -> {
-      }
     }
+  }
+
+  private void HandApplyBoneVisibilityBySlot(HumanoidModel<?> model) {
+    setBoneVisible(this.rightArm, model.rightArm.visible && !this.isSlim);
+    setBoneVisible(this.leftArm, model.leftArm.visible && !this.isSlim);
+
+    setBoneVisible(this.slimRightArm, model.rightArm.visible && this.isSlim);
+    setBoneVisible(this.slimLeftArm, model.leftArm.visible && this.isSlim);
   }
 
   private boolean isABoolean(@Nullable GeoBone slimArm) {

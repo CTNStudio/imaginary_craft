@@ -36,12 +36,13 @@ versionRange = "${geckolib_version}"
 ordering = "NONE"
 side = "BOTH"
 
-[[dependencies.${ mod_id }]]
-modId = "player_animation_library"
-type = "required"
-versionRange = "${pal_version}"
-ordering = "NONE"
-side = "BOTH"
+# TODO 在等待PlayerAnimationLibrary修复
+#[[dependencies.${ mod_id }]]
+#modId = "player_animation_library"
+#type = "required"
+#versionRange = "${pal_version}"
+#ordering = "NONE"
+#side = "BOTH"
 
 [[dependencies.${ mod_id }]]
 modId = "curios"

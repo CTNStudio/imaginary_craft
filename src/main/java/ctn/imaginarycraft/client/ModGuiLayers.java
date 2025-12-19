@@ -5,4 +5,5 @@ import net.minecraft.resources.ResourceLocation;
 
 public final class ModGuiLayers {
   public static final ResourceLocation LEFT_BAR = ImaginaryCraft.modRl("left_bar");
+  public static final ResourceLocation SCREEN_FILTER = ImaginaryCraft.modRl("screen_filter");
 }

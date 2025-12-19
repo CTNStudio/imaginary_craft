@@ -3,6 +3,7 @@ package ctn.imaginarycraft.client.registry;
 import com.mojang.blaze3d.vertex.PoseStack;
 import ctn.imaginarycraft.client.ModGuiLayers;
 import ctn.imaginarycraft.client.gui.layers.LeftBarLayer;
+import ctn.imaginarycraft.client.gui.layers.ScreenFilterLayer;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -22,5 +23,6 @@ public final class RegistryGuiLayer {
       layer.render(guiGraphics, deltaTracker);
       pose.popPose();
     });
+    event.registerAbove(VanillaGuiLayers.SAVING_INDICATOR, ModGuiLayers.SCREEN_FILTER, ScreenFilterLayer.INSTANCE);
   }
 }

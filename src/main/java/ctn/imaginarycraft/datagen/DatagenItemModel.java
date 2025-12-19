@@ -123,26 +123,25 @@ public class DatagenItemModel extends ItemModelProvider {
    */
   public void createModelFile(Item item, String prefix, @NotNull Map<Float, String> textures, ResourceLocation... predicates) {
     ResourceLocation resourceLocation = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item));
-    ResourceLocation path = fromNamespaceAndPath(resourceLocation.getNamespace(), "item/" + prefix + resourceLocation.getPath());
+    String itemRl = "item/" + prefix + resourceLocation.getPath();
+    String itemModId = resourceLocation.getNamespace();
     ItemModelBuilder modelBuilder = getBuilder(item.toString())
       .parent(new ModelFile.UncheckedModelFile("item/generated"))
-      .texture("layer0", path);
+      .texture("layer0", fromNamespaceAndPath(itemModId, itemRl));
 
     int index = 0;
     for (Map.Entry<Float, String> entry : textures.entrySet()) {
-      ResourceLocation predicate = predicates[Math.min(index, predicates.length - 1)];
-      Float key = entry.getKey();
       String value = entry.getValue();
 
+      ResourceLocation overrideModelRl = getItemResourceLocation(item, value).withPrefix("item/");
       modelBuilder.override()
-        .model(createModelFile(item, value))
-        .predicate(predicate, key)
+        .model(new ModelFile.UncheckedModelFile(overrideModelRl))
+        .predicate(predicates[Math.min(index, predicates.length - 1)], entry.getKey())
         .end();
 
-      ResourceLocation path1 = fromNamespaceAndPath(resourceLocation.getNamespace(), "item/" + prefix + resourceLocation.getPath() + "_" + value);
-      getBuilder(item.toString())
+      getBuilder(overrideModelRl.toString())
         .parent(new ModelFile.UncheckedModelFile("item/generated"))
-        .texture("layer0", path1);
+        .texture("layer0", fromNamespaceAndPath(itemModId, itemRl + "_" + value));
       index++;
     }
   }

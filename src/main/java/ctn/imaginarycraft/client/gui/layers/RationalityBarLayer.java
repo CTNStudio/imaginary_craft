@@ -7,6 +7,7 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.ImageWidget;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 public class RationalityBarLayer extends StatusBarLayer {
   // 默认
@@ -37,7 +38,7 @@ public class RationalityBarLayer extends StatusBarLayer {
   }
 
   @Override
-  protected void renderStatusBar(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+  protected void renderStatusBar(GuiGraphics guiGraphics, @NotNull DeltaTracker deltaTracker) {
     super.renderStatusBar(guiGraphics, deltaTracker);
     float deltaTime = deltaTracker.getRealtimeDeltaTicks();
     this.lowDynamicStatusBar.render(guiGraphics, 0, 0, deltaTime);

@@ -30,10 +30,10 @@ public abstract class ItemStackMixin implements DataComponentHolder, net.neoforg
   public abstract <T extends TooltipProvider> void addToTooltip(DataComponentType<T> component, Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag);
 
   @WrapOperation(method = "addToTooltip", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/component/TooltipProvider;addToTooltip(Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/world/item/TooltipFlag;)V", ordinal = 0))
-  private <T extends TooltipProvider> void addItemDataComponentTooltipEvent(TooltipProvider instance, Item.TooltipContext context,
-                                                                            Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag,
-                                                                            Operation<Void> original,
-                                                                            @Local(argsOnly = true) DataComponentType<T> component) {
+  private <T extends TooltipProvider> void imaginarycraft$addItemDataComponentTooltipEvent(TooltipProvider instance, Item.TooltipContext context,
+                                                                                           Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag,
+                                                                                           Operation<Void> original,
+                                                                                           @Local(argsOnly = true) DataComponentType<T> component) {
     var event = new AddItemDataComponentTooltipEvent.Up<>(getImaginarycraft$itemStack(), component, context, tooltipAdder, tooltipFlag);
     if (!event.isCanceled()) {
       return;
@@ -46,8 +46,8 @@ public abstract class ItemStackMixin implements DataComponentHolder, net.neoforg
   @Definition(id = "HIDE_ADDITIONAL_TOOLTIP", field = "HIDE_ADDITIONAL_TOOLTIP", type = DataComponents.class)
   @Expression("this.has(HIDE_ADDITIONAL_TOOLTIP)")
   @ModifyExpressionValue(method = "getTooltipLines", at = @At("MIXINEXTRAS:EXPRESSION"))
-  private boolean addTooltip(boolean original, @Local Consumer<Component> instance, @Local(argsOnly = true) Item.TooltipContext tooltipContext,
-                             @Local(argsOnly = true) TooltipFlag tooltipFlag) {
+  private boolean imaginarycraft$addTooltip(boolean original, @Local Consumer<Component> instance, @Local(argsOnly = true) Item.TooltipContext tooltipContext,
+                                            @Local(argsOnly = true) TooltipFlag tooltipFlag) {
     // 添加物品使用要求
     addToTooltip(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, tooltipContext, instance, tooltipFlag);
     return original;

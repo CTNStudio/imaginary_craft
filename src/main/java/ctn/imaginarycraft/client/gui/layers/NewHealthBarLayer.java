@@ -51,7 +51,7 @@ public class NewHealthBarLayer extends StatusBarLayer {
     this.absorbingLightStatusBar = ImageWidget.sprite(80, 9, ABSORBING_LIGHT_TEXTURE);
   }
 
-  protected void renderStatusBar(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+  protected void renderStatusBar(GuiGraphics guiGraphics, @NotNull DeltaTracker deltaTracker) {
     super.renderStatusBar(guiGraphics, deltaTracker);
     float deltaTime = deltaTracker.getRealtimeDeltaTicks();
 

@@ -27,5 +27,5 @@ public final class ModCreativeModeTabs extends CreativeModeTabRegisterUtil {
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EGO_ARMOR = register(
     "ego_armor", "E.G.O 护甲", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
       EgoArmorItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get())), () ->
-      EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chestplate().get().getDefaultInstance()));
+      EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chest().get().getDefaultInstance()));
 }

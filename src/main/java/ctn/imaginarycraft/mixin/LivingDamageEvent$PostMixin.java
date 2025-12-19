@@ -16,7 +16,7 @@ public abstract class LivingDamageEvent$PostMixin implements ILivingDamageEvent$
   private DamageContainer projectMoon$damageContainer;
 
   @Inject(method = "<init>", at = @At("RETURN"))
-  private void projectMoon$Post(LivingEntity entity, DamageContainer container, CallbackInfo ci) {
+  private void imaginarycraft$projectMoon$Post(LivingEntity entity, DamageContainer container, CallbackInfo ci) {
     projectMoon$damageContainer = container;
   }
 

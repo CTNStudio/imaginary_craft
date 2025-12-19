@@ -173,8 +173,6 @@ public abstract class EgoArmorRegisterUtil {
       case CHESTPLATE -> DatagenItemTag.CHEST_ARMOR.add(deferredItem);
       case LEGGINGS -> DatagenItemTag.LEG_ARMOR.add(deferredItem);
       case BOOTS -> DatagenItemTag.FOOT_ARMOR.add(deferredItem);
-      case BODY -> {
-      }
     }
     DatagenItemTag.EGO_ARMOUR.add(deferredItem);
     ZhCn.ITEMS.put(deferredItem, zhName);
@@ -183,28 +181,28 @@ public abstract class EgoArmorRegisterUtil {
 
   /**
    *
-   * @param chestplate 胸
-   * @param leggings   腿
-   * @param boots      脚
+   * @param chest 胸
+   * @param legs  腿
+   * @param feet  脚
    */
   public record EgoArmor(
-    DeferredItem<EgoArmorItem> chestplate,
-    DeferredItem<EgoArmorItem> leggings,
-    DeferredItem<EgoArmorItem> boots) implements Iterable<DeferredItem<EgoArmorItem>> {
+    DeferredItem<EgoArmorItem> chest,
+    DeferredItem<EgoArmorItem> legs,
+    DeferredItem<EgoArmorItem> feet) implements Iterable<DeferredItem<EgoArmorItem>> {
     @Override
     public @NotNull Iterator<DeferredItem<EgoArmorItem>> iterator() {
       return getSet().iterator();
     }
 
     public @NotNull Set<DeferredItem<EgoArmorItem>> getSet() {
-      return Set.of(this.chestplate, this.leggings, this.boots);
+      return Set.of(this.chest, this.legs, this.feet);
     }
 
     public @NotNull Map<EquipmentSlot, DeferredItem<EgoArmorItem>> getMap() {
       return Map.of(
-        EquipmentSlot.CHEST, this.chestplate,
-        EquipmentSlot.LEGS, this.leggings,
-        EquipmentSlot.BODY, this.boots
+        EquipmentSlot.CHEST, this.chest,
+        EquipmentSlot.LEGS, this.legs,
+        EquipmentSlot.FEET, this.feet
       );
     }
   }

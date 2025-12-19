@@ -26,7 +26,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(0.667f)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, null),
-    "soda");
+    "weapon/soda");
 
   public static final DeferredItem<MeleeEgoWeaponItem> PENITENCE = registerMeleeTemplate(
     "penitence_weapon", "忏悔",
@@ -36,7 +36,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(6)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null),
-    "penitence");
+    "weapon/penitence");
 
   public static final DeferredItem<MeleeEgoWeaponItem> WINGBEAT = registerMeleeTemplate(
     "wingbeat_weapon", "翅振",
@@ -46,7 +46,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(6)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, null),
-    "wingbeat");
+    "weapon/wingbeat");
   //endregion
 
   //region TETH
@@ -58,7 +58,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(25)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, null),
-    "fourth_match_flame");
+    "weapon/fourth_match_flame");
 
   public static final DeferredItem<RemoteEgoWeaponItem> SOLITUDE = registerRemoteTemplate(
     "solitude_weapon", "孤独",
@@ -68,7 +68,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(2.5f)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null),
-    "solitude");
+    "weapon/solitude");
 
   public static final DeferredItem<RemoteEgoWeaponItem> BEAK = registerRemoteTemplate(
     "beak_weapon", "小喙",
@@ -78,7 +78,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(2.5f)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, null),
-    "beak");
+    "weapon/beak");
 
   public static final DeferredItem<RemoteEgoWeaponItem> TODAY_IS_EXPRESSION = registerRemoteTemplate(
     "today_is_expression_weapon", "此刻的神色",
@@ -88,7 +88,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(2.5f)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, null, null, null),
-    "today_is_expression");
+    "weapon/today_is_expression");
 
   // TODO 只有秃顶或是地中海的帅气员工才能使用这件屌爆的装备！
   // 这是什么阴的没边的效果（
@@ -114,7 +114,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null),
-    (p, b) -> new EngulfingDreamWeaponItem(p, b, "engulfing_dream"));
+    (p, b) -> new EngulfingDreamWeaponItem(p, b, "weapon/engulfing_dream"));
 
   // TODO 这把武器一次攻击动画会造成三次伤害。
   public static final DeferredItem<CherryBlossomsWeaponItem> CHERRY_BLOSSOMS = register(
@@ -128,7 +128,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null),
-    (p, b) -> new CherryBlossomsWeaponItem(p, b, "cherry_blossoms"));
+    (p, b) -> new CherryBlossomsWeaponItem(p, b, "weapon/cherry_blossoms"));
 
   // TODO 如果持有者的勇气等级高于2级，进入战斗后会提高2.5点移动速度。
   public static final DeferredItem<MeleeEgoWeaponItem> RED_EYES = registerMeleeTemplate(
@@ -139,7 +139,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(8)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, null),
-    "red_eyes");
+    "weapon/red_eyes");
 
   public static final DeferredItem<MeleeEgoWeaponItem> HORN = registerMeleeTemplate(
     "horn_weapon", "犄角",
@@ -149,7 +149,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(7)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, null),
-    "horn");
+    "weapon/horn");
 
   public static final DeferredItem<MeleeEgoWeaponItem> WRIST_CUTTER = registerMeleeTemplate(
     "wrist_cutter_weapon", "割腕者",
@@ -159,7 +159,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(2.5f)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null),
-    "wrist_cutter");
+    "weapon/wrist_cutter");
 
   public static final DeferredItem<MeleeEgoWeaponItem> REGRET = registerMeleeTemplate(
     "regret_weapon", "悔恨",
@@ -169,7 +169,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(15)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, null),
-    "regret");
+    "weapon/regret");
 
   // TODO 如果持有者的谨慎等级低于5级，进入战斗后有10%的概率提升40%的最大精神值。该效果持续30秒。
   public static final DeferredItem<MeleeEgoWeaponItem> FRAGMENTS_FROM_SOMEWHERE = registerMeleeTemplate(
@@ -180,7 +180,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(7)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, null, null, null),
-    "fragments_from_somewhere");
+    "weapon/fragments_from_somewhere");
 
   public static final DeferredItem<MeleeEgoWeaponItem> LANTERN = registerMeleeTemplate(
     "lantern_weapon", "诱捕幻灯",
@@ -190,7 +190,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(15)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, null, null, null),
-    "lantern");
+    "weapon/lantern");
 
   public static final DeferredItem<MeleeEgoWeaponItem> SO_CUTE = registerMeleeTemplate(
     "so_cute_weapon", "超特么可爱！！！",
@@ -200,7 +200,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(5)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, null),
-    "so_cute");
+    "weapon/so_cute");
 
   public static final DeferredItem<MeleeEgoWeaponItem> STANDARD_TRAINING_EGO = registerMeleeTemplate(
     "standard_training_ego_weapon", "教学用E.G.O武器",
@@ -210,7 +210,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(6)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null),
-    "standard_training_ego");
+    "weapon/standard_training_ego");
   //endregion
 
   //region HE
@@ -222,7 +222,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(12)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, VirtueRating.II, null, null, null),
-    "screaming_wedge");
+    "weapon/screaming_wedge");
 
   // TODO 如果持有者的生命值维持在10%及以上，那么持有者将消耗一定生命值发动更加强大的攻击。（造成30%的额外伤害）
   public static final DeferredItem<RemoteEgoWeaponItem> HARMONY = registerRemoteTemplate(
@@ -233,7 +233,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(40)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(VirtueRating.II, null, null, null, VirtueRating.II),
-    "harmony");
+    "weapon/harmony");
 
   public static final DeferredItem<RemoteEgoWeaponItem> LAETITIA = registerRemoteTemplate(
     "laetitia_weapon", "蕾蒂希娅",
@@ -243,7 +243,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(5.5f)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, VirtueRating.II, null, null),
-    "laetitia");
+    "weapon/laetitia");
 
   public static final DeferredItem<SyrinxWeaponItem> SYRINX = register(
     "syrinx_weapon", "泣婴",
@@ -256,7 +256,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(10)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, VirtueRating.III, null, null),
-    (p, b) -> new SyrinxWeaponItem(p, b, "syrinx"));
+    (p, b) -> new SyrinxWeaponItem(p, b, "weapon/syrinx"));
 
   // TODO 这把武器一次攻击会造成6次伤害。
   public static final DeferredItem<GrinderMk4WeaponItem> GRINDER_MK4 = register(
@@ -270,7 +270,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.II, null, null, null, null),
-    (p, b) -> new GrinderMk4WeaponItem(p, b, "grinder_mk4"));
+    (p, b) -> new GrinderMk4WeaponItem(p, b, "weapon/grinder_mk4"));
 
   public static final DeferredItem<OurGalaxyWeaponItem> OUR_GALAXY = register(
     "our_galaxy_weapon", "小小银河",
@@ -283,7 +283,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, VirtueRating.II, null, null, VirtueRating.II),
-    (p, b) -> new OurGalaxyWeaponItem(p, b, "our_galaxy"));
+    (p, b) -> new OurGalaxyWeaponItem(p, b, "weapon/our_galaxy"));
 
   public static final DeferredItem<LifeForADaredevilWeaponItem> LIFE_FOR_A_DAREDEVIL = register(
     "life_for_a_daredevil_weapon", "决死之心",
@@ -296,7 +296,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.THE_SOUL)
       .virtueUsageReq(null, null, null, VirtueRating.II, null),
-    (p, b) -> new LifeForADaredevilWeaponItem(p, b, "life_for_a_daredevil"));
+    (p, b) -> new LifeForADaredevilWeaponItem(p, b, "weapon/life_for_a_daredevil"));
 
   // TODO 这把武器每次攻击会造成9次伤害。
   // TODO 在攻击到敌人时，为敌人附加一个每秒受到2点物理伤害的dot，持续5秒，不可叠加。
@@ -311,7 +311,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, VirtueRating.II, VirtueRating.II, null, null),
-    (p, b) -> new GazeWeaponItem(p, b, "gaze"));
+    (p, b) -> new GazeWeaponItem(p, b, "weapon/gaze"));
 
   // TODO 这把武器击中目标时，会给目标附加每秒受到2点精神伤害的dot，持续5秒，不可叠加。
   public static final DeferredItem<PleasureWeaponItem> PLEASURE = register(
@@ -325,7 +325,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, VirtueRating.III, null, null),
-    (p, b) -> new PleasureWeaponItem(p, b, "pleasure"));
+    (p, b) -> new PleasureWeaponItem(p, b, "weapon/pleasure"));
 
   public static final DeferredItem<MeleeEgoWeaponItem> BEAR_PAWS = registerMeleeTemplate(
     "bear_paws_weapon", "熊熊抱",
@@ -335,7 +335,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(7)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.II, null, null, null, null),
-    "bear_paws");
+    "weapon/bear_paws");
 
   // TODO 如果持有者的自律等级低于3级，每次攻击都会提高最大与最小攻击力。但代价是每次攻击都会丧失等同于最大精神值4%的精神值。
   public static final DeferredItem<MeleeEgoWeaponItem> SANGUINE_DESIRE = registerMeleeTemplate(
@@ -346,7 +346,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(6)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, null),
-    "sanguine_desire");
+    "weapon/sanguine_desire");
 
   public static final DeferredItem<MeleeEgoWeaponItem> LOGGING = registerMeleeTemplate(
     "logging_weapon", "伐木者",
@@ -356,7 +356,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(17)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, VirtueRating.II, null, null),
-    "logging");
+    "weapon/logging");
 
   // TODO 被这支武器刺中的目标会减少30%的移动速度，持续3秒。需要单独效果。
   public static final DeferredItem<MeleeEgoWeaponItem> FROST_SPLINTER = registerMeleeTemplate(
@@ -367,7 +367,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(7)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null),
-    "frost_splinter");
+    "weapon/frost_splinter");
 
   public static final DeferredItem<MeleeEgoWeaponItem> CHRISTMAS = registerMeleeTemplate(
     "christmas_weapon", "悲惨圣诞",
@@ -377,7 +377,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(12)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null),
-    "christmas");
+    "weapon/christmas");
 
   public static final DeferredItem<MeleeEgoWeaponItem> HARVEST = registerMeleeTemplate(
     "harvest_weapon", "猎头长耙",
@@ -387,7 +387,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(8)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, null, null, null),
-    "harvest");
+    "weapon/harvest");
   //endregion
 
   //region WAW
@@ -399,7 +399,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(7.5f)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.III, null, null, null, null),
-    "hornet");
+    "weapon/hornet");
 
   public static final DeferredItem<RemoteEgoWeaponItem> FAINT_AROMA = registerRemoteTemplate(
     "faint_aroma_weapon", "余香",
@@ -409,7 +409,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(15)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, VirtueRating.III, null, null, null),
-    "faint_aroma");
+    "weapon/faint_aroma");
 
   // TODO 攻击时有25%的概率给目标添加一个易伤效果，使其受到的物理伤害加深。
   public static final DeferredItem<RemoteEgoWeaponItem> EXUVIAE = registerRemoteTemplate(
@@ -420,7 +420,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(42.5f)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, VirtueRating.IV),
-    "exuviae");
+    "weapon/exuviae");
 
   public static final DeferredItem<RemoteEgoWeaponItem> HYPOCRISY = registerRemoteTemplate(
     "hypocrisy_weapon", "伪善",
@@ -430,7 +430,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(15)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, VirtueRating.III, null, null, null),
-    "hypocrisy");
+    "weapon/hypocrisy");
 
   // TODO 这件E.G.O在攻击时会造成随机类型的伤害。这件E.G.O命中员工时，会根据伤害类型为员工恢复生命值和精神值。
   public static final DeferredItem<InTheNameOfLoveAndHateWeaponItem> IN_THE_NAME_OF_LOVE_AND_HATE = register(
@@ -444,7 +444,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick((int) (20 * 0.83f))
       .meleeLcDamageType(null, LcDamageType.PHYSICS, LcDamageType.SPIRIT, LcDamageType.EROSION, LcDamageType.THE_SOUL)
       .virtueUsageReq(VirtueRating.III, null, null, VirtueRating.III, VirtueRating.IV),
-    (p, b) -> new InTheNameOfLoveAndHateWeaponItem(p, b, "in_the_name_of_love_and_hate"));
+    (p, b) -> new InTheNameOfLoveAndHateWeaponItem(p, b, "weapon/in_the_name_of_love_and_hate"));
 
   // TODO 如果持有者的生命值低于50%，武器的伤害会额外增加50%。但是，持有者在该状态下攻击时会对其他员工造成无差别伤害。
   public static final DeferredItem<CrimsonScarWeaponItem> CRIMSON_SCAR = register(
@@ -458,7 +458,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.III, null, null, VirtueRating.III, VirtueRating.III),
-    (p, b) -> new CrimsonScarWeaponItem(p, b, "crimson_scar"));
+    (p, b) -> new CrimsonScarWeaponItem(p, b, "weapon/crimson_scar"));
 
   // TODO 持有者攻击时会在一定时间内增加物理伤害。如果持有者的生命值小于或等于50%，武器的伤害会额外增加50%。但是，持有者在该状态下攻击时会对其他员工造成无差别伤害。
   public static final DeferredItem<CobaltScarWeaponItem> COBALT_SCAR = register(
@@ -472,7 +472,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.III, null, VirtueRating.III, null, VirtueRating.II),
-    (p, b) -> new CobaltScarWeaponItem(p, b, "cobalt_scar"));
+    (p, b) -> new CobaltScarWeaponItem(p, b, "weapon/cobalt_scar"));
 
   public static final DeferredItem<SolemnLamentWeaponItem> SOLEMN_LAMENT_BLACK = register(
     "solemn_lament_black_weapon", "圣宣-黑",
@@ -485,7 +485,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick((int) (20 * 0.5f))
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, null, VirtueRating.III, null),
-    (p, b) -> new SolemnLamentWeaponItem(p, b, "solemn_lament"));
+    (p, b) -> new SolemnLamentWeaponItem(p, b, "weapon/solemn_lament"));
 
   public static final DeferredItem<SolemnLamentWeaponItem> SOLEMN_LAMENT_WHITE = register(
     "solemn_lament_white_weapon", "圣宣-白",
@@ -498,7 +498,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick((int) (20 * 0.5f))
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, null, VirtueRating.III, null),
-    (p, b) -> new SolemnLamentWeaponItem(p, b, "solemn_lament"));
+    (p, b) -> new SolemnLamentWeaponItem(p, b, "weapon/solemn_lament"));
 
   public static final DeferredItem<MagicBulletWeaponItem> MAGIC_BULLET = register(
     "magic_bullet_weapon", "魔弹",
@@ -510,13 +510,8 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .attackPrecise(50)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
-      .virtueUsageReq(
-        null,
-        null,
-        VirtueRating.III,
-        null,
-        null),
-    (p, b) -> new MagicBulletWeaponItem(p, b, "magic_bullet"));
+      .virtueUsageReq(null, null, VirtueRating.III, null, null),
+    (p, b) -> new MagicBulletWeaponItem(p, b, "weapon/magic_bullet"));
 
   // TODO 这把武器一次攻击动画会造成2次侵蚀伤害。
   // TODO 持有者进入战斗后，有一定概率反弹自身受到的伤害。
@@ -531,7 +526,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, VirtueRating.III, null, null, null),
-    (p, b) -> new BlackSwanWeaponItem(p, b, "black_swan"));
+    (p, b) -> new BlackSwanWeaponItem(p, b, "weapon/black_swan"));
 
   public static final DeferredItem<EcstasyWeaponItem> ECSTASY = register(
     "ecstasy_weapon", "沉醉",
@@ -544,7 +539,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick((int) (20 * 0.83f))
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(VirtueRating.II, null, null, null, VirtueRating.II),
-    (p, b) -> new EcstasyWeaponItem(p, b, "ecstasy"));
+    (p, b) -> new EcstasyWeaponItem(p, b, "weapon/ecstasy"));
 
   // TODO 这把武器攻击时有30%的概率使用特殊攻击，持有者先举起刺剑，然后对目标进行快速戳刺，造成9次1-2点精神伤害和1次9-12点精神伤害。
   public static final DeferredItem<TheSwordSharpenedWithTearsWeaponItem> THE_SWORD_SHARPENED_WITH_TEARS = register(
@@ -558,7 +553,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, VirtueRating.IV),
-    (p, b) -> new TheSwordSharpenedWithTearsWeaponItem(p, b, "the_sword_sharpened_with_tears"));
+    (p, b) -> new TheSwordSharpenedWithTearsWeaponItem(p, b, "weapon/the_sword_sharpened_with_tears"));
 
   public static final DeferredItem<FeatherOfHonorWeaponItem> FEATHER_OF_HONOR = register(
     "feather_of_honor_weapon", "荣耀之羽",
@@ -571,7 +566,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick((int) (20 * 0.5f))
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(VirtueRating.III, null, null, null, null),
-    (p, b) -> new FeatherOfHonorWeaponItem(p, b, "feather_of_honor"));
+    (p, b) -> new FeatherOfHonorWeaponItem(p, b, "weapon/feather_of_honor"));
 
   // TODO 这把武器在攻击时有10%的概率使用特殊攻击，具体效果为：持有者对目标进行4次快速戳刺和一次劈砍，造成4次2.5点侵蚀伤害和一次9-12点侵蚀伤害。
   public static final DeferredItem<DiscordWeaponItem> DISCORD = register(
@@ -584,13 +579,8 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .attackDistance(5)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
-      .virtueUsageReq(
-        null,
-        null,
-        VirtueRating.III,
-        null,
-        VirtueRating.III),
-    (p, b) -> new DiscordWeaponItem(p, b, "discord"));
+      .virtueUsageReq(null, null, VirtueRating.III, null, VirtueRating.III),
+    (p, b) -> new DiscordWeaponItem(p, b, "weapon/discord"));
 
   // TODO 这把武器在攻击时有15%的概率使用特殊攻击，持有者对目标进行一次快速上挑和下砸然后以拐杖点地，造成2次5.5点侵蚀伤害和10点侵蚀伤害。
   // TODO 这把武器发动特殊攻击时，能够为同房间的所有职员附加一层和中央本部科技完全相同的反侵蚀力场盾。这层反侵蚀力场盾不会影响其余类型护盾的效果并可以和它们共存，若已经存在附加的反侵蚀力场盾，那么该护盾的承伤能力将恢复为最大值。
@@ -605,7 +595,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(VirtueRating.III, null, null, null, VirtueRating.IV),
-    (p, b) -> new MoonlightWeaponItem(p, b, "moonlight"));
+    (p, b) -> new MoonlightWeaponItem(p, b, "weapon/moonlight"));
 
   // TODO 这把武器每次攻击时会造成3次物理伤害。
   public static final DeferredItem<AmitaWeaponItem> AMITA = register(
@@ -618,13 +608,8 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .attackDistance(4)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
-      .virtueUsageReq(
-        null,
-        null,
-        VirtueRating.III,
-        null,
-        VirtueRating.III),
-    (p, b) -> new AmitaWeaponItem(p, b, "amita"));
+      .virtueUsageReq(null, null, VirtueRating.III, null, VirtueRating.III),
+    (p, b) -> new AmitaWeaponItem(p, b, "weapon/amita"));
 
   public static final DeferredItem<MeleeEgoWeaponItem> LAMP = registerMeleeTemplate(
     "lamp_weapon", "目灯",
@@ -634,7 +619,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(24)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(VirtueRating.III, VirtueRating.III, null, null, null),
-    "lamp");
+    "weapon/lamp");
 
   public static final DeferredItem<MeleeEgoWeaponItem> GREEN_STEM = registerMeleeTemplate(
     "green_stem_weapon", "绿色枝干",
@@ -644,7 +629,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(12)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, VirtueRating.III, null, null),
-    "green_stem");
+    "weapon/green_stem");
 
   // TODO 持有者攻击时有25%的概率给目标添加一个易伤效果，使其受到的精神伤害加深。
   public static final DeferredItem<MeleeEgoWeaponItem> SPORE = registerMeleeTemplate(
@@ -655,7 +640,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(12)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, VirtueRating.II, null, VirtueRating.II),
-    "spore");
+    "weapon/spore");
 
   public static final DeferredItem<MeleeEgoWeaponItem> HEAVEN = registerMeleeTemplate(
     "heaven_weapon", "穿刺极乐",
@@ -665,7 +650,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(10)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, VirtueRating.III),
-    "heaven");
+    "weapon/heaven");
 
   public static final DeferredItem<MeleeEgoWeaponItem> DIFFRACTION = registerMeleeTemplate(
     "diffraction_weapon", "虚无衍射体",
@@ -675,7 +660,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(16)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, VirtueRating.III, null, null, null),
-    "diffraction");
+    "weapon/diffraction");
   //endregion
 
   //region ALEPH
@@ -690,13 +675,8 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .attackDistance(4)
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
-      .virtueUsageReq(
-        VirtueRating.V,
-        null,
-        null,
-        null,
-        VirtueRating.V),
-    (p, b) -> new MimicryWeaponItem(p, b, "mimicry"));
+      .virtueUsageReq(VirtueRating.V, null, null, null, VirtueRating.V),
+    (p, b) -> new MimicryWeaponItem(p, b, "weapon/mimicry"));
 
   // TODO 这把武器每次攻击时会造成5次灵魂伤害。
   public static final DeferredItem<JustitiaWeaponItem> JUSTITIA = register(
@@ -710,7 +690,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.THE_SOUL)
       .virtueUsageReq(null, null, null, VirtueRating.V, VirtueRating.V),
-    (p, b) -> new JustitiaWeaponItem(p, b, "justitia"));
+    (p, b) -> new JustitiaWeaponItem(p, b, "weapon/justitia"));
 
   // TODO 持有者无法通过各部门的"再生反应堆"恢复生命值和精神值。
   // TODO 发起普通攻击时，这把武器能减少被击中单位的移动速度，同时恢复持有者的生命值和精神值。(伤害量和恢复量取决于击中单位的数量。)
@@ -726,7 +706,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.THE_SOUL)
       .virtueUsageReq(VirtueRating.V, VirtueRating.V, VirtueRating.V, VirtueRating.V, null),
-    (p, b) -> new ParadiseLostWeaponItem(p, b, "paradise_lost"));
+    (p, b) -> new ParadiseLostWeaponItem(p, b, "weapon/paradise_lost"));
 
   // TODO 只有全属性超过110的员工才能拿起这把武器。
   // TODO 这把武器会同时造成物理，精神，侵蚀和灵魂伤害。
@@ -746,7 +726,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
         LcDamageType.EROSION,
         LcDamageType.THE_SOUL)
       .virtueUsageReq(111, 111, 111, 111, 0),
-    (p, b) -> new TwilightWeaponItem(p, b, "twilight"));
+    (p, b) -> new TwilightWeaponItem(p, b, "weapon/twilight"));
 
   // TODO 持有者每次攻击时都有10%的概提高5点最大与最小攻击力，该效果持续12秒。代价是，120秒内，持有者的自律相关属性会降低50%。
   // TODO 这把武器每次攻击时会造成3次物理伤害。
@@ -761,7 +741,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.V, null, null, null, VirtueRating.V),
-    (p, b) -> new GoldRushWeaponItem(p, b, "gold_rush"));
+    (p, b) -> new GoldRushWeaponItem(p, b, "weapon/gold_rush"));
 
   // TODO 每击杀一个目标，持有者的勇气与正义的相关属性会提高3点。该效果仅在当天有效。
   // TODO 发起普通攻击时，这把武器能减少被击中单位的移动速度。
@@ -778,7 +758,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, VirtueRating.V, null, VirtueRating.V),
-    (p, b) -> new SmileWeaponItem(p, b, "smile"));
+    (p, b) -> new SmileWeaponItem(p, b, "weapon/smile"));
 
   // TODO 每次攻击造成2次伤害
   // TODO 持有这「CENSORED」的员工受到伤害时，「CENSORED」会为其恢复相当于伤害数值40%的生命
@@ -794,7 +774,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(VirtueRating.V, null, null, null, VirtueRating.V),
-    (p, b) -> new CensoredWeaponItem(p, b, "censored"));
+    (p, b) -> new CensoredWeaponItem(p, b, "weapon/censored"));
 
   // TODO 这把武器在攻击时会造成贯穿伤害，但该武器的伤害不会伤害到中立目标和友方目标。
   // TODO 这把武器的伤害和攻击次数与员工的最大精神值数值无关，仅与员工当前精神值占最大精神值的百分比有关。
@@ -812,7 +792,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, VirtueRating.V, VirtueRating.V, null, VirtueRating.V),
-    (p, b) -> new SoundOfAStarWeaponItem(p, b, "sound_of_a_star"));
+    (p, b) -> new SoundOfAStarWeaponItem(p, b, "weapon/sound_of_a_star"));
 
   // TODO 这把武器每次攻击之前需要花费等同于一次攻击间隔的时间趴下来准备攻击；若目标始终处于射程范围内且保持与武器持有者相对方向相同，则不需要再次准备。
   public static final DeferredItem<PinkWeaponItem> PINK = register(
@@ -826,7 +806,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, VirtueRating.V, null, null, VirtueRating.V),
-    (p, b) -> new PinkWeaponItem(p, b, "pink"));
+    (p, b) -> new PinkWeaponItem(p, b, "weapon/pink"));
 
   // TODO 这把武器的子弹命中时，会给目标附加每秒受到 2 点侵蚀伤害的dot，持续 5 秒，不可叠加。
   // TODO 这把武器的子弹命中时，会使目标的移动速度在 5 秒内降低 30%。
@@ -841,7 +821,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, VirtueRating.V, null, VirtueRating.V),
-    (p, b) -> new AdorationWeaponItem(p, b, "adoration"));
+    (p, b) -> new AdorationWeaponItem(p, b, "weapon/adoration"));
   //endregion
 
   public static void init(IEventBus bus) {

@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
-import ctn.imaginarycraft.api.client.IPlayerAnim;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.common.entity.projectile.ParadiseLostSpikeweed;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
@@ -299,11 +298,6 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
    * 強制中断
    */
   public void forcedInterruption(Level level, Player player) {
-//    resetTemporaryAttribute(player);
-    IPlayerAnim.stopAnimation(level, player, ATTACK);
-    IPlayerAnim.stopAnimation(level, player, CONTINUOUS_ATTACK);
-    IPlayerAnim.stopAnimation(level, player, END);
-    player.releaseUsingItem();
   }
 
   @Nullable
