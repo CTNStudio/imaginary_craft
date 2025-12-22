@@ -31,7 +31,7 @@ public record PlayerAnimationPayload(ResourceLocation controller,
 
   /**
    * @param controller 动画控制器id
-   * @param animation  动画id 如果为空则停止动画
+   * @param animation 动画id 如果为空则停止动画
    */
   public PlayerAnimationPayload(@NotNull ResourceLocation controller, @Nullable ResourceLocation animation) {
     this(controller, Optional.ofNullable(animation));

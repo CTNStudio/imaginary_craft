@@ -5,6 +5,7 @@ import com.zigythebird.playeranim.animation.PlayerAnimationController;
 import com.zigythebird.playeranim.api.PlayerAnimationAccess;
 import com.zigythebird.playeranimcore.animation.Animation;
 import com.zigythebird.playeranimcore.animation.AnimationController;
+import com.zigythebird.playeranimcore.animation.AnimationData;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
 import com.zigythebird.playeranimcore.easing.EasingType;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -16,10 +17,11 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.util.Arrays;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 
 public final class PlayerAnimUtil {
-  public static final ResourceLocation PLAYER_HEAD_ROTATION = ImaginaryCraft.modRl("player.head_rotation");
   /**
    * 头部旋转
    */
@@ -108,5 +110,49 @@ public final class PlayerAnimUtil {
     return animation != null &&
       animation1 != null &&
       animation.uuid().equals(animation1.uuid());
+  }
+
+  @SafeVarargs
+  public static boolean is(ItemStack item, Supplier<? extends Item>... items) {
+    return Arrays.stream(items).anyMatch(i -> i.get() == item.getItem());
+  }
+
+  /**
+   * 动画集合
+   */
+  @SuppressWarnings("UnusedReturnValue")
+  public record AnimCollection(ResourceLocation standby, ResourceLocation move,
+                               Supplier<? extends Item>... items) {
+    @SafeVarargs
+    public AnimCollection {
+    }
+
+    public boolean executeAnim(ItemStack toItemStack, PlayerAnimationController controller,
+                               AnimationData state, AnimationController.AnimationSetter animationSetter) {
+      for (Supplier<? extends Item> item : items) {
+        if (!toItemStack.is(item.get())) {
+          continue;
+        }
+        if (state.isMoving()) {
+          movingAnim(controller);
+        } else {
+          standbyAnim(controller);
+        }
+        return true;
+      }
+      return false;
+    }
+
+    public void movingAnim(PlayerAnimationController controller) {
+      if (PlayerAnimUtil.isExecutableAnimation(controller, move)) {
+        controller.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(3, EasingType.EASE_IN_OUT_SINE), move, true);
+      }
+    }
+
+    public void standbyAnim(PlayerAnimationController controller) {
+      if (PlayerAnimUtil.isExecutableAnimation(controller, standby)) {
+        controller.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(3, EasingType.EASE_IN_OUT_SINE), standby, true);
+      }
+    }
   }
 }
