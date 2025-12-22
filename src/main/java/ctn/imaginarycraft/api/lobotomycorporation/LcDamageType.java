@@ -2,10 +2,10 @@ package ctn.imaginarycraft.api.lobotomycorporation;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
-import ctn.ctnapi.client.util.ColorUtil;
 import ctn.imaginarycraft.api.ColourText;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
 import ctn.imaginarycraft.client.ModFontIcon;
+import ctn.imaginarycraft.client.util.ColorUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.ModDamageTypes;

@@ -26,12 +26,13 @@ import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import org.jetbrains.annotations.Nullable;
 
-/**
- * 实体事件
- */
-@EventBusSubscriber(modid = ImaginaryCraft.ID)
-public final class EntityEvents {
 
+@EventBusSubscriber(modid = ImaginaryCraft.ID)
+public final class LivingEntityEvents {
+
+  /**
+   * 恢复事件
+   */
   @SubscribeEvent
   public static void entityHealEvent(LivingHealEvent event) {
     float amount = event.getAmount();
@@ -47,16 +48,19 @@ public final class EntityEvents {
    */
   @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void livingIncomingDamageEvent(LivingIncomingDamageEvent event) {
+    LivingEntity entity = event.getEntity();
+    if (!(entity.level() instanceof ServerLevel serverLevel)) {
+      return;
+    }
+
     DamageSource damageSource = event.getSource();
     DamageContainer damageContainer = event.getContainer();
     IDamageSource iDamageSource = IDamageSource.of(damageSource);
     IDamageContainer iDamageContainer = IDamageContainer.of(damageContainer);
     @Nullable LcLevelType lcDamageLevel = iDamageSource.getImaginaryCraft$LcDamageLevel();
     LcDamageType lcDamageType = iDamageSource.getImaginaryCraft$LcDamageType();
-    LivingEntity entity = event.getEntity();
-    if (entity.level() instanceof ServerLevel serverLevel) {
-      LcDamageEventExecutes.vulnerableTreatment(iDamageContainer, entity, lcDamageLevel, lcDamageType);
-    }
+
+    LcDamageEventExecutes.vulnerableTreatment(iDamageContainer, entity, lcDamageLevel, lcDamageType);
   }
 
   /**
@@ -74,6 +78,7 @@ public final class EntityEvents {
     // 建议在每个有返回值的方法执行后再获取一次以求准确
     float newDamage = event.getNewDamage();
     boolean modifyRationality = lcDamageType == LcDamageType.SPIRIT || lcDamageType == LcDamageType.EROSION;
+
     // TODO 添加免疫，吸收，无效处理
     if (lcDamageType == LcDamageType.THE_SOUL) {
       newDamage = LcDamageUtil.theSoulDamage(newDamage, attackedEntity, sourceDirectEntity == null ? sourceCausingEntity : sourceDirectEntity, source);
@@ -119,11 +124,13 @@ public final class EntityEvents {
   public static void appliedDamageToEntityEvent(LivingDamageEvent.Post event) {
     LivingEntity entity = event.getEntity();
     Level level = entity.level();
+
+    if (!(level instanceof ServerLevel serverLevel)) {
+      return;
+    }
+
     DamageSource source = event.getSource();
     float newDamage = event.getNewDamage();
-
-    if (level instanceof ServerLevel serverLevel) {
-      LcDamageEventExecutes.appliedDamageToEntity(serverLevel, entity, source, newDamage);
-    }
+    LcDamageEventExecutes.appliedDamageToEntity(serverLevel, entity, source, newDamage);
   }
 }

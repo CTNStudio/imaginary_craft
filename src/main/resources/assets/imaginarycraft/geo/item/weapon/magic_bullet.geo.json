@@ -1,16 +1,16 @@
 {
-  "format_version": "1.12.0",
+  "format_version": "1.21.20",
   "minecraft:geometry": [
     {
       "description": {
         "identifier": "geometry.magic_bullet",
         "texture_width": 32,
         "texture_height": 32,
-        "visible_bounds_width": 4,
-        "visible_bounds_height": 1.5,
+        "visible_bounds_width": 7,
+        "visible_bounds_height": 4,
         "visible_bounds_offset": [
           0,
-          0.25,
+          1,
           0
         ]
       },
@@ -30,9 +30,9 @@
           "cubes": [
             {
               "origin": [
-                -0.675,
-                -11.675,
-                3.75
+                -1.16667,
+                -12,
+                3.91667
               ],
               "size": [
                 3,
@@ -46,9 +46,9 @@
             },
             {
               "origin": [
-                -1.675,
-                -5.675,
-                3.75
+                -2.16667,
+                -6,
+                3.91667
               ],
               "size": [
                 3,
@@ -62,9 +62,9 @@
             },
             {
               "origin": [
-                -0.675,
-                -7.675,
-                3.75
+                -1.16667,
+                -8,
+                3.91667
               ],
               "size": [
                 2,
@@ -78,9 +78,9 @@
             },
             {
               "origin": [
-                1.325,
-                -6.675,
-                4
+                0.83333,
+                -7,
+                4.16667
               ],
               "size": [
                 1,
@@ -94,9 +94,9 @@
             },
             {
               "origin": [
-                -0.675,
-                -0.675,
-                4
+                -1.16667,
+                -1,
+                4.16667
               ],
               "size": [
                 2,
@@ -110,9 +110,9 @@
             },
             {
               "origin": [
-                -0.675,
-                18.325,
-                4
+                -1.16667,
+                18,
+                4.16667
               ],
               "size": [
                 1,

@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.api.lobotomycorporation.virtue;
 
 import com.mojang.serialization.Codec;
-import ctn.ctnapi.client.util.ColorUtil;
 import ctn.imaginarycraft.api.ColourText;
+import ctn.imaginarycraft.client.util.ColorUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModAttachments;
 import io.netty.buffer.ByteBuf;

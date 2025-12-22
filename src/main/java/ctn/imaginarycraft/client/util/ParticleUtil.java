@@ -193,6 +193,6 @@ public final class ParticleUtil {
   // TODO 新增吸收字段
   // TODO 新增无效字段
   public static @NotNull MutableComponent getText(float value, boolean isHeal) {
-    return Component.literal((isHeal ? "+%s" : "-%s").formatted(TextUtil.formatNumber(Math.abs(value), 2)));
+    return Component.literal((isHeal ? "+%s" : "-%s").formatted(TextUtil.formatNumberPlaces(Math.abs(value), 2)));
   }
 }

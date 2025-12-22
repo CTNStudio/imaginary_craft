@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.client.gui.layers;
 
-import ctn.ctnapi.util.TextUtil;
 import ctn.imaginarycraft.client.gui.widget.HorizontalStatusBar;
+import ctn.imaginarycraft.util.TextUtil;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;

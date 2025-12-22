@@ -1,0 +1,34 @@
+{
+  "format_version": "1.8.0",
+  "model": {
+    "main_head": {
+      "pivot": [
+        0,
+        24,
+        0
+      ]
+    }
+  },
+  "parents": {
+    "head": "main_head"
+  },
+  "animations": {
+    "player.head_rotation": {
+      "loop": true,
+      "animation_length": 0,
+      "bones": {
+        "main_head": {
+          "rotation": {
+            "0.0": {
+              "vector": [
+                "query.head_x_rotation",
+                "query.head_y_rotation-query.body_y_rotation",
+                0
+              ]
+            }
+          }
+        }
+      }
+    }
+  }
+}

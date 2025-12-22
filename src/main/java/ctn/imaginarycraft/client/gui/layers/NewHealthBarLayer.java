@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.client.gui.layers;
 
-import ctn.ctnapi.util.TextUtil;
 import ctn.imaginarycraft.client.gui.widget.HorizontalStatusBar;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.util.TextUtil;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.GuiGraphics;
@@ -73,7 +73,7 @@ public class NewHealthBarLayer extends StatusBarLayer {
     MutableComponent value = super.getValueText();
     float absorbingHp = this.absorbingHp;
     if (absorbingHp > 0) {
-      String text = "+%s".formatted(TextUtil.formatNumber(absorbingHp, 2));
+      String text = "+%s".formatted(TextUtil.formatNumberPlaces(absorbingHp, 2));
       value.append(Component.literal(text).withColor(0xffe400));
     }
 

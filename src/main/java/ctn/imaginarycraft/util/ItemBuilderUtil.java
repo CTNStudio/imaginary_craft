@@ -7,7 +7,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 
-public class ItemBuilderUtil {
+public final class ItemBuilderUtil {
   public static void addAttributeModifier(final ItemAttributeModifiers.Builder builder, final Holder<Attribute> attributeHolder, final ResourceLocation id, final double value, final AttributeModifier.Operation operation, EquipmentSlotGroup slot) {
     if (value == 0) {
       return;

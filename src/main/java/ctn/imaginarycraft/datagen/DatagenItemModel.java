@@ -16,12 +16,11 @@ import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 import static net.minecraft.resources.ResourceLocation.parse;
@@ -44,9 +43,20 @@ public class DatagenItemModel extends ItemModelProvider {
 
   @Override
   protected void registerModels() {
+    Set<DeferredItem<? extends Item>> items = new HashSet<>(Set.of(
+      EgoWeaponItems.MAGIC_BULLET
+    ));
     withExistingParent(EgoCurioItems.REGISTRY, "item/curios/");
     withExistingParent(EgoArmorItems.REGISTRY, "item/armor/");
-    EgoWeaponItems.REGISTRY.getEntries().stream().map(DeferredHolder::get).forEach(this::geoItem);
+    EgoWeaponItems.REGISTRY.getEntries().stream()
+      .filter(holder -> {
+        boolean is = !items.contains(holder);
+        if (!is) {
+          items.remove(holder);
+        }
+        return is;
+      })
+      .map(DeferredHolder::get).forEach(this::geoItem);
     creativeRationalityTool(ToolItems.CREATIVE_RATIONALITY_TOOL.get());
     chaosSword(ToolItems.CHAOS_SWORD.get());
   }
