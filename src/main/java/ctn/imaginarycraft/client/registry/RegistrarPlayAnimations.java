@@ -19,11 +19,9 @@ public final class RegistrarPlayAnimations {
   @SubscribeEvent
   public static void register(FMLClientSetupEvent event) {
     event.enqueueWork(() -> {
-      PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(PlayerAnimUtil.STANDBY, 600, StandbyPlayerAnimationController::new);
+      PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(PlayerAnimUtil.STANDBY_OR_WALK, 600, StandbyPlayerAnimationController::new);
       registerFactory(PlayerAnimUtil.HEAD_ROTATION, 700);
-      registerFactory(PlayerAnimUtil.WALK, 1000);
-      registerFactory(PlayerAnimUtil.ATTACK_STANDBY, 1500);
-      registerFactory(PlayerAnimUtil.ATTACK, 2000);
+      registerFactory(PlayerAnimUtil.NORMAL_STATE, 1500);
     });
   }
 

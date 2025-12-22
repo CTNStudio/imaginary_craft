@@ -8,119 +8,120 @@ import com.zigythebird.playeranimcore.animation.AnimationController;
 import com.zigythebird.playeranimcore.animation.AnimationData;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
 import com.zigythebird.playeranimcore.easing.EasingType;
+import ctn.imaginarycraft.common.payloads.player.PlayerAnimationPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.util.PayloadUtil;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Arrays;
-import java.util.function.Consumer;
 import java.util.function.Supplier;
 
+@SuppressWarnings({"LoggingSimilarMessage", "UnusedReturnValue"})
 public final class PlayerAnimUtil {
   /**
    * 头部旋转
    */
   public static final ResourceLocation HEAD_ROTATION = ImaginaryCraft.modRl("head_rotation");
   /**
-   * 待机
+   * 待机和行走
    */
-  public static final ResourceLocation STANDBY = ImaginaryCraft.modRl("standby");
+  public static final ResourceLocation STANDBY_OR_WALK = ImaginaryCraft.modRl("standby_or_walk");
   /**
-   * 行走
+   * 常态
    */
-  public static final ResourceLocation WALK = ImaginaryCraft.modRl("walk");
+  public static final ResourceLocation NORMAL_STATE = ImaginaryCraft.modRl("normal_state");
+
+  public static void stop(Player player) {
+    stop(player, NORMAL_STATE);
+  }
+
+  public static void play(Player player, ResourceLocation animationId) {
+    play(player, NORMAL_STATE, animationId);
+  }
+
   /**
-   * 攻击待机
+   * 停止动画
    */
-  public static final ResourceLocation ATTACK_STANDBY = ImaginaryCraft.modRl("attack_standby");
+  public static void stop(Player player, ResourceLocation controllerId) {
+    if (player instanceof ServerPlayer serverPlayer) {
+      PayloadUtil.sendToClient(serverPlayer, new PlayerAnimationPayload(controllerId));
+      return;
+    }
+    if (player instanceof AbstractClientPlayer clientPlayer) {
+      clientStop(controllerId, clientPlayer);
+      return;
+    }
+    throw new UnsupportedOperationException("Not implemented");
+  }
+
   /**
-   * 攻击
+   * 播放动画
    */
-  public static final ResourceLocation ATTACK = ImaginaryCraft.modRl("attack");
+  public static void play(Player player, ResourceLocation controllerId, ResourceLocation animationId) {
+    if (player instanceof ServerPlayer serverPlayer) {
+      PayloadUtil.sendToClient(serverPlayer, new PlayerAnimationPayload(controllerId, animationId));
+      return;
+    }
+    if (player instanceof AbstractClientPlayer clientPlayer) {
+      clientPlay(controllerId, animationId, clientPlayer);
+      return;
+    }
+    throw new UnsupportedOperationException("Not implemented");
+  }
+
+  public static void clientStop(ResourceLocation controllerId, AbstractClientPlayer clientPlayer) {
+    PlayerAnimationController controller = getPlayerAnimationController(clientPlayer, controllerId);
+    if (controller == null) {
+      ImaginaryCraft.LOGGER.warn("PlayerAnimationController not found: {}", controllerId);
+      return;
+    }
+    controller.stop();
+  }
+
+  public static void clientPlay(ResourceLocation controllerId, ResourceLocation animationId, AbstractClientPlayer clientPlayer) {
+    PlayerAnimationController controller = getPlayerAnimationController(clientPlayer, controllerId);
+    if (controller == null) {
+      ImaginaryCraft.LOGGER.warn("PlayerAnimationController not found: {}", controllerId);
+      return;
+    }
+    controller.triggerAnimation(animationId);
+  }
 
   @Nullable
   public static PlayerAnimationController getPlayerAnimationController(@NotNull AbstractClientPlayer player, @NotNull ResourceLocation id) {
     return (PlayerAnimationController) PlayerAnimationAccess.getPlayerAnimationLayer(player, id);
   }
 
-  public static void controller(@NotNull Player player, @NotNull ResourceLocation id, Consumer<PlayerAnimationController> consumer) {
-    if (!(player instanceof AbstractClientPlayer clientPlayer)) {
-      return;
-    }
-    PlayerAnimationController controller = getPlayerAnimationController(clientPlayer, id);
-    if (controller == null) {
-      return;
-    }
-    consumer.accept(controller);
-  }
-
   /**
-   * 停止动画
+   * 是否可播放动画
    */
-  public static void stop(Player player, ResourceLocation animationID) {
-  }
-
-  /**
-   * 播放动画
-   */
-  public static void play(Player player, ResourceLocation controllerID, ResourceLocation animationID) {
-    if (!(player instanceof AbstractClientPlayer clientPlayer)) {
-      // TODO 处理同步
-      return;
-    }
-    PlayerAnimationController controller = (PlayerAnimationController) PlayerAnimationAccess.getPlayerAnimationLayer(clientPlayer, controllerID);
-    if (controller == null) {
-      ImaginaryCraft.LOGGER.warn("PlayerAnimationController not found: {}", controllerID);
-      return;
-    }
-    controller.triggerAnimation(animationID);
-  }
-
-
-  public static boolean playItemAnimation(ItemStack toItemStack, PlayerAnimationController standbyController, ResourceLocation playAnimationId, Item... items) {
-    for (Item item : items) {
-      if (!toItemStack.is(item)) {
-        continue;
-      }
-      return playStandbyAnimation(standbyController, playAnimationId);
-    }
-    return false;
-  }
-
-  public static boolean playStandbyAnimation(PlayerAnimationController controller, ResourceLocation playAnimationId) {
-    return !isExecutableAnimation(controller, playAnimationId) &&
-      controller.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(1, EasingType.LINEAR), playAnimationId, true);
-  }
-
   public static boolean isExecutableAnimation(AnimationController controller, ResourceLocation animationId) {
     return isExecutableAnimation(controller, PlayerAnimResources.getAnimation(animationId));
   }
 
+  /**
+   * 是否可播放动画
+   */
   public static boolean isExecutableAnimation(AnimationController controller, Animation animation) {
-    return animation != null &&
-      !isSameAnimation(controller.getCurrentAnimationInstance(), animation);
+    return animation != null && !isSameAnimation(controller.getCurrentAnimationInstance(), animation);
   }
 
+  /**
+   * 是否是同一动画
+   */
   public static boolean isSameAnimation(Animation animation, Animation animation1) {
-    return animation != null &&
-      animation1 != null &&
-      animation.uuid().equals(animation1.uuid());
-  }
-
-  @SafeVarargs
-  public static boolean is(ItemStack item, Supplier<? extends Item>... items) {
-    return Arrays.stream(items).anyMatch(i -> i.get() == item.getItem());
+    return animation != null && animation1 != null && animation.uuid().equals(animation1.uuid());
   }
 
   /**
    * 动画集合
    */
-  @SuppressWarnings("UnusedReturnValue")
   public record AnimCollection(ResourceLocation standby, ResourceLocation move,
                                Supplier<? extends Item>... items) {
     @SafeVarargs

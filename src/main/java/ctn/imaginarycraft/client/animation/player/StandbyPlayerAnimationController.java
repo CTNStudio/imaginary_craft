@@ -14,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 
+import java.util.Arrays;
 import java.util.Map;
 import java.util.function.Supplier;
 
@@ -44,7 +45,8 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
     ItemStack mainHandItem = player.getMainHandItem();
 
     PlayerAnimationController headRotationController = PlayerAnimUtil.getPlayerAnimationController(player, PlayerAnimUtil.HEAD_ROTATION);
-    if (!is(mainHandItem)) {
+
+    if (!isExecutableAnimation(mainHandItem)) {
       if (headRotationController != null) {
         headRotationController.stopTriggeredAnimation();
       }
@@ -52,6 +54,7 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
       return;
     }
 
+    // 触发头部旋转动画
     if (headRotationController != null) {
       headRotationController.triggerAnimation(PLAYER_HEAD_ROTATION);
     }
@@ -60,7 +63,11 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
     MagicBulletWeaponItem.ANIM_COLLECTION.executeAnim(mainHandItem, controller, animationData, animationSetter);
   }
 
-  private static boolean is(ItemStack mainHandItem) {
-    return mainHandItem.isEmpty() || !PlayerAnimUtil.is(mainHandItem, ITEM_KEY_CACHE);
+  /**
+   * 是否能执行动画
+   */
+  private static boolean isExecutableAnimation(ItemStack item) {
+    return !item.isEmpty() && Arrays.stream(ITEM_KEY_CACHE)
+      .anyMatch(i -> i.get() == item.getItem());
   }
 }

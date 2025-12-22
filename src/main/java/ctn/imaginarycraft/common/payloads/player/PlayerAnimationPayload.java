@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.payloads.player;
 
-
+import ctn.imaginarycraft.client.util.PlayerAnimUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.util.PayloadUtil;
 import io.netty.buffer.ByteBuf;
@@ -37,6 +37,13 @@ public record PlayerAnimationPayload(ResourceLocation controller,
     this(controller, Optional.ofNullable(animation));
   }
 
+  /**
+   * @param controller 动画控制器id
+   */
+  public PlayerAnimationPayload(@NotNull ResourceLocation controller) {
+    this(controller, Optional.empty());
+  }
+
   public static void toServer(final PlayerAnimationPayload data, final IPayloadContext context) {
     MinecraftServer minecraftServer = ServerLifecycleHooks.getCurrentServer();
     if (minecraftServer == null) {
@@ -59,6 +66,12 @@ public record PlayerAnimationPayload(ResourceLocation controller,
   }
 
   public static void toClient(final PlayerAnimationPayload data, final IPayloadContext context) {
+    Optional<ResourceLocation> animation = data.animation;
+    if (animation.isEmpty()) {
+      PlayerAnimUtil.stop(context.player(), data.controller);
+      return;
+    }
+    PlayerAnimUtil.play(context.player(), data.controller, animation.get());
   }
 
   @Override
