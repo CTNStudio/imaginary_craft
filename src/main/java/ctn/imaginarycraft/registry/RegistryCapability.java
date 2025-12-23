@@ -24,6 +24,7 @@ import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Supplier;
 
 
 /**
@@ -36,58 +37,58 @@ public final class RegistryCapability {
   public static final List<ItemLike> ITEM_HE = new ArrayList<>();
   public static final List<ItemLike> ITEM_WAW = new ArrayList<>();
   public static final List<ItemLike> ITEM_ALEPH = new ArrayList<>();
-  public static final List<Block> BLOCK_ZAYIN = new ArrayList<>();
-  public static final List<Block> BLOCK_TETH = new ArrayList<>();
-  public static final List<Block> BLOCK_HE = new ArrayList<>();
-  public static final List<Block> BLOCK_WAW = new ArrayList<>();
-  public static final List<Block> BLOCK_ALEPH = new ArrayList<>();
-  public static final List<EntityType<?>> ENTITY_ZAYIN = new ArrayList<>();
-  public static final List<EntityType<?>> ENTITY_TETH = new ArrayList<>();
-  public static final List<EntityType<?>> ENTITY_HE = new ArrayList<>();
-  public static final List<EntityType<?>> ENTITY_WAW = new ArrayList<>();
-  public static final List<EntityType<?>> ENTITY_ALEPH = new ArrayList<>();
+  public static final List<Supplier<Block>> BLOCK_ZAYIN = new ArrayList<>();
+  public static final List<Supplier<Block>> BLOCK_TETH = new ArrayList<>();
+  public static final List<Supplier<Block>> BLOCK_HE = new ArrayList<>();
+  public static final List<Supplier<Block>> BLOCK_WAW = new ArrayList<>();
+  public static final List<Supplier<Block>> BLOCK_ALEPH = new ArrayList<>();
+  public static final List<Supplier<EntityType<?>>> ENTITY_ZAYIN = new ArrayList<>();
+  public static final List<Supplier<EntityType<?>>> ENTITY_TETH = new ArrayList<>();
+  public static final List<Supplier<EntityType<?>>> ENTITY_HE = new ArrayList<>();
+  public static final List<Supplier<EntityType<?>>> ENTITY_WAW = new ArrayList<>();
+  public static final List<Supplier<EntityType<?>>> ENTITY_ALEPH = new ArrayList<>();
 
   static {
-    ENTITY_ALEPH.add(EntityType.WITHER);
-    ENTITY_ALEPH.add(EntityType.ENDER_DRAGON);
-    ENTITY_ALEPH.add(EntityType.WARDEN);
+    ENTITY_ALEPH.add(() -> EntityType.WITHER);
+    ENTITY_ALEPH.add(() -> EntityType.ENDER_DRAGON);
+    ENTITY_ALEPH.add(() -> EntityType.WARDEN);
 
-    ENTITY_WAW.add(EntityType.RAVAGER);
-    ENTITY_WAW.add(EntityType.ELDER_GUARDIAN);
-    ENTITY_WAW.add(EntityType.IRON_GOLEM);
+    ENTITY_WAW.add(() -> EntityType.RAVAGER);
+    ENTITY_WAW.add(() -> EntityType.ELDER_GUARDIAN);
+    ENTITY_WAW.add(() -> EntityType.IRON_GOLEM);
 
-    ENTITY_HE.add(EntityType.WITHER_SKELETON);
-    ENTITY_HE.add(EntityType.WITCH);
-    ENTITY_HE.add(EntityType.VINDICATOR);
-    ENTITY_HE.add(EntityType.EVOKER);
-    ENTITY_HE.add(EntityType.ZOGLIN);
-    ENTITY_HE.add(EntityType.SHULKER);
-    ENTITY_HE.add(EntityType.PIGLIN_BRUTE);
-    ENTITY_HE.add(EntityType.HOGLIN);
-    ENTITY_HE.add(EntityType.GHAST);
-    ENTITY_HE.add(EntityType.ENDERMAN);
-    ENTITY_HE.add(EntityType.GUARDIAN);
+    ENTITY_HE.add(() -> EntityType.WITHER_SKELETON);
+    ENTITY_HE.add(() -> EntityType.WITCH);
+    ENTITY_HE.add(() -> EntityType.VINDICATOR);
+    ENTITY_HE.add(() -> EntityType.EVOKER);
+    ENTITY_HE.add(() -> EntityType.ZOGLIN);
+    ENTITY_HE.add(() -> EntityType.SHULKER);
+    ENTITY_HE.add(() -> EntityType.PIGLIN_BRUTE);
+    ENTITY_HE.add(() -> EntityType.HOGLIN);
+    ENTITY_HE.add(() -> EntityType.GHAST);
+    ENTITY_HE.add(() -> EntityType.ENDERMAN);
+    ENTITY_HE.add(() -> EntityType.GUARDIAN);
 
-    ENTITY_TETH.add(EntityType.CAVE_SPIDER);
-    ENTITY_TETH.add(EntityType.SPIDER);
-    ENTITY_TETH.add(EntityType.PIGLIN);
-    ENTITY_TETH.add(EntityType.PILLAGER);
-    ENTITY_TETH.add(EntityType.VEX);
-    ENTITY_TETH.add(EntityType.SILVERFISH);
-    ENTITY_TETH.add(EntityType.ENDERMITE);
-    ENTITY_TETH.add(EntityType.PHANTOM);
-    ENTITY_TETH.add(EntityType.MAGMA_CUBE);
-    ENTITY_TETH.add(EntityType.HUSK);
-    ENTITY_TETH.add(EntityType.CREEPER);
-    ENTITY_TETH.add(EntityType.BREEZE);
-    ENTITY_TETH.add(EntityType.DROWNED);
-    ENTITY_TETH.add(EntityType.ZOMBIFIED_PIGLIN);
-    ENTITY_TETH.add(EntityType.ZOMBIE);
-    ENTITY_TETH.add(EntityType.STRAY);
-    ENTITY_TETH.add(EntityType.SKELETON);
-    ENTITY_TETH.add(EntityType.BOGGED);
-    ENTITY_TETH.add(EntityType.BLAZE);
-    ENTITY_TETH.add(EntityType.SLIME);
+    ENTITY_TETH.add(() -> EntityType.CAVE_SPIDER);
+    ENTITY_TETH.add(() -> EntityType.SPIDER);
+    ENTITY_TETH.add(() -> EntityType.PIGLIN);
+    ENTITY_TETH.add(() -> EntityType.PILLAGER);
+    ENTITY_TETH.add(() -> EntityType.VEX);
+    ENTITY_TETH.add(() -> EntityType.SILVERFISH);
+    ENTITY_TETH.add(() -> EntityType.ENDERMITE);
+    ENTITY_TETH.add(() -> EntityType.PHANTOM);
+    ENTITY_TETH.add(() -> EntityType.MAGMA_CUBE);
+    ENTITY_TETH.add(() -> EntityType.HUSK);
+    ENTITY_TETH.add(() -> EntityType.CREEPER);
+    ENTITY_TETH.add(() -> EntityType.BREEZE);
+    ENTITY_TETH.add(() -> EntityType.DROWNED);
+    ENTITY_TETH.add(() -> EntityType.ZOMBIFIED_PIGLIN);
+    ENTITY_TETH.add(() -> EntityType.ZOMBIE);
+    ENTITY_TETH.add(() -> EntityType.STRAY);
+    ENTITY_TETH.add(() -> EntityType.SKELETON);
+    ENTITY_TETH.add(() -> EntityType.BOGGED);
+    ENTITY_TETH.add(() -> EntityType.BLAZE);
+    ENTITY_TETH.add(() -> EntityType.SLIME);
   }
 
   @SubscribeEvent(priority = EventPriority.HIGHEST)
@@ -195,7 +196,7 @@ public final class RegistryCapability {
     );
   }
 
-  private static void blockLevel(RegisterCapabilitiesEvent event, LcLevelType lcLevelType, List<Block> list) {
+  private static void blockLevel(RegisterCapabilitiesEvent event, LcLevelType lcLevelType, List<Supplier<Block>> list) {
     if (list.isEmpty()) {
       return;
     }
@@ -206,16 +207,16 @@ public final class RegistryCapability {
         case HE -> BlockLcLevel.HE;
         case WAW -> BlockLcLevel.WAW;
         case ALEPH -> BlockLcLevel.ALEPH;
-      }, list.toArray(new Block[0])
+      }, (Block[]) list.stream().map(Supplier::get).toArray()
     );
   }
 
-  private static void entityLevel(RegisterCapabilitiesEvent event, LcLevelType level, List<EntityType<?>> list) {
+  private static void entityLevel(RegisterCapabilitiesEvent event, LcLevelType level, List<Supplier<EntityType<?>>> list) {
     if (list.isEmpty()) {
       return;
     }
-    for (EntityType<?> entityType : list) {
-      event.registerEntity(ModCapabilitys.LcLevel.LC_LEVEL_ENTITY, entityType, (stack, ctx) ->
+    for (Supplier<EntityType<?>> entityType : list) {
+      event.registerEntity(ModCapabilitys.LcLevel.LC_LEVEL_ENTITY, entityType.get(), (stack, ctx) ->
         switch (level) {
           case ZAYIN -> EntityLcLevel.ZAYIN;
           case TETH -> EntityLcLevel.TETH;
