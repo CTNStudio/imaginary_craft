@@ -7,6 +7,7 @@
     "DamageSourceMixin",
     "ItemStackMixin",
     "LivingDamageEvent$PostMixin",
+    "PlayerMixin",
     "client.ModelBuilderMixin"
   ],
   "injectors": {

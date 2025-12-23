@@ -3,7 +3,7 @@ package ctn.imaginarycraft.common.item.ego.weapon.template.remote;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.model.GeoModel;
 
-public class CannonEgoWeaponItem extends GeoRemoteEgoWeaponItem {
+public class CannonEgoWeaponItem extends GunEgoWeaponItem {
 
   public CannonEgoWeaponItem(Properties properties, Builder builder, GeoModel<GeoRemoteEgoWeaponItem> model, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
     super(properties, builder, model, guiModel);
@@ -17,4 +17,5 @@ public class CannonEgoWeaponItem extends GeoRemoteEgoWeaponItem {
   public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
 
   }
+
 }

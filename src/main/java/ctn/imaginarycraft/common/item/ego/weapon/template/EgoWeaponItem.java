@@ -7,11 +7,10 @@ import ctn.imaginarycraft.api.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueRating;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
-import ctn.imaginarycraft.common.item.ego.EgoItem;
 import ctn.imaginarycraft.init.ModDataComponents;
 import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
@@ -24,7 +23,7 @@ import java.util.Set;
 /**
  * EGO武器
  */
-public abstract class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLcDamageType, IItemUsageReq, IItemInvincibleTick {
+public abstract class EgoWeaponItem extends Item implements IItemEgo, IItemLcDamageType, IItemUsageReq, IItemInvincibleTick {
   private final @Nullable LcDamageType lcDamageType;
   private final @Nullable Set<LcDamageType> canCauseLcDamageTypes;
   private final int invincibleTick;
@@ -52,46 +51,6 @@ public abstract class EgoWeaponItem extends EgoItem implements IItemEgo, IItemLc
   @Nullable
   public Set<LcDamageType> getCanCauseLcDamageTypes(ItemStack stack) {
     return canCauseLcDamageTypes;
-  }
-
-  /**
-   * 使用物品时触发
-   */
-  @Override
-  public void useImpede(ItemStack itemStack, Level level, LivingEntity entity) {
-
-  }
-
-  /**
-   * 攻击时触发
-   */
-  @Override
-  public void attackImpede(ItemStack itemStack, Level level, LivingEntity entity) {
-
-  }
-
-  /**
-   * 在手上时触发
-   */
-  @Override
-  public void onTheHandImpede(ItemStack itemStack, Level level, LivingEntity entity) {
-
-  }
-
-  /**
-   * 物品在背包时里触发
-   */
-  @Override
-  public void inTheBackpackImpede(ItemStack itemStack, Level level, LivingEntity entity) {
-
-  }
-
-  /**
-   * 在装备里时触发，如盔甲，饰品
-   */
-  @Override
-  public void equipmentImpede(ItemStack itemStack, Level level, LivingEntity entity) {
-
   }
 
   /// 获取武器攻击时造成的无敌帧

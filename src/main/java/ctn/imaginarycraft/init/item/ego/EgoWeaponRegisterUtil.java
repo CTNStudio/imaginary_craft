@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.init.item.ego;
 
+import ctn.imaginarycraft.api.capability.item.IItemEgo;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
@@ -46,7 +47,7 @@ public abstract class EgoWeaponRegisterUtil {
   ) {
     var remoteBuilder = builder
       .attackInterval(remoteTemplateType.getAttackSpeed())
-      .attackPrecise(remoteTemplateType.getAttackDistance());
+      .attackDistance(remoteTemplateType.getAttackDistance());
     builder.invincibleTick(remoteTemplateType.getInvincibleTick());
     return registerRemote(id, zhName, lcLevelType, remoteTemplateType, properties, remoteBuilder, item);
   }
@@ -111,7 +112,7 @@ public abstract class EgoWeaponRegisterUtil {
     return register(id, zhName, lcLevelType, remoteTemplateType, properties, builder, item);
   }
 
-  protected static @NotNull <I extends EgoWeaponItem, B extends EgoWeaponItem.Builder<B>> DeferredItem<I> register(
+  protected static @NotNull <I extends Item & IItemEgo, B extends EgoWeaponItem.Builder<B>> DeferredItem<I> register(
     String id,
     String zhName,
     LcLevelType lcLevelType,

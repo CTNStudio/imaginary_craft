@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.events.entity;
 
-import ctn.imaginarycraft.api.ItemLeftClickEmpty;
+import ctn.imaginarycraft.api.ItemLeftEmptyClick;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.common.payloads.player.PlayerLeftEmptyClickPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -69,20 +69,19 @@ public final class PlayerEvents {
   }
 
   public static void playerLeftClickEmpty(PlayerInteractEvent event) {
+    PlayerLeftEmptyClickPayload.trigger(event.getEntity(), event.getHand());
     if (event.getSide().isClient()) {
       PayloadUtil.sendToServer(new PlayerLeftEmptyClickPayload(event.getHand()));
-      return;
     }
-    PlayerLeftEmptyClickPayload.trigger(event.getEntity(), event.getHand());
   }
 
   /**
-   * 左键点击空（服务端）
+   * 左键点击空
    */
   @SubscribeEvent
   public static void playerLeftClickEmptyEventPre(PlayerLeftEmptyClickEvent.Post event) {
     var itemStack = event.getItemStack();
-    if (!(itemStack.getItem() instanceof ItemLeftClickEmpty itemLeftClick)) {
+    if (!(itemStack.getItem() instanceof ItemLeftEmptyClick itemLeftClick)) {
       return;
     }
     itemLeftClick.leftClick(itemStack, event.getEntity());

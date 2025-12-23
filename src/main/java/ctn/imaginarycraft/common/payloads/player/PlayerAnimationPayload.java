@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.common.payloads.player;
 
+import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimStandardFadePlayerAnim;
 import ctn.imaginarycraft.client.util.PlayerAnimUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.util.PayloadUtil;
@@ -20,28 +21,67 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 import java.util.UUID;
 
+/**
+ * 玩家动画数据包
+ *
+ * @param controller 动画控制器id
+ * @param length     动画长度 如果为-1则无加速
+ * @param animation  动画id 如果为空则停止动画
+ * @param withFade   动画淡入淡出 如果为空则无淡入淡出
+ */
 public record PlayerAnimationPayload(ResourceLocation controller,
-                                     Optional<ResourceLocation> animation) implements CustomPacketPayload {
+                                     Optional<ResourceLocation> animation,
+                                     float length,
+                                     Optional<PlayerAnimStandardFadePlayerAnim> withFade) implements CustomPacketPayload {
   public static final CustomPacketPayload.Type<PlayerAnimationPayload> TYPE = new CustomPacketPayload.Type<>(ImaginaryCraft.modRl("player_animation_payload"));
 
   public static final StreamCodec<ByteBuf, PlayerAnimationPayload> STREAM_CODEC = StreamCodec.composite(
     ResourceLocation.STREAM_CODEC, PlayerAnimationPayload::controller,
     ByteBufCodecs.optional(ResourceLocation.STREAM_CODEC), PlayerAnimationPayload::animation,
+    ByteBufCodecs.FLOAT, PlayerAnimationPayload::length,
+    ByteBufCodecs.optional(PlayerAnimStandardFadePlayerAnim.STREAM_CODEC), PlayerAnimationPayload::withFade,
     PlayerAnimationPayload::new);
 
   /**
+   * 玩家动画数据包
+   *
    * @param controller 动画控制器id
-   * @param animation 动画id 如果为空则停止动画
+   * @param length     动画长度
+   * @param animation  动画id 如果为空则停止动画
+   * @param withFade   动画淡入淡出 如果为空则无淡入淡出
    */
-  public PlayerAnimationPayload(@NotNull ResourceLocation controller, @Nullable ResourceLocation animation) {
-    this(controller, Optional.ofNullable(animation));
+  public PlayerAnimationPayload(@NotNull ResourceLocation controller, @Nullable ResourceLocation animation, float length, @Nullable PlayerAnimStandardFadePlayerAnim withFade) {
+    this(controller, Optional.ofNullable(animation), length, Optional.ofNullable(withFade));
+  }
+
+
+  /**
+   * 玩家动画数据包(无过度动画)
+   *
+   * @param controller 动画控制器id
+   * @param length     动画长度 如果为-1则无加速
+   * @param animation  动画id 如果为空则停止动画
+   */
+  public PlayerAnimationPayload(@NotNull ResourceLocation controller, @Nullable ResourceLocation animation, float length) {
+    this(controller, animation, length, null);
   }
 
   /**
+   * 玩家动画数据包(无过度动画，无加速)
+   *
+   * @param controller 动画控制器id
+   * @param animation  动画id 如果为空则停止动画
+   */
+  public PlayerAnimationPayload(@NotNull ResourceLocation controller, @Nullable ResourceLocation animation) {
+    this(controller, animation, -1);
+  }
+
+  /**
+   * 暂停动画
    * @param controller 动画控制器id
    */
   public PlayerAnimationPayload(@NotNull ResourceLocation controller) {
-    this(controller, Optional.empty());
+    this(controller, null);
   }
 
   public static void toServer(final PlayerAnimationPayload data, final IPayloadContext context) {
@@ -55,13 +95,11 @@ public record PlayerAnimationPayload(ResourceLocation controller,
       return;
     }
     UUID senderUUID = senderPlayer.getUUID();
-    PlayerAnimationPayload customPacketPayload = new PlayerAnimationPayload(data.controller, data.animation);
-
     for (ServerPlayer player : level.players()) {
       if (player.getUUID().equals(senderUUID)) {
         continue;
       }
-      PayloadUtil.sendToClient(player, customPacketPayload);
+      PayloadUtil.sendToClient(player, data);
     }
   }
 

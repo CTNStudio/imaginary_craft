@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.common.entity.projectile.ParadiseLostSpikeweed;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import net.minecraft.client.Minecraft;
@@ -12,6 +11,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,12 +19,11 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.model.GeoModel;
 
-import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 失乐园武器
@@ -46,6 +45,11 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
 
   @Override
   public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+
+  }
+
+  @Override
+  protected void shootProjectile(LivingEntity shooter, Projectile projectile, int index, float velocity, float inaccuracy, float angle, @Nullable LivingEntity target) {
 
   }
 
@@ -298,11 +302,5 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
    * 強制中断
    */
   public void forcedInterruption(Level level, Player player) {
-  }
-
-  @Nullable
-  @Override
-  public Set<LcDamageType> getCanCauseLcDamageTypes(final ItemStack stack) {
-    return Set.of(LcDamageType.THE_SOUL);
   }
 }

@@ -7,7 +7,10 @@ import com.zigythebird.playeranimcore.animation.Animation;
 import com.zigythebird.playeranimcore.animation.AnimationController;
 import com.zigythebird.playeranimcore.animation.AnimationData;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
+import com.zigythebird.playeranimcore.animation.layered.modifier.SpeedModifier;
 import com.zigythebird.playeranimcore.easing.EasingType;
+import com.zigythebird.playeranimcore.enums.FadeType;
+import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimStandardFadePlayerAnim;
 import ctn.imaginarycraft.common.payloads.player.PlayerAnimationPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.util.PayloadUtil;
@@ -42,7 +45,19 @@ public final class PlayerAnimUtil {
   }
 
   public static void play(Player player, ResourceLocation animationId) {
-    play(player, NORMAL_STATE, animationId);
+    play(player, animationId, -1);
+  }
+
+  public static void play(Player player, ResourceLocation animationId, float length) {
+    play(player, NORMAL_STATE, animationId, length, null);
+  }
+
+  public static void play(Player player, ResourceLocation controllerId, ResourceLocation animationId) {
+    play(player, controllerId, animationId, -1);
+  }
+
+  public static void play(Player player, ResourceLocation controllerId, ResourceLocation animationId, float length) {
+    play(player, controllerId, animationId, length, null);
   }
 
   /**
@@ -63,13 +78,13 @@ public final class PlayerAnimUtil {
   /**
    * 播放动画
    */
-  public static void play(Player player, ResourceLocation controllerId, ResourceLocation animationId) {
+  public static void play(Player player, ResourceLocation controllerId, ResourceLocation animationId, float length, @Nullable PlayerAnimStandardFadePlayerAnim playerAnimStandardFade) {
     if (player instanceof ServerPlayer serverPlayer) {
-      PayloadUtil.sendToClient(serverPlayer, new PlayerAnimationPayload(controllerId, animationId));
+      PayloadUtil.sendToClient(serverPlayer, new PlayerAnimationPayload(controllerId, animationId, length, playerAnimStandardFade));
       return;
     }
     if (player instanceof AbstractClientPlayer clientPlayer) {
-      clientPlay(controllerId, animationId, clientPlayer);
+      clientPlay(controllerId, animationId, clientPlayer, length, playerAnimStandardFade);
       return;
     }
     throw new UnsupportedOperationException("Not implemented");
@@ -84,13 +99,33 @@ public final class PlayerAnimUtil {
     controller.stop();
   }
 
-  public static void clientPlay(ResourceLocation controllerId, ResourceLocation animationId, AbstractClientPlayer clientPlayer) {
+  public static void clientPlay(ResourceLocation controllerId, ResourceLocation animationId,
+                                AbstractClientPlayer clientPlayer, float length, @Nullable PlayerAnimStandardFadePlayerAnim playerAnimStandardFade) {
+    clientPlay(controllerId, animationId, clientPlayer, length, playerAnimStandardFade != null ? playerAnimStandardFade.toModifier() : null);
+  }
+
+  private static void clientPlay(ResourceLocation controllerId, ResourceLocation animationId, AbstractClientPlayer clientPlayer, float length, @Nullable AbstractFadeModifier abstractFadeModifier) {
     PlayerAnimationController controller = getPlayerAnimationController(clientPlayer, controllerId);
     if (controller == null) {
       ImaginaryCraft.LOGGER.warn("PlayerAnimationController not found: {}", controllerId);
       return;
     }
-    controller.triggerAnimation(animationId);
+    if (!PlayerAnimResources.hasAnimation(animationId)) {
+      return;
+    }
+    Animation animation = PlayerAnimResources.getAnimation(animationId);
+    if (length > 0) {
+      float speed = animation.length() / length;
+      controller.getModifiers().stream()
+        .filter(SpeedModifier.class::isInstance)
+        .map(SpeedModifier.class::cast).findFirst()
+        .ifPresentOrElse(modifiers -> modifiers.speed = speed, () -> controller.addModifierLast(new SpeedModifier(speed)));
+    }
+    if (abstractFadeModifier != null) {
+      controller.replaceAnimationWithFade(abstractFadeModifier, animation, true);
+      return;
+    }
+    controller.triggerAnimation(animation);
   }
 
   @Nullable
@@ -119,15 +154,20 @@ public final class PlayerAnimUtil {
     return animation != null && animation1 != null && animation.uuid().equals(animation1.uuid());
   }
 
+  public static AbstractFadeModifier getDefaultAbstractFadeModifier() {
+    return AbstractFadeModifier.standardFadeIn(3, EasingType.EASE_IN_OUT_SINE);
+  }
+
+  public static PlayerAnimStandardFadePlayerAnim getDefaultStandardFade() {
+    return new PlayerAnimStandardFadePlayerAnim(3, EasingType.EASE_IN_OUT_SINE, null, FadeType.FADE_IN);
+  }
+
   /**
    * 动画集合
    */
+  @SuppressWarnings("unchecked")
   public record AnimCollection(ResourceLocation standby, ResourceLocation move,
                                Supplier<? extends Item>... items) {
-    @SafeVarargs
-    public AnimCollection {
-    }
-
     public boolean executeAnim(ItemStack toItemStack, PlayerAnimationController controller,
                                AnimationData state, AnimationController.AnimationSetter animationSetter) {
       for (Supplier<? extends Item> item : items) {

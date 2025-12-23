@@ -45,6 +45,13 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
     ItemStack mainHandItem = player.getMainHandItem();
 
     PlayerAnimationController headRotationController = PlayerAnimUtil.getPlayerAnimationController(player, PlayerAnimUtil.HEAD_ROTATION);
+    PlayerAnimationController normalStateRotationController = PlayerAnimUtil.getPlayerAnimationController(player, PlayerAnimUtil.NORMAL_STATE);
+
+    if (normalStateRotationController != null && normalStateRotationController.isActive()) {
+      triggerHeadRotationAnimation(headRotationController);
+      controller.stopTriggeredAnimation();
+      return;
+    }
 
     if (!isExecutableAnimation(mainHandItem)) {
       if (headRotationController != null) {
@@ -55,12 +62,16 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
     }
 
     // 触发头部旋转动画
-    if (headRotationController != null) {
-      headRotationController.triggerAnimation(PLAYER_HEAD_ROTATION);
-    }
+    triggerHeadRotationAnimation(headRotationController);
 
     // 触发物品动画
     MagicBulletWeaponItem.ANIM_COLLECTION.executeAnim(mainHandItem, controller, animationData, animationSetter);
+  }
+
+  private static void triggerHeadRotationAnimation(PlayerAnimationController headRotationController) {
+    if (headRotationController != null && PlayerAnimUtil.isExecutableAnimation(headRotationController, PLAYER_HEAD_ROTATION)) {
+      headRotationController.triggerAnimation(PLAYER_HEAD_ROTATION);
+    }
   }
 
   /**

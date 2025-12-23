@@ -9,15 +9,12 @@ import ctn.imaginarycraft.util.ItemBuilderUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EquipmentSlotGroup;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
-import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.GeoRenderProvider;
@@ -39,31 +36,6 @@ public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, I
       .component(ModDataComponents.IS_RESTRAIN, false)
       .component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, builder.virtueUsageReqBuilder.build()));
     this.renderProvider = renderProvider;
-  }
-
-  @Override
-  public void useImpede(final ItemStack itemStack, final Level level, final LivingEntity entity) {
-
-  }
-
-  @Override
-  public void attackImpede(final ItemStack itemStack, final Level level, final LivingEntity entity) {
-
-  }
-
-  @Override
-  public void onTheHandImpede(final ItemStack itemStack, final Level level, final LivingEntity entity) {
-
-  }
-
-  @Override
-  public void inTheBackpackImpede(final ItemStack itemStack, final Level level, final LivingEntity entity) {
-
-  }
-
-  @Override
-  public void equipmentImpede(final ItemStack itemStack, final Level level, final LivingEntity entity) {
-
   }
 
   @Override
