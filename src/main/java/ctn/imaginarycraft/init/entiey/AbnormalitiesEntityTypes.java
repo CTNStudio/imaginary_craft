@@ -1,6 +1,7 @@
 package ctn.imaginarycraft.init.entiey;
 
 import ctn.imaginarycraft.common.entity.abnormalities.TrainingRabbits;
+import ctn.imaginarycraft.common.entity.abnormalities.ordeals.violet.GrantUsLove;
 import ctn.imaginarycraft.common.entity.projectile.MagicBulletEntity;
 import ctn.imaginarycraft.common.entity.projectile.ParadiseLostSpikeweed;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -25,6 +26,14 @@ public final class AbnormalitiesEntityTypes {
       .clientTrackingRange(8)
       .updateInterval(2)
       .canSpawnFarFromPlayer());
+
+  public static final Supplier<EntityType<GrantUsLove>> GRANT_US_LOVE = register(
+    "grant_us_love",
+    EntityType.Builder.of(GrantUsLove::new, MobCategory.MISC)
+      .sized(1.0F, 2.5F)
+      .eyeHeight(1.5F)
+      .clientTrackingRange(8)
+      .updateInterval(2));
 
   public static final Supplier<EntityType<ParadiseLostSpikeweed>> PARADISE_LOST_SPIKEWEED = register(
     "paradise_lost_spikeweed",

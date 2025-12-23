@@ -8,6 +8,7 @@ import ctn.imaginarycraft.api.capability.item.*;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModCapabilitys;
+import ctn.imaginarycraft.init.entiey.AbnormalitiesEntityTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -89,6 +90,8 @@ public final class RegistryCapability {
     ENTITY_TETH.add(() -> EntityType.BOGGED);
     ENTITY_TETH.add(() -> EntityType.BLAZE);
     ENTITY_TETH.add(() -> EntityType.SLIME);
+
+    ENTITY_HE.add(AbnormalitiesEntityTypes.GRANT_US_LOVE::get);
   }
 
   @SubscribeEvent(priority = EventPriority.HIGHEST)

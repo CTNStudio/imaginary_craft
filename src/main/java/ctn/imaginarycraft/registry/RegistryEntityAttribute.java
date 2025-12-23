@@ -1,13 +1,17 @@
 package ctn.imaginarycraft.registry;
 
+import ctn.imaginarycraft.common.entity.abnormalities.ordeals.violet.GrantUsLove;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModAttributes;
+import ctn.imaginarycraft.init.entiey.AbnormalitiesEntityTypes;
+import ctn.imaginarycraft.init.entiey.ModEntityTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
 import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 
@@ -19,6 +23,8 @@ public final class RegistryEntityAttribute {
    */
   @SubscribeEvent
   public static void registry(EntityAttributeCreationEvent event) {
+    event.put(AbnormalitiesEntityTypes.GRANT_US_LOVE.get(), GrantUsLove.createAttributes().build());
+
   }
 
   /**

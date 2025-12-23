@@ -44,7 +44,7 @@ public class TrainingRabbits extends AbnormalitiesEntity {
 
     @Override
     public @NotNull ResourceLocation getTextureLocation(@NotNull TrainingRabbits animatable) {
-      return ModGeoEntityModel.texturePath("training_rabbits");
+      return ModGeoEntityModel.getTexturePath("training_rabbits");
     }
   }
 }
