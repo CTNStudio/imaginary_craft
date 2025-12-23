@@ -5,6 +5,7 @@ import com.zigythebird.playeranimcore.animation.AnimationController;
 import com.zigythebird.playeranimcore.animation.AnimationData;
 import com.zigythebird.playeranimcore.enums.PlayState;
 import ctn.imaginarycraft.api.client.ModPlayerAnimationController;
+import ctn.imaginarycraft.api.client.playeranimcore.AnimCollection;
 import ctn.imaginarycraft.client.util.PlayerAnimUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.remote.MagicBulletWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -22,7 +23,7 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
   public static final ResourceLocation PLAYER_HEAD_ROTATION = ImaginaryCraft.modRl("player.head_rotation");
 
   // 有移动，待机的物品放这
-  public static final Map<Supplier<? extends Item>, PlayerAnimUtil.AnimCollection> ITEM = Map.of(
+  public static final Map<Supplier<? extends Item>, AnimCollection> ITEM = Map.of(
     EgoWeaponItems.MAGIC_BULLET, MagicBulletWeaponItem.ANIM_COLLECTION
   );
 

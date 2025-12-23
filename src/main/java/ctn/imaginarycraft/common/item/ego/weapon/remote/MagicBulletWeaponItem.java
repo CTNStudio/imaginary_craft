@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
+import ctn.imaginarycraft.api.client.playeranimcore.AnimCollection;
 import ctn.imaginarycraft.client.util.PlayerAnimUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponItem;
@@ -30,7 +31,7 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   public static final ResourceLocation SHOOTING_CYCLE_AIM = ImaginaryCraft.modRl("magic_bullet_weapon.shooting.cycle.aim");
 
   @SuppressWarnings("unchecked")
-  public static final PlayerAnimUtil.AnimCollection ANIM_COLLECTION = new PlayerAnimUtil.AnimCollection(
+  public static final AnimCollection ANIM_COLLECTION = new AnimCollection(
     STANDBY, GALLOP, EgoWeaponItems.MAGIC_BULLET
   );
 
@@ -78,6 +79,6 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
 
   @Override
   public void leftClickAiming(@NotNull Player player, @NotNull ItemStack stack) {
-    PlayerAnimUtil.play(player, PlayerAnimUtil.NORMAL_STATE, SHOOTING, getUseDuration(stack, player), null /*PlayerAnimUtil.getDefaultStandardFade()*/);
+    PlayerAnimUtil.playAnimation(player, PlayerAnimUtil.NORMAL_STATE, SHOOTING, getUseDuration(stack, player), null /*PlayerAnimUtil.getDefaultStandardFade()*/);
   }
 }

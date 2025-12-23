@@ -48,13 +48,8 @@ public abstract class DamageSourceMixin implements IDamageSource {
     "Lnet/minecraft/world/entity/Entity;" +
     "Lnet/minecraft/world/entity/Entity;" +
     "Lnet/minecraft/world/phys/Vec3;)V", at = @At("RETURN"))
-  private void imaginaryCraft$DamageSource(
-    Holder<DamageType> type,
-    Entity directEntity,
-    Entity causingEntity,
-    Vec3 damageSourcePosition,
-    CallbackInfo ci
-  ) {
+  private void imaginaryCraft$DamageSource(Holder<DamageType> type, Entity directEntity, Entity causingEntity,
+                                           Vec3 damageSourcePosition, CallbackInfo ci) {
     DamageSource damageSource = (DamageSource) (Object) this;
     ItemStack itemStack = LcDamageUtil.getDamageItemStack(damageSource);
 

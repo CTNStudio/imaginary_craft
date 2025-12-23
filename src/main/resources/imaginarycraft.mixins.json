@@ -8,6 +8,7 @@
     "ItemStackMixin",
     "LivingDamageEvent$PostMixin",
     "PlayerMixin",
+    "client.AnimationControllerMixin",
     "client.ModelBuilderMixin"
   ],
   "injectors": {
