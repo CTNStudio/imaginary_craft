@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.client.registry;
 
-import ctn.imaginarycraft.common.entity.abnormalities.AbnormalitiesEntity;
 import ctn.imaginarycraft.common.entity.abnormalities.ordeals.violet.GrantUsLove;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.entiey.AbnormalitiesEntityTypes;

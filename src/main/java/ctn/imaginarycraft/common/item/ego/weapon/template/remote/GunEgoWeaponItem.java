@@ -57,11 +57,6 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
     return InteractionResultHolder.consume(itemStack);
   }
 
-  @Override
-  public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
-    return (int) (20 * entity.getAttributeValue(Attributes.ATTACK_SPEED));
-  }
-
   public void aim(Player player, ItemStack itemStack) {
 
   }
@@ -69,7 +64,7 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
   @Override
   public void onUseTick(@NotNull Level level, @NotNull LivingEntity livingEntity, @NotNull ItemStack stack, int remainingUseDuration) {
     if (remainingUseDuration - 1 == 0) {
-      livingEntity.stopUsingItem();
+//      livingEntity.stopUsingItem();
     }
   }
 
@@ -80,16 +75,16 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
 
   @Override
   public void onStopUsing(@NotNull ItemStack stack, @NotNull LivingEntity entity, int count) {
-    if (isAim(entity, stack)) {
-      endAimAiming(entity, stack);
-      return;
-    }
-    endAiming(entity, stack);
+
   }
 
   @Override
   public void releaseUsing(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity livingEntity, int timeCharged) {
-
+    if (isAim(livingEntity, stack)) {
+      endAimAiming(livingEntity, stack);
+      return;
+    }
+    endAiming(livingEntity, stack);
   }
 
   @Override

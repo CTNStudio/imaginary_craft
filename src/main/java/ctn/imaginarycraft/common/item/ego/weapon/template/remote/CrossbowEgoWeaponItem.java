@@ -81,8 +81,8 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * 构造函数
    *
    * @param properties 物品属性
-   * @param builder EGO武器构建器
-   * @param modPath 模组路径
+   * @param builder    EGO武器构建器
+   * @param modPath    模组路径
    */
   public CrossbowEgoWeaponItem(Properties properties, Builder builder, String modPath) {
     super(properties, builder, modPath);

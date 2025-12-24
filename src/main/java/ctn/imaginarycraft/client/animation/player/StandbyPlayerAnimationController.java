@@ -49,9 +49,9 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
     PlayerAnimationController normalStateRotationController = PlayerAnimUtil.getPlayerAnimationController(player, PlayerAnimUtil.NORMAL_STATE);
 
     if (normalStateRotationController != null && normalStateRotationController.isActive()) {
-      triggerHeadRotationAnimation(headRotationController);
-      controller.stopTriggeredAnimation();
-      return;
+//      triggerHeadRotationAnimation(headRotationController);
+//      controller.stopTriggeredAnimation();
+//      return;
     }
 
     if (!isExecutableAnimation(mainHandItem)) {

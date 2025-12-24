@@ -1,6 +1,9 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
+import com.zigythebird.playeranimcore.animation.Animation;
+import ctn.imaginarycraft.api.IPlayer;
 import ctn.imaginarycraft.api.client.playeranimcore.AnimCollection;
+import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimRawAnimation;
 import ctn.imaginarycraft.client.util.PlayerAnimUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponItem;
@@ -11,6 +14,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -59,26 +63,39 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   @Override
   public void aimAiming(@NotNull LivingEntity livingEntity, @NotNull ItemStack stack) {
     if (livingEntity instanceof AbstractClientPlayer player) {
-//      PlayerAnimUtil.play(player, SHOOTING, getUseDuration(stack, livingEntity));
+      PlayerAnimUtil.playRawAnimation(player, PlayerAnimUtil.NORMAL_STATE, PlayerAnimRawAnimation.begin()
+        .then(SHOOTING_AIM, Animation.LoopType.PLAY_ONCE)
+        .thenLoop(SHOOTING_AIM_CYCLE), PlayerAnimUtil.getDefaultStandardFade());
     }
   }
 
   @Override
   public void endAimAiming(@NotNull LivingEntity livingEntity, @NotNull ItemStack stack) {
     if (livingEntity instanceof Player player) {
-//      PlayerAnimUtil.stop(player);
+      PlayerAnimUtil.stop(player, PlayerAnimUtil.NORMAL_STATE, true);
     }
   }
 
   @Override
   public void endAiming(@NotNull LivingEntity livingEntity, @NotNull ItemStack stack) {
     if (livingEntity instanceof Player player) {
-//      PlayerAnimUtil.stop(player);
+      PlayerAnimUtil.stop(player, PlayerAnimUtil.NORMAL_STATE, true);
     }
   }
 
   @Override
+  public void leftClick(ItemStack stack, Player player) {
+    float attackStrengthScale = player.getAttackStrengthScale(1.0F);
+    if (attackStrengthScale < 0.4f) {
+      IPlayer.of(player).setImaginarycraft$AttackStrengthTicker((int) (player.getAttributeValue(Attributes.ATTACK_SPEED) * 20.0));
+      return;
+    }
+    leftClickAiming(player, stack);
+    player.resetAttackStrengthTicker();
+  }
+
+  @Override
   public void leftClickAiming(@NotNull Player player, @NotNull ItemStack stack) {
-    PlayerAnimUtil.playAnimation(player, PlayerAnimUtil.NORMAL_STATE, SHOOTING, getUseDuration(stack, player), null /*PlayerAnimUtil.getDefaultStandardFade()*/);
+    PlayerAnimUtil.playAnimation(player, PlayerAnimUtil.NORMAL_STATE, SHOOTING, getUseDuration(stack, player), PlayerAnimUtil.getDefaultStandardFade());
   }
 }

@@ -12,7 +12,9 @@ public final class PayloadUtil {
     PacketDistributor.sendToPlayer(serverPlayer, customPacketPayload);
   }
 
-  /** 发送玩家数据包（客户端到服务端）*/
+  /**
+   * 发送玩家数据包（客户端到服务端）
+   */
   public static void sendToServer(CustomPacketPayload customPacketPayload) {
     PacketDistributor.sendToServer(customPacketPayload);
   }

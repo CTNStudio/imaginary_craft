@@ -1,4 +1,3 @@
-
 package ctn.imaginarycraft.api.client.playeranimcore;
 
 import com.mojang.serialization.Codec;

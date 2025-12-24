@@ -51,7 +51,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
 
   @Override
   public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-    controllers.add(new AnimationController<>(this,"controller", 0, this::predicate));
+    controllers.add(new AnimationController<>(this, "controller", 0, this::predicate));
   }
 
   private PlayState predicate(AnimationState<GrantUsLove> animationState) {

@@ -108,7 +108,7 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
 
   @Override
   public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
-    return 72000;
+    return 7200000;
   }
 
   @Override
