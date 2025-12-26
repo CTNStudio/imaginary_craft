@@ -31,28 +31,27 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
   public StandbyPlayerAnimationController(AbstractClientPlayer player) {
     super(player, (animationController, animationData, animationSetter) -> {
       if (!(animationController instanceof StandbyPlayerAnimationController controller)) {
-        return;
       }
-      ItemStack mainHandItem = player.getMainHandItem();
-
-      ModPlayerAnimationController headRotationController = controller.headRotationController;
-      if (headRotationController == null) {
-        headRotationController = controller.headRotationController = (ModPlayerAnimationController) PlayerAnimUtil.getPlayerAnimationController(player, PlayerAnimUtil.HEAD_ROTATION);
-      }
-
-      if (!isExecutableAnimation(mainHandItem)) {
-        if (headRotationController != null) {
-          headRotationController.stopTriggeredAnimation();
-        }
-        controller.stopTriggeredAnimation();
-        return;
-      }
-
-      // 触发头部旋转动画
-      triggerHeadRotationAnimation(headRotationController);
-
-      // 触发物品动画
-      MagicBulletWeaponItem.ANIM_COLLECTION.executeAnim(mainHandItem, controller, animationData, animationSetter);
+//      ItemStack mainHandItem = player.getMainHandItem();
+//
+//      ModPlayerAnimationController headRotationController = controller.headRotationController;
+//      if (headRotationController == null) {
+//        headRotationController = controller.headRotationController = (ModPlayerAnimationController) PlayerAnimUtil.getPlayerAnimationController(player, PlayerAnimUtil.HEAD_ROTATION);
+//      }
+//
+//      if (!isExecutableAnimation(mainHandItem)) {
+//        if (headRotationController != null) {
+//          headRotationController.stopTriggeredAnimation();
+//        }
+//        controller.stopTriggeredAnimation();
+//        return;
+//      }
+//
+//      // 触发头部旋转动画
+//      triggerHeadRotationAnimation(headRotationController);
+//
+//      // 触发物品动画
+//      MagicBulletWeaponItem.ANIM_COLLECTION.executeAnim(mainHandItem, controller, animationData, animationSetter);
     }, (controller, animationData, animationSetter) -> PlayState.STOP);
   }
 
