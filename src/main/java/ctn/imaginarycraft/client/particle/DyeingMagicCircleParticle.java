@@ -27,7 +27,17 @@ public class DyeingMagicCircleParticle extends TextureSheetParticle {
   private int color;
   private float radius;
 
-  protected DyeingMagicCircleParticle(TextureAtlasSprite sprite, ClientLevel level, double x, double y, double z, float xRot, float yRot, int color, float radius) {
+  protected DyeingMagicCircleParticle(
+    TextureAtlasSprite sprite,
+    ClientLevel level,
+    double x,
+    double y,
+    double z,
+    float xRot,
+    float yRot,
+    int color,
+    float radius
+  ) {
     super(level, x, y, z);
     setSprite(sprite);
     this.xRot = xRot;

@@ -20,7 +20,7 @@ import net.minecraft.client.particle.ParticleProvider;
 import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.OutlineBufferSource;
+import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -98,7 +98,11 @@ public class TextParticle extends TextureSheetParticle {
 
   @Override
   public void render(@NotNull VertexConsumer vertexConsumer, Camera camera, float partialTicks) {
-    OutlineBufferSource outlineBufferSource = this.minecraft.renderBuffers().outlineBufferSource();
+    int textListSize = textComponentList.size();
+    if (textListSize == 0) {
+      return;
+    }
+
     Vec3 camPos = camera.getPosition();
     //  TODO 后续添加正常光照
     int getLightColor = getLightColor(partialTicks);
@@ -120,7 +124,9 @@ public class TextParticle extends TextureSheetParticle {
       poseStack.mulPose(Axis.XP.rotationDegrees(this.xRot));
       poseStack.mulPose(Axis.YP.rotationDegrees(this.yRot));
     }
-    float textY = textComponentList.size() * -(fontHeight / 2f + 1);
+    float textY = textListSize * -(fontHeight / 2f + 1);
+
+    var bufferSource = this.minecraft.renderBuffers().outlineBufferSource();
     for (Component component : this.textComponentList) {
       float fontWidth = splitter.stringWidth(component);
       float textX = switch (this.align) {
@@ -129,33 +135,32 @@ public class TextParticle extends TextureSheetParticle {
         case RIGHT -> fontWidth;
       };
       poseStack.pushPose();
-      renderText(component, font, textX, textY, poseStack.last().pose(), outlineBufferSource, getLightColor);
+      renderText(component, font, textX, textY, poseStack.last().pose(), bufferSource, getLightColor);
       poseStack.popPose();
       textY -= -(fontHeight / 2f + 1);
     }
-    outlineBufferSource.endOutlineBatch();
+    bufferSource.endOutlineBatch();
     poseStack.popPose();
   }
 
-  protected void renderText(Component text, final Font font, final float textX, final float textY, final Matrix4f matrix, OutlineBufferSource outlineBufferSource, final int getLightColor) {
+  protected void renderText(Component text, final Font font, final float textX, final float textY, final Matrix4f matrix, MultiBufferSource bufferSource, final int getLightColor) {
     if (this.isShadow) {
-      renderTextShadow(font, textX + 1, textY + 1, matrix, outlineBufferSource, getLightColor, text);
+      renderTextShadow(font, textX + 1, textY + 1, matrix, bufferSource, getLightColor, text);
     }
     int fontColor = this.fontColor;
-    renderText(text, font, textX, textY, matrix, outlineBufferSource, getLightColor, fontColor);
+    renderText(text, font, textX, textY, matrix, bufferSource, getLightColor, fontColor);
   }
 
-  protected void renderTextShadow(final Font font, final float textX, final float textY, final Matrix4f matrix, final OutlineBufferSource outlineBufferSource, final int getLightColor, final Component text) {
-    matrix.translate(0, 0, 0.03f);
+  protected void renderTextShadow(final Font font, final float textX, final float textY, final Matrix4f matrix, final MultiBufferSource bufferSource, final int getLightColor, final Component text) {
     int shadowColor = this.shadowColor;
-    renderText(text, font, textX, textY, matrix, outlineBufferSource, getLightColor, shadowColor);
+    renderText(text, font, textX, textY, new Matrix4f(matrix).translate(0, 0, 0.1f), bufferSource, getLightColor, shadowColor);
   }
 
-  protected void renderText(final Component text, final Font font, final float textX, final float textY, final Matrix4f matrix, final OutlineBufferSource outlineBufferSource, final int getLightColor, final int fontColor) {
-    font.drawInBatch(text, textX, textY, fontColor, false, matrix, outlineBufferSource, Font.DisplayMode.NORMAL, fontColor, getLightColor);
+  protected void renderText(final Component text, final Font font, final float textX, final float textY, final Matrix4f matrix, final MultiBufferSource bufferSource, final int getLightColor, final int fontColor) {
+    font.drawInBatch(text, textX, textY, fontColor, false, matrix, bufferSource, Font.DisplayMode.NORMAL, fontColor, getLightColor);
     if (this.isSeeThrough) {
-      font.drawInBatch(text, textX, textY, fontColor, false, matrix, outlineBufferSource, Font.DisplayMode.SEE_THROUGH, fontColor, getLightColor);
-      font.drawInBatch(text, textX, textY, fontColor, false, matrix, outlineBufferSource, Font.DisplayMode.SEE_THROUGH, fontColor, getLightColor);
+      font.drawInBatch(text, textX, textY, fontColor, false, matrix, bufferSource, Font.DisplayMode.SEE_THROUGH, fontColor, getLightColor);
+      font.drawInBatch(text, textX, textY, fontColor, false, matrix, bufferSource, Font.DisplayMode.SEE_THROUGH, fontColor, getLightColor);
     }
   }
 

@@ -1,9 +1,7 @@
 package ctn.imaginarycraft.registry;
 
-import ctn.imaginarycraft.common.payloads.player.PlayerAnimationPayload;
-import ctn.imaginarycraft.common.payloads.player.PlayerLeftEmptyClickPayload;
-import ctn.imaginarycraft.common.payloads.player.PlayerRawAnimationPayload;
-import ctn.imaginarycraft.common.payloads.player.PlayerStopAnimationPayload;
+import ctn.imaginarycraft.common.payloads.entity.living.LivingEntityAttackStrengthTickerPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.*;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -23,11 +21,15 @@ public final class RegistryPayloadInit {
         new DirectionalPayloadHandler<>(PlayerStopAnimationPayload::toClient, PlayerStopAnimationPayload::toServer));
     registrar.playBidirectional(PlayerAnimationPayload.TYPE, PlayerAnimationPayload.STREAM_CODEC,
         new DirectionalPayloadHandler<>(PlayerAnimationPayload::toClient, PlayerAnimationPayload::toServer));
+    registrar.playBidirectional(LivingEntityAttackStrengthTickerPayload.TYPE, LivingEntityAttackStrengthTickerPayload.STREAM_CODEC,
+      new DirectionalPayloadHandler<>(LivingEntityAttackStrengthTickerPayload::to, LivingEntityAttackStrengthTickerPayload::to));
 
     // 接收来自服务端的数据
+    registrar.playToClient(PlayerDamagePayload.TYPE, PlayerDamagePayload.STREAM_CODEC, PlayerDamagePayload::toClient);
 
     // 接收来自客户端的数据
     registrar.playToServer(PlayerLeftEmptyClickPayload.TYPE, PlayerLeftEmptyClickPayload.STREAM_CODEC, PlayerLeftEmptyClickPayload::toServer);
+    registrar.playToServer(PlayerGunWeaponAimShootPayload.TYPE, PlayerGunWeaponAimShootPayload.STREAM_CODEC, PlayerGunWeaponAimShootPayload::toServer);
     ImaginaryCraft.LOGGER.info("Registering payloads finish");
   }
 }

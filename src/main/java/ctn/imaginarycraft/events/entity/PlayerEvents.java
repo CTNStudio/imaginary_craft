@@ -1,16 +1,15 @@
 package ctn.imaginarycraft.events.entity;
 
-import ctn.imaginarycraft.api.ItemLeftEmptyClick;
+import ctn.imaginarycraft.api.IItemPlayerLeftClick;
 import ctn.imaginarycraft.client.util.ParticleUtil;
-import ctn.imaginarycraft.common.payloads.player.PlayerLeftEmptyClickPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.PlayerLeftEmptyClickPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.event.PlayerLeftEmptyClickEvent;
 import ctn.imaginarycraft.event.rationality.RationalityModifyEvent;
 import ctn.imaginarycraft.eventexecute.RationalityEventExecutes;
-import ctn.imaginarycraft.util.PayloadUtil;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -26,12 +25,8 @@ public final class PlayerEvents {
   @SubscribeEvent
   public static void tick(PlayerTickEvent.Pre event) {
     Player player = event.getEntity();
-
     if (player instanceof ServerPlayer serverPlayer) {
       RationalityEventExecutes.refreshRationalityValue(serverPlayer);
-    }
-    if (player instanceof AbstractClientPlayer clientPlayer) {
-//      PlayerEventAnimExecute.tick(clientPlayer);
     }
   }
 
@@ -57,7 +52,8 @@ public final class PlayerEvents {
    */
   @SubscribeEvent
   public static void playerInteractEventLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
-    playerLeftClickEmpty(event);
+    PlayerLeftEmptyClickPayload.trigger(event.getEntity(), event.getHand());
+
   }
 
   /**
@@ -65,14 +61,7 @@ public final class PlayerEvents {
    */
   @SubscribeEvent
   public static void playerInteractEventLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-    playerLeftClickEmpty(event);
-  }
-
-  public static void playerLeftClickEmpty(PlayerInteractEvent event) {
     PlayerLeftEmptyClickPayload.trigger(event.getEntity(), event.getHand());
-    if (event.getSide().isClient()) {
-      PayloadUtil.sendToServer(new PlayerLeftEmptyClickPayload(event.getHand()));
-    }
   }
 
   /**
@@ -80,10 +69,12 @@ public final class PlayerEvents {
    */
   @SubscribeEvent
   public static void playerLeftClickEmptyEventPre(PlayerLeftEmptyClickEvent.Post event) {
-    var itemStack = event.getItemStack();
-    if (!(itemStack.getItem() instanceof ItemLeftEmptyClick itemLeftClick)) {
-      return;
+    playerLeftClickEmpty(event.getItemStack(), event.getEntity());
+  }
+
+  private static void playerLeftClickEmpty(ItemStack itemStack, Player player) {
+    if (itemStack.getItem() instanceof IItemPlayerLeftClick itemLeftClick) {
+      itemLeftClick.leftClickEmpty(player, itemStack);
     }
-    itemLeftClick.leftClick(itemStack, event.getEntity());
   }
 }

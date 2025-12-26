@@ -13,9 +13,9 @@ import com.zigythebird.playeranimcore.enums.FadeType;
 import ctn.imaginarycraft.api.client.IAnimationController;
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimRawAnimation;
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimStandardFadePlayerAnim;
-import ctn.imaginarycraft.common.payloads.player.PlayerAnimationPayload;
-import ctn.imaginarycraft.common.payloads.player.PlayerRawAnimationPayload;
-import ctn.imaginarycraft.common.payloads.player.PlayerStopAnimationPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.PlayerAnimationPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.PlayerRawAnimationPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.PlayerStopAnimationPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.util.PayloadUtil;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -24,8 +24,6 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-
-import java.util.Optional;
 
 /**
  * 玩家动画工具类，提供播放、停止动画以及获取动画控制器等方法
@@ -48,8 +46,9 @@ public final class PlayerAnimUtil {
   public static final ResourceLocation NORMAL_STATE = ImaginaryCraft.modRl("normal_state");
   //endregion
 
-  public static final AbstractFadeModifier DEFAULT_ABSTRACT_FADE_MODIFIER = AbstractFadeModifier.standardFadeIn(3, EasingType.EASE_IN_OUT_SINE);
-  public static final PlayerAnimStandardFadePlayerAnim DEFAULT_STANDARD_FADE = new PlayerAnimStandardFadePlayerAnim(3, EasingType.EASE_IN_OUT_SINE, null, FadeType.FADE_IN);
+  public static final PlayerAnimStandardFadePlayerAnim DEFAULT_FADE_IN = new PlayerAnimStandardFadePlayerAnim(3, EasingType.EASE_IN_OUT_SINE, null, FadeType.FADE_IN);
+
+  public static final PlayerAnimStandardFadePlayerAnim DEFAULT_FADE_OUT = new PlayerAnimStandardFadePlayerAnim(3, EasingType.EASE_IN_OUT_SINE, null, FadeType.FADE_OUT);
 
   //region 停止动画
 
@@ -75,10 +74,12 @@ public final class PlayerAnimUtil {
       PayloadUtil.sendToClient(serverPlayer, new PlayerStopAnimationPayload(serverPlayer, controllerId, isStopTriggeredAnimation));
       return;
     }
+
     if (player instanceof AbstractClientPlayer clientPlayer) {
       PayloadUtil.sendToServer(new PlayerStopAnimationPayload(clientPlayer, controllerId, isStopTriggeredAnimation));
       return;
     }
+
     throw new UnsupportedOperationException("Not implemented");
   }
 
@@ -95,6 +96,7 @@ public final class PlayerAnimUtil {
       ImaginaryCraft.LOGGER.warn("PlayerAnimationController not found: {}", controllerId);
       return;
     }
+
     if (isStopTriggeredAnimation) {
       controller.stopTriggeredAnimation();
     } else {
@@ -188,10 +190,12 @@ public final class PlayerAnimUtil {
       PayloadUtil.sendToClient(serverPlayer, new PlayerAnimationPayload(serverPlayer, controllerId, animationId, startAnimFrom, playTime, playerAnimStandardFade));
       return;
     }
+
     if (player instanceof AbstractClientPlayer clientPlayer) {
       PayloadUtil.sendToServer(new PlayerAnimationPayload(clientPlayer, controllerId, animationId, startAnimFrom, playTime, playerAnimStandardFade));
       return;
     }
+
     throw new UnsupportedOperationException("Not implemented");
   }
 
@@ -229,25 +233,21 @@ public final class PlayerAnimUtil {
       ImaginaryCraft.LOGGER.warn("PlayerAnimationController not found: {}", controllerId);
       return;
     }
+
     if (!PlayerAnimResources.hasAnimation(animationId)) {
       return;
     }
+
     Animation animation = PlayerAnimResources.getAnimation(animationId);
-    Optional<SpeedModifier> speedModifier = controller.getModifiers().stream()
-      .filter(SpeedModifier.class::isInstance)
-      .map(SpeedModifier.class::cast).findFirst();
-    if (playTime > 0) {
-      float speed = animation.length() / playTime;
-      speedModifier.ifPresentOrElse(modifiers -> modifiers.speed = speed, () -> controller.addModifierLast(new SpeedModifier(speed)));
-    } else {
-      speedModifier.ifPresent(modifiers -> modifiers.speed = 1);
-    }
+    controller.removeModifierIf(SpeedModifier.class::isInstance);
+    controller.addModifierLast(new SpeedModifier(playTime > 0 ? animation.length() / playTime : 1));
     IAnimationController.of(controller).imaginarycraft$linkModifiers();
-    if (abstractFadeModifier != null) {
+    if (abstractFadeModifier == null) {
+      controller.triggerAnimation(animation, startAnimFrom);
+    } else {
+      controller.removeModifierIf(AbstractFadeModifier.class::isInstance);
       controller.replaceAnimationWithFade(abstractFadeModifier, animation, true);
-      return;
     }
-    controller.triggerAnimation(animation, startAnimFrom);
   }
 
   /**
@@ -306,10 +306,12 @@ public final class PlayerAnimUtil {
       PayloadUtil.sendToClient(serverPlayer, new PlayerRawAnimationPayload(serverPlayer, controllerId, rawAnimation, startAnimFrom, playerAnimStandardFade));
       return;
     }
+
     if (player instanceof AbstractClientPlayer clientPlayer) {
       PayloadUtil.sendToServer(new PlayerRawAnimationPayload(clientPlayer, controllerId, rawAnimation, startAnimFrom, playerAnimStandardFade));
       return;
     }
+
     throw new UnsupportedOperationException("Not implemented");
   }
 
@@ -345,11 +347,13 @@ public final class PlayerAnimUtil {
       ImaginaryCraft.LOGGER.warn("PlayerAnimationController not found: {}", controllerId);
       return;
     }
-    IAnimationController.of(controller).imaginarycraft$linkModifiers();
+
+    controller.removeAllModifiers();
     RawAnimation animation = rawAnimation.toRawAnimation();
     if (abstractFadeModifier == null) {
       controller.triggerAnimation(animation, startAnimFrom);
     } else {
+      controller.removeModifierIf(AbstractFadeModifier.class::isInstance);
       controller.replaceAnimationWithFade(abstractFadeModifier, animation, true);
     }
   }
@@ -404,21 +408,14 @@ public final class PlayerAnimUtil {
   }
 
   /**
-   * 获取默认的抽象淡入淡出修饰符
+   * 判断是否是同一动画
    *
-   * @return 默认的抽象淡入淡出修饰符
+   * @param animation  第一个动画对象
+   * @param animationId 第二个动画对象
+   * @return 如果是同一动画则返回true，否则返回false
    */
-  public static AbstractFadeModifier getDefaultAbstractFadeModifier() {
-    return DEFAULT_ABSTRACT_FADE_MODIFIER;
-  }
-
-  /**
-   * 获取默认的标准淡入淡出效果
-   *
-   * @return 默认的标准淡入淡出效果
-   */
-  public static PlayerAnimStandardFadePlayerAnim getDefaultStandardFade() {
-    return DEFAULT_STANDARD_FADE;
+  public static boolean isSameAnimation(Animation animation, ResourceLocation animationId) {
+    return isSameAnimation(animation, PlayerAnimResources.getAnimation(animationId));
   }
   //endregion
 }

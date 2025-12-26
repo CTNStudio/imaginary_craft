@@ -1,8 +1,11 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template.remote;
 
-import ctn.imaginarycraft.api.IPlayer;
-import ctn.imaginarycraft.api.ItemLeftEmptyClick;
-import net.minecraft.server.level.ServerLevel;
+import ctn.imaginarycraft.api.IGunWeapon;
+import ctn.imaginarycraft.api.IItemPlayerLeftClick;
+import ctn.imaginarycraft.api.ILivingEntity;
+import ctn.imaginarycraft.common.payloads.entity.living.LivingEntityAttackStrengthTickerPayload;
+import ctn.imaginarycraft.util.PayloadUtil;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
@@ -14,9 +17,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.model.GeoModel;
 
-import javax.annotation.Nullable;
-
-public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements ItemLeftEmptyClick {
+public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements IItemPlayerLeftClick, IGunWeapon {
   public GunEgoWeaponItem(Properties properties, Builder builder, GeoModel<GeoRemoteEgoWeaponItem> model, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
     super(properties, builder, model, guiModel);
   }
@@ -25,47 +26,19 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
     super(properties, builder, modPath);
   }
 
-  /**
-   * 是否可以瞄准
-   */
-  public boolean isAim(LivingEntity entity, ItemStack itemStack) {
-    return true;
-  }
-
-  /**
-   * 瞄准的时候是否可以移动
-   */
-  public boolean isAimMove(LivingEntity entity, ItemStack itemStack) {
-    return true;
-  }
-
-  public void aimShoot(ServerLevel level, LivingEntity shooter, InteractionHand hand, ItemStack weapon,
-                       float velocity, float inaccuracy, boolean isCrit, @Nullable LivingEntity target) {
-    shoot(level, shooter, hand, weapon, velocity, inaccuracy, isCrit, target);
-  }
-
   @Override
   public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand usedHand) {
     ItemStack itemStack = player.getItemInHand(usedHand);
-    if (player.getAttackStrengthScale(0.0F) < 1) {
-      return InteractionResultHolder.fail(itemStack);
-    }
     if (isAim(player, itemStack)) {
-      aimAiming(player, itemStack);
+      aim(player, itemStack);
     }
     player.startUsingItem(usedHand);
     return InteractionResultHolder.consume(itemStack);
   }
 
-  public void aim(Player player, ItemStack itemStack) {
-
-  }
-
   @Override
   public void onUseTick(@NotNull Level level, @NotNull LivingEntity livingEntity, @NotNull ItemStack stack, int remainingUseDuration) {
-    if (remainingUseDuration - 1 == 0) {
-//      livingEntity.stopUsingItem();
-    }
+
   }
 
   @Override
@@ -80,11 +53,16 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
 
   @Override
   public void releaseUsing(@NotNull ItemStack stack, @NotNull Level level, @NotNull LivingEntity livingEntity, int timeCharged) {
-    if (isAim(livingEntity, stack)) {
-      endAimAiming(livingEntity, stack);
+    if (!(livingEntity instanceof Player player)) {
       return;
     }
-    endAiming(livingEntity, stack);
+
+    if (isAim(player, stack)) {
+      endAim(player, stack);
+      return;
+    }
+
+    end(player, stack);
   }
 
   @Override
@@ -92,30 +70,16 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
 
   }
 
-  public void aimAiming(@NotNull LivingEntity livingEntity, @NotNull ItemStack stack) {
-    // TODO 发送瞄准
-  }
-
-  public void endAimAiming(@NotNull LivingEntity livingEntity, @NotNull ItemStack stack) {
-    // TODO 发送结束瞄准
-  }
-
-  public void endAiming(@NotNull LivingEntity livingEntity, @NotNull ItemStack stack) {
-    // TODO 发送结束
-  }
-
-  public void leftClickAiming(@NotNull Player livingEntity, @NotNull ItemStack stack) {
-    // TODO 发送攻击
-  }
-
   @Override
-  public void leftClick(ItemStack stack, Player player) {
-    float attackStrengthScale = player.getAttackStrengthScale(1.0F);
+  public void leftClickEmpty(Player player, ItemStack stack) {
+    float attackStrengthScale = player.getAttackStrengthScale(0.5F);
     if (attackStrengthScale < 1) {
-      IPlayer.of(player).setImaginarycraft$AttackStrengthTicker((int) (player.getAttributeValue(Attributes.ATTACK_SPEED) * 20.0));
+      int attackStrengthTicker = (int) (player.getAttributeValue(Attributes.ATTACK_SPEED) * 20.0);
+      ILivingEntity.of(player).setImaginarycraft$AttackStrengthTicker(attackStrengthTicker);
+      PayloadUtil.sendToClient((ServerPlayer) player, new LivingEntityAttackStrengthTickerPayload(attackStrengthTicker));
       return;
     }
-    leftClickAiming(player, stack);
+    shoot(player, stack);
     player.resetAttackStrengthTicker();
   }
 }

@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.common.payloads.player;
+package ctn.imaginarycraft.common.payloads.entity.player;
 
 import com.zigythebird.playeranimcore.animation.Animation;
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimRawAnimation;

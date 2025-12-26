@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.common.payloads.player;
+package ctn.imaginarycraft.common.payloads.entity.player;
 
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimStandardFadePlayerAnim;
 import ctn.imaginarycraft.client.util.PlayerAnimUtil;

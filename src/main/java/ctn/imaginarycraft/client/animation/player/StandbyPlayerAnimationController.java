@@ -1,10 +1,7 @@
 package ctn.imaginarycraft.client.animation.player;
 
 import com.zigythebird.playeranim.animation.PlayerAnimationController;
-import com.zigythebird.playeranimcore.animation.AnimationController;
-import com.zigythebird.playeranimcore.animation.AnimationData;
 import com.zigythebird.playeranimcore.enums.PlayState;
-import ctn.imaginarycraft.api.client.ModPlayerAnimationController;
 import ctn.imaginarycraft.api.client.playeranimcore.AnimCollection;
 import ctn.imaginarycraft.client.util.PlayerAnimUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.remote.MagicBulletWeaponItem;
@@ -20,6 +17,7 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 public class StandbyPlayerAnimationController extends ModPlayerAnimationController {
+  private ModPlayerAnimationController headRotationController;
   public static final ResourceLocation PLAYER_HEAD_ROTATION = ImaginaryCraft.modRl("player.head_rotation");
 
   // 有移动，待机的物品放这
@@ -31,42 +29,31 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
   private static final Supplier<? extends Item>[] ITEM_KEY_CACHE = ITEM.keySet().toArray(Supplier[]::new);
 
   public StandbyPlayerAnimationController(AbstractClientPlayer player) {
-    super(player, StandbyPlayerAnimationController::tickAnimationStateHandler, StandbyPlayerAnimationController::animationStateHandler);
-  }
-
-  private static PlayState animationStateHandler(AnimationController controller, AnimationData animationData, AnimationSetter animationSetter) {
-    return PlayState.STOP;
-  }
-
-  private static void tickAnimationStateHandler(AnimationController animationController, AnimationData animationData, AnimationSetter animationSetter) {
-    if (!(animationController instanceof ModPlayerAnimationController controller)) {
-      return;
-    }
-    AbstractClientPlayer player = controller.getPlayer();
-    ItemStack mainHandItem = player.getMainHandItem();
-
-    PlayerAnimationController headRotationController = PlayerAnimUtil.getPlayerAnimationController(player, PlayerAnimUtil.HEAD_ROTATION);
-    PlayerAnimationController normalStateRotationController = PlayerAnimUtil.getPlayerAnimationController(player, PlayerAnimUtil.NORMAL_STATE);
-
-    if (normalStateRotationController != null && normalStateRotationController.isActive()) {
-//      triggerHeadRotationAnimation(headRotationController);
-//      controller.stopTriggeredAnimation();
-//      return;
-    }
-
-    if (!isExecutableAnimation(mainHandItem)) {
-      if (headRotationController != null) {
-        headRotationController.stopTriggeredAnimation();
+    super(player, (animationController, animationData, animationSetter) -> {
+      if (!(animationController instanceof StandbyPlayerAnimationController controller)) {
+        return;
       }
-      controller.stopTriggeredAnimation();
-      return;
-    }
+      ItemStack mainHandItem = player.getMainHandItem();
 
-    // 触发头部旋转动画
-    triggerHeadRotationAnimation(headRotationController);
+      ModPlayerAnimationController headRotationController = controller.headRotationController;
+      if (headRotationController == null) {
+        headRotationController = controller.headRotationController = (ModPlayerAnimationController) PlayerAnimUtil.getPlayerAnimationController(player, PlayerAnimUtil.HEAD_ROTATION);
+      }
 
-    // 触发物品动画
-    MagicBulletWeaponItem.ANIM_COLLECTION.executeAnim(mainHandItem, controller, animationData, animationSetter);
+      if (!isExecutableAnimation(mainHandItem)) {
+        if (headRotationController != null) {
+          headRotationController.stopTriggeredAnimation();
+        }
+        controller.stopTriggeredAnimation();
+        return;
+      }
+
+      // 触发头部旋转动画
+      triggerHeadRotationAnimation(headRotationController);
+
+      // 触发物品动画
+      MagicBulletWeaponItem.ANIM_COLLECTION.executeAnim(mainHandItem, controller, animationData, animationSetter);
+    }, (controller, animationData, animationSetter) -> PlayState.STOP);
   }
 
   private static void triggerHeadRotationAnimation(PlayerAnimationController headRotationController) {

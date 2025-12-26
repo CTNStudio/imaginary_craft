@@ -1,80 +1,44 @@
 package ctn.imaginarycraft.client.particle.magicbullet;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import ctn.imaginarycraft.client.particle.DyeingMagicCircleParticle;
 import ctn.imaginarycraft.client.particle.text.TextParticle;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.*;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SpriteSet;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
-import org.joml.Quaternionf;
 
 import java.util.List;
 
-public class MagicBulletMagicCircleParticle extends TextureSheetParticle {
-  private float xRot;
-  private float yRot;
-  private float radius;
+public class MagicBulletMagicCircleParticle extends DyeingMagicCircleParticle {
 
-  protected MagicBulletMagicCircleParticle(TextureAtlasSprite sprite, ClientLevel level, double x, double y, double z, float xRot, float yRot, float radius) {
-    super(level, x, y, z);
-    setSprite(sprite);
-    this.xRot = xRot;
-    this.yRot = yRot;
-    this.radius = radius;
-  }
-
-  @Override
-  public void render(VertexConsumer buffer, Camera renderInfo, float partialTicks) {
-    Quaternionf quaternionf = new Quaternionf();
-    quaternionf.rotationX(this.xRot * Mth.DEG_TO_RAD);
-    quaternionf.rotationY(this.yRot * Mth.DEG_TO_RAD);
-    this.renderRotatedQuad(buffer, renderInfo, quaternionf, partialTicks);
-  }
-
-  @Override
-  public @NotNull ParticleRenderType getRenderType() {
-    return ParticleRenderType.PARTICLE_SHEET_LIT;
-  }
-
-  public float getXRot() {
-    return xRot;
-  }
-
-  public void setXRot(float xRot) {
-    this.xRot = xRot;
-  }
-
-  public float getYRot() {
-    return yRot;
-  }
-
-  public void setYRot(float yRot) {
-    this.yRot = yRot;
-  }
-
-  public float getRadius() {
-    return radius;
-  }
-
-  public void setRadius(float radius) {
-    this.radius = radius;
+  protected MagicBulletMagicCircleParticle(
+    TextureAtlasSprite sprite,
+    ClientLevel level,
+    double x,
+    double y,
+    double z,
+    float xRot,
+    float yRot,
+    float radius
+  ) {
+    super(sprite, level, x, y, z, xRot, yRot, 0xFFFFFF, radius);
   }
 
   public static class Builder {
     protected final float xRot;
     protected final float yRot;
-    protected int color = 0xFFFFFF;
     protected float radius;
 
     public Builder(float xRot, float yRot) {
@@ -120,7 +84,9 @@ public class MagicBulletMagicCircleParticle extends TextureSheetParticle {
 
     @Override
     @NotNull
-    public Particle createParticle(@NotNull Options type, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+    public Particle createParticle(@NotNull Options type, @NotNull ClientLevel level,
+                                   double x, double y, double z,
+                                   double xSpeed, double ySpeed, double zSpeed) {
       return new MagicBulletMagicCircleParticle(getSprite(), level, x, y, z, type.xRot(), type.yRot(), type.radius());
     }
 
