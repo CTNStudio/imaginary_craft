@@ -1,8 +1,12 @@
 package ctn.imaginarycraft.init;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.init.item.ModItems;
+import ctn.imaginarycraft.init.item.ToolItems;
+import ctn.imaginarycraft.init.item.WeaponItems;
 import ctn.imaginarycraft.init.item.ego.EgoArmorItems;
 import ctn.imaginarycraft.init.item.ego.EgoCurioItems;
+import ctn.imaginarycraft.init.item.ego.EgoItems;
 import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
 import ctn.imaginarycraft.init.util.CreativeModeTabRegisterUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -28,4 +32,11 @@ public final class ModCreativeModeTabs extends CreativeModeTabRegisterUtil {
     "ego_armor", "E.G.O 护甲", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
       EgoArmorItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get())), () ->
       EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chest().get().getDefaultInstance()));
+  public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ITEMS = register(
+    "items", "异想工艺|物品", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) -> {
+      EgoItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get()));
+      ModItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get()));
+      ToolItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get()));
+      WeaponItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get()));
+    }, () -> EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chest().get().getDefaultInstance()));
 }

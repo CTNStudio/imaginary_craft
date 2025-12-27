@@ -188,7 +188,8 @@ public abstract class EgoArmorRegisterUtil {
   public record EgoArmor(
     DeferredItem<EgoArmorItem> chest,
     DeferredItem<EgoArmorItem> legs,
-    DeferredItem<EgoArmorItem> feet) implements Iterable<DeferredItem<EgoArmorItem>> {
+    DeferredItem<EgoArmorItem> feet
+  ) implements Iterable<DeferredItem<EgoArmorItem>> {
     @Override
     public @NotNull Iterator<DeferredItem<EgoArmorItem>> iterator() {
       return getSet().iterator();

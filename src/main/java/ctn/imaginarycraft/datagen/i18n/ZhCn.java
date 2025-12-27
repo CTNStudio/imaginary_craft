@@ -25,7 +25,7 @@ import java.util.function.Supplier;
 public final class ZhCn extends DatagenI18n {
   private static final Map<Supplier<? extends Item>, String> ITEMS = new HashMap<>();
   private static final Map<Supplier<EntityType<?>>, String> ENTITY = new HashMap<>();
-  public static final Map<String, String> MAP = new HashMap<>();
+  private static final Map<String, String> MAP = new HashMap<>();
 
   public ZhCn(final PackOutput output) {
     super(output, "zh_cn");
