@@ -125,7 +125,7 @@ public abstract class EgoWeaponRegisterUtil {
     LcLevelUtil.addItemLcLevelCapability(lcLevelType, deferredItem);
     DatagenItemTag.EGO_WEAPON.add(deferredItem);
     type.addItem(deferredItem);
-    ZhCn.ITEMS.put(deferredItem, zhName);
+    ZhCn.clientAddI18nItemText(zhName, deferredItem);
     return deferredItem;
   }
 

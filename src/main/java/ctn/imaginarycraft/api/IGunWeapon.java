@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.api;
 
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -22,8 +23,13 @@ public interface IGunWeapon {
 
   /**
    * 射击
+   * <p>
+   * 在手持该物品时按攻击键触发
+   *
+   * @return 返回false则不在服务器执行
    */
-  default void shoot(@NotNull Player player, @NotNull ItemStack stack) {
+  default boolean shoot(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand usedHand) {
+    return false;
   }
 
   /**
@@ -34,6 +40,8 @@ public interface IGunWeapon {
 
   /**
    * 瞄准射击
+   * <p>
+   * 在使用该物品时同时按住使用键和攻击键
    *
    * @return 返回false则不在服务器执行
    */

@@ -15,7 +15,10 @@ import java.util.Map;
 import java.util.Set;
 
 public final class EntityRenderEventExecute {
-  public static void hiddenParts(LivingEntity entity, PlayerModel<?> model) {
+  /**
+   * 给特定护甲隐藏玩家部分模型
+   */
+  public static void hiddenParts(LivingEntity entity, PlayerModel<?> playerModel) {
     var entrySet = getHiddenPartsEntrySet();
     HashSet<EquipmentSlot> equipmentSlots = new HashSet<>();
     for (ItemStack itemStack : entity.getArmorSlots()) {
@@ -29,7 +32,17 @@ public final class EntityRenderEventExecute {
           continue;
         }
         equipmentSlots.add(equipmentSlot);
-        hiddenParts(equipmentSlot, model);
+        switch (equipmentSlot) {
+          case LEGS, FEET -> {
+            playerModel.leftPants.visible = false;
+            playerModel.rightPants.visible = false;
+          }
+          case CHEST -> {
+            playerModel.jacket.visible = false;
+            playerModel.leftSleeve.visible = false;
+            playerModel.rightSleeve.visible = false;
+          }
+        }
         break;
       }
     }
@@ -38,19 +51,5 @@ public final class EntityRenderEventExecute {
   private static @NotNull Set<Map.Entry<EquipmentSlot, DeferredItem<EgoArmorItem>>> getHiddenPartsEntrySet() {
     // TODO 目前没有扩展能力需要后期重构
     return EgoArmorItems.MAGIC_BULLET.getMap().entrySet();
-  }
-
-  private static void hiddenParts(EquipmentSlot key, PlayerModel<?> playerModel) {
-    switch (key) {
-      case LEGS, FEET -> {
-        playerModel.leftPants.visible = false;
-        playerModel.rightPants.visible = false;
-      }
-      case CHEST -> {
-        playerModel.jacket.visible = false;
-        playerModel.leftSleeve.visible = false;
-        playerModel.rightSleeve.visible = false;
-      }
-    }
   }
 }

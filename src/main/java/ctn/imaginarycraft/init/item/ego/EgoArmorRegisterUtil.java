@@ -175,7 +175,7 @@ public abstract class EgoArmorRegisterUtil {
       case BOOTS -> DatagenItemTag.FOOT_ARMOR.add(deferredItem);
     }
     DatagenItemTag.EGO_ARMOUR.add(deferredItem);
-    ZhCn.ITEMS.put(deferredItem, zhName);
+    ZhCn.clientAddI18nItemText(zhName, deferredItem);
     return deferredItem;
   }
 

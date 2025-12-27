@@ -1,6 +1,8 @@
 package ctn.imaginarycraft.client.animation.player;
 
 import com.zigythebird.playeranim.animation.PlayerAnimationController;
+import com.zigythebird.playeranimcore.animation.AnimationController;
+import com.zigythebird.playeranimcore.animation.AnimationData;
 import com.zigythebird.playeranimcore.enums.PlayState;
 import ctn.imaginarycraft.api.client.playeranimcore.AnimCollection;
 import ctn.imaginarycraft.client.util.PlayerAnimUtil;
@@ -29,31 +31,38 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
   private static final Supplier<? extends Item>[] ITEM_KEY_CACHE = ITEM.keySet().toArray(Supplier[]::new);
 
   public StandbyPlayerAnimationController(AbstractClientPlayer player) {
-    super(player, (animationController, animationData, animationSetter) -> {
-      if (!(animationController instanceof StandbyPlayerAnimationController controller)) {
-        return;
+    super(player, StandbyPlayerAnimationController::getTickAnimationStateHandler, StandbyPlayerAnimationController::getAnimationStateHandler);
+  }
+
+  private static PlayState getAnimationStateHandler(AnimationController controller, AnimationData animationData, AnimationSetter animationSetter) {
+    return PlayState.STOP;
+  }
+
+  private static void getTickAnimationStateHandler(AnimationController animationController, AnimationData animationData, AnimationSetter animationSetter) {
+    if (!(animationController instanceof StandbyPlayerAnimationController controller)) {
+      return;
+    }
+    AbstractClientPlayer player = controller.getPlayer();
+    ItemStack mainHandItem = player.getMainHandItem();
+
+    ModPlayerAnimationController headRotationController = controller.headRotationController;
+    if (headRotationController == null) {
+      headRotationController = controller.headRotationController = (ModPlayerAnimationController) PlayerAnimUtil.getPlayerAnimationController(player, PlayerAnimUtil.HEAD_ROTATION);
+    }
+
+    if (!isExecutableAnimation(mainHandItem)) {
+      if (headRotationController != null) {
+        headRotationController.stopTriggeredAnimation();
       }
-      ItemStack mainHandItem = player.getMainHandItem();
+      controller.stopTriggeredAnimation();
+      return;
+    }
 
-      ModPlayerAnimationController headRotationController = controller.headRotationController;
-      if (headRotationController == null) {
-        headRotationController = controller.headRotationController = (ModPlayerAnimationController) PlayerAnimUtil.getPlayerAnimationController(player, PlayerAnimUtil.HEAD_ROTATION);
-      }
+    // 触发头部旋转动画
+    triggerHeadRotationAnimation(headRotationController);
 
-      if (!isExecutableAnimation(mainHandItem)) {
-        if (headRotationController != null) {
-          headRotationController.stopTriggeredAnimation();
-        }
-        controller.stopTriggeredAnimation();
-        return;
-      }
-
-      // 触发头部旋转动画
-      triggerHeadRotationAnimation(headRotationController);
-
-      // 触发物品动画
-      MagicBulletWeaponItem.ANIM_COLLECTION.executeAnim(mainHandItem, controller, animationData, animationSetter);
-    }, (controller, animationData, animationSetter) -> PlayState.STOP);
+    // 触发物品动画
+    MagicBulletWeaponItem.ANIM_COLLECTION.executeAnim(mainHandItem, controller, animationData, animationSetter);
   }
 
   private static void triggerHeadRotationAnimation(PlayerAnimationController headRotationController) {

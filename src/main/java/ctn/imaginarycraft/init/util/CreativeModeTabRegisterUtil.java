@@ -48,9 +48,11 @@ public abstract class CreativeModeTabRegisterUtil {
     CreativeModeTab.DisplayItemsGenerator displayItemsGenerator
   ) {
     String key = "itemGroup." + ImaginaryCraft.ID + "." + name;
-    ZhCn.MAP.put(key, zhCn);
+    ZhCn.clientAddI18nText(zhCn, key);
     return CreativeModeTab.builder()
       .title(Component.translatable(key))
       .displayItems(displayItemsGenerator);
   }
+
+
 }

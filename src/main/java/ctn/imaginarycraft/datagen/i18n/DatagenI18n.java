@@ -2,7 +2,6 @@ package ctn.imaginarycraft.datagen.i18n;
 
 import ctn.imaginarycraft.config.ConfigUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
@@ -13,12 +12,12 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.item.Item;
 import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.common.data.LanguageProvider;
-import net.neoforged.neoforge.registries.DeferredItem;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Supplier;
 
 
 public abstract class DatagenI18n extends LanguageProvider {
@@ -44,12 +43,12 @@ public abstract class DatagenI18n extends LanguageProvider {
   @Override
   protected abstract void addTranslations();
 
-  protected void addItemList(Map<DeferredItem<? extends Item>, String> map) {
-    map.forEach((holder, zhName) -> add(holder.value(), zhName));
+  protected void addItemList(Map<Supplier<? extends Item>, String> map) {
+    map.forEach((holder, zhName) -> add(holder.get(), zhName));
   }
 
-  protected void addEntityList(Map<Holder<EntityType<?>>, String> map) {
-    map.forEach((holder, zhName) -> add(holder.value(), zhName));
+  protected void addEntityList(Map<Supplier<EntityType<?>>, String> map) {
+    map.forEach((holder, zhName) -> add(holder.get(), zhName));
   }
 
   protected void addJadePlugin(ResourceLocation pluginId, String name) {

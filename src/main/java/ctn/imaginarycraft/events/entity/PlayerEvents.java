@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.events.entity;
 
+import ctn.imaginarycraft.api.IGunWeapon;
 import ctn.imaginarycraft.api.IItemPlayerLeftClick;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.common.payloads.entity.player.PlayerLeftEmptyClickPayload;
@@ -46,22 +47,17 @@ public final class PlayerEvents {
     ParticleUtil.createTextParticles(player, difference, true, difference < 0);
   }
 
-
-  /**
-   * 左键点击空（客户端）
-   */
-  @SubscribeEvent
-  public static void playerInteractEventLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
-    PlayerLeftEmptyClickPayload.trigger(event.getEntity(), event.getHand());
-
-  }
-
   /**
    * 左键点击方块
    */
-  @SubscribeEvent
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void playerInteractEventLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-    PlayerLeftEmptyClickPayload.trigger(event.getEntity(), event.getHand());
+    Player entity = event.getEntity();
+    if (entity.isUsingItem() && entity.getUseItem().getItem() instanceof IGunWeapon) {
+      event.setCanceled(true);
+      return;
+    }
+    PlayerLeftEmptyClickPayload.trigger(entity, event.getHand());
   }
 
   /**

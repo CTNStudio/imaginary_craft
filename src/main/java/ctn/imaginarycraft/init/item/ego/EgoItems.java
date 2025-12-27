@@ -38,7 +38,7 @@ public final class EgoItems {
     Item.Properties properties
   ) {
     DeferredItem<I> deferredItem = REGISTRY.registerItem(id, item, properties);
-    ZhCn.ITEMS.put(deferredItem, zhName);
+    ZhCn.clientAddI18nItemText(zhName, deferredItem);
     return deferredItem;
   }
 }

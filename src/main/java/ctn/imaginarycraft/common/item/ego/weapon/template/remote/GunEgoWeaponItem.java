@@ -1,15 +1,9 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template.remote;
 
 import ctn.imaginarycraft.api.IGunWeapon;
-import ctn.imaginarycraft.api.IItemPlayerLeftClick;
-import ctn.imaginarycraft.api.ILivingEntity;
-import ctn.imaginarycraft.common.payloads.entity.living.LivingEntityAttackStrengthTickerPayload;
-import ctn.imaginarycraft.util.PayloadUtil;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
@@ -17,7 +11,7 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.model.GeoModel;
 
-public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements IItemPlayerLeftClick, IGunWeapon {
+public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements IGunWeapon {
   public GunEgoWeaponItem(Properties properties, Builder builder, GeoModel<GeoRemoteEgoWeaponItem> model, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
     super(properties, builder, model, guiModel);
   }
@@ -71,15 +65,14 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
   }
 
   @Override
-  public void leftClickEmpty(Player player, ItemStack stack) {
+  public boolean aimShoot(@NotNull Player player, @NotNull ItemStack stack) {
     float attackStrengthScale = player.getAttackStrengthScale(0.5F);
-    if (attackStrengthScale < 1) {
-      int attackStrengthTicker = (int) (player.getAttributeValue(Attributes.ATTACK_SPEED) * 20.0);
-      ILivingEntity.of(player).setImaginarycraft$AttackStrengthTicker(attackStrengthTicker);
-      PayloadUtil.sendToClient((ServerPlayer) player, new LivingEntityAttackStrengthTickerPayload(attackStrengthTicker));
-      return;
-    }
-    shoot(player, stack);
-    player.resetAttackStrengthTicker();
+    return !(attackStrengthScale < 1);
+  }
+
+  @Override
+  public boolean shoot(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand usedHand) {
+    float attackStrengthScale = player.getAttackStrengthScale(0.5F);
+    return !(attackStrengthScale < 1);
   }
 }

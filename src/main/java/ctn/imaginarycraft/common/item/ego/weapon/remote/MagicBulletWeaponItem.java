@@ -11,10 +11,8 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -113,29 +111,23 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
     PlayerAnimUtil.playAnimation(player, PlayerAnimUtil.NORMAL_STATE, SHOOTING_AIM_TERMINATE, PlayerAnimUtil.DEFAULT_FADE_OUT);
   }
 
-  @Override
-  public void leftClickEmpty(Player player, ItemStack stack) {
-    float attackStrengthScale = getAttackStrengthScale(player);
-    if (attackStrengthScale < 0.4f) {
-      ILivingEntity.of(player).setImaginarycraft$AttackStrengthTicker((int) (player.getAttributeValue(Attributes.ATTACK_SPEED) * 20.0));
-      return;
-    }
-    if (player instanceof ServerPlayer clientPlayer) {
-      shoot(player, stack);
-    }
-    player.resetAttackStrengthTicker();
-  }
-
   private float getAttackStrengthScale(Player player) {
     return player.getAttackStrengthScale(1.0F);
   }
 
   @Override
-  public void shoot(@NotNull Player player, @NotNull ItemStack stack) {
+  public boolean shoot(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand usedHand) {
+    float attackStrengthScale = getAttackStrengthScale(player);
+//    if (attackStrengthScale < 0.4f) {
+//      ILivingEntity.of(player).setImaginarycraft$AttackStrengthTicker((int) (player.getAttributeValue(Attributes.ATTACK_SPEED) * 20.0));
+//      return false;
+//    }
     if (player instanceof AbstractClientPlayer clientPlayer) {
-      return;
+      return true;
     }
+//    player.resetAttackStrengthTicker();
     PlayerAnimUtil.playAnimation(player, PlayerAnimUtil.NORMAL_STATE, SHOOTING,
       PlayerAnimUtil.DEFAULT_FADE_IN);
+    return true;
   }
 }

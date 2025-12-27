@@ -29,7 +29,7 @@ public final class RegistryPayloadInit {
 
     // 接收来自客户端的数据
     registrar.playToServer(PlayerLeftEmptyClickPayload.TYPE, PlayerLeftEmptyClickPayload.STREAM_CODEC, PlayerLeftEmptyClickPayload::toServer);
-    registrar.playToServer(PlayerGunWeaponAimShootPayload.TYPE, PlayerGunWeaponAimShootPayload.STREAM_CODEC, PlayerGunWeaponAimShootPayload::toServer);
+    registrar.playToServer(PlayerIGunWeaponPayload.TYPE, PlayerIGunWeaponPayload.STREAM_CODEC, PlayerIGunWeaponPayload::toServer);
     ImaginaryCraft.LOGGER.info("Registering payloads finish");
   }
 }

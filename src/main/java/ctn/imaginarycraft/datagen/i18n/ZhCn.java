@@ -13,15 +13,18 @@ import ctn.imaginarycraft.init.tag.ModItemTags;
 import ctn.imaginarycraft.linkage.jade.LivingEntityVulnerable;
 import ctn.imaginarycraft.linkage.jade.ModPlugin;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public final class ZhCn extends DatagenI18n {
-  public static final Map<DeferredItem<? extends Item>, String> ITEMS = new HashMap<>();
+  private static final Map<Supplier<? extends Item>, String> ITEMS = new HashMap<>();
+  private static final Map<Supplier<EntityType<?>>, String> ENTITY = new HashMap<>();
   public static final Map<String, String> MAP = new HashMap<>();
 
   public ZhCn(final PackOutput output) {
@@ -32,6 +35,7 @@ public final class ZhCn extends DatagenI18n {
   protected void addTranslations() {
     add("pack.imaginarycraft.description", "异想工艺");
     addItemList(ITEMS);
+    addEntityList(ENTITY);
     MAP.forEach(this::add);
     addJadePlugin(ModPlugin.ENTITY_LC_LEVEL, "生物等级");
     addJadePlugin(ModPlugin.BLOCK_LC_LEVEL, "方块等级");
@@ -150,5 +154,23 @@ public final class ZhCn extends DatagenI18n {
     add(VirtueType.JUSTICE.getTooltipName(), "正义");
     add(VirtueType.COMPOSITE.getTooltipName(), "综合");
     //endregion
+  }
+
+  public static void clientAddI18nText(String zhCn, String key) {
+    if (FMLEnvironment.dist.isClient()) {
+      ZhCn.MAP.put(key, zhCn);
+    }
+  }
+
+  public static void clientAddI18nItemText(String zhName, Supplier<? extends Item> deferredItem) {
+    if (FMLEnvironment.dist.isClient()) {
+      ZhCn.ITEMS.put(deferredItem, zhName);
+    }
+  }
+
+  public static void clientAddI18nEntityTypeText(String zhName, Supplier<EntityType<?>> entityType) {
+    if (FMLEnvironment.dist.isClient()) {
+      ZhCn.ENTITY.put(entityType, zhName);
+    }
   }
 }

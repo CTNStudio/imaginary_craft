@@ -18,11 +18,11 @@ public final class ModEntityTypes {
     AbnormalitiesEntityTypes.init(bus);
   }
 
-  public static <I extends Entity> Supplier<EntityType<I>> register(final String name, final EntityType.Builder<I> sup) {
+  private static <I extends Entity> Supplier<EntityType<I>> register(final String name, final EntityType.Builder<I> sup) {
     return register(name, () -> sup.build(name));
   }
 
-  public static <I extends EntityType<?>> DeferredHolder<EntityType<?>, I> register(final String name, final Supplier<? extends I> sup) {
+  private static <I extends EntityType<?>> DeferredHolder<EntityType<?>, I> register(final String name, final Supplier<? extends I> sup) {
     return REGISTRY.register(name, sup);
   }
 }
