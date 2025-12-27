@@ -22,21 +22,21 @@ public final class ModCreativeModeTabs extends CreativeModeTabRegisterUtil {
 
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EGO_CURIOS = register(
     "ego_curios", "E.G.O 饰品", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
-      EgoCurioItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get())), () ->
+      addRegistryItem(EgoCurioItems.REGISTRY, output), () ->
       EgoCurioItems.BENEDICTION.get().getDefaultInstance()));
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EGO_WEAPON = register(
     "ego_weapon", "E.G.O 武器", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
-      EgoWeaponItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get())), () ->
+      addRegistryItem(EgoWeaponItems.REGISTRY, output), () ->
       EgoWeaponItems.IN_THE_NAME_OF_LOVE_AND_HATE.get().getDefaultInstance()));
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EGO_ARMOR = register(
     "ego_armor", "E.G.O 护甲", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
-      EgoArmorItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get())), () ->
+      addRegistryItem(EgoArmorItems.REGISTRY, output), () ->
       EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chest().get().getDefaultInstance()));
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ITEMS = register(
     "items", "异想工艺|物品", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) -> {
-      EgoItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get()));
-      ModItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get()));
-      ToolItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get()));
-      WeaponItems.REGISTRY.getEntries().forEach(entry -> output.accept(entry.get()));
+      addRegistryItem(EgoItems.REGISTRY, output);
+      addRegistryItem(ModItems.REGISTRY, output);
+      addRegistryItem(ToolItems.REGISTRY, output);
+      addRegistryItem(WeaponItems.REGISTRY, output);
     }, () -> EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chest().get().getDefaultInstance()));
 }

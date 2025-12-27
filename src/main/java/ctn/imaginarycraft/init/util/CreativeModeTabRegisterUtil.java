@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.BiFunction;
 import java.util.function.Supplier;
@@ -54,5 +55,7 @@ public abstract class CreativeModeTabRegisterUtil {
       .displayItems(displayItemsGenerator);
   }
 
-
+  protected static void addRegistryItem(DeferredRegister.Items registry, CreativeModeTab.Output output) {
+    registry.getEntries().forEach(entry -> output.accept(entry.get()));
+  }
 }
