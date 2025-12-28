@@ -13,16 +13,16 @@ public final class ModClientConfig extends ConfigUtil {
    */
   public final BooleanValue enableLowRationalityFilter;
   /**
-   * 玩家遭受四色伤害滤镜
+   * 玩家遭受脑叶伤害滤镜
    */
-  public final BooleanValue enableFourColorDamageFilter;
+  public final BooleanValue enableLcColorDamageFilter;
 
   ModClientConfig(Builder builder) {
     enableNewHealthBar = define(
       builder, false, "enable_new_health_bar", "新玩家生命条");
     enableLowRationalityFilter = define(
       builder, true, "enable_low_rationality_filter", "玩家低理智滤镜");
-    enableFourColorDamageFilter = define(
-      builder, true, "enable_lobotomy_corporation_damage_filter", "玩家遭受四色伤害滤镜");
+    enableLcColorDamageFilter = define(
+      builder, true, "enable_lobotomy_corporation_damage_filter", "玩家遭受脑叶伤害滤镜");
   }
 }

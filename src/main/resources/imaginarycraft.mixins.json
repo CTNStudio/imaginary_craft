@@ -7,6 +7,9 @@
     "DamageSourceMixin",
     "ItemStackMixin",
     "LivingDamageEvent$PostMixin",
+    "LivingEntityMixin",
+    "PlayerMixin",
+    "client.AnimationControllerMixin",
     "client.ModelBuilderMixin"
   ],
   "injectors": {
@@ -16,7 +19,8 @@
     "requireAnnotations": true
   },
   "client": [
-    "client.FontMixin"
+    "client.FontMixin",
+    "client.GuiMixin"
   ],
   "mixinextras": {
     "minVersion": "0.5.0"

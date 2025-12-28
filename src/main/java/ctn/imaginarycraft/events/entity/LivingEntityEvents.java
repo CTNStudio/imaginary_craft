@@ -7,12 +7,13 @@ import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.client.util.ParticleUtil;
+import ctn.imaginarycraft.common.payloads.entity.player.PlayerDamagePayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.eventexecute.LcDamageEventExecutes;
-import net.minecraft.core.Holder;
+import ctn.imaginarycraft.util.PayloadUtil;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
@@ -69,12 +70,14 @@ public final class LivingEntityEvents {
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void dealingWithDamageEffects(LivingDamageEvent.Pre event) {
     DamageContainer container = event.getContainer();
+    IDamageContainer iDamageContainer = IDamageContainer.of(container);
     LivingEntity attackedEntity = event.getEntity();
     DamageSource source = event.getSource();
+    IDamageSource iDamageSource = IDamageSource.of(source);
     Entity sourceDirectEntity = source.getDirectEntity();
     Entity sourceCausingEntity = source.getEntity();
-    Holder<DamageType> damageTypeHolder = source.typeHolder();
-    LcDamageType lcDamageType = LcDamageType.byDamageType(damageTypeHolder);
+    LcDamageType lcDamageType = iDamageSource.getImaginaryCraft$LcDamageType();
+
     // 建议在每个有返回值的方法执行后再获取一次以求准确
     float newDamage = event.getNewDamage();
     boolean modifyRationality = lcDamageType == LcDamageType.SPIRIT || lcDamageType == LcDamageType.EROSION;
@@ -132,5 +135,8 @@ public final class LivingEntityEvents {
     DamageSource source = event.getSource();
     float newDamage = event.getNewDamage();
     LcDamageEventExecutes.appliedDamageToEntity(serverLevel, entity, source, newDamage);
+    if (entity instanceof ServerPlayer player) {
+      PayloadUtil.sendToClient(player, new PlayerDamagePayload(IDamageSource.of(event.getSource()).getImaginaryCraft$LcDamageType(), newDamage));
+    }
   }
 }

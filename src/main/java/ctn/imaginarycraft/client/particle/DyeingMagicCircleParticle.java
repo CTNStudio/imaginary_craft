@@ -27,8 +27,20 @@ public class DyeingMagicCircleParticle extends TextureSheetParticle {
   private int color;
   private float radius;
 
-  protected DyeingMagicCircleParticle(TextureAtlasSprite sprite, ClientLevel level, double x, double y, double z, float xRot, float yRot, int color, float radius) {
+  protected DyeingMagicCircleParticle(
+    TextureAtlasSprite sprite,
+    ClientLevel level,
+    double x,
+    double y,
+    double z,
+    float xRot,
+    float yRot,
+    int color,
+    float radius,
+    int particleLifeTime
+  ) {
     super(level, x, y, z);
+    setLifetime(particleLifeTime);
     setSprite(sprite);
     this.xRot = xRot;
     this.yRot = yRot;
@@ -87,6 +99,7 @@ public class DyeingMagicCircleParticle extends TextureSheetParticle {
     protected final float yRot;
     protected int color = 0xFFFFFF;
     protected float radius;
+    protected int particleLifeTime = 20;
 
     public Builder(float xRot, float yRot) {
       this.xRot = xRot;
@@ -103,18 +116,24 @@ public class DyeingMagicCircleParticle extends TextureSheetParticle {
       return this;
     }
 
+    public Builder particleLifeTime(int particleLifeTime) {
+      this.particleLifeTime = particleLifeTime;
+      return this;
+    }
+
     public Options buildOptions() {
-      return new Options(this.xRot, this.yRot, this.color, this.radius);
+      return new Options(this.xRot, this.yRot, this.color, this.radius, this.particleLifeTime);
     }
   }
 
   public record Options(float xRot, float yRot, int color,
-                        float radius) implements ParticleOptions {
+                        float radius, int particleLifeTime) implements ParticleOptions {
     public static final MapCodec<Options> CODEC = RecordCodecBuilder.mapCodec((thisOptionsInstance) -> thisOptionsInstance.group(
       Codec.FLOAT.fieldOf("xRot").forGetter(Options::xRot),
       Codec.FLOAT.fieldOf("yRot").forGetter(Options::yRot),
       Codec.INT.fieldOf("color").forGetter(Options::color),
-      Codec.FLOAT.fieldOf("radius").forGetter(Options::radius)
+      Codec.FLOAT.fieldOf("radius").forGetter(Options::radius),
+      Codec.INT.fieldOf("particleLifeTime").forGetter(Options::particleLifeTime)
     ).apply(thisOptionsInstance, Options::new));
 
     public static final StreamCodec<ByteBuf, Options> STREAM_CODEC = StreamCodec.composite(
@@ -122,6 +141,7 @@ public class DyeingMagicCircleParticle extends TextureSheetParticle {
       ByteBufCodecs.FLOAT, Options::yRot,
       ByteBufCodecs.INT, Options::color,
       ByteBufCodecs.FLOAT, Options::radius,
+      ByteBufCodecs.INT, Options::particleLifeTime,
       Options::new);
 
     @Override
@@ -139,8 +159,8 @@ public class DyeingMagicCircleParticle extends TextureSheetParticle {
 
     @Override
     @NotNull
-    public Particle createParticle(@NotNull Options type, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
-      return new DyeingMagicCircleParticle(getSprite(), level, x, y, z, type.xRot(), type.yRot(), type.color(), type.radius());
+    public Particle createParticle(@NotNull Options options, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {
+      return new DyeingMagicCircleParticle(getSprite(), level, x, y, z, options.xRot(), options.yRot(), options.color(), options.radius(), options.particleLifeTime());
     }
 
     protected List<TextureAtlasSprite> getSpriteLis() {

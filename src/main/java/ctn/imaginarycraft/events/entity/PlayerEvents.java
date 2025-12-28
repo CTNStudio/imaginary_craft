@@ -1,16 +1,16 @@
 package ctn.imaginarycraft.events.entity;
 
-import ctn.imaginarycraft.api.ItemLeftClickEmpty;
+import ctn.imaginarycraft.api.IGunWeapon;
+import ctn.imaginarycraft.api.IItemPlayerLeftClick;
 import ctn.imaginarycraft.client.util.ParticleUtil;
-import ctn.imaginarycraft.common.payloads.player.PlayerLeftEmptyClickPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.PlayerLeftEmptyClickPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.event.PlayerLeftEmptyClickEvent;
 import ctn.imaginarycraft.event.rationality.RationalityModifyEvent;
 import ctn.imaginarycraft.eventexecute.RationalityEventExecutes;
-import ctn.imaginarycraft.util.PayloadUtil;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -26,12 +26,8 @@ public final class PlayerEvents {
   @SubscribeEvent
   public static void tick(PlayerTickEvent.Pre event) {
     Player player = event.getEntity();
-
     if (player instanceof ServerPlayer serverPlayer) {
       RationalityEventExecutes.refreshRationalityValue(serverPlayer);
-    }
-    if (player instanceof AbstractClientPlayer clientPlayer) {
-//      PlayerEventAnimExecute.tick(clientPlayer);
     }
   }
 
@@ -51,40 +47,30 @@ public final class PlayerEvents {
     ParticleUtil.createTextParticles(player, difference, true, difference < 0);
   }
 
-
-  /**
-   * 左键点击空（客户端）
-   */
-  @SubscribeEvent
-  public static void playerInteractEventLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
-    playerLeftClickEmpty(event);
-  }
-
   /**
    * 左键点击方块
    */
-  @SubscribeEvent
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void playerInteractEventLeftClickBlock(PlayerInteractEvent.LeftClickBlock event) {
-    playerLeftClickEmpty(event);
-  }
-
-  public static void playerLeftClickEmpty(PlayerInteractEvent event) {
-    if (event.getSide().isClient()) {
-      PayloadUtil.sendToServer(new PlayerLeftEmptyClickPayload(event.getHand()));
+    Player entity = event.getEntity();
+    if (entity.isUsingItem() && entity.getUseItem().getItem() instanceof IGunWeapon) {
+      event.setCanceled(true);
       return;
     }
-    PlayerLeftEmptyClickPayload.trigger(event.getEntity(), event.getHand());
+    PlayerLeftEmptyClickPayload.trigger(entity, event.getHand());
   }
 
   /**
-   * 左键点击空（服务端）
+   * 左键点击空
    */
   @SubscribeEvent
   public static void playerLeftClickEmptyEventPre(PlayerLeftEmptyClickEvent.Post event) {
-    var itemStack = event.getItemStack();
-    if (!(itemStack.getItem() instanceof ItemLeftClickEmpty itemLeftClick)) {
-      return;
+    playerLeftClickEmpty(event.getItemStack(), event.getEntity());
+  }
+
+  private static void playerLeftClickEmpty(ItemStack itemStack, Player player) {
+    if (itemStack.getItem() instanceof IItemPlayerLeftClick itemLeftClick) {
+      itemLeftClick.leftClickEmpty(player, itemStack);
     }
-    itemLeftClick.leftClick(itemStack, event.getEntity());
   }
 }

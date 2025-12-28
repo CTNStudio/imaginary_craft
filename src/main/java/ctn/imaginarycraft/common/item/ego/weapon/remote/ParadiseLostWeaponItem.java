@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.common.entity.projectile.ParadiseLostSpikeweed;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import net.minecraft.client.Minecraft;
@@ -12,6 +11,7 @@ import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,12 +19,11 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.phys.shapes.VoxelShape;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.model.GeoModel;
 
-import javax.annotation.Nullable;
 import java.util.List;
-import java.util.Set;
 
 /**
  * 失乐园武器
@@ -36,42 +35,47 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
   private final int NORMAL_ATTACK_TICK = 8;
   private final int CHARGING_ATTACK_TICK = 10;
 
-  public ParadiseLostWeaponItem(Properties properties, Builder builder, GeoModel<GeoRemoteEgoWeaponItem> model, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
-    super(properties, builder, model, guiModel);
+  public ParadiseLostWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
+    super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 
-  public ParadiseLostWeaponItem(Properties properties, Builder builder, String modPath) {
-    super(properties, builder, modPath);
+  public ParadiseLostWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
+    super(itemProperties, egoWeaponBuilder, modPath);
   }
 
   @Override
-  public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+  public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+
+  }
+
+  @Override
+  protected void shootProjectile(LivingEntity shooterEntity, Projectile projectileEntity, int projectileIndex, float projectileVelocity, float projectileInaccuracy, float shootingAngle, @Nullable LivingEntity targetEntity) {
 
   }
 
   /**
    * 召唤一个
    */
-  public static void normalAttack(Level level, LivingEntity entity) {
-    if (!(level instanceof ServerLevel serverLevel)) {
+  public static void normalAttack(Level world, LivingEntity attackingEntity) {
+    if (!(world instanceof ServerLevel serverLevel)) {
       return;
     }
-    final Vec3 position = entity.getEyePosition();
+    final Vec3 position = attackingEntity.getEyePosition();
     double x = 0;
     double y = 0;
     double z = 0;
     int accuracy = 5;//探测精度（每1距离检测碰撞次数）
     for (int scale = 0; scale <= 30 * accuracy; scale++) {
-      Vec3 vec3 = position.add(entity.getLookAngle().scale((double) scale / accuracy));
+      Vec3 vec3 = position.add(attackingEntity.getLookAngle().scale((double) scale / accuracy));
       x = vec3.x;
       y = vec3.y;
       z = vec3.z;
       double v = 2;
       AABB aabb = new AABB(x - v, y - v, z - v, x + v, y + v, z + v);
-      List<LivingEntity> entityList = getAttackableTarget(entity, serverLevel, aabb);
+      List<LivingEntity> entityList = getAttackableTarget(attackingEntity, serverLevel, aabb);
       int i = entityList.size();
       if (i > 0) {
-        LivingEntity livingEntity = entityList.get(entity.level().getRandom().nextInt(i));
+        LivingEntity livingEntity = entityList.get(attackingEntity.level().getRandom().nextInt(i));
         if (livingEntity != null) {
           x = livingEntity.position().x;
           y = livingEntity.blockPosition().getY();
@@ -89,22 +93,22 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
         }
       }
     }
-    serverLevel.addFreshEntityWithPassengers(ParadiseLostSpikeweed.create(serverLevel, x, y, z, 1, entity));
+    serverLevel.addFreshEntityWithPassengers(ParadiseLostSpikeweed.create(serverLevel, x, y, z, 1, attackingEntity));
   }
 
   /**
    * 召唤多个
    */
-  public static void chargingAttack(Level level, LivingEntity entity) {
-    if (!(level instanceof ServerLevel serverLevel)) {
+  public static void chargingAttack(Level world, LivingEntity attackingEntity) {
+    if (!(world instanceof ServerLevel serverLevel)) {
       return;
     }
-    double x = entity.position().x;
-    int y = entity.blockPosition().getY();
-    double z = entity.position().z;
+    double x = attackingEntity.position().x;
+    int y = attackingEntity.blockPosition().getY();
+    double z = attackingEntity.position().z;
     double v = 8;
     AABB aabb = new AABB(x - v, y - 3, z - v, x + v, y + 3, z + v);
-    List<LivingEntity> entityList = getAttackableTarget(entity, serverLevel, aabb);
+    List<LivingEntity> entityList = getAttackableTarget(attackingEntity, serverLevel, aabb);
     int i = entityList.size();
     if (i > 0) {
       for (LivingEntity livingEntity : entityList) {
@@ -118,7 +122,7 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
             break;
           }
         }
-        serverLevel.addFreshEntityWithPassengers(ParadiseLostSpikeweed.create(serverLevel, x, y, z, i, entity, livingEntity));
+        serverLevel.addFreshEntityWithPassengers(ParadiseLostSpikeweed.create(serverLevel, x, y, z, i, attackingEntity, livingEntity));
       }
     }
   }
@@ -126,14 +130,14 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 获取可攻击目标
    */
-  private static @NotNull List<LivingEntity> getAttackableTarget(LivingEntity entity, ServerLevel serverLevel, AABB aabb) {
+  private static @NotNull List<LivingEntity> getAttackableTarget(LivingEntity attackingEntity, ServerLevel serverLevel, AABB aabb) {
     return serverLevel.getEntitiesOfClass(
       LivingEntity.class, aabb, (livingEntity) -> {
         boolean playerCreative = false;
         if (livingEntity instanceof Player player) {
           playerCreative = player.isCreative();
         }
-        return !livingEntity.getUUID().equals(entity.getUUID()) && livingEntity.isAlive() && livingEntity.isAttackable() && !playerCreative;
+        return !livingEntity.getUUID().equals(attackingEntity.getUUID()) && livingEntity.isAlive() && livingEntity.isAttackable() && !playerCreative;
       });
   }
 
@@ -167,24 +171,24 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
   }
 
   @Override
-  public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
+  public int getUseDuration(@NotNull ItemStack itemStack, @NotNull LivingEntity usingEntity) {
     return 666;
   }
 
   @Override
-  public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand hand) {
-    ItemStack itemstack = super.use(level, player, hand).getObject();
-    CompoundTag nbt = player.getPersistentData();
+  public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, @NotNull Player playerEntity, @NotNull InteractionHand handUsed) {
+    ItemStack itemstack = super.use(world, playerEntity, handUsed).getObject();
+    CompoundTag nbt = playerEntity.getPersistentData();
 //    // 玩家移动、下方方块没有实体方块顶部、在使用中时不执行
 //    if (hand == OFF_HAND ||
 //      Minecraft.getInstance().player == null ||
 //      !player.onGround() ||
 //      nbt.getBoolean(PLAYER_USE_ITEM) ||
 //      nbt.getBoolean(PLAYER_ATTACK) ||
-//      isJumpCancellation(level, player)) {
+//      isJumpCancellation(world, player)) {
 //      return InteractionResultHolder.fail(itemstack);
 //    }
-//    enterAttackState(level, player, ATTACK);
+//    enterAttackState(world, player, ATTACK);
 //    nbt.putBoolean(CANNOT_PLAYER_SWITCH_ITEMS, true);
 //    nbt.putBoolean(CANNOT_PLAYER_MOVED, true);
 //    player.startUsingItem(hand);
@@ -192,8 +196,8 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
   }
 
   @Override
-  public void onUseTick(@NotNull Level level, @NotNull LivingEntity entity, @NotNull ItemStack stack, int remainingUseDuration) {
-    if (!(entity instanceof Player player) || !player.onGround() || isJumpCancellation(level, player)) {
+  public void onUseTick(@NotNull Level world, @NotNull LivingEntity usingEntity, @NotNull ItemStack itemStack, int remainingUseDuration) {
+    if (!(usingEntity instanceof Player player) || !player.onGround() || isJumpCancellation(world, player)) {
     }
 //    PmTool.incrementNbt(player, PLAYER_USE_ITEM_TICK, 1);
 //    PmTool.incrementNbt(player, PLAYER_USE_TICK, 1);
@@ -209,26 +213,26 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
 //      return;
 //    }
 //    if (nbt.getInt(PLAYER_USE_TICK) == NORMAL_ATTACK_TICK) {
-//      if (level instanceof ServerLevel serverLevel) {
+//      if (world instanceof ServerLevel serverLevel) {
 //        PlayerAnimAPI.playPlayerAnim(
 //          serverLevel, player, IPlayerAnim.getAnimationID(CONTINUOUS_ATTACK),
 //          PlayerParts.allExceptHeadRot(), null, 2000);
 //      }
 //      nbt.putBoolean(CANNOT_PLAYER_ROTATING_PERSPECTIVE, true);
-//      chargingAttack(level, player);
+//      chargingAttack(world, player);
 //      nbt.putInt(ITEM_TICK, 0);
 //    }
 //    if (nbt.getInt(ITEM_TICK) >= CHARGING_ATTACK_TICK) {
-//      chargingAttack(level, player);
+//      chargingAttack(world, player);
 //      nbt.putInt(ITEM_TICK, 0);
 //    }
   }
 
-  private boolean isJumpCancellation(Level level, Player player) {
+  private boolean isJumpCancellation(Level world, Player playerEntity) {
     Minecraft minecraft = Minecraft.getInstance();
     if (minecraft.player != null) {
       if (minecraft.player.input.jumping) {
-        forcedInterruption(level, player);
+        forcedInterruption(world, playerEntity);
         return true;
       }
     }
@@ -236,8 +240,8 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
   }
 
   @Override
-  public void onStopUsing(@NotNull ItemStack stack, @NotNull LivingEntity entity, int count) {
-    if (!(entity instanceof Player player)) {
+  public void onStopUsing(@NotNull ItemStack itemStack, @NotNull LivingEntity usingEntity, int count) {
+    if (!(usingEntity instanceof Player player)) {
       return;
     }
     CompoundTag nbt = player.getPersistentData();
@@ -258,12 +262,12 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
 //    nbt.putBoolean(CANNOT_PLAYER_ROTATING_PERSPECTIVE, false);
 //    nbt.putBoolean(CANNOT_PLAYER_MOVED, false);
 //    nbt.putInt(PLAYER_USE_ITEM_TICK, 0);
-    super.onStopUsing(stack, entity, count);
+    super.onStopUsing(itemStack, usingEntity, count);
   }
 
   @Override
-  public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level, @NotNull Entity entity, int slotId, boolean isSelected) {
-    if (!isSelected || !(entity instanceof Player player) || player.isUsingItem()) {
+  public void inventoryTick(@NotNull ItemStack itemStack, @NotNull Level world, @NotNull Entity entity, int slotIndex, boolean isCurrentlySelected) {
+    if (!isCurrentlySelected || !(entity instanceof Player player) || player.isUsingItem()) {
       return;
     }
     CompoundTag nbt = player.getPersistentData();
@@ -276,13 +280,13 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
 //      // 因为不知名BUG因此这么写
 //      if (minecraft != null && minecraft.player != null && minecraft.player.input != null) {
 //        if (minecraft.player.input.jumping) {
-//          forcedInterruption(level, player);
+//          forcedInterruption(world, player);
 //          return;
 //        }
 //      }
 //      PmTool.incrementNbt(player, PLAYER_USE_ITEM_TICK, 1);
 //      if (nbt.getInt(PLAYER_USE_ITEM_TICK) == NORMAL_ATTACK_TICK) {
-//        normalAttack(level, player);
+//        normalAttack(world, player);
 //      }
 //      if (nbt.getInt(PLAYER_USE_ITEM_TICK) == 10) {
 //        nbt.putBoolean(PLAYER_ATTACK, false);
@@ -297,12 +301,6 @@ public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 強制中断
    */
-  public void forcedInterruption(Level level, Player player) {
-  }
-
-  @Nullable
-  @Override
-  public Set<LcDamageType> getCanCauseLcDamageTypes(final ItemStack stack) {
-    return Set.of(LcDamageType.THE_SOUL);
+  public void forcedInterruption(Level world, Player playerEntity) {
   }
 }

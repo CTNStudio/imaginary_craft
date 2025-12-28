@@ -175,7 +175,7 @@ public abstract class EgoArmorRegisterUtil {
       case BOOTS -> DatagenItemTag.FOOT_ARMOR.add(deferredItem);
     }
     DatagenItemTag.EGO_ARMOUR.add(deferredItem);
-    ZhCn.ITEMS.put(deferredItem, zhName);
+    ZhCn.clientAddI18nItemText(zhName, deferredItem);
     return deferredItem;
   }
 
@@ -188,7 +188,8 @@ public abstract class EgoArmorRegisterUtil {
   public record EgoArmor(
     DeferredItem<EgoArmorItem> chest,
     DeferredItem<EgoArmorItem> legs,
-    DeferredItem<EgoArmorItem> feet) implements Iterable<DeferredItem<EgoArmorItem>> {
+    DeferredItem<EgoArmorItem> feet
+  ) implements Iterable<DeferredItem<EgoArmorItem>> {
     @Override
     public @NotNull Iterator<DeferredItem<EgoArmorItem>> iterator() {
       return getSet().iterator();

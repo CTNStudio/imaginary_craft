@@ -12,7 +12,7 @@ public class ModGeoEntityModel<T extends GeoAnimatable> extends BasicGeoModel<T>
     super("entity/" + modelPath, "entity/" + textureName, "entity/" + animationsName + ".animation");
   }
 
-  public static ResourceLocation getTexturePath(String textureName){
+  public static ResourceLocation getTexturePath(String textureName) {
     return texturePath("entity/" + textureName);
   }
 }

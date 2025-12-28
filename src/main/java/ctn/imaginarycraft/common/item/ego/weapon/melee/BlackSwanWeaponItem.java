@@ -6,16 +6,16 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class BlackSwanWeaponItem extends GeoMeleeEgoWeaponItem {
 
-  public BlackSwanWeaponItem(Properties properties, Builder builder, GeoModel<GeoMeleeEgoWeaponItem> model, GeoModel<GeoMeleeEgoWeaponItem> guiModel) {
-    super(properties, builder, model, guiModel);
+  public BlackSwanWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoMeleeEgoWeaponItem> geoModel, GeoModel<GeoMeleeEgoWeaponItem> guiModel) {
+    super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 
-  public BlackSwanWeaponItem(Properties properties, Builder builder, String modPath) {
-    super(properties, builder, modPath);
+  public BlackSwanWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
+    super(itemProperties, egoWeaponBuilder, modPath);
   }
 
   @Override
-  public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+  public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
 
   }
 }

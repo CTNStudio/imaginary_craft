@@ -1,8 +1,10 @@
-package ctn.imaginarycraft.common.payloads.player;
+package ctn.imaginarycraft.common.payloads.entity.player;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.event.PlayerLeftEmptyClickEvent;
+import ctn.imaginarycraft.util.PayloadUtil;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
@@ -34,7 +36,10 @@ public record PlayerLeftEmptyClickPayload(boolean isMainHand) implements CustomP
   }
 
   public static void trigger(final Player player, final InteractionHand hand) {
-    var event = new PlayerLeftEmptyClickEvent.Pre(player, hand);
+    PlayerLeftEmptyClickEvent.Pre event = new PlayerLeftEmptyClickEvent.Pre(player, hand);
+    if (player instanceof AbstractClientPlayer) {
+      PayloadUtil.sendToServer(new PlayerLeftEmptyClickPayload(hand));
+    }
     ModLoader.postEvent(event);
     if (event.isCanceled()) {
       return;

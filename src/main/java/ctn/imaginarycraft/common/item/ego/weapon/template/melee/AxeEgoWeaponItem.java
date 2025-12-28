@@ -6,16 +6,16 @@ import software.bernie.geckolib.model.GeoModel;
 // TODO 需要具备原版斧头的一切功能
 public class AxeEgoWeaponItem extends GeoMeleeEgoWeaponItem {
 
-  public AxeEgoWeaponItem(Properties properties, Builder builder, GeoModel<GeoMeleeEgoWeaponItem> model, GeoModel<GeoMeleeEgoWeaponItem> guiModel) {
-    super(properties, builder, model, guiModel);
+  public AxeEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoMeleeEgoWeaponItem> geoModel, GeoModel<GeoMeleeEgoWeaponItem> guiModel) {
+    super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 
-  public AxeEgoWeaponItem(Properties properties, Builder builder, String modPath) {
-    super(properties, builder, modPath);
+  public AxeEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
+    super(itemProperties, egoWeaponBuilder, modPath);
   }
 
   @Override
-  public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+  public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
 
   }
 }

@@ -38,7 +38,7 @@ public final class LcDamageUtil {
     if (maxHealth == 0) {
       maxHealth = 20;
     }
-
+    // TODO 重新调整算法
     // 根据伤害等级差异计算最终伤害
     return damage * (maxHealth / 5) * LcLevelUtil.getDamageMultiple(attackedLevel, attackerLevel);
   }

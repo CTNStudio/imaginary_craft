@@ -54,36 +54,36 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem {
   private @Nullable Function<EgoCurioItem, BasicCuriosRenderer> curiosRendererFunction;
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-  public EgoCurioItem(Builder builder) {
-    super(builder.properties.component(ModDataComponents.IS_RESTRAIN, false)
+  public EgoCurioItem(Builder egoCurioBuilder) {
+    super(egoCurioBuilder.properties.component(ModDataComponents.IS_RESTRAIN, false)
       .stacksTo(1)
       .fireResistant());
-    this.virtueAddAttribute = builder.virtueAddAttribute.build();
-    this.isEnderMask = builder.isEnderMask;
+    this.virtueAddAttribute = egoCurioBuilder.virtueAddAttribute.build();
+    this.isEnderMask = egoCurioBuilder.isEnderMask;
     if (FMLEnvironment.dist.isDedicatedServer()) {
       this.model = null;
       this.curiosRenderer = null;
       this.curiosRendererFunction = null;
     } else {
-      this.model = builder.model;
-      this.curiosRendererFunction = builder.curiosRenderer;
+      this.model = egoCurioBuilder.model;
+      this.curiosRendererFunction = egoCurioBuilder.curiosRenderer;
     }
 
-    this.tooltipsI18n = builder.tooltips;
-    this.tooltipsComponent = builder.tooltipsComponent;
+    this.tooltipsI18n = egoCurioBuilder.tooltips;
+    this.tooltipsComponent = egoCurioBuilder.tooltipsComponent;
   }
 
   @Override
-  public void onUnequip(final SlotContext slotContext, final ItemStack newStack, final ItemStack stack) {
-    ICurioItem.super.onUnequip(slotContext, newStack, stack);
+  public void onUnequip(final SlotContext slotContext, final ItemStack newStackInSlot, final ItemStack stackBeingUnequipped) {
+    ICurioItem.super.onUnequip(slotContext, newStackInSlot, stackBeingUnequipped);
     if (slotContext.entity() instanceof Player player) {
       RationalityUtil.restrictValue(player, true);
     }
   }
 
   @Override
-  public void onEquip(final SlotContext slotContext, final ItemStack prevStack, final ItemStack stack) {
-    ICurioItem.super.onEquip(slotContext, prevStack, stack);
+  public void onEquip(final SlotContext slotContext, final ItemStack previousStack, final ItemStack stackBeingEquipped) {
+    ICurioItem.super.onEquip(slotContext, previousStack, stackBeingEquipped);
     if (slotContext.entity() instanceof Player player) {
       RationalityUtil.restrictValue(player, true);
     }
@@ -91,17 +91,17 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem {
 
   @Override
   protected @NotNull String getOrCreateDescriptionId() {
-    String orCreateDescriptionId = super.getOrCreateDescriptionId();
+    String itemDescriptionId = super.getOrCreateDescriptionId();
     if (this.tooltipsI18n == null) {
-      return orCreateDescriptionId;
+      return itemDescriptionId;
     }
-    AtomicInteger componentKeyIndex = new AtomicInteger();
-    this.tooltipsI18n.forEach(value -> {
-      int index = componentKeyIndex.get();
-      componentKeyIndex.incrementAndGet();
-      String key = orCreateDescriptionId + ".tooltip." + index;
+    AtomicInteger tooltipComponentIndex = new AtomicInteger();
+    this.tooltipsI18n.forEach(tooltipValue -> {
+      int index = tooltipComponentIndex.get();
+      tooltipComponentIndex.incrementAndGet();
+      String key = itemDescriptionId + ".tooltip." + index;
       if (!FMLEnvironment.production && this.tooltipsI18nMap != null) {
-        this.tooltipsI18nMap.put(key, value);
+        this.tooltipsI18nMap.put(key, tooltipValue);
       }
       if (this.tooltipsComponent != null) {
         this.tooltips.add(this.tooltipsComponent.get(index).apply(key));
@@ -113,23 +113,23 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem {
     }
     this.tooltipsComponent = null;
     this.tooltipsI18n = null;
-    return orCreateDescriptionId;
+    return itemDescriptionId;
   }
 
   @Override
-  public List<Component> getSlotsTooltip(final List<Component> tooltips, final TooltipContext context, final ItemStack stack) {
-    List<Component> mutableTooltip = new ArrayList<>(tooltips);
+  public List<Component> getSlotsTooltip(final List<Component> originalTooltips, final TooltipContext tooltipContext, final ItemStack itemStack) {
+    List<Component> mutableTooltip = new ArrayList<>(originalTooltips);
     mutableTooltip.addAll(this.tooltips);
-    return ICurioItem.super.getSlotsTooltip(mutableTooltip, context, stack);
+    return ICurioItem.super.getSlotsTooltip(mutableTooltip, tooltipContext, itemStack);
   }
 
   @Override
-  public boolean canEquipFromUse(SlotContext slotContext, ItemStack stack) {
+  public boolean canEquipFromUse(SlotContext slotContext, ItemStack itemStack) {
     return true;
   }
 
   @Override
-  public boolean isEnderMask(final SlotContext slotContext, final EnderMan enderMan, final ItemStack stack) {
+  public boolean isEnderMask(final SlotContext slotContext, final EnderMan endermanEntity, final ItemStack itemStack) {
     return isEnderMask;
   }
 
@@ -137,10 +137,10 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem {
    * 属性加成
    */
   @Override
-  public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation id, ItemStack stack) {
-    Multimap<Holder<Attribute>, AttributeModifier> modifier = ICurioItem.super.getAttributeModifiers(slotContext, id, stack);
-    modifier.putAll(this.virtueAddAttribute.getAttributeModifiers(slotContext.entity(), id, stack));
-    return modifier;
+  public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(SlotContext slotContext, ResourceLocation attributeId, ItemStack itemStack) {
+    Multimap<Holder<Attribute>, AttributeModifier> attributeModifiers = ICurioItem.super.getAttributeModifiers(slotContext, attributeId, itemStack);
+    attributeModifiers.putAll(this.virtueAddAttribute.getAttributeModifiers(slotContext.entity(), attributeId, itemStack));
+    return attributeModifiers;
   }
 
   @Override

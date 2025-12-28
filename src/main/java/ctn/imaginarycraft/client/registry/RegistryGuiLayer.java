@@ -2,6 +2,7 @@ package ctn.imaginarycraft.client.registry;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import ctn.imaginarycraft.client.ModGuiLayers;
+import ctn.imaginarycraft.client.gui.layers.LcDamageScreenFilterLayer;
 import ctn.imaginarycraft.client.gui.layers.LeftBarLayer;
 import ctn.imaginarycraft.client.gui.layers.ScreenFilterLayer;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -15,6 +16,7 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 public final class RegistryGuiLayer {
   @SubscribeEvent
   public static void register(RegisterGuiLayersEvent event) {
+    event.registerAbove(VanillaGuiLayers.CAMERA_OVERLAYS, ModGuiLayers.LC_DAMAGE_SCREEN_FILTER, LcDamageScreenFilterLayer.INSTANCE);
     event.registerAbove(VanillaGuiLayers.PLAYER_HEALTH, ModGuiLayers.LEFT_BAR, LeftBarLayer.INSTANCE);
     event.wrapLayer(VanillaGuiLayers.ARMOR_LEVEL, (layer) -> (guiGraphics, deltaTracker) -> {
       PoseStack pose = guiGraphics.pose();

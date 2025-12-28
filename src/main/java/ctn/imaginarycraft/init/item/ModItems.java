@@ -32,7 +32,7 @@ public final class ModItems {
                                                            Function<Item.Properties, ? extends I> item,
                                                            Item.Properties properties) {
     DeferredItem<I> deferredItem = REGISTRY.registerItem(name, item, properties);
-    ZhCn.ITEMS.put(deferredItem, zhName);
+    ZhCn.clientAddI18nItemText(zhName, deferredItem);
     return deferredItem;
   }
 }

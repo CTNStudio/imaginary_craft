@@ -4,7 +4,6 @@ import ctn.imaginarycraft.init.entiey.AbnormalitiesEntityTypes;
 import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -22,7 +21,7 @@ public class MagicBulletEntity extends ModBulletEntity {
   @CheckForNull
   private LivingEntity target;
 
-  public MagicBulletEntity(EntityType<? extends ThrowableProjectile> entityType, Level level) {
+  public MagicBulletEntity(EntityType<? extends ModBulletEntity> entityType, Level level) {
     super(entityType, level);
     this.setNoGravity(true);
   }

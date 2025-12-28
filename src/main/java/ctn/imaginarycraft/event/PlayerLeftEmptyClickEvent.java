@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.event;
 
-import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -12,13 +11,7 @@ import org.jetbrains.annotations.Nullable;
 public abstract class PlayerLeftEmptyClickEvent extends PlayerInteractEvent implements IModBusEvent {
   public PlayerLeftEmptyClickEvent(final Player player,
                                    final InteractionHand hand) {
-    super(player, hand, BlockPos.ZERO, null);
-  }
-
-  @Override
-  @Nullable
-  public BlockPos getPos() {
-    return null;
+    super(player, hand, player.blockPosition(), null);
   }
 
   @Override

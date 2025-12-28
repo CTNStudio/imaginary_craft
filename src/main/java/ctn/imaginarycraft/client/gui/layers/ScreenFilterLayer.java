@@ -12,8 +12,6 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-import java.util.Arrays;
-
 public class ScreenFilterLayer extends BasicDrawLayer {
   public static final ResourceLocation RATIONALITY = ImaginaryCraft.modRl("textures/gui/filter/rationality.png");
   public static final ResourceLocation RATIONALITY1 = ImaginaryCraft.modRl("textures/gui/filter/rationality1.png");
@@ -79,7 +77,9 @@ public class ScreenFilterLayer extends BasicDrawLayer {
 
   private void rationalityChange(float value) {
     if (value >= 0) {
-      Arrays.stream(this.rationalityFilters).forEach(filter -> filter.setAlpha(0));
+      for (Filter filter : this.rationalityFilters) {
+        filter.setAlpha(0);
+      }
       return;
     }
     float v = value / this.minValue;
@@ -108,7 +108,7 @@ public class ScreenFilterLayer extends BasicDrawLayer {
       PoseStack pose = guiGraphics.pose();
       pose.pushPose();
       guiGraphics.setColor(1, 1, 1, this.alpha);
-      guiGraphics.blit(this.texture, 0, 0, -90, 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), guiGraphics.guiWidth(), guiGraphics.guiHeight());
+      guiGraphics.blit(this.texture, 0, 0, 0, 0, 0, guiGraphics.guiWidth(), guiGraphics.guiHeight(), guiGraphics.guiWidth(), guiGraphics.guiHeight());
       guiGraphics.setColor(1, 1, 1, 1);
       pose.popPose();
     }
@@ -123,6 +123,10 @@ public class ScreenFilterLayer extends BasicDrawLayer {
     @Override
     protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
 
+    }
+
+    public float getAlpha() {
+      return alpha;
     }
   }
 }
