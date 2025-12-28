@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.client.gui.layers;
+package ctn.imaginarycraft.client.gui.hudlayers;
 
 import ctn.imaginarycraft.client.gui.widget.HorizontalStatusBar;
 import ctn.imaginarycraft.core.ImaginaryCraft;

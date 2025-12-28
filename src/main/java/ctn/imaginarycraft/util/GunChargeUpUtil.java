@@ -4,13 +4,13 @@ import ctn.imaginarycraft.init.ModAttachments;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 
-public final class ChargeUpUtil {
+public final class GunChargeUpUtil {
   public static int getValue(Player player) {
-    return player.getData(ModAttachments.CHARGE_UP);
+    return player.getData(ModAttachments.GUN_CHARGE_UP);
   }
 
   public static void setValue(Player player, int value) {
-    player.setData(ModAttachments.CHARGE_UP, value);
+    player.setData(ModAttachments.GUN_CHARGE_UP, value);
   }
 
   public static void reset(Player player) {

@@ -1,5 +1,6 @@
-package ctn.imaginarycraft.client.gui.layers;
+package ctn.imaginarycraft.client.gui.hudlayers;
 
+import ctn.imaginarycraft.api.client.IHudLayer;
 import ctn.imaginarycraft.client.gui.widget.HorizontalStatusBar;
 import ctn.imaginarycraft.util.TextUtil;
 import net.minecraft.client.DeltaTracker;
@@ -10,7 +11,10 @@ import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.util.Mth;
 import org.jetbrains.annotations.NotNull;
 
-public abstract class StatusBarLayer extends CompositeLayer.Layer {
+/**
+ * 状态条层
+ */
+public abstract class StatusBarLayer extends IHudLayer {
   protected float currentValue;
   protected float renderedValue;
   protected float previousValue;

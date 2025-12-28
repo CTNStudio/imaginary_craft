@@ -42,8 +42,7 @@ public final class ParticleUtil {
       .shadow()
       .seeThrough()
       .buildOptions();
-    DamageTextParticle.Options options = new DamageTextParticle.Options(built, isHeal);
-    world.sendParticles(options, x, y, z, 1, xOffset, yOffset, zOffset, 0);
+    world.sendParticles(new DamageTextParticle.Options(built, isHeal), x, y, z, 1, xOffset, yOffset, zOffset, 0);
   }
 
   private static TextParticle.Builder getBuild(

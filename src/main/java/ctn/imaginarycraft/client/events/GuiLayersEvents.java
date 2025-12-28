@@ -1,8 +1,10 @@
 package ctn.imaginarycraft.client.events;
 
+import ctn.imaginarycraft.api.IGunWeapon;
 import ctn.imaginarycraft.client.ModGuiLayers;
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -31,6 +33,12 @@ public final class GuiLayersEvents {
     }
     if (name.equals(ModGuiLayers.LC_DAMAGE_SCREEN_FILTER)) {
       if (!ModConfig.CLIENT.enableLcColorDamageFilter.get()) {
+        event.setCanceled(true);
+      }
+      return;
+    }
+    if (name.equals(ModGuiLayers.GUN_CHARGE_UP_HUD_LAYER_CROSSHAIR) || name.equals(ModGuiLayers.GUN_CHARGE_UP_HUD_LAYER_HOTBAR)) {
+      if (!IGunWeapon.isHoldGunWeapon(Minecraft.getInstance().player)) {
         event.setCanceled(true);
       }
     }

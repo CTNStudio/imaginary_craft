@@ -68,9 +68,9 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 构造函数
    *
-   * @param properties 物品属性
-   * @param builder    EGO武器构建器
-   * @param model      物品模型
+   * @param itemProperties 物品属性
+   * @param egoWeaponBuilder    EGO武器构建器
+   * @param geoModel      物品模型
    * @param guiModel   GUI界面模型
    */
   public CrossbowEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
@@ -80,8 +80,8 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 构造函数
    *
-   * @param properties 物品属性
-   * @param builder    EGO武器构建器
+   * @param itemProperties 物品属性
+   * @param egoWeaponBuilder    EGO武器构建器
    * @param modPath    模组路径
    */
   public CrossbowEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
@@ -106,9 +106,9 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 使用物品时调用的方法，处理右键点击行为
    *
-   * @param level  游戏世界
-   * @param player 使用物品的玩家
-   * @param hand   使用物品的手（主手或副手）
+   * @param world  游戏世界
+   * @param playerEntity 使用物品的玩家
+   * @param handUsed   使用物品的手（主手或副手）
    * @return 交互结果
    */
   @Override
@@ -144,8 +144,8 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 当玩家停止使用物品时调用（松开右键）
    *
-   * @param stack        物品堆
-   * @param level        游戏世界
+   * @param itemStack        物品堆
+   * @param world        游戏世界
    * @param entityLiving 使用物品的实体
    * @param timeLeft     剩余时间
    */
@@ -199,13 +199,13 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 发射弹药
    *
-   * @param shooter    射击者
-   * @param projectile 投射物
-   * @param index      弹药索引
-   * @param velocity   速度
-   * @param inaccuracy 不准确度
-   * @param angle      角度
-   * @param target     目标实体（可为空）
+   * @param shooterEntity    射击者
+   * @param projectileEntity 投射物
+   * @param projectileIndex      弹药索引
+   * @param projectileVelocity   速度
+   * @param projectileInaccuracy 不准确度
+   * @param shootingAngle      角度
+   * @param targetEntity     目标实体（可为空）
    */
   @Override
   protected void shootProjectile(LivingEntity shooterEntity, Projectile projectileEntity, int projectileIndex, float projectileVelocity,
@@ -252,10 +252,10 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 创建投射物实例
    *
-   * @param level   游戏世界
-   * @param shooter 射击者
-   * @param weapon  武器物品堆
-   * @param ammo    弹药物品堆
+   * @param world   游戏世界
+   * @param shooterEntity 射击者
+   * @param weaponItem  武器物品堆
+   * @param ammoItem    弹药物品堆
    * @param isCrit  是否暴击
    * @return 投射物实例
    */
@@ -287,13 +287,13 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 执行射击操作
    *
-   * @param level      游戏世界
-   * @param shooter    射击者
-   * @param hand       使用的手
-   * @param weapon     武器物品堆
-   * @param velocity   速度
-   * @param inaccuracy 不准确度
-   * @param target     目标实体（可为空）
+   * @param world      游戏世界
+   * @param shooterEntity    射击者
+   * @param handUsed       使用的手
+   * @param weaponItem     武器物品堆
+   * @param projectileVelocity   速度
+   * @param projectileInaccuracy 不准确度
+   * @param targetEntity     目标实体（可为空）
    */
   public void performShooting(Level world, LivingEntity shooterEntity, InteractionHand handUsed, ItemStack weaponItem,
                               float projectileVelocity, float projectileInaccuracy, @Nullable LivingEntity targetEntity) {
@@ -342,9 +342,9 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 物品使用过程中每刻调用的方法
    *
-   * @param level        游戏世界
-   * @param livingEntity 使用物品的实体
-   * @param stack        物品堆
+   * @param world        游戏世界
+   * @param usingEntity 使用物品的实体
+   * @param itemStack        物品堆
    * @param count        剩余使用时间
    */
   @Override
@@ -378,8 +378,8 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 获取物品使用持续时间
    *
-   * @param stack  物品堆
-   * @param entity 使用物品的实体
+   * @param itemStack  物品堆
+   * @param usingEntity 使用物品的实体
    * @return 使用持续时间
    */
   @Override
@@ -390,8 +390,8 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 获取弩装填所需时间
    *
-   * @param stack   物品堆
-   * @param shooter 射击者
+   * @param itemStack   物品堆
+   * @param shooterEntity 射击者
    * @return 装填时间（tick）
    */
   public static int getChargeDuration(ItemStack itemStack, LivingEntity shooterEntity) {
@@ -413,7 +413,7 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 获取装填音效
    *
-   * @param stack 物品堆
+   * @param itemStack 物品堆
    * @return 装填音效配置
    */
   CrossbowItem.ChargingSounds getChargingSounds(ItemStack itemStack) {
@@ -424,8 +424,8 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * 根据使用时间计算装填力度
    *
    * @param timeLeft 剩余时间
-   * @param stack    物品堆
-   * @param shooter  射击者
+   * @param itemStack    物品堆
+   * @param shooterEntity  射击者
    * @return 装填力度（0.0-1.0）
    */
   private static float getPowerForTime(int timeLeft, ItemStack itemStack, LivingEntity shooterEntity) {
@@ -440,8 +440,8 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
   /**
    * 添加物品悬停文本（提示信息）
    *
-   * @param stack             物品堆
-   * @param context           提示上下文
+   * @param itemStack             物品堆
+   * @param tooltipContext           提示上下文
    * @param tooltipComponents 提示组件列表
    * @param tooltipFlag       提示标志
    */

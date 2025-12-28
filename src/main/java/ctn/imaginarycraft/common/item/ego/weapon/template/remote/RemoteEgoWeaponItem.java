@@ -56,11 +56,11 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
   }
 
   protected float getProjectileInaccuracy(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
-    return Math.max(attackDistance / 3f, 0);
+    return Math.max(1F / attackDistance, 0);
   }
 
   protected float getProjectileVelocity(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
-    return 1.0F;
+    return 10.0F;
   }
 
   protected void shoot(ServerLevel world, LivingEntity shooterEntity, InteractionHand handUsed, ItemStack weaponItem,

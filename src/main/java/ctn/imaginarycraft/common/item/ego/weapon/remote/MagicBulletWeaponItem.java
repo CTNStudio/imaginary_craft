@@ -8,10 +8,9 @@ import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWea
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
-import ctn.imaginarycraft.util.ChargeUpUtil;
+import ctn.imaginarycraft.util.GunChargeUpUtil;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -29,9 +28,18 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   public static final ResourceLocation SHOOTING_AIM = ImaginaryCraft.modRl("magic_bullet_weapon.shooting.aim");
   public static final ResourceLocation SHOOTING_AIM_CYCLE = ImaginaryCraft.modRl("magic_bullet_weapon.shooting.aim.cycle");
   public static final ResourceLocation SHOOTING_AIM_LAUNCH = ImaginaryCraft.modRl("magic_bullet_weapon.shooting.aim.launch");
+
   public static final ResourceLocation SHOOTING_AIM_TERMINATE = ImaginaryCraft.modRl("magic_bullet_weapon.shooting.aim.terminate");
   public static final ResourceLocation SHOOTING_AIM_CHARGEUP = ImaginaryCraft.modRl("magic_bullet_weapon.shooting.aim.chargeup");
   public static final ResourceLocation SHOOTING_CYCLE = ImaginaryCraft.modRl("magic_bullet_weapon.shooting.cycle");
+
+
+  public static final PlayerAnimRawAnimation GUN_AIM_RAW_ANIMATION = PlayerAnimRawAnimation.begin()
+    .then(SHOOTING_AIM, Animation.LoopType.PLAY_ONCE)
+    .thenLoop(SHOOTING_AIM_CYCLE);
+  public static final PlayerAnimRawAnimation GUN_AIM_SHOOT_RAW_ANIMATION = PlayerAnimRawAnimation.begin()
+    .then(SHOOTING_AIM_LAUNCH, Animation.LoopType.PLAY_ONCE)
+    .thenLoop(SHOOTING_AIM_CYCLE);
 
   @SuppressWarnings("unchecked")
   public static final AnimCollection ANIM_COLLECTION = new AnimCollection(
@@ -52,12 +60,12 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   }
 
   @Override
-  public boolean isAim(Player playerEntity, ItemStack itemStack) {
+  public boolean isGunAim(Player playerEntity, ItemStack itemStack) {
     return true;
   }
 
   @Override
-  public boolean isAimMove(Player playerEntity, ItemStack itemStack) {
+  public boolean isGunAimMove(Player playerEntity, ItemStack itemStack) {
     return true;
   }
 
@@ -70,25 +78,15 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   }
 
   @Override
-  public void aim(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
+  public void gunAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
     if (playerEntity instanceof AbstractClientPlayer) {
       return;
     }
-    PlayerAnimUtil.playRawAnimation(playerEntity, PlayerAnimUtil.NORMAL_STATE, PlayerAnimRawAnimation.begin()
-      .then(SHOOTING_AIM, Animation.LoopType.PLAY_ONCE)
-      .thenLoop(SHOOTING_AIM_CYCLE), PlayerAnimUtil.DEFAULT_FADE_IN);
+    PlayerAnimUtil.playRawAnimation(playerEntity, PlayerAnimUtil.NORMAL_STATE, GUN_AIM_RAW_ANIMATION, PlayerAnimUtil.DEFAULT_FADE_IN);
   }
 
   @Override
-  public void endAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
-    if (playerEntity instanceof AbstractClientPlayer) {
-      return;
-    }
-    PlayerAnimUtil.playAnimation(playerEntity, PlayerAnimUtil.NORMAL_STATE, SHOOTING_AIM_TERMINATE, PlayerAnimUtil.DEFAULT_FADE_OUT);
-  }
-
-  @Override
-  public void end(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
+  public void gunEndAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
     if (playerEntity instanceof AbstractClientPlayer) {
       return;
     }
@@ -96,31 +94,35 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   }
 
   @Override
-  public boolean shoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
-    if (!super.shoot(playerEntity, itemStack, handUsed)) {
-      return false;
+  public void gunEnd(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
+    if (playerEntity instanceof AbstractClientPlayer) {
+      return;
     }
-    if (playerEntity.level() instanceof ServerLevel serverLevel) {
-      ChargeUpUtil.reset(playerEntity);
-      PlayerAnimUtil.playAnimation(playerEntity, PlayerAnimUtil.NORMAL_STATE, SHOOTING,
-        PlayerAnimUtil.DEFAULT_FADE_IN);
-    }
-    return true;
+    PlayerAnimUtil.playAnimation(playerEntity, PlayerAnimUtil.NORMAL_STATE, SHOOTING_AIM_TERMINATE, PlayerAnimUtil.DEFAULT_FADE_OUT);
   }
 
   @Override
-  public boolean aimShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
-    float attackStrengthScale = ChargeUpUtil.getPercentage(playerEntity);
-    if (attackStrengthScale < 0.3) {
-      return false;
-    }
-    if (playerEntity.level() instanceof ServerLevel serverLevel) {
-      shoot(playerEntity, itemStack, handUsed, serverLevel);
-      ChargeUpUtil.reset(playerEntity);
-      PlayerAnimUtil.playRawAnimation(playerEntity, PlayerAnimUtil.NORMAL_STATE, PlayerAnimRawAnimation.begin()
-        .then(SHOOTING_AIM_LAUNCH, Animation.LoopType.PLAY_ONCE)
-        .thenLoop(SHOOTING_AIM_CYCLE), PlayerAnimUtil.DEFAULT_FADE_IN);
-    }
-    return true;
+  public boolean gunShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    return gunShootFunction(playerEntity,
+      chargeUpPercentage -> chargeUpPercentage >= 1,
+      serverLevel -> {
+        defaultGunShootServerLevelConsumer(playerEntity, itemStack, handUsed, serverLevel);
+        GunChargeUpUtil.reset(playerEntity);
+        PlayerAnimUtil.playAnimation(playerEntity, PlayerAnimUtil.NORMAL_STATE, SHOOTING, PlayerAnimUtil.DEFAULT_FADE_IN);
+      }
+    );
+  }
+
+
+  @Override
+  public boolean gunAimShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    return gunShootFunction(playerEntity,
+      chargeUpPercentage -> chargeUpPercentage >= 0.3,
+      serverLevel -> {
+        defaultGunShootServerLevelConsumer(playerEntity, itemStack, handUsed, serverLevel);
+        GunChargeUpUtil.reset(playerEntity);
+        PlayerAnimUtil.playRawAnimation(playerEntity, PlayerAnimUtil.NORMAL_STATE, GUN_AIM_SHOOT_RAW_ANIMATION, PlayerAnimUtil.DEFAULT_FADE_IN);
+      }
+    );
   }
 }

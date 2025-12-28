@@ -1,11 +1,11 @@
-package ctn.imaginarycraft.client.gui.layers;
+package ctn.imaginarycraft.client.gui.hudlayers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import ctn.imaginarycraft.api.client.IHudLayer;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.client.player.LocalPlayer;
 
 import java.util.LinkedHashMap;
@@ -15,33 +15,31 @@ import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.BooleanSupplier;
 
-public abstract class CompositeLayer implements LayeredDraw.Layer {
-  protected final Minecraft minecraft;
-  protected LocalPlayer player;
-  protected Font font;
-  protected int leftPos;
-  protected int topPos;
+/**
+ * 组合层
+ */
+public abstract class CompositeHudLayer extends IHudLayer {
   protected int screenWidth;
   protected int screenHeight;
 
-  private final Map<Layer, BooleanSupplier> layers = new LinkedHashMap<>();
+  private final Map<IHudLayer, BooleanSupplier> layers = new LinkedHashMap<>();
 
-  public CompositeLayer() {
+  public CompositeHudLayer() {
     this.minecraft = Minecraft.getInstance();
     this.font = this.minecraft.font;
   }
 
-  public CompositeLayer addLayer(Layer layer) {
+  public CompositeHudLayer addLayer(IHudLayer layer) {
     this.layers.put(layer, () -> true);
     return this;
   }
 
-  public CompositeLayer addLayer(Layer layer, BooleanSupplier supplier) {
+  public CompositeHudLayer addLayer(IHudLayer layer, BooleanSupplier supplier) {
     this.layers.put(layer, supplier);
     return this;
   }
 
-  public Set<Map.Entry<Layer, BooleanSupplier>> getLayers() {
+  public Set<Map.Entry<IHudLayer, BooleanSupplier>> getLayers() {
     return this.layers.entrySet();
   }
 
@@ -55,7 +53,7 @@ public abstract class CompositeLayer implements LayeredDraw.Layer {
     renderSubLayer(guiGraphics, deltaTracker);
   }
 
-  protected void init(final GuiGraphics guiGraphics, final DeltaTracker deltaTracker) {
+  public void init(final GuiGraphics guiGraphics, final DeltaTracker deltaTracker) {
     int newScreenWidth = guiGraphics.guiWidth();
     int newScreenHeight = guiGraphics.guiHeight();
 
@@ -83,10 +81,10 @@ public abstract class CompositeLayer implements LayeredDraw.Layer {
   }
 
   protected void updateSubLayerFont(final Font font) {
-    this.layers.forEach((layer, supplier) -> layer.font = font);
+    this.layers.forEach((layer, supplier) -> layer.setFont(font));
   }
 
-  protected void playerChange(final LocalPlayer newPlayer) {
+  public void playerChange(final LocalPlayer newPlayer) {
     this.player = newPlayer;
     updateSubLayerPlayer(newPlayer);
   }
@@ -118,8 +116,8 @@ public abstract class CompositeLayer implements LayeredDraw.Layer {
   protected void renderSubLayer(final GuiGraphics guiGraphics, final DeltaTracker deltaTracker) {
     PoseStack pose = guiGraphics.pose();
     pose.pushPose();
-    for (Map.Entry<Layer, BooleanSupplier> entry : this.layers.entrySet()) {
-      Layer layer = entry.getKey();
+    for (Map.Entry<IHudLayer, BooleanSupplier> entry : this.layers.entrySet()) {
+      IHudLayer layer = entry.getKey();
       BooleanSupplier supplier = entry.getValue();
       if (!supplier.getAsBoolean()) {
         continue;
@@ -160,38 +158,5 @@ public abstract class CompositeLayer implements LayeredDraw.Layer {
 
   protected void updateSubLayerPlayer(final LocalPlayer newPlayer) {
     this.layers.keySet().forEach((layer) -> layer.playerChange(newPlayer));
-  }
-
-  public static abstract class Layer implements LayeredDraw.Layer {
-    protected int leftPos;
-    protected int topPos;
-    protected Minecraft minecraft;
-    protected LocalPlayer player;
-    protected Font font;
-
-    public Layer() {
-      this.minecraft = Minecraft.getInstance();
-      this.font = this.minecraft.font;
-    }
-
-    public void init(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-
-    }
-
-    public void playerChange(LocalPlayer newPlayer) {
-      this.player = newPlayer;
-    }
-
-    public void setLeftPos(int leftPos) {
-      this.leftPos = leftPos;
-    }
-
-    public void setTopPos(int topPos) {
-      this.topPos = topPos;
-    }
-
-    public abstract int getWidth();
-
-    public abstract int getHeight();
   }
 }

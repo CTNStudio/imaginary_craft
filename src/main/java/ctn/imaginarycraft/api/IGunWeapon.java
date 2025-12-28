@@ -11,14 +11,14 @@ public interface IGunWeapon {
   /**
    * 是否可以瞄准
    */
-  default boolean isAim(Player player, ItemStack itemStack) {
+  default boolean isGunAim(Player player, ItemStack itemStack) {
     return false;
   }
 
   /**
    * 瞄准的时候是否可以移动
    */
-  default boolean isAimMove(Player player, ItemStack itemStack) {
+  default boolean isGunAimMove(Player player, ItemStack itemStack) {
     return false;
   }
 
@@ -29,14 +29,14 @@ public interface IGunWeapon {
    *
    * @return 返回false则不在服务器执行
    */
-  default boolean shoot(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand usedHand) {
+  default boolean gunShoot(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand usedHand) {
     return false;
   }
 
   /**
    * 瞄准
    */
-  default void aim(@NotNull Player player, @NotNull ItemStack stack) {
+  default void gunAim(@NotNull Player player, @NotNull ItemStack stack) {
   }
 
   /**
@@ -46,20 +46,20 @@ public interface IGunWeapon {
    *
    * @return 返回false则不在服务器执行
    */
-  default boolean aimShoot(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand usedHand) {
+  default boolean gunAimShoot(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand usedHand) {
     return false;
   }
 
   /**
    * 结束射击
    */
-  default void end(@NotNull Player player, @NotNull ItemStack stack) {
+  default void gunEnd(@NotNull Player player, @NotNull ItemStack stack) {
   }
 
   /**
    * 瞄准结束
    */
-  default void endAim(@NotNull Player player, @NotNull ItemStack stack) {
+  default void gunEndAim(@NotNull Player player, @NotNull ItemStack stack) {
   }
 
   static boolean isHoldGunWeapon(LivingEntity livingEntity) {

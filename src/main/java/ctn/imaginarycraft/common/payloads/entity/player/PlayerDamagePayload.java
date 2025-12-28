@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.payloads.entity.player;
 
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
-import ctn.imaginarycraft.client.gui.layers.LcDamageScreenFilterLayer;
+import ctn.imaginarycraft.client.gui.hudlayers.screenfilter.LcDamageScreenFilterLayer;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;

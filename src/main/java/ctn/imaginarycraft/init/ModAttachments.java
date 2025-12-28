@@ -17,11 +17,20 @@ public final class ModAttachments extends AttachmentRegisterUtil {
   public static final DeferredRegister<AttachmentType<?>> REGISTRY = ImaginaryCraft.modRegister(NeoForgeRegistries.ATTACHMENT_TYPES);
 
   /**
-   * 蓄力值
+   * 枪械蓄力值
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> CHARGE_UP = register("charge_up",
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> GUN_CHARGE_UP = register("gun_charge_up",
     (player) -> 0, builder -> builder
       .sync(ByteBufCodecs.INT));
+
+  /**
+   * 魔弹使用数量
+   */
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> MAGIC_BULLET_USAGE_QUANTITY = register("magic_bullet_usage_quantity",
+    (player) -> 0, builder -> builder
+      .sync(ByteBufCodecs.INT)
+      .serialize(Codec.INT)
+      .copyOnDeath());
 
   /**
    * 理智值
@@ -30,6 +39,7 @@ public final class ModAttachments extends AttachmentRegisterUtil {
     (player) -> 0f, builder -> builder
       .serialize(Codec.FLOAT)
       .sync(ByteBufCodecs.FLOAT));
+
   /**
    * 理智值暂停恢复tick
    */

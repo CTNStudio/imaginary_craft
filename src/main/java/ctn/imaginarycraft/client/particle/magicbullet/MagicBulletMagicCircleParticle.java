@@ -58,18 +58,19 @@ public class MagicBulletMagicCircleParticle extends DyeingMagicCircleParticle {
       return this;
     }
 
-    public Options buildOptions() {
-      return new Options(this.xRot, this.yRot, this.radius, this.particleLifeTime);
+    public Options buildOptions(int index) {
+      return new Options(this.xRot, this.yRot, this.radius, this.particleLifeTime, index);
     }
   }
 
   public record Options(float xRot, float yRot, float radius,
-                        int particleLifeTime) implements ParticleOptions {
+                        int particleLifeTime, int index) implements ParticleOptions {
     public static final MapCodec<Options> CODEC = RecordCodecBuilder.mapCodec((thisOptionsInstance) -> thisOptionsInstance.group(
       Codec.FLOAT.fieldOf("xRot").forGetter(Options::xRot),
       Codec.FLOAT.fieldOf("yRot").forGetter(Options::yRot),
       Codec.FLOAT.fieldOf("radius").forGetter(Options::radius),
-      Codec.INT.fieldOf("particleLifeTime").forGetter(Options::particleLifeTime)
+      Codec.INT.fieldOf("particleLifeTime").forGetter(Options::particleLifeTime),
+      Codec.INT.fieldOf("index").forGetter(Options::index)
     ).apply(thisOptionsInstance, Options::new));
 
     public static final StreamCodec<ByteBuf, Options> STREAM_CODEC = StreamCodec.composite(
@@ -77,6 +78,7 @@ public class MagicBulletMagicCircleParticle extends DyeingMagicCircleParticle {
       ByteBufCodecs.FLOAT, Options::yRot,
       ByteBufCodecs.FLOAT, Options::radius,
       ByteBufCodecs.INT, Options::particleLifeTime,
+      ByteBufCodecs.INT, Options::index,
       Options::new);
 
     @Override
@@ -85,7 +87,7 @@ public class MagicBulletMagicCircleParticle extends DyeingMagicCircleParticle {
     }
   }
 
-  public static abstract class Provider implements ParticleProvider<Options> {
+  public static class Provider implements ParticleProvider<Options> {
     private final SpriteSet sprite;
 
     public Provider(SpriteSet sprite) {
@@ -97,46 +99,11 @@ public class MagicBulletMagicCircleParticle extends DyeingMagicCircleParticle {
     public Particle createParticle(@NotNull Options options, @NotNull ClientLevel level,
                                    double x, double y, double z,
                                    double xSpeed, double ySpeed, double zSpeed) {
-      return new MagicBulletMagicCircleParticle(getSprite(), level, x, y, z, options.xRot(), options.yRot(), options.radius(), options.particleLifeTime());
+      return new MagicBulletMagicCircleParticle(getSpriteLis().get(options.index()), level, x, y, z, options.xRot(), options.yRot(), options.radius(), options.particleLifeTime());
     }
 
     protected List<TextureAtlasSprite> getSpriteLis() {
       return ((ParticleEngine.MutableSpriteSet) sprite).sprites;
-    }
-
-    protected abstract TextureAtlasSprite getSprite();
-  }
-
-  public static class Provider16x extends Provider {
-    public Provider16x(SpriteSet sprite) {
-      super(sprite);
-    }
-
-    @Override
-    protected TextureAtlasSprite getSprite() {
-      return getSpriteLis().get(0);
-    }
-  }
-
-  public static class Provider32x extends Provider {
-    public Provider32x(SpriteSet sprite) {
-      super(sprite);
-    }
-
-    @Override
-    protected TextureAtlasSprite getSprite() {
-      return getSpriteLis().get(1);
-    }
-  }
-
-  public static class Provider128x extends Provider {
-    public Provider128x(SpriteSet sprite) {
-      super(sprite);
-    }
-
-    @Override
-    protected TextureAtlasSprite getSprite() {
-      return getSpriteLis().get(2);
     }
   }
 }

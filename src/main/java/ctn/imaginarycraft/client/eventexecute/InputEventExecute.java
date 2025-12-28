@@ -24,11 +24,11 @@ public final class InputEventExecute {
       if (useItem.isEmpty() || !(useItem.getItem() instanceof IGunWeapon iGunWeapon)) {
         return;
       }
-      if (iGunWeapon.isAim(player, useItem)) {
+      if (iGunWeapon.isGunAim(player, useItem)) {
         break use;
       }
       InteractionHand usedItemHand = player.getUsedItemHand();
-      if (!iGunWeapon.aimShoot(player, useItem, usedItemHand)) {
+      if (!iGunWeapon.gunAimShoot(player, useItem, usedItemHand)) {
         return;
       }
       PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(usedItemHand, true, true));
@@ -56,7 +56,7 @@ public final class InputEventExecute {
       }
     }
 
-    if (!gunWeapon.shoot(player, weaponItemStack, usedHand)) {
+    if (!gunWeapon.gunShoot(player, weaponItemStack, usedHand)) {
       return;
     }
     PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(InteractionHand.MAIN_HAND, false, true));

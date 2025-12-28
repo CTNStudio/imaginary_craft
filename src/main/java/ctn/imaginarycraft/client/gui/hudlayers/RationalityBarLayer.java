@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.client.gui.layers;
+package ctn.imaginarycraft.client.gui.hudlayers;
 
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.client.gui.widget.HorizontalStatusBar;

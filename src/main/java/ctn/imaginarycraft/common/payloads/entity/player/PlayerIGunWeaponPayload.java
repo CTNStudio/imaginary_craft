@@ -76,12 +76,12 @@ public record PlayerIGunWeaponPayload(byte operation) implements CustomPacketPay
       if (!(itemStack.getItem() instanceof IGunWeapon iGunWeapon)) {
         return;
       }
-      if (iGunWeapon.isAim(player, itemStack) && data.isAimShoot()) {
-        iGunWeapon.aimShoot(player, itemStack, hand);
+      if (iGunWeapon.isGunAim(player, itemStack) && data.isAimShoot()) {
+        iGunWeapon.gunAimShoot(player, itemStack, hand);
         return;
       }
       if (data.isShoot()) {
-        iGunWeapon.shoot(player, itemStack, hand);
+        iGunWeapon.gunShoot(player, itemStack, hand);
       }
     });
   }

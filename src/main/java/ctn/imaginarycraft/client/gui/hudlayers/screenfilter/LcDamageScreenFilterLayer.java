@@ -1,8 +1,9 @@
-package ctn.imaginarycraft.client.gui.layers;
+package ctn.imaginarycraft.client.gui.hudlayers.screenfilter;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.client.gui.hudlayers.BasicHudLayer;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
@@ -15,7 +16,7 @@ import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class LcDamageScreenFilterLayer extends BasicDrawLayer {
+public class LcDamageScreenFilterLayer extends BasicHudLayer {
   public static final ResourceLocation PHYSICS = ImaginaryCraft.modRl("textures/gui/filter/physics.png");
   public static final ResourceLocation SPIRIT = ImaginaryCraft.modRl("textures/gui/filter/spirit.png");
   public static final ResourceLocation EROSION = ImaginaryCraft.modRl("textures/gui/filter/erosion.png");
@@ -38,6 +39,16 @@ public class LcDamageScreenFilterLayer extends BasicDrawLayer {
     Filter filter = this.filterObjects.getOrDefault(damageType != null ? damageType : PHYSICS, this.filterObjects.get(LcDamageType.PHYSICS));
     filter.setValue(1);
     this.rationalityFilters.add(filter);
+  }
+
+  @Override
+  public int getWidth() {
+    return screenWidth;
+  }
+
+  @Override
+  public int getHeight() {
+    return screenHeight;
   }
 
   @Override
@@ -69,7 +80,7 @@ public class LcDamageScreenFilterLayer extends BasicDrawLayer {
     pose.popPose();
   }
 
-  public static class Filter extends ScreenFilterLayer.Filter {
+  public static class Filter extends RationalityScreenFilterLayer.Filter {
     protected float currentValue;
     protected float previousValue;
 

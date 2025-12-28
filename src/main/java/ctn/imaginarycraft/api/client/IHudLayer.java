@@ -1,0 +1,49 @@
+package ctn.imaginarycraft.api.client;
+
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
+import net.minecraft.client.player.LocalPlayer;
+
+public abstract class IHudLayer implements LayeredDraw.Layer {
+  protected int leftPos;
+  protected int topPos;
+  protected Minecraft minecraft;
+  protected LocalPlayer player;
+  protected Font font;
+
+  public IHudLayer() {
+    this.minecraft = Minecraft.getInstance();
+    this.font = this.minecraft.font;
+  }
+
+  public void init(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+
+  }
+
+  public void playerChange(LocalPlayer newPlayer) {
+    this.player = newPlayer;
+  }
+
+  public void setLeftPos(int leftPos) {
+    this.leftPos = leftPos;
+  }
+
+  public void setTopPos(int topPos) {
+    this.topPos = topPos;
+  }
+
+  public abstract int getWidth();
+
+  public abstract int getHeight();
+
+  public Font getFont() {
+    return font;
+  }
+
+  public void setFont(Font font) {
+    this.font = font;
+  }
+}

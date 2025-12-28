@@ -1,8 +1,9 @@
-package ctn.imaginarycraft.client.gui.layers;
+package ctn.imaginarycraft.client.gui.hudlayers.screenfilter;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
+import ctn.imaginarycraft.client.gui.hudlayers.BasicHudLayer;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
@@ -12,11 +13,11 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.Mth;
 
-public class ScreenFilterLayer extends BasicDrawLayer {
+public class RationalityScreenFilterLayer extends BasicHudLayer {
   public static final ResourceLocation RATIONALITY = ImaginaryCraft.modRl("textures/gui/filter/rationality.png");
   public static final ResourceLocation RATIONALITY1 = ImaginaryCraft.modRl("textures/gui/filter/rationality1.png");
   public static final ResourceLocation RATIONALITY2 = ImaginaryCraft.modRl("textures/gui/filter/rationality2.png");
-  public static final ScreenFilterLayer INSTANCE = new ScreenFilterLayer();
+  public static final RationalityScreenFilterLayer INSTANCE = new RationalityScreenFilterLayer();
 
   private final Filter[] rationalityFilters;
   protected float currentValue;
@@ -24,12 +25,41 @@ public class ScreenFilterLayer extends BasicDrawLayer {
   protected float previousValue;
   protected float minValue;
 
-  public ScreenFilterLayer() {
+  public RationalityScreenFilterLayer() {
     this.rationalityFilters = new Filter[]{
       new Filter(RATIONALITY),
       new Filter(RATIONALITY1),
       new Filter(RATIONALITY2)
     };
+  }
+
+  private void rationalityChange(float value) {
+    if (value >= 0) {
+      for (Filter filter : this.rationalityFilters) {
+        filter.setAlpha(0);
+      }
+      return;
+    }
+    float v = value / this.minValue;
+
+    // 第一个滤镜: 在 0.0-0.5 范围内从 0 升到 1 再降到 0
+    this.rationalityFilters[0].setAlpha(Math.max(0, Math.min(1, 1 - Math.abs(v - 0.25f) * 4)));
+
+    // 第二个滤镜: 在 0.333-1.0 范围内从 0 升到 1 再降到 0
+    this.rationalityFilters[1].setAlpha(Math.max(0, Math.min(1, 1 - Math.abs(v - 0.666f) * 1.5f)));
+
+    // 第三个滤镜: 在 0.666-1.0 范围内从 0 升到 1
+    this.rationalityFilters[2].setAlpha(Math.max(0, Math.min(1, (v - 0.666f) * 3)));
+  }
+
+  @Override
+  public int getWidth() {
+    return screenWidth;
+  }
+
+  @Override
+  public int getHeight() {
+    return screenHeight;
   }
 
   @Override
@@ -73,25 +103,6 @@ public class ScreenFilterLayer extends BasicDrawLayer {
     if (this.previousValue != calculatedRenderedValue) {
       this.previousValue = calculatedRenderedValue;
     }
-  }
-
-  private void rationalityChange(float value) {
-    if (value >= 0) {
-      for (Filter filter : this.rationalityFilters) {
-        filter.setAlpha(0);
-      }
-      return;
-    }
-    float v = value / this.minValue;
-
-    // 第一个滤镜: 在 0.0-0.5 范围内从 0 升到 1 再降到 0
-    this.rationalityFilters[0].setAlpha(Math.max(0, Math.min(1, 1 - Math.abs(v - 0.25f) * 4)));
-
-    // 第二个滤镜: 在 0.333-1.0 范围内从 0 升到 1 再降到 0
-    this.rationalityFilters[1].setAlpha(Math.max(0, Math.min(1, 1 - Math.abs(v - 0.666f) * 1.5f)));
-
-    // 第三个滤镜: 在 0.666-1.0 范围内从 0 升到 1
-    this.rationalityFilters[2].setAlpha(Math.max(0, Math.min(1, (v - 0.666f) * 3)));
   }
 
   public static class Filter extends AbstractWidget {

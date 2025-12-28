@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template.remote;
 
 import ctn.imaginarycraft.api.IGunWeapon;
-import ctn.imaginarycraft.util.ChargeUpUtil;
+import ctn.imaginarycraft.util.GunChargeUpUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -15,6 +15,9 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.model.GeoModel;
 
+import java.util.function.Consumer;
+import java.util.function.Predicate;
+
 public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements IGunWeapon {
   public GunEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
     super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
@@ -24,19 +27,34 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
     super(itemProperties, egoWeaponBuilder, modPath);
   }
 
+  protected void defaultGunShootServerLevelConsumer(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, ServerLevel serverLevel) {
+    this.shoot(serverLevel, playerEntity, playerEntity.getUsedItemHand(), itemStack, getProjectileVelocity(playerEntity, itemStack, handUsed), getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
+  }
+
+  protected boolean gunShootFunction(@NotNull Player playerEntity, Predicate<Float> percentagePredicate, Consumer<ServerLevel> serverLevelConsumer) {
+    if (!percentagePredicate.test(GunChargeUpUtil.getPercentage(playerEntity))) {
+      return false;
+    }
+    if (playerEntity.level() instanceof ServerLevel serverLevel) {
+      serverLevelConsumer.accept(serverLevel);
+    }
+    return true;
+  }
+
   @Override
   public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, Player playerEntity, @NotNull InteractionHand handUsed) {
     ItemStack itemStackInHand = playerEntity.getItemInHand(handUsed);
-    if (isAim(playerEntity, itemStackInHand)) {
-      aim(playerEntity, itemStackInHand);
+    if (isGunAim(playerEntity, itemStackInHand)) {
+      gunAim(playerEntity, itemStackInHand);
     }
     playerEntity.startUsingItem(handUsed);
+    GunChargeUpUtil.reset(playerEntity);
     return InteractionResultHolder.consume(itemStackInHand);
   }
 
   @Override
-  public void aim(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
-    ChargeUpUtil.reset(playerEntity);
+  public void gunAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
+    GunChargeUpUtil.reset(playerEntity);
   }
 
   @Override
@@ -44,57 +62,50 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
     if (!(usingEntity instanceof ServerPlayer player)) {
       return;
     }
-    int chargeUpValue = ChargeUpUtil.getValue(player);
+    int chargeUpValue = GunChargeUpUtil.getValue(player);
     if (player.getCurrentItemAttackStrengthDelay() > chargeUpValue) {
-      ChargeUpUtil.setValue(player, chargeUpValue + 1);
+      GunChargeUpUtil.setValue(player, chargeUpValue + 1);
     }
+  }
+
+  @Override
+  public void onStopUsing(ItemStack stack, LivingEntity entity, int count) {
+    if (!(entity instanceof Player player)) {
+      return;
+    }
+
+    if (isGunAim(player, stack)) {
+      gunEndAim(player, stack);
+      return;
+    }
+
+    gunEnd(player, stack);
   }
 
   @Override
   public void releaseUsing(@NotNull ItemStack itemStack, @NotNull Level world, @NotNull LivingEntity usingEntity, int timeCharged) {
-    if (!(usingEntity instanceof Player player)) {
-      return;
-    }
-
-    if (isAim(player, itemStack)) {
-      endAim(player, itemStack);
-      return;
-    }
-
-    end(player, itemStack);
-  }
-
-  @Override
-  protected void shootProjectile(@NotNull LivingEntity shooterEntity, @NotNull Projectile projectileEntity, int projectileIndex, float projectileVelocity, float projectileInaccuracy, float shootingAngle, @org.jetbrains.annotations.Nullable LivingEntity targetEntity) {
 
   }
 
   @Override
-  public boolean aimShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
-    float attackStrengthScale = ChargeUpUtil.getPercentage(playerEntity);
-    if (attackStrengthScale < 1) {
-      return false;
-    }
-    if (playerEntity.level() instanceof ServerLevel serverLevel) {
-      shoot(playerEntity, itemStack, handUsed, serverLevel);
-    }
-    return true;
+  protected void shootProjectile(
+    LivingEntity shooter, Projectile projectile, int index, float velocity, float inaccuracy, float angle, @javax.annotation.Nullable LivingEntity target
+  ) {
+    projectile.shootFromRotation(shooter, shooter.getXRot(), shooter.getYRot() + angle, 0.0F, velocity, inaccuracy);
   }
 
   @Override
-  public boolean shoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
-    float attackStrengthScale = ChargeUpUtil.getPercentage(playerEntity);
-    if (attackStrengthScale < 1) {
-      return false;
-    }
-    if (playerEntity.level() instanceof ServerLevel serverLevel) {
-      shoot(playerEntity, itemStack, handUsed, serverLevel);
-    }
-    return true;
+  public boolean gunAimShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    return gunShootFunction(playerEntity,
+      chargeUpPercentage -> chargeUpPercentage >= 1,
+      serverLevel -> defaultGunShootServerLevelConsumer(playerEntity, itemStack, handUsed, serverLevel));
   }
 
-  protected void shoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, ServerLevel serverLevel) {
-    this.shoot(serverLevel, playerEntity, playerEntity.getUsedItemHand(), itemStack, getProjectileVelocity(playerEntity, itemStack, handUsed), getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
+  @Override
+  public boolean gunShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    return gunShootFunction(playerEntity,
+      chargeUpPercentage -> chargeUpPercentage >= 1,
+      serverLevel -> defaultGunShootServerLevelConsumer(playerEntity, itemStack, handUsed, serverLevel));
   }
 
   @Override

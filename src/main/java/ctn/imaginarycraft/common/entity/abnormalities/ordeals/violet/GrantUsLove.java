@@ -15,7 +15,6 @@ import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCirclePart
 import ctn.imaginarycraft.common.entity.abnormalities.AbnormalitiesEntity;
 import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.ModDamageSources;
-import ctn.imaginarycraft.init.ModParticleTypes;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.core.BlockPos;
@@ -235,10 +234,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
       return !player.isCreative();
     }
     // 不攻击紫罗兰系列考验，由于没几个，我直接用硬编码
-    if (entity instanceof GrantUsLove){
-      return false;
-    }
-    return true;
+    return !(entity instanceof GrantUsLove);
   }
 
 
@@ -291,15 +287,15 @@ public class GrantUsLove extends AbnormalitiesEntity {
   }
 
   private void createPortal() {//TODO: 创建传送门
-    if (this.level().isClientSide) return;
-    MagicBulletMagicCircleParticle.Builder builder = new MagicBulletMagicCircleParticle.Builder(0, 0)
-      .radius(5.0f)
-      .particleLifeTime(110);
-    MagicBulletMagicCircleParticle.Options options = builder.buildOptions();
+    if (!(this.level() instanceof ServerLevel serverLevel)) {
+      return;
+    }
 
     Vec3 pos = this.crashPortalPosition;
-    ServerLevel level = (ServerLevel) this.level();
-    level.sendParticles(options, pos.x, pos.y, pos.z,1,0,0,0,0);
+    serverLevel.sendParticles(new MagicBulletMagicCircleParticle.Builder(0, 0)
+      .radius(5.0f)
+      .particleLifeTime(110)
+      .buildOptions(0), pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
   }
 
   private boolean isOnGround() {

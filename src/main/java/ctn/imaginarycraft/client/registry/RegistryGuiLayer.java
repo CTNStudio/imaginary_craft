@@ -2,9 +2,10 @@ package ctn.imaginarycraft.client.registry;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import ctn.imaginarycraft.client.ModGuiLayers;
-import ctn.imaginarycraft.client.gui.layers.LcDamageScreenFilterLayer;
-import ctn.imaginarycraft.client.gui.layers.LeftBarLayer;
-import ctn.imaginarycraft.client.gui.layers.ScreenFilterLayer;
+import ctn.imaginarycraft.client.gui.hudlayers.GunChargeUpHudLayer;
+import ctn.imaginarycraft.client.gui.hudlayers.LeftBarLayer;
+import ctn.imaginarycraft.client.gui.hudlayers.screenfilter.LcDamageScreenFilterLayer;
+import ctn.imaginarycraft.client.gui.hudlayers.screenfilter.RationalityScreenFilterLayer;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -16,6 +17,8 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 public final class RegistryGuiLayer {
   @SubscribeEvent
   public static void register(RegisterGuiLayersEvent event) {
+    event.registerAbove(VanillaGuiLayers.CROSSHAIR, ModGuiLayers.GUN_CHARGE_UP_HUD_LAYER_CROSSHAIR, GunChargeUpHudLayer.INSTANCE_CROSSHAIR);
+    event.registerAbove(VanillaGuiLayers.HOTBAR, ModGuiLayers.GUN_CHARGE_UP_HUD_LAYER_HOTBAR, GunChargeUpHudLayer.INSTANCE_HOTBAR);
     event.registerAbove(VanillaGuiLayers.CAMERA_OVERLAYS, ModGuiLayers.LC_DAMAGE_SCREEN_FILTER, LcDamageScreenFilterLayer.INSTANCE);
     event.registerAbove(VanillaGuiLayers.PLAYER_HEALTH, ModGuiLayers.LEFT_BAR, LeftBarLayer.INSTANCE);
     event.wrapLayer(VanillaGuiLayers.ARMOR_LEVEL, (layer) -> (guiGraphics, deltaTracker) -> {
@@ -25,6 +28,6 @@ public final class RegistryGuiLayer {
       layer.render(guiGraphics, deltaTracker);
       pose.popPose();
     });
-    event.registerAbove(VanillaGuiLayers.SAVING_INDICATOR, ModGuiLayers.SCREEN_FILTER, ScreenFilterLayer.INSTANCE);
+    event.registerAbove(VanillaGuiLayers.SAVING_INDICATOR, ModGuiLayers.SCREEN_FILTER, RationalityScreenFilterLayer.INSTANCE);
   }
 }

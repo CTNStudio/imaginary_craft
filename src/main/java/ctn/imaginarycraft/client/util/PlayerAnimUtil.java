@@ -25,6 +25,7 @@ import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+// TODO 制作可以同时淡入淡出的控制器
 /**
  * 玩家动画工具类，提供播放、停止动画以及获取动画控制器等方法
  * 支持在客户端和服务端之间同步动画状态

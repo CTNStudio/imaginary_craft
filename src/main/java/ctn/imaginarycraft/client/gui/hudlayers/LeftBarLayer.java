@@ -1,11 +1,11 @@
-package ctn.imaginarycraft.client.gui.layers;
+package ctn.imaginarycraft.client.gui.hudlayers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import ctn.imaginarycraft.config.ModConfig;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 
-public class LeftBarLayer extends CompositeLayer {
+public class LeftBarLayer extends CompositeHudLayer {
   public static final LeftBarLayer INSTANCE = new LeftBarLayer();
   public final RationalityBarLayer rationalityBarLayer = new RationalityBarLayer();
   public final NewHealthBarLayer newHealthBarLayer = new NewHealthBarLayer();

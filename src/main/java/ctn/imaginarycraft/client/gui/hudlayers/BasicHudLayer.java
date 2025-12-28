@@ -1,24 +1,25 @@
-package ctn.imaginarycraft.client.gui.layers;
+package ctn.imaginarycraft.client.gui.hudlayers;
 
+import ctn.imaginarycraft.api.client.IHudLayer;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.LayeredDraw;
 import net.minecraft.client.player.LocalPlayer;
 
 import java.util.Objects;
 
-public abstract class BasicDrawLayer implements LayeredDraw.Layer {
+/**
+ * 基础hud层
+ */
+public abstract class BasicHudLayer extends IHudLayer {
   protected final Minecraft minecraft;
   protected LocalPlayer player;
   protected final Font font;
-  protected int leftPos;
-  protected int topPos;
   protected int screenWidth;
   protected int screenHeight;
 
-  public BasicDrawLayer() {
+  public BasicHudLayer() {
     this.minecraft = Minecraft.getInstance();
     this.font = this.minecraft.font;
   }
@@ -42,19 +43,19 @@ public abstract class BasicDrawLayer implements LayeredDraw.Layer {
     int newScreenWidth = guiGraphics.guiWidth();
     int newScreenHeight = guiGraphics.guiHeight();
 
+    var newPlayer = Objects.requireNonNull(this.minecraft.player);
+    if (this.player != newPlayer) {
+      playerChange(newPlayer);
+    }
+
     boolean isWidthChange = newScreenWidth != this.screenWidth;
     boolean isHeightChange = newScreenHeight != this.screenHeight;
     if (isWidthChange || isHeightChange) {
       sizeChange(isWidthChange, isHeightChange, newScreenWidth, newScreenHeight);
     }
-
-    var newPlayer = Objects.requireNonNull(this.minecraft.player);
-    if (this.player != newPlayer) {
-      playerChange(newPlayer);
-    }
   }
 
-  protected void playerChange(final LocalPlayer newPlayer) {
+  public void playerChange(final LocalPlayer newPlayer) {
     this.player = newPlayer;
   }
 
