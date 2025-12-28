@@ -30,8 +30,8 @@ public final class AbnormalitiesEntityTypes {
   public static final Supplier<EntityType<GrantUsLove>> GRANT_US_LOVE = register(
     "grant_us_love",
     EntityType.Builder.of(GrantUsLove::new, MobCategory.MISC)
-      .sized(1.0F, 2.5F)
-      .eyeHeight(1.5F)
+      .sized(1.5F, 3F)
+      .eyeHeight(2.0F)
       .clientTrackingRange(8)
       .updateInterval(2));
 
