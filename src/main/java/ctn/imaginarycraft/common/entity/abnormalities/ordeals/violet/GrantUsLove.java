@@ -291,7 +291,15 @@ public class GrantUsLove extends AbnormalitiesEntity {
   }
 
   private void createPortal() {//TODO: 创建传送门
-    MagicBulletMagicCircleParticle portal = MagicBulletMagicCircleParticle;
+    if (this.level().isClientSide) return;
+    MagicBulletMagicCircleParticle.Builder builder = new MagicBulletMagicCircleParticle.Builder(0, 0)
+      .radius(5.0f)
+      .particleLifeTime(110);
+    MagicBulletMagicCircleParticle.Options options = builder.buildOptions();
+
+    Vec3 pos = this.crashPortalPosition;
+    ServerLevel level = (ServerLevel) this.level();
+    level.sendParticles(options, pos.x, pos.y, pos.z,1,0,0,0,0);
   }
 
   private boolean isOnGround() {
