@@ -28,14 +28,14 @@ public abstract class EgoWeaponItem extends Item implements IItemEgo, IItemLcDam
   private final @Nullable Set<LcDamageType> canCauseLcDamageTypes;
   private final int invincibleTick;
 
-  public EgoWeaponItem(Properties properties, Builder<?> builder) {
-    super(properties.stacksTo(1)
-      .attributes(builder.getItemAttributeModifiers())
-      .component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, builder.virtueUsageReqBuilder.build())
+  public EgoWeaponItem(Properties itemProperties, Builder<?> egoWeaponBuilder) {
+    super(itemProperties.stacksTo(1)
+      .attributes(egoWeaponBuilder.getItemAttributeModifiers())
+      .component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, egoWeaponBuilder.virtueUsageReqBuilder.build())
       .component(ModDataComponents.IS_RESTRAIN, false));
-    this.lcDamageType = builder.lcDamageType;
-    this.canCauseLcDamageTypes = builder.canCauseLcDamageTypes;
-    this.invincibleTick = builder.invincibleTick;
+    this.lcDamageType = egoWeaponBuilder.lcDamageType;
+    this.canCauseLcDamageTypes = egoWeaponBuilder.canCauseLcDamageTypes;
+    this.invincibleTick = egoWeaponBuilder.invincibleTick;
   }
 
   /**
@@ -43,45 +43,45 @@ public abstract class EgoWeaponItem extends Item implements IItemEgo, IItemLcDam
    */
   @Override
   @Nullable
-  public LcDamageType getLcDamageColorDamageType(ItemStack stack) {
+  public LcDamageType getLcDamageColorDamageType(ItemStack itemStack) {
     return lcDamageType;
   }
 
   @Override
   @Nullable
-  public Set<LcDamageType> getCanCauseLcDamageTypes(ItemStack stack) {
+  public Set<LcDamageType> getCanCauseLcDamageTypes(ItemStack itemStack) {
     return canCauseLcDamageTypes;
   }
 
   /// 获取武器攻击时造成的无敌帧
   @Override
-  public int getInvincibleTick(ItemStack stack) {
+  public int getInvincibleTick(ItemStack itemStack) {
     return invincibleTick;
   }
 
   /// 是否可以挖掘方块
   @Override
-  public boolean canAttackBlock(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player) {
-    return !player.isCreative();
+  public boolean canAttackBlock(@NotNull BlockState blockState, @NotNull Level world, @NotNull BlockPos blockPosition, Player playerEntity) {
+    return !playerEntity.isCreative();
   }
 
   /// 武器属性构造器
   public static class Builder<T extends Builder<T>> {
-    public Properties properties = new Properties();
+    public Properties itemProperties = new Properties();
     public ItemVirtueUsageReq.Builder virtueUsageReqBuilder = new ItemVirtueUsageReq.Builder();
     public @Nullable LcDamageType lcDamageType;
     public @Nullable Set<LcDamageType> canCauseLcDamageTypes;
-    public float damage;
+    public float weaponDamage;
     public int invincibleTick = 20;
 
-    public T damage(float damage) {
-      this.damage = damage;
+    public T damage(float weaponDamageValue) {
+      this.weaponDamage = weaponDamageValue;
       return self();
     }
 
-    public T meleeLcDamageType(LcDamageType meleeLcDamageType, Set<LcDamageType> canCauseLcDamageTypes) {
+    public T meleeLcDamageType(LcDamageType meleeLcDamageType, Set<LcDamageType> lcDamageTypesThatCanBeCaused) {
       this.lcDamageType = meleeLcDamageType;
-      this.canCauseLcDamageTypes = canCauseLcDamageTypes;
+      this.canCauseLcDamageTypes = lcDamageTypesThatCanBeCaused;
       return self();
     }
 
@@ -91,9 +91,9 @@ public abstract class EgoWeaponItem extends Item implements IItemEgo, IItemLcDam
       return self();
     }
 
-    public T meleeLcDamageType(LcDamageType meleeLcDamageType, LcDamageType... canCauseLcDamageTypes) {
+    public T meleeLcDamageType(LcDamageType meleeLcDamageType, LcDamageType... lcDamageTypesThatCanBeCaused) {
       this.lcDamageType = meleeLcDamageType;
-      this.canCauseLcDamageTypes = Set.of(canCauseLcDamageTypes);
+      this.canCauseLcDamageTypes = Set.of(lcDamageTypesThatCanBeCaused);
       return self();
     }
 
@@ -101,8 +101,8 @@ public abstract class EgoWeaponItem extends Item implements IItemEgo, IItemLcDam
       return self();
     }
 
-    public T virtueUsageReq(ItemVirtueUsageReq.Builder virtueUsageReqBuilder) {
-      this.virtueUsageReqBuilder = virtueUsageReqBuilder;
+    public T virtueUsageReq(ItemVirtueUsageReq.Builder virtueRequirementBuilder) {
+      this.virtueUsageReqBuilder = virtueRequirementBuilder;
       return self();
     }
 
@@ -134,13 +134,13 @@ public abstract class EgoWeaponItem extends Item implements IItemEgo, IItemLcDam
       return ItemAttributeModifiers.builder().build();
     }
 
-    public T invincibleTick(int invincibleTick) {
-      this.invincibleTick = invincibleTick;
+    public T invincibleTick(int weaponInvincibleTick) {
+      this.invincibleTick = weaponInvincibleTick;
       return self();
     }
 
-    public T properties(Properties properties) {
-      this.properties = properties;
+    public T properties(Properties itemProperties) {
+      this.itemProperties = itemProperties;
       return self();
     }
 

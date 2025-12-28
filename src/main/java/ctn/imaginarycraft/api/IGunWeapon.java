@@ -1,6 +1,7 @@
 package ctn.imaginarycraft.api;
 
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -45,7 +46,7 @@ public interface IGunWeapon {
    *
    * @return 返回false则不在服务器执行
    */
-  default boolean aimShoot(@NotNull Player player, @NotNull ItemStack stack) {
+  default boolean aimShoot(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand usedHand) {
     return false;
   }
 
@@ -61,4 +62,7 @@ public interface IGunWeapon {
   default void endAim(@NotNull Player player, @NotNull ItemStack stack) {
   }
 
+  static boolean isHoldGunWeapon(LivingEntity livingEntity) {
+    return livingEntity.getMainHandItem().getItem() instanceof IGunWeapon || livingEntity.getOffhandItem().getItem() instanceof IGunWeapon;
+  }
 }

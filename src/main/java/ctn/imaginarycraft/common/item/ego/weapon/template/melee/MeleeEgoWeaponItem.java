@@ -10,8 +10,8 @@ import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 public abstract class MeleeEgoWeaponItem extends EgoWeaponItem {
 
-  public MeleeEgoWeaponItem(Properties properties, Builder builder) {
-    super(properties, builder);
+  public MeleeEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder) {
+    super(itemProperties, egoWeaponBuilder);
   }
 
   public static class Builder extends EgoWeaponItem.Builder<Builder> {
@@ -27,16 +27,16 @@ public abstract class MeleeEgoWeaponItem extends EgoWeaponItem {
     /**
      * 近战攻击速度
      */
-    public Builder attackSpeed(float attackSpeed) {
-      this.attackSpeed = attackSpeed;
+    public Builder attackSpeed(float meleeAttackSpeed) {
+      this.attackSpeed = meleeAttackSpeed;
       return this;
     }
 
     /**
      * 近战攻击距离
      */
-    public Builder attackDistance(float attackDistance) {
-      this.attackDistance = attackDistance;
+    public Builder attackDistance(float meleeAttackDistance) {
+      this.attackDistance = meleeAttackDistance;
       return this;
     }
 
@@ -47,11 +47,11 @@ public abstract class MeleeEgoWeaponItem extends EgoWeaponItem {
 
     @Override
     public ItemAttributeModifiers getItemAttributeModifiers() {
-      ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
-      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_ID, this.damage, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
-      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ATTACK_SPEED, BASE_ATTACK_SPEED_ID, this.attackSpeed, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
-      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ENTITY_INTERACTION_RANGE, WeaponItem.ENTITY_RANGE, this.attackDistance, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
-      return builder.build();
+      ItemAttributeModifiers.Builder attributeBuilder = ItemAttributeModifiers.builder();
+      ItemBuilderUtil.addAttributeModifier(attributeBuilder, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_ID, this.weaponDamage, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
+      ItemBuilderUtil.addAttributeModifier(attributeBuilder, Attributes.ATTACK_SPEED, BASE_ATTACK_SPEED_ID, this.attackSpeed, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
+      ItemBuilderUtil.addAttributeModifier(attributeBuilder, Attributes.ENTITY_INTERACTION_RANGE, WeaponItem.ENTITY_RANGE, this.attackDistance, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
+      return attributeBuilder.build();
     }
   }
 }

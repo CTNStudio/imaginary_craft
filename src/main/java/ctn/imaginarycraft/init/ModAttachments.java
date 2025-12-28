@@ -17,6 +17,13 @@ public final class ModAttachments extends AttachmentRegisterUtil {
   public static final DeferredRegister<AttachmentType<?>> REGISTRY = ImaginaryCraft.modRegister(NeoForgeRegistries.ATTACHMENT_TYPES);
 
   /**
+   * 蓄力值
+   */
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> CHARGE_UP = register("charge_up",
+    (player) -> 0, builder -> builder
+      .sync(ByteBufCodecs.INT));
+
+  /**
    * 理智值
    */
   public static final DeferredHolder<AttachmentType<?>, AttachmentType<Float>> RATIONALITY = register("rationality",

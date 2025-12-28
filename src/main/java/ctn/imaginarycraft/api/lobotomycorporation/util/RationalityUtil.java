@@ -21,23 +21,24 @@ public final class RationalityUtil {
   /**
    * 限制理智
    */
-  public static void restrictValue(Player entity, final boolean isEvent) {
-    restrictValue(entity, getValue(entity), isEvent);
+  public static void restrictValue(Player player, final boolean isEvent) {
+    restrictValue(player, getValue(player), isEvent);
   }
 
   /**
    * 限制理智
    */
-  public static void restrictValue(Player entity, float value, final boolean isEvent) {
-    float maxRationalityValue = getMaxValue(entity);
-    setValue(entity, Math.clamp(value, -maxRationalityValue, maxRationalityValue), isEvent);
+  public static void restrictValue(Player player, float value, final boolean isEvent) {
+    float maxRationalityValue = getMaxValue(player);
+    setValue(player, Math.clamp(value, -maxRationalityValue, maxRationalityValue), isEvent);
   }
 
   /**
    * 获取理智值
    */
   public static float getValue(Player player) {
-    return player.getData(ModAttachments.RATIONALITY);
+    float maxRationalityValue = getMaxValue(player);
+    return Math.clamp(player.getData(ModAttachments.RATIONALITY), -maxRationalityValue, maxRationalityValue);
   }
 
   /**
@@ -68,44 +69,44 @@ public final class RationalityUtil {
   /**
    * 获取最大理智值
    */
-  public static float getMaxValue(Player entity) {
-    return (float) entity.getAttributeValue(ModAttributes.MAX_RATIONALITY);
+  public static float getMaxValue(Player player) {
+    return (float) player.getAttributeValue(ModAttributes.MAX_RATIONALITY);
   }
 
   /**
    * 设置基本最大理智值
    */
-  public static void setBaseMaxValue(Player entity, float value) {
-    entity.getAttributes().getInstance(ModAttributes.MAX_RATIONALITY).setBaseValue(value);
+  public static void setBaseMaxValue(Player player, float value) {
+    player.getAttributes().getInstance(ModAttributes.MAX_RATIONALITY).setBaseValue(value);
   }
 
   /**
    * 获取理智值自然恢复效率
    */
-  public static float getNaturalRecoveryRate(Player entity) {
-    return (float) entity.getAttributeValue(ModAttributes.RATIONALITY_NATURAL_RECOVERY_WAIT_TIME);
+  public static float getNaturalRecoveryRate(Player player) {
+    return (float) player.getAttributeValue(ModAttributes.RATIONALITY_NATURAL_RECOVERY_WAIT_TIME);
   }
 
   /**
    * 设置基本理智值自然恢复效率
    */
-  public static void setBaseNaturalRecoveryRate(Player entity, float value) {
-    entity.getAttributes().getInstance(ModAttributes.RATIONALITY_NATURAL_RECOVERY_WAIT_TIME).setBaseValue(value);
+  public static void setBaseNaturalRecoveryRate(Player player, float value) {
+    player.getAttributes().getInstance(ModAttributes.RATIONALITY_NATURAL_RECOVERY_WAIT_TIME).setBaseValue(value);
   }
 
   /**
    * 获取理智值自然恢复量
    */
-  public static float getRationalityRecoveryAmount(Player entity) {
-    restrictValue(entity, true);
-    return (float) entity.getAttributeValue(ModAttributes.RATIONALITY_RECOVERY_AMOUNT);
+  public static float getRationalityRecoveryAmount(Player player) {
+    restrictValue(player, true);
+    return (float) player.getAttributeValue(ModAttributes.RATIONALITY_RECOVERY_AMOUNT);
   }
 
   /**
    * 设置基本理智值自然恢复量
    */
-  public static void setBaseRationalityRecoveryAmount(Player entity, float value) {
-    entity.getAttributes().getInstance(ModAttributes.RATIONALITY_RECOVERY_AMOUNT).setBaseValue(value);
+  public static void setBaseRationalityRecoveryAmount(Player player, float value) {
+    player.getAttributes().getInstance(ModAttributes.RATIONALITY_RECOVERY_AMOUNT).setBaseValue(value);
   }
 
   /**

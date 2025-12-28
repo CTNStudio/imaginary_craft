@@ -5,16 +5,16 @@ import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.model.GeoModel;
 
 public class GazeWeaponItem extends GeoMeleeEgoWeaponItem {
-  public GazeWeaponItem(Properties properties, Builder builder, GeoModel<GeoMeleeEgoWeaponItem> model, GeoModel<GeoMeleeEgoWeaponItem> guiModel) {
-    super(properties, builder, model, guiModel);
+  public GazeWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoMeleeEgoWeaponItem> geoModel, GeoModel<GeoMeleeEgoWeaponItem> guiModel) {
+    super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 
-  public GazeWeaponItem(Properties properties, Builder builder, String modPath) {
-    super(properties, builder, modPath);
+  public GazeWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
+    super(itemProperties, egoWeaponBuilder, modPath);
   }
 
   @Override
-  public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+  public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
 
   }
 }

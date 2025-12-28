@@ -79,7 +79,7 @@ public final class ZhCn extends DatagenI18n {
 
     //region 配置
     add(ModConfig.CLIENT.enableNewHealthBar, "是否开启新玩家生命条");
-    add(ModConfig.CLIENT.enableFourColorDamageFilter, "是否开启玩家遭受四色伤害滤镜");
+    add(ModConfig.CLIENT.enableLcColorDamageFilter, "是否开启玩家遭受四色伤害滤镜");
     add(ModConfig.CLIENT.enableLowRationalityFilter, "是否开启玩家低理智滤镜");
     add(ModConfig.SERVER.enableNaturalRationalityRationality, "是否开启自然恢复理智值");
     //endregion

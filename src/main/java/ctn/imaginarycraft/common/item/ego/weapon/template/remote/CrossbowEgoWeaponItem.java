@@ -73,8 +73,8 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @param model      物品模型
    * @param guiModel   GUI界面模型
    */
-  public CrossbowEgoWeaponItem(Properties properties, Builder builder, GeoModel<GeoRemoteEgoWeaponItem> model, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
-    super(properties, builder, model, guiModel);
+  public CrossbowEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
+    super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 
   /**
@@ -84,12 +84,12 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @param builder    EGO武器构建器
    * @param modPath    模组路径
    */
-  public CrossbowEgoWeaponItem(Properties properties, Builder builder, String modPath) {
-    super(properties, builder, modPath);
+  public CrossbowEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
+    super(itemProperties, egoWeaponBuilder, modPath);
   }
 
   @Override
-  public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+  public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
 
   }
 
@@ -112,22 +112,22 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @return 交互结果
    */
   @Override
-  public @NotNull InteractionResultHolder<ItemStack> use(Level level, @NotNull Player player, InteractionHand hand) {
-    ItemStack itemstack = player.getItemInHand(hand);
-    ChargedProjectiles chargedprojectiles = itemstack.get(DataComponents.CHARGED_PROJECTILES);
+  public @NotNull InteractionResultHolder<ItemStack> use(Level world, @NotNull Player playerEntity, InteractionHand handUsed) {
+    ItemStack itemstackInHand = playerEntity.getItemInHand(handUsed);
+    ChargedProjectiles chargedprojectiles = itemstackInHand.get(DataComponents.CHARGED_PROJECTILES);
     if (chargedprojectiles != null && !chargedprojectiles.isEmpty()) {
-      this.performShooting(level, player, hand, itemstack, getShootingPower(chargedprojectiles), 1.0F, null);
-      return InteractionResultHolder.consume(itemstack);
+      this.performShooting(world, playerEntity, handUsed, itemstackInHand, getShootingPower(chargedprojectiles), 1.0F, null);
+      return InteractionResultHolder.consume(itemstackInHand);
     }
 
-    if (player.getProjectile(itemstack).isEmpty()) {
-      return InteractionResultHolder.fail(itemstack);
+    if (playerEntity.getProjectile(itemstackInHand).isEmpty()) {
+      return InteractionResultHolder.fail(itemstackInHand);
     }
 
     this.startSoundPlayed = false;
     this.midLoadSoundPlayed = false;
-    player.startUsingItem(hand);
-    return InteractionResultHolder.consume(itemstack);
+    playerEntity.startUsingItem(handUsed);
+    return InteractionResultHolder.consume(itemstackInHand);
   }
 
   /**
@@ -150,14 +150,14 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @param timeLeft     剩余时间
    */
   @Override
-  public void releaseUsing(ItemStack stack, Level level, LivingEntity entityLiving, int timeLeft) {
-    int i = this.getUseDuration(stack, entityLiving) - timeLeft;
-    float f = getPowerForTime(i, stack, entityLiving);
-    if (!(f >= 1.0F) || isCharged(stack) || !tryLoadProjectiles(entityLiving, stack)) {
+  public void releaseUsing(ItemStack itemStack, Level world, LivingEntity entityLiving, int timeLeft) {
+    int i = this.getUseDuration(itemStack, entityLiving) - timeLeft;
+    float f = getPowerForTime(i, itemStack, entityLiving);
+    if (!(f >= 1.0F) || isCharged(itemStack) || !tryLoadProjectiles(entityLiving, itemStack)) {
       return;
     }
 
-    this.getChargingSounds(stack).end().ifPresent(soundEventHolder -> level.playSound(
+    this.getChargingSounds(itemStack).end().ifPresent(soundEventHolder -> world.playSound(
       null,
       entityLiving.getX(),
       entityLiving.getY(),
@@ -165,7 +165,7 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
       soundEventHolder.value(),
       entityLiving.getSoundSource(),
       1.0F,
-      1.0F / (level.getRandom().nextFloat() * MID_SOUND_PERCENT + 1.0F) + START_SOUND_PERCENT
+      1.0F / (world.getRandom().nextFloat() * MID_SOUND_PERCENT + 1.0F) + START_SOUND_PERCENT
     ));
   }
 
@@ -208,25 +208,25 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @param target     目标实体（可为空）
    */
   @Override
-  protected void shootProjectile(LivingEntity shooter, Projectile projectile, int index, float velocity,
-                                 float inaccuracy, float angle, @Nullable LivingEntity target) {
+  protected void shootProjectile(LivingEntity shooterEntity, Projectile projectileEntity, int projectileIndex, float projectileVelocity,
+                                 float projectileInaccuracy, float shootingAngle, @Nullable LivingEntity targetEntity) {
     Vector3f vector3f;
-    if (target != null) {
-      double d0 = target.getX() - shooter.getX();
-      double d1 = target.getZ() - shooter.getZ();
+    if (targetEntity != null) {
+      double d0 = targetEntity.getX() - shooterEntity.getX();
+      double d1 = targetEntity.getZ() - shooterEntity.getZ();
       double d2 = Math.sqrt(d0 * d0 + d1 * d1);
-      double d3 = target.getY(0.3333333333333333) - projectile.getY() + d2 * START_SOUND_PERCENT;
-      vector3f = getProjectileShotVector(shooter, new Vec3(d0, d3, d1), angle);
+      double d3 = targetEntity.getY(0.3333333333333333) - projectileEntity.getY() + d2 * START_SOUND_PERCENT;
+      vector3f = getProjectileShotVector(shooterEntity, new Vec3(d0, d3, d1), shootingAngle);
     } else {
-      Vec3 vec3 = shooter.getUpVector(1.0F);
-      Quaternionf quaternionf = new Quaternionf().setAngleAxis(angle * (float) (Math.PI / 180.0), vec3.x, vec3.y, vec3.z);
-      Vec3 vec31 = shooter.getViewVector(1.0F);
+      Vec3 vec3 = shooterEntity.getUpVector(1.0F);
+      Quaternionf quaternionf = new Quaternionf().setAngleAxis(shootingAngle * (float) (Math.PI / 180.0), vec3.x, vec3.y, vec3.z);
+      Vec3 vec31 = shooterEntity.getViewVector(1.0F);
       vector3f = vec31.toVector3f().rotate(quaternionf);
     }
 
-    projectile.shoot(vector3f.x(), vector3f.y(), vector3f.z(), velocity, inaccuracy);
-    float f = getShotPitch(shooter.getRandom(), index);
-    shooter.level().playSound(null, shooter.getX(), shooter.getY(), shooter.getZ(), SoundEvents.CROSSBOW_SHOOT, shooter.getSoundSource(), 1.0F, f);
+    projectileEntity.shoot(vector3f.x(), vector3f.y(), vector3f.z(), projectileVelocity, projectileInaccuracy);
+    float f = getShotPitch(shooterEntity.getRandom(), projectileIndex);
+    shooterEntity.level().playSound(null, shooterEntity.getX(), shooterEntity.getY(), shooterEntity.getZ(), SoundEvents.CROSSBOW_SHOOT, shooterEntity.getSoundSource(), 1.0F, f);
   }
 
   /**
@@ -260,12 +260,12 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @return 投射物实例
    */
   @Override
-  protected @NotNull Projectile createProjectile(@NotNull Level level, @NotNull LivingEntity shooter, @NotNull ItemStack weapon, @NotNull ItemStack ammo, boolean isCrit) {
-    if (ammo.is(Items.FIREWORK_ROCKET)) {
-      return new FireworkRocketEntity(level, ammo, shooter, shooter.getX(), shooter.getEyeY() - 0.15F, shooter.getZ(), true);
+  protected @NotNull Projectile createProjectile(@NotNull Level world, @NotNull LivingEntity shooterEntity, @NotNull ItemStack weaponItem, @NotNull ItemStack ammoItem, boolean isCrit) {
+    if (ammoItem.is(Items.FIREWORK_ROCKET)) {
+      return new FireworkRocketEntity(world, ammoItem, shooterEntity, shooterEntity.getX(), shooterEntity.getEyeY() - 0.15F, shooterEntity.getZ(), true);
     }
 
-    Projectile projectile = super.createProjectile(level, shooter, weapon, ammo, isCrit);
+    Projectile projectile = super.createProjectile(world, shooterEntity, weaponItem, ammoItem, isCrit);
     if (projectile instanceof AbstractArrow abstractarrow) {
       abstractarrow.setSoundEvent(SoundEvents.CROSSBOW_HIT);
     }
@@ -295,25 +295,25 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @param inaccuracy 不准确度
    * @param target     目标实体（可为空）
    */
-  public void performShooting(Level level, LivingEntity shooter, InteractionHand hand, ItemStack weapon,
-                              float velocity, float inaccuracy, @Nullable LivingEntity target) {
-    if (!(level instanceof ServerLevel serverlevel) ||
-      shooter instanceof Player player && EventHooks.onArrowLoose(weapon, shooter.level(), player, 1, true) < 0) {
+  public void performShooting(Level world, LivingEntity shooterEntity, InteractionHand handUsed, ItemStack weaponItem,
+                              float projectileVelocity, float projectileInaccuracy, @Nullable LivingEntity targetEntity) {
+    if (!(world instanceof ServerLevel serverLevel) ||
+      shooterEntity instanceof Player player && EventHooks.onArrowLoose(weaponItem, shooterEntity.level(), player, 1, true) < 0) {
       return;
     }
 
-    ChargedProjectiles chargedprojectiles = weapon.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.EMPTY);
+    ChargedProjectiles chargedprojectiles = weaponItem.set(DataComponents.CHARGED_PROJECTILES, ChargedProjectiles.EMPTY);
     if (chargedprojectiles == null || chargedprojectiles.isEmpty()) {
       return;
     }
 
-    this.shoot(serverlevel, shooter, hand, weapon, chargedprojectiles.getItems(), velocity, inaccuracy, shooter instanceof Player, target);
-    if (!(shooter instanceof ServerPlayer serverplayer)) {
+    this.shoot(serverLevel, shooterEntity, handUsed, weaponItem, chargedprojectiles.getItems(), projectileVelocity, projectileInaccuracy, shooterEntity instanceof Player, targetEntity);
+    if (!(shooterEntity instanceof ServerPlayer serverPlayer)) {
       return;
     }
 
-    CriteriaTriggers.SHOT_CROSSBOW.trigger(serverplayer, weapon);
-    serverplayer.awardStat(Stats.ITEM_USED.get(weapon.getItem()));
+    CriteriaTriggers.SHOT_CROSSBOW.trigger(serverPlayer, weaponItem);
+    serverPlayer.awardStat(Stats.ITEM_USED.get(weaponItem.getItem()));
   }
 
   /**
@@ -348,13 +348,13 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @param count        剩余使用时间
    */
   @Override
-  public void onUseTick(@NotNull Level level, @NotNull LivingEntity livingEntity, @NotNull ItemStack stack, int count) {
-    if (level.isClientSide) {
+  public void onUseTick(@NotNull Level world, @NotNull LivingEntity usingEntity, @NotNull ItemStack itemStack, int count) {
+    if (world.isClientSide) {
       return;
     }
 
-    CrossbowItem.ChargingSounds crossbowitem$chargingsounds = this.getChargingSounds(stack);
-    float f = (float) (stack.getUseDuration(livingEntity) - count) / (float) getChargeDuration(stack, livingEntity);
+    CrossbowItem.ChargingSounds crossbowItemChargingSounds = this.getChargingSounds(itemStack);
+    float f = (float) (itemStack.getUseDuration(usingEntity) - count) / (float) getChargeDuration(itemStack, usingEntity);
     if (f < START_SOUND_PERCENT) {
       this.startSoundPlayed = false;
       this.midLoadSoundPlayed = false;
@@ -362,15 +362,15 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
 
     if (f >= START_SOUND_PERCENT && !this.startSoundPlayed) {
       this.startSoundPlayed = true;
-      crossbowitem$chargingsounds.start().ifPresent(soundEventHolder -> level.playSound(
-        null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), soundEventHolder.value(), SoundSource.PLAYERS, MID_SOUND_PERCENT, 1.0F
+      crossbowItemChargingSounds.start().ifPresent(soundEventHolder -> world.playSound(
+        null, usingEntity.getX(), usingEntity.getY(), usingEntity.getZ(), soundEventHolder.value(), SoundSource.PLAYERS, MID_SOUND_PERCENT, 1.0F
       ));
     }
 
     if (f >= MID_SOUND_PERCENT && !this.midLoadSoundPlayed) {
       this.midLoadSoundPlayed = true;
-      crossbowitem$chargingsounds.mid().ifPresent(soundEventHolder -> level.playSound(
-        null, livingEntity.getX(), livingEntity.getY(), livingEntity.getZ(), soundEventHolder.value(), SoundSource.PLAYERS, MID_SOUND_PERCENT, 1.0F
+      crossbowItemChargingSounds.mid().ifPresent(soundEventHolder -> world.playSound(
+        null, usingEntity.getX(), usingEntity.getY(), usingEntity.getZ(), soundEventHolder.value(), SoundSource.PLAYERS, MID_SOUND_PERCENT, 1.0F
       ));
     }
   }
@@ -383,8 +383,8 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @return 使用持续时间
    */
   @Override
-  public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
-    return getChargeDuration(stack, entity) + 3;
+  public int getUseDuration(@NotNull ItemStack itemStack, @NotNull LivingEntity usingEntity) {
+    return getChargeDuration(itemStack, usingEntity) + 3;
   }
 
   /**
@@ -394,8 +394,8 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @param shooter 射击者
    * @return 装填时间（tick）
    */
-  public static int getChargeDuration(ItemStack stack, LivingEntity shooter) {
-    float f = EnchantmentHelper.modifyCrossbowChargingTime(stack, shooter, MAX_CHARGE_DURATION);
+  public static int getChargeDuration(ItemStack itemStack, LivingEntity shooterEntity) {
+    float f = EnchantmentHelper.modifyCrossbowChargingTime(itemStack, shooterEntity, MAX_CHARGE_DURATION);
     return Mth.floor(f * 20.0F);
   }
 
@@ -416,8 +416,8 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @param stack 物品堆
    * @return 装填音效配置
    */
-  CrossbowItem.ChargingSounds getChargingSounds(ItemStack stack) {
-    return EnchantmentHelper.pickHighestLevel(stack, EnchantmentEffectComponents.CROSSBOW_CHARGING_SOUNDS).orElse(DEFAULT_SOUNDS);
+  CrossbowItem.ChargingSounds getChargingSounds(ItemStack itemStack) {
+    return EnchantmentHelper.pickHighestLevel(itemStack, EnchantmentEffectComponents.CROSSBOW_CHARGING_SOUNDS).orElse(DEFAULT_SOUNDS);
   }
 
   /**
@@ -428,8 +428,8 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @param shooter  射击者
    * @return 装填力度（0.0-1.0）
    */
-  private static float getPowerForTime(int timeLeft, ItemStack stack, LivingEntity shooter) {
-    float f = (float) timeLeft / (float) getChargeDuration(stack, shooter);
+  private static float getPowerForTime(int timeLeft, ItemStack itemStack, LivingEntity shooterEntity) {
+    float f = (float) timeLeft / (float) getChargeDuration(itemStack, shooterEntity);
     if (f > 1.0F) {
       f = 1.0F;
     }
@@ -446,8 +446,8 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @param tooltipFlag       提示标志
    */
   @Override
-  public void appendHoverText(ItemStack stack, Item.TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
-    ChargedProjectiles chargedprojectiles = stack.get(DataComponents.CHARGED_PROJECTILES);
+  public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+    ChargedProjectiles chargedprojectiles = itemStack.get(DataComponents.CHARGED_PROJECTILES);
     if (chargedprojectiles == null || chargedprojectiles.isEmpty()) {
       return;
     }
@@ -462,7 +462,7 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
     }
 
     List<Component> list = new ArrayList<>();
-    Items.FIREWORK_ROCKET.appendHoverText(itemstack, context, list, tooltipFlag);
+    Items.FIREWORK_ROCKET.appendHoverText(itemstack, tooltipContext, list, tooltipFlag);
     if (list.isEmpty()) {
       return;
     }

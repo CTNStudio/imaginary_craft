@@ -16,18 +16,15 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.ProjectileWeaponItem;
-import net.minecraft.world.item.UseAnim;
+import net.minecraft.world.item.*;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
 
@@ -35,44 +32,51 @@ import java.util.function.Predicate;
  * 远程EGO武器
  */
 public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implements IItemEgo, IItemLcDamageType, IItemUsageReq, IItemInvincibleTick {
-  protected final float attackDistance;
-  protected final @Nullable LcDamageType lcDamageType;
-  protected final @Nullable Set<LcDamageType> canCauseLcDamageTypes;
-  protected final int invincibleTick;
-  protected final @Nullable CreateProjectile<? extends Projectile> createProjectile;
+  private final float attackDistance;
+  private final @Nullable LcDamageType lcDamageType;
+  private final @Nullable Set<LcDamageType> canCauseLcDamageTypes;
+  private final int invincibleTick;
+  private final @Nullable CreateProjectile<? extends Projectile> createProjectile;
 
-  public RemoteEgoWeaponItem(@NotNull Properties properties, @NotNull Builder builder) {
-    super(properties.stacksTo(1)
-      .attributes(builder.getItemAttributeModifiers())
-      .component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, builder.virtueUsageReqBuilder.build())
+  public RemoteEgoWeaponItem(@NotNull Properties itemProperties, @NotNull Builder remoteEgoWeaponBuilder) {
+    super(itemProperties.stacksTo(1)
+      .attributes(remoteEgoWeaponBuilder.getItemAttributeModifiers())
+      .component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, remoteEgoWeaponBuilder.virtueUsageReqBuilder.build())
       .component(ModDataComponents.IS_RESTRAIN, false));
-    this.lcDamageType = builder.lcDamageType;
-    this.canCauseLcDamageTypes = builder.canCauseLcDamageTypes;
-    this.invincibleTick = builder.invincibleTick;
-    this.attackDistance = builder.attackDistance;
-    this.createProjectile = builder.createProjectile;
-  }
-
-  /**
-   * 远程攻击距离
-   */
-  public float getAttackDistance() {
-    return attackDistance;
+    this.lcDamageType = remoteEgoWeaponBuilder.lcDamageType;
+    this.canCauseLcDamageTypes = remoteEgoWeaponBuilder.canCauseLcDamageTypes;
+    this.invincibleTick = remoteEgoWeaponBuilder.invincibleTick;
+    this.attackDistance = remoteEgoWeaponBuilder.attackDistance;
+    this.createProjectile = remoteEgoWeaponBuilder.createProjectile;
   }
 
   @Override
-  protected void shoot(ServerLevel level, LivingEntity shooter, InteractionHand hand, ItemStack weapon,
-                       List<ItemStack> projectileItems, float velocity, float inaccuracy, boolean isCrit,
-                       @Nullable LivingEntity target) {
-    super.shoot(level, shooter, hand, weapon, projectileItems, velocity, inaccuracy, isCrit, target);
+  public int getDefaultProjectileRange() {
+    return (int) attackDistance;
   }
 
-  protected void shoot(ServerLevel level, LivingEntity shooter, InteractionHand hand, ItemStack weapon,
-                       float velocity, float inaccuracy, boolean isCrit, @Nullable LivingEntity target) {
-    Projectile projectile = this.createProjectile(level, shooter, weapon, null, isCrit);
-    this.shootProjectile(shooter, projectile, 0, velocity, inaccuracy, 0, target);
-    level.addFreshEntity(projectile);
-    weapon.hurtAndBreak(1, shooter, LivingEntity.getSlotForHand(hand));
+  protected float getProjectileInaccuracy(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    return Math.max(attackDistance / 3f, 0);
+  }
+
+  protected float getProjectileVelocity(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    return 1.0F;
+  }
+
+  protected void shoot(ServerLevel world, LivingEntity shooterEntity, InteractionHand handUsed, ItemStack weaponItem,
+                       float projectileVelocity, float projectileInaccuracy, boolean isCrit, @Nullable LivingEntity targetEntity) {
+    Projectile projectile = this.createProjectile(world, shooterEntity, weaponItem, null, isCrit);
+    this.shootProjectile(shooterEntity, projectile, 0, projectileVelocity, projectileInaccuracy, 0, targetEntity);
+    world.addFreshEntity(projectile);
+    weaponItem.hurtAndBreak(1, shooterEntity, LivingEntity.getSlotForHand(handUsed));
+  }
+
+  protected void shoot(ServerLevel world, LivingEntity shooterEntity, InteractionHand handUsed, ItemStack weaponItem,
+                       float projectileVelocity, float projectileInaccuracy, @Nullable LivingEntity targetEntity) {
+    Projectile projectile = this.createProjectile(world, shooterEntity, weaponItem, null);
+    this.shootProjectile(shooterEntity, projectile, 0, projectileVelocity, projectileInaccuracy, 0, targetEntity);
+    world.addFreshEntity(projectile);
+    weaponItem.hurtAndBreak(1, shooterEntity, LivingEntity.getSlotForHand(handUsed));
   }
 
   /**
@@ -80,13 +84,13 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
    */
   @Override
   @Nullable
-  public LcDamageType getLcDamageColorDamageType(ItemStack stack) {
+  public LcDamageType getLcDamageColorDamageType(ItemStack itemStack) {
     return lcDamageType;
   }
 
   @Override
   @Nullable
-  public Set<LcDamageType> getCanCauseLcDamageTypes(ItemStack stack) {
+  public Set<LcDamageType> getCanCauseLcDamageTypes(ItemStack itemStack) {
     return canCauseLcDamageTypes;
   }
 
@@ -94,7 +98,7 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
    * 获取武器攻击时造成的无敌帧
    */
   @Override
-  public int getInvincibleTick(ItemStack stack) {
+  public int getInvincibleTick(ItemStack itemStack) {
     return invincibleTick;
   }
 
@@ -102,13 +106,13 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
    * 是否可以挖掘方块
    */
   @Override
-  public boolean canAttackBlock(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, @NotNull Player player) {
-    return !player.isCreative();
+  public boolean canAttackBlock(@NotNull BlockState blockState, @NotNull Level world, @NotNull BlockPos blockPosition, @NotNull Player playerEntity) {
+    return !playerEntity.isCreative();
   }
 
   @Override
-  public int getUseDuration(@NotNull ItemStack stack, @NotNull LivingEntity entity) {
-    return 7200000;
+  public int getUseDuration(@NotNull ItemStack itemStack, @NotNull LivingEntity usingEntity) {
+    return Integer.MAX_VALUE;
   }
 
   @Override
@@ -117,20 +121,28 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
   }
 
   @Override
-  protected @NotNull Projectile createProjectile(@NotNull Level level, @NotNull LivingEntity shooter, @NotNull ItemStack weapon,
-                                                 @Nullable ItemStack ammo, boolean isCrit) {
+  protected @NotNull Projectile createProjectile(@NotNull Level world, @NotNull LivingEntity shooterEntity, @NotNull ItemStack weaponItem,
+                                                 @Nullable ItemStack ammoItem, boolean isCrit) {
     return this.createProjectile != null ?
-      this.createProjectile.createProjectile(level, shooter, weapon, ammo) :
-      super.createProjectile(level, shooter, weapon, Items.ARROW.getDefaultInstance(), isCrit);
+      this.createProjectile.createProjectile(world, shooterEntity, weaponItem, ammoItem) :
+      super.createProjectile(world, shooterEntity, weaponItem, Items.ARROW.getDefaultInstance(), isCrit);
+  }
+
+  protected @NotNull Projectile createProjectile(@NotNull Level world, @NotNull LivingEntity shooterEntity, @NotNull ItemStack weaponItem,
+                                                 @Nullable ItemStack ammoItem) {
+    if (this.createProjectile != null) {
+      return this.createProjectile.createProjectile(world, shooterEntity, weaponItem, ammoItem);
+    }
+    ItemStack ammo1 = Items.ARROW.getDefaultInstance();
+    ArrowItem arrowitem = ammo1.getItem() instanceof ArrowItem arrowitem1 ? arrowitem1 : (ArrowItem) Items.ARROW;
+    AbstractArrow abstractarrow = arrowitem.createArrow(world, ammo1, shooterEntity, weaponItem);
+    abstractarrow.setCritArrow(true);
+
+    return customArrow(abstractarrow, ammo1, weaponItem);
   }
 
   @Override
-  public int getDefaultProjectileRange() {
-    return (int) getAttackDistance();
-  }
-
-  @Override
-  public @NotNull Predicate<ItemStack> getSupportedHeldProjectiles(@NotNull ItemStack stack) {
+  public @NotNull Predicate<ItemStack> getSupportedHeldProjectiles(@NotNull ItemStack itemStack) {
     return (stack1) -> false;
   }
 
@@ -141,7 +153,7 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
   }
 
   @Override
-  public @NotNull Predicate<ItemStack> getAllSupportedProjectiles(@NotNull ItemStack stack) {
+  public @NotNull Predicate<ItemStack> getAllSupportedProjectiles(@NotNull ItemStack itemStack) {
     return (stack1) -> false;
   }
 
@@ -152,7 +164,7 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
 
   // TODO 如果是使用箭的武器如果没有箭就消耗一定量的理智（生成特殊箭），正常发射（有箭）消耗少量理智
   @Override
-  public @NotNull ItemStack getDefaultCreativeAmmo(@Nullable Player player, @NotNull ItemStack projectileWeaponItem) {
+  public @NotNull ItemStack getDefaultCreativeAmmo(@Nullable Player playerEntity, @NotNull ItemStack projectileWeaponItem) {
     return Items.AIR.getDefaultInstance();
   }
 
@@ -168,24 +180,24 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
 
     public CreateProjectile<? extends Projectile> createProjectile;
 
-    public Builder createProjectile(CreateProjectile<? extends Projectile> createProjectile) {
-      this.createProjectile = createProjectile;
+    public Builder createProjectile(CreateProjectile<? extends Projectile> projectileCreator) {
+      this.createProjectile = projectileCreator;
       return this;
     }
 
     /**
      * 远程攻击间隔
      */
-    public Builder attackInterval(float attackInterval) {
-      this.attackInterval = attackInterval;
+    public Builder attackInterval(float weaponAttackInterval) {
+      this.attackInterval = weaponAttackInterval;
       return this;
     }
 
     /**
      * 远程攻击精准度
      */
-    public Builder attackDistance(float attackDistance) {
-      this.attackDistance = attackDistance;
+    public Builder attackDistance(float weaponAttackDistance) {
+      this.attackDistance = weaponAttackDistance;
       return this;
     }
 
@@ -197,7 +209,7 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
     @Override
     public ItemAttributeModifiers getItemAttributeModifiers() {
       ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
-      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_ID, this.damage, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
+      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_ID, this.weaponDamage, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
       ItemBuilderUtil.addAttributeModifier(builder, Attributes.ATTACK_SPEED, BASE_ATTACK_SPEED_ID, this.attackInterval, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
       return builder.build();
     }

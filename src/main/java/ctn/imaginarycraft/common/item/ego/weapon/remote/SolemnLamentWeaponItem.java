@@ -9,21 +9,21 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class SolemnLamentWeaponItem extends GeoRemoteEgoWeaponItem {
 
-  public SolemnLamentWeaponItem(Properties properties, Builder builder, GeoModel<GeoRemoteEgoWeaponItem> model, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
-    super(properties, builder, model, guiModel);
+  public SolemnLamentWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
+    super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 
-  public SolemnLamentWeaponItem(Properties properties, Builder builder, String modPath) {
-    super(properties, builder, modPath);
-  }
-
-  @Override
-  public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-
+  public SolemnLamentWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
+    super(itemProperties, egoWeaponBuilder, modPath);
   }
 
   @Override
-  protected void shootProjectile(LivingEntity shooter, Projectile projectile, int index, float velocity, float inaccuracy, float angle, @Nullable LivingEntity target) {
+  public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
+
+  }
+
+  @Override
+  protected void shootProjectile(LivingEntity shooterEntity, Projectile projectileEntity, int projectileIndex, float projectileVelocity, float projectileInaccuracy, float shootingAngle, @Nullable LivingEntity targetEntity) {
 
   }
 }

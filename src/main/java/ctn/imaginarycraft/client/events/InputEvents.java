@@ -44,9 +44,7 @@ public final class InputEvents {
       return;
     }
 
-    if (!event.isAttack() ||
-      (!(player.getOffhandItem().getItem() instanceof IGunWeapon) &&
-        !(player.getMainHandItem().getItem() instanceof IGunWeapon))) {
+    if (!event.isAttack() || !IGunWeapon.isHoldGunWeapon(player)) {
       return;
     }
 

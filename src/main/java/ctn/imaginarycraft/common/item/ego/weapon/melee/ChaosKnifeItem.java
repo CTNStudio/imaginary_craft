@@ -20,43 +20,43 @@ import java.util.Set;
 public class ChaosKnifeItem extends SwordsEgoWeaponItem {
   public static final String KEY = ImaginaryCraft.ID + ".item_tooltip.geo_describe.damage_type";
 
-  public ChaosKnifeItem(Properties properties, Builder builder) {
-    super(properties.component(ModDataComponents.LC_DAMAGE_TYPE.get(), LcDamageType.PHYSICS), builder);
+  public ChaosKnifeItem(Properties itemProperties, Builder egoWeaponBuilder) {
+    super(itemProperties.component(ModDataComponents.LC_DAMAGE_TYPE.get(), LcDamageType.PHYSICS), egoWeaponBuilder);
   }
 
   @Override
   @NotNull
-  public InteractionResultHolder<ItemStack> use(@NotNull Level level, @NotNull Player player, @NotNull InteractionHand usedHand) {
-    ItemStack itemStack = player.getItemInHand(usedHand);
-    itemStack.update(ModDataComponents.LC_DAMAGE_TYPE, LcDamageType.PHYSICS,
+  public InteractionResultHolder<ItemStack> use(@NotNull Level world, @NotNull Player playerEntity, @NotNull InteractionHand handUsed) {
+    ItemStack itemStackInHand = playerEntity.getItemInHand(handUsed);
+    itemStackInHand.update(ModDataComponents.LC_DAMAGE_TYPE, LcDamageType.PHYSICS,
       (damageType) -> {
         LcDamageType[] values = LcDamageType.values();
         int i = damageType.getIndex() + 1;
         return values[i >= values.length ? 0 : i];
       });
-    return InteractionResultHolder.success(itemStack);
+    return InteractionResultHolder.success(itemStackInHand);
   }
 
   @Override
-  public Component getLcDamageTypeToTooltip(final ItemStack stack) {
-    LcDamageType damageType = getLcDamageColorDamageType(stack);
+  public Component getLcDamageTypeToTooltip(final ItemStack itemStack) {
+    LcDamageType damageType = getLcDamageColorDamageType(itemStack);
     return Component.translatable(KEY).withColor(0xAAAAAA).append(Component.literal(" ")
       .append(damageType.getName()).withColor(damageType.getColourValue()));
   }
 
   @Override
   @NotNull
-  public LcDamageType getLcDamageColorDamageType(ItemStack stack) {
-    return stack.getOrDefault(ModDataComponents.LC_DAMAGE_TYPE, LcDamageType.PHYSICS);
+  public LcDamageType getLcDamageColorDamageType(ItemStack itemStack) {
+    return itemStack.getOrDefault(ModDataComponents.LC_DAMAGE_TYPE, LcDamageType.PHYSICS);
   }
 
   @Override
-  public Set<LcDamageType> getCanCauseLcDamageTypes(final ItemStack stack) {
+  public Set<LcDamageType> getCanCauseLcDamageTypes(final ItemStack itemStack) {
     return Set.of(LcDamageType.values());
   }
 
   @Override
-  public void appendHoverText(@NotNull ItemStack stack, @NotNull TooltipContext context, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
-    super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
+  public void appendHoverText(@NotNull ItemStack itemStack, @NotNull TooltipContext tooltipContext, @NotNull List<Component> tooltipComponents, @NotNull TooltipFlag tooltipFlag) {
+    super.appendHoverText(itemStack, tooltipContext, tooltipComponents, tooltipFlag);
   }
 }

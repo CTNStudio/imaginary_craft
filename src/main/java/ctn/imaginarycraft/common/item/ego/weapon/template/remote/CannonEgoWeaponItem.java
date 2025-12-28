@@ -5,16 +5,16 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class CannonEgoWeaponItem extends GunEgoWeaponItem {
 
-  public CannonEgoWeaponItem(Properties properties, Builder builder, GeoModel<GeoRemoteEgoWeaponItem> model, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
-    super(properties, builder, model, guiModel);
+  public CannonEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
+    super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 
-  public CannonEgoWeaponItem(Properties properties, Builder builder, String modPath) {
-    super(properties, builder, modPath);
+  public CannonEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
+    super(itemProperties, egoWeaponBuilder, modPath);
   }
 
   @Override
-  public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+  public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
 
   }
 

@@ -22,34 +22,34 @@ public class CreativeRationalityToolItem extends Item {
   }
 
   @Override
-  public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level level, Player player, @NotNull InteractionHand usedHand) {
-    ItemStack itemStack = player.getItemInHand(usedHand);
-    if (!player.isCreative()) {
-      return InteractionResultHolder.fail(itemStack);
+  public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, Player playerEntity, @NotNull InteractionHand handUsed) {
+    ItemStack itemStackInHand = playerEntity.getItemInHand(handUsed);
+    if (!playerEntity.isCreative()) {
+      return InteractionResultHolder.fail(itemStackInHand);
     }
 
-    if (player.isShiftKeyDown()) {
-      itemStack.set(ModDataComponents.MODE_BOOLEAN, Boolean.FALSE.equals(itemStack.get(ModDataComponents.MODE_BOOLEAN)));
-      return InteractionResultHolder.success(itemStack);
+    if (playerEntity.isShiftKeyDown()) {
+      itemStackInHand.set(ModDataComponents.MODE_BOOLEAN, Boolean.FALSE.equals(itemStackInHand.get(ModDataComponents.MODE_BOOLEAN)));
+      return InteractionResultHolder.success(itemStackInHand);
     }
 
-    if (level.isClientSide()) {
-      return InteractionResultHolder.fail(itemStack);
+    if (world.isClientSide()) {
+      return InteractionResultHolder.fail(itemStackInHand);
     }
 
-    RationalityUtil.modifyValue(player, Boolean.TRUE == itemStack.get(ModDataComponents.MODE_BOOLEAN) ? -1 : 1, false);
-    return InteractionResultHolder.success(itemStack);
+    RationalityUtil.modifyValue(playerEntity, Boolean.TRUE == itemStackInHand.get(ModDataComponents.MODE_BOOLEAN) ? -1 : 1, false);
+    return InteractionResultHolder.success(itemStackInHand);
   }
 
   @Override
-  public void inventoryTick(@NotNull ItemStack stack, @NotNull Level level, @NotNull Entity entity, int slotId, boolean isSelected) {
-    super.inventoryTick(stack, level, entity, slotId, isSelected);
-    if (entity instanceof Player player && !level.isClientSide() && isSelected) {
-      getRationality("当前的理智值为：" + RationalityUtil.getValue(player));
+  public void inventoryTick(@NotNull ItemStack itemStack, @NotNull Level world, @NotNull Entity entity, int slotIndex, boolean isCurrentlySelected) {
+    super.inventoryTick(itemStack, world, entity, slotIndex, isCurrentlySelected);
+    if (entity instanceof Player player && !world.isClientSide() && isCurrentlySelected) {
+      displayRationalityValue("当前的理智值为：" + RationalityUtil.getValue(player));
     }
   }
 
-  private void getRationality(String player) {
-    Minecraft.getInstance().gui.setOverlayMessage(Component.literal(player), false);
+  private void displayRationalityValue(String message) {
+    Minecraft.getInstance().gui.setOverlayMessage(Component.literal(message), false);
   }
 }

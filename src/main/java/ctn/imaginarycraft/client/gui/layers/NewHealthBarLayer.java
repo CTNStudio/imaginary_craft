@@ -13,7 +13,6 @@ import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class NewHealthBarLayer extends StatusBarLayer {
-  // 发光
   public static final ResourceLocation LIGHT_TEXTURE = ImaginaryCraft.modRl("hud_bar/health/light");
 
   // 伤害吸收

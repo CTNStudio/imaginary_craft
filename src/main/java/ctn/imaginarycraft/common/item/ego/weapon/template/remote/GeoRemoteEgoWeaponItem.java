@@ -22,22 +22,22 @@ public abstract class GeoRemoteEgoWeaponItem extends RemoteEgoWeaponItem impleme
   private final GeoModel<GeoRemoteEgoWeaponItem> model;
   private final @Nullable GeoModel<GeoRemoteEgoWeaponItem> guiModel;
 
-  public GeoRemoteEgoWeaponItem(Properties properties, Builder builder, GeoModel<GeoRemoteEgoWeaponItem> model, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
-    super(properties, builder);
-    this.model = model;
+  public GeoRemoteEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
+    super(itemProperties, egoWeaponBuilder);
+    this.model = geoModel;
     this.guiModel = guiModel;
   }
 
-  public GeoRemoteEgoWeaponItem(Properties properties, Builder builder, String modPath) {
-    this(properties, builder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
+  public GeoRemoteEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
+    this(itemProperties, egoWeaponBuilder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
   }
 
-  public void createGeoRenderer(@NotNull Consumer<GeoRenderProvider> consumer) {
-    consumer.accept(new ModGeoItemRenderProvider<>(this.model, this.guiModel));
+  public void createGeoRenderer(@NotNull Consumer<GeoRenderProvider> rendererConsumer) {
+    rendererConsumer.accept(new ModGeoItemRenderProvider<>(this.model, this.guiModel));
   }
 
   @Override
-  public abstract void registerControllers(AnimatableManager.ControllerRegistrar controllers);
+  public abstract void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar);
 
   @Override
   public AnimatableInstanceCache getAnimatableInstanceCache() {

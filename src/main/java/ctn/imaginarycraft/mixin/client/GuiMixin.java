@@ -1,0 +1,34 @@
+package ctn.imaginarycraft.mixin.client;
+
+import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Expression;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import ctn.imaginarycraft.api.IGunWeapon;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Gui;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.injection.At;
+
+@Mixin(Gui.class)
+public abstract class GuiMixin {
+
+  @Shadow
+  @Final
+  private Minecraft minecraft;
+
+  @Definition(id = "minecraft", field = "Lnet/minecraft/client/gui/Gui;minecraft:Lnet/minecraft/client/Minecraft;")
+  @Definition(id = "options", field = "Lnet/minecraft/client/Minecraft;options:Lnet/minecraft/client/Options;")
+  @Definition(id = "attackIndicator", method = "Lnet/minecraft/client/Options;attackIndicator()Lnet/minecraft/client/OptionInstance;")
+  @Definition(id = "get", method = "Lnet/minecraft/client/OptionInstance;get()Ljava/lang/Object;")
+  @Definition(id = "CROSSHAIR", field = "Lnet/minecraft/client/AttackIndicatorStatus;CROSSHAIR:Lnet/minecraft/client/AttackIndicatorStatus;")
+  @Expression("this.minecraft.options.attackIndicator().get() == CROSSHAIR")
+  @ModifyExpressionValue(method = "renderCrosshair", at = @At("MIXINEXTRAS:EXPRESSION"))
+  private boolean imaginarycraft$imaginarycraft$renderCrosshair(boolean original) {
+    if (IGunWeapon.isHoldGunWeapon(minecraft.player)) {
+      return false;
+    }
+    return original;
+  }
+}

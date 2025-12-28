@@ -27,10 +27,11 @@ public final class InputEventExecute {
       if (iGunWeapon.isAim(player, useItem)) {
         break use;
       }
-      if (!iGunWeapon.aimShoot(player, useItem)) {
+      InteractionHand usedItemHand = player.getUsedItemHand();
+      if (!iGunWeapon.aimShoot(player, useItem, usedItemHand)) {
         return;
       }
-      PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(player.getUsedItemHand(), true, true));
+      PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(usedItemHand, true, true));
       return;
     }
 

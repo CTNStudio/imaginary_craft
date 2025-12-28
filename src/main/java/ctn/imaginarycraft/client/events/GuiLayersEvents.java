@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.client.events;
 
+import ctn.imaginarycraft.client.ModGuiLayers;
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.resources.ResourceLocation;
@@ -14,9 +15,24 @@ public final class GuiLayersEvents {
   @SubscribeEvent
   public static void renderGuiLayerEventPre(RenderGuiLayerEvent.Pre event) {
     final ResourceLocation name = event.getName();
+
     // 关闭原版的血条
-    if (ModConfig.CLIENT.enableNewHealthBar.get() && name.equals(VanillaGuiLayers.PLAYER_HEALTH)) {
-      event.setCanceled(true);
+    if (name.equals(VanillaGuiLayers.PLAYER_HEALTH)) {
+      if (ModConfig.CLIENT.enableNewHealthBar.get()) {
+        event.setCanceled(true);
+      }
+      return;
+    }
+    if (name.equals(ModGuiLayers.SCREEN_FILTER)) {
+      if (!ModConfig.CLIENT.enableLowRationalityFilter.get()) {
+        event.setCanceled(true);
+      }
+      return;
+    }
+    if (name.equals(ModGuiLayers.LC_DAMAGE_SCREEN_FILTER)) {
+      if (!ModConfig.CLIENT.enableLcColorDamageFilter.get()) {
+        event.setCanceled(true);
+      }
     }
   }
 

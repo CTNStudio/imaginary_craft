@@ -28,18 +28,18 @@ public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, I
   protected final GeoRenderProvider renderProvider;
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-  public EgoArmorItem(Holder<ArmorMaterial> material, ArmorItem.Type type, Item.Properties properties,
-                      Builder builder, GeoRenderProvider renderProvider) {
-    super(material, type, properties
+  public EgoArmorItem(Holder<ArmorMaterial> armorMaterial, ArmorItem.Type armorType, Item.Properties itemProperties,
+                      Builder egoArmorBuilder, GeoRenderProvider geoRendererProvider) {
+    super(armorMaterial, armorType, itemProperties
       .stacksTo(1)
-      .attributes(builder.getItemAttributeModifiers(type, material))
+      .attributes(egoArmorBuilder.getItemAttributeModifiers(armorType, armorMaterial))
       .component(ModDataComponents.IS_RESTRAIN, false)
-      .component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, builder.virtueUsageReqBuilder.build()));
-    this.renderProvider = renderProvider;
+      .component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, egoArmorBuilder.virtueUsageReqBuilder.build()));
+    this.renderProvider = geoRendererProvider;
   }
 
   @Override
-  public void registerControllers(final AnimatableManager.ControllerRegistrar controllers) {
+  public void registerControllers(final AnimatableManager.ControllerRegistrar controllerRegistrar) {
 
   }
 
@@ -63,39 +63,39 @@ public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, I
     public Builder() {
     }
 
-    public ItemAttributeModifiers getItemAttributeModifiers(ArmorItem.Type type, Holder<ArmorMaterial> material) {
-      ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
+    public ItemAttributeModifiers getItemAttributeModifiers(ArmorItem.Type armorType, Holder<ArmorMaterial> material) {
+      ItemAttributeModifiers.Builder attributeBuilder = ItemAttributeModifiers.builder();
       ArmorMaterial armorMaterial = material.value();
-      EquipmentSlotGroup dropLocation = EquipmentSlotGroup.bySlot(type.getSlot());
-      ResourceLocation id = getArmorModifierId(type);
-      ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.PHYSICS_VULNERABLE, id, this.physicsVulnerable, AttributeModifier.Operation.ADD_VALUE, dropLocation);
-      ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.SPIRIT_VULNERABLE, id, this.spiritVulnerable, AttributeModifier.Operation.ADD_VALUE, dropLocation);
-      ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.EROSION_VULNERABLE, id, this.erosionVulnerable, AttributeModifier.Operation.ADD_VALUE, dropLocation);
-      ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.THE_SOUL_VULNERABLE, id, this.theSoulVulnerable, AttributeModifier.Operation.ADD_VALUE, dropLocation);
+      EquipmentSlotGroup equipmentSlotGroup = EquipmentSlotGroup.bySlot(armorType.getSlot());
+      ResourceLocation id = getArmorModifierId(armorType);
+      ItemBuilderUtil.addAttributeModifier(attributeBuilder, ModAttributes.PHYSICS_VULNERABLE, id, this.physicsVulnerable, AttributeModifier.Operation.ADD_VALUE, equipmentSlotGroup);
+      ItemBuilderUtil.addAttributeModifier(attributeBuilder, ModAttributes.SPIRIT_VULNERABLE, id, this.spiritVulnerable, AttributeModifier.Operation.ADD_VALUE, equipmentSlotGroup);
+      ItemBuilderUtil.addAttributeModifier(attributeBuilder, ModAttributes.EROSION_VULNERABLE, id, this.erosionVulnerable, AttributeModifier.Operation.ADD_VALUE, equipmentSlotGroup);
+      ItemBuilderUtil.addAttributeModifier(attributeBuilder, ModAttributes.THE_SOUL_VULNERABLE, id, this.theSoulVulnerable, AttributeModifier.Operation.ADD_VALUE, equipmentSlotGroup);
 
-      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ARMOR, id, armorMaterial.getDefense(type), AttributeModifier.Operation.ADD_VALUE, dropLocation);
-      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ARMOR_TOUGHNESS, id, armorMaterial.toughness(), AttributeModifier.Operation.ADD_VALUE, dropLocation);
-      ItemBuilderUtil.addAttributeModifier(builder, Attributes.KNOCKBACK_RESISTANCE, id, armorMaterial.knockbackResistance(), AttributeModifier.Operation.ADD_VALUE, dropLocation);
-      return builder.build();
+      ItemBuilderUtil.addAttributeModifier(attributeBuilder, Attributes.ARMOR, id, armorMaterial.getDefense(armorType), AttributeModifier.Operation.ADD_VALUE, equipmentSlotGroup);
+      ItemBuilderUtil.addAttributeModifier(attributeBuilder, Attributes.ARMOR_TOUGHNESS, id, armorMaterial.toughness(), AttributeModifier.Operation.ADD_VALUE, equipmentSlotGroup);
+      ItemBuilderUtil.addAttributeModifier(attributeBuilder, Attributes.KNOCKBACK_RESISTANCE, id, armorMaterial.knockbackResistance(), AttributeModifier.Operation.ADD_VALUE, equipmentSlotGroup);
+      return attributeBuilder.build();
     }
 
-    public Builder virtueUsageReqBuilder(ItemVirtueUsageReq.Builder virtueUsageReqBuilder) {
-      this.virtueUsageReqBuilder = virtueUsageReqBuilder;
+    public Builder virtueUsageReqBuilder(ItemVirtueUsageReq.Builder virtueRequirementBuilder) {
+      this.virtueUsageReqBuilder = virtueRequirementBuilder;
       return this;
     }
 
-    private static @NotNull ResourceLocation getArmorModifierId(final Type type) {
-      return ResourceLocation.withDefaultNamespace("armor." + type.getName());
+    private static @NotNull ResourceLocation getArmorModifierId(final Type armorType) {
+      return ResourceLocation.withDefaultNamespace("armor." + armorType.getName());
     }
 
     /**
      * 易伤
      */
-    public Builder vulnerable(double physics, double spirit, double erosion, double theSoul) {
-      this.physicsVulnerable = physics;
-      this.spiritVulnerable = spirit;
-      this.erosionVulnerable = erosion;
-      this.theSoulVulnerable = theSoul;
+    public Builder vulnerable(double physicsVulnerability, double spiritVulnerability, double erosionVulnerability, double soulVulnerability) {
+      this.physicsVulnerable = physicsVulnerability;
+      this.spiritVulnerable = spiritVulnerability;
+      this.erosionVulnerable = erosionVulnerability;
+      this.theSoulVulnerable = soulVulnerability;
       return this;
     }
   }
