@@ -74,6 +74,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
   private final List<LivingEntity> recentAttackers = new ArrayList<>(); // 最近攻击者列表
   private final Map<LivingEntity, Integer> lastAttackTimeMap = new HashMap<>(); // 记录攻击时间
   private Vec3 crashPortalPosition = null;
+
   // ========== 可配置参数 ==========
   private static final class Config {
     // 攻击参数
@@ -97,6 +98,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
     public static final float NORMAL_ATTACK_KNOCKBACK_STRENGTH = 0.0F; // 击退强度
     public static final float CRASH_ATTACK_KNOCKBACK_STRENGTH = 1.0F;
   }
+
   //普攻
   private void executeAoeAttack() {
     AABB aoeBox = this.getBoundingBox()
@@ -133,10 +135,10 @@ public class GrantUsLove extends AbnormalitiesEntity {
         Config.CRASH_ATTACK_AOE_RADIUS)
       .move(0, Config.CRASH_ATTACK_AOE_HEIGHT / 4, 0);
     List<LivingEntity> targets = this.level().getEntitiesOfClass(
-        LivingEntity.class,
-        aoeBox,
-        entity -> entity != this && entity.isAlive() && this.canAttackTarget(entity)
-      );
+      LivingEntity.class,
+      aoeBox,
+      entity -> entity != this && entity.isAlive() && this.canAttackTarget(entity)
+    );
 
     DamageSource damageSource = ModDamageSources.physicsDamage(this);
 
@@ -153,7 +155,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
   private boolean applyAttackToTarget(LivingEntity target, DamageSource damageSource, float damageAmount, double strength) {
     boolean hurt = target.hurt(damageSource, damageAmount);
     if (hurt) {
-      this.applyKnockback(target,strength);
+      this.applyKnockback(target, strength);
     }
     return hurt;
   }
@@ -196,7 +198,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
     double baseY = area.minY + 3.1;
 
     // 采样点数量（根据区域大小调整）
-    int samples = Math.min(40, (int)((maxX - minX) * (maxZ - minZ) / 4));
+    int samples = Math.min(40, (int) ((maxX - minX) * (maxZ - minZ) / 4));
 
     for (int i = 0; i < samples; i++) {
       // 在区域内随机位置
@@ -242,9 +244,9 @@ public class GrantUsLove extends AbnormalitiesEntity {
   public void tick() {
     super.tick();
 
-    if(!this.level().isClientSide){
+    if (!this.level().isClientSide) {
       stateDuration++;
-      if(!this.crashAttackReady) {//无大招时
+      if (!this.crashAttackReady) {//无大招时
         if (crashAttackCooldown <= 0) {
           crashAttackCooldown = Config.CRASH_ATTACK_COOLDOWN;
 //          this.teleportTo(this.getX(), this.getY() + 30.0F, this.getZ());
@@ -258,16 +260,16 @@ public class GrantUsLove extends AbnormalitiesEntity {
             attackCooldown = Config.NORMAL_ATTACK_COOLDOWN;
           }
         }
-      }else if (this.crashPortalOpeningTime>0){
-        if (this.crashPortalOpeningTime == Config.CRASH_PORTAL_OPENING_TIME){//砸击开始时,锁定传送位置
+      } else if (this.crashPortalOpeningTime > 0) {
+        if (this.crashPortalOpeningTime == Config.CRASH_PORTAL_OPENING_TIME) {//砸击开始时,锁定传送位置
           this.crashPortalPosition = Objects.requireNonNullElse(this.primaryTarget, this).position()
             .add(0, 20, 0);
           this.createPortal();
-        }else if(this.crashPortalOpeningTime == 1){
+        } else if (this.crashPortalOpeningTime == 1) {
           this.teleportTo(this.crashPortalPosition.x, this.crashPortalPosition.y, this.crashPortalPosition.z);
         }
         this.crashPortalOpeningTime--;
-      } else if (this.isOnGround()){//砸到地上时伤害
+      } else if (this.isOnGround()) {//砸到地上时伤害
         this.crashAttackReady = false;
         this.crashPortalOpeningTime = Config.CRASH_PORTAL_OPENING_TIME;
         this.executeCrashAttack();
@@ -317,7 +319,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
     }
   }
 
-  private void updatePrimaryTarget(){
+  private void updatePrimaryTarget() {
     if (recentAttackers.isEmpty()) {
       primaryTarget = null;
       return;
@@ -349,6 +351,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
 
   /**
    * 计算目标得分（即追踪权重）
+   *
    * @param entity 目标实体
    * @return 得分
    */
