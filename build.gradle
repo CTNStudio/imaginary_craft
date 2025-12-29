@@ -20,13 +20,26 @@ group = mod_group_id
 //  }
 //}
 //repositories.clear()
+
 repositories {
+  maven {
+    url = "https://libraries.minecraft.net/"
+  }
+
+  maven {
+    url = "https://neoforged.forgecdn.net/releases"
+  }
+
+  maven {
+    url = "https://neoforged.forgecdn.net/mojang-meta"
+  }
+
   mavenLocal()
   mavenCentral()
 
   maven {
     name = "NeoForged"
-    url = "https://maven.neoforged.net/releases"
+    url = "https://neoforged.forgecdn.net/releases"
   }
 
   // KotlinForForge
