@@ -496,7 +496,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .attackInterval(minuteToSpeedConversion(0.5f))
       .attackDistance(10)
       .invincibleTick((int) (20 * 0.5f))
-      .meleeLcDamageType(LcDamageType.EROSION)
+      .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, VirtueRating.III, null),
     (p, b) -> new SolemnLamentWeaponItem(p, b, "weapon/solemn_lament"));
 

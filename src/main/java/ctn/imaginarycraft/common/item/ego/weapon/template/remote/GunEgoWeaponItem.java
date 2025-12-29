@@ -18,6 +18,7 @@ import software.bernie.geckolib.model.GeoModel;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 
+// TODO 延迟攻击
 public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements IGunWeapon {
   public GunEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
     super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
