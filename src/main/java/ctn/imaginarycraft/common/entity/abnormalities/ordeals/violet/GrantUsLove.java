@@ -68,7 +68,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
   private int crashAttackCooldown = 0;
   private int stateDuration = 0; // 当前状态持续时间
   private boolean crashAttackReady = false; //一个状态，大招冷却结束但未释放
-  private int crashPortalOpeningTime = Config.CRASH_PORTAL_OPENING_TIME;
+  private int crashPortalOpeningTime = 1;
   private final List<LivingEntity> recentAttackers = new ArrayList<>(); // 最近攻击者列表
   private final Map<LivingEntity, Integer> lastAttackTimeMap = new HashMap<>(); // 记录攻击时间
   private Vec3 crashPortalPosition = null;
@@ -76,13 +76,13 @@ public class GrantUsLove extends AbnormalitiesEntity {
   // ========== 可配置参数 ==========
   private static final class Config {
     // 攻击参数
-    public static final int NORMAL_ATTACK_COOLDOWN = 60; // 基础攻击间隔（3秒）
+    public static final int NORMAL_ATTACK_COOLDOWN = 30; // 基础攻击间隔（1.5秒）
     public static final int CRASH_ATTACK_COOLDOWN = 600; // 大招攻击间隔（30秒）
     public static final int CRASH_PORTAL_OPENING_TIME = 100;
     public static final float TARGETED_ATTACK_RADIUS = 50.0F; // 锁定半径（针对玩家，脱离后解除锁定）
 
     // 目标锁定参数
-    public static final int TARGET_LOCK_DURATION = 400; // 锁定目标持续时间（20秒）
+    public static final int TARGET_LOCK_DURATION = 600; // 锁定目标持续时间（30秒）
     public static final int RECENT_ATTACKER_MEMORY = 200; // 记住攻击者的时间（10秒）
     public static final float PLAYER_TARGET_PRIORITY = 10.0F; // 玩家目标优先级权重
 
@@ -237,7 +237,6 @@ public class GrantUsLove extends AbnormalitiesEntity {
     return !(entity instanceof GrantUsLove);
   }
 
-
   @Override
   public void tick() {
     super.tick();
@@ -250,7 +249,6 @@ public class GrantUsLove extends AbnormalitiesEntity {
     if (!this.crashAttackReady) {//无大招时
       if (crashAttackCooldown <= 0) {
         crashAttackCooldown = Config.CRASH_ATTACK_COOLDOWN;
-//          this.teleportTo(this.getX(), this.getY() + 30.0F, this.getZ());
         this.crashAttackReady = true;
       } else {
         crashAttackCooldown--;
@@ -264,10 +262,13 @@ public class GrantUsLove extends AbnormalitiesEntity {
     } else if (this.crashPortalOpeningTime > 0) {
       if (this.crashPortalOpeningTime == Config.CRASH_PORTAL_OPENING_TIME) {//砸击开始时,锁定传送位置
         this.crashPortalPosition = Objects.requireNonNullElse(this.primaryTarget, this).position()
-          .add(0, 20, 0);
+          .add(0, 15, 0);
         this.createPortal();
       } else if (this.crashPortalOpeningTime == 1) {
-        this.absMoveTo(crashPortalPosition.x, crashPortalPosition.y, crashPortalPosition.z);
+        if(this.crashPortalPosition == null){
+          crashPortalPosition = this.position().add(0, 20, 0);
+        }
+        this.setPos(crashPortalPosition.x, crashPortalPosition.y, crashPortalPosition.z);
       }
       this.crashPortalOpeningTime--;
     } else if (this.isOnGround()) {//砸到地上时伤害
@@ -337,7 +338,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
     float bestScore = -1;
 
     for (LivingEntity attacker : recentAttackers) {
-      if (!attacker.isAlive()) continue;
+      if (!attacker.isAlive() || !this.canAttackTarget(attacker)) continue;
 
       float score = this.calculateTargetScore(attacker);
 
@@ -504,7 +505,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
     @Override
     public void render(GrantUsLove entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
       poseStack.pushPose();
-      float scale = 0.3f;
+      float scale = 0.4f;
       poseStack.scale(scale, scale, scale);
       super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
       poseStack.popPose();
