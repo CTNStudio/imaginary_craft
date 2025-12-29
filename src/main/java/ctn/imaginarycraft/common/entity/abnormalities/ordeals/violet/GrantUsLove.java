@@ -56,11 +56,13 @@ public class GrantUsLove extends AbnormalitiesEntity {
       .add(Attributes.ATTACK_DAMAGE, 1.0)
       .add(Attributes.MOVEMENT_SPEED, 0)
       .add(Attributes.ATTACK_KNOCKBACK, 0)
-      .add(Attributes.GRAVITY, 0.20)
+      .add(Attributes.GRAVITY, 0.08)
+
       .add(ModAttributes.PHYSICS_VULNERABLE, 0.8)
       .add(ModAttributes.SPIRIT_VULNERABLE, 2.0)
       .add(ModAttributes.EROSION_VULNERABLE, 0.8)
-      .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0);
+      .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0)
+      ;
   }
 
   private LivingEntity primaryTarget = null; // 主要目标（优先玩家）
@@ -247,7 +249,6 @@ public class GrantUsLove extends AbnormalitiesEntity {
       if (!this.crashAttackReady) {//无大招时
         if (crashAttackCooldown <= 0) {
           crashAttackCooldown = Config.CRASH_ATTACK_COOLDOWN;
-//          this.teleportTo(this.getX(), this.getY() + 30.0F, this.getZ());
           this.crashAttackReady = true;
         } else {
           crashAttackCooldown--;
@@ -261,7 +262,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
       } else if (this.crashPortalOpeningTime > 0) {
         if (this.crashPortalOpeningTime == Config.CRASH_PORTAL_OPENING_TIME) {//砸击开始时,锁定传送位置
           this.crashPortalPosition = Objects.requireNonNullElse(this.primaryTarget, this).position()
-            .add(0, 20, 0);
+            .add(0, 15, 0);
           this.createPortal();
         } else if (this.crashPortalOpeningTime == 1) {
           this.teleportTo(this.crashPortalPosition.x, this.crashPortalPosition.y, this.crashPortalPosition.z);
