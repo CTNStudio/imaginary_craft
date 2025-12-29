@@ -152,9 +152,9 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
   /**
    * 当isVertical为true时：
    * <br>
-   * 如果是正向绘制（isReverseDirection为false），进度从下往上填充
+   * 如果是正向绘制（isReverseDirection为false），进度从上往下填充
    * <br>
-   * 如果是反向绘制（isReverseDirection为true），进度从上往下填充
+   * 如果是反向绘制（isReverseDirection为true），进度从下往上填充
    * <p>
    * 当isVertical为false时：
    * <br>
@@ -163,8 +163,11 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
    * 如果是反向绘制（isReverseDirection为true），进度从右往左填
    */
   public static void renderProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int width, int height,
-                                       double value, double maxValue, boolean isVertical, boolean isReverseDirection) {
-    float renderValue = (int) Math.min(Math.max(0, value), maxValue);
+                                       float value, float maxValue, boolean isVertical, boolean isReverseDirection) {
+    if (value == 0) {
+      return;
+    }
+    float renderValue = Math.min(Math.max(0, value), maxValue);
 
     // 根据方向选择尺寸参数
     int mainDimension = isVertical ? height : width;  // 主要尺寸（垂直时是高度，水平时是宽度）

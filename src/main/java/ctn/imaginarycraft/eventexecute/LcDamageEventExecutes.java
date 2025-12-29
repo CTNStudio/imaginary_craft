@@ -17,15 +17,21 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 
 import static net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN;
 
 public final class LcDamageEventExecutes {
+
+  public static final double VULNERABILITY_DECELERATE_THRESHOLD = 1.2;
+
   /**
    * 伤害回血
    */
@@ -131,7 +137,7 @@ public final class LcDamageEventExecutes {
   }
 
   /**
-   * 伤害应用
+   * 伤害应用并生成粒子和易伤减速
    */
   public static void appliedDamageToEntity(final ServerLevel serverLevel, final LivingEntity entity, final DamageSource source, final float newDamage) {
     if (entity instanceof Player player) {
@@ -139,30 +145,35 @@ public final class LcDamageEventExecutes {
     }
 
     // 低抗缓慢
-    AttributeInstance attributeInstance;
     @Nullable LcDamageType lcDamageType = IDamageSource.of(source).getImaginaryCraft$LcDamageType();
-    if (lcDamageType != null &&
-      (attributeInstance = entity.getAttribute(lcDamageType.getVulnerable())) != null &&
-      attributeInstance.getValue() > 1.0) {
-      entity.addEffect(new MobEffectInstance(MOVEMENT_SLOWDOWN, 20, 2));
+    if (lcDamageType != null) {
+      vulnerabilityDecelerate(entity, lcDamageType);
     }
 
     // 生成粒子
     Holder<DamageType> damageType = source.typeHolder();
 
     // TODO 需要改良 以实现攻击位置
-//    @Nullable Vec3 sourcePosition = source.getSourcePosition();
-//    @Nullable Entity entity1 = source.getEntity();
-//    @Nullable Entity entity2 = source.getDirectEntity();
-//    if (sourcePosition != null && (
-//        entity1 != null && !entity1.position().equals(sourcePosition))) {
-//      double x = sourcePosition.x;
-//      double y = sourcePosition.y;
-//      double z = sourcePosition.z;
-//      ParticleUtil.randomColorTextParticles(serverLevel,
-//        ParticleUtil.getText(newDamage, false), damageType, false, false, true, x, y, z);
-//      return;
-//    }
+    if (source.getEntity() instanceof Projectile projectile) {
+      @Nullable Vec3 sourcePosition = source.getSourcePosition();
+      if (sourcePosition != null && !projectile.position().equals(sourcePosition)) {
+        double x = sourcePosition.x;
+        double y = sourcePosition.y;
+        double z = sourcePosition.z;
+        ParticleUtil.randomColorTextParticles(serverLevel,
+            ParticleUtil.getText(newDamage, false), damageType, lcDamageType, false, true, x, y, z);
+        return;
+      }
+    }
+
     ParticleUtil.createTextParticles(entity, damageType, lcDamageType, newDamage, false, false);
+  }
+
+  public static void vulnerabilityDecelerate(LivingEntity entity, @NotNull LcDamageType lcDamageType) {
+    AttributeInstance attributeInstance = entity.getAttribute(lcDamageType.getVulnerable());
+    if (attributeInstance != null && attributeInstance.getValue() > VULNERABILITY_DECELERATE_THRESHOLD) {
+      // TODO 替换成专属效果
+      entity.addEffect(new MobEffectInstance(MOVEMENT_SLOWDOWN, 20, 2));
+    }
   }
 }

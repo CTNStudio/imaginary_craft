@@ -37,7 +37,9 @@ import java.util.UUID;
 
 import static net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN;
 
-/// 失乐园尖刺
+/**
+ * 失乐园尖刺
+ */
 public class ParadiseLostSpikeweed extends Entity implements TraceableEntity, GeoEntity {
   private final AnimatableInstanceCache anims = GeckoLibUtil.createInstanceCache(this);
   private final int lifeTicks = 22;

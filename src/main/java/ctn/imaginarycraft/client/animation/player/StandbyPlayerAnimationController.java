@@ -39,6 +39,9 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
   }
 
   private static void getTickAnimationStateHandler(AnimationController animationController, AnimationData animationData, AnimationSetter animationSetter) {
+//    if (true) {
+//      return;
+//    }
     if (!(animationController instanceof StandbyPlayerAnimationController controller)) {
       return;
     }

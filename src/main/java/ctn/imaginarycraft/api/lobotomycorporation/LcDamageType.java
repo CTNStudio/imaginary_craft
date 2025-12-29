@@ -28,8 +28,6 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
 
-// TODO 对于药水需要做特殊处理
-
 /**
  * 脑叶伤害类型
  */

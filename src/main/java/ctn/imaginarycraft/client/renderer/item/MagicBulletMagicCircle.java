@@ -28,7 +28,7 @@ public class MagicBulletMagicCircle {
     if (true) {
       return;
     }
-    PlayerAnimationController controller = PlayerAnimUtil.getPlayerAnimationController(entity, PlayerAnimUtil.NORMAL_STATE);
+    PlayerAnimationController controller = PlayerAnimUtil.getPlayerAnimationController(entity, PlayerAnimUtil.WEAPON_STATE);
     if (controller == null) {
       return;
     }

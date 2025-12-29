@@ -24,7 +24,7 @@ public final class InputEventExecute {
       if (useItem.isEmpty() || !(useItem.getItem() instanceof IGunWeapon iGunWeapon)) {
         return;
       }
-      if (iGunWeapon.isGunAim(player, useItem)) {
+      if (!iGunWeapon.isGunAim(player, useItem)) {
         break use;
       }
       InteractionHand usedItemHand = player.getUsedItemHand();

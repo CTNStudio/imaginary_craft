@@ -21,6 +21,7 @@ import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.model.GeoModel;
 
 // TODO 禁止放到副手
+// TODO 第一人称动画
 public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   public static final ResourceLocation STANDBY = ImaginaryCraft.modRl("magic_bullet_weapon.standby");
   public static final ResourceLocation GALLOP = ImaginaryCraft.modRl("magic_bullet_weapon.gallop");
@@ -32,7 +33,6 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   public static final ResourceLocation SHOOTING_AIM_TERMINATE = ImaginaryCraft.modRl("magic_bullet_weapon.shooting.aim.terminate");
   public static final ResourceLocation SHOOTING_AIM_CHARGEUP = ImaginaryCraft.modRl("magic_bullet_weapon.shooting.aim.chargeup");
   public static final ResourceLocation SHOOTING_CYCLE = ImaginaryCraft.modRl("magic_bullet_weapon.shooting.cycle");
-
 
   public static final PlayerAnimRawAnimation GUN_AIM_RAW_ANIMATION = PlayerAnimRawAnimation.begin()
     .then(SHOOTING_AIM, Animation.LoopType.PLAY_ONCE)
@@ -74,7 +74,9 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
     if (handUsed != InteractionHand.MAIN_HAND) {
       return InteractionResultHolder.fail(playerEntity.getItemInHand(handUsed));
     }
-    return super.use(world, playerEntity, handUsed);
+    InteractionResultHolder<ItemStack> use = super.use(world, playerEntity, handUsed);
+    GunChargeUpUtil.setPercentage(playerEntity, 0.6f);
+    return use;
   }
 
   @Override
@@ -82,7 +84,7 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
     if (playerEntity instanceof AbstractClientPlayer) {
       return;
     }
-    PlayerAnimUtil.playRawAnimation(playerEntity, PlayerAnimUtil.NORMAL_STATE, GUN_AIM_RAW_ANIMATION, PlayerAnimUtil.DEFAULT_FADE_IN);
+    PlayerAnimUtil.playRawAnimation(playerEntity, PlayerAnimUtil.WEAPON_STATE, GUN_AIM_RAW_ANIMATION, PlayerAnimUtil.DEFAULT_FADE_IN);
   }
 
   @Override
@@ -90,7 +92,7 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
     if (playerEntity instanceof AbstractClientPlayer) {
       return;
     }
-    PlayerAnimUtil.playAnimation(playerEntity, PlayerAnimUtil.NORMAL_STATE, SHOOTING_AIM_TERMINATE, PlayerAnimUtil.DEFAULT_FADE_OUT);
+    PlayerAnimUtil.playAnimation(playerEntity, PlayerAnimUtil.WEAPON_STATE, SHOOTING_AIM_TERMINATE, PlayerAnimUtil.DEFAULT_FADE_OUT);
   }
 
   @Override
@@ -98,17 +100,17 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
     if (playerEntity instanceof AbstractClientPlayer) {
       return;
     }
-    PlayerAnimUtil.playAnimation(playerEntity, PlayerAnimUtil.NORMAL_STATE, SHOOTING_AIM_TERMINATE, PlayerAnimUtil.DEFAULT_FADE_OUT);
+    PlayerAnimUtil.playAnimation(playerEntity, PlayerAnimUtil.WEAPON_STATE, SHOOTING_AIM_TERMINATE, PlayerAnimUtil.DEFAULT_FADE_OUT);
   }
 
   @Override
   public boolean gunShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
     return gunShootFunction(playerEntity,
-      chargeUpPercentage -> chargeUpPercentage >= 1,
+      chargeUpPercentage -> true,
       serverLevel -> {
         defaultGunShootServerLevelConsumer(playerEntity, itemStack, handUsed, serverLevel);
         GunChargeUpUtil.reset(playerEntity);
-        PlayerAnimUtil.playAnimation(playerEntity, PlayerAnimUtil.NORMAL_STATE, SHOOTING, PlayerAnimUtil.DEFAULT_FADE_IN);
+        PlayerAnimUtil.playAnimation(playerEntity, PlayerAnimUtil.WEAPON_STATE, SHOOTING, PlayerAnimUtil.DEFAULT_FADE_IN);
       }
     );
   }
@@ -117,11 +119,11 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   @Override
   public boolean gunAimShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
     return gunShootFunction(playerEntity,
-      chargeUpPercentage -> chargeUpPercentage >= 0.3,
+      chargeUpPercentage -> chargeUpPercentage >= 1,
       serverLevel -> {
         defaultGunShootServerLevelConsumer(playerEntity, itemStack, handUsed, serverLevel);
-        GunChargeUpUtil.reset(playerEntity);
-        PlayerAnimUtil.playRawAnimation(playerEntity, PlayerAnimUtil.NORMAL_STATE, GUN_AIM_SHOOT_RAW_ANIMATION, PlayerAnimUtil.DEFAULT_FADE_IN);
+        GunChargeUpUtil.setPercentage(playerEntity, 0.6f);
+        PlayerAnimUtil.playRawAnimation(playerEntity, PlayerAnimUtil.WEAPON_STATE, GUN_AIM_SHOOT_RAW_ANIMATION, PlayerAnimUtil.DEFAULT_FADE_IN);
       }
     );
   }

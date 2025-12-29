@@ -43,10 +43,15 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
         if (player.getMainHandItem().getItem() instanceof MagicBulletWeaponItem) {
           texture = REMOTE_MAGIC_BULLET;
         }
-        ImageProgressBar.renderProgressBar(guiGraphics, texture, leftPos, topPos, 16, 16, gunChargeUpPercentageValue, 1, true, false);
+        ImageProgressBar.renderProgressBar(guiGraphics, texture, leftPos, topPos, 16, 16, gunChargeUpPercentageValue, 1, true, true);
       }
       case HOTBAR -> {
         guiGraphics.blitSprite(BIG_REMOTE_BOTTOM, leftPos, topPos, 32, 32);
+        ResourceLocation texture = BIG_REMOTE_GUN;
+        if (player.getMainHandItem().getItem() instanceof MagicBulletWeaponItem) {
+          texture = BIG_REMOTE_MAGIC_BULLET;
+        }
+        ImageProgressBar.renderProgressBar(guiGraphics, texture, leftPos, topPos, 32, 32, gunChargeUpPercentageValue, 1, true, true);
       }
     }
   }
@@ -58,7 +63,6 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
 
     if (this.gunChargeUpPercentageValue != gunChargeUpPercentageValue) {
       this.gunChargeUpPercentageValue = gunChargeUpPercentageValue;
-      System.out.println(gunChargeUpPercentageValue);
     }
   }
 
@@ -72,7 +76,7 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
       switch (attackIndicatorStatus) {
         case CROSSHAIR -> setLeftPos(newScreenWidth / 2 - 16 / 2 + 15);
         case HOTBAR ->
-          setLeftPos(newScreenWidth / 2 + (player.getMainArm() == HumanoidArm.RIGHT ? -91 - 29 : 91));
+          setLeftPos(newScreenWidth / 2 + (player.getMainArm() != HumanoidArm.RIGHT ? -91 - 29 : 91));
         default -> throw new IllegalStateException("Unexpected value: " + attackIndicatorStatus);
       }
     }

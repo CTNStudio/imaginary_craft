@@ -22,6 +22,6 @@ public final class GunChargeUpUtil {
   }
 
   public static void setPercentage(Player player, float value) {
-    setValue(player, (int) Mth.clamp(value * player.getCurrentItemAttackStrengthDelay(), 0, 1));
+    setValue(player, (int) (value * player.getCurrentItemAttackStrengthDelay()));
   }
 }

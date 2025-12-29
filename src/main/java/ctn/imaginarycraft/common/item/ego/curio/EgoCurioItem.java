@@ -107,7 +107,6 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem {
         this.tooltips.add(this.tooltipsComponent.get(index).apply(key));
       }
     });
-    // TODO 目前仅在玩家的分发时才移除
     if (FMLEnvironment.production && this.tooltipsI18nMap != null) {
       this.tooltipsI18nMap = null;
     }

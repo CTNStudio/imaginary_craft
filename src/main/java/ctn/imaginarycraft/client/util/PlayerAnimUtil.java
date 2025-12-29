@@ -45,6 +45,10 @@ public final class PlayerAnimUtil {
    * 常态控制器ID
    */
   public static final ResourceLocation NORMAL_STATE = ImaginaryCraft.modRl("normal_state");
+  /**
+   * 武器控制器ID
+   */
+  public static final ResourceLocation WEAPON_STATE = ImaginaryCraft.modRl("weapon_state");
   //endregion
 
   public static final PlayerAnimStandardFadePlayerAnim DEFAULT_FADE_IN = new PlayerAnimStandardFadePlayerAnim(3, EasingType.EASE_IN_OUT_SINE, null, FadeType.FADE_IN);

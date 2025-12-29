@@ -29,6 +29,7 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
 
   protected void defaultGunShootServerLevelConsumer(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, ServerLevel serverLevel) {
     this.shoot(serverLevel, playerEntity, playerEntity.getUsedItemHand(), itemStack, getProjectileVelocity(playerEntity, itemStack, handUsed), getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
+    GunChargeUpUtil.reset(playerEntity);
   }
 
   protected boolean gunShootFunction(@NotNull Player playerEntity, Predicate<Float> percentagePredicate, Consumer<ServerLevel> serverLevelConsumer) {
@@ -70,21 +71,32 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
 
   @Override
   public void onStopUsing(ItemStack stack, LivingEntity entity, int count) {
-    if (!(entity instanceof Player player)) {
+    if (!(entity instanceof ServerPlayer player)) {
       return;
     }
 
     if (isGunAim(player, stack)) {
       gunEndAim(player, stack);
-      return;
+    } else {
+      gunEnd(player, stack);
     }
 
-    gunEnd(player, stack);
+    GunChargeUpUtil.reset(player);
   }
 
   @Override
-  public void releaseUsing(@NotNull ItemStack itemStack, @NotNull Level world, @NotNull LivingEntity usingEntity, int timeCharged) {
+  public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
+    if (livingEntity instanceof ServerPlayer player) {
+      GunChargeUpUtil.reset(player);
+    }
+    return super.finishUsingItem(stack, level, livingEntity);
+  }
 
+  @Override
+  public void releaseUsing(ItemStack stack, Level level, LivingEntity livingEntity, int timeCharged) {
+    if (livingEntity instanceof ServerPlayer player) {
+      GunChargeUpUtil.reset(player);
+    }
   }
 
   @Override
@@ -104,7 +116,7 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
   @Override
   public boolean gunShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
     return gunShootFunction(playerEntity,
-      chargeUpPercentage -> chargeUpPercentage >= 1,
+      chargeUpPercentage -> true,
       serverLevel -> defaultGunShootServerLevelConsumer(playerEntity, itemStack, handUsed, serverLevel));
   }
 

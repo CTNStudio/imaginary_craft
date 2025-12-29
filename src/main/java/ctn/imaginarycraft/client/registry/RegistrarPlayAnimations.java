@@ -24,7 +24,8 @@ public final class RegistrarPlayAnimations {
     event.enqueueWork(() -> {
       modRegisterFactory(PlayerAnimUtil.STANDBY_OR_WALK, 600, StandbyPlayerAnimationController::new);
       modRegisterFactory(PlayerAnimUtil.HEAD_ROTATION, 700);
-      modRegisterFactory(PlayerAnimUtil.NORMAL_STATE, 1500);
+      modRegisterFactory(PlayerAnimUtil.NORMAL_STATE, 1000);
+      modRegisterFactory(PlayerAnimUtil.WEAPON_STATE, 1500);
     });
   }
 

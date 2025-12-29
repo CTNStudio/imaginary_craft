@@ -16,7 +16,8 @@ import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 public final class GuiLayersEvents {
   @SubscribeEvent
   public static void renderGuiLayerEventPre(RenderGuiLayerEvent.Pre event) {
-    final ResourceLocation name = event.getName();
+    ResourceLocation name = event.getName();
+    Minecraft instance = Minecraft.getInstance();
 
     // 关闭原版的血条
     if (name.equals(VanillaGuiLayers.PLAYER_HEALTH)) {
@@ -38,10 +39,27 @@ public final class GuiLayersEvents {
       return;
     }
     if (name.equals(ModGuiLayers.GUN_CHARGE_UP_HUD_LAYER_CROSSHAIR) || name.equals(ModGuiLayers.GUN_CHARGE_UP_HUD_LAYER_HOTBAR)) {
-      if (!IGunWeapon.isHoldGunWeapon(Minecraft.getInstance().player)) {
+      switch (instance.options.attackIndicator().get()) {
+        case CROSSHAIR -> {
+          if (name.equals(ModGuiLayers.GUN_CHARGE_UP_HUD_LAYER_HOTBAR)) {
+            event.setCanceled(true);
+          }
+        }
+        case HOTBAR -> {
+          if (name.equals(ModGuiLayers.GUN_CHARGE_UP_HUD_LAYER_CROSSHAIR)) {
+            event.setCanceled(true);
+          }
+        }
+        default -> {
+          event.setCanceled(true);
+          return;
+        }
+      }
+      if (!IGunWeapon.isHoldGunWeapon(instance.player)) {
         event.setCanceled(true);
       }
     }
+
   }
 
   @SubscribeEvent

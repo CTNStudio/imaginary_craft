@@ -30,6 +30,7 @@ public interface IGunWeapon {
    * @return 返回false则不在服务器执行
    */
   default boolean gunShoot(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand usedHand) {
+    // TODO 新增延迟射击以同步动画
     return false;
   }
 
