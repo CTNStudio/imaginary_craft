@@ -57,12 +57,10 @@ public class GrantUsLove extends AbnormalitiesEntity {
       .add(Attributes.MOVEMENT_SPEED, 0)
       .add(Attributes.ATTACK_KNOCKBACK, 0)
       .add(Attributes.GRAVITY, 0.20)
-
       .add(ModAttributes.PHYSICS_VULNERABLE, 0.8)
       .add(ModAttributes.SPIRIT_VULNERABLE, 2.0)
       .add(ModAttributes.EROSION_VULNERABLE, 0.8)
-      .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0)
-      ;
+      .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0);
   }
 
   private LivingEntity primaryTarget = null; // 主要目标（优先玩家）

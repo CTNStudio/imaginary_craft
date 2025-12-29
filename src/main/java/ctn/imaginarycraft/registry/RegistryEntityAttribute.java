@@ -28,7 +28,7 @@ public final class RegistryEntityAttribute {
   /**
    * 添加或修改属性 等级在{@link RegistryCapability}类注册
    */
-  @SubscribeEvent(priority = EventPriority.LOWEST)
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void registry(EntityAttributeModificationEvent event) {
     // 对所有实体打入基础属性
     event.getTypes().forEach(entityType -> lcAttributesVulnerable(event, entityType));
