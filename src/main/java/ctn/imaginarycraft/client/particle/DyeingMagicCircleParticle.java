@@ -4,7 +4,6 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import ctn.imaginarycraft.client.particle.text.TextParticle;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Camera;
@@ -147,8 +146,8 @@ public class DyeingMagicCircleParticle extends TextureSheetParticle {
       Options::new);
 
     @Override
-    public @NotNull ParticleType<TextParticle.Options> getType() {
-      return ModParticleTypes.TEXT.get();
+    public @NotNull ParticleType<Options> getType() {
+      return ModParticleTypes.DYEING_MAGIC_CIRCLE.get();
     }
   }
 

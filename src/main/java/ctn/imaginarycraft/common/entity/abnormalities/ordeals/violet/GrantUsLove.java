@@ -11,6 +11,7 @@ package ctn.imaginarycraft.common.entity.abnormalities.ordeals.violet;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import ctn.imaginarycraft.client.model.ModGeoEntityModel;
+import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
 import ctn.imaginarycraft.common.entity.abnormalities.AbnormalitiesEntity;
 import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.ModDamageSources;
@@ -287,13 +288,14 @@ public class GrantUsLove extends AbnormalitiesEntity {
 
   private void createPortal() {
     if (!(this.level() instanceof ServerLevel serverLevel)) {
+      return;
     }
-//TODO: 创建传送门
-//    Vec3 pos = this.crashPortalPosition;
-//    serverLevel.sendParticles(new MagicBulletMagicCircleParticle.Builder(0, 0)
-//      .radius(5.0f)
-//      .particleLifeTime(110)
-//      .buildOptions(0), pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
+
+    Vec3 pos = this.crashPortalPosition;
+    serverLevel.sendParticles(new MagicBulletMagicCircleParticle.Builder(0, 0)
+      .radius(5.0f)
+      .particleLifeTime(110)
+      .buildOptions(0), pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
   }
 
   private boolean isOnGround() {
