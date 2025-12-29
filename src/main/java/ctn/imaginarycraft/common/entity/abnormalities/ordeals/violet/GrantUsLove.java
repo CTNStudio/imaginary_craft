@@ -267,7 +267,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
           .add(0, 20, 0);
         this.createPortal();
       } else if (this.crashPortalOpeningTime == 1) {
-        this.teleportTo(this.crashPortalPosition.x, this.crashPortalPosition.y, this.crashPortalPosition.z);
+        this.absMoveTo(crashPortalPosition.x, crashPortalPosition.y, crashPortalPosition.z);
       }
       this.crashPortalOpeningTime--;
     } else if (this.isOnGround()) {//砸到地上时伤害
