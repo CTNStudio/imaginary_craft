@@ -95,10 +95,18 @@ public final class RegistryEntityAttribute {
    * 脑叶属性抗性
    */
   private static void lcAttributesVulnerable(EntityAttributeModificationEvent event, EntityType<? extends LivingEntity> entityType) {
-    event.add(entityType, ModAttributes.PHYSICS_VULNERABLE);
-    event.add(entityType, ModAttributes.SPIRIT_VULNERABLE);
-    event.add(entityType, ModAttributes.EROSION_VULNERABLE);
-    event.add(entityType, ModAttributes.THE_SOUL_VULNERABLE);
+    if (!event.has(entityType, ModAttributes.PHYSICS_VULNERABLE)) {
+      event.add(entityType, ModAttributes.PHYSICS_VULNERABLE);
+    }
+    if (!event.has(entityType, ModAttributes.SPIRIT_VULNERABLE)) {
+      event.add(entityType, ModAttributes.SPIRIT_VULNERABLE);
+    }
+    if (!event.has(entityType, ModAttributes.EROSION_VULNERABLE)) {
+      event.add(entityType, ModAttributes.EROSION_VULNERABLE);
+    }
+    if (!event.has(entityType, ModAttributes.THE_SOUL_VULNERABLE)) {
+      event.add(entityType, ModAttributes.THE_SOUL_VULNERABLE);
+    }
   }
 
   /**

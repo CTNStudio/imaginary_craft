@@ -57,12 +57,10 @@ public class GrantUsLove extends AbnormalitiesEntity {
       .add(Attributes.MOVEMENT_SPEED, 0)
       .add(Attributes.ATTACK_KNOCKBACK, 0)
       .add(Attributes.GRAVITY, 0.08)
-
       .add(ModAttributes.PHYSICS_VULNERABLE, 0.8)
       .add(ModAttributes.SPIRIT_VULNERABLE, 2.0)
       .add(ModAttributes.EROSION_VULNERABLE, 0.8)
-      .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0)
-      ;
+      .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0);
   }
 
   private LivingEntity primaryTarget = null; // 主要目标（优先玩家）
@@ -244,47 +242,51 @@ public class GrantUsLove extends AbnormalitiesEntity {
   public void tick() {
     super.tick();
 
-    if (!this.level().isClientSide) {
-      stateDuration++;
-      if (!this.crashAttackReady) {//无大招时
-        if (crashAttackCooldown <= 0) {
-          crashAttackCooldown = Config.CRASH_ATTACK_COOLDOWN;
-          this.crashAttackReady = true;
-        } else {
-          crashAttackCooldown--;
-          if (attackCooldown > 0) {
-            attackCooldown--;
-          } else {
-            this.executeAoeAttack();
-            attackCooldown = Config.NORMAL_ATTACK_COOLDOWN;
-          }
-        }
-      } else if (this.crashPortalOpeningTime > 0) {
-        if (this.crashPortalOpeningTime == Config.CRASH_PORTAL_OPENING_TIME) {//砸击开始时,锁定传送位置
-          this.crashPortalPosition = Objects.requireNonNullElse(this.primaryTarget, this).position()
-            .add(0, 15, 0);
-          this.createPortal();
-        } else if (this.crashPortalOpeningTime == 1) {
-          this.teleportTo(this.crashPortalPosition.x, this.crashPortalPosition.y, this.crashPortalPosition.z);
-        }
-        this.crashPortalOpeningTime--;
-      } else if (this.isOnGround()) {//砸到地上时伤害
-        this.crashAttackReady = false;
-        this.crashPortalOpeningTime = Config.CRASH_PORTAL_OPENING_TIME;
-        this.executeCrashAttack();
-      }
-
-      // 检查目标是否脱离锁定
-      this.checkTargetOutOfRange();
-
-      // 清理过期攻击者（每5秒一次）
-      if (this.tickCount % 100 == 0) {
-        this.cleanupAttackers();
-      }
-
-      // 状态超时检查
-      this.checkStateTimeout();
+    if (this.level().isClientSide) {
+      return;
     }
+
+    stateDuration++;
+    if (!this.crashAttackReady) {//无大招时
+      if (crashAttackCooldown <= 0) {
+        crashAttackCooldown = Config.CRASH_ATTACK_COOLDOWN;
+//          this.teleportTo(this.getX(), this.getY() + 30.0F, this.getZ());
+        this.crashAttackReady = true;
+      } else {
+        crashAttackCooldown--;
+        if (attackCooldown > 0) {
+          attackCooldown--;
+        } else {
+          this.executeAoeAttack();
+          attackCooldown = Config.NORMAL_ATTACK_COOLDOWN;
+        }
+      }
+    } else if (this.crashPortalOpeningTime > 0) {
+      if (this.crashPortalOpeningTime == Config.CRASH_PORTAL_OPENING_TIME) {//砸击开始时,锁定传送位置
+        this.crashPortalPosition = Objects.requireNonNullElse(this.primaryTarget, this).position()
+          .add(0, 20, 0);
+        this.createPortal();
+      } else if (this.crashPortalOpeningTime == 1) {
+        this.teleportTo(this.crashPortalPosition.x, this.crashPortalPosition.y, this.crashPortalPosition.z);
+      }
+      this.crashPortalOpeningTime--;
+    } else if (this.isOnGround()) {//砸到地上时伤害
+      this.crashAttackReady = false;
+      this.crashPortalOpeningTime = Config.CRASH_PORTAL_OPENING_TIME;
+      this.executeCrashAttack();
+    }
+
+    // 检查目标是否脱离锁定
+    this.checkTargetOutOfRange();
+
+    // 清理过期攻击者（每5秒一次）
+    if (this.tickCount % 100 == 0) {
+      this.cleanupAttackers();
+    }
+
+    // 状态超时检查
+    this.checkStateTimeout();
+
   }
 
   private void createPortal() {
