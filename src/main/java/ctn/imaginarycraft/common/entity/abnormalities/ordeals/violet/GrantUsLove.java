@@ -294,7 +294,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
     }
 
     Vec3 pos = this.crashPortalPosition;
-    serverLevel.sendParticles(new MagicBulletMagicCircleParticle.Builder(0, 0)
+    serverLevel.sendParticles(new MagicBulletMagicCircleParticle.Builder(-90, 0)
       .radius(5.0f)
       .particleLifeTime(110)
       .buildOptions(0), pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);

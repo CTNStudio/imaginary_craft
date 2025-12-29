@@ -4,11 +4,13 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import ctn.imaginarycraft.client.ModParticleRenderTypes;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.Camera;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
+import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -24,7 +26,6 @@ public class DyeingMagicCircleParticle extends TextureSheetParticle {
   private float xRot;
   private float yRot;
   private int color;
-  private float radius;
 
   protected DyeingMagicCircleParticle(
     TextureAtlasSprite sprite,
@@ -41,23 +42,11 @@ public class DyeingMagicCircleParticle extends TextureSheetParticle {
     super(level, x, y, z);
     setLifetime(particleLifeTime);
     setSprite(sprite);
+    this.quadSize = radius;
+    setSize(radius, radius);
     this.xRot = xRot;
     this.yRot = yRot;
     this.color = color;
-    this.radius = radius;
-  }
-
-  @Override
-  public void render(VertexConsumer buffer, Camera renderInfo, float partialTicks) {
-    Quaternionf quaternionf = new Quaternionf();
-    quaternionf.rotationX(this.xRot * Mth.DEG_TO_RAD);
-    quaternionf.rotationY(this.yRot * Mth.DEG_TO_RAD);
-    this.renderRotatedQuad(buffer, renderInfo, quaternionf, partialTicks);
-  }
-
-  @Override
-  public @NotNull ParticleRenderType getRenderType() {
-    return ParticleRenderType.PARTICLE_SHEET_LIT;
   }
 
   public float getXRot() {
@@ -85,12 +74,22 @@ public class DyeingMagicCircleParticle extends TextureSheetParticle {
     setColor(color << 24, color << 16, color << 8);
   }
 
-  public float getRadius() {
-    return radius;
+  @Override
+  public void render(VertexConsumer buffer, Camera renderInfo, float partialTicks) {
+    Quaternionf quaternionf = new Quaternionf();
+    quaternionf.rotateX(xRot * Mth.DEG_TO_RAD);
+    quaternionf.rotateY(yRot * Mth.DEG_TO_RAD);
+    this.renderRotatedQuad(buffer, renderInfo, quaternionf, partialTicks);
   }
 
-  public void setRadius(float radius) {
-    this.radius = radius;
+  @Override
+  protected int getLightColor(float partialTick) {
+    return LightTexture.FULL_BRIGHT;
+  }
+
+  @Override
+  public @NotNull ParticleRenderType getRenderType() {
+    return ModParticleRenderTypes.MAGIC_CIRCLE_PARTICLE;
   }
 
   public static class Builder {

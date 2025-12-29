@@ -1,12 +1,13 @@
 package ctn.imaginarycraft.client.particle.text;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.*;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.math.Axis;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
+import ctn.imaginarycraft.client.ModParticleRenderTypes;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import ctn.imaginarycraft.network.codec.CompositeStreamCodecBuilder;
 import io.netty.buffer.ByteBuf;
@@ -21,7 +22,6 @@ import net.minecraft.client.particle.ParticleRenderType;
 import net.minecraft.client.particle.TextureSheetParticle;
 import net.minecraft.client.renderer.LightTexture;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -40,19 +40,6 @@ import java.util.List;
 
 // TODO 拆分成伤害，BOSS说话文本，普通文本
 public class TextParticle extends TextureSheetParticle {
-  public static final ParticleRenderType RENDER_TYPE = new ParticleRenderType() {
-    @Override
-    public BufferBuilder begin(Tesselator tesselator, TextureManager textureManager) {
-      RenderSystem.depthMask(true);
-      RenderSystem.disableBlend();
-      return tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
-    }
-
-    @Override
-    public String toString() {
-      return "TEXT_PARTICLE";
-    }
-  };
   protected final Minecraft minecraft;
   protected final Font font;
 
@@ -94,6 +81,39 @@ public class TextParticle extends TextureSheetParticle {
     this.isTargetingPlayers = builder.isTargetingPlayers;
     this.isShadow = builder.isShadow;
     this.isSeeThrough = builder.isSeeThrough;
+  }
+
+  protected void renderText(Component text, final Font font, final float textX, final float textY, final Matrix4f matrix, MultiBufferSource bufferSource, final int getLightColor) {
+    if (this.isShadow) {
+      renderTextShadow(font, textX + 1, textY + 1, matrix, bufferSource, getLightColor, text);
+    }
+    int fontColor = this.fontColor;
+    renderText(text, font, textX, textY, matrix, bufferSource, getLightColor, fontColor);
+  }
+
+  protected void renderTextShadow(final Font font, final float textX, final float textY, final Matrix4f matrix, final MultiBufferSource bufferSource, final int getLightColor, final Component text) {
+    int shadowColor = this.shadowColor;
+    renderText(text, font, textX, textY, new Matrix4f(matrix).translate(0, 0, 0.1f), bufferSource, getLightColor, shadowColor);
+  }
+
+  protected void renderText(final Component text, final Font font, final float textX, final float textY, final Matrix4f matrix, final MultiBufferSource bufferSource, final int getLightColor, final int fontColor) {
+    font.drawInBatch(text, textX, textY, fontColor, false, matrix, bufferSource, Font.DisplayMode.NORMAL, fontColor, getLightColor);
+    if (this.isSeeThrough) {
+      font.drawInBatch(text, textX, textY, fontColor, false, matrix, bufferSource, Font.DisplayMode.SEE_THROUGH, fontColor, getLightColor);
+      font.drawInBatch(text, textX, textY, fontColor, false, matrix, bufferSource, Font.DisplayMode.SEE_THROUGH, fontColor, getLightColor);
+    }
+  }
+
+  protected double getX(float partialTicks) {
+    return Mth.lerp(partialTicks, this.xo, this.x);
+  }
+
+  protected double getY(float partialTicks) {
+    return Mth.lerp(partialTicks, this.yo, this.y);
+  }
+
+  protected double getZ(float partialTicks) {
+    return Mth.lerp(partialTicks, this.zo, this.z);
   }
 
   @Override
@@ -143,39 +163,6 @@ public class TextParticle extends TextureSheetParticle {
     poseStack.popPose();
   }
 
-  protected void renderText(Component text, final Font font, final float textX, final float textY, final Matrix4f matrix, MultiBufferSource bufferSource, final int getLightColor) {
-    if (this.isShadow) {
-      renderTextShadow(font, textX + 1, textY + 1, matrix, bufferSource, getLightColor, text);
-    }
-    int fontColor = this.fontColor;
-    renderText(text, font, textX, textY, matrix, bufferSource, getLightColor, fontColor);
-  }
-
-  protected void renderTextShadow(final Font font, final float textX, final float textY, final Matrix4f matrix, final MultiBufferSource bufferSource, final int getLightColor, final Component text) {
-    int shadowColor = this.shadowColor;
-    renderText(text, font, textX, textY, new Matrix4f(matrix).translate(0, 0, 0.1f), bufferSource, getLightColor, shadowColor);
-  }
-
-  protected void renderText(final Component text, final Font font, final float textX, final float textY, final Matrix4f matrix, final MultiBufferSource bufferSource, final int getLightColor, final int fontColor) {
-    font.drawInBatch(text, textX, textY, fontColor, false, matrix, bufferSource, Font.DisplayMode.NORMAL, fontColor, getLightColor);
-    if (this.isSeeThrough) {
-      font.drawInBatch(text, textX, textY, fontColor, false, matrix, bufferSource, Font.DisplayMode.SEE_THROUGH, fontColor, getLightColor);
-      font.drawInBatch(text, textX, textY, fontColor, false, matrix, bufferSource, Font.DisplayMode.SEE_THROUGH, fontColor, getLightColor);
-    }
-  }
-
-  protected double getX(float partialTicks) {
-    return Mth.lerp(partialTicks, this.xo, this.x);
-  }
-
-  protected double getY(float partialTicks) {
-    return Mth.lerp(partialTicks, this.yo, this.y);
-  }
-
-  protected double getZ(float partialTicks) {
-    return Mth.lerp(partialTicks, this.zo, this.z);
-  }
-
   @Override
   protected int getLightColor(final float partialTick) {
     return LightTexture.FULL_BRIGHT;
@@ -183,7 +170,7 @@ public class TextParticle extends TextureSheetParticle {
 
   @Override
   public @NotNull ParticleRenderType getRenderType() {
-    return RENDER_TYPE;
+    return ModParticleRenderTypes.TEXT_PARTICLE;
   }
 
   public static class Builder {

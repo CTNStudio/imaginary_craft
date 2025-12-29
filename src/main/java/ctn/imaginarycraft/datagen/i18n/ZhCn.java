@@ -157,19 +157,19 @@ public final class ZhCn extends DatagenI18n {
   }
 
   public static void clientAddI18nText(String zhCn, String key) {
-    if (FMLEnvironment.production) {
+    if (!FMLEnvironment.production) {
       ZhCn.MAP.put(key, zhCn);
     }
   }
 
   public static void clientAddI18nItemText(String zhName, Supplier<? extends Item> deferredItem) {
-    if (FMLEnvironment.production) {
+    if (!FMLEnvironment.production) {
       ZhCn.ITEMS.put(deferredItem, zhName);
     }
   }
 
   public static void clientAddI18nEntityTypeText(String zhName, Supplier<EntityType<?>> entityType) {
-    if (FMLEnvironment.production) {
+    if (!FMLEnvironment.production) {
       ZhCn.ENTITY.put(entityType, zhName);
     }
   }

@@ -1,22 +1,15 @@
 package ctn.imaginarycraft.client.particle;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.BufferBuilder;
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.Tesselator;
-import com.mojang.blaze3d.vertex.VertexFormat;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.client.ModParticleRenderTypes;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.texture.TextureAtlas;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureManager;
 import net.minecraft.core.Holder;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -30,20 +23,7 @@ import org.jetbrains.annotations.Nullable;
 import java.util.Optional;
 
 public class LcDamageIconParticle extends TextureSheetParticle {
-  public static final ParticleRenderType RENDER_TYPE = new ParticleRenderType() {
-    @Override
-    public BufferBuilder begin(Tesselator tesselator, TextureManager textureManager) {
-      RenderSystem.disableDepthTest();
-      RenderSystem.setShader(GameRenderer::getParticleShader);
-      RenderSystem.setShaderTexture(0, TextureAtlas.LOCATION_PARTICLES);
-      return tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
-    }
 
-    @Override
-    public String toString() {
-      return "LOBOTOMY_CORPORATION_DAMAGE_ICON_PARTICLE";
-    }
-  };
   private final int durationTick;
 
   protected LcDamageIconParticle(
@@ -74,7 +54,7 @@ public class LcDamageIconParticle extends TextureSheetParticle {
 
   @Override
   public @NotNull ParticleRenderType getRenderType() {
-    return RENDER_TYPE;
+    return ModParticleRenderTypes.LOBOTOMY_CORPORATION_DAMAGE_ICON_PARTICLE;
   }
 
   public record Provider(
