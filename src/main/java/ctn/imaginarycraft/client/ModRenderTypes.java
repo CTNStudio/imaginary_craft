@@ -10,14 +10,9 @@ import net.minecraft.resources.ResourceLocation;
 import java.util.function.BiFunction;
 
 public final class ModRenderTypes {
-  public static final BiFunction<ResourceLocation, RenderStateShard.TransparencyStateShard, RenderType> MAGIC_BULLET = Util.memoize(
+  public static final BiFunction<ResourceLocation, RenderStateShard.TransparencyStateShard, RenderType> MAGIC_BULLET_MAGIC_CIRCLE = Util.memoize(
     (resourceLocation, transparencyStateShard) -> RenderType.create(
-      "magic_bullet",
-      DefaultVertexFormat.NEW_ENTITY,
-      VertexFormat.Mode.QUADS,
-      1536,
-      false,
-      true,
+      "magic_bullet_magic_circle", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 1536, false, true,
       RenderType.CompositeState.builder()
         .setShaderState(RenderStateShard.RENDERTYPE_EYES_SHADER)
         .setTextureState(new RenderStateShard.TextureStateShard(resourceLocation, false, false))
@@ -26,7 +21,7 @@ public final class ModRenderTypes {
         .setCullState(RenderStateShard.NO_CULL)
         .createCompositeState(true)));
 
-  public static RenderType magicBullet(ResourceLocation location) {
-    return MAGIC_BULLET.apply(location, RenderStateShard.ADDITIVE_TRANSPARENCY);
+  public static RenderType magicBulletMagicCircle(ResourceLocation location) {
+    return MAGIC_BULLET_MAGIC_CIRCLE.apply(location, RenderStateShard.ADDITIVE_TRANSPARENCY);
   }
 }

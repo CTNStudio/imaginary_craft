@@ -18,10 +18,13 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.world.phys.Vec3;
 
-public class MagicBulletMagicCircle {
-  public static final RenderType RENDER_TYPE = ModRenderTypes.magicBullet(ImaginaryCraft.modRl("textures/particle/magic_bullet/magic_circle16x.png"));
-  public static final RenderType RENDER_TYPE1 = ModRenderTypes.magicBullet(ImaginaryCraft.modRl("textures/particle/magic_bullet/magic_circle32x.png"));
-  public static final RenderType RENDER_TYPE2 = ModRenderTypes.magicBullet(ImaginaryCraft.modRl("textures/particle/magic_bullet/magic_circle128x.png"));
+/**
+ * 魔弹法阵渲染
+ */
+public class MagicBulletMagicCircleRenderer {
+  public static final RenderType MAGIC_CIRCLE_16X = ModRenderTypes.magicBulletMagicCircle(ImaginaryCraft.modRl("textures/particle/magic_bullet/magic_circle16x.png"));
+  public static final RenderType MAGIC_CIRCLE_32X = ModRenderTypes.magicBulletMagicCircle(ImaginaryCraft.modRl("textures/particle/magic_bullet/magic_circle32x.png"));
+  public static final RenderType MAGIC_CIRCLE_128X = ModRenderTypes.magicBulletMagicCircle(ImaginaryCraft.modRl("textures/particle/magic_bullet/magic_circle128x.png"));
 
   public static void magicBulletMagicCircle(AbstractClientPlayer entity, float partialTick, MultiBufferSource multiBufferSource) {
     // TODO 等老外修复完成
@@ -63,7 +66,7 @@ public class MagicBulletMagicCircle {
 
     PlayerAnimBone playerAnimBone = controller.get3DTransform(bone);
 //    PoseStack poseStack = event.getPoseStack();
-    VertexConsumer buffer = multiBufferSource.getBuffer(RENDER_TYPE);
+    VertexConsumer buffer = multiBufferSource.getBuffer(MAGIC_CIRCLE_16X);
 
     int lightColor = LightTexture.FULL_BRIGHT;
     bonePoseStack.pushPose();

@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.client.events;
 
-import ctn.imaginarycraft.client.renderer.item.MagicBulletMagicCircle;
+import ctn.imaginarycraft.client.renderer.item.MagicBulletMagicCircleRenderer;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -17,6 +17,6 @@ public final class PlayerRenderEvents {
     MultiBufferSource multiBufferSource = event.getMultiBufferSource();
     float partialTick = event.getPartialTick();
     AbstractClientPlayer entity = (AbstractClientPlayer) event.getEntity();
-    MagicBulletMagicCircle.magicBulletMagicCircle(entity, partialTick, multiBufferSource);
+    MagicBulletMagicCircleRenderer.magicBulletMagicCircle(entity, partialTick, multiBufferSource);
   }
 }

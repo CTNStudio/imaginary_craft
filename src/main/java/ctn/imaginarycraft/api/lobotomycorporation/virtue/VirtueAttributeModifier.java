@@ -13,11 +13,12 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import org.jetbrains.annotations.Nullable;
 
-public record VirtueAttributeModifier(@Nullable Builder.AttributeModifierBuilder fortitudeModifier,
-                                      @Nullable Builder.AttributeModifierBuilder prudenceModifier,
-                                      @Nullable Builder.AttributeModifierBuilder temperanceModifier,
-                                      @Nullable Builder.AttributeModifierBuilder justiceModifier) {
-
+public record VirtueAttributeModifier(
+  @Nullable Builder.AttributeModifierBuilder fortitudeModifier,
+  @Nullable Builder.AttributeModifierBuilder prudenceModifier,
+  @Nullable Builder.AttributeModifierBuilder temperanceModifier,
+  @Nullable Builder.AttributeModifierBuilder justiceModifier
+) {
   /**
    * 获取
    */

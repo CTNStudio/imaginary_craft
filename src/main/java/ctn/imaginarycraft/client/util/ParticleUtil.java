@@ -21,6 +21,7 @@ import static ctn.imaginarycraft.api.lobotomycorporation.LcDamageType.PHYSICS;
 
 public final class ParticleUtil {
 
+  //region 伤害文本粒子
   public static void createTextParticles(
     ServerLevel world,
     Component component,
@@ -194,4 +195,5 @@ public final class ParticleUtil {
   public static @NotNull MutableComponent getText(float value, boolean isHeal) {
     return Component.literal((isHeal ? "+%s" : "-%s").formatted(TextUtil.formatNumberPlaces(Math.abs(value), 2)));
   }
+  //endregion
 }
