@@ -13,14 +13,14 @@ import java.util.function.Supplier;
 
 public abstract class AttachmentRegisterUtil {
 
-  protected static <T> @NotNull DeferredHolder<AttachmentType<?>, AttachmentType<T>> register(
+  protected static <T> @NotNull DeferredHolder<AttachmentType<?>, AttachmentType<T>> registerPlayer(
     final String name,
-    final AttachmentType.@NotNull Builder<T> builder
+    final Function<Player, T> defaultValue
   ) {
-    return register(name, builder::build);
+    return registerPlayer(name, defaultValue, builder -> builder);
   }
 
-  protected static <T> @NotNull DeferredHolder<AttachmentType<?>, AttachmentType<T>> register(
+  protected static <T> @NotNull DeferredHolder<AttachmentType<?>, AttachmentType<T>> registerPlayer(
     final String name,
     final Function<Player, T> defaultValue,
     final @NotNull Function<AttachmentType.Builder<T>, AttachmentType.Builder<T>> builder
@@ -33,6 +33,13 @@ public abstract class AttachmentRegisterUtil {
   protected static <T> T instanceofPlayer(final @NotNull Function<Player, T> defaultValue, final IAttachmentHolder holder, final String name) {
     assert holder instanceof Player : name + " can only be attached to a player";
     return defaultValue.apply((Player) holder);
+  }
+
+  protected static <T> @NotNull DeferredHolder<AttachmentType<?>, AttachmentType<T>> register(
+    final String name,
+    final AttachmentType.@NotNull Builder<T> builder
+  ) {
+    return register(name, builder::build);
   }
 
   private static <T> @NotNull DeferredHolder<AttachmentType<?>, AttachmentType<T>> register(

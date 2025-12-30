@@ -1,6 +1,7 @@
 package ctn.imaginarycraft.init;
 
 import com.mojang.serialization.Codec;
+import ctn.imaginarycraft.api.PlayerTimingRun;
 import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueFortitude;
 import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueJustice;
 import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtuePrudence;
@@ -17,16 +18,29 @@ public final class ModAttachments extends AttachmentRegisterUtil {
   public static final DeferredRegister<AttachmentType<?>> REGISTRY = ImaginaryCraft.modRegister(NeoForgeRegistries.ATTACHMENT_TYPES);
 
   /**
+   * 玩家延迟运行
+   */
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<PlayerTimingRun>> PLAYER_TIMING_RUN = registerPlayer("player_timing_run",
+    PlayerTimingRun::new);
+
+  /**
    * 枪械蓄力值
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> GUN_CHARGE_UP = register("gun_charge_up",
-    (player) -> 0, builder -> builder
-      .sync(ByteBufCodecs.INT));
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Float>> GUN_CHARGE_UP = registerPlayer("gun_charge_up",
+    (player) -> 0f, builder -> builder
+      .sync(ByteBufCodecs.FLOAT));
+
+  /**
+   * 枪械是否可以攻击（左键）
+   */
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> IS_GUN_LEFT_KEY_ATTACK = registerPlayer("is_gun_left_key_attack",
+    (player) -> true, builder -> builder
+      .sync(ByteBufCodecs.BOOL));
 
   /**
    * 魔弹使用数量
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> MAGIC_BULLET_USAGE_QUANTITY = register("magic_bullet_usage_quantity",
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> MAGIC_BULLET_USAGE_QUANTITY = registerPlayer("magic_bullet_usage_quantity",
     (player) -> 0, builder -> builder
       .sync(ByteBufCodecs.INT)
       .serialize(Codec.INT)
@@ -35,7 +49,7 @@ public final class ModAttachments extends AttachmentRegisterUtil {
   /**
    * 理智值
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Float>> RATIONALITY = register("rationality",
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Float>> RATIONALITY = registerPlayer("rationality",
     (player) -> 0f, builder -> builder
       .serialize(Codec.FLOAT)
       .sync(ByteBufCodecs.FLOAT));
@@ -43,7 +57,7 @@ public final class ModAttachments extends AttachmentRegisterUtil {
   /**
    * 理智值暂停恢复tick
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> RATIONALITY_PAUSE_RECOVERY_TICK = register("rationality_pause_recovery_tick",
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> RATIONALITY_PAUSE_RECOVERY_TICK = registerPlayer("rationality_pause_recovery_tick",
     (player) -> 0, builder -> builder
       .serialize(Codec.INT)
       .sync(ByteBufCodecs.INT));
@@ -52,7 +66,7 @@ public final class ModAttachments extends AttachmentRegisterUtil {
   /**
    * 勇气
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<VirtueFortitude>> FORTITUDE = register("fortitude",
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<VirtueFortitude>> FORTITUDE = registerPlayer("fortitude",
     VirtueFortitude::new, builder -> builder
       .serialize(new VirtueFortitude.Serialize())
       .sync(new VirtueFortitude.Sync())
@@ -60,7 +74,7 @@ public final class ModAttachments extends AttachmentRegisterUtil {
   /**
    * 谨慎
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<VirtuePrudence>> PRUDENCE = register("prudence",
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<VirtuePrudence>> PRUDENCE = registerPlayer("prudence",
     VirtuePrudence::new, builder -> builder
       .serialize(new VirtuePrudence.Serialize())
       .sync(new VirtuePrudence.Sync())
@@ -68,7 +82,7 @@ public final class ModAttachments extends AttachmentRegisterUtil {
   /**
    * 自律
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<VirtueTemperance>> TEMPERANCE = register("temperance",
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<VirtueTemperance>> TEMPERANCE = registerPlayer("temperance",
     VirtueTemperance::new, builder -> builder
       .serialize(new VirtueTemperance.Serialize())
       .sync(new VirtueTemperance.Sync())
@@ -76,7 +90,7 @@ public final class ModAttachments extends AttachmentRegisterUtil {
   /**
    * 正义
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<VirtueJustice>> JUSTICE = register("justice",
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<VirtueJustice>> JUSTICE = registerPlayer("justice",
     VirtueJustice::new, builder -> builder
       .serialize(new VirtueJustice.Serialize())
       .sync(new VirtueJustice.Sync())

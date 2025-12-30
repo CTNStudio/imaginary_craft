@@ -4,7 +4,6 @@ import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.config.ModConfig;
 import net.minecraft.server.level.ServerPlayer;
 
-// TODO 补充侵蚀伤害情况
 public final class RationalityEventExecutes {
   /**
    * 自然恢复理智值

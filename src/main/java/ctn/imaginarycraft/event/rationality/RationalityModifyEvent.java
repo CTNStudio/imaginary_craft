@@ -3,6 +3,7 @@ package ctn.imaginarycraft.event.rationality;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.bus.api.ICancellableEvent;
 
+// TODO 侵蚀伤害不造成理智理智
 public abstract class RationalityModifyEvent extends RationalityEvent {
   private final float oldValue;
 

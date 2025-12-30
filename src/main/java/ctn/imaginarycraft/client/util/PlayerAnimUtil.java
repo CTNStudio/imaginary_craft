@@ -5,7 +5,6 @@ import com.zigythebird.playeranim.animation.PlayerAnimationController;
 import com.zigythebird.playeranim.api.PlayerAnimationAccess;
 import com.zigythebird.playeranimcore.animation.Animation;
 import com.zigythebird.playeranimcore.animation.AnimationController;
-import com.zigythebird.playeranimcore.animation.RawAnimation;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
 import com.zigythebird.playeranimcore.animation.layered.modifier.SpeedModifier;
 import com.zigythebird.playeranimcore.easing.EasingType;
@@ -26,6 +25,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 // TODO 制作可以同时淡入淡出的控制器
+
 /**
  * 玩家动画工具类，提供播放、停止动画以及获取动画控制器等方法
  * 支持在客户端和服务端之间同步动画状态
@@ -115,89 +115,17 @@ public final class PlayerAnimUtil {
   /**
    * 播放指定动画
    *
-   * @param player       玩家对象
-   * @param controllerId 控制器ID
-   * @param animationId  动画ID
+   * @param player  玩家对象
+   * @param builder 动画参数构建器
    */
-  public static void playAnimation(Player player, ResourceLocation controllerId, ResourceLocation animationId) {
-    playAnimation(player, controllerId, animationId, -1);
-  }
-
-  /**
-   * 播放指定动画
-   *
-   * @param player       玩家对象
-   * @param controllerId 控制器ID
-   * @param animationId  动画ID
-   * @param playTime     播放时间
-   */
-  public static void playAnimation(Player player, ResourceLocation controllerId, ResourceLocation animationId,
-                                   float playTime) {
-    playAnimation(player, controllerId, animationId, 0, playTime);
-  }
-
-  /**
-   * 播放指定动画
-   *
-   * @param player        玩家对象
-   * @param controllerId  控制器ID
-   * @param animationId   动画ID
-   * @param startAnimFrom 动画开始位置
-   * @param playTime      播放时间
-   */
-  public static void playAnimation(Player player, ResourceLocation controllerId, ResourceLocation animationId,
-                                   float startAnimFrom, float playTime) {
-    playAnimation(player, controllerId, animationId, startAnimFrom, playTime, null);
-  }
-
-  /**
-   * 播放指定动画
-   *
-   * @param player                 玩家对象
-   * @param controllerId           控制器ID
-   * @param animationId            动画ID
-   * @param playTime               播放时间
-   * @param playerAnimStandardFade 播放动画的标准淡入淡出效果
-   */
-  public static void playAnimation(Player player, ResourceLocation controllerId, ResourceLocation animationId,
-                                   float playTime,
-                                   @Nullable PlayerAnimStandardFadePlayerAnim playerAnimStandardFade) {
-    playAnimation(player, controllerId, animationId, 0, playTime, playerAnimStandardFade);
-  }
-
-  /**
-   * 播放指定动画
-   *
-   * @param player                 玩家对象
-   * @param controllerId           控制器ID
-   * @param animationId            动画ID
-   * @param playerAnimStandardFade 播放动画的标准淡入淡出效果
-   */
-  public static void playAnimation(Player player, ResourceLocation controllerId, ResourceLocation animationId,
-                                   @Nullable PlayerAnimStandardFadePlayerAnim playerAnimStandardFade) {
-    playAnimation(player, controllerId, animationId, 0, -1, playerAnimStandardFade);
-  }
-
-  /**
-   * 播放指定动画
-   *
-   * @param player                 玩家对象
-   * @param controllerId           控制器ID
-   * @param animationId            动画ID
-   * @param startAnimFrom          动画开始位置
-   * @param playTime               播放时间
-   * @param playerAnimStandardFade 播放动画的标准淡入淡出效果
-   */
-  public static void playAnimation(Player player, ResourceLocation controllerId, ResourceLocation animationId,
-                                   float startAnimFrom, float playTime,
-                                   @Nullable PlayerAnimStandardFadePlayerAnim playerAnimStandardFade) {
+  public static void playAnimation(Player player, PlayerAnimationPayload.Builder builder) {
     if (player instanceof ServerPlayer serverPlayer) {
-      PayloadUtil.sendToClient(serverPlayer, new PlayerAnimationPayload(serverPlayer, controllerId, animationId, startAnimFrom, playTime, playerAnimStandardFade));
+      PayloadUtil.sendToClient(serverPlayer, builder.playPlayerUUID(serverPlayer).build());
       return;
     }
 
     if (player instanceof AbstractClientPlayer clientPlayer) {
-      PayloadUtil.sendToServer(new PlayerAnimationPayload(clientPlayer, controllerId, animationId, startAnimFrom, playTime, playerAnimStandardFade));
+      PayloadUtil.sendToServer(builder.playPlayerUUID(clientPlayer).build());
       return;
     }
 
@@ -211,13 +139,13 @@ public final class PlayerAnimUtil {
    * @param controllerId           控制器ID
    * @param animationId            动画ID
    * @param startAnimFrom          动画开始位置
-   * @param playTime               播放时间
+   * @param playSpeed              播放速度
    * @param playerAnimStandardFade 播放动画的标准淡入淡出效果
    */
   public static void playAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
-                                         ResourceLocation animationId, float startAnimFrom, float playTime,
+                                         ResourceLocation animationId, float startAnimFrom, float playSpeed,
                                          @Nullable PlayerAnimStandardFadePlayerAnim playerAnimStandardFade) {
-    playAnimationClient(clientPlayer, controllerId, animationId, startAnimFrom, playTime, playerAnimStandardFade != null ? playerAnimStandardFade.toModifier() : null);
+    playAnimationClient(clientPlayer, controllerId, animationId, startAnimFrom, playSpeed, playerAnimStandardFade != null ? playerAnimStandardFade.toModifier() : null);
   }
 
   /**
@@ -227,11 +155,11 @@ public final class PlayerAnimUtil {
    * @param controllerId         控制器ID
    * @param animationId          动画ID
    * @param startAnimFrom        动画开始位置
-   * @param playTime             播放时间
+   * @param playSpeed            播放速度
    * @param abstractFadeModifier 抽象淡入淡出修饰符
    */
   public static void playAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
-                                         ResourceLocation animationId, float startAnimFrom, float playTime,
+                                         ResourceLocation animationId, float startAnimFrom, float playSpeed,
                                          @Nullable AbstractFadeModifier abstractFadeModifier) {
     PlayerAnimationController controller = getPlayerAnimationController(clientPlayer, controllerId);
     if (controller == null) {
@@ -243,77 +171,31 @@ public final class PlayerAnimUtil {
       return;
     }
 
-    Animation animation = PlayerAnimResources.getAnimation(animationId);
+    controller.removeModifierIf(AbstractFadeModifier.class::isInstance);
     controller.removeModifierIf(SpeedModifier.class::isInstance);
-    controller.addModifierLast(new SpeedModifier(playTime > 0 ? animation.length() / playTime : 1));
+    controller.addModifierLast(new SpeedModifier(playSpeed));
     IAnimationController.of(controller).imaginarycraft$linkModifiers();
     if (abstractFadeModifier == null) {
-      controller.triggerAnimation(animation, startAnimFrom);
+      controller.triggerAnimation(animationId, startAnimFrom);
     } else {
-      controller.removeModifierIf(AbstractFadeModifier.class::isInstance);
-      controller.replaceAnimationWithFade(abstractFadeModifier, animation, true);
+      controller.replaceAnimationWithFade(abstractFadeModifier, animationId, true);
     }
   }
 
   /**
    * 播放原始动画
    *
-   * @param player       玩家对象
-   * @param controllerId 控制器ID
-   * @param rawAnimation 原始动画对象
+   * @param player  玩家对象
+   * @param builder 播放原始动画的构建器
    */
-  public static void playRawAnimation(Player player, ResourceLocation controllerId,
-                                      PlayerAnimRawAnimation rawAnimation) {
-    playRawAnimation(player, controllerId, rawAnimation, -1);
-  }
-
-
-  /**
-   * 播放原始动画
-   *
-   * @param player        玩家对象
-   * @param controllerId  控制器ID
-   * @param rawAnimation  原始动画对象
-   * @param startAnimFrom 动画开始位置
-   */
-  public static void playRawAnimation(Player player, ResourceLocation controllerId,
-                                      PlayerAnimRawAnimation rawAnimation, float startAnimFrom) {
-    playRawAnimation(player, controllerId, rawAnimation, startAnimFrom, null);
-  }
-
-  /**
-   * 播放原始动画
-   *
-   * @param player                 玩家对象
-   * @param controllerId           控制器ID
-   * @param rawAnimation           原始动画对象
-   * @param playerAnimStandardFade 播放动画的标准淡入淡出效果
-   */
-  public static void playRawAnimation(Player player, ResourceLocation controllerId,
-                                      PlayerAnimRawAnimation rawAnimation,
-                                      @Nullable PlayerAnimStandardFadePlayerAnim playerAnimStandardFade) {
-    playRawAnimation(player, controllerId, rawAnimation, 0, playerAnimStandardFade);
-  }
-
-  /**
-   * 播放原始动画
-   *
-   * @param player                 玩家对象
-   * @param controllerId           控制器ID
-   * @param rawAnimation           原始动画对象
-   * @param startAnimFrom          动画开始位置
-   * @param playerAnimStandardFade 播放动画的标准淡入淡出效果
-   */
-  public static void playRawAnimation(Player player, ResourceLocation controllerId,
-                                      PlayerAnimRawAnimation rawAnimation, float startAnimFrom,
-                                      @Nullable PlayerAnimStandardFadePlayerAnim playerAnimStandardFade) {
+  public static void playRawAnimation(Player player, PlayerRawAnimationPayload.Builder builder) {
     if (player instanceof ServerPlayer serverPlayer) {
-      PayloadUtil.sendToClient(serverPlayer, new PlayerRawAnimationPayload(serverPlayer, controllerId, rawAnimation, startAnimFrom, playerAnimStandardFade));
+      PayloadUtil.sendToClient(serverPlayer, builder.playPlayerUUID(serverPlayer).build());
       return;
     }
 
     if (player instanceof AbstractClientPlayer clientPlayer) {
-      PayloadUtil.sendToServer(new PlayerRawAnimationPayload(clientPlayer, controllerId, rawAnimation, startAnimFrom, playerAnimStandardFade));
+      PayloadUtil.sendToServer(builder.playPlayerUUID(clientPlayer).build());
       return;
     }
 
@@ -327,12 +209,13 @@ public final class PlayerAnimUtil {
    * @param controllerId           控制器ID
    * @param rawAnimation           原始动画对象
    * @param startAnimFrom          动画开始位置
+   * @param playSpeed              播放速度
    * @param playerAnimStandardFade 播放动画的标准淡入淡出效果
    */
   public static void playRawAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
-                                            PlayerAnimRawAnimation rawAnimation, float startAnimFrom,
+                                            PlayerAnimRawAnimation rawAnimation, float startAnimFrom, float playSpeed,
                                             @Nullable PlayerAnimStandardFadePlayerAnim playerAnimStandardFade) {
-    playRawAnimationClient(clientPlayer, controllerId, rawAnimation, startAnimFrom, playerAnimStandardFade != null ? playerAnimStandardFade.toModifier() : null);
+    playRawAnimationClient(clientPlayer, controllerId, rawAnimation, startAnimFrom, playSpeed, playerAnimStandardFade != null ? playerAnimStandardFade.toModifier() : null);
   }
 
   /**
@@ -342,10 +225,11 @@ public final class PlayerAnimUtil {
    * @param controllerId         控制器ID
    * @param rawAnimation         原始动画对象
    * @param startAnimFrom        动画开始位置
+   * @param playSpeed            播放速度
    * @param abstractFadeModifier 抽象淡入淡出修饰符
    */
   public static void playRawAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
-                                            PlayerAnimRawAnimation rawAnimation, float startAnimFrom,
+                                            PlayerAnimRawAnimation rawAnimation, float startAnimFrom, float playSpeed,
                                             @Nullable AbstractFadeModifier abstractFadeModifier) {
     PlayerAnimationController controller = getPlayerAnimationController(clientPlayer, controllerId);
     if (controller == null) {
@@ -353,13 +237,13 @@ public final class PlayerAnimUtil {
       return;
     }
 
-    controller.removeAllModifiers();
-    RawAnimation animation = rawAnimation.toRawAnimation();
+    controller.removeModifierIf(AbstractFadeModifier.class::isInstance);
+    controller.removeModifierIf(SpeedModifier.class::isInstance);
+    controller.addModifierLast(new SpeedModifier(playSpeed));
     if (abstractFadeModifier == null) {
-      controller.triggerAnimation(animation, startAnimFrom);
+      controller.triggerAnimation(rawAnimation.toRawAnimation(), startAnimFrom);
     } else {
-      controller.removeModifierIf(AbstractFadeModifier.class::isInstance);
-      controller.replaceAnimationWithFade(abstractFadeModifier, animation, true);
+      controller.replaceAnimationWithFade(abstractFadeModifier, rawAnimation.toRawAnimation(), true);
     }
   }
 
@@ -415,7 +299,7 @@ public final class PlayerAnimUtil {
   /**
    * 判断是否是同一动画
    *
-   * @param animation  第一个动画对象
+   * @param animation   第一个动画对象
    * @param animationId 第二个动画对象
    * @return 如果是同一动画则返回true，否则返回false
    */

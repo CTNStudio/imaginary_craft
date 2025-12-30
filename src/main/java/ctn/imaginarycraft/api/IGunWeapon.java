@@ -1,7 +1,6 @@
 package ctn.imaginarycraft.api;
 
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -19,6 +18,7 @@ public interface IGunWeapon {
    * 瞄准的时候是否可以移动
    */
   default boolean isGunAimMove(Player player, ItemStack itemStack) {
+    // TODO 待添加实际效果
     return false;
   }
 
@@ -30,7 +30,6 @@ public interface IGunWeapon {
    * @return 返回false则不在服务器执行
    */
   default boolean gunShoot(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand usedHand) {
-    // TODO 新增延迟射击以同步动画
     return false;
   }
 
@@ -61,9 +60,5 @@ public interface IGunWeapon {
    * 瞄准结束
    */
   default void gunEndAim(@NotNull Player player, @NotNull ItemStack stack) {
-  }
-
-  static boolean isHoldGunWeapon(LivingEntity livingEntity) {
-    return livingEntity.getMainHandItem().getItem() instanceof IGunWeapon || livingEntity.getOffhandItem().getItem() instanceof IGunWeapon;
   }
 }

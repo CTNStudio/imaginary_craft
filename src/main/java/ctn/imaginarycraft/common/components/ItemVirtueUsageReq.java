@@ -103,12 +103,15 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
       return null;
     }
 
+    MutableComponent mutableComponent = Component.translatable(virtueType.getTooltipName());
+
     if (virtueType == VirtueType.COMPOSITE) {
       isDetailed = false;
+    } else {
+      mutableComponent.withColor(virtueType.getColourValue());
     }
 
-    return Component.translatable(virtueType.getTooltipName())
-      .append(getUsageReqComponent(list, isDetailed));
+    return Component.empty().append(mutableComponent).append(getUsageReqComponent(list, isDetailed));
   }
 
   /**
@@ -173,11 +176,9 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
       return;
     }
     Player player = Minecraft.getInstance().player;
-    tooltipAdder.accept(Component.literal(USE_CONDITION).withColor(0xAAAAAA));
+    tooltipAdder.accept(Component.translatable(USE_CONDITION).withColor(0xAAAAAA));
 
-    boolean detailed = player != null &&
-      (tooltipFlag.isCreative() && tooltipFlag.hasShiftDown() ||
-        player.getAttributeValue(ModAttributes.INTELLIGENCE_DEPARTMENT_ACTIVATION) >= 1);
+    boolean detailed = player != null && (player.isCreative() && tooltipFlag.hasShiftDown() || player.getAttributeValue(ModAttributes.INTELLIGENCE_DEPARTMENT_ACTIVATION) >= 1);
     for (VirtueType type : VirtueType.values()) {
       Component component = analysisUsageReq(type, detailed);
       if (component == null) {
@@ -281,7 +282,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder fortitude(VirtueRating value, boolean isNotToExceed) {
-      return updateList(fortitude, value.getRating(), isNotToExceed);
+      return updateList(fortitude, value.getMinValue(), isNotToExceed);
     }
 
     /**
@@ -303,7 +304,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder fortitude(VirtueRating min, VirtueRating max) {
-      return updateListRange(fortitude, min.getRating(), max.getRating());
+      return updateListRange(fortitude, min.getMinValue(), max.getMinValue());
     }
 
     /**
@@ -313,7 +314,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder fortitude(int value) {
-      return updateList(fortitude, value, true);
+      return updateList(fortitude, value, false);
     }
 
     /**
@@ -323,7 +324,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder fortitude(VirtueRating value) {
-      return updateList(fortitude, value.getRating(), true);
+      return updateList(fortitude, value.getMinValue(), false);
     }
 
     /**
@@ -365,7 +366,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder prudence(VirtueRating value, boolean isNotToExceed) {
-      return updateList(prudence, value.getRating(), isNotToExceed);
+      return updateList(prudence, value.getMinValue(), isNotToExceed);
     }
 
     /**
@@ -387,7 +388,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder prudence(VirtueRating min, VirtueRating max) {
-      return updateListRange(prudence, min.getRating(), max.getRating());
+      return updateListRange(prudence, min.getMinValue(), max.getMinValue());
     }
 
     /**
@@ -397,7 +398,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder prudence(int value) {
-      return updateList(prudence, value, true);
+      return updateList(prudence, value, false);
     }
 
     /**
@@ -407,7 +408,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder prudence(VirtueRating value) {
-      return updateList(prudence, value.getRating(), true);
+      return updateList(prudence, value.getMinValue(), false);
     }
 
     /**
@@ -449,7 +450,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder temperance(VirtueRating value, boolean isNotToExceed) {
-      return updateList(temperance, value.getRating(), isNotToExceed);
+      return updateList(temperance, value.getMinValue(), isNotToExceed);
     }
 
     /**
@@ -471,7 +472,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder temperance(VirtueRating min, VirtueRating max) {
-      return updateListRange(temperance, min.getRating(), max.getRating());
+      return updateListRange(temperance, min.getMinValue(), max.getMinValue());
     }
 
     /**
@@ -481,7 +482,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder temperance(int value) {
-      return updateList(temperance, value, true);
+      return updateList(temperance, value, false);
     }
 
     /**
@@ -491,7 +492,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder temperance(VirtueRating value) {
-      return updateList(temperance, value.getRating(), true);
+      return updateList(temperance, value.getMinValue(), false);
     }
 
     /**
@@ -533,7 +534,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder justice(VirtueRating value, boolean isNotToExceed) {
-      return updateList(justice, value.getRating(), isNotToExceed);
+      return updateList(justice, value.getMinValue(), isNotToExceed);
     }
 
     /**
@@ -555,7 +556,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder justice(VirtueRating min, VirtueRating max) {
-      return updateListRange(justice, min.getRating(), max.getRating());
+      return updateListRange(justice, min.getMinValue(), max.getMinValue());
     }
 
     /**
@@ -565,7 +566,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder justice(int value) {
-      return updateList(justice, value, true);
+      return updateList(justice, value, false);
     }
 
     /**
@@ -575,7 +576,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder justice(VirtueRating value) {
-      return updateList(justice, value.getRating(), true);
+      return updateList(justice, value.getMinValue(), false);
     }
 
     /**
@@ -617,7 +618,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder composite(VirtueRating value, boolean isNotToExceed) {
-      return updateList(composite, value.getRating(), isNotToExceed);
+      return updateList(composite, value.getMinValue(), isNotToExceed);
     }
 
     /**
@@ -627,7 +628,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder composite(int value) {
-      return updateList(composite, value, true);
+      return updateList(composite, value, false);
     }
 
     /**
@@ -637,7 +638,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder composite(VirtueRating value) {
-      return updateList(composite, value.getRating(), true);
+      return updateList(composite, value.getMinValue(), false);
     }
 
     /**
@@ -659,7 +660,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @return 构建器本身
      */
     public Builder composite(VirtueRating min, VirtueRating max) {
-      return updateListRange(composite, min.getRating(), max.getRating());
+      return updateListRange(composite, min.getMinValue(), max.getMinValue());
     }
 
     /**

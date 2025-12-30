@@ -12,12 +12,12 @@ import java.util.List;
  * 四德评级
  */
 public enum VirtueRating implements StringRepresentable {
-  I("one", 1, 1),
-  II("two", 2, 30),
-  III("three", 3, 45),
-  IV("four", 4, 65),
-  V("five", 5, 85),
-  EX("maxed", 6, 101),
+  I("I", 1, 1),
+  II("II", 2, 30),
+  III("III", 3, 45),
+  IV("IV", 4, 65),
+  V("V", 5, 85),
+  EX("EX", 6, 101),
   ;
   public static final List<VirtueRating> REVERSE_LIST = Collections.unmodifiableList(List.of(VirtueRating.values()).reversed());
 
@@ -72,6 +72,6 @@ public enum VirtueRating implements StringRepresentable {
   @Contract(pure = true)
   @Override
   public @NotNull String getSerializedName() {
-    return ImaginaryCraft.ID + "." + getName();
+    return ImaginaryCraft.ID + "." + getName().toLowerCase();
   }
 }

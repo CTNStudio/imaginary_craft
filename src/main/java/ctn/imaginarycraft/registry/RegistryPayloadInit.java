@@ -16,11 +16,11 @@ public final class RegistryPayloadInit {
     final PayloadRegistrar registrar = event.registrar("1.0");
     // 接收来自服务端和客户端的数据
     registrar.playBidirectional(PlayerRawAnimationPayload.TYPE, PlayerRawAnimationPayload.STREAM_CODEC,
-        new DirectionalPayloadHandler<>(PlayerRawAnimationPayload::toClient, PlayerRawAnimationPayload::toServer));
+      new DirectionalPayloadHandler<>(PlayerRawAnimationPayload::toClient, PlayerRawAnimationPayload::toServer));
     registrar.playBidirectional(PlayerStopAnimationPayload.TYPE, PlayerStopAnimationPayload.STREAM_CODEC,
-        new DirectionalPayloadHandler<>(PlayerStopAnimationPayload::toClient, PlayerStopAnimationPayload::toServer));
+      new DirectionalPayloadHandler<>(PlayerStopAnimationPayload::toClient, PlayerStopAnimationPayload::toServer));
     registrar.playBidirectional(PlayerAnimationPayload.TYPE, PlayerAnimationPayload.STREAM_CODEC,
-        new DirectionalPayloadHandler<>(PlayerAnimationPayload::toClient, PlayerAnimationPayload::toServer));
+      new DirectionalPayloadHandler<>(PlayerAnimationPayload::toClient, PlayerAnimationPayload::toServer));
     registrar.playBidirectional(LivingEntityAttackStrengthTickerPayload.TYPE, LivingEntityAttackStrengthTickerPayload.STREAM_CODEC,
       new DirectionalPayloadHandler<>(LivingEntityAttackStrengthTickerPayload::to, LivingEntityAttackStrengthTickerPayload::to));
 

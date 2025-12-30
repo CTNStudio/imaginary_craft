@@ -124,7 +124,7 @@ public class TextParticle extends TextureSheetParticle {
     }
 
     Vec3 camPos = camera.getPosition();
-    //  TODO 后续添加正常光照
+    //  TODO 后续添加正常光照的版本
     int getLightColor = getLightColor(partialTicks);
     Font font = this.font;
     int fontHeight = font.lineHeight;

@@ -8,6 +8,7 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.event.PlayerLeftEmptyClickEvent;
 import ctn.imaginarycraft.event.rationality.RationalityModifyEvent;
 import ctn.imaginarycraft.eventexecute.RationalityEventExecutes;
+import ctn.imaginarycraft.init.ModAttachments;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -27,6 +28,7 @@ public final class PlayerEvents {
   public static void tick(PlayerTickEvent.Pre event) {
     Player player = event.getEntity();
     if (player instanceof ServerPlayer serverPlayer) {
+      player.getData(ModAttachments.PLAYER_TIMING_RUN).tick();
       RationalityEventExecutes.refreshRationalityValue(serverPlayer);
     }
   }
@@ -44,7 +46,7 @@ public final class PlayerEvents {
       return;
     }
 
-    ParticleUtil.createTextParticles(player, difference, true, difference < 0);
+    ParticleUtil.createDamageTextParticles(player, difference, true, difference < 0);
   }
 
   /**
@@ -57,6 +59,7 @@ public final class PlayerEvents {
       event.setCanceled(true);
       return;
     }
+
     PlayerLeftEmptyClickPayload.trigger(entity, event.getHand());
   }
 

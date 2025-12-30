@@ -203,7 +203,6 @@ public final class EgoCurioItems {
       .justice(10)
       .addTooltip("勇气愈发强大，一切都成为可能！", Style.EMPTY.withColor(LcDamageType.PHYSICS.getColourValue()))
   );
-  // TODO 修改名称颜色为 blue
   public static final DeferredItem<EgoCurioItem> RECKLESS_FOOLISHNESS_BLUE = register(
     "reckless_foolishness_blue_curios", "匹夫之勇", CuriosType.HEAD,
     EgoCurioItem::new,
@@ -214,7 +213,6 @@ public final class EgoCurioItems {
       .justice(10)
       .addTooltip("充满勇气的战士时刻准备着冲锋陷阵！", Style.EMPTY.withColor(LcDamageType.PHYSICS.getColourValue()))
   );
-  // TODO 修改名称颜色为 orange
   public static final DeferredItem<EgoCurioItem> RECKLESS_FOOLISHNESS_ORANGE = register(
     "reckless_foolishness_orange_curios", "匹夫之勇", CuriosType.HEAD,
     EgoCurioItem::new,
@@ -225,7 +223,6 @@ public final class EgoCurioItems {
       .justice(15)
       .addTooltip("过度的勇气可能会铸成大错。", Style.EMPTY.withColor(LcDamageType.PHYSICS.getColourValue()))
   );
-  // TODO 修改名称颜色为 red
   public static final DeferredItem<EgoCurioItem> RECKLESS_FOOLISHNESS_RED = register(
     "reckless_foolishness_red_curios", "匹夫之勇", CuriosType.HEAD,
     EgoCurioItem::new,

@@ -1,16 +1,20 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
 import com.zigythebird.playeranimcore.animation.Animation;
+import ctn.imaginarycraft.api.PlayerTimingRun;
 import ctn.imaginarycraft.api.client.playeranimcore.AnimCollection;
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimRawAnimation;
 import ctn.imaginarycraft.client.util.PlayerAnimUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponItem;
+import ctn.imaginarycraft.common.payloads.entity.player.PlayerAnimationPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.PlayerRawAnimationPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
-import ctn.imaginarycraft.util.GunChargeUpUtil;
+import ctn.imaginarycraft.util.GunWeaponUtil;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -72,11 +76,9 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   @Override
   public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, Player playerEntity, @NotNull InteractionHand handUsed) {
     if (handUsed != InteractionHand.MAIN_HAND) {
-      return InteractionResultHolder.fail(playerEntity.getItemInHand(handUsed));
+      return InteractionResultHolder.pass(playerEntity.getItemInHand(handUsed));
     }
-    InteractionResultHolder<ItemStack> use = super.use(world, playerEntity, handUsed);
-    GunChargeUpUtil.setPercentage(playerEntity, 0.6f);
-    return use;
+    return super.use(world, playerEntity, handUsed);
   }
 
   @Override
@@ -84,7 +86,12 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
     if (playerEntity instanceof AbstractClientPlayer) {
       return;
     }
-    PlayerAnimUtil.playRawAnimation(playerEntity, PlayerAnimUtil.WEAPON_STATE, GUN_AIM_RAW_ANIMATION, PlayerAnimUtil.DEFAULT_FADE_IN);
+    super.gunAim(playerEntity, itemStack);
+    GunWeaponUtil.setChargeUpPercentage(playerEntity, 0);
+    PlayerAnimUtil.playRawAnimation(playerEntity, new PlayerRawAnimationPayload.Builder()
+      .controllerId(PlayerAnimUtil.WEAPON_STATE)
+      .rawAnimation(GUN_AIM_RAW_ANIMATION)
+      .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
   }
 
   @Override
@@ -92,7 +99,11 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
     if (playerEntity instanceof AbstractClientPlayer) {
       return;
     }
-    PlayerAnimUtil.playAnimation(playerEntity, PlayerAnimUtil.WEAPON_STATE, SHOOTING_AIM_TERMINATE, PlayerAnimUtil.DEFAULT_FADE_OUT);
+    super.gunEndAim(playerEntity, itemStack);
+    PlayerAnimUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
+      .controllerId(PlayerAnimUtil.WEAPON_STATE)
+      .animationId(SHOOTING_AIM_TERMINATE)
+      .withFade(PlayerAnimUtil.DEFAULT_FADE_OUT));
   }
 
   @Override
@@ -100,31 +111,53 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
     if (playerEntity instanceof AbstractClientPlayer) {
       return;
     }
-    PlayerAnimUtil.playAnimation(playerEntity, PlayerAnimUtil.WEAPON_STATE, SHOOTING_AIM_TERMINATE, PlayerAnimUtil.DEFAULT_FADE_OUT);
+    super.gunEnd(playerEntity, itemStack);
+    PlayerAnimUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
+      .controllerId(PlayerAnimUtil.WEAPON_STATE)
+      .animationId(SHOOTING_AIM_TERMINATE)
+      .withFade(PlayerAnimUtil.DEFAULT_FADE_OUT));
   }
 
   @Override
-  public boolean gunShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
-    return gunShootFunction(playerEntity,
-      chargeUpPercentage -> true,
-      serverLevel -> {
-        defaultGunShootServerLevelConsumer(playerEntity, itemStack, handUsed, serverLevel);
-        GunChargeUpUtil.reset(playerEntity);
-        PlayerAnimUtil.playAnimation(playerEntity, PlayerAnimUtil.WEAPON_STATE, SHOOTING, PlayerAnimUtil.DEFAULT_FADE_IN);
-      }
-    );
+  protected boolean gunShootExecute(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
+    if (playerEntity.level() instanceof ServerLevel serverLevel) {
+      PlayerTimingRun instance = PlayerTimingRun.getInstance(playerEntity);
+      instance.addTimingRun(handUsed, PlayerTimingRun.createTimingRunBilder().tickRun((tick, max, player) -> {
+        GunWeaponUtil.modifyChargeUpPercentage(player, 1f / (max));
+        return tick - 1;
+      }).build(player -> {
+        this.shoot(serverLevel, playerEntity, playerEntity.getUsedItemHand(), itemStack,
+          getProjectileVelocity(playerEntity, itemStack, handUsed),
+          getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
+        GunWeaponUtil.setIsLeftKeyAttack(playerEntity, true);
+        GunWeaponUtil.resetChargeUp(playerEntity);
+        return 0;
+      }, 20));
+      PlayerAnimUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
+        .controllerId(PlayerAnimUtil.WEAPON_STATE)
+        .animationId(SHOOTING)
+        .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
+      GunWeaponUtil.setIsLeftKeyAttack(playerEntity, false);
+      GunWeaponUtil.setChargeUpPercentage(playerEntity, 0f);
+    }
+    return true;
   }
 
+  @Override
+  protected boolean gunAimShootExecute(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
+    if (playerEntity.level() instanceof ServerLevel serverLevel) {
+      super.gunAimShootExecute(playerEntity, itemStack, handUsed, chargeUpPercentage);
+      PlayerAnimUtil.playRawAnimation(playerEntity, new PlayerRawAnimationPayload.Builder()
+        .controllerId(PlayerAnimUtil.WEAPON_STATE)
+        .rawAnimation(GUN_AIM_SHOOT_RAW_ANIMATION)
+        .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
+      GunWeaponUtil.setChargeUpPercentage(playerEntity, 0);
+    }
+    return true;
+  }
 
   @Override
-  public boolean gunAimShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
-    return gunShootFunction(playerEntity,
-      chargeUpPercentage -> chargeUpPercentage >= 1,
-      serverLevel -> {
-        defaultGunShootServerLevelConsumer(playerEntity, itemStack, handUsed, serverLevel);
-        GunChargeUpUtil.setPercentage(playerEntity, 0.6f);
-        PlayerAnimUtil.playRawAnimation(playerEntity, PlayerAnimUtil.WEAPON_STATE, GUN_AIM_SHOOT_RAW_ANIMATION, PlayerAnimUtil.DEFAULT_FADE_IN);
-      }
-    );
+  protected float getProjectileInaccuracy(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    return 0;
   }
 }

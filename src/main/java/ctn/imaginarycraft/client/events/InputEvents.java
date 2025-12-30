@@ -4,6 +4,7 @@ import ctn.imaginarycraft.api.IGunWeapon;
 import ctn.imaginarycraft.client.eventexecute.InputEventExecute;
 import ctn.imaginarycraft.common.payloads.entity.player.PlayerLeftEmptyClickPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.util.GunWeaponUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
@@ -44,7 +45,7 @@ public final class InputEvents {
       return;
     }
 
-    if (!event.isAttack() || !IGunWeapon.isHoldGunWeapon(player)) {
+    if (!event.isAttack() || !GunWeaponUtil.isHoldGunWeapon(player)) {
       return;
     }
 

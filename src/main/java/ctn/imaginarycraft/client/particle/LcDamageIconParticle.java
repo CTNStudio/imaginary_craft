@@ -17,6 +17,7 @@ import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.world.damagesource.DamageType;
+import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -80,11 +81,14 @@ public class LcDamageIconParticle extends TextureSheetParticle {
       @Nullable Holder<DamageType> damageTypeResourceKey = options.damageType().orElse(null);
       @Nullable LcDamageType lcDamageTypeResourceKey = options.lcDamageType().orElse(null);
 
-      if (damageTypeResourceKey == null) {
-        return getSprite(Type.PHYSICS);
+      if (lcDamageTypeResourceKey == null) {
+        if (damageTypeResourceKey == null) {
+          return getSprite(Type.PHYSICS);
+        }
+        if (damageTypeResourceKey.is(Tags.DamageTypes.IS_MAGIC)) {
+          return getSprite(Type.MAGIC);
+        }
       }
-
-      // TODO 补充魔法类型
       return getSprite(switch (lcDamageTypeResourceKey != null ?
         lcDamageTypeResourceKey : LcDamageType.byDamageType(damageTypeResourceKey)) {
         case SPIRIT -> Type.SPIRIT;
@@ -94,8 +98,8 @@ public class LcDamageIconParticle extends TextureSheetParticle {
       });
     }
 
-    private TextureAtlasSprite getSprite(Type index) {
-      return ((ParticleEngine.MutableSpriteSet) this.spriteSet).sprites.get(index.getIndex());
+    private TextureAtlasSprite getSprite(Type type) {
+      return ((ParticleEngine.MutableSpriteSet) this.spriteSet).sprites.get(type.getIndex());
     }
   }
 

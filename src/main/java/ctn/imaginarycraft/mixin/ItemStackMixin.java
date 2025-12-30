@@ -34,12 +34,13 @@ public abstract class ItemStackMixin implements DataComponentHolder, net.neoforg
                                                                                            Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag,
                                                                                            Operation<Void> original,
                                                                                            @Local(argsOnly = true) DataComponentType<T> component) {
-    var event = new AddItemDataComponentTooltipEvent.Up<>(getImaginarycraft$itemStack(), component, context, tooltipAdder, tooltipFlag);
-    if (!event.isCanceled()) {
+    ItemStack imaginarycraft$itemStack = getImaginarycraft$itemStack();
+    var event = new AddItemDataComponentTooltipEvent.Up<>(imaginarycraft$itemStack, component, context, tooltipAdder, tooltipFlag);
+    if (event.isCanceled()) {
       return;
     }
     original.call(instance, context, tooltipAdder, tooltipFlag);
-    new AddItemDataComponentTooltipEvent.Down<>(getImaginarycraft$itemStack(), component, context, tooltipAdder, tooltipFlag);
+    new AddItemDataComponentTooltipEvent.Down<>(imaginarycraft$itemStack, component, context, tooltipAdder, tooltipFlag);
   }
 
   @Definition(id = "has", method = "Lnet/minecraft/world/item/ItemStack;has(Lnet/minecraft/core/component/DataComponentType;)Z")

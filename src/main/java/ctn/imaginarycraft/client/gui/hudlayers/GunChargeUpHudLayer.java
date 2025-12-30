@@ -3,7 +3,7 @@ package ctn.imaginarycraft.client.gui.hudlayers;
 import ctn.imaginarycraft.client.gui.widget.ImageProgressBar;
 import ctn.imaginarycraft.common.item.ego.weapon.remote.MagicBulletWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.util.GunChargeUpUtil;
+import ctn.imaginarycraft.util.GunWeaponUtil;
 import net.minecraft.client.AttackIndicatorStatus;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
@@ -59,7 +59,7 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
   @Override
   public void init(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
     super.init(guiGraphics, deltaTracker);
-    float gunChargeUpPercentageValue = GunChargeUpUtil.getPercentage(player);
+    float gunChargeUpPercentageValue = GunWeaponUtil.getChargeUpPercentage(player);
 
     if (this.gunChargeUpPercentageValue != gunChargeUpPercentageValue) {
       this.gunChargeUpPercentageValue = gunChargeUpPercentageValue;

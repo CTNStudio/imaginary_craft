@@ -14,7 +14,7 @@ import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import org.jetbrains.annotations.NotNull;
 
-// TODO 等待完成
+// TODO 等待完成动画
 public class DamageTextParticle extends TextParticle {
   protected final boolean isHeal;
 

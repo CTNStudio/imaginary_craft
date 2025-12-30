@@ -3,7 +3,7 @@ package ctn.imaginarycraft.mixin.client;
 import com.llamalad7.mixinextras.expression.Definition;
 import com.llamalad7.mixinextras.expression.Expression;
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import ctn.imaginarycraft.api.IGunWeapon;
+import ctn.imaginarycraft.util.GunWeaponUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import org.spongepowered.asm.mixin.Final;
@@ -26,7 +26,7 @@ public abstract class GuiMixin {
   @Expression("this.minecraft.options.attackIndicator().get() == CROSSHAIR")
   @ModifyExpressionValue(method = "renderCrosshair", at = @At("MIXINEXTRAS:EXPRESSION"))
   private boolean imaginarycraft$renderCrosshair(boolean original) {
-    if (IGunWeapon.isHoldGunWeapon(minecraft.player)) {
+    if (GunWeaponUtil.isHoldGunWeapon(minecraft.player)) {
       return false;
     }
     return original;
@@ -40,7 +40,7 @@ public abstract class GuiMixin {
   @Expression("this.minecraft.options.attackIndicator().get() == HOTBAR")
   @ModifyExpressionValue(method = "renderItemHotbar", at = @At("MIXINEXTRAS:EXPRESSION"))
   private boolean imaginarycraft$renderItemHotbar(boolean original) {
-    if (IGunWeapon.isHoldGunWeapon(minecraft.player)) {
+    if (GunWeaponUtil.isHoldGunWeapon(minecraft.player)) {
       return false;
     }
     return original;

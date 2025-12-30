@@ -4,7 +4,6 @@ import com.mojang.brigadier.Command;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.FloatArgumentType;
 import com.mojang.brigadier.builder.LiteralArgumentBuilder;
-import com.mojang.brigadier.suggestion.SuggestionsBuilder;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.init.ModAttributes;
 import net.minecraft.commands.CommandSourceStack;
@@ -13,8 +12,6 @@ import net.minecraft.commands.arguments.EntityArgument;
 import net.minecraft.network.chat.Component;
 import net.minecraft.server.level.ServerPlayer;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Arrays;
 
 import static ctn.imaginarycraft.datagen.i18n.DatagenI18n.getFormattedKey;
 
@@ -137,15 +134,6 @@ public class RationalityCommands {
         Component.translatable(getFormattedKey(isSet ? SET_KEY : GET_KEY, name), player.getName(), finalValue), true);
       return 1;
     };
-  }
-
-  //TODO
-  private static void fillSelectorSuggestions(@NotNull SuggestionsBuilder builder) {
-    builder.suggest("set", Component.translatable(FILL_SET_KEY));
-    builder.suggest("get", Component.translatable(FILL_GET_KEY));
-    Arrays.stream(ProcessType.values()).map(ProcessType::getName)
-      .forEach(name -> builder.suggest(name, Component.translatable(SUGGESTIONS + name)));
-    builder.suggest("value", Component.translatable(FILL_VALUE_KEY));
   }
 
   public enum ProcessType {

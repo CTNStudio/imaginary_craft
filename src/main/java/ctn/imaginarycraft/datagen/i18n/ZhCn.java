@@ -143,11 +143,11 @@ public final class ZhCn extends DatagenI18n {
     //endregion
 
     //region tooltip
-    add(ItemVirtueUsageReq.USE_CONDITION, "E.G.O");
-    add(ItemVirtueUsageReq.REQUIREMENT, "E.G.O");
-    add(ItemVirtueUsageReq.INTERVAL, "E.G.O");
-    add(ItemVirtueUsageReq.NOT_TO_EXCEED, "E.G.O");
-    add(ItemVirtueUsageReq.NOT_LOWER_THAN, "E.G.O");
+    add(ItemVirtueUsageReq.USE_CONDITION, "使用条件");
+    add(ItemVirtueUsageReq.REQUIREMENT, "只能为：");
+    add(ItemVirtueUsageReq.INTERVAL, "至少：%s，至多：%s");
+    add(ItemVirtueUsageReq.NOT_TO_EXCEED, "至多：%s");
+    add(ItemVirtueUsageReq.NOT_LOWER_THAN, "至少：%s");
     add(VirtueType.FORTITUDE.getTooltipName(), "勇气");
     add(VirtueType.PRUDENCE.getTooltipName(), "谨慎");
     add(VirtueType.TEMPERANCE.getTooltipName(), "自律");

@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.client.events;
 
-import ctn.imaginarycraft.api.IGunWeapon;
 import ctn.imaginarycraft.client.ModGuiLayers;
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.util.GunWeaponUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.resources.ResourceLocation;
 import net.neoforged.api.distmarker.Dist;
@@ -55,7 +55,7 @@ public final class GuiLayersEvents {
           return;
         }
       }
-      if (!IGunWeapon.isHoldGunWeapon(instance.player)) {
+      if (!GunWeaponUtil.isHoldGunWeapon(instance.player)) {
         event.setCanceled(true);
       }
     }

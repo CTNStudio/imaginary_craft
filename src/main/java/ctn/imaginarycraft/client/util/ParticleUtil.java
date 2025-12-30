@@ -22,7 +22,7 @@ import static ctn.imaginarycraft.api.lobotomycorporation.LcDamageType.PHYSICS;
 public final class ParticleUtil {
 
   //region 伤害文本粒子
-  public static void createTextParticles(
+  public static void createDamageTextParticles(
     ServerLevel world,
     Component component,
     @Nullable Holder<DamageType> damageTypeHolder,
@@ -117,7 +117,7 @@ public final class ParticleUtil {
       .strokeColor(strokeColor);
   }
 
-  public static void randomColorTextParticles(
+  public static void randomDamageTextParticles(
     ServerLevel world,
     Component component,
     @Nullable Holder<DamageType> damageType,
@@ -128,10 +128,10 @@ public final class ParticleUtil {
     double y,
     double z
   ) {
-    createTextParticles(world, component, damageType, lcDamageType, isRationality, isHeal, x, y, z, 0.1, 0.1, 0.1);
+    createDamageTextParticles(world, component, damageType, lcDamageType, isRationality, isHeal, x, y, z, 0.1, 0.1, 0.1);
   }
 
-  public static void randomColorTextParticles(
+  public static void randomDamageTextParticles(
     ServerLevel world,
     Component component,
     boolean isRationality,
@@ -140,18 +140,18 @@ public final class ParticleUtil {
     double y,
     double z
   ) {
-    randomColorTextParticles(world, component, null, null, isRationality, isHeal, x, y, z);
+    randomDamageTextParticles(world, component, null, null, isRationality, isHeal, x, y, z);
   }
 
-  public static void createTextParticles(LivingEntity entity, Component component, boolean isRationality, boolean isHeal) {
-    createTextParticles(entity, component, null, null, isRationality, isHeal);
+  public static void createDamageTextParticles(LivingEntity entity, Component component, boolean isRationality, boolean isHeal) {
+    createDamageTextParticles(entity, component, null, null, isRationality, isHeal);
   }
 
-  public static void createTextParticles(LivingEntity entity, float value, boolean isRationality, boolean isHeal) {
-    createTextParticles(entity, getText(value, isHeal), null, null, isRationality, isHeal);
+  public static void createDamageTextParticles(LivingEntity entity, float value, boolean isRationality, boolean isHeal) {
+    createDamageTextParticles(entity, getText(value, isHeal), null, null, isRationality, isHeal);
   }
 
-  public static void createTextParticles(
+  public static void createDamageTextParticles(
     LivingEntity entity,
     @Nullable Holder<DamageType> damageType,
     @Nullable LcDamageType lcDamageType,
@@ -159,10 +159,10 @@ public final class ParticleUtil {
     boolean isRationality,
     boolean isHeal
   ) {
-    createTextParticles(entity, getText(value, isHeal), damageType, lcDamageType, isRationality, isHeal);
+    createDamageTextParticles(entity, getText(value, isHeal), damageType, lcDamageType, isRationality, isHeal);
   }
 
-  public static void createTextParticles(
+  public static void createDamageTextParticles(
     LivingEntity entity,
     Component component,
     @Nullable Holder<DamageType> damageType,
@@ -181,7 +181,7 @@ public final class ParticleUtil {
     double x = pos.x;
     double y = pos.y + yOffset;
     double z = pos.z;
-    createTextParticles(serverLevel, component, damageType, lcDamageType, isRationality, isHeal,
+    createDamageTextParticles(serverLevel, component, damageType, lcDamageType, isRationality, isHeal,
       x, y, z, xOffset / 2, yOffset / 2, zOffset / 2);
   }
 

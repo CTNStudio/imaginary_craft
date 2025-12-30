@@ -2,20 +2,30 @@ package ctn.imaginarycraft.events.entity;
 
 import ctn.imaginarycraft.api.IDamageContainer;
 import ctn.imaginarycraft.api.IDamageSource;
+import ctn.imaginarycraft.api.PlayerTimingRun;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.client.util.ParticleUtil;
+import ctn.imaginarycraft.client.util.PlayerAnimUtil;
 import ctn.imaginarycraft.common.payloads.entity.player.PlayerDamagePayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.eventexecute.LcDamageEventExecutes;
+import ctn.imaginarycraft.init.ModAttachments;
+import ctn.imaginarycraft.util.GunWeaponUtil;
 import ctn.imaginarycraft.util.PayloadUtil;
+import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.EventPriority;
@@ -23,9 +33,12 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
 import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
 import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
 import org.jetbrains.annotations.Nullable;
+
+import static net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN;
 
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
@@ -40,7 +53,23 @@ public final class LivingEntityEvents {
     LivingEntity entity = event.getEntity();
 
     if (amount > 0) {
-      ParticleUtil.createTextParticles(entity, ParticleUtil.getText(amount), false, true);
+      ParticleUtil.createDamageTextParticles(entity, ParticleUtil.getText(amount), false, true);
+    }
+  }
+
+  @SubscribeEvent
+  public static void livingEquipmentChangeEvent(LivingEquipmentChangeEvent event) {
+    LivingEntity entity = event.getEntity();
+    EquipmentSlot slot = event.getSlot();
+    if (entity instanceof Player player) {
+      GunWeaponUtil.setIsLeftKeyAttack(player, true);
+      GunWeaponUtil.resetChargeUp(player);
+      PlayerTimingRun data = player.getData(ModAttachments.PLAYER_TIMING_RUN);
+      data.removeTimingRun(slot);
+      data.removeTimingRun(GunWeaponUtil.GUN_SHOOT_MODIFY_TICK);
+      if (slot.getType() == EquipmentSlot.Type.HAND) {
+        PlayerAnimUtil.stop(player, PlayerAnimUtil.WEAPON_STATE);
+      }
     }
   }
 
@@ -61,7 +90,22 @@ public final class LivingEntityEvents {
     @Nullable LcLevelType lcDamageLevel = iDamageSource.getImaginaryCraft$LcDamageLevel();
     LcDamageType lcDamageType = iDamageSource.getImaginaryCraft$LcDamageType();
 
-    LcDamageEventExecutes.vulnerableTreatment(iDamageContainer, entity, lcDamageLevel, lcDamageType);
+    DamageContainer container = iDamageContainer.getImaginaryCraft$This();
+    float newDamageAmount = LcDamageEventExecutes.levelJudgment(entity, lcDamageLevel, container.getNewDamage());
+
+    // 伤害类型
+    if (lcDamageType != null) {
+      // 易伤处理
+      Holder<Attribute> vulnerable = lcDamageType.getVulnerable();
+      AttributeInstance attributeInstance = entity.getAttribute(vulnerable);
+      if (attributeInstance != null) {
+        newDamageAmount *= (float) attributeInstance.getValue();
+      } else {
+        newDamageAmount *= (float) vulnerable.value().getDefaultValue();
+      }
+    }
+
+    container.setNewDamage(newDamageAmount);
   }
 
   /**
@@ -80,7 +124,8 @@ public final class LivingEntityEvents {
 
     // 建议在每个有返回值的方法执行后再获取一次以求准确
     float newDamage = event.getNewDamage();
-    boolean modifyRationality = lcDamageType == LcDamageType.SPIRIT || lcDamageType == LcDamageType.EROSION;
+    // 是否会修改理智
+    boolean isModifyRationality = lcDamageType == LcDamageType.SPIRIT || lcDamageType == LcDamageType.EROSION;
 
     // TODO 添加免疫，吸收，无效处理
     if (lcDamageType == LcDamageType.THE_SOUL) {
@@ -88,10 +133,10 @@ public final class LivingEntityEvents {
     }
 
     if (newDamage > 0) {
-      if (attackedEntity instanceof Player player && modifyRationality) {
+      // 修改理智
+      if (attackedEntity instanceof Player player && isModifyRationality) {
         RationalityUtil.modifyValue(player, -newDamage, true);
         if (lcDamageType == LcDamageType.SPIRIT) {
-//          ParticleUtil.createTextParticles(player, newDamage, true, false);
           event.getContainer().setPostAttackInvulnerabilityTicks(0);
           event.setNewDamage(0);
           return;
@@ -106,18 +151,24 @@ public final class LivingEntityEvents {
       return;
     }
 
-    // TODO 要注入判断要判断是否符合恢复条件
+    // TODO 要注入判断要判断是否符合恢复条件（免疫，吸收，无效处理）
     // 如果低于0则恢复生命值
-    event.getContainer().setPostAttackInvulnerabilityTicks(0);
-    event.setNewDamage(0);
-    newDamage = -newDamage;
 
-    if (attackedEntity instanceof Player player && modifyRationality) {
+    // TODO 应该很早就处理
+    // 恢复理智
+    if (attackedEntity instanceof Player player && isModifyRationality) {
       RationalityUtil.modifyValue(player, newDamage, true);
-      ParticleUtil.createTextParticles(player, newDamage, true, true);
+      ParticleUtil.createDamageTextParticles(player, newDamage, true, true);
     }
 
-    LcDamageEventExecutes.heal(event, newDamage, attackedEntity);
+    // 恢复血量
+    float healed = Math.abs(newDamage);
+    attackedEntity.heal(healed);
+    ParticleUtil.createDamageTextParticles(attackedEntity, healed, false, true);
+
+    // 最后修改伤害为0表示不造成伤害
+    event.getContainer().setPostAttackInvulnerabilityTicks(0);
+    event.setNewDamage(0);
   }
 
   /**
@@ -134,7 +185,47 @@ public final class LivingEntityEvents {
 
     DamageSource source = event.getSource();
     float newDamage = event.getNewDamage();
-    LcDamageEventExecutes.appliedDamageToEntity(serverLevel, entity, source, newDamage);
+    // 设置理智恢复计时
+    if (entity instanceof Player player) {
+      RationalityUtil.setRecoveryTick(player, 10 * 20);
+    }
+
+    // 低抗缓慢
+    @Nullable LcDamageType lcDamageType = IDamageSource.of(source).getImaginaryCraft$LcDamageType();
+    if (lcDamageType != null) {
+      AttributeInstance attributeInstance = entity.getAttribute(lcDamageType.getVulnerable());
+      if (attributeInstance != null && attributeInstance.getValue() > LcDamageEventExecutes.VULNERABILITY_DECELERATE_THRESHOLD) {
+        // TODO 替换成专属效果
+        entity.addEffect(new MobEffectInstance(MOVEMENT_SLOWDOWN, 20, 2));
+      }
+    }
+
+    // 生成粒子
+    Holder<DamageType> damageType = source.typeHolder();
+    ParticleUtil.createDamageTextParticles(entity, damageType, lcDamageType, newDamage, false, false);
+
+    // TODO 速度快的子弹无法正常显示位置
+//    if (source.getDirectEntity() instanceof Projectile projectile) {
+//      Vec3 position = source.getSourcePosition();
+//      double x;
+//      double y;
+//      double z;
+//      if (position != null) {
+//        x = position.x;
+//        y = position.y;
+//        z = position.z;
+//      } else {
+//        Vec3 sourcePosition = projectile.position();
+//        x = sourcePosition.x;
+//        y = sourcePosition.y;
+//        z = sourcePosition.z;
+//      }
+//      MutableComponent text = ParticleUtil.getText(newDamage, false);
+//      ParticleUtil.randomDamageTextParticles(serverLevel, text, damageType, lcDamageType, false, false, x, y, z);
+//    } else {
+//      ParticleUtil.createDamageTextParticles(entity, damageType, lcDamageType, newDamage, false, false);
+//    }
+
     if (entity instanceof ServerPlayer player) {
       PayloadUtil.sendToClient(player, new PlayerDamagePayload(IDamageSource.of(event.getSource()).getImaginaryCraft$LcDamageType(), newDamage));
     }

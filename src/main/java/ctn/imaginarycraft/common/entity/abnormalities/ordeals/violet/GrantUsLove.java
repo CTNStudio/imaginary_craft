@@ -265,7 +265,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
           .add(0, 15, 0);
         this.createPortal();
       } else if (this.crashPortalOpeningTime == 1) {
-        if(this.crashPortalPosition == null){
+        if (this.crashPortalPosition == null) {
           crashPortalPosition = this.position().add(0, 20, 0);
         }
         this.setPos(crashPortalPosition.x, crashPortalPosition.y, crashPortalPosition.z);

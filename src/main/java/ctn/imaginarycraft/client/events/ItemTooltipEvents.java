@@ -4,6 +4,7 @@ import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -28,9 +29,10 @@ public final class ItemTooltipEvents {
     // 添加物品等级 ToolTip
     LcLevelType lcLevelType = LcLevelUtil.getLevel(itemStack);
     if (lcLevelType != null) {
-      toolTip.add(Math.clamp(size, 0, 1), Component
+      MutableComponent component = Component
         .literal(lcLevelType.getName().toUpperCase())
-        .withColor(lcLevelType.getColourValue()));
+        .withColor(lcLevelType.getColourValue());
+      toolTip.add(Math.clamp(size, 0, 1), component);
     }
   }
 
