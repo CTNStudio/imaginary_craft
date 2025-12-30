@@ -111,7 +111,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(1.5f)
       .attackInterval(minuteToSpeedConversion(1))
       .attackDistance(8)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null),
     (p, b) -> new EngulfingDreamWeaponItem(p, b, "weapon/engulfing_dream"));
@@ -125,7 +124,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(1.5f)
       .attackInterval(minuteToSpeedConversion(1))
       .attackDistance(5)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null),
     (p, b) -> new CherryBlossomsWeaponItem(p, b, "weapon/cherry_blossoms"));
@@ -253,7 +251,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(3)
       .attackInterval(minuteToSpeedConversion(0.5f))
       .attackDistance(10)
-      .invincibleTick(10)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, VirtueRating.III, null, null),
     (p, b) -> new SyrinxWeaponItem(p, b, "weapon/syrinx"));
@@ -267,7 +264,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(1.5f)
       .attackSpeed(minuteToSpeedConversion(1.67f))
       .attackDistance(4)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.II, null, null, null, null),
     (p, b) -> new GrinderMk4WeaponItem(p, b, "weapon/grinder_mk4"));
@@ -280,7 +276,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(11)
       .attackSpeed(minuteToSpeedConversion(2))
       .attackDistance(8)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, VirtueRating.II, null, null, VirtueRating.II),
     (p, b) -> new OurGalaxyWeaponItem(p, b, "weapon/our_galaxy"));
@@ -293,7 +288,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(8)
       .attackSpeed(minuteToSpeedConversion(1.33f))
       .attackDistance(4)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.THE_SOUL)
       .virtueUsageReq(null, null, null, VirtueRating.II, null),
     (p, b) -> new LifeForADaredevilWeaponItem(p, b, "weapon/life_for_a_daredevil"));
@@ -308,7 +302,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(3)
       .attackSpeed(minuteToSpeedConversion(2.9f))
       .attackDistance(4)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, VirtueRating.II, VirtueRating.II, null, null),
     (p, b) -> new GazeWeaponItem(p, b, "weapon/gaze"));
@@ -322,7 +315,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(2.5f)
       .attackSpeed(minuteToSpeedConversion(1.67f))
       .attackDistance(5)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, VirtueRating.III, null, null),
     (p, b) -> new PleasureWeaponItem(p, b, "weapon/pleasure"));
@@ -441,7 +433,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(6.5f)
       .attackInterval(minuteToSpeedConversion(0.83f))
       .attackDistance(80)
-      .invincibleTick((int) (20 * 0.83f))
       .meleeLcDamageType(null, LcDamageType.PHYSICS, LcDamageType.SPIRIT, LcDamageType.EROSION, LcDamageType.THE_SOUL)
       .virtueUsageReq(VirtueRating.III, null, null, VirtueRating.III, VirtueRating.IV),
     (p, b) -> new InTheNameOfLoveAndHateWeaponItem(p, b, "weapon/in_the_name_of_love_and_hate"));
@@ -455,7 +446,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(12)
       .attackSpeed(minuteToSpeedConversion(1.53f))
       .attackDistance(3 - 15)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.III, null, null, VirtueRating.III, VirtueRating.III),
     (p, b) -> new CrimsonScarWeaponItem(p, b, "weapon/crimson_scar"));
@@ -469,7 +459,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(15)
       .attackSpeed(minuteToSpeedConversion(1.83f))
       .attackDistance(0)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.III, null, VirtueRating.III, null, VirtueRating.II),
     (p, b) -> new CobaltScarWeaponItem(p, b, "weapon/cobalt_scar"));
@@ -482,7 +471,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(2)
       .attackInterval(minuteToSpeedConversion(0.5f))
       .attackDistance(10)
-      .invincibleTick((int) (20 * 0.5f))
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, null, VirtueRating.III, null),
     (p, b) -> new SolemnLamentWeaponItem(p, b, "weapon/solemn_lament"));
@@ -495,7 +483,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(2)
       .attackInterval(minuteToSpeedConversion(0.5f))
       .attackDistance(10)
-      .invincibleTick((int) (20 * 0.5f))
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, VirtueRating.III, null),
     (p, b) -> new SolemnLamentWeaponItem(p, b, "weapon/solemn_lament"));
@@ -508,7 +495,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(21)
       .attackInterval(minuteToSpeedConversion(2.33f))
       .attackDistance(50)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, VirtueRating.III, null, null),
     (p, b) -> new MagicBulletWeaponItem(p, b, "weapon/magic_bullet"));
@@ -523,7 +509,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(6)
       .attackSpeed(minuteToSpeedConversion(1.63f))
       .attackDistance(0)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, VirtueRating.III, null, null, null),
     (p, b) -> new BlackSwanWeaponItem(p, b, "weapon/black_swan"));
@@ -536,7 +521,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(3)
       .attackSpeed(minuteToSpeedConversion(0.83f))
       .attackDistance(10)
-      .invincibleTick((int) (20 * 0.83f))
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(VirtueRating.II, null, null, null, VirtueRating.II),
     (p, b) -> new EcstasyWeaponItem(p, b, "weapon/ecstasy"));
@@ -550,7 +534,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(10.5f)
       .attackSpeed(minuteToSpeedConversion(1.33f))
       .attackDistance(4)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, VirtueRating.IV),
     (p, b) -> new TheSwordSharpenedWithTearsWeaponItem(p, b, "weapon/the_sword_sharpened_with_tears"));
@@ -563,7 +546,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(4.5f)
       .attackInterval(minuteToSpeedConversion(0.5f))
       .attackDistance(15)
-      .invincibleTick((int) (20 * 0.5f))
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(VirtueRating.III, null, null, null, null),
     (p, b) -> new FeatherOfHonorWeaponItem(p, b, "weapon/feather_of_honor"));
@@ -577,7 +559,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(9)
       .attackSpeed(minuteToSpeedConversion(1.33f))
       .attackDistance(5)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, VirtueRating.III, null, VirtueRating.III),
     (p, b) -> new DiscordWeaponItem(p, b, "weapon/discord"));
@@ -592,7 +573,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(9)
       .attackSpeed(minuteToSpeedConversion(1.17f))
       .attackDistance(0)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(VirtueRating.III, null, null, null, VirtueRating.IV),
     (p, b) -> new MoonlightWeaponItem(p, b, "weapon/moonlight"));
@@ -606,7 +586,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(3.5f)
       .attackSpeed(minuteToSpeedConversion(2.33f))
       .attackDistance(4)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, VirtueRating.III, null, VirtueRating.III),
     (p, b) -> new AmitaWeaponItem(p, b, "weapon/amita"));
@@ -687,7 +666,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(3)
       .attackSpeed(minuteToSpeedConversion(2))
       .attackDistance(4)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.THE_SOUL)
       .virtueUsageReq(null, null, null, VirtueRating.V, VirtueRating.V),
     (p, b) -> new JustitiaWeaponItem(p, b, "weapon/justitia"));
@@ -703,7 +681,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(24)
       .attackInterval(minuteToSpeedConversion(2))
       .attackDistance(80)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.THE_SOUL)
       .virtueUsageReq(VirtueRating.V, VirtueRating.V, VirtueRating.V, VirtueRating.V, null),
     (p, b) -> new ParadiseLostWeaponItem(p, b, "weapon/paradise_lost"));
@@ -719,7 +696,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(14)
       .attackSpeed(minuteToSpeedConversion(2))
       .attackDistance(6)
-      .invincibleTick(20)
       .meleeLcDamageType(null,
         LcDamageType.PHYSICS,
         LcDamageType.SPIRIT,
@@ -738,7 +714,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(5.5f)
       .attackSpeed(minuteToSpeedConversion(1.5f))
       .attackDistance(2)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.V, null, null, null, VirtueRating.V),
     (p, b) -> new GoldRushWeaponItem(p, b, "weapon/gold_rush"));
@@ -755,7 +730,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(13)
       .attackSpeed(minuteToSpeedConversion(1.5f))
       .attackDistance(5)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, VirtueRating.V, null, VirtueRating.V),
     (p, b) -> new SmileWeaponItem(p, b, "weapon/smile"));
@@ -771,7 +745,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(9)
       .attackSpeed(minuteToSpeedConversion(1.5f))
       .attackDistance(0)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(VirtueRating.V, null, null, null, VirtueRating.V),
     (p, b) -> new CensoredWeaponItem(p, b, "weapon/censored"));
@@ -789,7 +762,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(9)
       .attackInterval(minuteToSpeedConversion(1.67f))
       .attackDistance(25)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, VirtueRating.V, VirtueRating.V, null, VirtueRating.V),
     (p, b) -> new SoundOfAStarWeaponItem(p, b, "weapon/sound_of_a_star"));
@@ -803,7 +775,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(22)
       .attackInterval(minuteToSpeedConversion(2))
       .attackDistance(35)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, VirtueRating.V, null, null, VirtueRating.V),
     (p, b) -> new PinkWeaponItem(p, b, "weapon/pink"));
@@ -818,7 +789,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(33)
       .attackInterval(minuteToSpeedConversion(3.47f))
       .attackDistance(15)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, VirtueRating.V, null, VirtueRating.V),
     (p, b) -> new AdorationWeaponItem(p, b, "weapon/adoration"));

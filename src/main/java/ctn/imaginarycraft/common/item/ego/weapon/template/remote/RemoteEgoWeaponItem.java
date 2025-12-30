@@ -35,7 +35,6 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
   private final float attackDistance;
   private final @Nullable LcDamageType lcDamageType;
   private final @Nullable Set<LcDamageType> canCauseLcDamageTypes;
-  private final int invincibleTick;
   private final @Nullable CreateProjectile<? extends Projectile> createProjectile;
 
   public RemoteEgoWeaponItem(@NotNull Properties itemProperties, @NotNull Builder remoteEgoWeaponBuilder) {
@@ -45,7 +44,6 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
       .component(ModDataComponents.IS_RESTRAIN, false));
     this.lcDamageType = remoteEgoWeaponBuilder.lcDamageType;
     this.canCauseLcDamageTypes = remoteEgoWeaponBuilder.canCauseLcDamageTypes;
-    this.invincibleTick = remoteEgoWeaponBuilder.invincibleTick;
     this.attackDistance = remoteEgoWeaponBuilder.attackDistance;
     this.createProjectile = remoteEgoWeaponBuilder.createProjectile;
   }
@@ -99,7 +97,7 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
    */
   @Override
   public int getInvincibleTick(ItemStack itemStack) {
-    return invincibleTick;
+    return 0;
   }
 
   /**

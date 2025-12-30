@@ -48,7 +48,6 @@ public abstract class EgoWeaponRegisterUtil {
     var remoteBuilder = builder
       .attackInterval(remoteTemplateType.getAttackSpeed())
       .attackDistance(remoteTemplateType.getAttackDistance());
-    builder.invincibleTick(remoteTemplateType.getInvincibleTick());
     return registerRemote(id, zhName, lcLevelType, remoteTemplateType, properties, remoteBuilder, item);
   }
 
