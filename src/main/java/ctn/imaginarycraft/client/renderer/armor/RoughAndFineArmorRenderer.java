@@ -21,15 +21,16 @@ import software.bernie.geckolib.util.RenderUtil;
 /**
  * 盔甲渲染
  */
-public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmorRenderer<T> {
-  protected @Nullable GeoBone slimRightArm;
-  protected @Nullable GeoBone slimLeftArm;
+public class RoughAndFineArmorRenderer<T extends Item & GeoItem> extends GeoArmorRenderer<T> {
+  protected @Nullable GeoBone fineRightArm;
+  protected @Nullable GeoBone fineLeftArm;
+  protected @Nullable GeoBone armorPants;
   /**
    * 是否是细手臂渲染
    */
-  public boolean isSlim;
+  public boolean isFine;
 
-  public RoughAndSlimArmorRenderer(GeoModel<T> model) {
+  public RoughAndFineArmorRenderer(GeoModel<T> model) {
     super(model);
   }
 
@@ -50,9 +51,11 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
     this.rightBoot = getRightBootBone(model);
     this.leftBoot = getLeftBootBone(model);
 
+    this.armorPants = getArmorPantsBone(model);
+
     // 细模型部分
-    this.slimRightArm = getFineRightArmBone(model);
-    this.slimLeftArm = getFineLeftArmBone(model);
+    this.fineRightArm = getFineRightArmBone(model);
+    this.fineLeftArm = getFineLeftArmBone(model);
   }
 
   @Nullable
@@ -63,6 +66,11 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
   @Nullable
   public GeoBone getFineLeftArmBone(@NotNull GeoModel<T> model) {
     return model.getBone("armorFineLeftArm").orElse(null);
+  }
+
+  @Nullable
+  public GeoBone getArmorPantsBone(@NotNull GeoModel<T> model) {
+    return model.getBone("armorPants").orElse(null);
   }
 
   @Override
@@ -80,18 +88,21 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
       bone = currentSlot == EquipmentSlot.FEET ? this.leftBoot : this.leftLeg;
     } else if (currentPart == model.rightLeg) {
       bone = currentSlot == EquipmentSlot.FEET ? this.rightBoot : this.rightLeg;
-    } else if (currentPart == model.leftArm && isABoolean(this.slimRightArm)) {
+    } else if (currentPart == model.leftArm && isABoolean(this.fineRightArm)) {
       bone = this.leftArm;
-    } else if (currentPart == model.rightArm && isABoolean(this.slimLeftArm)) {
+    } else if (currentPart == model.rightArm && isABoolean(this.fineLeftArm)) {
       bone = this.rightArm;
-    } else if (currentPart == model.rightArm && this.slimRightArm != null) {
-      bone = this.slimRightArm;
-    } else if (currentPart == model.leftArm && this.slimLeftArm != null) {
-      bone = this.slimLeftArm;
+    } else if (currentPart == model.rightArm && this.fineRightArm != null) {
+      bone = this.fineRightArm;
+    } else if (currentPart == model.leftArm && this.fineLeftArm != null) {
+      bone = this.fineLeftArm;
     }
 
     if (bone != null) {
       bone.setHidden(false);
+      if ((currentPart == model.leftLeg || currentPart == model.rightLeg) && currentSlot == EquipmentSlot.FEET && armorPants != null) {
+        armorPants.setHidden(false);
+      }
     }
   }
 
@@ -99,26 +110,33 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
   protected void setAllBonesVisible(boolean visible) {
     super.setAllBonesVisible(visible);
 
-    setBoneVisible(this.slimRightArm, visible);
-    setBoneVisible(this.slimLeftArm, visible);
+    setBoneVisible(this.fineRightArm, visible);
+    setBoneVisible(this.fineLeftArm, visible);
   }
 
   @Override
   protected void applyBaseTransformations(HumanoidModel<?> baseModel) {
     super.applyBaseTransformations(baseModel);
 
-    if (this.slimRightArm != null) {
+    if (this.fineRightArm != null) {
       ModelPart rightArmPart = baseModel.rightArm;
 
-      RenderUtil.matchModelPartRot(rightArmPart, this.slimRightArm);
-      this.slimRightArm.updatePosition(rightArmPart.x + 5, 2 - rightArmPart.y, rightArmPart.z);
+      RenderUtil.matchModelPartRot(rightArmPart, this.fineRightArm);
+      this.fineRightArm.updatePosition(rightArmPart.x + 5, 2 - rightArmPart.y, rightArmPart.z);
     }
 
-    if (this.slimLeftArm != null) {
+    if (this.fineLeftArm != null) {
       ModelPart leftArmPart = baseModel.leftArm;
 
-      RenderUtil.matchModelPartRot(leftArmPart, this.slimLeftArm);
-      this.slimLeftArm.updatePosition(leftArmPart.x - 5f, 2f - leftArmPart.y, leftArmPart.z);
+      RenderUtil.matchModelPartRot(leftArmPart, this.fineLeftArm);
+      this.fineLeftArm.updatePosition(leftArmPart.x - 5f, 2f - leftArmPart.y, leftArmPart.z);
+    }
+
+    if (this.armorPants != null) {
+      ModelPart bodyPart = baseModel.body;
+
+      RenderUtil.matchModelPartRot(bodyPart, this.armorPants);
+      this.armorPants.updatePosition(bodyPart.x, -bodyPart.y, bodyPart.z);
     }
   }
 
@@ -126,15 +144,15 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
   public void prepForRender(Entity entity, ItemStack stack, EquipmentSlot slot, HumanoidModel<?> baseModel, MultiBufferSource bufferSource, float partialTick, float limbSwing, float limbSwingAmount, float netHeadYaw, float headPitch) {
     super.prepForRender(entity, stack, slot, baseModel, bufferSource, partialTick, limbSwing, limbSwingAmount, netHeadYaw, headPitch);
     if (getCurrentEntity() instanceof AbstractClientPlayer player &&
-      (this.slimRightArm != null || this.slimLeftArm != null)) {
-      this.isSlim = player.getSkin().model() == PlayerSkin.Model.SLIM;
+      (this.fineRightArm != null || this.fineLeftArm != null)) {
+      this.isFine = player.getSkin().model() == PlayerSkin.Model.SLIM;
     }
   }
 
   @Override
   public void doPostRenderCleanup() {
     super.doPostRenderCleanup();
-    this.isSlim = false;
+    this.isFine = false;
   }
 
   @Override
@@ -151,6 +169,7 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
       case LEGS -> {
         setBoneVisible(this.rightLeg, model.rightLeg.visible);
         setBoneVisible(this.leftLeg, model.leftLeg.visible);
+        setBoneVisible(this.armorPants, model.leftLeg.visible || model.rightLeg.visible);
       }
       case FEET -> {
         setBoneVisible(this.rightBoot, model.rightLeg.visible);
@@ -160,14 +179,14 @@ public class RoughAndSlimArmorRenderer<T extends Item & GeoItem> extends GeoArmo
   }
 
   private void HandApplyBoneVisibilityBySlot(HumanoidModel<?> model) {
-    setBoneVisible(this.rightArm, model.rightArm.visible && !this.isSlim);
-    setBoneVisible(this.leftArm, model.leftArm.visible && !this.isSlim);
+    setBoneVisible(this.rightArm, model.rightArm.visible && !this.isFine);
+    setBoneVisible(this.leftArm, model.leftArm.visible && !this.isFine);
 
-    setBoneVisible(this.slimRightArm, model.rightArm.visible && this.isSlim);
-    setBoneVisible(this.slimLeftArm, model.leftArm.visible && this.isSlim);
+    setBoneVisible(this.fineRightArm, model.rightArm.visible && this.isFine);
+    setBoneVisible(this.fineLeftArm, model.leftArm.visible && this.isFine);
   }
 
   private boolean isABoolean(@Nullable GeoBone slimArm) {
-    return slimArm == null || !this.isSlim;
+    return slimArm == null || !this.isFine;
   }
 }

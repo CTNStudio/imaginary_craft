@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.client.renderer.providers;
 
-import ctn.imaginarycraft.client.renderer.armor.RoughAndSlimArmorRenderer;
+import ctn.imaginarycraft.client.renderer.armor.RoughAndFineArmorRenderer;
 import net.minecraft.client.model.HumanoidModel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
@@ -29,7 +29,7 @@ public class ModGeoArmourRenderProvider<T extends Item & GeoItem> implements Geo
 
   public ModGeoArmourRenderProvider(GeoModel<T> model) {
     this.model = model;
-    this.rendererFunction = RoughAndSlimArmorRenderer::new;
+    this.rendererFunction = RoughAndFineArmorRenderer::new;
   }
 
   @Nullable

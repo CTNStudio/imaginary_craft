@@ -25,22 +25,11 @@ public final class GunWeaponUtil {
   }
 
   public static void setChargeUpValue(Player player, float newValue) {
-    float value = Math.max(0, newValue);
-    if (getChargeUpValue(player) != value) {
-      player.setData(ModAttachments.GUN_CHARGE_UP, value);
-    }
+    player.setData(ModAttachments.GUN_CHARGE_UP, Mth.clamp(newValue, 0.0f, getMaxChargeUpValue(player)));
   }
 
   public static void modifyChargeUpValue(Player player, float value) {
-    double maxChargeUpValue = getMaxChargeUpValue(player);
-    if (maxChargeUpValue == 0) {
-      return;
-    }
-    float chargeUpValue = getChargeUpValue(player);
-    if (chargeUpValue >= maxChargeUpValue) {
-      return;
-    }
-    setChargeUpValue(player, chargeUpValue + value);
+    setChargeUpValue(player, Mth.clamp(getChargeUpValue(player) + value, 0.0f, getMaxChargeUpValue(player)));
   }
 
   public static void resetChargeUp(Player player) {
@@ -48,39 +37,31 @@ public final class GunWeaponUtil {
   }
 
   public static float getChargeUpPercentage(Player player) {
-    double maxChargeUpValue = getMaxChargeUpValue(player);
-    if (maxChargeUpValue == 0) {
-      return 1;
+    float maxChargeUpValue = getMaxChargeUpValue(player);
+    if (maxChargeUpValue <= 0) {
+      return 0;
     }
-    return (float) Mth.clamp(getChargeUpValue(player) / getMaxChargeUpValue(player), 0, 1);
+    return Mth.clamp(getChargeUpValue(player) / maxChargeUpValue, 0, 1);
   }
 
   public static void setChargeUpPercentage(Player player, float newValue) {
-    double maxChargeUpValue = getMaxChargeUpValue(player);
-    if (maxChargeUpValue == 0) {
+    float maxChargeUpValue = getMaxChargeUpValue(player);
+    if (maxChargeUpValue <= 0) {
       return;
     }
-    float chargeUpValue = getChargeUpValue(player);
-    float value = (float) (Mth.clamp(newValue, 0, 1) * maxChargeUpValue);
-    if (chargeUpValue != value) {
-      setChargeUpValue(player, value);
-    }
+    setChargeUpValue(player, Mth.clamp(newValue / maxChargeUpValue, 0, 1));
   }
 
   public static void modifyChargeUpPercentage(Player player, float value) {
-    float chargeUpPercentage = getChargeUpPercentage(player);
-    if (chargeUpPercentage >= 1) {
-      return;
+    setChargeUpPercentage(player, getChargeUpPercentage(player) + value);
+  }
+
+  public static float getMaxChargeUpValue(Player player) {
+    double attributeValue = player.getAttributeValue(Attributes.ATTACK_SPEED);
+    if (attributeValue <= 0) {
+      return 0;
     }
-    setChargeUpPercentage(player, chargeUpPercentage + value);
-  }
-
-  public static double getMaxChargeUpValue(Player player) {
-    return player.getAttributeValue(Attributes.ATTACK_SPEED) * 20.0;
-  }
-
-  public static float getSpeed(Player player) {
-    return player.getCurrentItemAttackStrengthDelay();
+    return (float) (20.0f / attributeValue);
   }
 
   public static boolean isHoldGunWeapon(LivingEntity livingEntity) {

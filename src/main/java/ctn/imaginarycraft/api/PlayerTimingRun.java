@@ -106,8 +106,8 @@ public class PlayerTimingRun {
     }
 
     public static class Builder {
-      private Function3<Integer, Integer, Player, Integer> tickRun = (tick, maxTick, playerTimingRun) -> tick - 1;
-      private int remainingTick;
+      public static final Function3<Integer, Integer, Player, Integer> DEFAULT = (tick, maxTick, playerTimingRun) -> tick - 1;
+      private Function3<Integer, Integer, Player, Integer> tickRun = DEFAULT;
 
       private Builder() {
       }
@@ -119,10 +119,6 @@ public class PlayerTimingRun {
       public Builder tickRun(Function3<Integer, Integer, Player, Integer> tickRun) {
         this.tickRun = tickRun;
         return this;
-      }
-
-      public TimingRun build(Function<Player, Integer> resultRun) {
-        return new TimingRun(tickRun, resultRun, remainingTick);
       }
 
       public TimingRun build(Function<Player, Integer> resultRun, int maxTick) {

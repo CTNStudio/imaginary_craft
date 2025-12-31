@@ -48,8 +48,11 @@ public final class EntityRenderEventExecute {
     }
   }
 
+  // 全包类盔甲模型
   private static @NotNull Set<Map.Entry<EquipmentSlot, DeferredItem<EgoArmorItem>>> getHiddenPartsEntrySet() {
-    // TODO 目前没有扩展能力需要后期重构
-    return EgoArmorItems.MAGIC_BULLET.getMap().entrySet();
+    Set<Map.Entry<EquipmentSlot, DeferredItem<EgoArmorItem>>> set = new HashSet<>();
+    set.addAll(EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.getMap().entrySet());
+    set.addAll(EgoArmorItems.MAGIC_BULLET.getMap().entrySet());
+    return set;
   }
 }
