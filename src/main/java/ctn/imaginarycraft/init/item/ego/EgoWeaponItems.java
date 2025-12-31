@@ -473,7 +473,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .attackDistance(10)
       .meleeLcDamageType(LcDamageType.EROSION)
       .virtueUsageReq(null, null, null, VirtueRating.III, null),
-    (p, b) -> new SolemnLamentWeaponItem(p, b, "weapon/solemn_lament"));
+    (p, b) -> new SolemnLamentWeaponItem(p, b, "weapon/solemn_lament_black"));
 
   public static final DeferredItem<SolemnLamentWeaponItem> SOLEMN_LAMENT_WHITE = register(
     "solemn_lament_white_weapon", "圣宣-白",
@@ -485,7 +485,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .attackDistance(10)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, VirtueRating.III, null),
-    (p, b) -> new SolemnLamentWeaponItem(p, b, "weapon/solemn_lament"));
+    (p, b) -> new SolemnLamentWeaponItem(p, b, "weapon/solemn_lament_white"));
 
   public static final DeferredItem<MagicBulletWeaponItem> MAGIC_BULLET = register(
     "magic_bullet_weapon", "魔弹",

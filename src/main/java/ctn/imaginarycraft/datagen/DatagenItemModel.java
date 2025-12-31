@@ -16,11 +16,12 @@ import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
 import net.neoforged.neoforge.client.model.generators.ModelFile;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
 import static net.minecraft.resources.ResourceLocation.parse;
@@ -43,22 +44,25 @@ public class DatagenItemModel extends ItemModelProvider {
 
   @Override
   protected void registerModels() {
-    Set<DeferredItem<? extends Item>> items = new HashSet<>(Set.of(
-      EgoWeaponItems.MAGIC_BULLET
-    ));
     withExistingParent(EgoCurioItems.REGISTRY, "item/curios/");
     withExistingParent(EgoArmorItems.REGISTRY, "item/armor/");
-    EgoWeaponItems.REGISTRY.getEntries().stream()
-      .filter(holder -> {
-        boolean is = !items.contains(holder);
-        if (!is) {
-          items.remove(holder);
-        }
-        return is;
-      })
-      .map(DeferredHolder::get).forEach(this::geoItem);
+    for (DeferredHolder<Item, ? extends Item> itemDeferredHolder : EgoWeaponItems.REGISTRY.getEntries()) {
+      Item item = itemDeferredHolder.get();
+      String path = item.toString();
+      ResourceLocation outputLoc = extendWithFolder(path.contains(":") ? ResourceLocation.parse(path) : ResourceLocation.fromNamespaceAndPath(modid, path));
+      if (!existingFileHelper.exists(outputLoc, MODEL)) {
+        geoItem(item);
+      }
+    }
     creativeRationalityTool(ToolItems.CREATIVE_RATIONALITY_TOOL.get());
     chaosSword(ToolItems.CHAOS_SWORD.get());
+  }
+
+  private ResourceLocation extendWithFolder(ResourceLocation rl) {
+    if (rl.getPath().contains("/")) {
+      return rl;
+    }
+    return ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), folder + "/" + rl.getPath());
   }
 
   /**
@@ -96,7 +100,7 @@ public class DatagenItemModel extends ItemModelProvider {
     map.put(0.1F, "spirit");
     map.put(0.2F, "erosion");
     map.put(0.3F, "the_soul");
-    createModelFileWithParent(item, "weapon/", map, getParent("item/handheld"), ItemPropertyEvents.CURRENT_LC_DAMAGE_TYPE);
+    createModelFile(item, "weapon/", map, getParent("item/handheld"), ItemPropertyEvents.CURRENT_LC_DAMAGE_TYPE);
   }
 
   /**
@@ -129,14 +133,19 @@ public class DatagenItemModel extends ItemModelProvider {
    * @param item       物品实例
    * @param prefix     前缀
    * @param textures   纹理映射，键为浮点数值，值为纹理名称
+   * @param parent     父模型文件，如果为null则使用默认的"item/generated"
    * @param predicates 谓词资源位置数组，用于确定何时使用哪个模型变体
    */
-  public void createModelFile(Item item, String prefix, @NotNull Map<Float, String> textures, ResourceLocation... predicates) {
+  public void createModelFile(Item item, String prefix, @NotNull Map<Float, String> textures, ModelFile parent,
+                              ResourceLocation... predicates) {
     ResourceLocation resourceLocation = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item));
-    String itemRl = "item/" + prefix + resourceLocation.getPath();
     String itemModId = resourceLocation.getNamespace();
+    String itemRl = "item/" + prefix + resourceLocation.getPath();
+
+    // 如果没有提供父模型，则使用默认的"item/generated"
+    ModelFile actualParent = parent != null ? parent : new ModelFile.UncheckedModelFile("item/generated");
     ItemModelBuilder modelBuilder = getBuilder(item.toString())
-      .parent(new ModelFile.UncheckedModelFile("item/generated"))
+      .parent(actualParent)
       .texture("layer0", fromNamespaceAndPath(itemModId, itemRl));
 
     int index = 0;
@@ -150,47 +159,24 @@ public class DatagenItemModel extends ItemModelProvider {
         .end();
 
       getBuilder(overrideModelRl.toString())
-        .parent(new ModelFile.UncheckedModelFile("item/generated"))
+        .parent(actualParent)
         .texture("layer0", fromNamespaceAndPath(itemModId, itemRl + "_" + value));
       index++;
     }
   }
 
   /**
-   * 为物品创建带有父模型和不同纹理的模型文件
-   * 根据提供的纹理映射和谓词创建多个模型变体，并指定一个父模型
+   * 为物品创建带有不同纹理的模型文件
+   * 根据提供的纹理映射和谓词创建多个模型变体
+   * 使用默认的"item/generated"作为父模型
    *
    * @param item       物品实例
    * @param prefix     前缀
    * @param textures   纹理映射，键为浮点数值，值为纹理名称
-   * @param parent     父模型文件
    * @param predicates 谓词资源位置数组，用于确定何时使用哪个模型变体
    */
-  public void createModelFileWithParent(Item item, String prefix, @NotNull Map<Float, String> textures, ModelFile parent,
-                                        ResourceLocation... predicates) {
-    ResourceLocation resourceLocation = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item));
-    ResourceLocation path = fromNamespaceAndPath(resourceLocation.getNamespace(), "item/" + prefix + resourceLocation.getPath());
-    ItemModelBuilder modelBuilder = getBuilder(item.toString())
-      .parent(parent)
-      .texture("layer0", path);
-
-    int index = 0;
-    for (Map.Entry<Float, String> entry : textures.entrySet()) {
-      ResourceLocation predicate = predicates[Math.min(index, predicates.length - 1)];
-      float key = entry.getKey();
-      String value = entry.getValue();
-
-      modelBuilder.override()
-        .model(createModelFile(item, value))
-        .predicate(predicate, key)
-        .end();
-
-      ResourceLocation path1 = fromNamespaceAndPath(resourceLocation.getNamespace(), "item/" + prefix + resourceLocation.getPath() + "_" + value);
-      getBuilder(item.toString())
-        .parent(parent)
-        .texture("layer0", path1);
-      index++;
-    }
+  public void createModelFile(Item item, String prefix, @NotNull Map<Float, String> textures, ResourceLocation... predicates) {
+    createModelFile(item, prefix, textures, null, predicates);
   }
 
   /**

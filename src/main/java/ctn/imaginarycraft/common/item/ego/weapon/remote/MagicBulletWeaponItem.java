@@ -12,9 +12,9 @@ import ctn.imaginarycraft.common.payloads.entity.player.PlayerRawAnimationPayloa
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
 import ctn.imaginarycraft.util.GunWeaponUtil;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
@@ -26,6 +26,7 @@ import software.bernie.geckolib.model.GeoModel;
 
 // TODO 禁止放到副手
 // TODO 第一人称动画
+// TODO 修复动画问题
 public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   public static final ResourceLocation STANDBY = ImaginaryCraft.modRl("magic_bullet_weapon.standby");
   public static final ResourceLocation GALLOP = ImaginaryCraft.modRl("magic_bullet_weapon.gallop");
@@ -83,7 +84,7 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
 
   @Override
   public void gunAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
-    if (playerEntity instanceof AbstractClientPlayer) {
+    if (!(playerEntity instanceof ServerPlayer)) {
       return;
     }
     super.gunAim(playerEntity, itemStack);
@@ -96,7 +97,7 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
 
   @Override
   public void gunEndAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
-    if (playerEntity instanceof AbstractClientPlayer) {
+    if (!(playerEntity instanceof ServerPlayer)) {
       return;
     }
     super.gunEndAim(playerEntity, itemStack);
@@ -108,7 +109,7 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
 
   @Override
   public void gunEnd(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
-    if (playerEntity instanceof AbstractClientPlayer) {
+    if (!(playerEntity instanceof ServerPlayer)) {
       return;
     }
     super.gunEnd(playerEntity, itemStack);
@@ -120,26 +121,29 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
 
   @Override
   protected boolean gunShootExecute(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
-    if (playerEntity.level() instanceof ServerLevel serverLevel) {
-      PlayerTimingRun instance = PlayerTimingRun.getInstance(playerEntity);
-      instance.addTimingRun(handUsed, PlayerTimingRun.createTimingRunBilder().tickRun((tick, max, player) -> {
-        GunWeaponUtil.modifyChargeUpPercentage(player, 1f / (max));
-        return tick - 1;
-      }).build(player -> {
-        this.shoot(serverLevel, playerEntity, playerEntity.getUsedItemHand(), itemStack,
-          getProjectileVelocity(playerEntity, itemStack, handUsed),
-          getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
-        GunWeaponUtil.setIsLeftKeyAttack(playerEntity, true);
-        GunWeaponUtil.resetChargeUp(playerEntity);
-        return 0;
-      }, 20));
-      PlayerAnimUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
-        .controllerId(PlayerAnimUtil.WEAPON_STATE)
-        .animationId(SHOOTING)
-        .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
-      GunWeaponUtil.setIsLeftKeyAttack(playerEntity, false);
-      GunWeaponUtil.setChargeUpPercentage(playerEntity, 0f);
+    if (!(playerEntity.level() instanceof ServerLevel serverLevel)) {
+      return true;
     }
+
+    PlayerTimingRun instance = PlayerTimingRun.getInstance(playerEntity);
+    instance.addTimingRun(handUsed, PlayerTimingRun.createTimingRunBilder().tickRun((tick, max, player) -> {
+      GunWeaponUtil.modifyChargeUpPercentage(player, 1f / (max));
+      return tick - 1;
+    }).build(player -> {
+      this.shoot(serverLevel, playerEntity, playerEntity.getUsedItemHand(), itemStack,
+        getProjectileVelocity(playerEntity, itemStack, handUsed),
+        getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
+      GunWeaponUtil.setIsLeftKeyAttack(playerEntity, true);
+      GunWeaponUtil.resetChargeUp(playerEntity);
+      return 0;
+    }, (int) (GunWeaponUtil.getSpeed(playerEntity))));
+
+    PlayerAnimUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
+      .controllerId(PlayerAnimUtil.WEAPON_STATE)
+      .animationId(SHOOTING)
+      .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
+    GunWeaponUtil.setIsLeftKeyAttack(playerEntity, false);
+    GunWeaponUtil.setChargeUpPercentage(playerEntity, 0f);
     return true;
   }
 

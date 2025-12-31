@@ -52,13 +52,13 @@ public record PlayerRawAnimationPayload(
     PlayerRawAnimationPayload::new);
 
   public static void toServer(final PlayerRawAnimationPayload data, final IPayloadContext context) {
-    PlayerStopAnimationPayload.getPlayers(data.receivePlayerUUID, context, ServerPlayer.class).forEach(p ->
-      PayloadUtil.sendToClient(p, data));
+    PlayerStopAnimationPayload.getPlayers(data.receivePlayerUUID, context, ServerPlayer.class).forEach(serverPlayer ->
+      PayloadUtil.sendToClient(serverPlayer, data));
   }
 
   public static void toClient(final PlayerRawAnimationPayload data, final IPayloadContext context) {
-    PlayerStopAnimationPayload.getPlayers(data.playPlayerUUID, context, AbstractClientPlayer.class).forEach(p ->
-        PlayerAnimUtil.playRawAnimationClient(p, data.controllerId, data.rawAnimation, data.startAnimFrom, data.playSpeed, data.withFade.orElse(null)));
+    PlayerStopAnimationPayload.getPlayers(data.playPlayerUUID, context, AbstractClientPlayer.class).forEach(clientPlayer ->
+      PlayerAnimUtil.playRawAnimationClient(clientPlayer, data.controllerId, data.rawAnimation, data.startAnimFrom, data.playSpeed, data.withFade.orElse(null)));
   }
 
   @Override
@@ -68,8 +68,8 @@ public record PlayerRawAnimationPayload(
 
   public static class Builder {
     private UUIDFilterUtil playPlayerUUID = null;
-    private UUIDFilterUtil receivePlayerUUID = UUIDFilterUtil.create();
-    private PlayerAnimRawAnimation rawAnimation = PlayerAnimRawAnimation.begin();
+    private UUIDFilterUtil receivePlayerUUID = null;
+    private PlayerAnimRawAnimation rawAnimation = null;
     private ResourceLocation controllerId = null;
     private float startAnimFrom = 0;
     private float playSpeed = 1;
@@ -128,8 +128,9 @@ public record PlayerRawAnimationPayload(
     }
 
     public PlayerRawAnimationPayload build() {
-      assert controllerId != null : "controller cannot be null";
+      assert controllerId != null : "controllerId cannot be null";
       assert playPlayerUUID != null : "playPlayerUUID cannot be null";
+      assert rawAnimation != null : "rawAnimation cannot be null";
       return new PlayerRawAnimationPayload(
           playPlayerUUID,
           Optional.ofNullable(receivePlayerUUID),

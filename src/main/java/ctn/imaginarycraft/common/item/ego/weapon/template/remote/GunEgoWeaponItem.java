@@ -40,16 +40,17 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
 
   @Override
   public void gunAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
-    GunWeaponUtil.setIsLeftKeyAttack(playerEntity, true);
-    GunWeaponUtil.resetChargeUp(playerEntity);
+    if (playerEntity instanceof ServerPlayer player) {
+      GunWeaponUtil.resetChargeUp(player);
+      GunWeaponUtil.setIsLeftKeyAttack(player, true);
+    }
   }
 
   @Override
   public void onUseTick(@NotNull Level world, @NotNull LivingEntity usingEntity, @NotNull ItemStack itemStack, int remainingUseDuration) {
-    if (!(usingEntity instanceof ServerPlayer player)) {
-      return;
+    if (usingEntity instanceof ServerPlayer player) {
+      GunWeaponUtil.modifyChargeUpValue(player, 1);
     }
-    GunWeaponUtil.modifyChargeUpValue(player, 1);
   }
 
   @Override
@@ -119,25 +120,23 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
   }
 
   protected boolean gunShootExecute(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
-    if (playerEntity.level() instanceof ServerLevel serverLevel) {
-      PlayerTimingRun.getInstance(playerEntity).addTimingRun(handUsed, PlayerTimingRun.createTimingRun((player) -> {
-        this.shoot(serverLevel, playerEntity, playerEntity.getUsedItemHand(), itemStack,
-          getProjectileVelocity(playerEntity, itemStack, handUsed),
-          getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
-        GunWeaponUtil.setIsLeftKeyAttack(playerEntity, true);
-        GunWeaponUtil.resetChargeUp(playerEntity);
-        return 0;
-      }, 20));
-      PlayerTimingRun.getInstance(playerEntity).addTimingRun(GunWeaponUtil.GUN_SHOOT_MODIFY_TICK, PlayerTimingRun.createTimingRun((player) -> {
-        GunWeaponUtil.modifyChargeUpValue(player, 1);
-        if (GunWeaponUtil.getChargeUpPercentage(player) >= 1) {
-          return 0;
-        }
-        return 1;
-      }, 1));
-      GunWeaponUtil.setIsLeftKeyAttack(playerEntity, false);
-      GunWeaponUtil.resetChargeUp(playerEntity);
+    if (!(playerEntity.level() instanceof ServerLevel serverLevel)) {
+      return true;
     }
+    PlayerTimingRun instance = PlayerTimingRun.getInstance(playerEntity);
+    instance.addTimingRun(handUsed, PlayerTimingRun.createTimingRunBilder().tickRun((tick, max, player) -> {
+      GunWeaponUtil.modifyChargeUpPercentage(player, 1f / (max));
+      return tick - 1;
+    }).build(player -> {
+      this.shoot(serverLevel, playerEntity, playerEntity.getUsedItemHand(), itemStack,
+        getProjectileVelocity(playerEntity, itemStack, handUsed),
+        getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
+      GunWeaponUtil.setIsLeftKeyAttack(playerEntity, true);
+      GunWeaponUtil.resetChargeUp(playerEntity);
+      return 0;
+    }, (int) (GunWeaponUtil.getSpeed(playerEntity))));
+    GunWeaponUtil.setIsLeftKeyAttack(playerEntity, false);
+    GunWeaponUtil.resetChargeUp(playerEntity);
     return true;
   }
 

@@ -32,8 +32,12 @@ public final class GunWeaponUtil {
   }
 
   public static void modifyChargeUpValue(Player player, float value) {
+    double maxChargeUpValue = getMaxChargeUpValue(player);
+    if (maxChargeUpValue == 0) {
+      return;
+    }
     float chargeUpValue = getChargeUpValue(player);
-    if (chargeUpValue >= getMaxChargeUpValue(player)) {
+    if (chargeUpValue >= maxChargeUpValue) {
       return;
     }
     setChargeUpValue(player, chargeUpValue + value);
@@ -44,12 +48,20 @@ public final class GunWeaponUtil {
   }
 
   public static float getChargeUpPercentage(Player player) {
+    double maxChargeUpValue = getMaxChargeUpValue(player);
+    if (maxChargeUpValue == 0) {
+      return 1;
+    }
     return (float) Mth.clamp(getChargeUpValue(player) / getMaxChargeUpValue(player), 0, 1);
   }
 
   public static void setChargeUpPercentage(Player player, float newValue) {
+    double maxChargeUpValue = getMaxChargeUpValue(player);
+    if (maxChargeUpValue == 0) {
+      return;
+    }
     float chargeUpValue = getChargeUpValue(player);
-    float value = (float) (Mth.clamp(newValue, 0, 1) * getMaxChargeUpValue(player));
+    float value = (float) (Mth.clamp(newValue, 0, 1) * maxChargeUpValue);
     if (chargeUpValue != value) {
       setChargeUpValue(player, value);
     }
@@ -68,7 +80,6 @@ public final class GunWeaponUtil {
   }
 
   public static float getSpeed(Player player) {
-    // TODO
     return player.getCurrentItemAttackStrengthDelay();
   }
 

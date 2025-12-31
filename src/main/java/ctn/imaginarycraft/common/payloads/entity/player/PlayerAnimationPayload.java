@@ -44,19 +44,19 @@ public record PlayerAnimationPayload(
     ByteBufCodecs.optional(UUIDFilterUtil.STREAM_CODEC), PlayerAnimationPayload::receivePlayerUUID,
     ResourceLocation.STREAM_CODEC, PlayerAnimationPayload::controllerId,
     ResourceLocation.STREAM_CODEC, PlayerAnimationPayload::animationId,
-    ByteBufCodecs.FLOAT, PlayerAnimationPayload::playSpeed,
     ByteBufCodecs.FLOAT, PlayerAnimationPayload::startAnimFrom,
+    ByteBufCodecs.FLOAT, PlayerAnimationPayload::playSpeed,
     ByteBufCodecs.optional(PlayerAnimStandardFadePlayerAnim.STREAM_CODEC), PlayerAnimationPayload::withFade,
     PlayerAnimationPayload::new);
 
   public static void toServer(final PlayerAnimationPayload data, final IPayloadContext context) {
-    PlayerStopAnimationPayload.getPlayers(data.receivePlayerUUID, context, ServerPlayer.class).forEach(p ->
-      PayloadUtil.sendToClient(p, data));
+    PlayerStopAnimationPayload.getPlayers(data.receivePlayerUUID, context, ServerPlayer.class).forEach(serverPlayer ->
+      PayloadUtil.sendToClient(serverPlayer, data));
   }
 
   public static void toClient(final PlayerAnimationPayload data, final IPayloadContext context) {
-    PlayerStopAnimationPayload.getPlayers(data.playPlayerUUID, context, AbstractClientPlayer.class).forEach(p ->
-      PlayerAnimUtil.playAnimationClient(p, data.controllerId, data.animationId, data.startAnimFrom, data.playSpeed, data.withFade.orElse(null)));
+    PlayerStopAnimationPayload.getPlayers(data.playPlayerUUID, context, AbstractClientPlayer.class).forEach(clientPlayer ->
+      PlayerAnimUtil.playAnimationClient(clientPlayer, data.controllerId, data.animationId, data.startAnimFrom, data.playSpeed, data.withFade.orElse(null)));
   }
 
   @Override
@@ -67,12 +67,12 @@ public record PlayerAnimationPayload(
 
   public static class Builder {
     private UUIDFilterUtil playPlayerUUID = null;
-    private UUIDFilterUtil receivePlayerUUID = UUIDFilterUtil.create();
+    private UUIDFilterUtil receivePlayerUUID = null;
     private ResourceLocation controllerId = null;
     private ResourceLocation animationId = null;
+    private float startAnimFrom = 0;
+    private float playSpeed = 1;
     private PlayerAnimStandardFadePlayerAnim withFade = null;
-    private float startAnimFrom;
-    private float playSpeed;
 
     public static Builder create(Player player, ResourceLocation controller, ResourceLocation animationId) {
       return new Builder()

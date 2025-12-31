@@ -54,13 +54,13 @@ public record PlayerStopAnimationPayload(
   }
 
   public static void toServer(final PlayerStopAnimationPayload data, final IPayloadContext context) {
-    getPlayers(data.receivePlayerUUID, context, ServerPlayer.class).forEach(p ->
-      PayloadUtil.sendToClient(p, data));
+    getPlayers(data.receivePlayerUUID, context, ServerPlayer.class).forEach(serverPlayer ->
+      PayloadUtil.sendToClient(serverPlayer, data));
   }
 
   public static void toClient(final PlayerStopAnimationPayload data, final IPayloadContext context) {
-    getPlayers(data.playPlayerUUID, context, AbstractClientPlayer.class).forEach(p ->
-      PlayerAnimUtil.stopClient(p, data.controller, data.isStopTriggeredAnimation));
+    getPlayers(data.playPlayerUUID, context, AbstractClientPlayer.class).forEach(clientPlayer ->
+      PlayerAnimUtil.stopClient(clientPlayer, data.controller, data.isStopTriggeredAnimation));
   }
 
   public static <T extends Player> Collection<T> getPlayers(Optional<@Nullable UUIDFilterUtil> uuidFilterUtil, IPayloadContext context, Class<T> playerClass) {

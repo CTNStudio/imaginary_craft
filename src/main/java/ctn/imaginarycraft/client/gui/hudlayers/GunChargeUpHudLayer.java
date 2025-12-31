@@ -60,7 +60,6 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
   public void init(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
     super.init(guiGraphics, deltaTracker);
     float gunChargeUpPercentageValue = GunWeaponUtil.getChargeUpPercentage(player);
-
     if (this.gunChargeUpPercentageValue != gunChargeUpPercentageValue) {
       this.gunChargeUpPercentageValue = gunChargeUpPercentageValue;
     }

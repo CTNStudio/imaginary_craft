@@ -5,6 +5,7 @@ import com.zigythebird.playeranim.animation.PlayerAnimationController;
 import com.zigythebird.playeranim.api.PlayerAnimationAccess;
 import com.zigythebird.playeranimcore.animation.Animation;
 import com.zigythebird.playeranimcore.animation.AnimationController;
+import com.zigythebird.playeranimcore.animation.RawAnimation;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
 import com.zigythebird.playeranimcore.animation.layered.modifier.SpeedModifier;
 import com.zigythebird.playeranimcore.easing.EasingType;
@@ -231,6 +232,20 @@ public final class PlayerAnimUtil {
   public static void playRawAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
                                             PlayerAnimRawAnimation rawAnimation, float startAnimFrom, float playSpeed,
                                             @Nullable AbstractFadeModifier abstractFadeModifier) {
+    playRawAnimationClient(clientPlayer, controllerId, rawAnimation.toRawAnimation(), startAnimFrom, playSpeed, abstractFadeModifier);
+  }
+
+  /**
+   * 在客户端播放原始动画
+   *
+   * @param clientPlayer         玩家对象
+   * @param controllerId         控制器ID
+   * @param rawAnimation         原始动画对象
+   * @param startAnimFrom        动画开始位置
+   * @param playSpeed            播放速度
+   * @param abstractFadeModifier 抽象淡入淡出修饰符
+   */
+  public static void playRawAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId, RawAnimation rawAnimation, float startAnimFrom, float playSpeed, @Nullable AbstractFadeModifier abstractFadeModifier) {
     PlayerAnimationController controller = getPlayerAnimationController(clientPlayer, controllerId);
     if (controller == null) {
       ImaginaryCraft.LOGGER.warn("PlayerAnimationController not found: {}", controllerId);
@@ -240,10 +255,11 @@ public final class PlayerAnimUtil {
     controller.removeModifierIf(AbstractFadeModifier.class::isInstance);
     controller.removeModifierIf(SpeedModifier.class::isInstance);
     controller.addModifierLast(new SpeedModifier(playSpeed));
+    IAnimationController.of(controller).imaginarycraft$linkModifiers();
     if (abstractFadeModifier == null) {
-      controller.triggerAnimation(rawAnimation.toRawAnimation(), startAnimFrom);
+      controller.triggerAnimation(rawAnimation, startAnimFrom);
     } else {
-      controller.replaceAnimationWithFade(abstractFadeModifier, rawAnimation.toRawAnimation(), true);
+      controller.replaceAnimationWithFade(abstractFadeModifier, rawAnimation, true);
     }
   }
 
