@@ -91,7 +91,8 @@ public final class GunWeaponUtil {
    * @param isHandUsed 是否为主手
    */
   public static void setChargeUpValue(Player player, int newValue, boolean isHandUsed) {
-    player.setData(isHandUsed ? ModAttachments.GUN_CHARGE_UP_TICK_MAIN_HAND : ModAttachments.GUN_CHARGE_UP_TICK_OFF_HAND, Math.clamp(newValue, 0, getMaxChargeUpValue(player, isHandUsed)));
+    player.setData(isHandUsed ? ModAttachments.GUN_CHARGE_UP_TICK_MAIN_HAND : ModAttachments.GUN_CHARGE_UP_TICK_OFF_HAND,
+      Math.max(0, Math.min(newValue, getMaxChargeUpValue(player, isHandUsed))));
   }
 
   /**

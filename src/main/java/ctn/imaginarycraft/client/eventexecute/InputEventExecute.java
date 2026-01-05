@@ -29,11 +29,11 @@ public final class InputEventExecute {
 
         InteractionHand usedItemHand = player.getUsedItemHand();
         if (!iGunWeapon.gunAimShoot(player, useItem, usedItemHand)) {
-          break useDown1;
+          return;
         }
 
         PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(usedItemHand, true, true));
-        break useDown1;
+        return;
       }
 
       ItemStack offHandItem = player.getOffhandItem();
@@ -43,7 +43,9 @@ public final class InputEventExecute {
         !iGunWeapon.gunShoot(player, offHandItem, InteractionHand.OFF_HAND)) {
         break useDown;
       }
+
       PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(InteractionHand.OFF_HAND, false, true));
+      return;
     }
 
     if (options.keyAttack.isDown()) {
@@ -55,6 +57,7 @@ public final class InputEventExecute {
       }
 
       PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(InteractionHand.MAIN_HAND, false, true));
+      System.out.println(3);
     }
   }
 }

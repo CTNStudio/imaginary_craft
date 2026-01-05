@@ -39,6 +39,7 @@ import org.joml.Matrix4f;
 import java.util.List;
 
 // TODO 拆分成伤害，BOSS说话文本，普通文本
+// TODO 待修复显示问题
 public class TextParticle extends TextureSheetParticle {
   protected final Minecraft minecraft;
   protected final Font font;

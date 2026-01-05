@@ -76,6 +76,7 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
     boolean isShoot = super.gunShoot(playerEntity, itemStack, handUsed);
     if (isShoot && playerEntity instanceof ServerPlayer) {
       PlayerAnimUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
+        .playSpeed(22f / gunShootExecuteTick(playerEntity, itemStack, handUsed))
         .controllerId(PlayerAnimUtil.WEAPON_STATE)
         .animationId(SHOOTING)
         .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
@@ -90,6 +91,7 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
     }
     super.gunAimShootExecute(playerEntity, itemStack, handUsed, chargeUpPercentage);
     PlayerAnimUtil.playRawAnimation(playerEntity, new PlayerRawAnimationPayload.Builder()
+      .playSpeed(13f / gunShootExecuteTick(playerEntity, itemStack, handUsed))
       .controllerId(PlayerAnimUtil.WEAPON_STATE)
       .rawAnimation(GUN_AIM_SHOOT_RAW_ANIMATION)
       .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
@@ -102,7 +104,7 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
     super.gunAim(playerEntity, itemStack, handUsed);
     if (playerEntity instanceof ServerPlayer) {
       PlayerAnimUtil.playRawAnimation(playerEntity, new PlayerRawAnimationPayload.Builder()
-//      .playSpeed()
+        .playSpeed(13f / gunShootExecuteTick(playerEntity, itemStack, handUsed))
         .controllerId(PlayerAnimUtil.WEAPON_STATE)
         .rawAnimation(GUN_AIM_RAW_ANIMATION)
         .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
@@ -121,6 +123,7 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
     }
     super.gunEndAim(playerEntity, itemStack, handUsed);
     PlayerAnimUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
+      .playSpeed(13f / gunShootExecuteTick(playerEntity, itemStack, handUsed))
       .controllerId(PlayerAnimUtil.WEAPON_STATE)
       .animationId(SHOOTING_AIM_TERMINATE)
       .withFade(PlayerAnimUtil.DEFAULT_FADE_OUT));
