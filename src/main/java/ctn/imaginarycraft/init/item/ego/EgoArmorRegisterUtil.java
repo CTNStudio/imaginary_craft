@@ -181,14 +181,14 @@ public abstract class EgoArmorRegisterUtil {
 
   /**
    *
-   * @param chest 胸
-   * @param legs  腿
-   * @param feet  脚
+   * @param chestplate 胸
+   * @param leggings  腿
+   * @param boots  脚
    */
   public record EgoArmor(
-    DeferredItem<EgoArmorItem> chest,
-    DeferredItem<EgoArmorItem> legs,
-    DeferredItem<EgoArmorItem> feet
+    DeferredItem<EgoArmorItem> chestplate,
+    DeferredItem<EgoArmorItem> leggings,
+    DeferredItem<EgoArmorItem> boots
   ) implements Iterable<DeferredItem<EgoArmorItem>> {
     @Override
     public @NotNull Iterator<DeferredItem<EgoArmorItem>> iterator() {
@@ -196,14 +196,14 @@ public abstract class EgoArmorRegisterUtil {
     }
 
     public @NotNull Set<DeferredItem<EgoArmorItem>> getSet() {
-      return Set.of(this.chest, this.legs, this.feet);
+      return Set.of(this.chestplate, this.leggings, this.boots);
     }
 
     public @NotNull Map<EquipmentSlot, DeferredItem<EgoArmorItem>> getMap() {
       return Map.of(
-        EquipmentSlot.CHEST, this.chest,
-        EquipmentSlot.LEGS, this.legs,
-        EquipmentSlot.FEET, this.feet
+        EquipmentSlot.CHEST, this.chestplate,
+        EquipmentSlot.LEGS, this.leggings,
+        EquipmentSlot.FEET, this.boots
       );
     }
   }

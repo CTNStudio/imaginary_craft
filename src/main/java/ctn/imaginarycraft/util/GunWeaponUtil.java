@@ -3,68 +3,315 @@ package ctn.imaginarycraft.util;
 import ctn.imaginarycraft.api.IGunWeapon;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModAttachments;
+import ctn.imaginarycraft.init.ModAttributes;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 
+/**
+ * 枪械武器工具类
+ * 提供对枪械武器的各种操作和属性管理功能
+ */
 public final class GunWeaponUtil {
   public static final ResourceLocation GUN_SHOOT_MODIFY_TICK = ImaginaryCraft.modRl("gun_shoot_modify_tick");
 
-  public static boolean isIsLeftKeyAttack(Player player) {
-    return player.getData(ModAttachments.IS_GUN_LEFT_KEY_ATTACK);
+  /**
+   * 检查指定手是否可以进行攻击
+   *
+   * @param player     玩家对象
+   * @param isHandUsed 是否为主手
+   * @return 如果指定手可以攻击则返回true，否则返回false
+   */
+  public static boolean isAttack(Player player, boolean isHandUsed) {
+    return isHandUsed ? player.getData(ModAttachments.IS_GUN_ATTACK_MAIN_HAND) : player.getData(ModAttachments.IS_GUN_ATTACK_OFF_HAND);
   }
 
-  public static void setIsLeftKeyAttack(Player player, boolean is) {
-    player.setData(ModAttachments.IS_GUN_LEFT_KEY_ATTACK, is);
+  /**
+   * 检查指定手是否可以进行攻击
+   *
+   * @param player   玩家对象
+   * @param handUsed 使用的手（主手或副手）
+   * @return 如果指定手可以攻击则返回true，否则返回false
+   */
+  public static boolean isAttack(Player player, InteractionHand handUsed) {
+    return isAttack(player, handUsed == InteractionHand.MAIN_HAND);
   }
 
-  public static float getChargeUpValue(Player player) {
-    return player.getData(ModAttachments.GUN_CHARGE_UP);
+  /**
+   * 设置指定手的攻击状态
+   *
+   * @param player     玩家对象
+   * @param isAttack   攻击状态
+   * @param isHandUsed 是否为主手
+   */
+  public static void setIsAttack(Player player, boolean isAttack, boolean isHandUsed) {
+    player.setData(isHandUsed ? ModAttachments.IS_GUN_ATTACK_MAIN_HAND : ModAttachments.IS_GUN_ATTACK_OFF_HAND, isAttack);
   }
 
-  public static void setChargeUpValue(Player player, float newValue) {
-    player.setData(ModAttachments.GUN_CHARGE_UP, Mth.clamp(newValue, 0.0f, getMaxChargeUpValue(player)));
+  /**
+   * 设置指定手的攻击状态
+   *
+   * @param player   玩家对象
+   * @param isAttack 攻击状态
+   * @param handUsed 使用的手（主手或副手）
+   */
+  public static void setIsAttack(Player player, boolean isAttack, InteractionHand handUsed) {
+    setIsAttack(player, isAttack, handUsed == InteractionHand.MAIN_HAND);
   }
 
-  public static void modifyChargeUpValue(Player player, float value) {
-    setChargeUpValue(player, Mth.clamp(getChargeUpValue(player) + value, 0.0f, getMaxChargeUpValue(player)));
+  /**
+   * 获取指定手的蓄力值
+   *
+   * @param player     玩家对象
+   * @param isHandUsed 是否为主手
+   * @return 指定手的蓄力值
+   */
+  public static int getChargeUpValue(Player player, boolean isHandUsed) {
+    return player.getData(isHandUsed ? ModAttachments.GUN_CHARGE_UP_TICK_MAIN_HAND : ModAttachments.GUN_CHARGE_UP_TICK_OFF_HAND);
   }
 
-  public static void resetChargeUp(Player player) {
-    setChargeUpValue(player, 0);
+  /**
+   * 获取指定手的蓄力值
+   *
+   * @param player   玩家对象
+   * @param handUsed 使用的手（主手或副手）
+   * @return 指定手的蓄力值
+   */
+  public static int getChargeUpValue(Player player, InteractionHand handUsed) {
+    return getChargeUpValue(player, handUsed == InteractionHand.MAIN_HAND);
   }
 
-  public static float getChargeUpPercentage(Player player) {
-    float maxChargeUpValue = getMaxChargeUpValue(player);
-    if (maxChargeUpValue <= 0) {
-      return 0;
-    }
-    return Mth.clamp(getChargeUpValue(player) / maxChargeUpValue, 0, 1);
+  /**
+   * 设置指定手的蓄力值
+   *
+   * @param player     玩家对象
+   * @param newValue   新的蓄力值
+   * @param isHandUsed 是否为主手
+   */
+  public static void setChargeUpValue(Player player, int newValue, boolean isHandUsed) {
+    player.setData(isHandUsed ? ModAttachments.GUN_CHARGE_UP_TICK_MAIN_HAND : ModAttachments.GUN_CHARGE_UP_TICK_OFF_HAND, Math.clamp(newValue, 0, getMaxChargeUpValue(player, isHandUsed)));
   }
 
-  public static void setChargeUpPercentage(Player player, float newValue) {
-    float maxChargeUpValue = getMaxChargeUpValue(player);
+  /**
+   * 设置指定手的蓄力值
+   *
+   * @param player   玩家对象
+   * @param newValue 新的蓄力值
+   * @param handUsed 使用的手（主手或副手）
+   */
+  public static void setChargeUpValue(Player player, int newValue, InteractionHand handUsed) {
+    setChargeUpValue(player, newValue, handUsed == InteractionHand.MAIN_HAND);
+  }
+
+  /**
+   * 修改指定手的蓄力值
+   *
+   * @param player   玩家对象
+   * @param value    要增加的蓄力值
+   * @param handUsed 使用的手（主手或副手）
+   */
+  public static void modifyChargeUpValue(Player player, int value, boolean handUsed) {
+    setChargeUpValue(player, getChargeUpValue(player, handUsed) + value, handUsed);
+  }
+
+  /**
+   * 修改指定手的蓄力值
+   *
+   * @param player   玩家对象
+   * @param value    要增加的蓄力值
+   * @param handUsed 使用的手（主手或副手）
+   */
+  public static void modifyChargeUpValue(Player player, int value, InteractionHand handUsed) {
+    modifyChargeUpValue(player, value, handUsed == InteractionHand.MAIN_HAND);
+  }
+
+  /**
+   * 重置指定手的蓄力值为0
+   *
+   * @param player     玩家对象
+   * @param isHandUsed 是否为主手
+   */
+  public static void resetChargeUp(Player player, boolean isHandUsed) {
+    setChargeUpValue(player, 0, isHandUsed);
+  }
+
+  /**
+   * 重置指定手的蓄力值为0
+   *
+   * @param player   玩家对象
+   * @param handUsed 使用的手（主手或副手）
+   */
+  public static void resetChargeUp(Player player, InteractionHand handUsed) {
+    resetChargeUp(player, handUsed == InteractionHand.MAIN_HAND);
+  }
+
+  /**
+   * 获取指定手的蓄力百分比
+   *
+   * @param player     玩家对象
+   * @param isHandUsed 是否为主手
+   * @return 蓄力百分比，范围在0.0f到1.0f之间
+   */
+  public static float getChargeUpPercentage(Player player, boolean isHandUsed) {
+    return Math.clamp((float) getChargeUpValue(player, isHandUsed) / getMaxChargeUpValue(player, isHandUsed), 0.0f, 1.0f);
+  }
+
+  /**
+   * 获取指定手的蓄力百分比
+   *
+   * @param player   玩家对象
+   * @param handUsed 使用的手（主手或副手）
+   * @return 蓄力百分比，范围在0.0f到1.0f之间
+   */
+  public static float getChargeUpPercentage(Player player, InteractionHand handUsed) {
+    return getChargeUpPercentage(player, handUsed == InteractionHand.MAIN_HAND);
+  }
+
+  /**
+   * 设置指定手的蓄力百分比
+   *
+   * @param player     玩家对象
+   * @param newValue   新的蓄力百分比
+   * @param isHandUsed 是否为主手
+   */
+  public static void setChargeUpPercentage(Player player, float newValue, boolean isHandUsed) {
+    int maxChargeUpValue = getMaxChargeUpValue(player,isHandUsed);
     if (maxChargeUpValue <= 0) {
       return;
     }
-    setChargeUpValue(player, Mth.clamp(newValue / maxChargeUpValue, 0, 1));
+    setChargeUpValue(player, (int) Math.clamp(newValue / maxChargeUpValue, 0.0f, 1.0f), isHandUsed);
   }
 
-  public static void modifyChargeUpPercentage(Player player, float value) {
-    setChargeUpPercentage(player, getChargeUpPercentage(player) + value);
+  /**
+   * 设置指定手的蓄力百分比
+   *
+   * @param player   玩家对象
+   * @param newValue 新的蓄力百分比
+   * @param handUsed 使用的手（主手或副手）
+   */
+  public static void setChargeUpPercentage(Player player, float newValue, InteractionHand handUsed) {
+    setChargeUpPercentage(player, newValue, handUsed == InteractionHand.MAIN_HAND);
   }
 
-  public static float getMaxChargeUpValue(Player player) {
-    double attributeValue = player.getAttributeValue(Attributes.ATTACK_SPEED);
-    if (attributeValue <= 0) {
-      return 0;
-    }
-    return (float) (20.0f / attributeValue);
+  /**
+   * 修改指定手的蓄力百分比
+   *
+   * @param player     玩家对象
+   * @param value      要增加的蓄力百分比
+   * @param isHandUsed 是否为主手
+   */
+  public static void modifyChargeUpPercentage(Player player, float value, boolean isHandUsed) {
+    setChargeUpPercentage(player, getChargeUpPercentage(player, isHandUsed) + value, isHandUsed);
   }
 
+  /**
+   * 修改指定手的蓄力百分比
+   *
+   * @param player   玩家对象
+   * @param value    要增加的蓄力百分比
+   * @param handUsed 使用的手（主手或副手）
+   */
+  public static void modifyChargeUpPercentage(Player player, float value, InteractionHand handUsed) {
+    modifyChargeUpPercentage(player, value, handUsed == InteractionHand.MAIN_HAND);
+  }
+
+  /**
+   * 获取指定手的最大蓄力值
+   *
+   * @param player     玩家对象
+   * @param isHandUsed 是否为主手
+   * @return 指定手的最大蓄力值
+   */
+  public static int getMaxChargeUpValue(Player player, boolean isHandUsed) {
+    return (int) (1.0f / getAttackSpeed(player, isHandUsed) * 20.0f);
+  }
+
+  /**
+   * 获取指定手的最大蓄力值
+   *
+   * @param player   玩家对象
+   * @param handUsed 使用的手（主手或副手）
+   * @return 指定手的最大蓄力值
+   */
+  public static int getMaxChargeUpValue(Player player, InteractionHand handUsed) {
+    return getMaxChargeUpValue(player, handUsed == InteractionHand.MAIN_HAND);
+  }
+
+//  /**
+//   * 检查指定手是否正在射击
+//   *
+//   * @param player 玩家对象
+//   * @param isHandUsed 是否为主手
+//   * @return 如果指定手正在射击则返回true，否则返回false
+//   */
+//  public static boolean isShooting(Player player, boolean isHandUsed) {
+//    return getAttackSpeed(player, isHandUsed) > 0;
+//  }
+//
+//  /**
+//   * 检查指定手是否正在射击
+//   *
+//   * @param player 玩家对象
+//   * @param handUsed 使用的手（主手或副手）
+//   * @return 如果指定手正在射击则返回true，否则返回false
+//   */
+//  public static boolean isShooting(Player player, InteractionHand handUsed) {
+//    return isShooting(player, handUsed == InteractionHand.MAIN_HAND);
+//  }
+
+  /**
+   * 获取指定手的攻击速度
+   *
+   * @param player   玩家对象
+   * @param handUsed 使用的手（主手或副手）
+   * @return 指定手的攻击速度
+   */
+  private static double getAttackSpeed(Player player, InteractionHand handUsed) {
+    return getAttackSpeed(player, handUsed == InteractionHand.MAIN_HAND);
+  }
+
+  /**
+   * 检查生物是否持有枪械武器
+   *
+   * @param livingEntity 生物对象
+   * @return 如果持有枪械武器则返回true，否则返回false
+   */
   public static boolean isHoldGunWeapon(LivingEntity livingEntity) {
     return livingEntity.getMainHandItem().getItem() instanceof IGunWeapon || livingEntity.getOffhandItem().getItem() instanceof IGunWeapon;
+  }
+
+  /**
+   * 检查指定手是否持有枪械武器
+   *
+   * @param livingEntity 生物对象
+   * @param isHandUsed   是否为主手
+   * @return 如果指定手持有枪械武器则返回true，否则返回false
+   */
+  public static boolean isHoldGunWeapon(LivingEntity livingEntity, boolean isHandUsed) {
+    return (isHandUsed ? livingEntity.getMainHandItem().getItem() : livingEntity.getOffhandItem().getItem()) instanceof IGunWeapon;
+  }
+
+  /**
+   * 检查指定手是否持有枪械武器
+   *
+   * @param livingEntity 生物对象
+   * @param handUsed     使用的手（主手或副手）
+   * @return 如果指定手持有枪械武器则返回true，否则返回false
+   */
+  public static boolean isHoldGunWeapon(LivingEntity livingEntity, InteractionHand handUsed) {
+    return isHoldGunWeapon(livingEntity, handUsed == InteractionHand.MAIN_HAND);
+  }
+
+  /**
+   * 获取指定手的攻击速度
+   *
+   * @param player     玩家对象
+   * @param isHandUsed 是否为主手
+   * @return 指定手的攻击速度
+   */
+  public static double getAttackSpeed(Player player, boolean isHandUsed) {
+    return player.getAttributeValue(Attributes.ATTACK_SPEED) + player.getAttributeValue(isHandUsed ? ModAttributes.ATTACK_SPEED_MAIN_HAND : ModAttributes.ATTACK_SPEED_OFF_HAND);
   }
 }

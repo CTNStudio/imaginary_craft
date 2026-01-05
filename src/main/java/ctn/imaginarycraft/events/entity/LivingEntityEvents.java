@@ -62,8 +62,9 @@ public final class LivingEntityEvents {
     LivingEntity entity = event.getEntity();
     EquipmentSlot slot = event.getSlot();
     if (entity instanceof Player player) {
-      GunWeaponUtil.setIsLeftKeyAttack(player, true);
-      GunWeaponUtil.resetChargeUp(player);
+      boolean isHandUsed = slot == EquipmentSlot.MAINHAND;
+      GunWeaponUtil.setIsAttack(player, true, isHandUsed);
+      GunWeaponUtil.resetChargeUp(player, isHandUsed);
       PlayerTimingRun data = player.getData(ModAttachments.PLAYER_TIMING_RUN);
       data.removeTimingRun(slot);
       data.removeTimingRun(GunWeaponUtil.GUN_SHOOT_MODIFY_TICK);

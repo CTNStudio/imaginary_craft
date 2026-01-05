@@ -46,7 +46,7 @@ public abstract class EgoWeaponRegisterUtil {
     BiFunction<Item.Properties, RemoteEgoWeaponItem.Builder, I> item
   ) {
     var remoteBuilder = builder
-      .attackInterval(remoteTemplateType.getAttackSpeed())
+      .attackIntervalMainHand(remoteTemplateType.getAttackSpeed())
       .attackDistance(remoteTemplateType.getAttackDistance());
     return registerRemote(id, zhName, lcLevelType, remoteTemplateType, properties, remoteBuilder, item);
   }
@@ -129,7 +129,17 @@ public abstract class EgoWeaponRegisterUtil {
   }
 
   protected static float minuteToSpeedConversion(float attackSpeedTick) {
-    return 20.0f / (attackSpeedTick * 20) - 4;
+    // 防止除零错误和负数输入
+    if (attackSpeedTick <= 0) {
+      return 0; // 或者根据实际情况返回合适的默认值
+    }
+
+    // 将每分钟攻击次数转换为游戏速度值
+    // 基础转换公式: ticks/20秒 -> 每秒攻击次数，然后减去基准值4
+    final float TICKS_PER_SECOND = 20.0f;
+    final float BASE_VALUE = 4.0f;
+
+    return TICKS_PER_SECOND / (attackSpeedTick * TICKS_PER_SECOND) - BASE_VALUE;
   }
 
   public enum SpecialTemplateType implements Type {

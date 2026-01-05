@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.client.gui.hudlayers;
 
+import ctn.imaginarycraft.api.IGunWeapon;
 import ctn.imaginarycraft.client.gui.widget.ImageProgressBar;
 import ctn.imaginarycraft.common.item.ego.weapon.remote.MagicBulletWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -8,7 +9,10 @@ import net.minecraft.client.AttackIndicatorStatus;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class GunChargeUpHudLayer extends BasicHudLayer {
 
@@ -24,7 +28,11 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
   public static final GunChargeUpHudLayer INSTANCE_HOTBAR = new GunChargeUpHudLayer(AttackIndicatorStatus.HOTBAR);
 
   private final AttackIndicatorStatus attackIndicatorStatus;
-  private float gunChargeUpPercentageValue;
+  private float mainHandValue;
+  private float offHandValue;
+  private HumanoidArm mainArm = HumanoidArm.RIGHT;
+  private ItemStack mainHandItem = ItemStack.EMPTY;
+  private ItemStack offHandItem = ItemStack.EMPTY;
 
   public GunChargeUpHudLayer(AttackIndicatorStatus attackIndicatorStatus) {
     super();
@@ -36,22 +44,49 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
 
   @Override
   protected void renderDrawLayer(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
+    if (mainHandItem.isEmpty() && offHandItem.isEmpty()) {
+      return;
+    }
+    final Item mainHandItemItem = mainHandItem.getItem();
+    final Item offHandItemItem = offHandItem.getItem();
+    final boolean isMainArmRight = mainArm == HumanoidArm.RIGHT;
+
     switch (attackIndicatorStatus) {
       case CROSSHAIR -> {
-        guiGraphics.blitSprite(REMOTE_BOTTOM, leftPos, topPos, 16, 16);
-        ResourceLocation texture = REMOTE_GUN;
-        if (player.getMainHandItem().getItem() instanceof MagicBulletWeaponItem) {
-          texture = REMOTE_MAGIC_BULLET;
+        if (!mainHandItem.isEmpty() && mainHandItemItem instanceof IGunWeapon) {
+          int x = leftPos + (isMainArmRight ? -16 / 2 + 15 : -16 / 2 - 15);
+          guiGraphics.blitSprite(REMOTE_BOTTOM, x, topPos, 16, 16);
+          ResourceLocation texture;
+          if (mainHandItemItem instanceof MagicBulletWeaponItem) {
+            texture = REMOTE_MAGIC_BULLET;
+          } else {
+            texture = REMOTE_GUN;
+          }
+          ImageProgressBar.renderProgressBar(guiGraphics, texture, x, topPos, 16, 16, mainHandValue, 1, true, true);
         }
-        ImageProgressBar.renderProgressBar(guiGraphics, texture, leftPos, topPos, 16, 16, gunChargeUpPercentageValue, 1, true, true);
+        if (!offHandItem.isEmpty() && offHandItemItem instanceof IGunWeapon) {
+          int x = leftPos + (!isMainArmRight ? -16 / 2 + 15 : -16 / 2 - 15);
+          guiGraphics.blitSprite(REMOTE_BOTTOM, x, topPos, 16, 16);
+          ImageProgressBar.renderProgressBar(guiGraphics, REMOTE_GUN, x, topPos, 16, 16, offHandValue, 1, true, true);
+        }
       }
       case HOTBAR -> {
-        guiGraphics.blitSprite(BIG_REMOTE_BOTTOM, leftPos, topPos, 32, 32);
-        ResourceLocation texture = BIG_REMOTE_GUN;
-        if (player.getMainHandItem().getItem() instanceof MagicBulletWeaponItem) {
-          texture = BIG_REMOTE_MAGIC_BULLET;
+        if (!mainHandItem.isEmpty() && mainHandItemItem instanceof IGunWeapon) {
+          int x = leftPos + (!isMainArmRight ? -91 - 29 : 91);
+          guiGraphics.blitSprite(BIG_REMOTE_BOTTOM, x, topPos, 32, 32);
+          ResourceLocation texture;
+          if (mainHandItemItem instanceof MagicBulletWeaponItem) {
+            texture = BIG_REMOTE_MAGIC_BULLET;
+          } else {
+            texture = BIG_REMOTE_GUN;
+          }
+          ImageProgressBar.renderProgressBar(guiGraphics, texture, x, topPos, 32, 32, mainHandValue, 1, true, true);
         }
-        ImageProgressBar.renderProgressBar(guiGraphics, texture, leftPos, topPos, 32, 32, gunChargeUpPercentageValue, 1, true, true);
+        if (!offHandItem.isEmpty() && offHandItemItem instanceof IGunWeapon) {
+          int x = leftPos + (isMainArmRight ? -91 - 29 : 91);
+          guiGraphics.blitSprite(BIG_REMOTE_BOTTOM, x, topPos, 32, 32);
+          ImageProgressBar.renderProgressBar(guiGraphics, BIG_REMOTE_GUN, x, topPos, 32, 32, offHandValue, 1, true, true);
+        }
       }
     }
   }
@@ -59,9 +94,40 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
   @Override
   public void init(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
     super.init(guiGraphics, deltaTracker);
-    float gunChargeUpPercentageValue = GunWeaponUtil.getChargeUpPercentage(player);
-    if (this.gunChargeUpPercentageValue != gunChargeUpPercentageValue) {
-      this.gunChargeUpPercentageValue = gunChargeUpPercentageValue;
+
+    ItemStack mainHandItem = player.getMainHandItem();
+    if (mainHandItem.isEmpty()) {
+      if (this.mainHandItem != ItemStack.EMPTY) {
+        this.mainHandItem = ItemStack.EMPTY;
+      }
+    } else if (mainHandItem.getItem() instanceof IGunWeapon) {
+      float mainHandValue = GunWeaponUtil.getChargeUpPercentage(player, InteractionHand.MAIN_HAND);
+      if (this.mainHandValue != mainHandValue) {
+        this.mainHandValue = mainHandValue;
+      }
+      if (!ItemStack.isSameItem(mainHandItem, this.mainHandItem)) {
+        this.mainHandItem = mainHandItem;
+      }
+    }
+
+    ItemStack offHandItem = player.getOffhandItem();
+    if (offHandItem.isEmpty()) {
+      if (this.offHandItem != ItemStack.EMPTY) {
+        this.offHandItem = ItemStack.EMPTY;
+      }
+    } else if (offHandItem.getItem() instanceof IGunWeapon iGunWeapon && iGunWeapon.isOffHandShoot(player, offHandItem)) {
+      float offHandValue = GunWeaponUtil.getChargeUpPercentage(player, InteractionHand.OFF_HAND);
+      if (this.offHandValue != offHandValue) {
+        this.offHandValue = offHandValue;
+      }
+      if (!ItemStack.isSameItem(offHandItem, this.offHandItem)) {
+        this.offHandItem = offHandItem;
+      }
+    }
+
+    HumanoidArm mainArm = player.getMainArm();
+    if (mainArm != this.mainArm) {
+      this.mainArm = mainArm;
     }
   }
 
@@ -72,12 +138,7 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
       return;
     }
     if (isWidthChange) {
-      switch (attackIndicatorStatus) {
-        case CROSSHAIR -> setLeftPos(newScreenWidth / 2 - 16 / 2 + 15);
-        case HOTBAR ->
-          setLeftPos(newScreenWidth / 2 + (player.getMainArm() != HumanoidArm.RIGHT ? -91 - 29 : 91));
-        default -> throw new IllegalStateException("Unexpected value: " + attackIndicatorStatus);
-      }
+      setLeftPos(newScreenWidth / 2);
     }
     if (isHeightChange) {
       switch (attackIndicatorStatus) {
@@ -86,23 +147,5 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
         default -> throw new IllegalStateException("Unexpected value: " + attackIndicatorStatus);
       }
     }
-  }
-
-  @Override
-  public int getWidth() {
-    return switch (attackIndicatorStatus) {
-      case CROSSHAIR -> 16;
-      case HOTBAR -> 32;
-      default -> throw new IllegalStateException("Unexpected value: " + attackIndicatorStatus);
-    };
-  }
-
-  @Override
-  public int getHeight() {
-    return switch (attackIndicatorStatus) {
-      case CROSSHAIR -> 16;
-      case HOTBAR -> 32;
-      default -> throw new IllegalStateException("Unexpected value: " + attackIndicatorStatus);
-    };
   }
 }

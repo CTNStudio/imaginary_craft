@@ -21,25 +21,41 @@ public final class ModAttributes extends AttributeRegisterUtil {
   public static final double THE_SOUL_VULNERABLE_DEFAULT_VALUE = 2.0;
 
   /**
+   * 攻击速度（主手）
+   * <p>
+   * 用物品攻击时处理冷却速度。该数值代表每秒可施展的满强度攻击次数
+   */
+  public static final DeferredHolder<Attribute, RangedAttribute> ATTACK_SPEED_MAIN_HAND = register("attack_speed_main_hand", function ->
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), PHYSICS_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
+  /**
+   * 攻击速度（副手）
+   * <p>
+   * 用物品攻击时处理冷却速度。该数值代表每秒可施展的满强度攻击次数
+   */
+  public static final DeferredHolder<Attribute, RangedAttribute> ATTACK_SPEED_OFF_HAND = register("attack_speed_off_hand", function ->
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), PHYSICS_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
+
+  // TODO 出不是百分比的对应属性
+  /**
    * 物理易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> PHYSICS_VULNERABLE = register("physics_vulnerable", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), PHYSICS_VULNERABLE_DEFAULT_VALUE, -10, 10);
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), PHYSICS_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
   /**
    * 精神易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> SPIRIT_VULNERABLE = register("spirit_vulnerable", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), SPIRIT_VULNERABLE_DEFAULT_VALUE, -10, 10);
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), SPIRIT_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
   /**
    * 侵蚀易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> EROSION_VULNERABLE = register("erosion_vulnerable", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), EROSION_VULNERABLE_DEFAULT_VALUE, -10, 10);
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), EROSION_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
   /**
    * 灵魂易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> THE_SOUL_VULNERABLE = register("the_soul_vulnerable", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), THE_SOUL_VULNERABLE_DEFAULT_VALUE, -10, 10);
+    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), THE_SOUL_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
 
   /// 理智
   /**

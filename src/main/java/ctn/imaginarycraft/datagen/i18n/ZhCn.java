@@ -47,6 +47,8 @@ public final class ZhCn extends DatagenI18n {
     add(LivingEntityVulnerable.THE_SOUL_KEY, "灵魂易伤");
 
     //region 属性
+    add(ModAttributes.ATTACK_SPEED_MAIN_HAND.get(), "主手攻击速度");
+    add(ModAttributes.ATTACK_SPEED_OFF_HAND.get(), "副手攻击速度");
     add(ModAttributes.PHYSICS_VULNERABLE.get(), "物理易伤");
     add(ModAttributes.SPIRIT_VULNERABLE.get(), "精神易伤");
     add(ModAttributes.EROSION_VULNERABLE.get(), "侵蚀易伤");

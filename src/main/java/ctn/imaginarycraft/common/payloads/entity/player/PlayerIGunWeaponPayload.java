@@ -20,10 +20,20 @@ public record PlayerIGunWeaponPayload(byte operation) implements CustomPacketPay
     PlayerIGunWeaponPayload::new
   );
 
+  /**
+   * @param hand  0b1:主手 0b0:副手
+   * @param sim   0b1:瞄准 0b0:不瞄准
+   * @param shoot 0b1:射击 0b0:不射击
+   */
   public PlayerIGunWeaponPayload(InteractionHand hand, boolean sim, boolean shoot) {
     this((byte) (setHand(hand) | setSim(sim) | setShoot(shoot)));
   }
 
+  /**
+   * @param isMainHand 0b1:主手 0b0:副手
+   * @param sim        0b1:瞄准 0b0:不瞄准
+   * @param shoot      0b1:射击 0b0:不射击
+   */
   public PlayerIGunWeaponPayload(boolean isMainHand, boolean sim, boolean shoot) {
     this((byte) ((isMainHand ? 0b1 : 0b0) | setSim(sim) | setShoot(shoot)));
   }

@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template.remote;
 
-import com.mojang.datafixers.util.Function3;
 import ctn.imaginarycraft.api.IGunWeapon;
 import ctn.imaginarycraft.api.PlayerTimingRun;
 import ctn.imaginarycraft.util.GunWeaponUtil;
@@ -18,8 +17,6 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.model.GeoModel;
 
-import java.util.function.Function;
-
 /**
  * 枪械EGO武器物品抽象类
  * 继承自GeoRemoteEgoWeaponItem并实现IGunWeapon接口，提供枪械的基本功能实现
@@ -32,6 +29,11 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
 
   public GunEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
     super(itemProperties, egoWeaponBuilder, modPath);
+  }
+
+  @Override
+  public boolean isOffHandShoot(@NotNull Player player, @NotNull ItemStack stack) {
+    return false;
   }
 
   //region Using
@@ -47,13 +49,16 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
    */
   @Override
   public @NotNull InteractionResultHolder<ItemStack> use(@NotNull Level world, Player playerEntity, @NotNull InteractionHand handUsed) {
-    ItemStack itemStackInHand = playerEntity.getItemInHand(handUsed);
-    if (isGunAim(playerEntity, itemStackInHand)) {
-      gunAim(playerEntity, itemStackInHand);
-      playerEntity.startUsingItem(handUsed);
-      PlayerTimingRun.getInstance(playerEntity).removeTimingRun(handUsed);
+    ItemStack itemStack = playerEntity.getItemInHand(handUsed);
+    if (!isGunAim(playerEntity, itemStack) || !isOffHandShoot(playerEntity, itemStack) && handUsed == InteractionHand.OFF_HAND) {
+      return InteractionResultHolder.pass(itemStack);
     }
-    return InteractionResultHolder.pass(itemStackInHand);
+
+    gunAim(playerEntity, itemStack, handUsed);
+    playerEntity.startUsingItem(handUsed);
+    PlayerTimingRun.getInstance(playerEntity).removeTimingRun(handUsed);
+
+    return InteractionResultHolder.success(itemStack);
   }
 
   /**
@@ -68,7 +73,7 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
   @Override
   public void onUseTick(@NotNull Level world, @NotNull LivingEntity usingEntity, @NotNull ItemStack itemStack, int remainingUseDuration) {
     if (usingEntity instanceof ServerPlayer player) {
-      GunWeaponUtil.modifyChargeUpValue(player, 1);
+      GunWeaponUtil.modifyChargeUpValue(player, 1, usingEntity.getUsedItemHand());
     }
   }
 
@@ -95,7 +100,7 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
    * @return 返回使用完成后的物品栈
    */
   @Override
-  public ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
+  public @NotNull ItemStack finishUsingItem(ItemStack stack, Level level, LivingEntity livingEntity) {
     onStopUsing(stack, livingEntity);
     return super.finishUsingItem(stack, level, livingEntity);
   }
@@ -121,13 +126,13 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
    * @param stack  停止使用的物品栈
    * @param entity 使用物品的实体
    */
-  public void onStopUsing(ItemStack stack, LivingEntity entity) {
+  protected void onStopUsing(ItemStack stack, LivingEntity entity) {
     if (!(entity instanceof ServerPlayer player)) {
       return;
     }
 
     if (isGunAim(player, stack)) {
-      gunEndAim(player, stack);
+      gunEndAim(player, stack, entity.getUsedItemHand());
     }
   }
   //endregion
@@ -140,37 +145,28 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
 
   @Override
   public boolean isGunAimMove(Player player, ItemStack itemStack) {
-    return false;
+    return true;
   }
 
   /**
    * 开始瞄准状态
    * 初始化瞄准相关的参数，重置充能值并设置左键攻击状态
-   *
-   * @param playerEntity 玩家实体
-   * @param itemStack    枪械物品栈
    */
-  @Override
-  public void gunAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
-    if (playerEntity instanceof ServerPlayer player) {
-      GunWeaponUtil.resetChargeUp(player);
-      GunWeaponUtil.setIsLeftKeyAttack(player, true);
-    }
+  protected void gunAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
+    GunWeaponUtil.setIsAttack(playerEntity, true, handUsed);
   }
 
   /**
    * 执行瞄准射击操作
    * 检查瞄准射击条件，如果满足则执行瞄准射击逻辑
    *
-   * @param playerEntity 玩家实体
-   * @param itemStack    枪械物品栈
-   * @param handUsed     使用的手（主手或副手）
    * @return 如果成功执行瞄准射击则返回true，否则返回false
    */
   @Override
   public boolean gunAimShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
-    float chargeUpPercentage = GunWeaponUtil.getChargeUpPercentage(playerEntity);
-    if (!gunAimShootCondition(playerEntity, itemStack, handUsed, chargeUpPercentage)) {
+    float chargeUpPercentage = GunWeaponUtil.getChargeUpPercentage(playerEntity, handUsed);
+    if (!gunBasEAimShootCondition(playerEntity, itemStack, handUsed, chargeUpPercentage)) {
       return false;
     }
     return gunAimShootExecute(playerEntity, itemStack, handUsed, chargeUpPercentage);
@@ -180,14 +176,9 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
    * 检查瞄准射击的条件
    * 验证当前充能百分比是否满足瞄准射击要求
    *
-   * @param playerEntity       玩家实体
-   * @param itemStack          枪械物品栈
-   * @param handUsed           使用的手（主手或副手）
-   * @param chargeUpPercentage 当前充能百分比
    * @return 如果满足瞄准射击条件则返回true，否则返回false
    */
-  @Override
-  public boolean gunAimShootCondition(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
+  protected boolean gunBasEAimShootCondition(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
     return chargeUpPercentage >= 1;
   }
 
@@ -195,17 +186,12 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
    * 执行瞄准射击的具体操作
    * 在服务器端发射弹射物并重置充能状态
    *
-   * @param playerEntity       玩家实体
-   * @param itemStack          枪械物品栈
-   * @param handUsed           使用的手（主手或副手）
-   * @param chargeUpPercentage 当前充能百分比
    * @return 如果成功执行瞄准射击则返回true，否则返回false
    */
-  @Override
-  public boolean gunAimShootExecute(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
+  protected boolean gunAimShootExecute(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
     if (playerEntity.level() instanceof ServerLevel serverLevel) {
       this.shoot(serverLevel, playerEntity, playerEntity.getUsedItemHand(), itemStack, getProjectileVelocity(playerEntity, itemStack, handUsed), getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
-      GunWeaponUtil.resetChargeUp(playerEntity);
+      GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
     }
     return true;
   }
@@ -214,13 +200,10 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
    * 结束瞄准状态
    * 清理瞄准相关状态，当前为空实现
    *
-   * @param playerEntity 玩家实体
-   * @param itemStack    枪械物品栈
    */
-  @Override
-  public void gunEndAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
-    GunWeaponUtil.setIsLeftKeyAttack(playerEntity, true);
-    GunWeaponUtil.resetChargeUp(playerEntity);
+  protected void gunEndAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    GunWeaponUtil.setIsAttack(playerEntity, true, handUsed);
+    GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
   }
   //endregion
 
@@ -230,98 +213,65 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
    * 执行普通射击操作
    * 检查射击条件，如果满足则执行射击逻辑
    *
-   * @param playerEntity 玩家实体
-   * @param itemStack    枪械物品栈
-   * @param handUsed     使用的手（主手或副手）
    * @return 如果成功执行射击则返回true，否则返回false
    */
   @Override
   public boolean gunShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
-    float chargeUpPercentage = GunWeaponUtil.getChargeUpPercentage(playerEntity);
+    float chargeUpPercentage = GunWeaponUtil.getChargeUpPercentage(playerEntity, handUsed);
     if (!gunShootCondition(playerEntity, itemStack, handUsed, chargeUpPercentage)) {
       return false;
     }
-    return gunShootExecute(playerEntity, itemStack, handUsed, chargeUpPercentage);
+
+    if (playerEntity.level() instanceof ServerLevel serverLevel) {
+      int gunShootExecuteTick = gunShootExecuteTick(playerEntity, itemStack, handUsed);
+      PlayerTimingRun.getInstance(playerEntity).addTimingRun(handUsed, PlayerTimingRun.createTimingRunBilder()
+        .tickRun((tick, maxTick, player) -> gunShootTickRun(tick, gunShootExecuteTick, maxTick, player, itemStack, handUsed))
+        .build(player -> gunShootExecute(playerEntity, itemStack, handUsed, serverLevel), gunShootExecuteTick));
+    }
+
+    GunWeaponUtil.setIsAttack(playerEntity, false, handUsed);
+    GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
+    return true;
+  }
+
+  protected int gunShootExecute(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, ServerLevel serverLevel) {
+    this.shoot(serverLevel, playerEntity, handUsed, itemStack, getProjectileVelocity(playerEntity, itemStack, handUsed), getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
+    GunWeaponUtil.setIsAttack(playerEntity, true, handUsed);
+    GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
+    return 0;
+  }
+
+  protected static int gunShootTickRun(int tick, int gunShootExecuteTick, int maxTick, @NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    int value = gunShootExecuteTick / maxTick;
+    GunWeaponUtil.modifyChargeUpValue(playerEntity, value, handUsed);
+    return tick - 1;
   }
 
   /**
    * 检查普通射击的条件
    * 验证玩家是否可以进行左键攻击
    *
-   * @param playerEntity       玩家实体
-   * @param itemStack          枪械物品栈
-   * @param handUsed           使用的手（主手或副手）
-   * @param chargeUpPercentage 当前充能百分比
    * @return 如果满足射击条件则返回true，否则返回false
    */
-  @Override
-  public boolean gunShootCondition(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
-    return GunWeaponUtil.isIsLeftKeyAttack(playerEntity);
-  }
-
-  /**
-   * 执行普通射击的具体操作
-   * 在服务器端添加定时运行任务以处理射击逻辑
-   *
-   * @param playerEntity       玩家实体
-   * @param itemStack          枪械物品栈
-   * @param handUsed           使用的手（主手或副手）
-   * @param chargeUpPercentage 当前充能百分比
-   * @return 如果成功执行射击则返回true，否则返回false
-   */
-  @Override
-  public boolean gunShootExecute(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
-    if (!(playerEntity.level() instanceof ServerLevel serverLevel)) {
-      return true;
-    }
-    gunShootExecuteFunction(playerEntity, handUsed, (tick, max, player) -> {
-      GunWeaponUtil.modifyChargeUpPercentage(player, 1f / (max));
-      return tick - 1;
-    }, player -> {
-      this.shoot(serverLevel, playerEntity, playerEntity.getUsedItemHand(), itemStack, getProjectileVelocity(playerEntity, itemStack, handUsed), getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
-      GunWeaponUtil.setIsLeftKeyAttack(playerEntity, true);
-      GunWeaponUtil.resetChargeUp(playerEntity);
-      return 0;
-    }, shootTick(playerEntity, itemStack, handUsed));
-    return true;
-  }
-
-  protected void gunShootExecuteFunction(
-    @NotNull Player playerEntity,
-    @NotNull InteractionHand handUsed,
-    Function3<Integer, Integer, Player, Integer> tickRun,
-    Function<Player, Integer> resultRun, int maxTick
-  ) {
-    PlayerTimingRun.getInstance(playerEntity).addTimingRun(handUsed, PlayerTimingRun.createTimingRunBilder().tickRun(tickRun).build(resultRun, maxTick));
-    GunWeaponUtil.setIsLeftKeyAttack(playerEntity, false);
-    GunWeaponUtil.resetChargeUp(playerEntity);
+  protected boolean gunShootCondition(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
+    return GunWeaponUtil.isAttack(playerEntity, handUsed);
   }
 
   /**
    * 获取射击所需的tick数
    * 根据玩家速度计算射击间隔
    *
-   * @param player   玩家实体
-   * @param stack    枪械物品栈
-   * @param usedHand 使用的手（主手或副手）
    * @return 返回射击所需的tick数
    */
   @Override
-  public int shootTick(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand usedHand) {
-    return (int) (GunWeaponUtil.getMaxChargeUpValue(player));// TODO 需要调整
+  public int gunShootExecuteTick(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand handUsed) {
+    return GunWeaponUtil.getMaxChargeUpValue(player, handUsed);
   }
 
   /**
    * 射出弹射物的具体实现
    * 设置弹射物的发射角度、速度和精度
    *
-   * @param shooter    发射者实体
-   * @param projectile 被发射的弹射物
-   * @param index      弹射物索引
-   * @param velocity   发射速度
-   * @param inaccuracy 发射精度（数值越大越不准确）
-   * @param angle      发射角度
-   * @param target     目标实体（可为空）
    */
   @Override
   protected void shootProjectile(LivingEntity shooter, Projectile projectile, int index, float velocity, float inaccuracy, float angle, @Nullable LivingEntity target) {
@@ -332,9 +282,6 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
    * 处理左键点击实体的事件
    * 允许对实体进行攻击操作
    *
-   * @param itemStack    当前物品栈
-   * @param playerEntity 玩家实体
-   * @param entity       被点击的实体
    * @return 返回是否允许攻击该实体
    */
   @Override

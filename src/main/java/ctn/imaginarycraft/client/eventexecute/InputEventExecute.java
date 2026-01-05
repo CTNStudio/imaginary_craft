@@ -12,53 +12,49 @@ import net.minecraft.world.item.ItemStack;
 public final class InputEventExecute {
   public static void iGunWeapon(LocalPlayer player, Minecraft minecraft) {
     Options options = minecraft.options;
-    if (!options.keyAttack.isDown()) {
-      return;
-    }
-    use:
+    useDown:
     if (options.keyUse.isDown()) {
-      if (!player.isUsingItem()) {
-        return;
+      useDown1:
+      if (options.keyAttack.isDown()) {
+        if (!player.isUsingItem()) {
+          break useDown1;
+        }
+
+        ItemStack useItem = player.getUseItem();
+        if (useItem.isEmpty() ||
+          !(useItem.getItem() instanceof IGunWeapon iGunWeapon) ||
+          !iGunWeapon.isGunAim(player, useItem)) {
+          break useDown1;
+        }
+
+        InteractionHand usedItemHand = player.getUsedItemHand();
+        if (!iGunWeapon.gunAimShoot(player, useItem, usedItemHand)) {
+          break useDown1;
+        }
+
+        PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(usedItemHand, true, true));
+        break useDown1;
       }
-      ItemStack useItem = player.getUseItem();
-      if (useItem.isEmpty() || !(useItem.getItem() instanceof IGunWeapon iGunWeapon)) {
-        return;
+
+      ItemStack offHandItem = player.getOffhandItem();
+      if (offHandItem.isEmpty() ||
+        !(offHandItem.getItem() instanceof IGunWeapon iGunWeapon) ||
+        !iGunWeapon.isOffHandShoot(player, offHandItem) ||
+        !iGunWeapon.gunShoot(player, offHandItem, InteractionHand.OFF_HAND)) {
+        break useDown;
       }
-      if (!iGunWeapon.isGunAim(player, useItem)) {
-        break use;
-      }
-      InteractionHand usedItemHand = player.getUsedItemHand();
-      if (!iGunWeapon.gunAimShoot(player, useItem, usedItemHand)) {
-        return;
-      }
-      PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(usedItemHand, true, true));
-      return;
+      PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(InteractionHand.OFF_HAND, false, true));
     }
 
-    // 查找可射击的枪械
-    IGunWeapon gunWeapon;
-    ItemStack weaponItemStack;
-    InteractionHand usedHand;
-
-    ItemStack mainHandItem = player.getMainHandItem();
-    if (!mainHandItem.isEmpty() && mainHandItem.getItem() instanceof IGunWeapon mainHandGun) {
-      gunWeapon = mainHandGun;
-      weaponItemStack = mainHandItem;
-      usedHand = InteractionHand.MAIN_HAND;
-    } else {
-      ItemStack offhandItem = player.getOffhandItem();
-      if (!offhandItem.isEmpty() && offhandItem.getItem() instanceof IGunWeapon offhandGun) {
-        gunWeapon = offhandGun;
-        weaponItemStack = offhandItem;
-        usedHand = InteractionHand.OFF_HAND;
-      } else {
+    if (options.keyAttack.isDown()) {
+      ItemStack mainHandItem = player.getMainHandItem();
+      if (mainHandItem.isEmpty() ||
+        !(mainHandItem.getItem() instanceof IGunWeapon mainHandGun) ||
+        !mainHandGun.gunShoot(player, mainHandItem, InteractionHand.MAIN_HAND)) {
         return;
       }
-    }
 
-    if (!gunWeapon.gunShoot(player, weaponItemStack, usedHand)) {
-      return;
+      PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(InteractionHand.MAIN_HAND, false, true));
     }
-    PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(InteractionHand.MAIN_HAND, false, true));
   }
 }

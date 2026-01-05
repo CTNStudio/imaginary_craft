@@ -8,6 +8,7 @@ import ctn.imaginarycraft.util.GunWeaponUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.player.LocalPlayer;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -35,31 +36,30 @@ public final class InputEvents {
   @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void interactionKeyMappingTriggered(InputEvent.InteractionKeyMappingTriggered event) {
     Minecraft instance = Minecraft.getInstance();
-    Player player = instance.player;
-    if (player == null) {
-      return;
-    }
-
-    // 不合并是因为合并会导致难以辨认代码
     if (instance.screen != null) {
       return;
     }
 
-    if (!event.isAttack() || !GunWeaponUtil.isHoldGunWeapon(player)) {
+    LocalPlayer player = instance.player;
+    if (player == null || !GunWeaponUtil.isHoldGunWeapon(player)) {
       return;
     }
 
-//    if (!event.isUseItem() || !player.isUsingItem()) {
-//      return;
-//    }
-//
-//    ItemStack useItem = player.getUseItem();
-//    if (!(useItem.getItem() instanceof IGunWeapon iGunWeapon) || iGunWeapon.isAim(player, useItem)) {
-//      return;
-//    }
+    if (event.isAttack()) {
+      ItemStack mainHandItem = player.getMainHandItem();
+      if (mainHandItem.getItem() instanceof IGunWeapon) {
+        event.setSwingHand(false);
+        event.setCanceled(true);
+      }
+    }
 
-    event.setSwingHand(false);
-    event.setCanceled(true);
+    if (event.isUseItem()) {
+      ItemStack offHandItem = player.getOffhandItem();
+      if (offHandItem.getItem() instanceof IGunWeapon iGunWeapon && iGunWeapon.isOffHandShoot(player, offHandItem)) {
+        event.setSwingHand(false);
+        event.setCanceled(true);
+      }
+    }
   }
 
   /**

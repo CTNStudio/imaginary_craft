@@ -72,16 +72,15 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   }
 
   @Override
-  public boolean gunShootExecute(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
-    if (!(playerEntity.level() instanceof ServerLevel)) {
-      return true;
+  public boolean gunShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    boolean isShoot = super.gunShoot(playerEntity, itemStack, handUsed);
+    if (isShoot && playerEntity instanceof ServerPlayer) {
+      PlayerAnimUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
+        .controllerId(PlayerAnimUtil.WEAPON_STATE)
+        .animationId(SHOOTING)
+        .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
     }
-    super.gunShootExecute(playerEntity, itemStack, handUsed, chargeUpPercentage);
-    PlayerAnimUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
-      .controllerId(PlayerAnimUtil.WEAPON_STATE)
-      .animationId(SHOOTING)
-      .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
-    return true;
+    return isShoot;
   }
 
   @Override
@@ -94,26 +93,20 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
       .controllerId(PlayerAnimUtil.WEAPON_STATE)
       .rawAnimation(GUN_AIM_SHOOT_RAW_ANIMATION)
       .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
-    GunWeaponUtil.resetChargeUp(playerEntity);
+    GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
     return true;
   }
 
   @Override
-  public void gunAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
-    if (!(playerEntity instanceof ServerPlayer)) {
-      return;
-    }
-    super.gunAim(playerEntity, itemStack);
-    PlayerAnimUtil.playRawAnimation(playerEntity, new PlayerRawAnimationPayload.Builder()
+  public void gunAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    super.gunAim(playerEntity, itemStack, handUsed);
+    if (playerEntity instanceof ServerPlayer) {
+      PlayerAnimUtil.playRawAnimation(playerEntity, new PlayerRawAnimationPayload.Builder()
 //      .playSpeed()
-      .controllerId(PlayerAnimUtil.WEAPON_STATE)
-      .rawAnimation(GUN_AIM_RAW_ANIMATION)
-      .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
-  }
-
-  @Override
-  public float getProjectileInaccuracy(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
-    return 0;
+        .controllerId(PlayerAnimUtil.WEAPON_STATE)
+        .rawAnimation(GUN_AIM_RAW_ANIMATION)
+        .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
+    }
   }
 
   @Override
@@ -122,18 +115,19 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   }
 
   @Override
-  public boolean isGunAimMove(Player playerEntity, ItemStack itemStack) {
-    return true;
-  }
-
-  @Override
-  public void gunEndAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack) {
+  public void gunEndAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
     if (!(playerEntity instanceof ServerPlayer)) {
       return;
     }
+    super.gunEndAim(playerEntity, itemStack, handUsed);
     PlayerAnimUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
       .controllerId(PlayerAnimUtil.WEAPON_STATE)
       .animationId(SHOOTING_AIM_TERMINATE)
       .withFade(PlayerAnimUtil.DEFAULT_FADE_OUT));
+  }
+
+  @Override
+  public int gunShootExecuteTick(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand handUsed) {
+    return super.gunShootExecuteTick(player, stack, handUsed);
   }
 }

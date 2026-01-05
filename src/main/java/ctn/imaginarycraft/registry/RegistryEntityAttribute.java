@@ -128,5 +128,8 @@ public final class RegistryEntityAttribute {
     event.add(entityType, ModAttributes.PRUDENCE_POINTS);
     event.add(entityType, ModAttributes.TEMPERANCE_POINTS);
     event.add(entityType, ModAttributes.JUSTICE_POINTS);
+
+    event.add(entityType, ModAttributes.ATTACK_SPEED_MAIN_HAND);
+    event.add(entityType, ModAttributes.ATTACK_SPEED_OFF_HAND);
   }
 }

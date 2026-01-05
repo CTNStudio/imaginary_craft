@@ -2,9 +2,9 @@ package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponItem;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.Projectile;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.model.GeoModel;
 
@@ -24,7 +24,7 @@ public class SolemnLamentWeaponItem extends GunEgoWeaponItem {
   }
 
   @Override
-  protected void shootProjectile(LivingEntity shooterEntity, Projectile projectileEntity, int projectileIndex, float projectileVelocity, float projectileInaccuracy, float shootingAngle, @Nullable LivingEntity targetEntity) {
-
+  public boolean isOffHandShoot(@NotNull Player player, @NotNull ItemStack stack) {
+    return true;
   }
 }

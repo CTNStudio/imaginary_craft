@@ -31,12 +31,12 @@ public final class ModCreativeModeTabs extends CreativeModeTabRegisterUtil {
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EGO_ARMOR = register(
     "ego_armor", "E.G.O 护甲", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
       addRegistryItem(EgoArmorItems.REGISTRY, output), () ->
-      EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chest().get().getDefaultInstance()));
+      EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chestplate().get().getDefaultInstance()));
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ITEMS = register(
     "items", "异想工艺|物品", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) -> {
       addRegistryItem(EgoItems.REGISTRY, output);
       addRegistryItem(ModItems.REGISTRY, output);
       addRegistryItem(ToolItems.REGISTRY, output);
       addRegistryItem(WeaponItems.REGISTRY, output);
-    }, () -> EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chest().get().getDefaultInstance()));
+    }, () -> EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chestplate().get().getDefaultInstance()));
 }

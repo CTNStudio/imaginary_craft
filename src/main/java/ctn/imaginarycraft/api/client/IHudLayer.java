@@ -35,9 +35,13 @@ public abstract class IHudLayer implements LayeredDraw.Layer {
     this.topPos = topPos;
   }
 
-  public abstract int getWidth();
+  public int getWidth() {
+    return -1;
+  }
 
-  public abstract int getHeight();
+  public int getHeight() {
+    return -1;
+  }
 
   public Font getFont() {
     return font;

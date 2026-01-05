@@ -6,6 +6,7 @@ import ctn.imaginarycraft.api.capability.item.IItemLcDamageType;
 import ctn.imaginarycraft.api.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
+import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.ModDataComponents;
 import ctn.imaginarycraft.util.ItemBuilderUtil;
 import net.minecraft.core.BlockPos;
@@ -48,16 +49,17 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
     this.createProjectile = remoteEgoWeaponBuilder.createProjectile;
   }
 
+  // TODO 武器的子弹需要根据这个值来设置最远距离
   @Override
   public int getDefaultProjectileRange() {
     return (int) attackDistance;
   }
 
-  protected float getProjectileInaccuracy(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
-    return Math.max(1F / attackDistance, 0);
+  public float getProjectileInaccuracy(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    return 0;
   }
 
-  protected float getProjectileVelocity(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+  public float getProjectileVelocity(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
     return 10.0F;
   }
 
@@ -171,6 +173,8 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
      * 远程攻击间隔
      */
     public float attackInterval;
+    public float attackIntervalMainHand;
+    public float attackIntervalOffHand;
     /**
      * 远程攻击距离
      */
@@ -186,13 +190,30 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
     /**
      * 远程攻击间隔
      */
-    public Builder attackInterval(float weaponAttackInterval) {
-      this.attackInterval = weaponAttackInterval;
+    public Builder attackIntervalHand(float weaponAttackInterval) {
+      this.attackIntervalMainHand = weaponAttackInterval;
+      this.attackIntervalOffHand = weaponAttackInterval;
       return this;
     }
 
     /**
-     * 远程攻击精准度
+     * 远程攻击间隔
+     */
+    public Builder attackIntervalMainHand(float weaponAttackInterval) {
+      this.attackIntervalMainHand = weaponAttackInterval;
+      return this;
+    }
+
+    /**
+     * 远程攻击间隔
+     */
+    public Builder attackIntervalOffHand(float weaponAttackInterval) {
+      this.attackIntervalOffHand = weaponAttackInterval;
+      return this;
+    }
+
+    /**
+     * 远程攻击距离
      */
     public Builder attackDistance(float weaponAttackDistance) {
       this.attackDistance = weaponAttackDistance;
@@ -209,6 +230,8 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
       ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
       ItemBuilderUtil.addAttributeModifier(builder, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_ID, this.weaponDamage, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
       ItemBuilderUtil.addAttributeModifier(builder, Attributes.ATTACK_SPEED, BASE_ATTACK_SPEED_ID, this.attackInterval, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
+      ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.ATTACK_SPEED_MAIN_HAND, BASE_ATTACK_SPEED_ID, this.attackIntervalMainHand, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.MAINHAND);
+      ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.ATTACK_SPEED_OFF_HAND, BASE_ATTACK_SPEED_ID, this.attackIntervalOffHand, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.OFFHAND);
       return builder.build();
     }
   }

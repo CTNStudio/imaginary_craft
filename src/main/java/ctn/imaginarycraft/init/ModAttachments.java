@@ -24,19 +24,31 @@ public final class ModAttachments extends AttachmentRegisterUtil {
     PlayerTimingRun::new);
 
   /**
-   * 枪械蓄力值
+   * 枪械蓄力值（主手）
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Float>> GUN_CHARGE_UP = registerPlayer("gun_charge_up",
-    (player) -> 0f, builder -> builder
-      .sync(ByteBufCodecs.FLOAT));
-
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> GUN_CHARGE_UP_TICK_MAIN_HAND = registerPlayer("gun_charge_up_tick_main_hand",
+    (player) -> 0, builder -> builder
+      .sync(ByteBufCodecs.INT));
   /**
-   * 枪械是否可以攻击（左键）
+   * 枪械蓄力值（副手）
    */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> IS_GUN_LEFT_KEY_ATTACK = registerPlayer("is_gun_left_key_attack",
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Integer>> GUN_CHARGE_UP_TICK_OFF_HAND = registerPlayer("gun_charge_up_tick_off_hand",
+    (player) -> 0, builder -> builder
+      .sync(ByteBufCodecs.INT));
+  /**
+   * 枪械是否可以攻击（主手）
+   */
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> IS_GUN_ATTACK_MAIN_HAND = registerPlayer("is_gun_left_key_attack_main_hand",
+    (player) -> true, builder -> builder
+      .sync(ByteBufCodecs.BOOL));
+  /**
+   * 枪械是否可以攻击（副手）
+   */
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Boolean>> IS_GUN_ATTACK_OFF_HAND = registerPlayer("is_gun_left_key_attack_off_hand",
     (player) -> true, builder -> builder
       .sync(ByteBufCodecs.BOOL));
 
+  // TODO 待实装
   /**
    * 魔弹使用数量
    */
