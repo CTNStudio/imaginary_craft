@@ -8,7 +8,7 @@ import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.client.util.ParticleUtil;
-import ctn.imaginarycraft.client.util.PlayerAnimUtil;
+import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.common.payloads.entity.player.PlayerDamagePayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.eventexecute.LcDamageEventExecutes;
@@ -69,7 +69,7 @@ public final class LivingEntityEvents {
       data.removeTimingRun(slot);
       data.removeTimingRun(GunWeaponUtil.GUN_SHOOT_MODIFY_TICK);
       if (slot.getType() == EquipmentSlot.Type.HAND) {
-        PlayerAnimUtil.stop(player, PlayerAnimUtil.WEAPON_STATE);
+        PlayerAnimationUtil.stop(player, PlayerAnimationUtil.WEAPON_STATE);
       }
     }
   }

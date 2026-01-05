@@ -8,6 +8,7 @@ import com.zigythebird.playeranimcore.animation.AnimationController;
 import com.zigythebird.playeranimcore.animation.RawAnimation;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
 import com.zigythebird.playeranimcore.animation.layered.modifier.SpeedModifier;
+import com.zigythebird.playeranimcore.api.firstPerson.FirstPersonConfiguration;
 import com.zigythebird.playeranimcore.easing.EasingType;
 import com.zigythebird.playeranimcore.enums.FadeType;
 import ctn.imaginarycraft.api.client.IAnimationController;
@@ -32,7 +33,9 @@ import org.jetbrains.annotations.Nullable;
  * 支持在客户端和服务端之间同步动画状态
  */
 @SuppressWarnings({"LoggingSimilarMessage", "UnusedReturnValue"})
-public final class PlayerAnimUtil {
+public final class PlayerAnimationUtil {
+  public static final FirstPersonConfiguration DEFAULT_FIRST_PERSON_CONFIG = new FirstPersonConfiguration(true, true, true, true);
+
   //region 控制器id
   /**
    * 头部旋转控制器ID
@@ -50,6 +53,11 @@ public final class PlayerAnimUtil {
    * 武器控制器ID
    */
   public static final ResourceLocation WEAPON_STATE = ImaginaryCraft.modRl("weapon_state");
+
+  /**
+   * 第一人称控制器ID
+   */
+  public static final ResourceLocation FIRST_PERSON = ImaginaryCraft.modRl("first_person");
   //endregion
 
   public static final PlayerAnimStandardFadePlayerAnim DEFAULT_FADE_IN = new PlayerAnimStandardFadePlayerAnim(3, EasingType.EASE_IN_OUT_SINE, null, FadeType.FADE_IN);
@@ -133,6 +141,12 @@ public final class PlayerAnimUtil {
     throw new UnsupportedOperationException("Not implemented");
   }
 
+  public static void playAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
+                                         ResourceLocation animationId,
+                                         @Nullable AbstractFadeModifier abstractFadeModifier) {
+    playAnimationClient(clientPlayer, controllerId, animationId, 0, 1, abstractFadeModifier);
+  }
+
   /**
    * 在客户端播放动画
    *
@@ -201,6 +215,12 @@ public final class PlayerAnimUtil {
     }
 
     throw new UnsupportedOperationException("Not implemented");
+  }
+
+  public static void playRawAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
+                                            PlayerAnimRawAnimation rawAnimation,
+                                            @Nullable AbstractFadeModifier abstractFadeModifier) {
+    playRawAnimationClient(clientPlayer, controllerId, rawAnimation, 0, 1, abstractFadeModifier);
   }
 
   /**

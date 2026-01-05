@@ -3,7 +3,7 @@ package ctn.imaginarycraft.common.item.ego.weapon.remote;
 import com.zigythebird.playeranimcore.animation.Animation;
 import ctn.imaginarycraft.api.client.playeranimcore.AnimCollection;
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimRawAnimation;
-import ctn.imaginarycraft.client.util.PlayerAnimUtil;
+import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponItem;
 import ctn.imaginarycraft.common.payloads.entity.player.PlayerAnimationPayload;
@@ -75,11 +75,11 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   public boolean gunShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
     boolean isShoot = super.gunShoot(playerEntity, itemStack, handUsed);
     if (isShoot && playerEntity instanceof ServerPlayer) {
-      PlayerAnimUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
+      PlayerAnimationUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
         .playSpeed(22f / gunShootExecuteTick(playerEntity, itemStack, handUsed))
-        .controllerId(PlayerAnimUtil.WEAPON_STATE)
+        .controllerId(PlayerAnimationUtil.WEAPON_STATE)
         .animationId(SHOOTING)
-        .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
+        .withFade(PlayerAnimationUtil.DEFAULT_FADE_IN));
     }
     return isShoot;
   }
@@ -90,11 +90,11 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
       return true;
     }
     super.gunAimShootExecute(playerEntity, itemStack, handUsed, chargeUpPercentage);
-    PlayerAnimUtil.playRawAnimation(playerEntity, new PlayerRawAnimationPayload.Builder()
+    PlayerAnimationUtil.playRawAnimation(playerEntity, new PlayerRawAnimationPayload.Builder()
       .playSpeed(13f / gunShootExecuteTick(playerEntity, itemStack, handUsed))
-      .controllerId(PlayerAnimUtil.WEAPON_STATE)
+      .controllerId(PlayerAnimationUtil.WEAPON_STATE)
       .rawAnimation(GUN_AIM_SHOOT_RAW_ANIMATION)
-      .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
+      .withFade(PlayerAnimationUtil.DEFAULT_FADE_IN));
     GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
     return true;
   }
@@ -103,11 +103,11 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   public void gunAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
     super.gunAim(playerEntity, itemStack, handUsed);
     if (playerEntity instanceof ServerPlayer) {
-      PlayerAnimUtil.playRawAnimation(playerEntity, new PlayerRawAnimationPayload.Builder()
+      PlayerAnimationUtil.playRawAnimation(playerEntity, new PlayerRawAnimationPayload.Builder()
         .playSpeed(13f / gunShootExecuteTick(playerEntity, itemStack, handUsed))
-        .controllerId(PlayerAnimUtil.WEAPON_STATE)
+        .controllerId(PlayerAnimationUtil.WEAPON_STATE)
         .rawAnimation(GUN_AIM_RAW_ANIMATION)
-        .withFade(PlayerAnimUtil.DEFAULT_FADE_IN));
+        .withFade(PlayerAnimationUtil.DEFAULT_FADE_IN));
     }
   }
 
@@ -122,11 +122,11 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
       return;
     }
     super.gunEndAim(playerEntity, itemStack, handUsed);
-    PlayerAnimUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
+    PlayerAnimationUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
       .playSpeed(13f / gunShootExecuteTick(playerEntity, itemStack, handUsed))
-      .controllerId(PlayerAnimUtil.WEAPON_STATE)
+      .controllerId(PlayerAnimationUtil.WEAPON_STATE)
       .animationId(SHOOTING_AIM_TERMINATE)
-      .withFade(PlayerAnimUtil.DEFAULT_FADE_OUT));
+      .withFade(PlayerAnimationUtil.DEFAULT_FADE_OUT));
   }
 
   @Override

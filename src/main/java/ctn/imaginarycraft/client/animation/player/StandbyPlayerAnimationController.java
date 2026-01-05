@@ -5,7 +5,7 @@ import com.zigythebird.playeranimcore.animation.AnimationController;
 import com.zigythebird.playeranimcore.animation.AnimationData;
 import com.zigythebird.playeranimcore.enums.PlayState;
 import ctn.imaginarycraft.api.client.playeranimcore.AnimCollection;
-import ctn.imaginarycraft.client.util.PlayerAnimUtil;
+import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.remote.MagicBulletWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
@@ -50,7 +50,7 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
 
     ModPlayerAnimationController headRotationController = controller.headRotationController;
     if (headRotationController == null) {
-      headRotationController = controller.headRotationController = (ModPlayerAnimationController) PlayerAnimUtil.getPlayerAnimationController(player, PlayerAnimUtil.HEAD_ROTATION);
+      headRotationController = controller.headRotationController = (ModPlayerAnimationController) PlayerAnimationUtil.getPlayerAnimationController(player, PlayerAnimationUtil.HEAD_ROTATION);
     }
 
     if (!isExecutableAnimation(mainHandItem)) {
@@ -69,7 +69,7 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
   }
 
   private static void triggerHeadRotationAnimation(PlayerAnimationController headRotationController) {
-    if (headRotationController != null && PlayerAnimUtil.isExecutableAnimation(headRotationController, PLAYER_HEAD_ROTATION)) {
+    if (headRotationController != null && PlayerAnimationUtil.isExecutableAnimation(headRotationController, PLAYER_HEAD_ROTATION)) {
       headRotationController.triggerAnimation(PLAYER_HEAD_ROTATION);
     }
   }

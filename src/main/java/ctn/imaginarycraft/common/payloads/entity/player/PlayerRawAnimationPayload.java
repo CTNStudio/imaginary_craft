@@ -2,7 +2,7 @@ package ctn.imaginarycraft.common.payloads.entity.player;
 
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimRawAnimation;
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimStandardFadePlayerAnim;
-import ctn.imaginarycraft.client.util.PlayerAnimUtil;
+import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.util.PayloadUtil;
 import ctn.imaginarycraft.util.UUIDFilterUtil;
@@ -58,7 +58,7 @@ public record PlayerRawAnimationPayload(
 
   public static void toClient(final PlayerRawAnimationPayload data, final IPayloadContext context) {
     PlayerStopAnimationPayload.getPlayers(data.playPlayerUUID, context, AbstractClientPlayer.class).forEach(clientPlayer ->
-      PlayerAnimUtil.playRawAnimationClient(clientPlayer, data.controllerId, data.rawAnimation, data.startAnimFrom, data.playSpeed, data.withFade.orElse(null)));
+      PlayerAnimationUtil.playRawAnimationClient(clientPlayer, data.controllerId, data.rawAnimation, data.startAnimFrom, data.playSpeed, data.withFade.orElse(null)));
   }
 
   @Override

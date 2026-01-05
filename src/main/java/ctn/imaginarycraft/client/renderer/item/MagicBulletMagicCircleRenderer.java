@@ -7,7 +7,7 @@ import com.zigythebird.playeranimcore.bones.AdvancedPlayerAnimBone;
 import com.zigythebird.playeranimcore.bones.PlayerAnimBone;
 import com.zigythebird.playeranimcore.math.Vec3f;
 import ctn.imaginarycraft.client.ModRenderTypes;
-import ctn.imaginarycraft.client.util.PlayerAnimUtil;
+import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.client.util.RendererUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.remote.MagicBulletWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -31,7 +31,7 @@ public class MagicBulletMagicCircleRenderer {
     if (true) {
       return;
     }
-    PlayerAnimationController controller = PlayerAnimUtil.getPlayerAnimationController(entity, PlayerAnimUtil.WEAPON_STATE);
+    PlayerAnimationController controller = PlayerAnimationUtil.getPlayerAnimationController(entity, PlayerAnimationUtil.WEAPON_STATE);
     if (controller == null) {
       return;
     }

@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.payloads.entity.player;
 
-import ctn.imaginarycraft.client.util.PlayerAnimUtil;
+import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.util.PayloadUtil;
 import ctn.imaginarycraft.util.UUIDFilterUtil;
@@ -60,7 +60,7 @@ public record PlayerStopAnimationPayload(
 
   public static void toClient(final PlayerStopAnimationPayload data, final IPayloadContext context) {
     getPlayers(data.playPlayerUUID, context, AbstractClientPlayer.class).forEach(clientPlayer ->
-      PlayerAnimUtil.stopClient(clientPlayer, data.controller, data.isStopTriggeredAnimation));
+      PlayerAnimationUtil.stopClient(clientPlayer, data.controller, data.isStopTriggeredAnimation));
   }
 
   public static <T extends Player> Collection<T> getPlayers(Optional<@Nullable UUIDFilterUtil> uuidFilterUtil, IPayloadContext context, Class<T> playerClass) {

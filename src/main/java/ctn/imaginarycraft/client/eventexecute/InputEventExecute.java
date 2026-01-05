@@ -57,7 +57,6 @@ public final class InputEventExecute {
       }
 
       PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(InteractionHand.MAIN_HAND, false, true));
-      System.out.println(3);
     }
   }
 }

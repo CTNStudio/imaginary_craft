@@ -5,7 +5,7 @@ import com.zigythebird.playeranimcore.animation.AnimationController;
 import com.zigythebird.playeranimcore.animation.AnimationData;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
 import com.zigythebird.playeranimcore.easing.EasingType;
-import ctn.imaginarycraft.client.util.PlayerAnimUtil;
+import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -35,13 +35,13 @@ public record AnimCollection(ResourceLocation standby, ResourceLocation move,
   }
 
   public void movingAnim(PlayerAnimationController controller) {
-    if (PlayerAnimUtil.isExecutableAnimation(controller, move)) {
+    if (PlayerAnimationUtil.isExecutableAnimation(controller, move)) {
       controller.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(3, EasingType.EASE_IN_OUT_SINE), move, true);
     }
   }
 
   public void standbyAnim(PlayerAnimationController controller) {
-    if (PlayerAnimUtil.isExecutableAnimation(controller, standby)) {
+    if (PlayerAnimationUtil.isExecutableAnimation(controller, standby)) {
       controller.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(3, EasingType.EASE_IN_OUT_SINE), standby, true);
     }
   }
