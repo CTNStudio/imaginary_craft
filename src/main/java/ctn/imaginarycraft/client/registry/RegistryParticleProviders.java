@@ -3,6 +3,7 @@ package ctn.imaginarycraft.client.registry;
 import ctn.imaginarycraft.client.particle.DyeingMagicCircleParticle;
 import ctn.imaginarycraft.client.particle.LcDamageIconParticle;
 import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
+import ctn.imaginarycraft.client.particle.solemnlament.ButterflyParticle;
 import ctn.imaginarycraft.client.particle.text.DamageTextParticle;
 import ctn.imaginarycraft.client.particle.text.TextParticle;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -21,5 +22,7 @@ public final class RegistryParticleProviders {
     event.registerSpriteSet(ModParticleTypes.LC_DAMAGE_ICON.get(), LcDamageIconParticle.Provider::new);
     event.registerSpriteSet(ModParticleTypes.DYEING_MAGIC_CIRCLE.get(), DyeingMagicCircleParticle.Provider::new);
     event.registerSpriteSet(ModParticleTypes.MAGIC_BULLET_MAGIC_CIRCLE.get(), MagicBulletMagicCircleParticle.Provider::new);
+    event.registerSpriteSet(ModParticleTypes.SOLEMN_LAMENT_BUTTERFLY_BLACK.get(), ButterflyParticle.Provider::new);
+    event.registerSpriteSet(ModParticleTypes.SOLEMN_LAMENT_BUTTERFLY_WHITE.get(), ButterflyParticle.Provider::new);
   }
 }

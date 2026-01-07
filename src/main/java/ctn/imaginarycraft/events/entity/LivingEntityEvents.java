@@ -18,6 +18,7 @@ import ctn.imaginarycraft.util.PayloadUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.effect.MobEffectInstance;
@@ -27,15 +28,13 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
-import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-import net.neoforged.neoforge.event.entity.living.LivingEquipmentChangeEvent;
-import net.neoforged.neoforge.event.entity.living.LivingHealEvent;
-import net.neoforged.neoforge.event.entity.living.LivingIncomingDamageEvent;
+import net.neoforged.neoforge.event.entity.living.*;
 import org.jetbrains.annotations.Nullable;
 
 import static net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN;
@@ -61,17 +60,55 @@ public final class LivingEntityEvents {
   public static void livingEquipmentChangeEvent(LivingEquipmentChangeEvent event) {
     LivingEntity entity = event.getEntity();
     EquipmentSlot slot = event.getSlot();
-    if (entity instanceof Player player) {
-      boolean isHandUsed = slot == EquipmentSlot.MAINHAND;
-      GunWeaponUtil.setIsAttack(player, true, isHandUsed);
-      GunWeaponUtil.resetChargeUp(player, isHandUsed);
-      PlayerTimingRun data = player.getData(ModAttachments.PLAYER_TIMING_RUN);
+    if (!(entity instanceof Player player)) {
+      return;
+    }
+
+    boolean isHandUsed = slot == EquipmentSlot.MAINHAND;
+    GunWeaponUtil.setIsAttack(player, true, isHandUsed);
+    GunWeaponUtil.resetChargeUp(player, isHandUsed);
+    PlayerTimingRun data = player.getData(ModAttachments.PLAYER_TIMING_RUN);
+    if (!data.getRunList().isEmpty()) {
       data.removeTimingRun(slot);
       data.removeTimingRun(GunWeaponUtil.GUN_SHOOT_MODIFY_TICK);
-      if (slot.getType() == EquipmentSlot.Type.HAND) {
-        PlayerAnimationUtil.stop(player, PlayerAnimationUtil.WEAPON_STATE);
+    }
+    if (slot.getType() == EquipmentSlot.Type.HAND) {
+      PlayerAnimationUtil.stop(player, PlayerAnimationUtil.WEAPON_STATE);
+    }
+  }
+
+  @SubscribeEvent
+  public static void livingSwapItemsEvent(LivingSwapItemsEvent.Hands event) {
+    LivingEntity entity = event.getEntity();
+    if (!(entity instanceof Player player)) {
+      return;
+    }
+    ItemStack mainHandItem = player.getMainHandItem();
+    ItemStack offhandItem = player.getOffhandItem();
+    if (mainHandItem.isEmpty() && offhandItem.isEmpty()) {
+      return;
+    }
+    PlayerTimingRun data = player.getData(ModAttachments.PLAYER_TIMING_RUN);
+
+    if (!mainHandItem.isEmpty()) {
+      GunWeaponUtil.setIsAttack(player, true, true);
+      GunWeaponUtil.resetChargeUp(player, true);
+      if (!data.getRunList().isEmpty()) {
+        data.removeTimingRun(InteractionHand.MAIN_HAND);
+        data.removeTimingRun(GunWeaponUtil.GUN_SHOOT_MODIFY_TICK);
       }
     }
+
+    if (!offhandItem.isEmpty()) {
+      GunWeaponUtil.setIsAttack(player, true, false);
+      GunWeaponUtil.resetChargeUp(player, false);
+      if (!data.getRunList().isEmpty()) {
+        data.removeTimingRun(InteractionHand.OFF_HAND);
+        data.removeTimingRun(GunWeaponUtil.GUN_SHOOT_MODIFY_TICK);
+      }
+    }
+
+    PlayerAnimationUtil.stop(player, PlayerAnimationUtil.WEAPON_STATE);
   }
 
   /**

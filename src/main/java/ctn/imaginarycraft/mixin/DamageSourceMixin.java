@@ -1,5 +1,7 @@
 package ctn.imaginarycraft.mixin;
 
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import ctn.imaginarycraft.api.IDamageSource;
 import ctn.imaginarycraft.api.capability.item.IItemInvincibleTick;
 import ctn.imaginarycraft.api.capability.item.IItemLcDamageType;
@@ -44,6 +46,9 @@ public abstract class DamageSourceMixin implements IDamageSource {
   @Unique
   private int imaginaryCraft$invincibleTick;
 
+  @Unique
+  private ItemStack imaginaryCraft$attackItemStack;
+
   @Inject(method = "<init>(Lnet/minecraft/core/Holder;" +
     "Lnet/minecraft/world/entity/Entity;" +
     "Lnet/minecraft/world/entity/Entity;" +
@@ -52,6 +57,7 @@ public abstract class DamageSourceMixin implements IDamageSource {
                                            Vec3 damageSourcePosition, CallbackInfo ci) {
     DamageSource damageSource = (DamageSource) (Object) this;
     ItemStack itemStack = LcDamageUtil.getDamageItemStack(damageSource);
+    this.imaginaryCraft$attackItemStack = itemStack;
 
     // 初始化默认值
     LcDamageType lcDamageType = null;
@@ -87,6 +93,12 @@ public abstract class DamageSourceMixin implements IDamageSource {
     this.imaginaryCraft$invincibleTick = invincibleTick;
     this.imaginaryCraft$lcDamageType = lcDamageType == null ?
       LcDamageType.byDamageType(type) : lcDamageType;
+  }
+
+  @Unique
+  @Override
+  public void setImaginaryCraft$WeaponItem(ItemStack itemStack) {
+    imaginaryCraft$attackItemStack = itemStack;
   }
 
   @Unique
@@ -149,5 +161,10 @@ public abstract class DamageSourceMixin implements IDamageSource {
   @Override
   public void setImaginaryCraft$LcDamageTypeNull(final boolean lcDamageTypeNull) {
     imaginaryCraft$isLcDamageTypeNull = lcDamageTypeNull;
+  }
+
+  @WrapMethod(method = "getWeaponItem")
+  private ItemStack imaginaryCraft$getWeaponItem(Operation<ItemStack> original) {
+    return imaginaryCraft$attackItemStack == null ? original.call() : imaginaryCraft$attackItemStack;
   }
 }

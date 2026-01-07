@@ -1,6 +1,6 @@
 # 代码方面
 
-- 伤害方面
+- 伤害处理方面
   - [ ] 免疫
   - [ ] 吸收
   - [ ] 无效
@@ -16,9 +16,11 @@
 - [ ] 魔弹武器子弹实体
 - [ ] 圣宣武器
 
+- [ ] dot伤害系统
+
 # 美术方面
 
-[请看vci](https://docs.qq.com/smartsheet/DVEJFZGtBRGdaQ2xs?u=eb26ac58f44f4c4c97fff4f65953ec1e&tab=t00i2h&viewId=vsIvpU)
+[请看vcr](https://docs.qq.com/smartsheet/DVEJFZGtBRGdaQ2xs?u=eb26ac58f44f4c4c97fff4f65953ec1e&tab=t00i2h&viewId=vsIvpU)
 
 # 未来计划
 

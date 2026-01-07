@@ -59,6 +59,7 @@ public final class ModDatagen {
     buildClient(event, generator, new DatagenParticle(output, existingFileHelper));
     buildClient(event, generator, new DatagenItemModel(output, existingFileHelper));
     buildClient(event, generator, new DatagenBlockState(output, existingFileHelper));
+    buildClient(event, generator, new DatagenSoundDefinitionsProvider(output, existingFileHelper));
   }
 
   private static <T extends DataProvider> @NotNull T buildClient(@NotNull GatherDataEvent event,

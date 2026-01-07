@@ -31,8 +31,6 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
   private float mainHandValue;
   private float offHandValue;
   private HumanoidArm mainArm = HumanoidArm.RIGHT;
-  private ItemStack mainHandItem = ItemStack.EMPTY;
-  private ItemStack offHandItem = ItemStack.EMPTY;
 
   public GunChargeUpHudLayer(AttackIndicatorStatus attackIndicatorStatus) {
     super();
@@ -44,16 +42,15 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
 
   @Override
   protected void renderDrawLayer(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-    if (mainHandItem.isEmpty() && offHandItem.isEmpty()) {
-      return;
-    }
+    ItemStack mainHandItem = player.getMainHandItem();
+    ItemStack offHandItem = player.getOffhandItem();
     final Item mainHandItemItem = mainHandItem.getItem();
     final Item offHandItemItem = offHandItem.getItem();
     final boolean isMainArmRight = mainArm == HumanoidArm.RIGHT;
 
     switch (attackIndicatorStatus) {
       case CROSSHAIR -> {
-        if (!mainHandItem.isEmpty() && mainHandItemItem instanceof IGunWeapon) {
+        if (mainHandValue > 0 && mainHandItemItem instanceof IGunWeapon) {
           int x = leftPos + (isMainArmRight ? -16 / 2 + 15 : -16 / 2 - 15);
           guiGraphics.blitSprite(REMOTE_BOTTOM, x, topPos, 16, 16);
           ResourceLocation texture;
@@ -64,14 +61,14 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
           }
           ImageProgressBar.renderProgressBar(guiGraphics, texture, x, topPos, 16, 16, mainHandValue, 1, true, true);
         }
-        if (!offHandItem.isEmpty() && offHandItemItem instanceof IGunWeapon) {
+        if (offHandValue > 0 && !offHandItem.isEmpty() && offHandItemItem instanceof IGunWeapon) {
           int x = leftPos + (!isMainArmRight ? -16 / 2 + 15 : -16 / 2 - 15);
           guiGraphics.blitSprite(REMOTE_BOTTOM, x, topPos, 16, 16);
           ImageProgressBar.renderProgressBar(guiGraphics, REMOTE_GUN, x, topPos, 16, 16, offHandValue, 1, true, true);
         }
       }
       case HOTBAR -> {
-        if (!mainHandItem.isEmpty() && mainHandItemItem instanceof IGunWeapon) {
+        if (mainHandValue > 0 && !mainHandItem.isEmpty() && mainHandItemItem instanceof IGunWeapon) {
           int x = leftPos + (!isMainArmRight ? -91 - 29 : 91);
           guiGraphics.blitSprite(BIG_REMOTE_BOTTOM, x, topPos, 32, 32);
           ResourceLocation texture;
@@ -82,7 +79,7 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
           }
           ImageProgressBar.renderProgressBar(guiGraphics, texture, x, topPos, 32, 32, mainHandValue, 1, true, true);
         }
-        if (!offHandItem.isEmpty() && offHandItemItem instanceof IGunWeapon) {
+        if (offHandValue > 0 && !offHandItem.isEmpty() && offHandItemItem instanceof IGunWeapon) {
           int x = leftPos + (isMainArmRight ? -91 - 29 : 91);
           guiGraphics.blitSprite(BIG_REMOTE_BOTTOM, x, topPos, 32, 32);
           ImageProgressBar.renderProgressBar(guiGraphics, BIG_REMOTE_GUN, x, topPos, 32, 32, offHandValue, 1, true, true);
@@ -95,34 +92,14 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
   public void init(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
     super.init(guiGraphics, deltaTracker);
 
-    ItemStack mainHandItem = player.getMainHandItem();
-    if (mainHandItem.isEmpty()) {
-      if (this.mainHandItem != ItemStack.EMPTY) {
-        this.mainHandItem = ItemStack.EMPTY;
-      }
-    } else if (mainHandItem.getItem() instanceof IGunWeapon) {
-      float mainHandValue = GunWeaponUtil.getChargeUpPercentage(player, InteractionHand.MAIN_HAND);
-      if (this.mainHandValue != mainHandValue) {
-        this.mainHandValue = mainHandValue;
-      }
-      if (!ItemStack.isSameItem(mainHandItem, this.mainHandItem)) {
-        this.mainHandItem = mainHandItem;
-      }
+    float mainHandValue = GunWeaponUtil.getChargeUpPercentage(player, InteractionHand.MAIN_HAND);
+    if (this.mainHandValue != mainHandValue) {
+      this.mainHandValue = mainHandValue;
     }
 
-    ItemStack offHandItem = player.getOffhandItem();
-    if (offHandItem.isEmpty()) {
-      if (this.offHandItem != ItemStack.EMPTY) {
-        this.offHandItem = ItemStack.EMPTY;
-      }
-    } else if (offHandItem.getItem() instanceof IGunWeapon iGunWeapon && iGunWeapon.isOffHandShoot(player, offHandItem)) {
-      float offHandValue = GunWeaponUtil.getChargeUpPercentage(player, InteractionHand.OFF_HAND);
-      if (this.offHandValue != offHandValue) {
-        this.offHandValue = offHandValue;
-      }
-      if (!ItemStack.isSameItem(offHandItem, this.offHandItem)) {
-        this.offHandItem = offHandItem;
-      }
+    float offHandValue = GunWeaponUtil.getChargeUpPercentage(player, InteractionHand.OFF_HAND);
+    if (this.offHandValue != offHandValue) {
+      this.offHandValue = offHandValue;
     }
 
     HumanoidArm mainArm = player.getMainArm();

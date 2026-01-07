@@ -35,6 +35,14 @@ public final class ModDamageTypes extends DamageTypeRegisterUtil {
    * Extermination of Geometrical Organ 是的没错这玩意的全称就是这么长
    */
   public static final ResourceKey<DamageType> EGO = register("ego");
+  /**
+   * 近战伤害
+   */
+  public static final ResourceKey<DamageType> MELEE = register("melee");
+  /**
+   * 远程伤害
+   */
+  public static final ResourceKey<DamageType> REMOTE = register("remote");
 
   public static void bootstrap(BootstrapContext<DamageType> context) {
     register(context, "physics", ModDamageTypes.PHYSICS, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.1f, DamageEffects.HURT, DeathMessageType.DEFAULT);
@@ -43,5 +51,7 @@ public final class ModDamageTypes extends DamageTypeRegisterUtil {
     register(context, "theSoul", ModDamageTypes.THE_SOUL, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.4f, DamageEffects.HURT, DeathMessageType.DEFAULT);
     register(context, "abnormalities", ModDamageTypes.ABNORMALITIES, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.3f, DamageEffects.HURT, DeathMessageType.DEFAULT);
     register(context, "ego", ModDamageTypes.EGO, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.3f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+    register(context, "melee", ModDamageTypes.MELEE, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.0f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+    register(context, "remote", ModDamageTypes.REMOTE, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.0f, DamageEffects.HURT, DeathMessageType.DEFAULT);
   }
 }

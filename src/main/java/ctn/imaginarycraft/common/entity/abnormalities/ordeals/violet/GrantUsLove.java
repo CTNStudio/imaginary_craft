@@ -234,6 +234,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
       return !player.isCreative();
     }
     // 不攻击紫罗兰系列考验，由于没几个，我直接用硬编码
+    // TODO 后续采用tag的形式处理
     return !(entity instanceof GrantUsLove);
   }
 

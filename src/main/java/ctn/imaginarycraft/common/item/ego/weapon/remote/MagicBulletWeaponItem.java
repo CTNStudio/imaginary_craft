@@ -6,10 +6,9 @@ import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimRawAnimation;
 import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponItem;
-import ctn.imaginarycraft.common.payloads.entity.player.PlayerAnimationPayload;
-import ctn.imaginarycraft.common.payloads.entity.player.PlayerRawAnimationPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.animation.PlayerAnimationPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.animation.PlayerRawAnimationPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
 import ctn.imaginarycraft.util.GunWeaponUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -45,9 +44,8 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
     .then(SHOOTING_AIM_LAUNCH, Animation.LoopType.PLAY_ONCE)
     .thenLoop(SHOOTING_AIM_CYCLE);
 
-  @SuppressWarnings("unchecked")
   public static final AnimCollection ANIM_COLLECTION = new AnimCollection(
-    STANDBY, GALLOP, EgoWeaponItems.MAGIC_BULLET
+    STANDBY, GALLOP
   );
 
   public MagicBulletWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {

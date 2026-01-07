@@ -8,10 +8,13 @@ import ctn.imaginarycraft.client.ModFontIcon;
 import ctn.imaginarycraft.client.util.ColorUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModAttributes;
+import ctn.imaginarycraft.init.ModDamageSources;
 import ctn.imaginarycraft.init.ModDamageTypes;
 import ctn.imaginarycraft.init.tag.ModDamageTypeTags;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.resources.ResourceKey;
@@ -22,6 +25,7 @@ import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -148,6 +152,31 @@ public enum LcDamageType implements ColourText, StringRepresentable {
 
   public ResourceKey<DamageType> getDamageTypeResourceKey() {
     return damageTypeResourceKey;
+  }
+
+  @Contract("_ -> new")
+  public @NotNull DamageSource getDamageSources(Entity causingEntity) {
+    return ModDamageSources.createDamage(getDamageTypeResourceKey(), causingEntity);
+  }
+
+  @Contract("_, _ -> new")
+  public @NotNull DamageSource getDamageSources(@Nullable Entity directEntity, @NotNull Entity causingEntity) {
+    return ModDamageSources.createDamage(getDamageTypeResourceKey(), directEntity, causingEntity);
+  }
+
+  @Contract("_ -> new")
+  public @NotNull DamageSource getNoSourceDamageSources(@NotNull Entity entity) {
+    return getNoSourceDamageSources(entity.level());
+  }
+
+  @Contract("_ -> new")
+  public @NotNull DamageSource getNoSourceDamageSources(@NotNull Level level) {
+    return getNoSourceDamageSources(level.registryAccess());
+  }
+
+  @Contract("_ -> new")
+  public @NotNull DamageSource getNoSourceDamageSources(@NotNull RegistryAccess registryAccess) {
+    return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(getDamageTypeResourceKey()), null, null);
   }
 
   @Contract(pure = true)

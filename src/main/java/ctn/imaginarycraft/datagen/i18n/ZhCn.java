@@ -8,6 +8,7 @@ import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.datagen.DatagenCuriosTest;
 import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.ModDamageTypes;
+import ctn.imaginarycraft.init.ModSoundEvents;
 import ctn.imaginarycraft.init.item.ego.EgoCurioItems;
 import ctn.imaginarycraft.init.tag.ModItemTags;
 import ctn.imaginarycraft.linkage.jade.LivingEntityVulnerable;
@@ -45,6 +46,13 @@ public final class ZhCn extends DatagenI18n {
     add(LivingEntityVulnerable.SPIRIT_KEY, "精神易伤");
     add(LivingEntityVulnerable.EROSION_KEY, "侵蚀易伤");
     add(LivingEntityVulnerable.THE_SOUL_KEY, "灵魂易伤");
+
+    //region 声音字幕
+    addSoundEvents(ModSoundEvents.SOLEMN_LAMENT_WEAPON_ATTACK_BLACK, "圣宣：射击-黑");
+    addSoundEvents(ModSoundEvents.SOLEMN_LAMENT_WEAPON_ATTACK_WHITE, "圣宣：射击-白");
+    addSoundEvents(ModSoundEvents.SOLEMN_LAMENT_WEAPON_STONGATTACK_BLACK, "圣宣：特殊射击-黑");
+    addSoundEvents(ModSoundEvents.SOLEMN_LAMENT_WEAPON_STONGATTACK_WHITE, "圣宣：特殊射击-白");
+    //endregion
 
     //region 属性
     add(ModAttributes.ATTACK_SPEED_MAIN_HAND.get(), "主手攻击速度");
@@ -111,15 +119,19 @@ public final class ZhCn extends DatagenI18n {
 
     //region 伤害类型
     addPlayerDeathMessage(ModDamageTypes.PHYSICS, "%s死于%s的造成的物理伤害");
-    addPlayerDeathMessage(ModDamageTypes.SPIRIT, "%s死于%s的造成的精神污染");
-    addPlayerDeathMessage(ModDamageTypes.EROSION, "%s死于%s的造成的侵蚀伤害");
-    addPlayerDeathMessage(ModDamageTypes.THE_SOUL, "%s死于%s的造成的灵魂伤害");
-    addPlayerDeathMessage(ModDamageTypes.EGO, "%s死于%s的E.G.O");
     addDeathMessage(ModDamageTypes.PHYSICS, "%s被剁成肉沫了");
-    addDeathMessage(ModDamageTypes.SPIRIT, "%s精神崩溃而死");
+    addPlayerDeathMessage(ModDamageTypes.SPIRIT, "%s死于%s的造成的精神污染");
+    addDeathMessage(ModDamageTypes.SPIRIT, "%s因精神崩溃而死");
+    addPlayerDeathMessage(ModDamageTypes.EROSION, "%s死于%s的造成的侵蚀伤害");
     addDeathMessage(ModDamageTypes.EROSION, "%s因腐蚀而亡");
+    addPlayerDeathMessage(ModDamageTypes.THE_SOUL, "%s死于%s的造成的灵魂伤害");
     addDeathMessage(ModDamageTypes.THE_SOUL, "%s的灵魂被超度了");
+    addPlayerDeathMessage(ModDamageTypes.EGO, "%s死于%s的E.G.O");
     addDeathMessage(ModDamageTypes.EGO, "%s死于E.G.O");
+    addPlayerDeathMessage(ModDamageTypes.MELEE, "%s死于%s的造成的近战伤害");
+    addDeathMessage(ModDamageTypes.MELEE, "%s死于近战伤害");
+    addPlayerDeathMessage(ModDamageTypes.REMOTE, "%s死于%s的造成的远程伤害");
+    addDeathMessage(ModDamageTypes.REMOTE, "%s死于远程伤害");
     //endregion
 
     //region 标签

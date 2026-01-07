@@ -25,6 +25,10 @@ public class PlayerTimingRun {
     return player;
   }
 
+  public Map<ResourceLocation, TimingRun> getRunList() {
+    return runList;
+  }
+
   public void tick() {
     Iterator<TimingRun> iterator = runList.values().iterator();
     while (iterator.hasNext()) {

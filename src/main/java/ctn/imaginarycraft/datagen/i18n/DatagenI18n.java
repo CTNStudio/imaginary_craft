@@ -2,10 +2,13 @@ package ctn.imaginarycraft.datagen.i18n;
 
 import ctn.imaginarycraft.config.ConfigUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.datagen.DatagenSoundDefinitionsProvider;
+import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.ai.attributes.Attribute;
@@ -88,9 +91,21 @@ public abstract class DatagenI18n extends LanguageProvider {
   }
 
   /**
+   * 声音字幕翻译
+   */
+  protected void addSoundEvents(Holder<SoundEvent> damageType, String name) {
+    add(damageType.value(), name);
+  }
+
+  public void add(SoundEvent damageType, String name) {
+    add(DatagenSoundDefinitionsProvider.getSubtitle(damageType), name);
+  }
+
+  /**
    * 玩家死亡消息翻译
    */
   protected void addPlayerDeathMessage(ResourceKey<DamageType> damageType, String name) {
     add("death.attack." + damageType.location().getPath() + ".player", name);
   }
+
 }

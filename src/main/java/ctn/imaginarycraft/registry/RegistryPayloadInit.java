@@ -1,7 +1,12 @@
 package ctn.imaginarycraft.registry;
 
 import ctn.imaginarycraft.common.payloads.entity.living.LivingEntityAttackStrengthTickerPayload;
-import ctn.imaginarycraft.common.payloads.entity.player.*;
+import ctn.imaginarycraft.common.payloads.entity.player.PlayerDamagePayload;
+import ctn.imaginarycraft.common.payloads.entity.player.PlayerIGunWeaponPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.PlayerLeftEmptyClickPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.animation.PlayerAnimationPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.animation.PlayerRawAnimationPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.animation.PlayerStopAnimationPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

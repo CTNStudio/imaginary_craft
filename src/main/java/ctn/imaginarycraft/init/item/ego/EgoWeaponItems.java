@@ -13,6 +13,7 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
+// TODO 远程武器的伤害加成要独立
 // TODO dot：在计时器正常运作的前提下，每1秒受到x点指定种类的无来源伤害。该伤害不受等级压制影响。
 public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
   public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(ImaginaryCraft.ID);

@@ -3,6 +3,7 @@ package ctn.imaginarycraft.api;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Unique;
 
 import javax.annotation.Nullable;
@@ -11,6 +12,8 @@ public interface IDamageSource {
   static IDamageSource of(DamageSource source) {
     return (IDamageSource) source;
   }
+
+  void setImaginaryCraft$WeaponItem(ItemStack itemStack);
 
   @Nullable
   LcDamageType getImaginaryCraft$LcDamageType();

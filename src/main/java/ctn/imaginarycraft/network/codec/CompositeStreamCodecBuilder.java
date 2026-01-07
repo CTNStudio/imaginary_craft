@@ -10,7 +10,6 @@ import java.util.function.Function;
 
 /**
  * 用于创建具有不同组件数量的复合StreamCodecs的构建器。
- * 这种方法比拥有30多个重载方法更灵活且易于维护。
  *
  * @param <B> 缓冲区类型
  * @param <C> 容器类型

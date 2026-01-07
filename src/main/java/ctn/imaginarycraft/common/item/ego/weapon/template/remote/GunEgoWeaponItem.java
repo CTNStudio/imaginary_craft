@@ -190,7 +190,7 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
    */
   protected boolean gunAimShootExecute(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
     if (playerEntity.level() instanceof ServerLevel serverLevel) {
-      this.shoot(serverLevel, playerEntity, playerEntity.getUsedItemHand(), itemStack, getProjectileVelocity(playerEntity, itemStack, handUsed), getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
+      this.notConsumingShoot(serverLevel, playerEntity, playerEntity.getUsedItemHand(), itemStack, getProjectileVelocity(playerEntity, itemStack, handUsed), getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
       GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
     }
     return true;
@@ -235,7 +235,7 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
   }
 
   protected int gunShootExecute(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, ServerLevel serverLevel) {
-    this.shoot(serverLevel, playerEntity, handUsed, itemStack, getProjectileVelocity(playerEntity, itemStack, handUsed), getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
+    this.notConsumingShoot(serverLevel, playerEntity, handUsed, itemStack, getProjectileVelocity(playerEntity, itemStack, handUsed), getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
     GunWeaponUtil.setIsAttack(playerEntity, true, handUsed);
     GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
     return 0;

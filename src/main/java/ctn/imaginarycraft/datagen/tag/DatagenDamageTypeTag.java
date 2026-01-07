@@ -6,6 +6,7 @@ import ctn.imaginarycraft.init.tag.ModDamageTypeTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.DamageTypeTagsProvider;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageTypes;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
@@ -72,6 +73,22 @@ public final class DatagenDamageTypeTag extends DamageTypeTagsProvider {
       DamageTypes.CRAMMING,
       DamageTypes.GENERIC_KILL
     ).addTag(Tags.DamageTypes.IS_MAGIC);
+
+    tag(DamageTypeTags.ALWAYS_HURTS_ENDER_DRAGONS)
+      .addOptional(ModDamageTypes.PHYSICS.location())
+      .addOptional(ModDamageTypes.SPIRIT.location())
+      .addOptional(ModDamageTypes.EROSION.location())
+      .addOptional(ModDamageTypes.THE_SOUL.location())
+      .addOptional(ModDamageTypes.ABNORMALITIES.location())
+      .addOptional(ModDamageTypes.EGO.location())
+      .addOptional(ModDamageTypes.MELEE.location())
+      .addOptional(ModDamageTypes.REMOTE.location());
+
+    tag(DamageTypeTags.IS_PROJECTILE)
+      .addOptional(ModDamageTypes.REMOTE.location());
+
+    tag(DamageTypeTags.NO_ANGER)
+      .addOptional(ModDamageTypes.REMOTE.location());
   }
 
   @Contract(pure = true)

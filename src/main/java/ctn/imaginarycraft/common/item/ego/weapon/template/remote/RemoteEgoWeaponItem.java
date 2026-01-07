@@ -49,34 +49,45 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
     this.createProjectile = remoteEgoWeaponBuilder.createProjectile;
   }
 
-  // TODO 武器的子弹需要根据这个值来设置最远距离
+  /**
+   * 获取子弹最远距离（单位方块）
+   */
   @Override
   public int getDefaultProjectileRange() {
     return (int) attackDistance;
   }
 
-  public float getProjectileInaccuracy(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+  /**
+   * 获取物品的攻击伤害
+   */
+  public float getDamage(@NotNull LivingEntity entity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    // TODO 引入主副手伤害
+    return (float) entity.getAttributeValue(Attributes.ATTACK_DAMAGE);
+  }
+
+  /**
+   * 获取子弹最远距离（单位：方块）
+   */
+  public float getProjectileRange(@NotNull LivingEntity entity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+    return attackDistance;
+  }
+
+  public float getProjectileInaccuracy(@NotNull LivingEntity entity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
     return 0;
   }
 
-  public float getProjectileVelocity(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
+  public float getProjectileVelocity(@NotNull LivingEntity entity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
     return 10.0F;
   }
 
-  protected void shoot(ServerLevel world, LivingEntity shooterEntity, InteractionHand handUsed, ItemStack weaponItem,
-                       float projectileVelocity, float projectileInaccuracy, boolean isCrit, @Nullable LivingEntity targetEntity) {
-    Projectile projectile = this.createProjectile(world, shooterEntity, weaponItem, null, isCrit);
-    this.shootProjectile(shooterEntity, projectile, 0, projectileVelocity, projectileInaccuracy, 0, targetEntity);
-    world.addFreshEntity(projectile);
-    weaponItem.hurtAndBreak(1, shooterEntity, LivingEntity.getSlotForHand(handUsed));
-  }
-
-  protected void shoot(ServerLevel world, LivingEntity shooterEntity, InteractionHand handUsed, ItemStack weaponItem,
-                       float projectileVelocity, float projectileInaccuracy, @Nullable LivingEntity targetEntity) {
+  /**
+   * 此方法为{@link ProjectileWeaponItem#shoot}不消耗弹药的的版本简易版
+   */
+  protected void notConsumingShoot(ServerLevel world, LivingEntity shooterEntity, InteractionHand handUsed, ItemStack weaponItem,
+                                   float projectileVelocity, float projectileInaccuracy, @Nullable LivingEntity targetEntity) {
     Projectile projectile = this.createProjectile(world, shooterEntity, weaponItem, null);
     this.shootProjectile(shooterEntity, projectile, 0, projectileVelocity, projectileInaccuracy, 0, targetEntity);
     world.addFreshEntity(projectile);
-    weaponItem.hurtAndBreak(1, shooterEntity, LivingEntity.getSlotForHand(handUsed));
   }
 
   /**

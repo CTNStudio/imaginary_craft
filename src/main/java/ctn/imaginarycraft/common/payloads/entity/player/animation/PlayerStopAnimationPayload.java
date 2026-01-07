@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.common.payloads.entity.player;
+package ctn.imaginarycraft.common.payloads.entity.player.animation;
 
 import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;

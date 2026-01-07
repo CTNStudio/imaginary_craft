@@ -7,6 +7,7 @@ import com.zigythebird.playeranimcore.animation.Animation;
 import com.zigythebird.playeranimcore.animation.AnimationController;
 import com.zigythebird.playeranimcore.animation.RawAnimation;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
+import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import com.zigythebird.playeranimcore.animation.layered.modifier.SpeedModifier;
 import com.zigythebird.playeranimcore.api.firstPerson.FirstPersonConfiguration;
 import com.zigythebird.playeranimcore.easing.EasingType;
@@ -14,9 +15,9 @@ import com.zigythebird.playeranimcore.enums.FadeType;
 import ctn.imaginarycraft.api.client.IAnimationController;
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimRawAnimation;
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimStandardFadePlayerAnim;
-import ctn.imaginarycraft.common.payloads.entity.player.PlayerAnimationPayload;
-import ctn.imaginarycraft.common.payloads.entity.player.PlayerRawAnimationPayload;
-import ctn.imaginarycraft.common.payloads.entity.player.PlayerStopAnimationPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.animation.PlayerAnimationPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.animation.PlayerRawAnimationPayload;
+import ctn.imaginarycraft.common.payloads.entity.player.animation.PlayerStopAnimationPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.util.PayloadUtil;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -144,7 +145,7 @@ public final class PlayerAnimationUtil {
   public static void playAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
                                          ResourceLocation animationId,
                                          @Nullable AbstractFadeModifier abstractFadeModifier) {
-    playAnimationClient(clientPlayer, controllerId, animationId, 0, 1, abstractFadeModifier);
+    playAnimationClient(clientPlayer, controllerId, animationId, 0, 1, abstractFadeModifier, false);
   }
 
   /**
@@ -159,8 +160,8 @@ public final class PlayerAnimationUtil {
    */
   public static void playAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
                                          ResourceLocation animationId, float startAnimFrom, float playSpeed,
-                                         @Nullable PlayerAnimStandardFadePlayerAnim playerAnimStandardFade) {
-    playAnimationClient(clientPlayer, controllerId, animationId, startAnimFrom, playSpeed, playerAnimStandardFade != null ? playerAnimStandardFade.toModifier() : null);
+                                         @Nullable PlayerAnimStandardFadePlayerAnim playerAnimStandardFade, boolean reverse) {
+    playAnimationClient(clientPlayer, controllerId, animationId, startAnimFrom, playSpeed, playerAnimStandardFade != null ? playerAnimStandardFade.toModifier() : null, reverse);
   }
 
   /**
@@ -175,7 +176,7 @@ public final class PlayerAnimationUtil {
    */
   public static void playAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
                                          ResourceLocation animationId, float startAnimFrom, float playSpeed,
-                                         @Nullable AbstractFadeModifier abstractFadeModifier) {
+                                         @Nullable AbstractFadeModifier abstractFadeModifier, boolean reverse) {
     PlayerAnimationController controller = getPlayerAnimationController(clientPlayer, controllerId);
     if (controller == null) {
       ImaginaryCraft.LOGGER.warn("PlayerAnimationController not found: {}", controllerId);
@@ -188,6 +189,10 @@ public final class PlayerAnimationUtil {
 
     controller.removeModifierIf(AbstractFadeModifier.class::isInstance);
     controller.removeModifierIf(SpeedModifier.class::isInstance);
+    controller.removeModifierIf(MirrorModifier.class::isInstance);
+    if (reverse) {
+      controller.addModifierLast(new MirrorModifier());
+    }
     controller.addModifierLast(new SpeedModifier(playSpeed));
     IAnimationController.of(controller).imaginarycraft$linkModifiers();
     if (abstractFadeModifier == null) {
@@ -220,7 +225,7 @@ public final class PlayerAnimationUtil {
   public static void playRawAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
                                             PlayerAnimRawAnimation rawAnimation,
                                             @Nullable AbstractFadeModifier abstractFadeModifier) {
-    playRawAnimationClient(clientPlayer, controllerId, rawAnimation, 0, 1, abstractFadeModifier);
+    playRawAnimationClient(clientPlayer, controllerId, rawAnimation, 0, 1, abstractFadeModifier, false);
   }
 
   /**
@@ -235,8 +240,8 @@ public final class PlayerAnimationUtil {
    */
   public static void playRawAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
                                             PlayerAnimRawAnimation rawAnimation, float startAnimFrom, float playSpeed,
-                                            @Nullable PlayerAnimStandardFadePlayerAnim playerAnimStandardFade) {
-    playRawAnimationClient(clientPlayer, controllerId, rawAnimation, startAnimFrom, playSpeed, playerAnimStandardFade != null ? playerAnimStandardFade.toModifier() : null);
+                                            @Nullable PlayerAnimStandardFadePlayerAnim playerAnimStandardFade, boolean reverse) {
+    playRawAnimationClient(clientPlayer, controllerId, rawAnimation, startAnimFrom, playSpeed, playerAnimStandardFade != null ? playerAnimStandardFade.toModifier() : null, reverse);
   }
 
   /**
@@ -251,8 +256,8 @@ public final class PlayerAnimationUtil {
    */
   public static void playRawAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
                                             PlayerAnimRawAnimation rawAnimation, float startAnimFrom, float playSpeed,
-                                            @Nullable AbstractFadeModifier abstractFadeModifier) {
-    playRawAnimationClient(clientPlayer, controllerId, rawAnimation.toRawAnimation(), startAnimFrom, playSpeed, abstractFadeModifier);
+                                            @Nullable AbstractFadeModifier abstractFadeModifier, boolean reverse) {
+    playRawAnimationClient(clientPlayer, controllerId, rawAnimation.toRawAnimation(), startAnimFrom, playSpeed, abstractFadeModifier, reverse);
   }
 
   /**
@@ -265,7 +270,9 @@ public final class PlayerAnimationUtil {
    * @param playSpeed            播放速度
    * @param abstractFadeModifier 抽象淡入淡出修饰符
    */
-  public static void playRawAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId, RawAnimation rawAnimation, float startAnimFrom, float playSpeed, @Nullable AbstractFadeModifier abstractFadeModifier) {
+  public static void playRawAnimationClient(AbstractClientPlayer clientPlayer, ResourceLocation controllerId,
+                                            RawAnimation rawAnimation, float startAnimFrom, float playSpeed,
+                                            @Nullable AbstractFadeModifier abstractFadeModifier, boolean reverse) {
     PlayerAnimationController controller = getPlayerAnimationController(clientPlayer, controllerId);
     if (controller == null) {
       ImaginaryCraft.LOGGER.warn("PlayerAnimationController not found: {}", controllerId);
@@ -274,6 +281,10 @@ public final class PlayerAnimationUtil {
 
     controller.removeModifierIf(AbstractFadeModifier.class::isInstance);
     controller.removeModifierIf(SpeedModifier.class::isInstance);
+    controller.removeModifierIf(MirrorModifier.class::isInstance);
+    if (reverse) {
+      controller.addModifierLast(new MirrorModifier());
+    }
     controller.addModifierLast(new SpeedModifier(playSpeed));
     IAnimationController.of(controller).imaginarycraft$linkModifiers();
     if (abstractFadeModifier == null) {

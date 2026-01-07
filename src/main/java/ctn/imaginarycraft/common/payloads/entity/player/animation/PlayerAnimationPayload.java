@@ -1,8 +1,9 @@
-package ctn.imaginarycraft.common.payloads.entity.player;
+package ctn.imaginarycraft.common.payloads.entity.player.animation;
 
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimStandardFadePlayerAnim;
 import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.network.codec.CompositeStreamCodecBuilder;
 import ctn.imaginarycraft.util.PayloadUtil;
 import ctn.imaginarycraft.util.UUIDFilterUtil;
 import io.netty.buffer.ByteBuf;
@@ -13,7 +14,6 @@ import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.network.codec.NeoForgeStreamCodecs;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 import java.util.Optional;
@@ -36,18 +36,30 @@ public record PlayerAnimationPayload(
   ResourceLocation animationId,
   float startAnimFrom,
   float playSpeed,
-  Optional<PlayerAnimStandardFadePlayerAnim> withFade
+  Optional<PlayerAnimStandardFadePlayerAnim> withFade,
+  boolean reverse
 ) implements CustomPacketPayload {
   public static final CustomPacketPayload.Type<PlayerAnimationPayload> TYPE = new CustomPacketPayload.Type<>(ImaginaryCraft.modRl("player_animation_payload"));
-  public static final StreamCodec<ByteBuf, PlayerAnimationPayload> STREAM_CODEC = NeoForgeStreamCodecs.composite(
-    UUIDFilterUtil.STREAM_CODEC, PlayerAnimationPayload::playPlayerUUID,
-    ByteBufCodecs.optional(UUIDFilterUtil.STREAM_CODEC), PlayerAnimationPayload::receivePlayerUUID,
-    ResourceLocation.STREAM_CODEC, PlayerAnimationPayload::controllerId,
-    ResourceLocation.STREAM_CODEC, PlayerAnimationPayload::animationId,
-    ByteBufCodecs.FLOAT, PlayerAnimationPayload::startAnimFrom,
-    ByteBufCodecs.FLOAT, PlayerAnimationPayload::playSpeed,
-    ByteBufCodecs.optional(PlayerAnimStandardFadePlayerAnim.STREAM_CODEC), PlayerAnimationPayload::withFade,
-    PlayerAnimationPayload::new);
+  public static final StreamCodec<ByteBuf, PlayerAnimationPayload> STREAM_CODEC = CompositeStreamCodecBuilder.<ByteBuf, PlayerAnimationPayload>builder()
+    .withComponent(UUIDFilterUtil.STREAM_CODEC, PlayerAnimationPayload::playPlayerUUID)
+    .withComponent(ByteBufCodecs.optional(UUIDFilterUtil.STREAM_CODEC), PlayerAnimationPayload::receivePlayerUUID)
+    .withComponent(ResourceLocation.STREAM_CODEC, PlayerAnimationPayload::controllerId)
+    .withComponent(ResourceLocation.STREAM_CODEC, PlayerAnimationPayload::animationId)
+    .withComponent(ByteBufCodecs.FLOAT, PlayerAnimationPayload::startAnimFrom)
+    .withComponent(ByteBufCodecs.FLOAT, PlayerAnimationPayload::playSpeed)
+    .withComponent(ByteBufCodecs.optional(PlayerAnimStandardFadePlayerAnim.STREAM_CODEC), PlayerAnimationPayload::withFade)
+    .withComponent(ByteBufCodecs.BOOL, PlayerAnimationPayload::reverse)
+    .decoderFactory(
+      decoder -> new PlayerAnimationPayload(
+        (UUIDFilterUtil) decoder.next(),
+        (Optional<UUIDFilterUtil>) decoder.next(),
+        (ResourceLocation) decoder.next(),
+        (ResourceLocation) decoder.next(),
+        (Float) decoder.next(),
+        (Float) decoder.next(),
+        (Optional<PlayerAnimStandardFadePlayerAnim>) decoder.next(),
+        (Boolean) decoder.next()
+      )).build();
 
   public static void toServer(final PlayerAnimationPayload data, final IPayloadContext context) {
     PlayerStopAnimationPayload.getPlayers(data.receivePlayerUUID, context, ServerPlayer.class).forEach(serverPlayer ->
@@ -56,14 +68,13 @@ public record PlayerAnimationPayload(
 
   public static void toClient(final PlayerAnimationPayload data, final IPayloadContext context) {
     PlayerStopAnimationPayload.getPlayers(data.playPlayerUUID, context, AbstractClientPlayer.class).forEach(clientPlayer ->
-      PlayerAnimationUtil.playAnimationClient(clientPlayer, data.controllerId, data.animationId, data.startAnimFrom, data.playSpeed, data.withFade.orElse(null)));
+      PlayerAnimationUtil.playAnimationClient(clientPlayer, data.controllerId, data.animationId, data.startAnimFrom, data.playSpeed, data.withFade.orElse(null), data.reverse));
   }
 
   @Override
   public CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
     return TYPE;
   }
-
 
   public static class Builder {
     private UUIDFilterUtil playPlayerUUID = null;
@@ -73,6 +84,7 @@ public record PlayerAnimationPayload(
     private float startAnimFrom = 0;
     private float playSpeed = 1;
     private PlayerAnimStandardFadePlayerAnim withFade = null;
+    private boolean reverse = false;
 
     public static Builder create(Player player, ResourceLocation controller, ResourceLocation animationId) {
       return new Builder()
@@ -126,6 +138,16 @@ public record PlayerAnimationPayload(
       return this;
     }
 
+    public Builder reverse() {
+      this.reverse = true;
+      return this;
+    }
+
+    public Builder reverse(boolean reverse) {
+      this.reverse = reverse;
+      return this;
+    }
+
     public PlayerAnimationPayload build() {
       assert controllerId != null : "controller cannot be null";
       assert playPlayerUUID != null : "playPlayerUUID cannot be null";
@@ -137,7 +159,8 @@ public record PlayerAnimationPayload(
         animationId,
         startAnimFrom,
         playSpeed,
-        Optional.ofNullable(withFade));
+        Optional.ofNullable(withFade),
+        reverse);
     }
   }
 }
