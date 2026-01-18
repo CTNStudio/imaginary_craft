@@ -7,6 +7,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.Vec3;
 
 import javax.annotation.CheckForNull;
 import javax.annotation.CheckForSigned;
@@ -53,11 +54,17 @@ public class MagicBulletEntity extends ModBulletEntity {
    * 轨迹修正。
    */
   protected void correctTrajectory() {
-    // TODO
-  }
+    if (Objects.isNull(this.target)) {
+      this.setDead();
+      return;
+    }
 
-  protected void calculateCanHitTarget() {
-    // TODO
+    final Vec3 vec = this.getViewVector(1).reverse();
+    final Vec3 pos = this.target.getPosition(1).add(vec.scale(3));
+
+    this.setPos(pos);
+
+    // TODO - 新增特效。
   }
 
   protected void setDead() {
@@ -86,7 +93,6 @@ public class MagicBulletEntity extends ModBulletEntity {
   @Override
   protected void onHitBlock(BlockHitResult result) {
     this.correctTrajectory();
-    // TODO
   }
 
   @Override
