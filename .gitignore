@@ -26,3 +26,5 @@ run-data
 repo
 /.kotlin/
 /src/generated/
+/logs/debug.log
+/logs/latest.log
