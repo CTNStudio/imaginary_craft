@@ -15,7 +15,6 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -54,28 +53,6 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
 
   public MagicBulletWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
     super(itemProperties, egoWeaponBuilder, modPath);
-  }
-
-  @Override
-  public void inventoryTick(ItemStack stack, Level level, Entity entity, int slotId, boolean isSelected) {
-    if (!(entity instanceof Player player)) {
-      return;
-    }
-
-    if (player.getMainHandItem() != stack) {
-      PlayerAnimationUtil.stop(player, PlayerAnimationUtil.STANDBY_OR_WALK);
-      return;
-    }
-
-    if (player.isUsingItem()) {
-      return;
-    }
-
-    PlayerAnimationUtil.playAnimation(player, new PlayerAnimationPayload.Builder()
-      .playSpeed(22f / gunShootExecuteTick(player, stack, InteractionHand.MAIN_HAND))
-      .controllerId(PlayerAnimationUtil.STANDBY_OR_WALK)
-      .animationId(STANDBY)
-      .withFade(PlayerAnimationUtil.DEFAULT_FADE_IN));
   }
 
   @Override
