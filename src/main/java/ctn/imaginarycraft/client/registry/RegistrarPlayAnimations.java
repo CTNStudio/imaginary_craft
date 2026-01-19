@@ -7,6 +7,7 @@ import com.zigythebird.playeranimcore.animation.layered.IAnimation;
 import com.zigythebird.playeranimcore.api.firstPerson.FirstPersonMode;
 import com.zigythebird.playeranimcore.enums.PlayState;
 import ctn.imaginarycraft.client.animation.player.ModPlayerAnimationController;
+import ctn.imaginarycraft.client.animation.player.StandbyPlayerAnimationController;
 import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.client.player.AbstractClientPlayer;
@@ -28,27 +29,7 @@ public final class RegistrarPlayAnimations {
   @SubscribeEvent
   public static void register(FMLClientSetupEvent event) {
     event.enqueueWork(() -> {
-      modRegisterFactory(PlayerAnimationUtil.STANDBY_OR_WALK, 600,
-        (controller, animationData, setter) -> {
-          if (!(controller instanceof ModPlayerAnimationController playerAnimationController)) {
-            return PlayState.STOP;
-          }
-          AbstractClientPlayer player = playerAnimationController.getPlayer();
-
-          ItemStack mainHandItem = player.getMainHandItem();
-          ItemStack offHandItem = player.getOffhandItem();
-
-//          // 使用行为树节点系统处理动画逻辑
-//          BehaviorContext context = new PlayerAnimationBehaviorContext(playerAnimationController, mainHandItem, offHandItem);
-//          BehaviorTree animationTree = PlayerAnimationBehaviorNodes.createAnimationBehaviorTree();
-//
-//          // 执行行为树
-//          if (animationTree.run(context) == BehaviorNode.Status.SUCCESS) {
-//            return PlayState.CONTINUE;
-//          }
-
-          return PlayState.STOP;
-        }, true);
+      modRegisterFactory(PlayerAnimationUtil.STANDBY_OR_WALK, 600, StandbyPlayerAnimationController::new, true);
       modRegisterFactory(PlayerAnimationUtil.NORMAL_STATE, 1000, true);
       modRegisterFactory(PlayerAnimationUtil.WEAPON_STATE, 1500, true);
       modRegisterFactory(PlayerAnimationUtil.LEFT_HAND, 2000, true);

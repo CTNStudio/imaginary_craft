@@ -40,7 +40,7 @@ public record PlayerRawAnimationPayload(
   Optional<PlayerAnimStandardFadePlayerAnim> withFade,
   boolean reverse
 ) implements CustomPacketPayload {
-  public static final CustomPacketPayload.Type<PlayerRawAnimationPayload> TYPE = new CustomPacketPayload.Type<>(ImaginaryCraft.modRl("player_raw_animation_payload"));
+  public static final Type<PlayerRawAnimationPayload> TYPE = new Type<>(ImaginaryCraft.modRl("player_raw_animation_payload"));
   public static final StreamCodec<ByteBuf, PlayerRawAnimationPayload> STREAM_CODEC = CompositeStreamCodecBuilder.<ByteBuf, PlayerRawAnimationPayload>builder()
     .withComponent(UUIDFilterUtil.STREAM_CODEC, PlayerRawAnimationPayload::playPlayerUUID)
     .withComponent(ByteBufCodecs.optional(UUIDFilterUtil.STREAM_CODEC), PlayerRawAnimationPayload::receivePlayerUUID)

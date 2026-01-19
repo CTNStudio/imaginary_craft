@@ -446,7 +446,7 @@ public class CrossbowEgoWeaponItem extends GeoRemoteEgoWeaponItem {
    * @param tooltipFlag       提示标志
    */
   @Override
-  public void appendHoverText(ItemStack itemStack, Item.TooltipContext tooltipContext, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
+  public void appendHoverText(ItemStack itemStack, TooltipContext tooltipContext, List<Component> tooltipComponents, TooltipFlag tooltipFlag) {
     ChargedProjectiles chargedprojectiles = itemStack.get(DataComponents.CHARGED_PROJECTILES);
     if (chargedprojectiles == null || chargedprojectiles.isEmpty()) {
       return;

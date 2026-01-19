@@ -40,7 +40,7 @@ public class DamageTextParticle extends TextParticle {
     }
   }
 
-  public static class Provider implements ParticleProvider<DamageTextParticle.Options> {
+  public static class Provider implements ParticleProvider<Options> {
     @Override
     @NotNull
     public Particle createParticle(@NotNull DamageTextParticle.Options type, @NotNull ClientLevel level, double x, double y, double z, double xSpeed, double ySpeed, double zSpeed) {

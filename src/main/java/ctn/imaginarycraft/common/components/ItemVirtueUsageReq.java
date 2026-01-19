@@ -255,7 +255,7 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      * @param properties 物品属性
      * @param builder    品德使用要求构建器
      */
-    public static void add(final Item.Properties properties, final ItemVirtueUsageReq.Builder builder) {
+    public static void add(final Item.Properties properties, final Builder builder) {
       if (builder == null || (builder.isEmpty())) {
         return;
       }

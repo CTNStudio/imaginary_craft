@@ -11,7 +11,7 @@ import net.neoforged.neoforge.network.handling.IPayloadContext;
 public record LivingEntityAttackStrengthTickerPayload(
   int attackStrengthTicker
 ) implements CustomPacketPayload {
-  public static final CustomPacketPayload.Type<LivingEntityAttackStrengthTickerPayload> TYPE = new CustomPacketPayload.Type<>(ImaginaryCraft.modRl("living_entity_attack_strength_ticker_payload"));
+  public static final Type<LivingEntityAttackStrengthTickerPayload> TYPE = new Type<>(ImaginaryCraft.modRl("living_entity_attack_strength_ticker_payload"));
   public static final StreamCodec<ByteBuf, LivingEntityAttackStrengthTickerPayload> STREAM_CODEC = StreamCodec.composite(
     ByteBufCodecs.INT, LivingEntityAttackStrengthTickerPayload::attackStrengthTicker,
     LivingEntityAttackStrengthTickerPayload::new);

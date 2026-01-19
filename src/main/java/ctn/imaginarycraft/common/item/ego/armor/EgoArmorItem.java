@@ -28,7 +28,7 @@ public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, I
   protected final GeoRenderProvider renderProvider;
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
-  public EgoArmorItem(Holder<ArmorMaterial> armorMaterial, ArmorItem.Type armorType, Item.Properties itemProperties,
+  public EgoArmorItem(Holder<ArmorMaterial> armorMaterial, Type armorType, Properties itemProperties,
                       Builder egoArmorBuilder, GeoRenderProvider geoRendererProvider) {
     super(armorMaterial, armorType, itemProperties
       .stacksTo(1)
@@ -63,7 +63,7 @@ public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, I
     public Builder() {
     }
 
-    public ItemAttributeModifiers getItemAttributeModifiers(ArmorItem.Type armorType, Holder<ArmorMaterial> material) {
+    public ItemAttributeModifiers getItemAttributeModifiers(Type armorType, Holder<ArmorMaterial> material) {
       ItemAttributeModifiers.Builder attributeBuilder = ItemAttributeModifiers.builder();
       ArmorMaterial armorMaterial = material.value();
       EquipmentSlotGroup equipmentSlotGroup = EquipmentSlotGroup.bySlot(armorType.getSlot());
