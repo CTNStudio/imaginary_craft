@@ -1,0 +1,132 @@
+{
+  "format_version": "1.12.0",
+  "minecraft:geometry": [
+    {
+      "description": {
+        "identifier": "geometry.magic_bullet",
+        "texture_width": 32,
+        "texture_height": 32,
+        "visible_bounds_width": 7,
+        "visible_bounds_height": 4,
+        "visible_bounds_offset": [
+          0,
+          1,
+          0
+        ]
+      },
+      "bones": [
+        {
+          "name": "bone",
+          "pivot": [
+            0.5,
+            0.325,
+            5
+          ],
+          "rotation": [
+            90,
+            0,
+            90
+          ],
+          "cubes": [
+            {
+              "origin": [
+                -1.16667,
+                -12,
+                3.91667
+              ],
+              "size": [
+                3,
+                4,
+                1.5
+              ],
+              "uv": [
+                6,
+                6
+              ]
+            },
+            {
+              "origin": [
+                -2.16667,
+                -6,
+                3.91667
+              ],
+              "size": [
+                3,
+                5,
+                1.5
+              ],
+              "uv": [
+                6,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -1.16667,
+                -8,
+                3.91667
+              ],
+              "size": [
+                2,
+                2,
+                1.5
+              ],
+              "uv": [
+                6,
+                11
+              ]
+            },
+            {
+              "origin": [
+                0.83333,
+                -7,
+                4.16667
+              ],
+              "size": [
+                1,
+                2,
+                1
+              ],
+              "uv": [
+                14,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -1.16667,
+                -1,
+                4.16667
+              ],
+              "size": [
+                2,
+                19,
+                1
+              ],
+              "uv": [
+                0,
+                0
+              ]
+            },
+            {
+              "origin": [
+                -1.16667,
+                18,
+                4.16667
+              ],
+              "size": [
+                1,
+                4,
+                1
+              ],
+              "uv": [
+                12,
+                11
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
