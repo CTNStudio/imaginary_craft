@@ -74,7 +74,8 @@ public final class RegistrarPlayAnimations {
   private static void modRegisterFactory(ResourceLocation controllerId, int priority,
                                          AnimationController.AnimationStateHandler animationHandler, boolean isFirstPerson) {
     PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(controllerId, priority, player -> {
-      ModPlayerAnimationController controller = new ModPlayerAnimationController(player, animationHandler);
+      ModPlayerAnimationController controller = new ModPlayerAnimationController(player, (a, b, c) -> {
+      }, animationHandler);
       if (isFirstPerson) {
         controller.setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
         controller.setFirstPersonConfiguration(PlayerAnimationUtil.DEFAULT_FIRST_PERSON_CONFIG);
