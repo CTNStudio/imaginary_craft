@@ -19,53 +19,50 @@ public class StandbyPlayerAnimationController extends ModPlayerAnimationControll
   public static final ResourceLocation PLAYER_HEAD_ROTATION = ImaginaryCraft.modRl("player.head_rotation");
 
   public StandbyPlayerAnimationController(AbstractClientPlayer player) {
-    super(player, StandbyPlayerAnimationController::getTickAnimationStateHandler, StandbyPlayerAnimationController::getAnimationStateHandler);
+    super(player, StandbyPlayerAnimationController::getAnimationStateHandler);
   }
 
   private static PlayState getAnimationStateHandler(AnimationController controller, AnimationData animationData, AnimationSetter animationSetter) {
-    return PlayState.STOP;
-  }
-
-  private static void getTickAnimationStateHandler(AnimationController animationController, AnimationData animationData, AnimationSetter animationSetter) {
-    if (!(animationController instanceof StandbyPlayerAnimationController controller)) {
-      return;
+    if (!(controller instanceof StandbyPlayerAnimationController animationController)) {
+      return PlayState.STOP;
     }
-    AbstractClientPlayer player = controller.getPlayer();
+    AbstractClientPlayer player = animationController.getPlayer();
 
     ItemStack mainHandItem = player.getMainHandItem();
     ItemStack offHandItem = player.getOffhandItem();
 
-    controller.removeModifierIf(MirrorModifier.class::isInstance);
+    animationController.removeModifierIf(MirrorModifier.class::isInstance);
 
     // 双手动画
 
     if (ItemUtil.anyMatchIs(mainHandItem, EgoWeaponItems.SOLEMN_LAMENT_BLACK, EgoWeaponItems.SOLEMN_LAMENT_WHITE) &&
       ItemUtil.anyMatchIs(offHandItem, EgoWeaponItems.SOLEMN_LAMENT_BLACK, EgoWeaponItems.SOLEMN_LAMENT_WHITE)) {
-      SolemnLamentWeaponItem.TWIN_ANIM_COLLECTION.executeAnim(controller, animationData, animationSetter);
-      return;
+      SolemnLamentWeaponItem.TWIN_ANIM_COLLECTION.executeAnim(animationController, animationData, animationSetter);
+      return PlayState.CONTINUE;
     }
 
     //  主手动画
 
     if (mainHandItem.is(EgoWeaponItems.MAGIC_BULLET)) {
-      MagicBulletWeaponItem.ANIM_COLLECTION.executeAnim(controller, animationData, animationSetter);
-      return;
+      MagicBulletWeaponItem.ANIM_COLLECTION.executeAnim(animationController, animationData, animationSetter);
+      return PlayState.CONTINUE;
     }
 
     if (ItemUtil.anyMatchIs(mainHandItem, EgoWeaponItems.SOLEMN_LAMENT_BLACK, EgoWeaponItems.SOLEMN_LAMENT_WHITE)) {
-      SolemnLamentWeaponItem.ANIM_COLLECTION.executeAnim(controller, animationData, animationSetter);
-      return;
+      SolemnLamentWeaponItem.ANIM_COLLECTION.executeAnim(animationController, animationData, animationSetter);
+      return PlayState.CONTINUE;
     }
 
     // 副手动画
 
     if (ItemUtil.anyMatchIs(offHandItem, EgoWeaponItems.SOLEMN_LAMENT_BLACK, EgoWeaponItems.SOLEMN_LAMENT_WHITE)) {
-      controller.addModifierLast(new MirrorModifier());
-      SolemnLamentWeaponItem.ANIM_COLLECTION.executeAnim(controller, animationData, animationSetter);
-      return;
+      animationController.addModifierLast(new MirrorModifier());
+      SolemnLamentWeaponItem.ANIM_COLLECTION.executeAnim(animationController, animationData, animationSetter);
+      return PlayState.CONTINUE;
     }
 
-    controller.stopTriggeredAnimation();
+    animationController.stopTriggeredAnimation();
+    return PlayState.STOP;
   }
 
   private static void triggerHeadRotationAnimation(PlayerAnimationController headRotationController) {

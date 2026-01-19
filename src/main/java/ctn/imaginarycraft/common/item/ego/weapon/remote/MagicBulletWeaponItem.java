@@ -23,7 +23,6 @@ import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.model.GeoModel;
 
 // TODO 禁止放到副手
-// TODO 第一人称动画
 // TODO 修复动画问题
 public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   public static final ResourceLocation STANDBY = ImaginaryCraft.modRl("magic_bullet_weapon.standby");

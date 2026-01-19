@@ -12,11 +12,11 @@ import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.jetbrains.annotations.NotNull;
 
-public record PlayerIGunWeaponPayload(byte operation) implements CustomPacketPayload {
+public record PlayerIGunWeaponPayload(int operation) implements CustomPacketPayload {
   public static final Type<PlayerIGunWeaponPayload> TYPE = new Type<>(ImaginaryCraft.modRl("player_i_gun_weapon_payload"));
 
   public static final StreamCodec<ByteBuf, PlayerIGunWeaponPayload> STREAM_CODEC = StreamCodec.composite(
-    ByteBufCodecs.BYTE, PlayerIGunWeaponPayload::operation,
+    ByteBufCodecs.INT, PlayerIGunWeaponPayload::operation,
     PlayerIGunWeaponPayload::new
   );
 
@@ -26,7 +26,7 @@ public record PlayerIGunWeaponPayload(byte operation) implements CustomPacketPay
    * @param shoot 0b1:射击 0b0:不射击
    */
   public PlayerIGunWeaponPayload(InteractionHand hand, boolean sim, boolean shoot) {
-    this((byte) (setHand(hand) | setSim(sim) | setShoot(shoot)));
+    this((setHand(hand) | setSim(sim) | setShoot(shoot)));
   }
 
   /**
@@ -35,7 +35,7 @@ public record PlayerIGunWeaponPayload(byte operation) implements CustomPacketPay
    * @param shoot      0b1:射击 0b0:不射击
    */
   public PlayerIGunWeaponPayload(boolean isMainHand, boolean sim, boolean shoot) {
-    this((byte) ((isMainHand ? 0b1 : 0b0) | setSim(sim) | setShoot(shoot)));
+    this(((isMainHand ? 0b1 : 0b0) | setSim(sim) | setShoot(shoot)));
   }
 
   private static int setHand(InteractionHand hand) {
@@ -51,28 +51,28 @@ public record PlayerIGunWeaponPayload(byte operation) implements CustomPacketPay
   }
 
   public InteractionHand getHand() {
-    return ((int) operation & 0b1) == 1 ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
+    return (operation & 0b1) == 1 ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
   }
 
   /**
    * 瞄准
    */
   public boolean isSim() {
-    return ((int) operation & 0b10) >> 1 == 0b1;
+    return (operation & 0b10) >> 1 == 0b1;
   }
 
   /**
    * 射击
    */
   public boolean isShoot() {
-    return ((int) operation & 0b100) >> 2 == 0b1;
+    return (operation & 0b100) >> 2 == 0b1;
   }
 
   /**
    * 瞄准射击
    */
   public boolean isAimShoot() {
-    return ((int) operation & 0b110) >> 1 == 0b11;
+    return (operation & 0b110) >> 1 == 0b11;
   }
 
   /**

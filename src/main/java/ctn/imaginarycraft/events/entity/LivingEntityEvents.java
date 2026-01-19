@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.events.entity;
 
+import ctn.imaginarycraft.api.DelayTaskHolder;
 import ctn.imaginarycraft.api.IDamageContainer;
 import ctn.imaginarycraft.api.IDamageSource;
-import ctn.imaginarycraft.api.PlayerTimingRun;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
@@ -35,18 +35,17 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.*;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 import org.jetbrains.annotations.Nullable;
 
 import static net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN;
 
-
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class LivingEntityEvents {
-
   /**
    * 恢复事件
    */
-  @SubscribeEvent
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void entityHealEvent(LivingHealEvent event) {
     float amount = event.getAmount();
     LivingEntity entity = event.getEntity();
@@ -56,59 +55,66 @@ public final class LivingEntityEvents {
     }
   }
 
-  @SubscribeEvent
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void livingEquipmentChangeEvent(LivingEquipmentChangeEvent event) {
     LivingEntity entity = event.getEntity();
     EquipmentSlot slot = event.getSlot();
-    if (!(entity instanceof Player player)) {
-      return;
-    }
 
-    boolean isHandUsed = slot == EquipmentSlot.MAINHAND;
-    GunWeaponUtil.setIsAttack(player, true, isHandUsed);
-    GunWeaponUtil.resetChargeUp(player, isHandUsed);
-    PlayerTimingRun data = player.getData(ModAttachments.PLAYER_TIMING_RUN);
-    if (!data.getRunList().isEmpty()) {
-      data.removeTimingRun(slot);
-      data.removeTimingRun(GunWeaponUtil.GUN_SHOOT_MODIFY_TICK);
-    }
-    if (slot.getType() == EquipmentSlot.Type.HAND) {
-      PlayerAnimationUtil.stop(player, PlayerAnimationUtil.WEAPON_STATE);
+    if (entity.isAlive()) {
+      DelayTaskHolder delayTaskHolder = entity.getExistingDataOrNull(ModAttachments.DELAY_TASK_HOLDER);
+      if (delayTaskHolder != null && !event.getFrom().getItem().shouldCauseBlockBreakReset(event.getFrom(), event.getTo())) {
+        delayTaskHolder.removeTask(slot);
+      }
+
+      if (slot.getType() == EquipmentSlot.Type.HAND) {
+        if (entity instanceof Player player) {
+          PlayerAnimationUtil.stop(player, PlayerAnimationUtil.WEAPON_STATE);
+          boolean isHandUsed = slot == EquipmentSlot.MAINHAND;
+          GunWeaponUtil.setIsAttack(player, true, isHandUsed);
+          GunWeaponUtil.resetChargeUp(player, isHandUsed);
+        }
+      }
     }
   }
 
-  @SubscribeEvent
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
+  public static void tickPre(EntityTickEvent.Pre event) {
+    Entity entity = event.getEntity();
+    if (entity instanceof LivingEntity livingEntity) {
+      DelayTaskHolder timingRun = livingEntity.getExistingDataOrNull(ModAttachments.DELAY_TASK_HOLDER);
+      if (timingRun != null) {
+        timingRun.tick();
+      }
+    }
+  }
+
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void livingSwapItemsEvent(LivingSwapItemsEvent.Hands event) {
-    LivingEntity entity = event.getEntity();
-    if (!(entity instanceof Player player)) {
-      return;
-    }
-    ItemStack mainHandItem = player.getMainHandItem();
-    ItemStack offhandItem = player.getOffhandItem();
-    if (mainHandItem.isEmpty() && offhandItem.isEmpty()) {
-      return;
-    }
-    PlayerTimingRun data = player.getData(ModAttachments.PLAYER_TIMING_RUN);
+    LivingEntity livingEntity = event.getEntity();
+    if (livingEntity.isAlive()) {
+      if (livingEntity instanceof Player player) {
+        ItemStack itemSwappedToMainHand = event.getItemSwappedToMainHand();
+        ItemStack itemSwappedToOffHand = event.getItemSwappedToOffHand();
+        DelayTaskHolder delayTaskHolder = livingEntity.getExistingDataOrNull(ModAttachments.DELAY_TASK_HOLDER);
 
-    if (!mainHandItem.isEmpty()) {
-      GunWeaponUtil.setIsAttack(player, true, true);
-      GunWeaponUtil.resetChargeUp(player, true);
-      if (!data.getRunList().isEmpty()) {
-        data.removeTimingRun(InteractionHand.MAIN_HAND);
-        data.removeTimingRun(GunWeaponUtil.GUN_SHOOT_MODIFY_TICK);
+        if (!itemSwappedToMainHand.getItem().shouldCauseBlockBreakReset(itemSwappedToMainHand, itemSwappedToOffHand)) {
+          if (delayTaskHolder != null) {
+            delayTaskHolder.removeTask(InteractionHand.MAIN_HAND);
+          }
+          GunWeaponUtil.setIsAttack(player, true, true);
+          GunWeaponUtil.resetChargeUp(player, true);
+        }
+
+        if (!itemSwappedToOffHand.getItem().shouldCauseBlockBreakReset(itemSwappedToOffHand, itemSwappedToMainHand)) {
+          if (delayTaskHolder != null) {
+            delayTaskHolder.removeTask(InteractionHand.OFF_HAND);
+          }
+          GunWeaponUtil.setIsAttack(player, true, false);
+          GunWeaponUtil.resetChargeUp(player, false);
+        }
+        PlayerAnimationUtil.stop(player, PlayerAnimationUtil.WEAPON_STATE);
       }
     }
-
-    if (!offhandItem.isEmpty()) {
-      GunWeaponUtil.setIsAttack(player, true, false);
-      GunWeaponUtil.resetChargeUp(player, false);
-      if (!data.getRunList().isEmpty()) {
-        data.removeTimingRun(InteractionHand.OFF_HAND);
-        data.removeTimingRun(GunWeaponUtil.GUN_SHOOT_MODIFY_TICK);
-      }
-    }
-
-    PlayerAnimationUtil.stop(player, PlayerAnimationUtil.WEAPON_STATE);
   }
 
   /**

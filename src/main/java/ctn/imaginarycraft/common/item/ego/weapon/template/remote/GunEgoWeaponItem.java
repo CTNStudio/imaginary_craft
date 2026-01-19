@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template.remote;
 
+import ctn.imaginarycraft.api.DelayTaskHolder;
 import ctn.imaginarycraft.api.IGunWeapon;
-import ctn.imaginarycraft.api.PlayerTimingRun;
 import ctn.imaginarycraft.util.GunWeaponUtil;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -56,7 +56,7 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
 
     gunAim(playerEntity, itemStack, handUsed);
     playerEntity.startUsingItem(handUsed);
-    PlayerTimingRun.getInstance(playerEntity).removeTimingRun(handUsed);
+    DelayTaskHolder.of(playerEntity).removeTask(handUsed);
 
     return InteractionResultHolder.success(itemStack);
   }
@@ -224,9 +224,11 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
 
     if (playerEntity.level() instanceof ServerLevel serverLevel) {
       int gunShootExecuteTick = gunShootExecuteTick(playerEntity, itemStack, handUsed);
-      PlayerTimingRun.getInstance(playerEntity).addTimingRun(handUsed, PlayerTimingRun.createTimingRunBilder()
-        .tickRun((tick, maxTick, player) -> gunShootTickRun(tick, gunShootExecuteTick, maxTick, player, itemStack, handUsed))
-        .build(player -> gunShootExecute(playerEntity, itemStack, handUsed, serverLevel), gunShootExecuteTick));
+      DelayTaskHolder.of(playerEntity).addTask(handUsed, DelayTaskHolder.createTaskBilder()
+        .tickRun((tick, maxTick, holder) -> gunShootTickRun(tick, gunShootExecuteTick, maxTick, playerEntity, itemStack, handUsed))
+        .resultRun(holder -> gunShootExecute(playerEntity, itemStack, handUsed, serverLevel))
+        .removedTick(gunShootExecuteTick)
+        .build());
     }
 
     GunWeaponUtil.setIsAttack(playerEntity, false, handUsed);
@@ -244,7 +246,7 @@ public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements
   protected static int gunShootTickRun(int tick, int gunShootExecuteTick, int maxTick, @NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
     int value = gunShootExecuteTick / maxTick;
     GunWeaponUtil.modifyChargeUpValue(playerEntity, value, handUsed);
-    return tick - 1;
+    return tick + 1;
   }
 
   /**

@@ -14,26 +14,24 @@ public final class InputEventExecute {
     Options options = minecraft.options;
     useDown:
     if (options.keyUse.isDown()) {
-      useDown1:
-      if (options.keyAttack.isDown()) {
-        if (!player.isUsingItem()) {
-          break useDown1;
-        }
+      if (!player.isUsingItem()) {
+        if (options.keyAttack.isDown()) {
+          ItemStack useItem = player.getUseItem();
+          if (useItem.isEmpty() ||
+            !(useItem.getItem() instanceof IGunWeapon iGunWeapon) ||
+            !iGunWeapon.isGunAim(player, useItem)) {
+            break useDown;
+          }
 
-        ItemStack useItem = player.getUseItem();
-        if (useItem.isEmpty() ||
-          !(useItem.getItem() instanceof IGunWeapon iGunWeapon) ||
-          !iGunWeapon.isGunAim(player, useItem)) {
-          break useDown1;
-        }
+          InteractionHand usedItemHand = player.getUsedItemHand();
+          if (!iGunWeapon.gunAimShoot(player, useItem, usedItemHand)) {
+            return;
+          }
 
-        InteractionHand usedItemHand = player.getUsedItemHand();
-        if (!iGunWeapon.gunAimShoot(player, useItem, usedItemHand)) {
+          PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(usedItemHand, true, true));
           return;
         }
-
-        PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(usedItemHand, true, true));
-        return;
+        break useDown;
       }
 
       ItemStack offHandItem = player.getOffhandItem();

@@ -8,7 +8,6 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.event.PlayerLeftEmptyClickEvent;
 import ctn.imaginarycraft.event.rationality.RationalityModifyEvent;
 import ctn.imaginarycraft.eventexecute.RationalityEventExecutes;
-import ctn.imaginarycraft.init.ModAttachments;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
@@ -25,10 +24,9 @@ import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 public final class PlayerEvents {
 
   @SubscribeEvent
-  public static void tick(PlayerTickEvent.Pre event) {
+  public static void tickPre(PlayerTickEvent.Pre event) {
     Player player = event.getEntity();
     if (player instanceof ServerPlayer serverPlayer) {
-      player.getData(ModAttachments.PLAYER_TIMING_RUN).tick();
       RationalityEventExecutes.refreshRationalityValue(serverPlayer);
     }
   }

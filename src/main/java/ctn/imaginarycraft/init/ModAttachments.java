@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.init;
 
 import com.mojang.serialization.Codec;
-import ctn.imaginarycraft.api.PlayerTimingRun;
+import ctn.imaginarycraft.api.DelayTaskHolder;
 import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueFortitude;
 import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueJustice;
 import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtuePrudence;
@@ -17,11 +17,8 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 public final class ModAttachments extends AttachmentRegisterUtil {
   public static final DeferredRegister<AttachmentType<?>> REGISTRY = ImaginaryCraft.modRegister(NeoForgeRegistries.ATTACHMENT_TYPES);
 
-  /**
-   * 玩家延迟运行
-   */
-  public static final DeferredHolder<AttachmentType<?>, AttachmentType<PlayerTimingRun>> PLAYER_TIMING_RUN = registerPlayer("player_timing_run",
-    PlayerTimingRun::new);
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<DelayTaskHolder>> DELAY_TASK_HOLDER = register("delay_task_holder",
+    AttachmentType.builder(DelayTaskHolder::new));
 
   /**
    * 枪械蓄力值（主手）

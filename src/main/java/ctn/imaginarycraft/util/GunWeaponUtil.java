@@ -1,10 +1,8 @@
 package ctn.imaginarycraft.util;
 
 import ctn.imaginarycraft.api.IGunWeapon;
-import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModAttachments;
 import ctn.imaginarycraft.init.ModAttributes;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -15,7 +13,6 @@ import net.minecraft.world.entity.player.Player;
  * 提供对枪械武器的各种操作和属性管理功能
  */
 public final class GunWeaponUtil {
-  public static final ResourceLocation GUN_SHOOT_MODIFY_TICK = ImaginaryCraft.modRl("gun_shoot_modify_tick");
 
   /**
    * 检查指定手是否可以进行攻击

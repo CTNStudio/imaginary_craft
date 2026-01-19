@@ -39,10 +39,6 @@ public final class PlayerAnimationUtil {
 
   //region 控制器id
   /**
-   * 头部旋转控制器ID
-   */
-  public static final ResourceLocation HEAD_ROTATION = ImaginaryCraft.modRl("head_rotation");
-  /**
    * 待机和行走控制器ID
    */
   public static final ResourceLocation STANDBY_OR_WALK = ImaginaryCraft.modRl("standby_or_walk");
@@ -54,11 +50,18 @@ public final class PlayerAnimationUtil {
    * 武器控制器ID
    */
   public static final ResourceLocation WEAPON_STATE = ImaginaryCraft.modRl("weapon_state");
-
   /**
-   * 第一人称控制器ID
+   * 左手
    */
-  public static final ResourceLocation FIRST_PERSON = ImaginaryCraft.modRl("first_person");
+  public static final ResourceLocation LEFT_HAND = ImaginaryCraft.modRl("left_hand");
+  /**
+   * 右手
+   */
+  public static final ResourceLocation RIGHT_HAND = ImaginaryCraft.modRl("right_hand");
+  /**
+   * 头部旋转控制器ID
+   */
+  public static final ResourceLocation HEAD_ROTATION = ImaginaryCraft.modRl("head_rotation");
   //endregion
 
   public static final PlayerAnimStandardFadePlayerAnim DEFAULT_FADE_IN = new PlayerAnimStandardFadePlayerAnim(3, EasingType.EASE_IN_OUT_SINE, null, FadeType.FADE_IN);

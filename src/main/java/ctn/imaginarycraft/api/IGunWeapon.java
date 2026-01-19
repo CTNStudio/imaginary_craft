@@ -41,6 +41,7 @@ public interface IGunWeapon {
   boolean isGunAim(Player player, ItemStack itemStack);
 
   // TODO 待实装
+
   /**
    * 判断玩家在瞄准状态下是否可以移动
    *
