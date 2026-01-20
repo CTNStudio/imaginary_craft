@@ -15,16 +15,13 @@ import java.util.Map;
 import java.util.function.Function;
 
 public class ModPlayerAnimationController extends PlayerAnimationController {
-  private final TickAnimationStateHandler tickAnimationStateHandler;
 
-  public ModPlayerAnimationController(AbstractClientPlayer player, TickAnimationStateHandler tickAnimationStateHandler, AnimationStateHandler animationHandler) {
+  public ModPlayerAnimationController(AbstractClientPlayer player, AnimationStateHandler animationHandler) {
     super(player, animationHandler);
-    this.tickAnimationStateHandler = tickAnimationStateHandler;
   }
 
-  public ModPlayerAnimationController(AbstractClientPlayer player, TickAnimationStateHandler tickAnimationStateHandler, AnimationStateHandler animationHandler, Function<AnimationController, MochaEngine<AnimationController>> molangRuntime) {
+  public ModPlayerAnimationController(AbstractClientPlayer player, AnimationStateHandler animationHandler, Function<AnimationController, MochaEngine<AnimationController>> molangRuntime) {
     super(player, animationHandler, molangRuntime);
-    this.tickAnimationStateHandler = tickAnimationStateHandler;
   }
 
   public Map<String, AdvancedPlayerAnimBone> getBones() {
@@ -37,19 +34,5 @@ public class ModPlayerAnimationController extends PlayerAnimationController {
 
   public Map<String, PivotBone> getPivotBone() {
     return Collections.unmodifiableMap(pivotBones);
-  }
-
-  @Override
-  public void tick(AnimationData state) {
-    this.tickAnimationStateHandler.handle(this, state, (animation, startTick) -> {
-      this.setAnimation(animation, startTick);
-      return PlayState.CONTINUE;
-    });
-    super.tick(state);
-  }
-
-  @FunctionalInterface
-  public interface TickAnimationStateHandler {
-    void handle(AnimationController controller, AnimationData state, AnimationSetter animationSetter);
   }
 }
