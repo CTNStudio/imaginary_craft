@@ -15,7 +15,7 @@ import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
 import net.neoforged.neoforge.network.registration.PayloadRegistrar;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
-public final class RegistryPayloadInit {
+public final class RegistryPayload {
   @SubscribeEvent
   public static void register(final RegisterPayloadHandlersEvent event) {
     final PayloadRegistrar registrar = event.registrar("1.0");
