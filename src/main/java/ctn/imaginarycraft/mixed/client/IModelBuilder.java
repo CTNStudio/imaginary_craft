@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.client;
+package ctn.imaginarycraft.mixed.client;
 
 import net.neoforged.neoforge.client.model.generators.ModelBuilder;
 import org.spongepowered.asm.mixin.Unique;

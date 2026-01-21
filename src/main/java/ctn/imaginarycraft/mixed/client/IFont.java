@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.client;
+package ctn.imaginarycraft.mixed.client;
 
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import net.minecraft.client.gui.Font;

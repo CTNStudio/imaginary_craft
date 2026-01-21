@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.mixin.client;
 
-import ctn.imaginarycraft.api.client.IModelBuilder;
+import ctn.imaginarycraft.mixed.client.IModelBuilder;
 import net.neoforged.neoforge.client.model.generators.ModelBuilder;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;

@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.client.gui.hudlayers;
 
-import ctn.imaginarycraft.api.client.IHudLayer;
+import ctn.imaginarycraft.mixed.client.IHudLayer;
 import ctn.imaginarycraft.client.gui.widget.HorizontalStatusBar;
 import ctn.imaginarycraft.util.TextUtil;
 import net.minecraft.client.DeltaTracker;

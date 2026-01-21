@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
-import ctn.imaginarycraft.api.IDamageSource;
+import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.api.client.playeranimcore.AnimCollection;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;

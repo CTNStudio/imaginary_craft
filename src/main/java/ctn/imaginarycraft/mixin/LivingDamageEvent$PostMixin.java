@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.mixin;
 
-import ctn.imaginarycraft.api.ILivingDamageEvent$Post;
+import ctn.imaginarycraft.mixed.ILivingDamageEvent$Post;
 import net.minecraft.world.entity.LivingEntity;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;

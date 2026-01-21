@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.datagen;
 
-import ctn.imaginarycraft.api.client.IModelBuilder;
+import ctn.imaginarycraft.mixed.client.IModelBuilder;
 import ctn.imaginarycraft.client.events.ItemPropertyEvents;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.item.ToolItems;

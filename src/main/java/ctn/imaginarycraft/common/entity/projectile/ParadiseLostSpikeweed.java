@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.entity.projectile;
 
-import ctn.imaginarycraft.api.IDamageSource;
+import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;

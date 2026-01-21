@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.client;
+package ctn.imaginarycraft.mixed.client;
 
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;

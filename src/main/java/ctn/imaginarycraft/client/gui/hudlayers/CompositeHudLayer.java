@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.client.gui.hudlayers;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import ctn.imaginarycraft.api.client.IHudLayer;
+import ctn.imaginarycraft.mixed.client.IHudLayer;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;

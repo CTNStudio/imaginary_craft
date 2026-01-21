@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.client;
+package ctn.imaginarycraft.mixed.client;
 
 import com.zigythebird.playeranimcore.animation.AnimationController;
 import org.spongepowered.asm.mixin.Unique;

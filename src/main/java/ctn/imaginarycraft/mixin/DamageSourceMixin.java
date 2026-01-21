@@ -2,7 +2,7 @@ package ctn.imaginarycraft.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import ctn.imaginarycraft.api.IDamageSource;
+import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.api.capability.item.IItemInvincibleTick;
 import ctn.imaginarycraft.api.capability.item.IItemLcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;

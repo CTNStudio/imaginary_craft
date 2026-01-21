@@ -12,7 +12,7 @@ import com.zigythebird.playeranimcore.animation.layered.modifier.SpeedModifier;
 import com.zigythebird.playeranimcore.api.firstPerson.FirstPersonConfiguration;
 import com.zigythebird.playeranimcore.easing.EasingType;
 import com.zigythebird.playeranimcore.enums.FadeType;
-import ctn.imaginarycraft.api.client.IAnimationController;
+import ctn.imaginarycraft.mixed.client.IAnimationController;
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimRawAnimation;
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimStandardFadePlayerAnim;
 import ctn.imaginarycraft.common.payloads.entity.player.animation.PlayerAnimationPayload;

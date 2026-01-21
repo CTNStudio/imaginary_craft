@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.mixin;
 
-import ctn.imaginarycraft.api.ILivingEntity;
+import ctn.imaginarycraft.mixed.ILivingEntity;
 import net.minecraft.world.entity.Attackable;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

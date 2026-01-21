@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.events.entity;
 
 import ctn.imaginarycraft.api.DelayTaskHolder;
-import ctn.imaginarycraft.api.IDamageContainer;
-import ctn.imaginarycraft.api.IDamageSource;
+import ctn.imaginarycraft.mixed.IDamageContainer;
+import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;

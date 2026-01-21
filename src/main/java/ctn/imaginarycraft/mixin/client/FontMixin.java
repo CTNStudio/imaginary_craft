@@ -2,7 +2,7 @@ package ctn.imaginarycraft.mixin.client;
 
 import com.mojang.blaze3d.font.GlyphInfo;
 import com.mojang.blaze3d.vertex.VertexConsumer;
-import ctn.imaginarycraft.api.client.IFont;
+import ctn.imaginarycraft.mixed.client.IFont;
 import ctn.imaginarycraft.client.gui.ModStringRenderOutput;
 import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.font.FontSet;

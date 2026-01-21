@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api;
+package ctn.imaginarycraft.mixed;
 
 import ctn.imaginarycraft.api.lobotomycorporation.LcImmuneType;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;

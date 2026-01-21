@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.payloads.entity.living;
 
-import ctn.imaginarycraft.api.ILivingEntity;
+import ctn.imaginarycraft.mixed.ILivingEntity;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;

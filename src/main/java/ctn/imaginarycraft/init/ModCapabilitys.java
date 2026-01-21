@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.init;
 
-import ctn.imaginarycraft.api.IDamageSource;
+import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.api.capability.block.IBlockLcLevel;
 import ctn.imaginarycraft.api.capability.entity.IEntityLcLevel;
 import ctn.imaginarycraft.api.capability.item.IItemInvincibleTick;
