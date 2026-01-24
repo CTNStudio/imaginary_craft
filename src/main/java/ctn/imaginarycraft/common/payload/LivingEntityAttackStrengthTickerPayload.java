@@ -1,27 +1,40 @@
-package ctn.imaginarycraft.common.payloads.entity.living;
+package ctn.imaginarycraft.common.payload;
 
-import ctn.imaginarycraft.mixed.ILivingEntity;
+import ctn.imaginarycraft.common.payload.api.ToServerAndClientPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.mixed.ILivingEntity;
 import io.netty.buffer.ByteBuf;
+import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 public record LivingEntityAttackStrengthTickerPayload(
   int attackStrengthTicker
-) implements CustomPacketPayload {
+) implements ToServerAndClientPayload {
   public static final Type<LivingEntityAttackStrengthTickerPayload> TYPE = new Type<>(ImaginaryCraft.modRl("living_entity_attack_strength_ticker_payload"));
   public static final StreamCodec<ByteBuf, LivingEntityAttackStrengthTickerPayload> STREAM_CODEC = StreamCodec.composite(
     ByteBufCodecs.INT, LivingEntityAttackStrengthTickerPayload::attackStrengthTicker,
     LivingEntityAttackStrengthTickerPayload::new);
 
-  public static void to(final LivingEntityAttackStrengthTickerPayload data, final IPayloadContext context) {
-    context.enqueueWork(() -> ILivingEntity.of(context.player()).setImaginarycraft$AttackStrengthTicker(data.attackStrengthTicker()));
-  }
-
   @Override
   public Type<? extends CustomPacketPayload> type() {
     return TYPE;
+  }
+
+  @Override
+  public void toServer(ServerPlayer serverPlayer) {
+    to(serverPlayer);
+  }
+
+  @Override
+  public void toClient(AbstractClientPlayer clientPlayer) {
+    to(clientPlayer);
+  }
+
+  public void to(Player player) {
+    ILivingEntity.of(player).setImaginarycraft$AttackStrengthTicker(attackStrengthTicker());
   }
 }

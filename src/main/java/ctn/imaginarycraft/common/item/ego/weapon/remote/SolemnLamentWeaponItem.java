@@ -7,7 +7,7 @@ import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
 import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponItem;
-import ctn.imaginarycraft.common.payloads.entity.player.animation.PlayerAnimationPayload;
+import ctn.imaginarycraft.common.payload.animation.PlayerAnimationPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModDamageSources;
 import ctn.imaginarycraft.init.ModParticleTypes;

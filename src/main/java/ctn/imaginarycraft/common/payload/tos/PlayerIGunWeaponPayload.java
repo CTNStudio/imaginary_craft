@@ -1,18 +1,20 @@
-package ctn.imaginarycraft.common.payloads.entity.player;
+package ctn.imaginarycraft.common.payload.tos;
 
 import ctn.imaginarycraft.api.IGunWeapon;
+import ctn.imaginarycraft.common.payload.api.ToServerPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
 import org.jetbrains.annotations.NotNull;
 
-public record PlayerIGunWeaponPayload(int operation) implements CustomPacketPayload {
+public record PlayerIGunWeaponPayload(
+  int operation
+) implements ToServerPayload {
   public static final Type<PlayerIGunWeaponPayload> TYPE = new Type<>(ImaginaryCraft.modRl("player_i_gun_weapon_payload"));
 
   public static final StreamCodec<ByteBuf, PlayerIGunWeaponPayload> STREAM_CODEC = StreamCodec.composite(
@@ -78,22 +80,20 @@ public record PlayerIGunWeaponPayload(int operation) implements CustomPacketPayl
   /**
    * 发送到服务端
    */
-  public static void toServer(final PlayerIGunWeaponPayload data, final IPayloadContext context) {
-    context.enqueueWork(() -> {
-      Player player = context.player();
-      InteractionHand hand = data.getHand();
-      ItemStack itemStack = player.getItemInHand(hand);
-      if (!(itemStack.getItem() instanceof IGunWeapon iGunWeapon)) {
-        return;
-      }
-      if (iGunWeapon.isGunAim(player, itemStack) && data.isAimShoot()) {
-        iGunWeapon.gunAimShoot(player, itemStack, hand);
-        return;
-      }
-      if (data.isShoot()) {
-        iGunWeapon.gunShoot(player, itemStack, hand);
-      }
-    });
+  @Override
+  public void work(ServerPlayer player) {
+    InteractionHand hand = getHand();
+    ItemStack itemStack = player.getItemInHand(hand);
+    if (!(itemStack.getItem() instanceof IGunWeapon iGunWeapon)) {
+      return;
+    }
+    if (iGunWeapon.isGunAim(player, itemStack) && isAimShoot()) {
+      iGunWeapon.gunAimShoot(player, itemStack, hand);
+      return;
+    }
+    if (isShoot()) {
+      iGunWeapon.gunShoot(player, itemStack, hand);
+    }
   }
 
   @Override

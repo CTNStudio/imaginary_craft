@@ -20,7 +20,8 @@
   },
   "client": [
     "client.FontMixin",
-    "client.GuiMixin"
+    "client.GuiMixin",
+    "client.KeyMappingMixin"
   ],
   "mixinextras": {
     "minVersion": "0.5.0"

@@ -9,7 +9,7 @@ import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
-import ctn.imaginarycraft.common.payloads.entity.player.PlayerDamagePayload;
+import ctn.imaginarycraft.common.payload.toc.PlayerDamagePayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.eventexecute.LcDamageEventExecutes;
 import ctn.imaginarycraft.init.ModAttachments;

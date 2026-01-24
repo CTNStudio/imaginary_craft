@@ -1,20 +1,23 @@
-package ctn.imaginarycraft.common.payloads.entity.player;
+package ctn.imaginarycraft.common.payload.toc;
 
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.client.gui.hudlayers.screenfilter.LcDamageScreenFilterLayer;
+import ctn.imaginarycraft.common.payload.api.ToClientPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.neoforged.neoforge.network.handling.IPayloadContext;
+import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Optional;
 
-public record PlayerDamagePayload(Optional<@Nullable LcDamageType> lcDamageType,
-                                  float damage) implements CustomPacketPayload {
+public record PlayerDamagePayload(
+  Optional<@Nullable LcDamageType> lcDamageType,
+  float damage
+) implements ToClientPayload {
   public static final Type<PlayerDamagePayload> TYPE = new Type<>(ImaginaryCraft.modRl("player_damage_payload"));
 
   public static final StreamCodec<ByteBuf, PlayerDamagePayload> STREAM_CODEC = StreamCodec.composite(
@@ -27,16 +30,14 @@ public record PlayerDamagePayload(Optional<@Nullable LcDamageType> lcDamageType,
     this(Optional.ofNullable(lcDamageType), damage);
   }
 
-  /**
-   * 发送到客户端
-   */
-  public static void toClient(final PlayerDamagePayload data, final IPayloadContext context) {
-    LcDamageScreenFilterLayer.INSTANCE.addFilter(data.lcDamageType().orElse(null));
-  }
-
   @Override
   public @NotNull CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
     return TYPE;
+  }
+
+  @Override
+  public void work(Player player) {
+    LcDamageScreenFilterLayer.INSTANCE.addFilter(lcDamageType().orElse(null));
   }
 }
 

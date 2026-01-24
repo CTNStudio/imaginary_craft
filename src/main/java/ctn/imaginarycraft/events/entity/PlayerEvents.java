@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.events.entity;
 
 import ctn.imaginarycraft.api.IGunWeapon;
-import ctn.imaginarycraft.api.IItemPlayerLeftClick;
+import ctn.imaginarycraft.api.IPlayerItemLeftClick;
 import ctn.imaginarycraft.client.util.ParticleUtil;
-import ctn.imaginarycraft.common.payloads.entity.player.PlayerLeftEmptyClickPayload;
+import ctn.imaginarycraft.common.payload.tos.PlayerLeftEmptyClickPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.event.PlayerLeftEmptyClickEvent;
 import ctn.imaginarycraft.event.rationality.RationalityModifyEvent;
@@ -70,7 +70,7 @@ public final class PlayerEvents {
   }
 
   private static void playerLeftClickEmpty(ItemStack itemStack, Player player) {
-    if (itemStack.getItem() instanceof IItemPlayerLeftClick itemLeftClick) {
+    if (itemStack.getItem() instanceof IPlayerItemLeftClick itemLeftClick) {
       itemLeftClick.leftClickEmpty(player, itemStack);
     }
   }
