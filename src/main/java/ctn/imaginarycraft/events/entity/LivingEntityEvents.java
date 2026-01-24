@@ -14,7 +14,6 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.eventexecute.LcDamageEventExecutes;
 import ctn.imaginarycraft.init.ModAttachments;
 import ctn.imaginarycraft.util.GunWeaponUtil;
-import ctn.imaginarycraft.util.PayloadUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -271,7 +270,7 @@ public final class LivingEntityEvents {
 //    }
 
     if (entity instanceof ServerPlayer player) {
-      PayloadUtil.sendToClient(player, new PlayerDamagePayload(IDamageSource.of(event.getSource()).getImaginaryCraft$LcDamageType(), newDamage));
+      PlayerDamagePayload.send(player, lcDamageType, newDamage);
     }
   }
 }

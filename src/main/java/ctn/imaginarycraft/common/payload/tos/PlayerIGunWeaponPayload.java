@@ -3,6 +3,7 @@ package ctn.imaginarycraft.common.payload.tos;
 import ctn.imaginarycraft.api.IGunWeapon;
 import ctn.imaginarycraft.common.payload.api.ToServerPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.util.PayloadUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
@@ -15,12 +16,11 @@ import org.jetbrains.annotations.NotNull;
 public record PlayerIGunWeaponPayload(
   int operation
 ) implements ToServerPayload {
-  public static final Type<PlayerIGunWeaponPayload> TYPE = new Type<>(ImaginaryCraft.modRl("player_i_gun_weapon_payload"));
+  public static final Type<PlayerIGunWeaponPayload> TYPE = new Type<>(ImaginaryCraft.modRl("player_gun_weapon_payload"));
 
   public static final StreamCodec<ByteBuf, PlayerIGunWeaponPayload> STREAM_CODEC = StreamCodec.composite(
     ByteBufCodecs.INT, PlayerIGunWeaponPayload::operation,
-    PlayerIGunWeaponPayload::new
-  );
+    PlayerIGunWeaponPayload::new);
 
   /**
    * @param hand  0b1:主手 0b0:副手
@@ -38,6 +38,10 @@ public record PlayerIGunWeaponPayload(
    */
   public PlayerIGunWeaponPayload(boolean isMainHand, boolean sim, boolean shoot) {
     this(((isMainHand ? 0b1 : 0b0) | setSim(sim) | setShoot(shoot)));
+  }
+
+  public static void send(InteractionHand usedItemHand, boolean sim) {
+    PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(usedItemHand, sim, true));
   }
 
   private static int setHand(InteractionHand hand) {

@@ -75,6 +75,6 @@ public final class InputEvents {
     if (entity.isUsingItem() && entity.getUseItem().getItem() instanceof IGunWeapon) {
       return;
     }
-    PlayerLeftEmptyClickPayload.trigger(entity, event.getHand());
+    PlayerLeftEmptyClickPayload.send(entity, event.getHand());
   }
 }

@@ -4,10 +4,12 @@ import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.client.gui.hudlayers.screenfilter.LcDamageScreenFilterLayer;
 import ctn.imaginarycraft.common.payload.api.ToClientPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.util.PayloadUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.network.codec.ByteBufCodecs;
 import net.minecraft.network.codec.StreamCodec;
 import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -28,6 +30,10 @@ public record PlayerDamagePayload(
 
   public PlayerDamagePayload(@Nullable LcDamageType lcDamageType, float damage) {
     this(Optional.ofNullable(lcDamageType), damage);
+  }
+
+  public static void send(ServerPlayer player, LcDamageType lcDamageType, float newDamage) {
+    PayloadUtil.sendToClient(player, new PlayerDamagePayload(lcDamageType, newDamage));
   }
 
   @Override

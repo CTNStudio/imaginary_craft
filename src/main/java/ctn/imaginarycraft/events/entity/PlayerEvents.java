@@ -58,7 +58,7 @@ public final class PlayerEvents {
       return;
     }
 
-    PlayerLeftEmptyClickPayload.trigger(entity, event.getHand());
+    PlayerLeftEmptyClickPayload.send(entity, event.getHand());
   }
 
   /**

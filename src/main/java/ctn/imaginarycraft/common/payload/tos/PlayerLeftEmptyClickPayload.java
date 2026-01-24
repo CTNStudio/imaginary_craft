@@ -31,7 +31,7 @@ public record PlayerLeftEmptyClickPayload(
     this(interactionHand == InteractionHand.MAIN_HAND);
   }
 
-  public static void trigger(final Player player, final InteractionHand hand) {
+  public static void send(final Player player, final InteractionHand hand) {
     PlayerLeftEmptyClickEvent.Pre event = new PlayerLeftEmptyClickEvent.Pre(player, hand);
     if (player instanceof AbstractClientPlayer) {
       PayloadUtil.sendToServer(new PlayerLeftEmptyClickPayload(hand));
@@ -50,6 +50,6 @@ public record PlayerLeftEmptyClickPayload(
 
   @Override
   public void work(ServerPlayer player) {
-    trigger(player, isMainHand() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND);
+    send(player, isMainHand() ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND);
   }
 }

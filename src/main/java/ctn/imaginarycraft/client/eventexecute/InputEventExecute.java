@@ -28,7 +28,7 @@ public final class InputEventExecute {
             return;
           }
 
-          PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(usedItemHand, true, true));
+          PlayerIGunWeaponPayload.send(usedItemHand, true);
           return;
         }
         break useDown;
@@ -42,7 +42,7 @@ public final class InputEventExecute {
         break useDown;
       }
 
-      PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(InteractionHand.OFF_HAND, false, true));
+      PlayerIGunWeaponPayload.send(InteractionHand.OFF_HAND, false);
       return;
     }
 
@@ -54,7 +54,7 @@ public final class InputEventExecute {
         return;
       }
 
-      PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(InteractionHand.MAIN_HAND, false, true));
+      PlayerIGunWeaponPayload.send(InteractionHand.MAIN_HAND, false);
     }
   }
 }
