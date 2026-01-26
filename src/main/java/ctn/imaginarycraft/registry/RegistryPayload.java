@@ -7,7 +7,6 @@ import ctn.imaginarycraft.common.payload.api.ToServerPayload;
 import ctn.imaginarycraft.common.payload.toc.PlayerDamagePayload;
 import ctn.imaginarycraft.common.payload.tos.PlayerIGunWeaponPayload;
 import ctn.imaginarycraft.common.payload.tos.PlayerKeyClickPayload;
-import ctn.imaginarycraft.common.payload.tos.PlayerLeftEmptyClickPayload;
 import ctn.imaginarycraft.common.payload.animation.PlayerAnimationPayload;
 import ctn.imaginarycraft.common.payload.animation.PlayerRawAnimationPayload;
 import ctn.imaginarycraft.common.payload.animation.PlayerStopAnimationPayload;
@@ -37,7 +36,6 @@ public final class RegistryPayload {
     playToClient(registrar, PlayerDamagePayload.TYPE, PlayerDamagePayload.STREAM_CODEC);
 
     // 接收来自客户端的数据 发送到 服务端
-    playToServer(registrar, PlayerLeftEmptyClickPayload.TYPE, PlayerLeftEmptyClickPayload.STREAM_CODEC);
     playToServer(registrar, PlayerIGunWeaponPayload.TYPE, PlayerIGunWeaponPayload.STREAM_CODEC);
     playToServer(registrar, PlayerKeyClickPayload.TYPE, PlayerKeyClickPayload.STREAM_CODEC);
     ImaginaryCraft.LOGGER.info("Registering payloads finish");

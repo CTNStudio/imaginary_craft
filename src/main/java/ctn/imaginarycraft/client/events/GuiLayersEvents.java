@@ -55,7 +55,7 @@ public final class GuiLayersEvents {
           return;
         }
       }
-      if (!GunWeaponUtil.isHoldGunWeapon(instance.player)) {
+      if (!GunWeaponUtil.is(instance.player)) {
         event.setCanceled(true);
       }
     }

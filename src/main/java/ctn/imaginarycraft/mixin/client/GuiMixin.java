@@ -26,7 +26,7 @@ public abstract class GuiMixin {
   @Expression("this.minecraft.options.attackIndicator().get() == CROSSHAIR")
   @ModifyExpressionValue(method = "renderCrosshair", at = @At("MIXINEXTRAS:EXPRESSION"))
   private boolean imaginarycraft$renderCrosshair(boolean original) {
-    if (GunWeaponUtil.isHoldGunWeapon(minecraft.player)) {
+    if (GunWeaponUtil.is(minecraft.player)) {
       return false;
     }
     return original;
@@ -40,7 +40,7 @@ public abstract class GuiMixin {
   @Expression("this.minecraft.options.attackIndicator().get() == HOTBAR")
   @ModifyExpressionValue(method = "renderItemHotbar", at = @At("MIXINEXTRAS:EXPRESSION"))
   private boolean imaginarycraft$renderItemHotbar(boolean original) {
-    if (GunWeaponUtil.isHoldGunWeapon(minecraft.player)) {
+    if (GunWeaponUtil.is(minecraft.player)) {
       return false;
     }
     return original;

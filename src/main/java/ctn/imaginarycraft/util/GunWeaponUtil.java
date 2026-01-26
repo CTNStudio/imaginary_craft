@@ -276,7 +276,7 @@ public final class GunWeaponUtil {
    * @param livingEntity 生物对象
    * @return 如果持有枪械武器则返回true，否则返回false
    */
-  public static boolean isHoldGunWeapon(LivingEntity livingEntity) {
+  public static boolean is(LivingEntity livingEntity) {
     return livingEntity.getMainHandItem().getItem() instanceof IGunWeapon || livingEntity.getOffhandItem().getItem() instanceof IGunWeapon;
   }
 
@@ -287,7 +287,7 @@ public final class GunWeaponUtil {
    * @param isHandUsed   是否为主手
    * @return 如果指定手持有枪械武器则返回true，否则返回false
    */
-  public static boolean isHoldGunWeapon(LivingEntity livingEntity, boolean isHandUsed) {
+  public static boolean is(LivingEntity livingEntity, boolean isHandUsed) {
     return (isHandUsed ? livingEntity.getMainHandItem().getItem() : livingEntity.getOffhandItem().getItem()) instanceof IGunWeapon;
   }
 
@@ -298,8 +298,8 @@ public final class GunWeaponUtil {
    * @param handUsed     使用的手（主手或副手）
    * @return 如果指定手持有枪械武器则返回true，否则返回false
    */
-  public static boolean isHoldGunWeapon(LivingEntity livingEntity, InteractionHand handUsed) {
-    return isHoldGunWeapon(livingEntity, handUsed == InteractionHand.MAIN_HAND);
+  public static boolean is(LivingEntity livingEntity, InteractionHand handUsed) {
+    return is(livingEntity, handUsed == InteractionHand.MAIN_HAND);
   }
 
   /**

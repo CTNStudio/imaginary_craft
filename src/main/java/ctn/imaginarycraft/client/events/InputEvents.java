@@ -1,12 +1,10 @@
 package ctn.imaginarycraft.client.events;
 
 import ctn.imaginarycraft.api.IGunWeapon;
+import ctn.imaginarycraft.api.IPlayerItemAttackClick;
 import ctn.imaginarycraft.client.eventexecute.InputEventExecute;
-import ctn.imaginarycraft.common.payload.tos.PlayerLeftEmptyClickPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.util.GunWeaponUtil;
 import ctn.imaginarycraft.util.PlayerKeyClickUtil;
-import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.player.LocalPlayer;
@@ -31,7 +29,7 @@ public final class InputEvents {
       Options options = minecraft.options;
       PlayerKeyClickUtil.clientTickProcess(options, minecraft, player);
       if (minecraft.screen == null) {
-      InputEventExecute.iGunWeapon(player, minecraft);
+        InputEventExecute.iGunWeapon(player, minecraft);
       }
     }
   }
@@ -44,12 +42,17 @@ public final class InputEvents {
     }
 
     LocalPlayer player = instance.player;
-    if (player == null || !GunWeaponUtil.isHoldGunWeapon(player)) {
+    if (player == null) {
       return;
     }
 
     if (event.isAttack()) {
       ItemStack mainHandItem = player.getMainHandItem();
+      if (mainHandItem.getItem() instanceof IPlayerItemAttackClick) {
+        event.setSwingHand(false);
+        event.setCanceled(true);
+        return;
+      }
       if (mainHandItem.getItem() instanceof IGunWeapon) {
         event.setSwingHand(false);
         event.setCanceled(true);
@@ -58,6 +61,11 @@ public final class InputEvents {
 
     if (event.isUseItem()) {
       ItemStack offHandItem = player.getOffhandItem();
+      if (offHandItem.getItem() instanceof IPlayerItemAttackClick) {
+        event.setSwingHand(false);
+        event.setCanceled(true);
+        return;
+      }
       if (offHandItem.getItem() instanceof IGunWeapon iGunWeapon && iGunWeapon.isOffHandShoot(player, offHandItem)) {
         event.setSwingHand(false);
         event.setCanceled(true);
@@ -74,6 +82,5 @@ public final class InputEvents {
     if (entity.isUsingItem() && entity.getUseItem().getItem() instanceof IGunWeapon) {
       return;
     }
-    PlayerLeftEmptyClickPayload.send(entity, event.getHand());
   }
 }

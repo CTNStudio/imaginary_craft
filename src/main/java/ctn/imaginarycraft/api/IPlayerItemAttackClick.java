@@ -12,13 +12,6 @@ import net.minecraft.world.item.ItemStack;
 public interface IPlayerItemAttackClick {
 
   /**
-   * 空点击
-   */
-  default void attackClickEmpty(Player player, ItemStack stack) {
-
-  }
-
-  /**
    * 点击
    */
   default void onAttackClick(Player player, InteractionHand hand) {
