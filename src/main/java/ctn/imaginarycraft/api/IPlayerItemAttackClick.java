@@ -1,0 +1,34 @@
+package ctn.imaginarycraft.api;
+
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+
+/**
+ * 左键->攻击键
+ * <p>
+ * 右键->使用键
+ */
+public interface IPlayerItemAttackClick {
+
+  /**
+   * 空点击
+   */
+  default void attackClickEmpty(Player player, ItemStack stack) {
+
+  }
+
+  /**
+   * 点击
+   */
+  default void onAttackClick(Player player, InteractionHand hand) {
+
+  }
+
+  /**
+   * 松开点击
+   */
+  default void onAttackClickRelease(Player player, InteractionHand hand) {
+
+  }
+}

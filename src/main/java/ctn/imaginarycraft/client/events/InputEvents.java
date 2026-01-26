@@ -6,6 +6,7 @@ import ctn.imaginarycraft.common.payload.tos.PlayerLeftEmptyClickPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.util.GunWeaponUtil;
 import ctn.imaginarycraft.util.PlayerKeyClickUtil;
+import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;
 import net.minecraft.client.player.LocalPlayer;
@@ -26,14 +27,12 @@ public final class InputEvents {
   public static void onClientTickPre(ClientTickEvent.Pre event) {
     Minecraft minecraft = Minecraft.getInstance();
     LocalPlayer player = minecraft.player;
-    Options options = minecraft.options;
     if (player != null) {
-      if (minecraft.screen != null) {
-        return;
-      }
-      PlayerKeyClickUtil playerKeyClickUtil = PlayerKeyClickUtil.of();
-      PlayerKeyClickUtil.keyProcess(options.keyUse, playerKeyClickUtil, player);
+      Options options = minecraft.options;
+      PlayerKeyClickUtil.clientTickProcess(options, minecraft, player);
+      if (minecraft.screen == null) {
       InputEventExecute.iGunWeapon(player, minecraft);
+      }
     }
   }
 

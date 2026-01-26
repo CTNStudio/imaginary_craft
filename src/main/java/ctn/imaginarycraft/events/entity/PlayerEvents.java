@@ -1,19 +1,21 @@
 package ctn.imaginarycraft.events.entity;
 
 import ctn.imaginarycraft.api.IGunWeapon;
-import ctn.imaginarycraft.api.IPlayerItemLeftClick;
+import ctn.imaginarycraft.api.IPlayerItemAttackClick;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.common.payload.tos.PlayerLeftEmptyClickPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.event.PlayerLeftEmptyClickEvent;
 import ctn.imaginarycraft.event.rationality.RationalityModifyEvent;
 import ctn.imaginarycraft.eventexecute.RationalityEventExecutes;
+import ctn.imaginarycraft.util.PlayerKeyClickUtil;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
@@ -70,8 +72,20 @@ public final class PlayerEvents {
   }
 
   private static void playerLeftClickEmpty(ItemStack itemStack, Player player) {
-    if (itemStack.getItem() instanceof IPlayerItemLeftClick itemLeftClick) {
-      itemLeftClick.leftClickEmpty(player, itemStack);
+    if (itemStack.getItem() instanceof IPlayerItemAttackClick itemLeftClick) {
+      itemLeftClick.attackClickEmpty(player, itemStack);
     }
+  }
+
+  /**
+   * 玩家重生或维度切换后
+   */
+  @SubscribeEvent
+  public static void reset(PlayerEvent.Clone event) {
+  }
+
+  /** 登录到世界-此时客户端玩家已创建 */
+  @SubscribeEvent
+  public static void loggedIn(PlayerEvent.PlayerLoggedInEvent event) {
   }
 }

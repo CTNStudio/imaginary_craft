@@ -45,7 +45,7 @@ public final class ModAttachments extends AttachmentRegisterUtil {
     (player) -> true, builder -> builder
       .sync(ByteBufCodecs.BOOL));
 
-  // TODO 待实装
+  // TODO 待实装 魔弹使用数量
   /**
    * 魔弹使用数量
    */
