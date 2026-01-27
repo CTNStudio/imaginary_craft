@@ -6,13 +6,12 @@ import com.zigythebird.playeranimcore.animation.AnimationController;
 import com.zigythebird.playeranimcore.animation.layered.IAnimation;
 import com.zigythebird.playeranimcore.api.firstPerson.FirstPersonMode;
 import com.zigythebird.playeranimcore.enums.PlayState;
-import ctn.imaginarycraft.client.animation.player.ModPlayerAnimationController;
-import ctn.imaginarycraft.client.animation.player.StandbyPlayerAnimationController;
+import ctn.imaginarycraft.client.animation.player.controller.AnimationControllerRegistry;
+import ctn.imaginarycraft.client.animation.player.controller.ModPlayerAnimationController;
 import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -28,25 +27,54 @@ public final class RegistrarPlayAnimations {
 
   @SubscribeEvent
   public static void register(FMLClientSetupEvent event) {
-    event.enqueueWork(() -> {
-      modRegisterFactory(PlayerAnimationUtil.STANDBY_OR_WALK, 600, StandbyPlayerAnimationController::new, true);
-      modRegisterFactory(PlayerAnimationUtil.NORMAL_STATE, 1000, true);
-      modRegisterFactory(PlayerAnimationUtil.WEAPON_STATE, 1500, true);
-      modRegisterFactory(PlayerAnimationUtil.LEFT_HAND, 2000, true);
-      modRegisterFactory(PlayerAnimationUtil.RIGHT_HAND, 2000, true);
-      modRegisterFactory(PlayerAnimationUtil.HEAD_ROTATION, 3000,
-        (controller, animationData, setter) -> {
-          if (!(controller instanceof ModPlayerAnimationController playerAnimationController)) {
-            return PlayState.STOP;
-          }
-          AbstractClientPlayer player = playerAnimationController.getPlayer();
-          if (triggerHeadRotationAnimation(player, PlayerAnimationUtil.STANDBY_OR_WALK) ||
-            triggerHeadRotationAnimation(player, PlayerAnimationUtil.NORMAL_STATE)) {
-            return PlayState.CONTINUE;
-          }
+    event.enqueueWork(() -> register());
+  }
+
+  private static void register() {
+    AnimationControllerRegistry.initializeControllers();
+    modRegisterFactory(PlayerAnimationUtil.STANDBY_OR_WALK, 600, (controller, data, animationSetter) -> controller instanceof ModPlayerAnimationController animationController ?
+      AnimationControllerRegistry.STANDBY_OR_WALK.execute(animationController, data, animationSetter) : PlayState.STOP, true);
+    modRegisterFactory(PlayerAnimationUtil.NORMAL_STATE, 1000, true);
+    modRegisterFactory(PlayerAnimationUtil.WEAPON_STATE, 1500, true);
+    modRegisterFactory(PlayerAnimationUtil.LEFT_HAND, 2000, true);
+    modRegisterFactory(PlayerAnimationUtil.RIGHT_HAND, 2000, true);
+    modRegisterFactory(PlayerAnimationUtil.HEAD_ROTATION, 3000,
+      (controller, animationData, setter) -> {
+        if (!(controller instanceof ModPlayerAnimationController playerAnimationController)) {
           return PlayState.STOP;
-        }, false);
+        }
+        AbstractClientPlayer player = playerAnimationController.getPlayer();
+        if (triggerHeadRotationAnimation(player, PlayerAnimationUtil.STANDBY_OR_WALK) ||
+          triggerHeadRotationAnimation(player, PlayerAnimationUtil.NORMAL_STATE)) {
+          return PlayState.CONTINUE;
+        }
+        return PlayState.STOP;
+      }, false);
+  }
+
+  private static void modRegisterFactory(ResourceLocation controllerId, int priority, boolean isFirstPerson) {
+    modRegisterFactory(controllerId, priority, (controller, animationData, setter) -> PlayState.STOP, isFirstPerson);
+  }
+
+  private static void modRegisterFactory(ResourceLocation controllerId, int priority,
+                                         AnimationController.AnimationStateHandler animationHandler, boolean isFirstPerson) {
+    PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(controllerId, priority, player -> {
+      ModPlayerAnimationController controller = new ModPlayerAnimationController(player, animationHandler);
+      if (isFirstPerson) {
+        controller.setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
+        controller.setFirstPersonConfiguration(PlayerAnimationUtil.DEFAULT_FIRST_PERSON_CONFIG);
+      }
+      return controller;
     });
+  }
+
+  private static boolean triggerHeadRotationAnimation(@NotNull AbstractClientPlayer player, @NotNull ResourceLocation id) {
+    PlayerAnimationController headRotationController = PlayerAnimationUtil.getPlayerAnimationController(player, id);
+    if (headRotationController != null && PlayerAnimationUtil.isExecutableAnimation(headRotationController, id)) {
+      headRotationController.triggerAnimation(id);
+      return true;
+    }
+    return false;
   }
 
   private static void registerFactory(ResourceLocation controllerId, int priority, boolean isFirstPerson) {
@@ -59,22 +87,6 @@ public final class RegistrarPlayAnimations {
                                       AnimationController.AnimationStateHandler animationHandler, boolean isFirstPerson) {
     PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(controllerId, priority, player -> {
       PlayerAnimationController controller = new PlayerAnimationController(player, animationHandler);
-      if (isFirstPerson) {
-        controller.setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
-        controller.setFirstPersonConfiguration(PlayerAnimationUtil.DEFAULT_FIRST_PERSON_CONFIG);
-      }
-      return controller;
-    });
-  }
-
-  private static void modRegisterFactory(ResourceLocation controllerId, int priority, boolean isFirstPerson) {
-    modRegisterFactory(controllerId, priority, (controller, animationData, setter) -> PlayState.STOP, isFirstPerson);
-  }
-
-  private static void modRegisterFactory(ResourceLocation controllerId, int priority,
-                                         AnimationController.AnimationStateHandler animationHandler, boolean isFirstPerson) {
-    PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(controllerId, priority, player -> {
-      ModPlayerAnimationController controller = new ModPlayerAnimationController(player, animationHandler);
       if (isFirstPerson) {
         controller.setFirstPersonMode(FirstPersonMode.THIRD_PERSON_MODEL);
         controller.setFirstPersonConfiguration(PlayerAnimationUtil.DEFAULT_FIRST_PERSON_CONFIG);
@@ -106,15 +118,6 @@ public final class RegistrarPlayAnimations {
       }
       return controller;
     });
-  }
-
-  private static boolean triggerHeadRotationAnimation(@NotNull AbstractClientPlayer player, @NotNull ResourceLocation id) {
-    PlayerAnimationController headRotationController = PlayerAnimationUtil.getPlayerAnimationController(player, id);
-    if (headRotationController != null && PlayerAnimationUtil.isExecutableAnimation(headRotationController, id)) {
-      headRotationController.triggerAnimation(id);
-      return true;
-    }
-    return false;
   }
 
   private static void triggerHeadRotationAnimation(PlayerAnimationController headRotationController) {

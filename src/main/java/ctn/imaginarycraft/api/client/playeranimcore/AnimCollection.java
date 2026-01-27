@@ -1,13 +1,13 @@
 package ctn.imaginarycraft.api.client.playeranimcore;
 
-import com.zigythebird.playeranim.animation.PlayerAnimResources;
 import com.zigythebird.playeranim.animation.PlayerAnimationController;
-import com.zigythebird.playeranimcore.animation.Animation;
 import com.zigythebird.playeranimcore.animation.AnimationController;
 import com.zigythebird.playeranimcore.animation.AnimationData;
 import com.zigythebird.playeranimcore.animation.layered.modifier.AbstractFadeModifier;
 import com.zigythebird.playeranimcore.easing.EasingType;
-import com.zigythebird.playeranimcore.enums.State;
+import com.zigythebird.playeranimcore.enums.PlayState;
+import ctn.imaginarycraft.client.animation.player.controller.GenericAnimationController;
+import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import net.minecraft.resources.ResourceLocation;
 
 /**
@@ -15,39 +15,31 @@ import net.minecraft.resources.ResourceLocation;
  */
 public record AnimCollection(ResourceLocation standby, ResourceLocation move) {
 
-  public void executeAnim(PlayerAnimationController controller, AnimationData state,
+  public PlayState executeAnim(GenericAnimationController.AnimationContext context) {
+    return executeAnim(context.controller, context.data, context.setter);
+  }
+
+  public PlayState executeAnim(PlayerAnimationController controller, AnimationData state,
                           AnimationController.AnimationSetter animationSetter) {
     if (state.isMoving()) {
-      if (is(controller, move)) {
-        movingAnim(controller);
+      if (PlayerAnimationUtil.isPlaying(controller, move)) {
+        return movingAnim(controller);
       }
     } else {
-      if (is(controller, standby)) {
-        standbyAnim(controller);
+      if (PlayerAnimationUtil.isPlaying(controller, standby)) {
+        return standbyAnim(controller);
       }
     }
+    return PlayState.STOP;
   }
 
-  private boolean is(PlayerAnimationController controller, ResourceLocation animationId) {
-    if (controller.getAnimationState() == State.STOPPED || controller.getAnimationState() == State.PAUSED) {
-      return true;
-    }
-    Animation currentAnimationInstance = controller.getCurrentAnimationInstance();
-    if (currentAnimationInstance == null) {
-      return true;
-    }
-    Animation animation = PlayerAnimResources.getAnimation(animationId);
-    if (animation == null) {
-      return true;
-    }
-    return !currentAnimationInstance.get().equals(animation.get());
-  }
-
-  public void movingAnim(PlayerAnimationController controller) {
+  public PlayState movingAnim(PlayerAnimationController controller) {
     controller.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(3, EasingType.EASE_IN_OUT_SINE), move, true);
+    return PlayState.CONTINUE;
   }
 
-  public void standbyAnim(PlayerAnimationController controller) {
+  public PlayState standbyAnim(PlayerAnimationController controller) {
     controller.replaceAnimationWithFade(AbstractFadeModifier.standardFadeIn(3, EasingType.EASE_IN_OUT_SINE), standby, true);
+    return PlayState.CONTINUE;
   }
 }

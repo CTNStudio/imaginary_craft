@@ -12,6 +12,7 @@ import com.zigythebird.playeranimcore.animation.layered.modifier.SpeedModifier;
 import com.zigythebird.playeranimcore.api.firstPerson.FirstPersonConfiguration;
 import com.zigythebird.playeranimcore.easing.EasingType;
 import com.zigythebird.playeranimcore.enums.FadeType;
+import com.zigythebird.playeranimcore.enums.State;
 import ctn.imaginarycraft.mixed.client.IAnimationController;
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimRawAnimation;
 import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimStandardFadePlayerAnim;
@@ -355,6 +356,21 @@ public final class PlayerAnimationUtil {
    */
   public static boolean isSameAnimation(Animation animation, ResourceLocation animationId) {
     return isSameAnimation(animation, PlayerAnimResources.getAnimation(animationId));
+  }
+
+  public static boolean isPlaying(PlayerAnimationController controller, ResourceLocation animationId) {
+    if (controller.getAnimationState() == State.STOPPED || controller.getAnimationState() == State.PAUSED) {
+      return true;
+    }
+    Animation currentAnimationInstance = controller.getCurrentAnimationInstance();
+    if (currentAnimationInstance == null) {
+      return true;
+    }
+    Animation animation = PlayerAnimResources.getAnimation(animationId);
+    if (animation == null) {
+      return true;
+    }
+    return !currentAnimationInstance.get().equals(animation.get());
   }
   //endregion
 }

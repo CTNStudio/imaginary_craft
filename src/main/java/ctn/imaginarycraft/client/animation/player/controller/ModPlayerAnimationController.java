@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.client.animation.player;
+package ctn.imaginarycraft.client.animation.player.controller;
 
 import com.zigythebird.playeranim.animation.PlayerAnimationController;
 import com.zigythebird.playeranimcore.animation.AnimationController;
@@ -6,8 +6,8 @@ import com.zigythebird.playeranimcore.animation.AnimationData;
 import com.zigythebird.playeranimcore.bones.AdvancedPlayerAnimBone;
 import com.zigythebird.playeranimcore.bones.PivotBone;
 import com.zigythebird.playeranimcore.bones.PlayerAnimBone;
-import com.zigythebird.playeranimcore.enums.PlayState;
 import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.resources.ResourceLocation;
 import team.unnamed.mocha.MochaEngine;
 
 import java.util.Collections;
