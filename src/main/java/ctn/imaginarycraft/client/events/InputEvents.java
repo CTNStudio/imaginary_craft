@@ -29,7 +29,7 @@ public final class InputEvents {
       Options options = minecraft.options;
       PlayerKeyClickUtil.clientTickProcess(options, minecraft, player);
       if (minecraft.screen == null) {
-        InputEventExecute.iGunWeapon(player, minecraft);
+        InputEventExecute.handleGunWeaponInput(player, minecraft);
       }
     }
   }

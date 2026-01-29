@@ -3,15 +3,21 @@ package ctn.imaginarycraft.client.registry;
 import com.zigythebird.playeranim.animation.PlayerAnimationController;
 import com.zigythebird.playeranim.api.PlayerAnimationFactory;
 import com.zigythebird.playeranimcore.animation.AnimationController;
+import com.zigythebird.playeranimcore.animation.AnimationData;
 import com.zigythebird.playeranimcore.animation.layered.IAnimation;
+import com.zigythebird.playeranimcore.animation.layered.modifier.MirrorModifier;
 import com.zigythebird.playeranimcore.api.firstPerson.FirstPersonMode;
 import com.zigythebird.playeranimcore.enums.PlayState;
-import ctn.imaginarycraft.client.animation.player.controller.AnimationControllerRegistry;
 import ctn.imaginarycraft.client.animation.player.controller.ModPlayerAnimationController;
 import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
+import ctn.imaginarycraft.common.item.ego.weapon.remote.MagicBulletWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.remote.SolemnLamentWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
+import ctn.imaginarycraft.util.ItemUtil;
 import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.ItemStack;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
@@ -27,37 +33,70 @@ public final class RegistrarPlayAnimations {
 
   @SubscribeEvent
   public static void register(FMLClientSetupEvent event) {
-    event.enqueueWork(() -> register());
-  }
+    event.enqueueWork(() -> {
+      modRegisterFactory(PlayerAnimationUtil.STANDBY_OR_WALK, 600, (controller, state, animationSetter) -> {
+        if (!(controller instanceof ModPlayerAnimationController animationController)) {
+          return PlayState.STOP;
+        }
+        AbstractClientPlayer player = animationController.getPlayer();
 
-  private static void register() {
-    AnimationControllerRegistry.initializeControllers();
-    modRegisterFactory(PlayerAnimationUtil.STANDBY_OR_WALK, 600, (controller, data, animationSetter) -> controller instanceof ModPlayerAnimationController animationController ?
-      AnimationControllerRegistry.STANDBY_OR_WALK.execute(animationController, data, animationSetter) : PlayState.STOP, true);
-    modRegisterFactory(PlayerAnimationUtil.NORMAL_STATE, 1000, true);
-    modRegisterFactory(PlayerAnimationUtil.WEAPON_STATE, 1500, true);
-    modRegisterFactory(PlayerAnimationUtil.LEFT_HAND, 2000, true);
-    modRegisterFactory(PlayerAnimationUtil.RIGHT_HAND, 2000, true);
-    modRegisterFactory(PlayerAnimationUtil.HEAD_ROTATION, 3000,
-      (controller, animationData, setter) -> {
+        ItemStack mainHandItem = player.getMainHandItem();
+        ItemStack offHandItem = player.getOffhandItem();
+
+        animationController.removeModifierIf(MirrorModifier.class::isInstance);
+
+        // 双手动画
+
+        if (ItemUtil.anyMatchIs(mainHandItem, EgoWeaponItems.SOLEMN_LAMENT_BLACK, EgoWeaponItems.SOLEMN_LAMENT_WHITE) && ItemUtil.anyMatchIs(offHandItem, EgoWeaponItems.SOLEMN_LAMENT_BLACK, EgoWeaponItems.SOLEMN_LAMENT_WHITE)) {
+          SolemnLamentWeaponItem.TWIN_ANIM_COLLECTION.executeAnim(animationController, state, animationSetter);
+          return PlayState.CONTINUE;
+        }
+
+        //  主手动画
+
+        if (mainHandItem.is(EgoWeaponItems.MAGIC_BULLET)) {
+          MagicBulletWeaponItem.ANIM_COLLECTION.executeAnim(animationController, state, animationSetter);
+          return PlayState.CONTINUE;
+        }
+
+        if (ItemUtil.anyMatchIs(mainHandItem, EgoWeaponItems.SOLEMN_LAMENT_BLACK, EgoWeaponItems.SOLEMN_LAMENT_WHITE)) {
+          SolemnLamentWeaponItem.ANIM_COLLECTION.executeAnim(animationController, state, animationSetter);
+          return PlayState.CONTINUE;
+        }
+
+        // 副手动画
+
+        if (ItemUtil.anyMatchIs(offHandItem, EgoWeaponItems.SOLEMN_LAMENT_BLACK, EgoWeaponItems.SOLEMN_LAMENT_WHITE)) {
+          animationController.addModifierLast(new MirrorModifier());
+          SolemnLamentWeaponItem.ANIM_COLLECTION.executeAnim(animationController, state, animationSetter);
+          return PlayState.CONTINUE;
+        }
+
+        animationController.stopTriggeredAnimation();
+        return PlayState.STOP;
+      }, true);
+      modRegisterFactory(PlayerAnimationUtil.NORMAL_STATE, 1000, true);
+      modRegisterFactory(PlayerAnimationUtil.WEAPON_STATE, 1500, true);
+      modRegisterFactory(PlayerAnimationUtil.LEFT_HAND, 2000, true);
+      modRegisterFactory(PlayerAnimationUtil.RIGHT_HAND, 2000, true);
+      modRegisterFactory(PlayerAnimationUtil.HEAD_ROTATION, 3000, (controller, animationData, setter) -> {
         if (!(controller instanceof ModPlayerAnimationController playerAnimationController)) {
           return PlayState.STOP;
         }
         AbstractClientPlayer player = playerAnimationController.getPlayer();
-        if (triggerHeadRotationAnimation(player, PlayerAnimationUtil.STANDBY_OR_WALK) ||
-          triggerHeadRotationAnimation(player, PlayerAnimationUtil.NORMAL_STATE)) {
+        if (triggerHeadRotationAnimation(player, PlayerAnimationUtil.STANDBY_OR_WALK) || triggerHeadRotationAnimation(player, PlayerAnimationUtil.NORMAL_STATE)) {
           return PlayState.CONTINUE;
         }
         return PlayState.STOP;
       }, false);
+    });
   }
 
   private static void modRegisterFactory(ResourceLocation controllerId, int priority, boolean isFirstPerson) {
     modRegisterFactory(controllerId, priority, (controller, animationData, setter) -> PlayState.STOP, isFirstPerson);
   }
 
-  private static void modRegisterFactory(ResourceLocation controllerId, int priority,
-                                         AnimationController.AnimationStateHandler animationHandler, boolean isFirstPerson) {
+  private static void modRegisterFactory(ResourceLocation controllerId, int priority, AnimationController.AnimationStateHandler animationHandler, boolean isFirstPerson) {
     PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(controllerId, priority, player -> {
       ModPlayerAnimationController controller = new ModPlayerAnimationController(player, animationHandler);
       if (isFirstPerson) {
@@ -77,14 +116,7 @@ public final class RegistrarPlayAnimations {
     return false;
   }
 
-  private static void registerFactory(ResourceLocation controllerId, int priority, boolean isFirstPerson) {
-    registerFactory(controllerId, priority,
-      (controller, animationData, setter) -> PlayState.STOP,
-      isFirstPerson);
-  }
-
-  private static void registerFactory(ResourceLocation controllerId, int priority,
-                                      AnimationController.AnimationStateHandler animationHandler, boolean isFirstPerson) {
+  private static void registerFactory(ResourceLocation controllerId, int priority, AnimationController.AnimationStateHandler animationHandler, boolean isFirstPerson) {
     PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(controllerId, priority, player -> {
       PlayerAnimationController controller = new PlayerAnimationController(player, animationHandler);
       if (isFirstPerson) {
@@ -95,8 +127,7 @@ public final class RegistrarPlayAnimations {
     });
   }
 
-  private static void modRegisterFactory(@Nullable ResourceLocation controllerId, int priority,
-                                         @NotNull PlayerAnimationFactory controllerFactory, boolean isFirstPerson) {
+  private static void modRegisterFactory(@Nullable ResourceLocation controllerId, int priority, @NotNull PlayerAnimationFactory controllerFactory, boolean isFirstPerson) {
     PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(controllerId, priority, (player) -> {
       IAnimation invoke = controllerFactory.invoke(player);
       if (isFirstPerson && invoke instanceof AnimationController controller) {
@@ -107,9 +138,7 @@ public final class RegistrarPlayAnimations {
     });
   }
 
-  private static void modRegisterFactory(@Nullable ResourceLocation controllerId, int priority,
-                                         BiFunction<AbstractClientPlayer, AnimationController.AnimationStateHandler, PlayerAnimationController> function,
-                                         boolean isFirstPerson) {
+  private static void modRegisterFactory(@Nullable ResourceLocation controllerId, int priority, BiFunction<AbstractClientPlayer, AnimationController.AnimationStateHandler, PlayerAnimationController> function, boolean isFirstPerson) {
     PlayerAnimationFactory.ANIMATION_DATA_FACTORY.registerFactory(controllerId, priority, (player) -> {
       PlayerAnimationController controller = function.apply(player, (controller1, state, animSetter) -> PlayState.STOP);
       if (isFirstPerson) {
