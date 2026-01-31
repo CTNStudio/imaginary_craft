@@ -180,7 +180,7 @@ dependencies {
   implementation "top.theillusivec4.curios:curios-neoforge:${curios_api_version}"
   implementation "top.theillusivec4.curios:curios-neoforge:${curios_api_version}:api"
 
-  implementation 'com.github.ZigyTheBird:PlayerAnimationLibrary:580fb6af3f'
+  implementation 'com.github.ZigyTheBird:PlayerAnimationLibrary:1.21.1-SNAPSHOT'
 //   implementation "com.zigythebird.playeranim:PlayerAnimationLibNeo:${pal_version}"
 //  compileOnly("com.zigythebird:mochafloats:4.1.0") {
 //    exclude group: 'io.netty', module: 'netty-buffer'
