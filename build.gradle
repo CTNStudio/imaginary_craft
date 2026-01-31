@@ -15,13 +15,6 @@ tasks.named('wrapper', Wrapper).configure {
 version = mod_version
 group = mod_group_id
 
-//repositories.each{
-//  repo->{
-//    println "${repo.url}"
-//  }
-//}
-//repositories.clear()
-
 repositories {
   maven {
     url = "https://libraries.minecraft.net/"
@@ -101,89 +94,60 @@ base {
 java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 neoForge {
-    // Specify the version of NeoForge to use.
-    version = project.neo_version
+  version = project.neo_version
 
-    parchment {
-        mappingsVersion = project.parchment_mappings_version
-        minecraftVersion = project.parchment_minecraft_version
+  parchment {
+    mappingsVersion = project.parchment_mappings_version
+    minecraftVersion = project.parchment_minecraft_version
+  }
+
+  runs {
+    client {
+      client()
+      systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
     }
 
-    // This line is optional. Access Transformers are automatically detected
-    // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
-
-    // Default run configurations.
-    // These can be tweaked, removed, or duplicated as needed.
-    runs {
-        client {
-            client()
-
-            // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        server {
-            server()
-            programArgument '--nogui'
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        // This run config launches GameTestServer and runs all registered gametests, then exits.
-        // By default, the server will crash when no gametests are provided.
-        // The gametest system is also enabled by default for other run configs under the /test command.
-        gameTestServer {
-            type = "gameTestServer"
-            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
-        }
-
-        data {
-            data()
-
-            // example of overriding the workingDirectory set in configureEach above, uncomment if you want to use it
-            // gameDirectory = project.file('run-data')
-
-            // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
-        }
-
-        // applies to all the run configs above
-        configureEach {
-            // Recommended logging data for a userdev environment
-            // The markers can be added/remove as needed separated by commas.
-            // "SCAN": For mods scan.
-            // "REGISTRIES": For firing of registry events.
-            // "REGISTRYDUMP": For getting the contents of all registries.
-            systemProperty 'forge.logging.markers', 'REGISTRIES'
-            systemProperty 'forge.logging.console.level', 'debug'
-
-            jvmArguments.addAll([
-              // 忽略无效指令，避免有的人没安装 JetBrain Runtime 无法启动游戏
-              "-XX:+IgnoreUnrecognizedVMOptions",
-              // 启用 JetBrain Runtime 热重载功能
-              "-XX:+AllowEnhancedClassRedefinition"
-            ])
-
-            // Recommended logging level for the console
-            // You can set various levels here.
-            // Please read: https://stackoverflow.com/questions/2031163/when-to-use-the-different-log-levels
-            logLevel = org.slf4j.event.Level.DEBUG
-        }
+    server {
+      server()
+      programArgument '--nogui'
+      systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+    }
+    gameTestServer {
+      type = "gameTestServer"
+      systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
     }
 
-    mods {
-        // define mod <-> source bindings
-        // these are used to tell the game which sources are for which mod
-        // multi mod projects should define one per mod
-        "${mod_id}" {
-            sourceSet(sourceSets.main)
-        }
+    data {
+      data()
+      programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
     }
+
+    configureEach {
+      systemProperty 'forge.logging.markers', 'REGISTRIES'
+      systemProperty 'forge.logging.console.level', 'debug'
+
+      jvmArguments.addAll([
+        // 忽略无效指令，避免有的人没安装 JetBrain Runtime 无法启动游戏
+        "-XX:+IgnoreUnrecognizedVMOptions",
+        // 启用 JetBrain Runtime 热重载功能
+        "-XX:+AllowEnhancedClassRedefinition"
+      ])
+
+      logLevel = org.slf4j.event.Level.DEBUG
+    }
+  }
+
+  mods {
+    "${mod_id}" {
+      sourceSet(sourceSets.main)
+    }
+  }
 }
 
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 configurations {
-    runtimeClasspath.extendsFrom localRuntime
+  runtimeClasspath.extendsFrom localRuntime
 }
 
 dependencies {
@@ -208,7 +172,7 @@ dependencies {
 
   implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
 
-  implementation  "maven.modrinth:jade:${jade_version}+neoforge"
+  implementation "maven.modrinth:jade:${jade_version}+neoforge"
   compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
   compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
   localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
@@ -216,62 +180,62 @@ dependencies {
   implementation "top.theillusivec4.curios:curios-neoforge:${curios_api_version}"
   implementation "top.theillusivec4.curios:curios-neoforge:${curios_api_version}:api"
 
-  // implementation "com.zigythebird.playeranim:PlayerAnimationLibNeo:${pal_version}"
-  compileOnly("com.zigythebird:mochafloats:4.1.0") {
-    exclude group: 'io.netty', module: 'netty-buffer'
-  }
-  implementation fileTree(dir: 'lib', includes: ['*.jar'])
+  implementation 'com.github.ZigyTheBird:PlayerAnimationLibrary:580fb6af3f'
+//   implementation "com.zigythebird.playeranim:PlayerAnimationLibNeo:${pal_version}"
+//  compileOnly("com.zigythebird:mochafloats:4.1.0") {
+//    exclude group: 'io.netty', module: 'netty-buffer'
+//  }
+//  implementation fileTree(dir: 'lib', includes: ['*.jar'])
 
   localRuntime "org.javassist:javassist:3.30.2-GA"
 }
 
-// This block of code expands all declared replace properties in the specified resource targets.
-// A missing property will result in an error. Properties are expanded using ${} Groovy notation.
+
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
-    var replaceProperties = [
-        minecraft_version      : minecraft_version,
-        minecraft_version_range: minecraft_version_range,
-        neo_version            : neo_version,
-        loader_version_range   : loader_version_range,
-        mod_id                 : mod_id,
-        mod_name               : mod_name,
-        mod_license            : mod_license,
-        mod_version            : mod_version,
-        mod_authors            : mod_authors,
-        mod_description        : mod_description,
-        geckolib_version       : geckolib_version,
-        curios_api_version     : curios_api_version,
-        pal_version            : pal_version
-    ]
-    inputs.properties replaceProperties
-    expand replaceProperties
-    from "src/main/templates"
-    into "build/generated/sources/modMetadata"
+  var replaceProperties = [
+    minecraft_version      : minecraft_version,
+    minecraft_version_range: minecraft_version_range,
+    neo_version            : neo_version,
+    loader_version_range   : loader_version_range,
+    mod_id                 : mod_id,
+    mod_name               : mod_name,
+    mod_license            : mod_license,
+    mod_version            : mod_version,
+    mod_authors            : mod_authors,
+    mod_description        : mod_description,
+    geckolib_version       : geckolib_version,
+    curios_api_version     : curios_api_version,
+    pal_version            : pal_version
+  ]
+  inputs.properties replaceProperties
+  expand replaceProperties
+  from "src/main/templates"
+  into "build/generated/sources/modMetadata"
 }
 
 sourceSets.main.resources.srcDir generateModMetadata
 neoForge.ideSyncTask generateModMetadata
 
 publishing {
-    publications {
-        register('mavenJava', MavenPublication) {
-            from components.java
-        }
+  publications {
+    register('mavenJava', MavenPublication) {
+      from components.java
     }
-    repositories {
-        maven {
-            url "file://${project.projectDir}/repo"
-        }
+  }
+  repositories {
+    maven {
+      url "file://${project.projectDir}/repo"
     }
+  }
 }
 
 tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8' // Use the UTF-8 charset for Java compilation
+  options.encoding = 'UTF-8'
 }
 
 idea {
-    module {
-        downloadSources = true
-        downloadJavadoc = true
-    }
+  module {
+    downloadSources = true
+    downloadJavadoc = true
+  }
 }
