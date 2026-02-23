@@ -1,12 +1,12 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template;
 
-import ctn.imaginarycraft.api.capability.item.IItemEgo;
-import ctn.imaginarycraft.api.capability.item.IItemInvincibleTick;
-import ctn.imaginarycraft.api.capability.item.IItemLcDamageType;
-import ctn.imaginarycraft.api.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueRating;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
+import ctn.imaginarycraft.core.capability.item.IItemEgo;
+import ctn.imaginarycraft.core.capability.item.IItemInvincibleTick;
+import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
+import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.init.ModDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;

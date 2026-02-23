@@ -9,7 +9,6 @@
     "LivingDamageEvent$PostMixin",
     "LivingEntityMixin",
     "PlayerMixin",
-    "client.AnimationControllerMixin",
     "client.ModelBuilderMixin"
   ],
   "injectors": {

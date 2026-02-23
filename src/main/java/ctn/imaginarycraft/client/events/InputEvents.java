@@ -80,7 +80,6 @@ public final class InputEvents {
   public static void playerInteractEventLeftClickEmpty(PlayerInteractEvent.LeftClickEmpty event) {
     Player entity = event.getEntity();
     if (entity.isUsingItem() && entity.getUseItem().getItem() instanceof IGunWeapon) {
-      return;
     }
   }
 }

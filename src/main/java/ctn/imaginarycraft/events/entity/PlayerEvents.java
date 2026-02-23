@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.events.entity;
 
-import ctn.imaginarycraft.api.IGunWeapon;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.event.rationality.RationalityModifyEvent;
@@ -11,7 +10,6 @@ import net.neoforged.bus.api.EventPriority;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.player.PlayerEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 /**
@@ -51,7 +49,9 @@ public final class PlayerEvents {
   public static void reset(PlayerEvent.Clone event) {
   }
 
-  /** 登录到世界-此时客户端玩家已创建 */
+  /**
+   * 登录到世界-此时客户端玩家已创建
+   */
   @SubscribeEvent
   public static void loggedIn(PlayerEvent.PlayerLoggedInEvent event) {
   }

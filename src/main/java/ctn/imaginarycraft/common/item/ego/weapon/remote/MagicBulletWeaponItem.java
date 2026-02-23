@@ -1,13 +1,7 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
-import com.zigythebird.playeranimcore.animation.Animation;
-import ctn.imaginarycraft.api.client.playeranimcore.AnimCollection;
-import ctn.imaginarycraft.api.client.playeranimcore.PlayerAnimRawAnimation;
-import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponItem;
-import ctn.imaginarycraft.common.payload.animation.PlayerAnimationPayload;
-import ctn.imaginarycraft.common.payload.animation.PlayerRawAnimationPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.util.GunWeaponUtil;
 import net.minecraft.resources.ResourceLocation;
@@ -36,17 +30,6 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   public static final ResourceLocation SHOOTING_AIM_CHARGEUP = ImaginaryCraft.modRl("magic_bullet_weapon.shooting.aim.chargeup");
   public static final ResourceLocation SHOOTING_CYCLE = ImaginaryCraft.modRl("magic_bullet_weapon.shooting.cycle");
 
-  public static final PlayerAnimRawAnimation GUN_AIM_RAW_ANIMATION = PlayerAnimRawAnimation.begin()
-    .then(SHOOTING_AIM, Animation.LoopType.PLAY_ONCE)
-    .thenLoop(SHOOTING_AIM_CYCLE);
-  public static final PlayerAnimRawAnimation GUN_AIM_SHOOT_RAW_ANIMATION = PlayerAnimRawAnimation.begin()
-    .then(SHOOTING_AIM_LAUNCH, Animation.LoopType.PLAY_ONCE)
-    .thenLoop(SHOOTING_AIM_CYCLE);
-
-  public static final AnimCollection ANIM_COLLECTION = new AnimCollection(
-    STANDBY, GALLOP
-  );
-
   public MagicBulletWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
     super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
@@ -72,11 +55,6 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   public boolean gunShoot(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
     boolean isShoot = super.gunShoot(playerEntity, itemStack, handUsed);
     if (isShoot && playerEntity instanceof ServerPlayer) {
-      PlayerAnimationUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
-        .playSpeed(22f / gunShootExecuteTick(playerEntity, itemStack, handUsed))
-        .controllerId(PlayerAnimationUtil.WEAPON_STATE)
-        .animationId(SHOOTING)
-        .withFade(PlayerAnimationUtil.DEFAULT_FADE_IN));
     }
     return isShoot;
   }
@@ -87,11 +65,6 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
       return true;
     }
     super.gunAimShootExecute(playerEntity, itemStack, handUsed, chargeUpPercentage);
-    PlayerAnimationUtil.playRawAnimation(playerEntity, new PlayerRawAnimationPayload.Builder()
-      .playSpeed(13f / gunShootExecuteTick(playerEntity, itemStack, handUsed))
-      .controllerId(PlayerAnimationUtil.WEAPON_STATE)
-      .rawAnimation(GUN_AIM_SHOOT_RAW_ANIMATION)
-      .withFade(PlayerAnimationUtil.DEFAULT_FADE_IN));
     GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
     return true;
   }
@@ -100,11 +73,6 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   public void gunAim(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
     super.gunAim(playerEntity, itemStack, handUsed);
     if (playerEntity instanceof ServerPlayer) {
-      PlayerAnimationUtil.playRawAnimation(playerEntity, new PlayerRawAnimationPayload.Builder()
-        .playSpeed(13f / gunShootExecuteTick(playerEntity, itemStack, handUsed))
-        .controllerId(PlayerAnimationUtil.WEAPON_STATE)
-        .rawAnimation(GUN_AIM_RAW_ANIMATION)
-        .withFade(PlayerAnimationUtil.DEFAULT_FADE_IN));
     }
   }
 
@@ -119,11 +87,6 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
       return;
     }
     super.gunEndAim(playerEntity, itemStack, handUsed);
-    PlayerAnimationUtil.playAnimation(playerEntity, new PlayerAnimationPayload.Builder()
-      .playSpeed(13f / gunShootExecuteTick(playerEntity, itemStack, handUsed))
-      .controllerId(PlayerAnimationUtil.WEAPON_STATE)
-      .animationId(SHOOTING_AIM_TERMINATE)
-      .withFade(PlayerAnimationUtil.DEFAULT_FADE_OUT));
   }
 
   @Override

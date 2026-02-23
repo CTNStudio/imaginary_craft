@@ -31,6 +31,8 @@ repositories {
   mavenLocal()
   mavenCentral()
 
+  maven { url 'https://jitpack.io' }
+
   maven {
     name = "NeoForged"
     url = "https://neoforged.forgecdn.net/releases"
@@ -161,8 +163,6 @@ dependencies {
     version { prefer ak4j_version }
   }
 
-//  libraries "club.snowlyicewolf:amarok-json-for-java:${aj4j_version}"
-//  libraries "club.snowlyicewolf:amarok-kdl-for-java:${ak4j_version}"
   api "club.snowlyicewolf:amarok-json-for-java:${aj4j_version}"
   api "club.snowlyicewolf:amarok-kdl-for-java:${ak4j_version}"
 
@@ -180,14 +180,9 @@ dependencies {
   implementation "top.theillusivec4.curios:curios-neoforge:${curios_api_version}"
   implementation "top.theillusivec4.curios:curios-neoforge:${curios_api_version}:api"
 
-  implementation 'com.github.ZigyTheBird:PlayerAnimationLibrary:1.21.1-SNAPSHOT'
-//   implementation "com.zigythebird.playeranim:PlayerAnimationLibNeo:${pal_version}"
-//  compileOnly("com.zigythebird:mochafloats:4.1.0") {
-//    exclude group: 'io.netty', module: 'netty-buffer'
-//  }
-//  implementation fileTree(dir: 'lib', includes: ['*.jar'])
-
   localRuntime "org.javassist:javassist:3.30.2-GA"
+
+  implementation "maven.modrinth:epic-fight:${epicfight_version}"
 }
 
 
@@ -203,9 +198,9 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
     mod_version            : mod_version,
     mod_authors            : mod_authors,
     mod_description        : mod_description,
+    epicfight_version : epicfight_version,
     geckolib_version       : geckolib_version,
-    curios_api_version     : curios_api_version,
-    pal_version            : pal_version
+    curios_api_version: curios_api_version
   ]
   inputs.properties replaceProperties
   expand replaceProperties

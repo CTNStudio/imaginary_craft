@@ -1,17 +1,14 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
-import ctn.imaginarycraft.mixed.IDamageSource;
-import ctn.imaginarycraft.api.client.playeranimcore.AnimCollection;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
-import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponItem;
-import ctn.imaginarycraft.common.payload.animation.PlayerAnimationPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModDamageSources;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import ctn.imaginarycraft.init.ModSoundEvents;
+import ctn.imaginarycraft.mixed.IDamageSource;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -51,14 +48,6 @@ public class SolemnLamentWeaponItem extends GunEgoWeaponItem {
   public static final ResourceLocation TWIN_SHOOTING2 = ImaginaryCraft.modRl("solemn_lament_weapon.twin.shooting2");
   public static final ResourceLocation TWIN_SHOOTING3 = ImaginaryCraft.modRl("solemn_lament_weapon.twin.shooting3");
 
-  public static final AnimCollection ANIM_COLLECTION = new AnimCollection(
-    STANDBY, GALLOP
-  );
-
-  public static final AnimCollection TWIN_ANIM_COLLECTION = new AnimCollection(
-    TWIN_STANDBY, TWIN_GALLOP
-  );
-
   public SolemnLamentWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
     super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
@@ -78,21 +67,6 @@ public class SolemnLamentWeaponItem extends GunEgoWeaponItem {
     if (!isShoot || !(playerEntity instanceof ServerPlayer)) {
       return isShoot;
     }
-
-    PlayerAnimationPayload.Builder builder = new PlayerAnimationPayload.Builder()
-//      .playSpeed(22f / gunShootExecuteTick(playerEntity, itemStack, handUsed))
-      .controllerId(PlayerAnimationUtil.WEAPON_STATE)
-      .withFade(PlayerAnimationUtil.DEFAULT_FADE_IN);
-    if (playerEntity.getOffhandItem().getItem() instanceof SolemnLamentWeaponItem &&
-      playerEntity.getMainHandItem().getItem() instanceof SolemnLamentWeaponItem) {
-      builder.animationId(TWIN_SHOOTING);
-    } else {
-      builder.animationId(SHOOTING);
-    }
-    if (handUsed == InteractionHand.OFF_HAND) {
-      builder.reverse();
-    }
-    PlayerAnimationUtil.playAnimation(playerEntity, builder);
     return true;
   }
 

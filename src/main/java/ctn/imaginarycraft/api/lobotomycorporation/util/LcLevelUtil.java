@@ -1,11 +1,11 @@
 package ctn.imaginarycraft.api.lobotomycorporation.util;
 
-import ctn.imaginarycraft.api.capability.block.IBlockLcLevel;
-import ctn.imaginarycraft.api.capability.entity.IEntityLcLevel;
-import ctn.imaginarycraft.api.capability.item.IItemLcLevel;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
+import ctn.imaginarycraft.core.capability.block.IBlockLcLevel;
+import ctn.imaginarycraft.core.capability.entity.IEntityLcLevel;
+import ctn.imaginarycraft.core.capability.item.IItemLcLevel;
+import ctn.imaginarycraft.core.registry.RegistryCapability;
 import ctn.imaginarycraft.init.ModCapabilitys;
-import ctn.imaginarycraft.registry.RegistryCapability;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.item.Item;

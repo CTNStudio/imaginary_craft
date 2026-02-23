@@ -16,7 +16,8 @@ import net.minecraft.world.item.ItemStack;
 public final class InputEventExecute {
   /**
    * 处理枪械武器的输入事件
-   * @param player 本地玩家对象
+   *
+   * @param player    本地玩家对象
    * @param minecraft Minecraft客户端实例
    */
   public static void handleGunWeaponInput(LocalPlayer player, Minecraft minecraft) {
@@ -79,8 +80,9 @@ public final class InputEventExecute {
 
   /**
    * 检查枪械是否处于有效的瞄准状态
-   * @param player 玩家对象
-   * @param item 物品对象
+   *
+   * @param player    玩家对象
+   * @param item      物品对象
    * @param usingItem 正在使用的物品堆
    * @return 如果是有效的枪械瞄准状态返回true，否则返回false
    */
@@ -90,26 +92,28 @@ public final class InputEventExecute {
 
   /**
    * 检查主手物品是否为有效的枪械
-   * @param player 玩家对象
+   *
+   * @param player       玩家对象
    * @param mainHandItem 主手物品
    * @return 如果是有效的主手枪械返回true，否则返回false
    */
   private static boolean isValidMainHandGun(LocalPlayer player, ItemStack mainHandItem) {
-    return !mainHandItem.isEmpty() && 
-           (mainHandItem.getItem() instanceof IGunWeapon mainHandGun) && 
-           mainHandGun.gunShoot(player, mainHandItem, InteractionHand.MAIN_HAND);
+    return !mainHandItem.isEmpty() &&
+      (mainHandItem.getItem() instanceof IGunWeapon mainHandGun) &&
+      mainHandGun.gunShoot(player, mainHandItem, InteractionHand.MAIN_HAND);
   }
 
   /**
    * 检查副手物品是否为有效的射击状态
-   * @param player 玩家对象
+   *
+   * @param player      玩家对象
    * @param offHandItem 副手物品
    * @return 如果是有效的副手射击状态返回true，否则返回false
    */
   private static boolean isValidOffHandShootState(LocalPlayer player, ItemStack offHandItem) {
-    return !offHandItem.isEmpty() && 
-           (offHandItem.getItem() instanceof IGunWeapon iGunWeapon) && 
-           iGunWeapon.isOffHandShoot(player, offHandItem) && 
-           iGunWeapon.gunShoot(player, offHandItem, InteractionHand.OFF_HAND);
+    return !offHandItem.isEmpty() &&
+      (offHandItem.getItem() instanceof IGunWeapon iGunWeapon) &&
+      iGunWeapon.isOffHandShoot(player, offHandItem) &&
+      iGunWeapon.gunShoot(player, offHandItem, InteractionHand.OFF_HAND);
   }
 }

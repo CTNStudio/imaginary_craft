@@ -6,9 +6,14 @@
   ],
   "display": {
     "thirdperson_righthand": {
+      "rotation": [
+        0,
+        -90,
+        0
+      ],
       "translation": [
         0,
-        -15.5,
+        -13.02,
         1.25
       ]
     },

@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.entity.abnormalities;
 
-import ctn.imaginarycraft.api.capability.entity.IEntityAbnormalities;
+import ctn.imaginarycraft.core.capability.entity.IEntityAbnormalities;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;

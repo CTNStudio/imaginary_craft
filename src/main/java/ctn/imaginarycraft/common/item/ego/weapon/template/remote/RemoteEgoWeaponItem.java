@@ -1,11 +1,11 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template.remote;
 
-import ctn.imaginarycraft.api.capability.item.IItemEgo;
-import ctn.imaginarycraft.api.capability.item.IItemInvincibleTick;
-import ctn.imaginarycraft.api.capability.item.IItemLcDamageType;
-import ctn.imaginarycraft.api.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
+import ctn.imaginarycraft.core.capability.item.IItemEgo;
+import ctn.imaginarycraft.core.capability.item.IItemInvincibleTick;
+import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
+import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.ModDataComponents;
 import ctn.imaginarycraft.util.ItemBuilderUtil;

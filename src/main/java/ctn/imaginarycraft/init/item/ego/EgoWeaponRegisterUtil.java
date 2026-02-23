@@ -1,11 +1,11 @@
 package ctn.imaginarycraft.init.item.ego;
 
-import ctn.imaginarycraft.api.capability.item.IItemEgo;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
 import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.melee.*;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.*;
+import ctn.imaginarycraft.core.capability.item.IItemEgo;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
 import ctn.imaginarycraft.datagen.tag.DatagenItemTag;
 import net.minecraft.world.item.Item;

@@ -182,8 +182,8 @@ public abstract class EgoArmorRegisterUtil {
   /**
    *
    * @param chestplate 胸
-   * @param leggings  腿
-   * @param boots  脚
+   * @param leggings   腿
+   * @param boots      脚
    */
   public record EgoArmor(
     DeferredItem<EgoArmorItem> chestplate,

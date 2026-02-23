@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.init.item.ego;
 
-import ctn.imaginarycraft.api.capability.item.IItemEgo;
 import ctn.imaginarycraft.common.item.ego.EgoItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.core.capability.item.IItemEgo;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;

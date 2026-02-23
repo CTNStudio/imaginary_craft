@@ -1,12 +1,12 @@
 package ctn.imaginarycraft.datagen;
 
-import ctn.imaginarycraft.mixed.client.IModelBuilder;
 import ctn.imaginarycraft.client.events.ItemPropertyEvents;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.item.ToolItems;
 import ctn.imaginarycraft.init.item.ego.EgoArmorItems;
 import ctn.imaginarycraft.init.item.ego.EgoCurioItems;
 import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
+import ctn.imaginarycraft.mixed.client.IModelBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;

@@ -2,14 +2,14 @@ package ctn.imaginarycraft.mixin;
 
 import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import ctn.imaginarycraft.mixed.IDamageSource;
-import ctn.imaginarycraft.api.capability.item.IItemInvincibleTick;
-import ctn.imaginarycraft.api.capability.item.IItemLcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
+import ctn.imaginarycraft.core.capability.item.IItemInvincibleTick;
+import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
 import ctn.imaginarycraft.init.ModCapabilitys;
+import ctn.imaginarycraft.mixed.IDamageSource;
 import net.minecraft.core.Holder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;

@@ -6,5 +6,6 @@ public interface IKeyMapping {
   static IKeyMapping of(KeyMapping obj) {
     return (IKeyMapping) obj;
   }
+
   int imaginarycraft$getClickCount();
 }

@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.common.item.ego.armor;
 
-import ctn.imaginarycraft.api.capability.item.IItemEgo;
-import ctn.imaginarycraft.api.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
+import ctn.imaginarycraft.core.capability.item.IItemEgo;
+import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.ModDataComponents;
 import ctn.imaginarycraft.util.ItemBuilderUtil;
@@ -13,7 +13,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ArmorItem;
 import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoItem;

@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.api.lobotomycorporation.util;
 
-import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
+import ctn.imaginarycraft.mixed.IDamageSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;

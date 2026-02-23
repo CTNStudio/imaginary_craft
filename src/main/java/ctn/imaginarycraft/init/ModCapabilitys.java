@@ -1,13 +1,13 @@
 package ctn.imaginarycraft.init;
 
-import ctn.imaginarycraft.mixed.IDamageSource;
-import ctn.imaginarycraft.api.capability.block.IBlockLcLevel;
-import ctn.imaginarycraft.api.capability.entity.IEntityLcLevel;
-import ctn.imaginarycraft.api.capability.item.IItemInvincibleTick;
-import ctn.imaginarycraft.api.capability.item.IItemLcDamageType;
-import ctn.imaginarycraft.api.capability.item.IItemLcLevel;
-import ctn.imaginarycraft.api.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.core.capability.block.IBlockLcLevel;
+import ctn.imaginarycraft.core.capability.entity.IEntityLcLevel;
+import ctn.imaginarycraft.core.capability.item.IItemInvincibleTick;
+import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
+import ctn.imaginarycraft.core.capability.item.IItemLcLevel;
+import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
+import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.mixin.DamageSourceMixin;
 import net.neoforged.neoforge.capabilities.BlockCapability;
 import net.neoforged.neoforge.capabilities.EntityCapability;

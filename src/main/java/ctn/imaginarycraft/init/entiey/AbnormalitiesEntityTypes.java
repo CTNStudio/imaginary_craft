@@ -6,8 +6,8 @@ import ctn.imaginarycraft.common.entity.abnormalities.ordeals.violet.GrantUsLove
 import ctn.imaginarycraft.common.entity.projectile.MagicBulletEntity;
 import ctn.imaginarycraft.common.entity.projectile.ParadiseLostSpikeweed;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.core.registry.RegistryCapability;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
-import ctn.imaginarycraft.registry.RegistryCapability;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;

@@ -41,7 +41,7 @@ public final class EntityRenderEventExecute {
    * 根据特定护甲隐藏玩家部分模型
    * 当玩家装备指定的EGO护甲时，隐藏对应的玩家模型部件
    *
-   * @param entity 实体对象，代表当前穿戴护甲的生物
+   * @param entity      实体对象，代表当前穿戴护甲的生物
    * @param playerModel 玩家模型对象，用于控制模型部件的可见性
    */
   public static void hiddenParts(LivingEntity entity, PlayerModel<?> playerModel) {

@@ -1,18 +1,17 @@
 package ctn.imaginarycraft.events.entity;
 
 import ctn.imaginarycraft.api.DelayTaskHolder;
-import ctn.imaginarycraft.mixed.IDamageContainer;
-import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.client.util.ParticleUtil;
-import ctn.imaginarycraft.client.util.PlayerAnimationUtil;
 import ctn.imaginarycraft.common.payload.toc.PlayerDamagePayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.eventexecute.LcDamageEventExecutes;
 import ctn.imaginarycraft.init.ModAttachments;
+import ctn.imaginarycraft.mixed.IDamageContainer;
+import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.util.GunWeaponUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
@@ -67,7 +66,6 @@ public final class LivingEntityEvents {
 
       if (slot.getType() == EquipmentSlot.Type.HAND) {
         if (entity instanceof Player player) {
-          PlayerAnimationUtil.stop(player, PlayerAnimationUtil.WEAPON_STATE);
           boolean isHandUsed = slot == EquipmentSlot.MAINHAND;
           GunWeaponUtil.setIsAttack(player, true, isHandUsed);
           GunWeaponUtil.resetChargeUp(player, isHandUsed);
@@ -111,7 +109,6 @@ public final class LivingEntityEvents {
           GunWeaponUtil.setIsAttack(player, true, false);
           GunWeaponUtil.resetChargeUp(player, false);
         }
-        PlayerAnimationUtil.stop(player, PlayerAnimationUtil.WEAPON_STATE);
       }
     }
   }

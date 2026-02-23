@@ -175,7 +175,7 @@ public final class GunWeaponUtil {
    * @param isHandUsed 是否为主手
    */
   public static void setChargeUpPercentage(Player player, float newValue, boolean isHandUsed) {
-    int maxChargeUpValue = getMaxChargeUpValue(player,isHandUsed);
+    int maxChargeUpValue = getMaxChargeUpValue(player, isHandUsed);
     if (maxChargeUpValue <= 0) {
       return;
     }

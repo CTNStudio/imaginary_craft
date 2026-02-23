@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.item.weapon;
 
-import ctn.imaginarycraft.api.capability.item.IItemInvincibleTick;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.core.capability.item.IItemInvincibleTick;
 import ctn.imaginarycraft.util.ItemBuilderUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;

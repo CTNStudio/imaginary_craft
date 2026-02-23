@@ -12,18 +12,12 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.animation.AnimationController;
-import software.bernie.geckolib.animation.PlayState;
-import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @Mixin(Player.class)
-public abstract class PlayerMixin extends LivingEntity implements  IPlayer {
+public abstract class PlayerMixin extends LivingEntity implements IPlayer {
   @Unique
   private final @NotNull Map<@NotNull String, PlayerKeyClickUtil.@NotNull ClickState> imaginarycraft$clickMap = new HashMap<>();
 

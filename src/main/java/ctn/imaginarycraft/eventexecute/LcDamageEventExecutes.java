@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.eventexecute;
 
-import ctn.imaginarycraft.api.capability.entity.IEntityAbnormalities;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
+import ctn.imaginarycraft.core.capability.entity.IEntityAbnormalities;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 

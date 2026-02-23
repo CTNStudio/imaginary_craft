@@ -1,12 +1,12 @@
 package ctn.imaginarycraft.common.entity.projectile;
 
-import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
 import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
 import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.client.model.ModGeoEntityModel;
 import ctn.imaginarycraft.init.ModDamageTypes;
 import ctn.imaginarycraft.init.entiey.AbnormalitiesEntityTypes;
+import ctn.imaginarycraft.mixed.IDamageSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.SynchedEntityData;
