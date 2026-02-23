@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.linkage.jade;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
-import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
+import ctn.imaginarycraft.api.LcLevelType;
+import ctn.imaginarycraft.util.LcLevelUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.Nullable;

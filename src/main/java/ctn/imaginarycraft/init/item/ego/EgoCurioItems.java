@@ -1,10 +1,10 @@
 package ctn.imaginarycraft.init.item.ego;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.common.item.ego.curio.EgoCurioItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.core.ImaginaryCraftConstants;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
-import ctn.imaginarycraft.datagen.tag.DatagenItemTag;
 import net.minecraft.network.chat.Style;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;
@@ -756,20 +756,20 @@ public final class EgoCurioItems {
   }
 
   public enum CuriosType {
-    HEADWEAR("headwear", DatagenItemTag.EGO_CURIOS_HEADWEAR),
-    CHEEK("cheek", DatagenItemTag.EGO_CURIOS_CHEEK),
-    HEAD("head", DatagenItemTag.EGO_CURIOS_HEAD),
-    HINDBRAIN("hindbrain", DatagenItemTag.EGO_CURIOS_HINDBRAIN),
-    EYE("eye", DatagenItemTag.EGO_CURIOS_EYE),
-    FACE("face", DatagenItemTag.EGO_CURIOS_FACE),
-    MASK("mask", DatagenItemTag.EGO_CURIOS_MASK),
-    MOUTH("mouth", DatagenItemTag.EGO_CURIOS_MOUTH),
-    NECK("neck", DatagenItemTag.EGO_CURIOS_NECK),
-    BROOCH("brooch", DatagenItemTag.EGO_CURIOS_NECK),
-    HAND("hand", DatagenItemTag.EGO_CURIOS_HAND),
-    GLOVE("glove", DatagenItemTag.EGO_CURIOS_GLOVE),
-    RIGHT_BACK("right_back", DatagenItemTag.EGO_CURIOS_RIGHT_BACK),
-    LEFT_BACK("left_back", DatagenItemTag.EGO_CURIOS_LEFT_BACK),
+    HEADWEAR("headwear", ImaginaryCraftConstants.EGO_CURIOS_HEADWEAR),
+    CHEEK("cheek", ImaginaryCraftConstants.EGO_CURIOS_CHEEK),
+    HEAD("head", ImaginaryCraftConstants.EGO_CURIOS_HEAD),
+    HINDBRAIN("hindbrain", ImaginaryCraftConstants.EGO_CURIOS_HINDBRAIN),
+    EYE("eye", ImaginaryCraftConstants.EGO_CURIOS_EYE),
+    FACE("face", ImaginaryCraftConstants.EGO_CURIOS_FACE),
+    MASK("mask", ImaginaryCraftConstants.EGO_CURIOS_MASK),
+    MOUTH("mouth", ImaginaryCraftConstants.EGO_CURIOS_MOUTH),
+    NECK("neck", ImaginaryCraftConstants.EGO_CURIOS_NECK),
+    BROOCH("brooch", ImaginaryCraftConstants.EGO_CURIOS_NECK),
+    HAND("hand", ImaginaryCraftConstants.EGO_CURIOS_HAND),
+    GLOVE("glove", ImaginaryCraftConstants.EGO_CURIOS_GLOVE),
+    RIGHT_BACK("right_back", ImaginaryCraftConstants.EGO_CURIOS_RIGHT_BACK),
+    LEFT_BACK("left_back", ImaginaryCraftConstants.EGO_CURIOS_LEFT_BACK),
     ;
     private final String name;
     private final Set<DeferredItem<? extends Item>> set;

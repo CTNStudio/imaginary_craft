@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.datagen.i18n;
 
-import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueType;
+import ctn.imaginarycraft.api.virtue.VirtueType;
 import ctn.imaginarycraft.common.command.RationalityCommands;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
 import ctn.imaginarycraft.common.item.ego.curio.EgoCurioItem;

@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.payload.toc;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.client.gui.hudlayers.screenfilter.LcDamageScreenFilterLayer;
 import ctn.imaginarycraft.common.payload.api.ToClientPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;

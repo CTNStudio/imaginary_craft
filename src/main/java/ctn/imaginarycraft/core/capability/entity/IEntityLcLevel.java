@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.core.capability.entity;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
+import ctn.imaginarycraft.api.LcLevelType;
 import org.jetbrains.annotations.Nullable;
 
 @FunctionalInterface

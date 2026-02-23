@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.client.util;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.client.ModFontIcon;
 import ctn.imaginarycraft.client.particle.text.DamageTextParticle;
 import ctn.imaginarycraft.client.particle.text.TextParticle;
@@ -17,7 +17,7 @@ import net.neoforged.neoforge.common.Tags;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import static ctn.imaginarycraft.api.lobotomycorporation.LcDamageType.PHYSICS;
+import static ctn.imaginarycraft.api.LcDamageType.PHYSICS;
 
 public final class ParticleUtil {
 

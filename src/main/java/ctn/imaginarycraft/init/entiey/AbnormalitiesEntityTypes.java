@@ -1,12 +1,12 @@
 package ctn.imaginarycraft.init.entiey;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
+import ctn.imaginarycraft.api.LcLevelType;
 import ctn.imaginarycraft.common.entity.abnormalities.TrainingRabbits;
 import ctn.imaginarycraft.common.entity.abnormalities.ordeals.violet.GrantUsLove;
 import ctn.imaginarycraft.common.entity.projectile.MagicBulletEntity;
 import ctn.imaginarycraft.common.entity.projectile.ParadiseLostSpikeweed;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.core.registry.RegistryCapability;
+import ctn.imaginarycraft.core.registry.CapabilityRegistry;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
@@ -76,11 +76,11 @@ public final class AbnormalitiesEntityTypes {
     DeferredHolder<EntityType<?>, EntityType<T>> register = REGISTRY.register(name, sup);
     Supplier<EntityType<?>> supplier = (Supplier<EntityType<?>>) (Object) register;
     (switch (lcLevelType) {
-      case ZAYIN -> RegistryCapability.ENTITY_ZAYIN;
-      case TETH -> RegistryCapability.ENTITY_TETH;
-      case HE -> RegistryCapability.ENTITY_HE;
-      case WAW -> RegistryCapability.ENTITY_WAW;
-      case ALEPH -> RegistryCapability.ENTITY_ALEPH;
+      case ZAYIN -> CapabilityRegistry.ENTITY_ZAYIN;
+      case TETH -> CapabilityRegistry.ENTITY_TETH;
+      case HE -> CapabilityRegistry.ENTITY_HE;
+      case WAW -> CapabilityRegistry.ENTITY_WAW;
+      case ALEPH -> CapabilityRegistry.ENTITY_ALEPH;
     }).add(supplier);
     ZhCn.clientAddI18nEntityTypeText(zhName, supplier);
     return register;

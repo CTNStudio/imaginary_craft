@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.init.item.ego;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
+import ctn.imaginarycraft.api.LcLevelType;
 import ctn.imaginarycraft.client.model.ModGeoArmorModel;
 import ctn.imaginarycraft.client.renderer.providers.ModGeoArmourRenderProvider;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;

@@ -3,7 +3,7 @@ package ctn.imaginarycraft.client.particle;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.client.ModParticleRenderTypes;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import net.minecraft.client.multiplayer.ClientLevel;

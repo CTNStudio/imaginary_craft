@@ -9,6 +9,7 @@
     "LivingDamageEvent$PostMixin",
     "LivingEntityMixin",
     "PlayerMixin",
+    "WeaponTypeReloadListenerMixin",
     "client.ModelBuilderMixin"
   ],
   "injectors": {

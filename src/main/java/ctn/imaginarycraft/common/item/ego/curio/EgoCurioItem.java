@@ -1,11 +1,11 @@
 package ctn.imaginarycraft.common.item.ego.curio;
 
 import com.google.common.collect.Multimap;
-import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
-import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueAttributeModifier;
+import ctn.imaginarycraft.api.virtue.VirtueAttributeModifier;
 import ctn.imaginarycraft.client.model.GeoCurioModel;
 import ctn.imaginarycraft.client.renderer.curios.BasicCuriosRenderer;
 import ctn.imaginarycraft.init.ModDataComponents;
+import ctn.imaginarycraft.util.RationalityUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;

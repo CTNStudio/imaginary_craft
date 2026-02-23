@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.item;
 
-import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
 import ctn.imaginarycraft.init.ModDataComponents;
+import ctn.imaginarycraft.util.RationalityUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.InteractionHand;

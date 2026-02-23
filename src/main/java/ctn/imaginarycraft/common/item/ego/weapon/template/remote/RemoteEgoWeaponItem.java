@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template.remote;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
 import ctn.imaginarycraft.core.capability.item.IItemEgo;
 import ctn.imaginarycraft.core.capability.item.IItemInvincibleTick;

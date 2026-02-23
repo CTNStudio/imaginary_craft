@@ -37,7 +37,7 @@ ordering = "NONE"
 side = "BOTH"
 
 [[dependencies.${ mod_id }]]
-modId = "epicfight_version"
+modId = "epicfight"
 type = "required"
 versionRange = "${epicfight_version}"
 ordering = "NONE"

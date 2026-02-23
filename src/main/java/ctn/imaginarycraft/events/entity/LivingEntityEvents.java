@@ -1,10 +1,8 @@
 package ctn.imaginarycraft.events.entity;
 
 import ctn.imaginarycraft.api.DelayTaskHolder;
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
-import ctn.imaginarycraft.api.lobotomycorporation.util.LcDamageUtil;
-import ctn.imaginarycraft.api.lobotomycorporation.util.RationalityUtil;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.api.LcLevelType;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.common.payload.toc.PlayerDamagePayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -13,6 +11,8 @@ import ctn.imaginarycraft.init.ModAttachments;
 import ctn.imaginarycraft.mixed.IDamageContainer;
 import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.util.GunWeaponUtil;
+import ctn.imaginarycraft.util.LcDamageUtil;
+import ctn.imaginarycraft.util.RationalityUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;

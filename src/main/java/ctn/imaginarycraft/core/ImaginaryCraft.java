@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.core;
 
 import ctn.imaginarycraft.config.ModConfig;
-import ctn.imaginarycraft.core.registry.RegistryCurios;
+import ctn.imaginarycraft.core.registry.CurioRegistry;
 import ctn.imaginarycraft.init.*;
 import ctn.imaginarycraft.init.entiey.ModEntityTypes;
 import ctn.imaginarycraft.init.item.ModArmorMaterials;
@@ -37,7 +37,7 @@ public final class ImaginaryCraft {
     ModEntityTypes.init(eventBus);
 
     ModCreativeModeTabs.REGISTRY.register(eventBus);
-    RegistryCurios.registry();
+    CurioRegistry.registry();
   }
 
   @Contract("_ -> new")

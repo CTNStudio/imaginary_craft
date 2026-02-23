@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.linkage.jade;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;

@@ -2,7 +2,7 @@ package ctn.imaginarycraft.client.gui.hudlayers.screenfilter;
 
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.PoseStack;
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.client.gui.hudlayers.BasicHudLayer;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.client.DeltaTracker;

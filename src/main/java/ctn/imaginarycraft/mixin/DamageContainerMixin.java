@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.mixin;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcImmuneType;
+import ctn.imaginarycraft.api.LcImmuneType;
 import ctn.imaginarycraft.mixed.IDamageContainer;
 import ctn.imaginarycraft.mixed.IDamageSource;
 import net.minecraft.world.damagesource.DamageSource;

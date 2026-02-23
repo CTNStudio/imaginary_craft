@@ -1,14 +1,14 @@
 package ctn.imaginarycraft.init.item.ego;
 
 import com.mojang.datafixers.util.Function5;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
-import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
+import ctn.imaginarycraft.api.LcLevelType;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
 import ctn.imaginarycraft.common.item.ego.armor.EgoArmorItem;
+import ctn.imaginarycraft.core.ImaginaryCraftConstants;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
-import ctn.imaginarycraft.datagen.tag.DatagenItemTag;
 import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.item.ModArmorMaterials;
+import ctn.imaginarycraft.util.LcLevelUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.item.ArmorItem;
@@ -169,12 +169,12 @@ public abstract class EgoArmorRegisterUtil {
       .vulnerable(physics, spirit, erosion, theSoul), renderProvider));
     LcLevelUtil.addItemLcLevelCapability(lcLevelType, deferredItem);
     switch (armorItemType) {
-      case HELMET -> DatagenItemTag.HEAD_ARMOR.add(deferredItem);
-      case CHESTPLATE -> DatagenItemTag.CHEST_ARMOR.add(deferredItem);
-      case LEGGINGS -> DatagenItemTag.LEG_ARMOR.add(deferredItem);
-      case BOOTS -> DatagenItemTag.FOOT_ARMOR.add(deferredItem);
+      case HELMET -> ImaginaryCraftConstants.HEAD_ARMOR.add(deferredItem);
+      case CHESTPLATE -> ImaginaryCraftConstants.CHEST_ARMOR.add(deferredItem);
+      case LEGGINGS -> ImaginaryCraftConstants.LEG_ARMOR.add(deferredItem);
+      case BOOTS -> ImaginaryCraftConstants.FOOT_ARMOR.add(deferredItem);
     }
-    DatagenItemTag.EGO_ARMOUR.add(deferredItem);
+    ImaginaryCraftConstants.EGO_ARMOUR.add(deferredItem);
     ZhCn.clientAddI18nItemText(zhName, deferredItem);
     return deferredItem;
   }

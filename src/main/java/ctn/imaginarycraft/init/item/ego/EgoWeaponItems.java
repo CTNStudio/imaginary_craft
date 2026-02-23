@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.init.item.ego;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
-import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueRating;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.api.LcLevelType;
+import ctn.imaginarycraft.api.virtue.VirtueRating;
 import ctn.imaginarycraft.common.item.ego.weapon.melee.*;
 import ctn.imaginarycraft.common.item.ego.weapon.remote.*;
 import ctn.imaginarycraft.common.item.ego.weapon.template.melee.MeleeEgoWeaponItem;

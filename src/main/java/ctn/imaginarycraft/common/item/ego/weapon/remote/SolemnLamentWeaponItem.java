@@ -1,7 +1,6 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
+import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -9,6 +8,7 @@ import ctn.imaginarycraft.init.ModDamageSources;
 import ctn.imaginarycraft.init.ModParticleTypes;
 import ctn.imaginarycraft.init.ModSoundEvents;
 import ctn.imaginarycraft.mixed.IDamageSource;
+import ctn.imaginarycraft.util.LcLevelUtil;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;

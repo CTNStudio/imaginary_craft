@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.client.events;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
-import ctn.imaginarycraft.api.lobotomycorporation.util.LcLevelUtil;
+import ctn.imaginarycraft.api.LcLevelType;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.util.LcLevelUtil;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.world.item.ItemStack;

@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.item.ego.weapon.melee;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
+import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.common.item.ego.weapon.template.melee.SwordsEgoWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModDataComponents;

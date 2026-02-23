@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.core.capability.item;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
+import ctn.imaginarycraft.api.LcLevelType;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;

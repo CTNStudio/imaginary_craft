@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.core.capability.block;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcLevelType;
+import ctn.imaginarycraft.api.LcLevelType;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;

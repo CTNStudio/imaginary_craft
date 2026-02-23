@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template;
 
-import ctn.imaginarycraft.api.lobotomycorporation.LcDamageType;
-import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueRating;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.api.virtue.VirtueRating;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
 import ctn.imaginarycraft.core.capability.item.IItemEgo;
 import ctn.imaginarycraft.core.capability.item.IItemInvincibleTick;

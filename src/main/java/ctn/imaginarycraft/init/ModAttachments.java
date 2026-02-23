@@ -2,10 +2,10 @@ package ctn.imaginarycraft.init;
 
 import com.mojang.serialization.Codec;
 import ctn.imaginarycraft.api.DelayTaskHolder;
-import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueFortitude;
-import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueJustice;
-import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtuePrudence;
-import ctn.imaginarycraft.api.lobotomycorporation.virtue.VirtueTemperance;
+import ctn.imaginarycraft.api.virtue.VirtueFortitude;
+import ctn.imaginarycraft.api.virtue.VirtueJustice;
+import ctn.imaginarycraft.api.virtue.VirtuePrudence;
+import ctn.imaginarycraft.api.virtue.VirtueTemperance;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.util.AttachmentRegisterUtil;
 import net.minecraft.network.codec.ByteBufCodecs;
