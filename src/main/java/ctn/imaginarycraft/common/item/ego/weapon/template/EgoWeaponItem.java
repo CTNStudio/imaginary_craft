@@ -3,15 +3,12 @@ package ctn.imaginarycraft.common.item.ego.weapon.template;
 import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.api.virtue.VirtueRating;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
-import ctn.imaginarycraft.core.capability.item.IItemEgo;
-import ctn.imaginarycraft.core.capability.item.IItemInvincibleTick;
-import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
+import ctn.imaginarycraft.core.capability.item.IEgoItem;
 import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.init.ModDataComponents;
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -23,40 +20,14 @@ import java.util.Set;
 /**
  * EGO武器
  */
-public abstract class EgoWeaponItem extends Item implements IItemEgo, IItemLcDamageType, IItemUsageReq, IItemInvincibleTick {
-  private final @Nullable LcDamageType lcDamageType;
-  private final @Nullable Set<LcDamageType> canCauseLcDamageTypes;
-  private final int invincibleTick;
+public abstract class EgoWeaponItem extends Item implements IEgoItem, IItemUsageReq {
 
   public EgoWeaponItem(Properties itemProperties, Builder<?> egoWeaponBuilder) {
     super(itemProperties.stacksTo(1)
       .attributes(egoWeaponBuilder.getItemAttributeModifiers())
+      .component(ModDataComponents.LC_DAMAGE_TYPE.get(), new LcDamageType.Component(egoWeaponBuilder.lcDamageType, egoWeaponBuilder.canCauseLcDamageTypes))
       .component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, egoWeaponBuilder.virtueUsageReqBuilder.build())
       .component(ModDataComponents.IS_RESTRAIN, false));
-    this.lcDamageType = egoWeaponBuilder.lcDamageType;
-    this.canCauseLcDamageTypes = egoWeaponBuilder.canCauseLcDamageTypes;
-    this.invincibleTick = egoWeaponBuilder.invincibleTick;
-  }
-
-  /**
-   * 获取物品当前的伤害颜色
-   */
-  @Override
-  @Nullable
-  public LcDamageType getLcDamageColorDamageType(ItemStack itemStack) {
-    return lcDamageType;
-  }
-
-  @Override
-  @Nullable
-  public Set<LcDamageType> getCanCauseLcDamageTypes(ItemStack itemStack) {
-    return canCauseLcDamageTypes;
-  }
-
-  /// 获取武器攻击时造成的无敌帧
-  @Override
-  public int getInvincibleTick(ItemStack itemStack) {
-    return invincibleTick;
   }
 
   /// 是否可以挖掘方块
@@ -72,7 +43,6 @@ public abstract class EgoWeaponItem extends Item implements IItemEgo, IItemLcDam
     public @Nullable LcDamageType lcDamageType;
     public @Nullable Set<LcDamageType> canCauseLcDamageTypes;
     public float weaponDamage;
-    public int invincibleTick = 20;
 
     public T damage(float weaponDamageValue) {
       this.weaponDamage = weaponDamageValue;
@@ -132,11 +102,6 @@ public abstract class EgoWeaponItem extends Item implements IItemEgo, IItemLcDam
 
     public ItemAttributeModifiers getItemAttributeModifiers() {
       return ItemAttributeModifiers.builder().build();
-    }
-
-    public T invincibleTick(int weaponInvincibleTick) {
-      this.invincibleTick = weaponInvincibleTick;
-      return self();
     }
 
     public T properties(Properties itemProperties) {

@@ -1,4 +1,4 @@
 package ctn.imaginarycraft.core.capability.item;
 
-public interface IItemEgo {
+public interface IEgoItem {
 }

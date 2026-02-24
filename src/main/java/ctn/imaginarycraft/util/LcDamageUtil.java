@@ -1,6 +1,9 @@
 package ctn.imaginarycraft.util;
 
+import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.api.LcLevelType;
+import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
+import ctn.imaginarycraft.init.ModDataComponents;
 import ctn.imaginarycraft.mixed.IDamageSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -8,8 +11,9 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import javax.annotation.Nullable;
+import java.util.Set;
 
 public final class LcDamageUtil {
   /**
@@ -18,6 +22,35 @@ public final class LcDamageUtil {
   @Nullable
   public static ItemStack getDamageItemStack(@NotNull DamageSource damageSource) {
     return damageSource.getWeaponItem();
+  }
+
+  @Nullable
+  public static LcDamageType getLcDamageType(ItemStack itemStack) {
+    if (itemStack.has(ModDataComponents.LC_DAMAGE_TYPE)) {
+      LcDamageType.Component component = itemStack.get(ModDataComponents.LC_DAMAGE_TYPE);
+      if (component == null) {
+        return LcDamageType.PHYSICS;
+      }
+      return component.lcDamageType();
+    }
+
+    if (itemStack.getItem() instanceof IItemLcDamageType iItemLcDamageType) {
+      return iItemLcDamageType.getLcDamageType(itemStack);
+    }
+
+    return LcDamageType.PHYSICS;
+  }
+
+  @NotNull
+  public static Set<LcDamageType> getCanCauseLcDamageTypes(ItemStack itemStack) {
+    if (itemStack.has(ModDataComponents.LC_DAMAGE_TYPE)) {
+      LcDamageType.Component component = itemStack.get(ModDataComponents.LC_DAMAGE_TYPE);
+      return component == null ? Set.of() : component.canCauseLcDamageTypes();
+    }
+    if (itemStack.getItem() instanceof IItemLcDamageType iItemLcDamageType) {
+      return iItemLcDamageType.getCanCauseLcDamageTypes(itemStack);
+    }
+    return Set.of();
   }
 
   /**

@@ -1,7 +1,6 @@
 package ctn.imaginarycraft.common.item.weapon;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.core.capability.item.IItemInvincibleTick;
 import ctn.imaginarycraft.util.ItemBuilderUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.resources.ResourceLocation;
@@ -10,7 +9,6 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -19,10 +17,9 @@ import org.jetbrains.annotations.NotNull;
 /**
  * 武器基类
  */
-public abstract class WeaponItem extends Item implements IItemInvincibleTick {
+public abstract class WeaponItem extends Item {
   public static final ResourceLocation ENTITY_RANGE = ImaginaryCraft.modRl("weapon_entity_range");
   public static final ResourceLocation BLOCK_RANGE = ImaginaryCraft.modRl("weapon_block_range");
-  private final int invincibleTick;
 
   public WeaponItem(Builder builder) {
     this(builder.buildProperties(), builder);
@@ -30,20 +27,10 @@ public abstract class WeaponItem extends Item implements IItemInvincibleTick {
 
   public WeaponItem(Properties properties, Builder builder) {
     super(properties.attributes(builder.getItemAttributeModifiers()).stacksTo(1));
-    this.invincibleTick = builder.invincibleTick;
-  }
-
-  /**
-   * 获取武器攻击时造成的无敌帧
-   */
-  @Override
-  public int getInvincibleTick(ItemStack stack) {
-    return invincibleTick;
   }
 
   @Override
-  public boolean canAttackBlock(@NotNull BlockState state, @NotNull Level level,
-                                @NotNull BlockPos pos, Player player) {
+  public boolean canAttackBlock(@NotNull BlockState state, @NotNull Level level, @NotNull BlockPos pos, Player player) {
     return !player.isCreative();
   }
 
@@ -64,7 +51,6 @@ public abstract class WeaponItem extends Item implements IItemInvincibleTick {
      * 耐久
      */
     protected int durability;
-    protected int invincibleTick;
     protected Properties properties = new Properties();
 
     public Properties buildProperties() {
@@ -93,11 +79,6 @@ public abstract class WeaponItem extends Item implements IItemInvincibleTick {
 
     public Builder durability(int durability) {
       this.durability = durability;
-      return this;
-    }
-
-    public Builder invincibleTick(int invincibleTick) {
-      this.invincibleTick = invincibleTick;
       return this;
     }
 

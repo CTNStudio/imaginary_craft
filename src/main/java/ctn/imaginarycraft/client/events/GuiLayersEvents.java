@@ -26,18 +26,21 @@ public final class GuiLayersEvents {
       }
       return;
     }
+
     if (name.equals(ModGuiLayers.SCREEN_FILTER)) {
       if (!ModConfig.CLIENT.enableLowRationalityFilter.get()) {
         event.setCanceled(true);
       }
       return;
     }
+
     if (name.equals(ModGuiLayers.LC_DAMAGE_SCREEN_FILTER)) {
       if (!ModConfig.CLIENT.enableLcColorDamageFilter.get()) {
         event.setCanceled(true);
       }
       return;
     }
+
     if (name.equals(ModGuiLayers.GUN_CHARGE_UP_HUD_LAYER_CROSSHAIR) || name.equals(ModGuiLayers.GUN_CHARGE_UP_HUD_LAYER_HOTBAR)) {
       switch (instance.options.attackIndicator().get()) {
         case CROSSHAIR -> {
@@ -55,11 +58,10 @@ public final class GuiLayersEvents {
           return;
         }
       }
-      if (!GunWeaponUtil.is(instance.player)) {
+      if (instance.player != null && !GunWeaponUtil.is(instance.player)) {
         event.setCanceled(true);
       }
     }
-
   }
 
   @SubscribeEvent

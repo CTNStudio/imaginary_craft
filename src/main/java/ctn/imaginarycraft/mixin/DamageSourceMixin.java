@@ -4,7 +4,6 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.api.LcLevelType;
-import ctn.imaginarycraft.core.capability.item.IItemInvincibleTick;
 import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
 import ctn.imaginarycraft.init.ModCapabilitys;
 import ctn.imaginarycraft.mixed.IDamageSource;
@@ -44,9 +43,6 @@ public abstract class DamageSourceMixin implements IDamageSource {
   private boolean imaginaryCraft$isLcDamageTypeNull;
 
   @Unique
-  private int imaginaryCraft$invincibleTick;
-
-  @Unique
   private ItemStack imaginaryCraft$attackItemStack;
 
   @Inject(method = "<init>(Lnet/minecraft/core/Holder;" +
@@ -62,18 +58,12 @@ public abstract class DamageSourceMixin implements IDamageSource {
     // 初始化默认值
     LcDamageType lcDamageType = null;
     LcLevelType lcDamageLevel = null;
-    int invincibleTick = 20;
 
     // 从物品获取信息
     if (itemStack != null) {
       IItemLcDamageType colorDamageTypeItem = itemStack.getCapability(ModCapabilitys.LC_DAMAGE_TYPE_ITEM);
       if (colorDamageTypeItem != null) {
-        lcDamageType = colorDamageTypeItem.getLcDamageColorDamageType(itemStack);
-      }
-
-      IItemInvincibleTick invincibleTickItem = itemStack.getCapability(ModCapabilitys.InvincibleTick.INVINCIBLE_TICK_ITEM);
-      if (invincibleTickItem != null) {
-        invincibleTick = invincibleTickItem.getInvincibleTick(itemStack);
+        lcDamageType = colorDamageTypeItem.getLcDamageType(itemStack);
       }
 
       if (lcDamageLevel == null) {
@@ -90,7 +80,6 @@ public abstract class DamageSourceMixin implements IDamageSource {
 
     // 应用最终值
     this.imaginaryCraft$lcDamageLevel = lcDamageLevel;
-    this.imaginaryCraft$invincibleTick = invincibleTick;
     this.imaginaryCraft$lcDamageType = lcDamageType == null ?
       LcDamageType.byDamageType(type) : lcDamageType;
   }
@@ -117,12 +106,6 @@ public abstract class DamageSourceMixin implements IDamageSource {
 
   @Unique
   @Override
-  public int getImaginaryCraft$InvincibleTick() {
-    return imaginaryCraft$invincibleTick;
-  }
-
-  @Unique
-  @Override
   public void setImaginaryCraft$LcDamageType(LcDamageType type) {
     this.imaginaryCraft$lcDamageType = type;
   }
@@ -131,12 +114,6 @@ public abstract class DamageSourceMixin implements IDamageSource {
   @Override
   public void setImaginaryCraft$DamageLevel(@Nullable LcLevelType level) {
     this.imaginaryCraft$lcDamageLevel = level;
-  }
-
-  @Unique
-  @Override
-  public void setImaginaryCraft$InvincibleTick(int tick) {
-    this.imaginaryCraft$invincibleTick = tick;
   }
 
   @Unique

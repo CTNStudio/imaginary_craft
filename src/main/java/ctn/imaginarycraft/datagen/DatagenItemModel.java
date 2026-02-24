@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.datagen;
 
-import ctn.imaginarycraft.client.events.ItemPropertyEvents;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.core.registry.client.ItemPropertyRenderersRegistrar;
 import ctn.imaginarycraft.init.item.ToolItems;
 import ctn.imaginarycraft.init.item.ego.EgoArmorItems;
 import ctn.imaginarycraft.init.item.ego.EgoCurioItems;
@@ -100,7 +100,7 @@ public class DatagenItemModel extends ItemModelProvider {
     map.put(0.1F, "spirit");
     map.put(0.2F, "erosion");
     map.put(0.3F, "the_soul");
-    createModelFile(item, "weapon/", map, getParent("item/handheld"), ItemPropertyEvents.CURRENT_LC_DAMAGE_TYPE);
+    createModelFile(item, "weapon/", map, getParent("item/handheld"), ItemPropertyRenderersRegistrar.CURRENT_LC_DAMAGE_TYPE);
   }
 
   /**
@@ -113,7 +113,7 @@ public class DatagenItemModel extends ItemModelProvider {
     LinkedHashMap<Float, String> map = new LinkedHashMap<>();
     map.put(0F, "add");
     map.put(1F, "decrease");
-    createModelFile(item, "tool/", map, ItemPropertyEvents.MODE_BOOLEAN);
+    createModelFile(item, "tool/", map, ItemPropertyRenderersRegistrar.MODE_BOOLEAN);
   }
 
   /**

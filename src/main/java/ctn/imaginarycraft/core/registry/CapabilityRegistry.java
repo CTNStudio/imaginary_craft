@@ -6,7 +6,10 @@ import ctn.imaginarycraft.core.capability.block.BlockLcLevel;
 import ctn.imaginarycraft.core.capability.block.IBlockLcLevel;
 import ctn.imaginarycraft.core.capability.entity.EntityLcLevel;
 import ctn.imaginarycraft.core.capability.entity.IEntityLcLevel;
-import ctn.imaginarycraft.core.capability.item.*;
+import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
+import ctn.imaginarycraft.core.capability.item.IItemLcLevel;
+import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
+import ctn.imaginarycraft.core.capability.item.ItemLcLevel;
 import ctn.imaginarycraft.init.ModCapabilitys;
 import ctn.imaginarycraft.init.entiey.AbnormalitiesEntityTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -116,7 +119,6 @@ public final class CapabilityRegistry {
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void registerLowest(RegisterCapabilitiesEvent event) {
     for (Item item : BuiltInRegistries.ITEM) {
-      registerItem(event, item, IItemInvincibleTick.class, ModCapabilitys.InvincibleTick.INVINCIBLE_TICK_ITEM);
       registerItem(event, item, IItemLcDamageType.class, ModCapabilitys.LC_DAMAGE_TYPE_ITEM);
       registerItem(event, item, IItemUsageReq.class, ModCapabilitys.USAGE_REQ_ITEM);
       registerItem(event, item, IItemLcLevel.class, ModCapabilitys.LcLevel.LC_LEVEL_ITEM);

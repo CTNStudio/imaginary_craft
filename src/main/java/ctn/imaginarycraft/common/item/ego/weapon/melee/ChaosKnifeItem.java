@@ -14,45 +14,28 @@ import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
-import java.util.Set;
 
 /// 混沌刀
 public class ChaosKnifeItem extends SwordsEgoWeaponItem {
   public static final String KEY = ImaginaryCraft.ID + ".item_tooltip.geo_describe.damage_type";
+  private static final LcDamageType.Component DEFAULT_COMPONENT = new LcDamageType.Component(LcDamageType.PHYSICS, LcDamageType.values());
 
   public ChaosKnifeItem(Properties itemProperties, Builder egoWeaponBuilder) {
-    super(itemProperties.component(ModDataComponents.LC_DAMAGE_TYPE.get(), LcDamageType.PHYSICS), egoWeaponBuilder);
+    super(itemProperties, egoWeaponBuilder
+      .meleeLcDamageType(LcDamageType.PHYSICS, LcDamageType.values()));
   }
 
   @Override
   @NotNull
   public InteractionResultHolder<ItemStack> use(@NotNull Level world, @NotNull Player playerEntity, @NotNull InteractionHand handUsed) {
     ItemStack itemStackInHand = playerEntity.getItemInHand(handUsed);
-    itemStackInHand.update(ModDataComponents.LC_DAMAGE_TYPE, LcDamageType.PHYSICS,
+    itemStackInHand.update(ModDataComponents.LC_DAMAGE_TYPE, DEFAULT_COMPONENT,
       (damageType) -> {
         LcDamageType[] values = LcDamageType.values();
-        int i = damageType.getIndex() + 1;
-        return values[i >= values.length ? 0 : i];
+        int i = damageType.lcDamageType().getIndex() + 1;
+        return new LcDamageType.Component(values[i >= values.length ? 0 : i], LcDamageType.values());
       });
     return InteractionResultHolder.success(itemStackInHand);
-  }
-
-  @Override
-  public Component getLcDamageTypeToTooltip(final ItemStack itemStack) {
-    LcDamageType damageType = getLcDamageColorDamageType(itemStack);
-    return Component.translatable(KEY).withColor(0xAAAAAA).append(Component.literal(" ")
-      .append(damageType.getName()).withColor(damageType.getColourValue()));
-  }
-
-  @Override
-  @NotNull
-  public LcDamageType getLcDamageColorDamageType(ItemStack itemStack) {
-    return itemStack.getOrDefault(ModDataComponents.LC_DAMAGE_TYPE, LcDamageType.PHYSICS);
-  }
-
-  @Override
-  public Set<LcDamageType> getCanCauseLcDamageTypes(final ItemStack itemStack) {
-    return Set.of(LcDamageType.values());
   }
 
   @Override

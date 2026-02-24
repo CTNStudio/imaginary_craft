@@ -25,10 +25,6 @@ public interface IDamageSource {
 
   void setImaginaryCraft$DamageLevel(@Nullable LcLevelType pmLevel);
 
-  int getImaginaryCraft$InvincibleTick();
-
-  void setImaginaryCraft$InvincibleTick(int tick);
-
   @Unique
   boolean isImaginaryCraft$LcLevelNull();
 

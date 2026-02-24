@@ -1,7 +1,10 @@
 package ctn.imaginarycraft.api;
 
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.DataResult;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
 import ctn.imaginarycraft.client.ModFontIcon;
 import ctn.imaginarycraft.client.util.ColorUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -30,6 +33,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 脑叶伤害类型
@@ -95,10 +100,6 @@ public enum LcDamageType implements ColourText, StringRepresentable {
     return Arrays.stream(LcDamageType.values()).filter(d -> d.name.equals(name)).findFirst().orElse(null);
   }
 
-  public String getName() {
-    return name;
-  }
-
   /**
    * 根据{@link Holder}获取对应的{@link LcDamageType}
    *
@@ -124,6 +125,10 @@ public enum LcDamageType implements ColourText, StringRepresentable {
     }
     // 默认为物理伤害
     return PHYSICS;
+  }
+
+  public String getName() {
+    return name;
   }
 
   @Override
@@ -190,5 +195,28 @@ public enum LcDamageType implements ColourText, StringRepresentable {
 
   public ModFontIcon getChar8x() {
     return char8xIcon;
+  }
+
+
+  public record Component(LcDamageType lcDamageType, Set<LcDamageType> canCauseLcDamageTypes) {
+    public static final Codec<Set<LcDamageType>> SET_CODEC = Codec.list(LcDamageType.CODEC).xmap(Sets::newHashSet, Lists::newArrayList);
+    public static final Codec<Component> CODEC = RecordCodecBuilder.create(
+      instance -> instance.group(
+        LcDamageType.CODEC.fieldOf("lc_damage_type").forGetter(Component::lcDamageType),
+        SET_CODEC.fieldOf("can_cause_lc_damage_types")
+          .forGetter(Component::canCauseLcDamageTypes)
+      ).apply(instance, Component::new));
+    public static final StreamCodec<ByteBuf, Component> STREAM_CODEC = StreamCodec.composite(
+      LcDamageType.STREAM_CODEC, Component::lcDamageType,
+      ByteBufCodecs.collection(HashSet::newHashSet, LcDamageType.STREAM_CODEC), Component::canCauseLcDamageTypes,
+      Component::new);
+
+    public Component(LcDamageType lcDamageType) {
+      this(lcDamageType, Set.of(lcDamageType));
+    }
+
+    public Component(LcDamageType lcDamageType, LcDamageType... canCauseLcDamageTypes) {
+      this(lcDamageType, Set.of(canCauseLcDamageTypes));
+    }
   }
 }

@@ -12,8 +12,10 @@ import java.util.function.Supplier;
 
 public final class ModDataComponents extends DataComponentsRegisterUtil {
   public static final DeferredRegister<DataComponentType<?>> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.DATA_COMPONENT_TYPE);
-  public static final Supplier<DataComponentType<LcDamageType>> LC_DAMAGE_TYPE = register("lobotomy_corporation_damage_type",
-    LcDamageType.CODEC, LcDamageType.STREAM_CODEC, true);
+
+  public static final Supplier<DataComponentType<LcDamageType.Component>> LC_DAMAGE_TYPE = register("lobotomy_corporation_damage_type",
+    LcDamageType.Component.CODEC, LcDamageType.Component.STREAM_CODEC, true);
+
   public static final Supplier<DataComponentType<Boolean>> MODE_BOOLEAN = recordBoolean("mode_boolean", true);
   /**
    * 是否正在受到抑制器的影响属性

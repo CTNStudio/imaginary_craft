@@ -2,9 +2,7 @@ package ctn.imaginarycraft.common.item.ego.weapon.template.remote;
 
 import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
-import ctn.imaginarycraft.core.capability.item.IItemEgo;
-import ctn.imaginarycraft.core.capability.item.IItemInvincibleTick;
-import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
+import ctn.imaginarycraft.core.capability.item.IEgoItem;
 import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.ModDataComponents;
@@ -26,25 +24,21 @@ import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Set;
 import java.util.function.Predicate;
 
 /**
  * 远程EGO武器
  */
-public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implements IItemEgo, IItemLcDamageType, IItemUsageReq, IItemInvincibleTick {
+public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implements IEgoItem, IItemUsageReq {
   private final float attackDistance;
-  private final @Nullable LcDamageType lcDamageType;
-  private final @Nullable Set<LcDamageType> canCauseLcDamageTypes;
   private final @Nullable CreateProjectile<? extends Projectile> createProjectile;
 
   public RemoteEgoWeaponItem(@NotNull Properties itemProperties, @NotNull Builder remoteEgoWeaponBuilder) {
     super(itemProperties.stacksTo(1)
       .attributes(remoteEgoWeaponBuilder.getItemAttributeModifiers())
+      .component(ModDataComponents.LC_DAMAGE_TYPE.get(), new LcDamageType.Component(remoteEgoWeaponBuilder.lcDamageType, remoteEgoWeaponBuilder.canCauseLcDamageTypes))
       .component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, remoteEgoWeaponBuilder.virtueUsageReqBuilder.build())
       .component(ModDataComponents.IS_RESTRAIN, false));
-    this.lcDamageType = remoteEgoWeaponBuilder.lcDamageType;
-    this.canCauseLcDamageTypes = remoteEgoWeaponBuilder.canCauseLcDamageTypes;
     this.attackDistance = remoteEgoWeaponBuilder.attackDistance;
     this.createProjectile = remoteEgoWeaponBuilder.createProjectile;
   }
@@ -88,29 +82,6 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
     Projectile projectile = this.createProjectile(world, shooterEntity, weaponItem, null);
     this.shootProjectile(shooterEntity, projectile, 0, projectileVelocity, projectileInaccuracy, 0, targetEntity);
     world.addFreshEntity(projectile);
-  }
-
-  /**
-   * 获取物品当前的伤害颜色
-   */
-  @Override
-  @Nullable
-  public LcDamageType getLcDamageColorDamageType(ItemStack itemStack) {
-    return lcDamageType;
-  }
-
-  @Override
-  @Nullable
-  public Set<LcDamageType> getCanCauseLcDamageTypes(ItemStack itemStack) {
-    return canCauseLcDamageTypes;
-  }
-
-  /**
-   * 获取武器攻击时造成的无敌帧
-   */
-  @Override
-  public int getInvincibleTick(ItemStack itemStack) {
-    return 0;
   }
 
   /**

@@ -1,12 +1,12 @@
 package ctn.imaginarycraft.common.item.ego.weapon.melee;
 
-import ctn.imaginarycraft.common.item.ego.weapon.template.melee.GeoMeleeEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.melee.MeleeEgoWeaponGeoItem;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.model.GeoModel;
 
-public class DaCapoWeaponItem extends GeoMeleeEgoWeaponItem {
+public class DaCapoWeaponItem extends MeleeEgoWeaponGeoItem {
 
-  public DaCapoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoMeleeEgoWeaponItem> geoModel, GeoModel<GeoMeleeEgoWeaponItem> guiModel) {
+  public DaCapoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<MeleeEgoWeaponGeoItem> geoModel, GeoModel<MeleeEgoWeaponGeoItem> guiModel) {
     super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 

@@ -2,7 +2,6 @@ package ctn.imaginarycraft.mixin;
 
 import ctn.imaginarycraft.api.LcImmuneType;
 import ctn.imaginarycraft.mixed.IDamageContainer;
-import ctn.imaginarycraft.mixed.IDamageSource;
 import net.minecraft.world.damagesource.DamageSource;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import org.spongepowered.asm.mixin.Final;
@@ -30,7 +29,6 @@ public abstract class DamageContainerMixin implements IDamageContainer {
 
   @Inject(method = "<init>", at = @At("RETURN"))
   private void imaginaryCraft$DamageContainer(DamageSource source, float originalDamage, CallbackInfo ci) {
-    setPostAttackInvulnerabilityTicks(IDamageSource.of(source).getImaginaryCraft$InvincibleTick());
   }
 
   @Unique

@@ -2,7 +2,7 @@ package ctn.imaginarycraft.init.item.ego;
 
 import ctn.imaginarycraft.common.item.ego.EgoItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.core.capability.item.IItemEgo;
+import ctn.imaginarycraft.core.capability.item.IEgoItem;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.IEventBus;
@@ -31,7 +31,7 @@ public final class EgoItems {
   }
 
   @NotNull
-  private static <I extends Item & IItemEgo> DeferredItem<I> register(
+  private static <I extends Item & IEgoItem> DeferredItem<I> register(
     String id,
     String zhName,
     Function<Item.Properties, ? extends I> item,

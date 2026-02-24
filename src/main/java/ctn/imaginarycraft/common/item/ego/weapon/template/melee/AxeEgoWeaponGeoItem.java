@@ -3,13 +3,14 @@ package ctn.imaginarycraft.common.item.ego.weapon.template.melee;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.model.GeoModel;
 
-public class KnifeEgoWeaponItem extends MeleeEgoWeaponGeoItem {
+// TODO 需要具备原版斧头的一切功能
+public class AxeEgoWeaponGeoItem extends MeleeEgoWeaponGeoItem {
 
-  public KnifeEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<MeleeEgoWeaponGeoItem> geoModel, GeoModel<MeleeEgoWeaponGeoItem> guiModel) {
+  public AxeEgoWeaponGeoItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<MeleeEgoWeaponGeoItem> geoModel, GeoModel<MeleeEgoWeaponGeoItem> guiModel) {
     super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 
-  public KnifeEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
+  public AxeEgoWeaponGeoItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
     super(itemProperties, egoWeaponBuilder, modPath);
   }
 
@@ -18,3 +19,4 @@ public class KnifeEgoWeaponItem extends MeleeEgoWeaponGeoItem {
 
   }
 }
+

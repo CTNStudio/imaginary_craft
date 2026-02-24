@@ -3,12 +3,9 @@ package ctn.imaginarycraft.init;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.core.capability.block.IBlockLcLevel;
 import ctn.imaginarycraft.core.capability.entity.IEntityLcLevel;
-import ctn.imaginarycraft.core.capability.item.IItemInvincibleTick;
 import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
 import ctn.imaginarycraft.core.capability.item.IItemLcLevel;
 import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
-import ctn.imaginarycraft.mixed.IDamageSource;
-import ctn.imaginarycraft.mixin.DamageSourceMixin;
 import net.neoforged.neoforge.capabilities.BlockCapability;
 import net.neoforged.neoforge.capabilities.EntityCapability;
 import net.neoforged.neoforge.capabilities.ItemCapability;
@@ -35,16 +32,5 @@ public final class ModCapabilitys {
 
     public static final EntityCapability<IEntityLcLevel, Void> LC_LEVEL_ENTITY =
       EntityCapability.createVoid(ImaginaryCraft.modRl("lobotomy_corporation_level_entity"), IEntityLcLevel.class);
-  }
-
-  /**
-   * 也可以通过mixin类 {@link DamageSourceMixin} 的 {@link IDamageSource}接口方法代替或覆盖这些
-   */
-  public static class InvincibleTick {
-    /**
-     * 仅适应于近战武器造成的伤害
-     */
-    public static final ItemCapability<IItemInvincibleTick, Void> INVINCIBLE_TICK_ITEM =
-      ItemCapability.createVoid(ImaginaryCraft.modRl("invincible_tick_item"), IItemInvincibleTick.class);
   }
 }

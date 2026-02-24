@@ -3,9 +3,9 @@ package ctn.imaginarycraft.common.item.ego.weapon.template.melee;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.model.GeoModel;
 
-public class HammerEgoWeaponItem extends GeoMeleeEgoWeaponItem {
+public class HammerEgoWeaponItem extends MeleeEgoWeaponGeoItem {
 
-  public HammerEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoMeleeEgoWeaponItem> geoModel, GeoModel<GeoMeleeEgoWeaponItem> guiModel) {
+  public HammerEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<MeleeEgoWeaponGeoItem> geoModel, GeoModel<MeleeEgoWeaponGeoItem> guiModel) {
     super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 

@@ -5,7 +5,7 @@ import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.melee.*;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.*;
 import ctn.imaginarycraft.core.ImaginaryCraftConstants;
-import ctn.imaginarycraft.core.capability.item.IItemEgo;
+import ctn.imaginarycraft.core.capability.item.IEgoItem;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
 import ctn.imaginarycraft.util.LcLevelUtil;
 import net.minecraft.world.item.Item;
@@ -21,18 +21,18 @@ public abstract class EgoWeaponRegisterUtil {
     String id,
     String zhName,
     LcLevelType lcLevelType,
-    RemoteTemplateType remoteTemplateType,
+    RemoteTemplateType templateType,
     Item.Properties properties,
     RemoteEgoWeaponItem.Builder builder,
     String modelPath
   ) {
-    return registerRemoteTemplate(id, zhName, lcLevelType, remoteTemplateType, properties, builder, switch (remoteTemplateType) {
+    return registerRemoteTemplate(id, zhName, lcLevelType, templateType, properties, builder, switch (templateType) {
       case CANNON -> (p, b) -> new CannonEgoWeaponItem(p, b, modelPath);
       case PISTOL -> (p, b) -> new PistolEgoWeaponItem(p, b, modelPath);
       case RIFLE -> (p, b) -> new RifleEgoWeaponItem(p, b, modelPath);
       case CROSSBOW -> (p, b) -> new CrossbowEgoWeaponItem(p, b, modelPath);
       default ->
-        throw new IllegalStateException("Other types should be custom classes type: " + remoteTemplateType);
+        throw new IllegalStateException("Other types should be custom classes type: " + templateType);
     });
   }
 
@@ -40,15 +40,14 @@ public abstract class EgoWeaponRegisterUtil {
     String id,
     String zhName,
     LcLevelType lcLevelType,
-    @NotNull RemoteTemplateType remoteTemplateType,
+    @NotNull RemoteTemplateType templateType,
     Item.Properties properties,
     RemoteEgoWeaponItem.@NotNull Builder builder,
     BiFunction<Item.Properties, RemoteEgoWeaponItem.Builder, I> item
   ) {
-    var remoteBuilder = builder
-      .attackIntervalMainHand(remoteTemplateType.getAttackSpeed())
-      .attackDistance(remoteTemplateType.getAttackDistance());
-    return registerRemote(id, zhName, lcLevelType, remoteTemplateType, properties, remoteBuilder, item);
+    return registerRemote(id, zhName, lcLevelType, templateType, properties, builder
+      .attackIntervalMainHand(templateType.getAttackSpeed())
+      .attackDistance(templateType.getAttackDistance()), item);
   }
 
   protected static @NotNull <I extends RemoteEgoWeaponItem> DeferredItem<I> registerRemote(
@@ -67,12 +66,12 @@ public abstract class EgoWeaponRegisterUtil {
     String id,
     String zhName,
     LcLevelType lcLevelType,
-    MeleeTemplateType remoteTemplateType,
+    MeleeTemplateType templateType,
     Item.Properties properties,
     MeleeEgoWeaponItem.Builder builder,
     String modelPath
   ) {
-    return registerMeleeTemplate(id, zhName, lcLevelType, remoteTemplateType, properties, builder, switch (remoteTemplateType) {
+    return registerMeleeTemplate(id, zhName, lcLevelType, templateType, properties, builder, switch (templateType) {
       case AXE -> (p, b) -> new AxeEgoWeaponItem(p, b, modelPath);
       case FIST -> (p, n) -> new FistEgoWeaponItem(p, n, modelPath);
       case HAMMER -> (p, b) -> new HammerEgoWeaponItem(p, b, modelPath);
@@ -92,10 +91,9 @@ public abstract class EgoWeaponRegisterUtil {
     MeleeEgoWeaponItem.@NotNull Builder builder,
     BiFunction<Item.Properties, MeleeEgoWeaponItem.Builder, I> item
   ) {
-    var meleeBuilder = builder
+    MeleeEgoWeaponItem.Builder meleeBuilder = builder
       .attackSpeed(remoteTemplateType.getAttackSpeed())
       .attackDistance(remoteTemplateType.getAttackDistance());
-    builder.invincibleTick(remoteTemplateType.getInvincibleTick());
     return registerMelee(id, zhName, lcLevelType, remoteTemplateType, properties, meleeBuilder, item);
   }
 
@@ -111,7 +109,7 @@ public abstract class EgoWeaponRegisterUtil {
     return register(id, zhName, lcLevelType, remoteTemplateType, properties, builder, item);
   }
 
-  protected static @NotNull <I extends Item & IItemEgo, B extends EgoWeaponItem.Builder<B>> DeferredItem<I> register(
+  protected static @NotNull <I extends Item & IEgoItem, B extends EgoWeaponItem.Builder<B>> DeferredItem<I> register(
     String id,
     String zhName,
     LcLevelType lcLevelType,
@@ -219,10 +217,6 @@ public abstract class EgoWeaponRegisterUtil {
       this.set.add(item);
     }
 
-    public int getInvincibleTick() {
-      return (int) (20 * Math.min(1, getAttackSpeedTick()));
-    }
-
     public float getAttackSpeedTick() {
       return this.attackSpeedTick;
     }
@@ -237,7 +231,6 @@ public abstract class EgoWeaponRegisterUtil {
   }
 
   public enum MeleeTemplateType implements Type {
-    // 近战武器
     /**
      * 斧 攻击速度 1 攻击距离 2
      */
@@ -295,10 +288,6 @@ public abstract class EgoWeaponRegisterUtil {
 
     public float getAttackSpeedTick() {
       return this.attackSpeedTick;
-    }
-
-    public int getInvincibleTick() {
-      return (int) (20 * Math.min(1, getAttackSpeedTick()));
     }
 
     public float getAttackDistance() {

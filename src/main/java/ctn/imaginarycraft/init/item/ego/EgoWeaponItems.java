@@ -140,6 +140,16 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .virtueUsageReq(null, null, null, null, null),
     "weapon/red_eyes");
 
+  public static final DeferredItem<MeleeEgoWeaponItem> RED_EYES_TACHI = registerMeleeTemplate(
+    "red_eyes_tachi_weapon", "赤瞳-太刀",
+    LcLevelType.TETH, MeleeTemplateType.MACE,
+    new Item.Properties(),
+    new MeleeEgoWeaponItem.Builder()
+      .damage(8)
+      .meleeLcDamageType(LcDamageType.PHYSICS)
+      .virtueUsageReq(null, null, null, null, null),
+    "weapon/red_eyes_tachi");
+
   public static final DeferredItem<MeleeEgoWeaponItem> HORN = registerMeleeTemplate(
     "horn_weapon", "犄角",
     LcLevelType.TETH, MeleeTemplateType.SPEAR,
@@ -653,7 +663,6 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(12)
       .attackSpeed(minuteToSpeedConversion(1.7f))
       .attackDistance(4)
-      .invincibleTick(20)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(VirtueRating.V, null, null, null, VirtueRating.V),
     (p, b) -> new MimicryWeaponItem(p, b, "weapon/mimicry"));

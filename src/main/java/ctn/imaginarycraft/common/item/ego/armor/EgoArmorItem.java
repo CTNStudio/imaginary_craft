@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.item.ego.armor;
 
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
-import ctn.imaginarycraft.core.capability.item.IItemEgo;
+import ctn.imaginarycraft.core.capability.item.IEgoItem;
 import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.init.ModAttributes;
 import ctn.imaginarycraft.init.ModDataComponents;
@@ -23,7 +23,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
-public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, IItemEgo {
+public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, IEgoItem {
   protected final GeoRenderProvider renderProvider;
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
