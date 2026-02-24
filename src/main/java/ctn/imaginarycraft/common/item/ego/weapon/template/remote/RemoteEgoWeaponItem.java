@@ -29,7 +29,7 @@ import java.util.function.Predicate;
 /**
  * 远程EGO武器
  */
-public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implements IEgoItem, IItemUsageReq {
+public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implements IEgoItem, IItemUsageReq, IRemoteEgoWeaponItem {
   private final float attackDistance;
   private final @Nullable CreateProjectile<? extends Projectile> createProjectile;
 

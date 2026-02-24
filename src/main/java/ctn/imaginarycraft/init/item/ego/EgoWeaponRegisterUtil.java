@@ -14,133 +14,53 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 
+/**
+ * 优化后的Ego武器注册工具类，采用构建者模式统一管理武器创建和注册
+ */
 public abstract class EgoWeaponRegisterUtil {
 
-  protected static @NotNull DeferredItem<RemoteEgoWeaponItem> registerRemoteTemplate(
-    String id,
-    String zhName,
-    LcLevelType lcLevelType,
-    RemoteTemplateType templateType,
-    Item.Properties properties,
-    RemoteEgoWeaponItem.Builder builder,
-    String modelPath
-  ) {
-    return registerRemoteTemplate(id, zhName, lcLevelType, templateType, properties, builder, switch (templateType) {
-      case CANNON -> (p, b) -> new CannonEgoWeaponItem(p, b, modelPath);
-      case PISTOL -> (p, b) -> new PistolEgoWeaponItem(p, b, modelPath);
-      case RIFLE -> (p, b) -> new RifleEgoWeaponItem(p, b, modelPath);
-      case CROSSBOW -> (p, b) -> new CrossbowEgoWeaponItem(p, b, modelPath);
-      default ->
-        throw new IllegalStateException("Other types should be custom classes type: " + templateType);
-    });
+  /**
+   * 创建远程武器构建器
+   */
+  public static RemoteEgoWeaponBuilder createRemoteWeapon() {
+    return new RemoteEgoWeaponBuilder();
   }
 
-  protected static @NotNull <I extends RemoteEgoWeaponItem> DeferredItem<I> registerRemoteTemplate(
-    String id,
-    String zhName,
-    LcLevelType lcLevelType,
-    @NotNull RemoteTemplateType templateType,
-    Item.Properties properties,
-    RemoteEgoWeaponItem.@NotNull Builder builder,
-    BiFunction<Item.Properties, RemoteEgoWeaponItem.Builder, I> item
-  ) {
-    return registerRemote(id, zhName, lcLevelType, templateType, properties, builder
-      .attackIntervalMainHand(templateType.getAttackSpeed())
-      .attackDistance(templateType.getAttackDistance()), item);
+  /**
+   * 创建近战武器构建器
+   */
+  public static MeleeEgoWeaponBuilder createMeleeWeapon() {
+    return new MeleeEgoWeaponBuilder();
   }
 
-  protected static @NotNull <I extends RemoteEgoWeaponItem> DeferredItem<I> registerRemote(
+  private static @NotNull <I extends Item & IEgoItem, B extends EgoWeaponItem.Builder<B>> DeferredItem<I> register(
     String id,
     String zhName,
     LcLevelType lcLevelType,
-    RemoteTemplateType templateType,
-    Item.Properties properties,
-    RemoteEgoWeaponItem.Builder builder,
-    BiFunction<Item.Properties, RemoteEgoWeaponItem.Builder, I> item
-  ) {
-    return register(id, zhName, lcLevelType, templateType, properties, builder, item);
-  }
-
-  protected static @NotNull DeferredItem<MeleeEgoWeaponItem> registerMeleeTemplate(
-    String id,
-    String zhName,
-    LcLevelType lcLevelType,
-    MeleeTemplateType templateType,
-    Item.Properties properties,
-    MeleeEgoWeaponItem.Builder builder,
-    String modelPath
-  ) {
-    return registerMeleeTemplate(id, zhName, lcLevelType, templateType, properties, builder, switch (templateType) {
-      case AXE -> (p, b) -> new AxeEgoWeaponItem(p, b, modelPath);
-      case FIST -> (p, n) -> new FistEgoWeaponItem(p, n, modelPath);
-      case HAMMER -> (p, b) -> new HammerEgoWeaponItem(p, b, modelPath);
-      case KNIFE -> (p, b) -> new KnifeEgoWeaponItem(p, b, modelPath);
-      case MACE -> (p, b) -> new MaceEgoWeaponItem(p, b, modelPath);
-      case SPEAR -> (p, b) -> new SpearEgoWeaponItem(p, b, modelPath);
-      case SWORDS -> SwordsEgoWeaponItem::new;
-    });
-  }
-
-  protected static @NotNull <I extends MeleeEgoWeaponItem> DeferredItem<I> registerMeleeTemplate(
-    String id,
-    String zhName,
-    LcLevelType lcLevelType,
-    @NotNull MeleeTemplateType remoteTemplateType,
-    Item.Properties properties,
-    MeleeEgoWeaponItem.@NotNull Builder builder,
-    BiFunction<Item.Properties, MeleeEgoWeaponItem.Builder, I> item
-  ) {
-    MeleeEgoWeaponItem.Builder meleeBuilder = builder
-      .attackSpeed(remoteTemplateType.getAttackSpeed())
-      .attackDistance(remoteTemplateType.getAttackDistance());
-    return registerMelee(id, zhName, lcLevelType, remoteTemplateType, properties, meleeBuilder, item);
-  }
-
-  protected static @NotNull <I extends MeleeEgoWeaponItem> DeferredItem<I> registerMelee(
-    String id,
-    String zhName,
-    LcLevelType lcLevelType,
-    MeleeTemplateType remoteTemplateType,
-    Item.Properties properties,
-    MeleeEgoWeaponItem.Builder builder,
-    BiFunction<Item.Properties, MeleeEgoWeaponItem.Builder, I> item
-  ) {
-    return register(id, zhName, lcLevelType, remoteTemplateType, properties, builder, item);
-  }
-
-  protected static @NotNull <I extends Item & IEgoItem, B extends EgoWeaponItem.Builder<B>> DeferredItem<I> register(
-    String id,
-    String zhName,
-    LcLevelType lcLevelType,
-    @NotNull Type type,
+    @NotNull EgoWeaponRegisterUtil.TemplateType templateType,
     Item.Properties properties,
     B builder,
-    BiFunction<Item.Properties, B, ? extends I> item
+    BiFunction<Item.Properties, B, ? extends I> itemFactory
   ) {
-    DeferredItem<I> deferredItem = EgoWeaponItems.REGISTRY.register(id, () -> item.apply(properties, builder));
+    DeferredItem<I> deferredItem = EgoWeaponItems.REGISTRY.register(id, () -> itemFactory.apply(properties, builder));
     LcLevelUtil.addItemLcLevelCapability(lcLevelType, deferredItem);
     ImaginaryCraftConstants.EGO_WEAPON.add(deferredItem);
-    type.addItem(deferredItem);
+    templateType.addItem(deferredItem);
     ZhCn.clientAddI18nItemText(zhName, deferredItem);
     return deferredItem;
   }
 
-  protected static float minuteToSpeedConversion(float attackSpeedTick) {
-    // 防止除零错误和负数输入
+  public static float minuteToSpeedConversion(float attackSpeedTick) {
     if (attackSpeedTick <= 0) {
-      return 0; // 或者根据实际情况返回合适的默认值
+      return 0;
     }
 
-    // 将每分钟攻击次数转换为游戏速度值
-    // 基础转换公式: ticks/20秒 -> 每秒攻击次数，然后减去基准值4
-    final float TICKS_PER_SECOND = 20.0f;
-    final float BASE_VALUE = 4.0f;
-
-    return TICKS_PER_SECOND / (attackSpeedTick * TICKS_PER_SECOND) - BASE_VALUE;
+    return 20f / (attackSpeedTick * 20f) - 4f;
   }
 
-  public enum SpecialTemplateType implements Type {
+  public enum SpecialTemplateType implements TemplateType {
     /**
      * 特殊武器
      */
@@ -152,8 +72,7 @@ public abstract class EgoWeaponRegisterUtil {
     /**
      * 远程武器
      */
-    REMOTE("remote", ImaginaryCraftConstants.REMOTE),
-    ;
+    REMOTE("remote", ImaginaryCraftConstants.REMOTE);
     private final String name;
     private final Set<DeferredItem<? extends Item>> set;
 
@@ -173,7 +92,7 @@ public abstract class EgoWeaponRegisterUtil {
     }
   }
 
-  public enum RemoteTemplateType implements Type {
+  public enum RemoteTemplateType implements TemplateType {
     /**
      * 加农炮 蓄力射击 攻击速度 5 攻击距离 15
      */
@@ -193,8 +112,7 @@ public abstract class EgoWeaponRegisterUtil {
     /**
      * 弩 攻击速度 2 攻击距离 20
      */
-    CROSSBOW("crossbow", ImaginaryCraftConstants.CROSSBOW, 2, 20),
-    ;
+    CROSSBOW("crossbow", ImaginaryCraftConstants.CROSSBOW, 2, 20);
     private final String name;
     private final Set<DeferredItem<? extends Item>> set;
     private final float attackSpeedTick;
@@ -218,7 +136,7 @@ public abstract class EgoWeaponRegisterUtil {
     }
 
     public float getAttackSpeedTick() {
-      return this.attackSpeedTick;
+      return attackSpeedTick;
     }
 
     public float getAttackSpeed() {
@@ -226,11 +144,11 @@ public abstract class EgoWeaponRegisterUtil {
     }
 
     public float getAttackDistance() {
-      return this.attackDistance != -1 ? this.attackDistance - 3 : -1;
+      return attackDistance != -1 ? attackDistance - 3 : -1;
     }
   }
 
-  public enum MeleeTemplateType implements Type {
+  public enum MeleeTemplateType implements TemplateType {
     /**
      * 斧 攻击速度 1 攻击距离 2
      */
@@ -287,17 +205,151 @@ public abstract class EgoWeaponRegisterUtil {
     }
 
     public float getAttackSpeedTick() {
-      return this.attackSpeedTick;
+      return attackSpeedTick;
     }
 
     public float getAttackDistance() {
-      return this.attackDistance != -1 ? this.attackDistance - 3 : -1;
+      return attackDistance != -1 ? attackDistance - 3 : -1;
     }
   }
 
-  public interface Type {
+  public interface TemplateType {
     String getName();
 
     void addItem(DeferredItem<? extends Item> item);
+  }
+
+  private abstract static class EgoWeaponBuilder<B extends EgoWeaponBuilder<B>> {
+    protected String id;
+    protected String zhName;
+    protected LcLevelType lcLevelType;
+    protected Item.Properties properties;
+    protected String modelPath;
+
+    public B id(String id) {
+      this.id = id;
+      return (B) this;
+    }
+
+    public B zhName(String zhName) {
+      this.zhName = zhName;
+      return (B) this;
+    }
+
+    public B lcLevelType(LcLevelType lcLevelType) {
+      this.lcLevelType = lcLevelType;
+      return (B) this;
+    }
+
+    public B properties(Item.Properties properties) {
+      this.properties = properties;
+      return (B) this;
+    }
+
+    public B modelPath(String modelPath) {
+      this.modelPath = modelPath;
+      return (B) this;
+    }
+  }
+
+  public static class RemoteEgoWeaponBuilder extends EgoWeaponBuilder<RemoteEgoWeaponBuilder> {
+    private RemoteTemplateType templateType;
+    private RemoteEgoWeaponItem.Builder weaponBuilder = new RemoteEgoWeaponItem.Builder();
+
+    public RemoteEgoWeaponBuilder type(RemoteTemplateType templateType) {
+      this.templateType = templateType;
+      // 自动填充模板默认属性
+      weaponBuilder.attackIntervalMainHand(templateType.getAttackSpeed())
+        .attackDistance(templateType.getAttackDistance());
+      return this;
+    }
+
+    public RemoteEgoWeaponBuilder weaponBuilder(Function<RemoteEgoWeaponItem.Builder, RemoteEgoWeaponItem.Builder> builder) {
+      this.weaponBuilder = builder.apply(weaponBuilder);
+      return this;
+    }
+
+    private BiFunction<Item.Properties, RemoteEgoWeaponItem.Builder, RemoteEgoWeaponItem> getRemoteItemFactory(RemoteTemplateType type) {
+      return switch (type) {
+        case CANNON -> (p, b) -> new CannonEgoWeaponItem(p, b, modelPath);
+        case PISTOL -> (p, b) -> new PistolEgoWeaponItem(p, b, modelPath);
+        case RIFLE -> (p, b) -> new RifleEgoWeaponItem(p, b, modelPath);
+        case CROSSBOW -> (p, b) -> new CrossbowEgoWeaponItem(p, b, modelPath);
+        default -> throw new IllegalStateException("Unsupported remote template type: " + type);
+      };
+    }
+
+    public <I extends Item & IRemoteEgoWeaponItem> DeferredItem<I> buildAndRegister() {
+      validateRequiredFields();
+      if (templateType == null) {
+        throw new IllegalStateException("Template type is required when using template");
+      }
+
+      return (DeferredItem<I>) register(id, zhName, lcLevelType, templateType, properties, weaponBuilder, getRemoteItemFactory(templateType));
+    }
+
+    public <I extends Item & IRemoteEgoWeaponItem> DeferredItem<I> buildAndRegister(BiFunction<Item.Properties, RemoteEgoWeaponItem.Builder, I> itemFactory) {
+      this.templateType = null;
+      validateRequiredFields();
+      return register(id, zhName, lcLevelType, SpecialTemplateType.MELEE, properties, weaponBuilder, itemFactory);
+    }
+
+    private void validateRequiredFields() {
+      if (id == null || zhName == null || lcLevelType == null || properties == null) {
+        throw new IllegalStateException("Missing required fields for remote weapon registration");
+      }
+    }
+  }
+
+  public static class MeleeEgoWeaponBuilder extends EgoWeaponBuilder<MeleeEgoWeaponBuilder> {
+    private MeleeTemplateType templateType;
+    private MeleeEgoWeaponItem.Builder weaponBuilder = new MeleeEgoWeaponItem.Builder();
+
+    public MeleeEgoWeaponBuilder type(MeleeTemplateType templateType) {
+      this.templateType = templateType;
+      // 自动填充模板默认属性
+      weaponBuilder.attackSpeed(templateType.getAttackSpeed())
+        .attackDistance(templateType.getAttackDistance());
+      return this;
+    }
+
+    /**
+     * 自定义武器构建器（用于非模板化武器）
+     */
+    public MeleeEgoWeaponBuilder weaponBuilder(Function<MeleeEgoWeaponItem.Builder, MeleeEgoWeaponItem.Builder> builder) {
+      this.weaponBuilder = builder.apply(weaponBuilder);
+      return this;
+    }
+
+    private BiFunction<Item.Properties, MeleeEgoWeaponItem.Builder, MeleeEgoWeaponItem> getMeleeItemFactory(MeleeTemplateType type) {
+      return switch (type) {
+        case AXE -> (p, b) -> new AxeEgoWeaponItem(p, b, modelPath);
+        case FIST -> (p, b) -> new FistEgoWeaponItem(p, b, modelPath);
+        case HAMMER -> (p, b) -> new HammerEgoWeaponItem(p, b, modelPath);
+        case KNIFE -> (p, b) -> new KnifeEgoWeaponItem(p, b, modelPath);
+        case MACE -> (p, b) -> new MaceEgoWeaponItem(p, b, modelPath);
+        case SPEAR -> (p, b) -> new SpearEgoWeaponItem(p, b, modelPath);
+        case SWORDS -> (p, b) -> new SwordsEgoWeaponGeoItem(p, b, modelPath);
+      };
+    }
+
+    public <I extends Item & IMeleeEgoWeaponItem> DeferredItem<I> buildAndRegister() {
+      validateRequiredFields();
+      if (templateType == null) {
+        throw new IllegalStateException("Template type is required when using template");
+      }
+      return (DeferredItem<I>) register(id, zhName, lcLevelType, templateType, properties, weaponBuilder, getMeleeItemFactory(templateType));
+    }
+
+    public <I extends Item & IMeleeEgoWeaponItem> DeferredItem<I> buildAndRegister(BiFunction<Item.Properties, MeleeEgoWeaponItem.Builder, I> itemFactory) {
+      validateRequiredFields();
+      return register(id, zhName, lcLevelType, SpecialTemplateType.REMOTE, properties, weaponBuilder, itemFactory);
+    }
+
+    private void validateRequiredFields() {
+      if (id == null || zhName == null || lcLevelType == null || properties == null) {
+        throw new IllegalStateException("Missing required fields for melee weapon registration");
+      }
+    }
   }
 }

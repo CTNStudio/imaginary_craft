@@ -3,6 +3,7 @@ package ctn.imaginarycraft.core.registry;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.core.ImaginaryCraftConstants;
 import ctn.imaginarycraft.init.ModWeaponCapabilityPresets;
+import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
 import ctn.imaginarycraft.mixin.WeaponTypeReloadListenerMixin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
@@ -11,6 +12,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import yesman.epicfight.api.animation.AnimationManager;
+import yesman.epicfight.client.gui.screen.config.ItemsPreferenceScreen;
 import yesman.epicfight.gameasset.Armatures;
 import yesman.epicfight.model.armature.HumanoidArmature;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
@@ -31,6 +33,7 @@ public final class EpicFightRegistry {
 
   @SubscribeEvent
   public static void register(FMLCommonSetupEvent event) {
+    ItemsPreferenceScreen.registerWeaponCategorizedItemClasses();
     event.enqueueWork(EpicFightRegistry::registerWeaponType);
     event.enqueueWork(EpicFightRegistry::registerWeaponTypesByClass);
   }
@@ -46,9 +49,6 @@ public final class EpicFightRegistry {
   }
 
   private static void registerWeaponTypesByClass() {
-//    register(ImaginaryCraftConstants.REMOTE, WeaponCapabilityPresets.REMOTE);
-//    register(ImaginaryCraftConstants.MELEE, WeaponCapabilityPresets.MELEE);
-//    register(ImaginaryCraftConstants.SPECIAL, WeaponCapabilityPresets.SPECIAL);
     register(ImaginaryCraftConstants.GUN, ModWeaponCapabilityPresets.GUN);
     register(ImaginaryCraftConstants.PISTOL, ModWeaponCapabilityPresets.PISTOL);
     register(ImaginaryCraftConstants.RIFLE, ModWeaponCapabilityPresets.RIFLE);
@@ -62,13 +62,18 @@ public final class EpicFightRegistry {
     register(ImaginaryCraftConstants.AXE, WeaponCapabilityPresets.AXE);
     register(ImaginaryCraftConstants.MACE, ModWeaponCapabilityPresets.MACE);
     register(ImaginaryCraftConstants.SWORDS, WeaponCapabilityPresets.SWORD);
+    register(EgoWeaponItems.RED_EYES_TACHI.get(), WeaponCapabilityPresets.TACHI);
   }
 
   private static void register(Set<DeferredItem<? extends Item>> items, Function<Item, ? extends CapabilityItem.Builder<?>> builder) {
     for (DeferredItem<? extends Item> item : items) {
       Item item1 = item.asItem();
-      EpicFightCapabilities.ITEM_CAPABILITY_PROVIDER.put(item1, builder.apply(item1).build());
+      register(item1, builder);
     }
+  }
+
+  private static void register(Item item1, Function<Item, ? extends CapabilityItem.Builder<?>> builder) {
+    EpicFightCapabilities.ITEM_CAPABILITY_PROVIDER.put(item1, builder.apply(item1).build());
   }
 
   private static <T extends CapabilityItem.Builder<?>> void register(ResourceLocation rl, Function<Item, T> builder) {

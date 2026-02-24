@@ -8,7 +8,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.component.ItemAttributeModifiers;
 
-public abstract class MeleeEgoWeaponItem extends EgoWeaponItem {
+public abstract class MeleeEgoWeaponItem extends EgoWeaponItem implements IMeleeEgoWeaponItem {
 
   public MeleeEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder) {
     super(itemProperties, egoWeaponBuilder);
