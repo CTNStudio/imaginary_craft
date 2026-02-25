@@ -7,14 +7,14 @@
   "display": {
     "thirdperson_righthand": {
       "rotation": [
-        16.5,
+        10,
         -90,
         0
       ],
       "translation": [
         0,
         -1,
-        -1
+        -0.75
       ],
       "scale": [
         0.85,
