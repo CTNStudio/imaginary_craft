@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.common.epicfight.item.remote;
 
-import yesman.epicfight.world.capabilities.item.CapabilityItem;
+import yesman.epicfight.world.capabilities.item.RangedWeaponCapability;
 
-public abstract class RemoteCapability extends CapabilityItem {
-  protected RemoteCapability(Builder<?> builder) {
+public abstract class RemoteCapability extends RangedWeaponCapability {
+  protected RemoteCapability(RangedWeaponCapability.Builder builder) {
     super(builder);
   }
 }

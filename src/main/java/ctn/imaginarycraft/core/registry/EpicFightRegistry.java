@@ -39,7 +39,6 @@ public final class EpicFightRegistry {
 
   private static void registerWeaponType() {
     register(ImaginaryCraft.modRl("hammer"), ModWeaponCapabilityPresets.HAMMER);
-    register(ImaginaryCraft.modRl("knife"), ModWeaponCapabilityPresets.KNIFE);
     register(ImaginaryCraft.modRl("mace"), ModWeaponCapabilityPresets.MACE);
     register(ImaginaryCraft.modRl("cannon"), ModWeaponCapabilityPresets.CANNON);
     register(ImaginaryCraft.modRl("gun"), ModWeaponCapabilityPresets.GUN);
@@ -54,7 +53,7 @@ public final class EpicFightRegistry {
     register(ImaginaryCraftConstants.CANNON, ModWeaponCapabilityPresets.CANNON);
     register(ImaginaryCraftConstants.CROSSBOW, WeaponCapabilityPresets.CROSSBOW);
     register(ImaginaryCraftConstants.BOW, WeaponCapabilityPresets.BOW);
-    register(ImaginaryCraftConstants.KNIFE, ModWeaponCapabilityPresets.KNIFE);
+    register(ImaginaryCraftConstants.KNIFE, WeaponCapabilityPresets.DAGGER);
     register(ImaginaryCraftConstants.HAMMER, ModWeaponCapabilityPresets.HAMMER);
     register(ImaginaryCraftConstants.FIST, WeaponCapabilityPresets.FIST);
     register(ImaginaryCraftConstants.SPEAR, WeaponCapabilityPresets.SPEAR);

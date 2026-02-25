@@ -15,14 +15,6 @@ public final class ModWeaponCapabilityPresets {
   };
 
   /**
-   * 刀（小刀）
-   */
-  public static final Function<Item, WeaponCapability.Builder> KNIFE = (item) -> {
-    WeaponCapability.Builder builder = WeaponCapability.builder();
-    return builder;
-  };
-
-  /**
    * 梲（狼牙棒）
    */
   public static final Function<Item, WeaponCapability.Builder> MACE = (item) -> {
