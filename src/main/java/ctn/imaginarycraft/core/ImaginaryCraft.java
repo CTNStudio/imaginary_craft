@@ -25,7 +25,7 @@ public final class ImaginaryCraft {
   public static final Logger LOGGER = LogManager.getLogger(ID);
 
   public ImaginaryCraft(IEventBus eventBus, ModContainer container) {
-    LOGGER.info("Server {}", NAME);
+    ModEpicjightEventHooks.listenerRegister();
     ModConfig.init(container);
     ModSoundEvents.REGISTRY.register(eventBus);
     ModAttributes.REGISTRY.register(eventBus);

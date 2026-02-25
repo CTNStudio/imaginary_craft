@@ -36,6 +36,7 @@ public class DelayTaskHolder {
     while (iterator.hasNext()) {
       ITask consumer = iterator.next();
       if (consumer.isRemoved()) {
+        consumer.removed();
         iterator.remove();
         continue;
       }
@@ -79,7 +80,7 @@ public class DelayTaskHolder {
     if (!containsTask(id)) {
       return;
     }
-    runList.remove(id);
+    runList.remove(id).removed();
   }
 
   /**
@@ -91,7 +92,7 @@ public class DelayTaskHolder {
     }
     for (ResourceLocation key : new HashSet<>(runList.keySet())) {
       if (key.getPath().startsWith(slot.getName())) {
-        runList.remove(key);
+        runList.remove(key).removed();
       }
     }
   }
@@ -155,6 +156,8 @@ public class DelayTaskHolder {
   public interface ITask {
     void run(DelayTaskHolder delayTaskHolder);
 
+    void removed();
+
     boolean isRemoved();
 
     /**
@@ -162,14 +165,16 @@ public class DelayTaskHolder {
      */
     class BaseTask implements ITask {
       protected final ResultRun resultRun;
+      protected final @Nullable RemovedRun removedRun;
       protected int tick = 0;
       protected final int maxTick;
       protected int repeatCount = 0;
       protected final int maxRepeatCount;
       protected boolean isRemoved;
 
-      private BaseTask(ResultRun resultRun, int removedTick, int maxRepeatCount) {
+      private BaseTask(ResultRun resultRun, @Nullable RemovedRun removedRun, int removedTick, int maxRepeatCount) {
         this.resultRun = resultRun;
+        this.removedRun = removedRun;
         this.maxTick = removedTick;
         this.maxRepeatCount = maxRepeatCount;
       }
@@ -182,11 +187,18 @@ public class DelayTaskHolder {
         }
 
         if (tick >= maxTick) {
-          resultRun.run(delayTaskHolder.getAttachmentHolder());
+          resultRun.run();
           repeatCount++;
           tick = 0;
         }
         tick++;
+      }
+
+      @Override
+      public void removed() {
+        if (removedRun != null) {
+          removedRun.run();
+        }
       }
 
       @Override
@@ -198,8 +210,8 @@ public class DelayTaskHolder {
     class TickTask extends BaseTask {
       private final TickRun tickRun;
 
-      private TickTask(TickRun tickRun, ResultRun resultRun, int removedTick, int maxRepeatCount) {
-        super(resultRun, removedTick, maxRepeatCount);
+      private TickTask(TickRun tickRun, RemovedRun removedRun, ResultRun resultRun, int removedTick, int maxRepeatCount) {
+        super(resultRun, removedRun, removedTick, maxRepeatCount);
         this.tickRun = tickRun;
       }
 
@@ -211,12 +223,12 @@ public class DelayTaskHolder {
         }
 
         if (tick >= maxTick) {
-          resultRun.run(delayTaskHolder.getAttachmentHolder());
+          resultRun.run();
           repeatCount++;
           tick = 0;
         }
 
-        tick = tickRun.run(tick, maxTick, delayTaskHolder.getAttachmentHolder());
+        tick = tickRun.run(tick, maxTick);
       }
     }
 
@@ -225,16 +237,22 @@ public class DelayTaskHolder {
      */
     @FunctionalInterface
     interface TickRun {
-      int run(int tick, int maxTick, IAttachmentHolder attachmentHolder);
+      int run(int tick, int maxTick);
     }
 
     @FunctionalInterface
     interface ResultRun {
-      void run(IAttachmentHolder attachmentHolder);
+      void run();
+    }
+
+    @FunctionalInterface
+    interface RemovedRun {
+      void run();
     }
 
     class Builder {
       private @Nullable TickRun tickRun;
+      private @Nullable RemovedRun removedRun;
       private ResultRun resultRun;
       private int removedTick;
       private int repeatCount = 1;
@@ -256,6 +274,11 @@ public class DelayTaskHolder {
         return this;
       }
 
+      public Builder removedRun(RemovedRun removedRun) {
+        this.removedRun = removedRun;
+        return this;
+      }
+
       public Builder removedTick(int removedTick) {
         this.removedTick = removedTick;
         return this;
@@ -270,8 +293,8 @@ public class DelayTaskHolder {
         assert resultRun != null : "resultRun can not be null";
         assert repeatCount > 0 : "repeatCount can not be less than 1";
         return tickRun == null ?
-          new BaseTask(resultRun, removedTick, repeatCount) :
-          new TickTask(tickRun, resultRun, removedTick, repeatCount);
+          new BaseTask(resultRun, removedRun, removedTick, repeatCount) :
+          new TickTask(tickRun, removedRun, resultRun, removedTick, repeatCount);
       }
     }
   }

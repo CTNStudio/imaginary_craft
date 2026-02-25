@@ -32,7 +32,6 @@ public final class EpicFightRegistry {
 
   @SubscribeEvent
   public static void register(FMLCommonSetupEvent event) {
-//    ItemsPreferenceScreen.registerWeaponCategorizedItemClasses(IMeleeEgoWeaponItem.class, IRemoteEgoWeaponItem.class);
     event.enqueueWork(EpicFightRegistry::registerWeaponType);
     event.enqueueWork(EpicFightRegistry::registerWeaponTypesByClass);
   }

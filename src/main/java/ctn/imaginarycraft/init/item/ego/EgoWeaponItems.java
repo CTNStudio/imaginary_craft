@@ -177,8 +177,7 @@ public final class EgoWeaponItems extends EgoWeaponRegisterUtil {
       .damage(8)
       .meleeLcDamageType(LcDamageType.PHYSICS)
       .virtueUsageReq(null, null, null, null, null))
-    .modelPath("weapon/red_eyes_tachi")
-    .buildAndRegister();
+    .buildAndRegister((p, b) -> new RedEyesTachiItem(p, b, "weapon/red_eyes_tachi"));
 
   public static final DeferredItem<?> HORN = onMelee()
     .id("horn_weapon")

@@ -1,7 +1,7 @@
 {
   "format_version": "1.8.0",
   "animations": {
-    "phase2": {
+    "phase1": {
       "loop": "hold_on_last_frame",
       "bones": {
         "c2": {
@@ -11,22 +11,6 @@
                 0,
                 0,
                 0
-              ]
-            }
-          }
-        }
-      }
-    },
-    "phase1": {
-      "loop": true,
-      "bones": {
-        "c2": {
-          "scale": {
-            "0.0": {
-              "vector": [
-                1,
-                1,
-                1
               ]
             }
           }

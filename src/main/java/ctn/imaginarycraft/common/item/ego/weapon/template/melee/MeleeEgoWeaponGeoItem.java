@@ -8,7 +8,6 @@ import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoItem;
 import software.bernie.geckolib.animatable.client.GeoRenderProvider;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
@@ -33,9 +32,6 @@ public abstract class MeleeEgoWeaponGeoItem extends MeleeEgoWeaponItem implement
   public void createGeoRenderer(@NotNull Consumer<GeoRenderProvider> rendererConsumer) {
     rendererConsumer.accept(new ModGeoItemRenderProvider<>(this.model, this.guiModel));
   }
-
-  @Override
-  public abstract void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar);
 
   @Override
   public AnimatableInstanceCache getAnimatableInstanceCache() {

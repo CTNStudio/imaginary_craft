@@ -44,7 +44,7 @@ public abstract class BasicGeoModel<T extends GeoAnimatable> extends GeoModel<T>
   }
 
   public static ResourceLocation animationsPath(String path) {
-    return ImaginaryCraft.modRl("animations/" + path + ".json");
+    return ImaginaryCraft.modRl("animations/" + path + ".animation.json");
   }
 
   @Override

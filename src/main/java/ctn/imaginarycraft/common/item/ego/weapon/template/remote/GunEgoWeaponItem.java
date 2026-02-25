@@ -238,8 +238,8 @@ public abstract class GunEgoWeaponItem extends RemoteEgoWeaponGeoItem implements
     if (playerEntity.level() instanceof ServerLevel serverLevel) {
       int gunShootExecuteTick = gunShootExecuteTick(playerEntity, itemStack, handUsed);
       DelayTaskHolder.of(playerEntity).addTask(handUsed, DelayTaskHolder.createTaskBilder()
-        .tickRun((tick, maxTick, holder) -> gunShootTickRun(tick, gunShootExecuteTick, maxTick, playerEntity, itemStack, handUsed))
-        .resultRun(holder -> gunShootExecute(playerEntity, itemStack, handUsed, serverLevel))
+        .tickRun((tick, maxTick) -> gunShootTickRun(tick, gunShootExecuteTick, maxTick, playerEntity, itemStack, handUsed))
+        .resultRun(() -> gunShootExecute(playerEntity, itemStack, handUsed, serverLevel))
         .removedTick(gunShootExecuteTick)
         .build());
     }
