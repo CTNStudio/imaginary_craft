@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
+import ctn.imaginarycraft.common.entity.projectile.MagicBulletEntity;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.RemoteEgoWeaponGeoItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -92,5 +93,13 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   @Override
   public int gunShootExecuteTick(@NotNull Player player, @NotNull ItemStack stack, @NotNull InteractionHand handUsed) {
     return super.gunShootExecuteTick(player, stack, handUsed);
+  }
+  @Override
+  protected ProjectileFactory getProjectileFactory() {
+      return (level, shooter, itemStack, handUsed) -> {
+          MagicBulletEntity magicBullet = new MagicBulletEntity(level, shooter);
+          // 配置魔弹属性（如穿墙、伤害等）
+          return magicBullet;
+      };
   }
 }

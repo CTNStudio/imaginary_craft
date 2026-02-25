@@ -7,12 +7,17 @@ import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.client.event.EntityRenderersEvent;
+import ctn.imaginarycraft.client.render.entity.MagicBulletRenderer;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID, value = Dist.CLIENT)
 public final class EntityRenderersRegistry {
   @SubscribeEvent
   public static void registry(EntityRenderersEvent.RegisterRenderers event) {
     event.registerEntityRenderer(AbnormalitiesEntityTypes.GRANT_US_LOVE.get(), GrantUsLove.GrantUsLoveRenderer::new);
+    event.registerEntityRenderer(
+        AbnormalitiesEntityTypes.MAGIC_BULLET_ENTITY.get(),
+        MagicBulletRenderer::new
+    );
 
   }
 }

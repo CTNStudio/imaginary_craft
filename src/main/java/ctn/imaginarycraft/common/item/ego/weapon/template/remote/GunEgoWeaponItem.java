@@ -189,11 +189,24 @@ public abstract class GunEgoWeaponItem extends RemoteEgoWeaponGeoItem implements
    * @return 如果成功执行瞄准射击则返回true，否则返回false
    */
   protected boolean gunAimShootExecute(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, float chargeUpPercentage) {
-    if (playerEntity.level() instanceof ServerLevel serverLevel) {
-      this.notConsumingShoot(serverLevel, playerEntity, playerEntity.getUsedItemHand(), itemStack, getProjectileVelocity(playerEntity, itemStack, handUsed), getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
-      GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
-    }
-    return true;
+      if (playerEntity.level() instanceof ServerLevel serverLevel) {
+          // 检查是否有自定义工厂，如果有则创建自定义弹射物并直接发射
+          ProjectileFactory factory = getProjectileFactory();
+          if (factory != null) {
+              Projectile projectile = factory.create(serverLevel, playerEntity, itemStack, handUsed);
+              // 直接设置弹射物属性并发射，绕过 notConsumingShoot
+              shootProjectileDirect(serverLevel, playerEntity, handUsed, itemStack, projectile,
+                  getProjectileVelocity(playerEntity, itemStack, handUsed),
+                  getProjectileInaccuracy(playerEntity, itemStack, handUsed));
+          } else {
+              // 使用默认弹射物
+              this.notConsumingShoot(serverLevel, playerEntity, handUsed, itemStack,
+                  getProjectileVelocity(playerEntity, itemStack, handUsed),
+                  getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
+          }
+          GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
+      }
+      return true;
   }
 
   /**
@@ -237,10 +250,20 @@ public abstract class GunEgoWeaponItem extends RemoteEgoWeaponGeoItem implements
   }
 
   protected int gunShootExecute(@NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed, ServerLevel serverLevel) {
-    this.notConsumingShoot(serverLevel, playerEntity, handUsed, itemStack, getProjectileVelocity(playerEntity, itemStack, handUsed), getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
-    GunWeaponUtil.setIsAttack(playerEntity, true, handUsed);
-    GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
-    return 0;
+      ProjectileFactory factory = getProjectileFactory();
+      if (factory != null) {
+          Projectile projectile = factory.create(serverLevel, playerEntity, itemStack, handUsed);
+          shootProjectileDirect(serverLevel, playerEntity, handUsed, itemStack, projectile,
+              getProjectileVelocity(playerEntity, itemStack, handUsed),
+              getProjectileInaccuracy(playerEntity, itemStack, handUsed));
+      } else {
+          this.notConsumingShoot(serverLevel, playerEntity, handUsed, itemStack,
+              getProjectileVelocity(playerEntity, itemStack, handUsed),
+              getProjectileInaccuracy(playerEntity, itemStack, handUsed), null);
+      }
+      GunWeaponUtil.setIsAttack(playerEntity, true, handUsed);
+      GunWeaponUtil.resetChargeUp(playerEntity, handUsed);
+      return 0;
   }
 
   protected static int gunShootTickRun(int tick, int gunShootExecuteTick, int maxTick, @NotNull Player playerEntity, @NotNull ItemStack itemStack, @NotNull InteractionHand handUsed) {
@@ -290,5 +313,53 @@ public abstract class GunEgoWeaponItem extends RemoteEgoWeaponGeoItem implements
   public boolean onLeftClickEntity(ItemStack itemStack, Player playerEntity, Entity entity) {
     return true;
   }
+  /**
+   * 直接发射自定义弹射物
+   * 绕过 notConsumingShoot，手动设置并发射弹射物
+   */
+  protected void shootProjectileDirect(ServerLevel level, LivingEntity shooter, InteractionHand hand, 
+                                      ItemStack stack, Projectile projectile, float velocity, float inaccuracy) {
+      // 设置弹射物位置和旋转
+      projectile.setPos(shooter.getX(), shooter.getEyeY() - 0.1, shooter.getZ());
+      
+      // 使用 shootProjectile 方法设置发射参数
+      shootProjectile(shooter, projectile, 0, velocity, inaccuracy, 0.0F, null);
+      
+      // 添加到世界
+      level.addFreshEntity(projectile);
+      
+      // 触发射击后逻辑（如弹药消耗、耐久度等，如果需要）
+      onProjectileShot(stack, shooter, hand, projectile);
+  }
+
+  /**
+   * 弹射物发射后的回调
+   * 子类可重写以添加自定义逻辑
+   */
+  protected void onProjectileShot(ItemStack stack, LivingEntity shooter, InteractionHand hand, Projectile projectile) {
+      // 默认空实现
+  }
   //endregion
+  
+  /**
+   * 弹射物创建函数式接口
+   */
+  @FunctionalInterface
+  public interface ProjectileFactory {
+      Projectile create(ServerLevel level, LivingEntity shooter, ItemStack itemStack, InteractionHand handUsed);
+  }
+  /**
+   * 创建弹射物的工厂方法
+   * 子类可重写此方法以返回自定义弹射物实体
+   *
+   * @param level       服务器世界
+   * @param shooter     射击者
+   * @param itemStack   使用的物品栈
+   * @param handUsed    使用的手
+   * @return 创建的弹射物实体，默认返回null表示使用父类默认逻辑
+   */
+  @Nullable
+  protected ProjectileFactory getProjectileFactory() {
+      return null;
+  }
 }
