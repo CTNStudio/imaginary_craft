@@ -1,22 +1,13 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template.melee;
 
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.model.GeoModel;
+import ctn.imaginarycraft.core.capability.item.IEgoItem;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.Tier;
 
-// TODO 需要具备原版斧头的一切功能
-public class AxeEgoWeaponItem extends MeleeEgoWeaponGeoItem {
+public class AxeEgoWeaponItem extends AxeItem implements IMeleeEgoWeaponItem {
 
-  public AxeEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<MeleeEgoWeaponGeoItem> geoModel, GeoModel<MeleeEgoWeaponGeoItem> guiModel) {
-    super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
-  }
-
-  public AxeEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
-    super(itemProperties, egoWeaponBuilder, modPath);
-  }
-
-  @Override
-  public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
-
+  public AxeEgoWeaponItem(Tier tier, Properties itemProperties, Builder egoWeaponBuilder) {
+    super(tier, IEgoItem.add(itemProperties, egoWeaponBuilder));
   }
 }
 

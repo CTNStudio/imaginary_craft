@@ -5,11 +5,11 @@ import software.bernie.geckolib.model.GeoModel;
 
 public class HammerEgoWeaponItem extends MeleeEgoWeaponGeoItem {
 
-  public HammerEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<MeleeEgoWeaponGeoItem> geoModel, GeoModel<MeleeEgoWeaponGeoItem> guiModel) {
+  public HammerEgoWeaponItem(Properties itemProperties, IMeleeEgoWeaponItem.Builder egoWeaponBuilder, GeoModel<MeleeEgoWeaponGeoItem> geoModel, GeoModel<MeleeEgoWeaponGeoItem> guiModel) {
     super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 
-  public HammerEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
+  public HammerEgoWeaponItem(Properties itemProperties, IMeleeEgoWeaponItem.Builder egoWeaponBuilder, String modPath) {
     super(itemProperties, egoWeaponBuilder, modPath);
   }
 

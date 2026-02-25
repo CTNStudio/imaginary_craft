@@ -17,21 +17,22 @@ import java.util.function.Consumer;
 /**
  * 远程EGO武器
  */
-public abstract class GeoRemoteEgoWeaponItem extends RemoteEgoWeaponItem implements GeoItem {
+public abstract class RemoteEgoWeaponGeoItem extends RemoteEgoWeaponItem implements GeoItem {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-  private final GeoModel<GeoRemoteEgoWeaponItem> model;
-  private final @Nullable GeoModel<GeoRemoteEgoWeaponItem> guiModel;
+  private final GeoModel<RemoteEgoWeaponGeoItem> model;
+  private final @Nullable GeoModel<RemoteEgoWeaponGeoItem> guiModel;
 
-  public GeoRemoteEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
+  public RemoteEgoWeaponGeoItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<RemoteEgoWeaponGeoItem> geoModel, GeoModel<RemoteEgoWeaponGeoItem> guiModel) {
     super(itemProperties, egoWeaponBuilder);
     this.model = geoModel;
     this.guiModel = guiModel;
   }
 
-  public GeoRemoteEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
+  public RemoteEgoWeaponGeoItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
     this(itemProperties, egoWeaponBuilder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
   }
 
+  @Override
   public void createGeoRenderer(@NotNull Consumer<GeoRenderProvider> rendererConsumer) {
     rendererConsumer.accept(new ModGeoItemRenderProvider<>(this.model, this.guiModel));
   }

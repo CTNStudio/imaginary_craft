@@ -80,7 +80,6 @@ public final class DatagenItemTag extends ItemTagsProvider {
     //endregion
 
     //region 近战武器
-
     ImaginaryCraftConstants.MELEE.addAll(ImaginaryCraftConstants.KNIFE);
     ImaginaryCraftConstants.MELEE.addAll(ImaginaryCraftConstants.HAMMER);
     ImaginaryCraftConstants.MELEE.addAll(ImaginaryCraftConstants.FIST);

@@ -1,24 +1,15 @@
 package ctn.imaginarycraft.common.item.ego.weapon.template.remote;
 
-import ctn.imaginarycraft.api.LcDamageType;
-import ctn.imaginarycraft.common.item.ego.weapon.template.EgoWeaponItem;
-import ctn.imaginarycraft.core.capability.item.IEgoItem;
 import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
-import ctn.imaginarycraft.init.ModAttributes;
-import ctn.imaginarycraft.init.ModDataComponents;
-import ctn.imaginarycraft.util.ItemBuilderUtil;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.EquipmentSlotGroup;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.AbstractArrow;
 import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
@@ -29,18 +20,14 @@ import java.util.function.Predicate;
 /**
  * 远程EGO武器
  */
-public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implements IEgoItem, IItemUsageReq, IRemoteEgoWeaponItem {
+public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implements IItemUsageReq, IRemoteEgoWeaponItem {
   private final float attackDistance;
   private final @Nullable CreateProjectile<? extends Projectile> createProjectile;
 
-  public RemoteEgoWeaponItem(@NotNull Properties itemProperties, @NotNull Builder remoteEgoWeaponBuilder) {
-    super(itemProperties.stacksTo(1)
-      .attributes(remoteEgoWeaponBuilder.getItemAttributeModifiers())
-      .component(ModDataComponents.LC_DAMAGE_TYPE.get(), new LcDamageType.Component(remoteEgoWeaponBuilder.lcDamageType, remoteEgoWeaponBuilder.canCauseLcDamageTypes))
-      .component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, remoteEgoWeaponBuilder.virtueUsageReqBuilder.build())
-      .component(ModDataComponents.IS_RESTRAIN, false));
-    this.attackDistance = remoteEgoWeaponBuilder.attackDistance;
-    this.createProjectile = remoteEgoWeaponBuilder.createProjectile;
+  public RemoteEgoWeaponItem(@NotNull Properties itemProperties, @NotNull Builder builder) {
+    super(IRemoteEgoWeaponItem.add(itemProperties, builder));
+    this.attackDistance = builder.attackDistance;
+    this.createProjectile = builder.createProjectile;
   }
 
   /**
@@ -148,78 +135,5 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
   @Override
   public @NotNull ItemStack getDefaultCreativeAmmo(@Nullable Player playerEntity, @NotNull ItemStack projectileWeaponItem) {
     return Items.AIR.getDefaultInstance();
-  }
-
-  public static class Builder extends EgoWeaponItem.Builder<Builder> {
-    /**
-     * 远程攻击间隔
-     */
-    public float attackInterval;
-    public float attackIntervalMainHand;
-    public float attackIntervalOffHand;
-    /**
-     * 远程攻击距离
-     */
-    public float attackDistance;
-
-    public CreateProjectile<? extends Projectile> createProjectile;
-
-    public Builder createProjectile(CreateProjectile<? extends Projectile> projectileCreator) {
-      this.createProjectile = projectileCreator;
-      return this;
-    }
-
-    /**
-     * 远程攻击间隔
-     */
-    public Builder attackIntervalHand(float weaponAttackInterval) {
-      this.attackIntervalMainHand = weaponAttackInterval;
-      this.attackIntervalOffHand = weaponAttackInterval;
-      return this;
-    }
-
-    /**
-     * 远程攻击间隔
-     */
-    public Builder attackIntervalMainHand(float weaponAttackInterval) {
-      this.attackIntervalMainHand = weaponAttackInterval;
-      return this;
-    }
-
-    /**
-     * 远程攻击间隔
-     */
-    public Builder attackIntervalOffHand(float weaponAttackInterval) {
-      this.attackIntervalOffHand = weaponAttackInterval;
-      return this;
-    }
-
-    /**
-     * 远程攻击距离
-     */
-    public Builder attackDistance(float weaponAttackDistance) {
-      this.attackDistance = weaponAttackDistance;
-      return this;
-    }
-
-    @Override
-    protected Builder self() {
-      return this;
-    }
-
-    @Override
-    public ItemAttributeModifiers getItemAttributeModifiers() {
-      ItemAttributeModifiers.Builder builder = ItemAttributeModifiers.builder();
-      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ATTACK_DAMAGE, BASE_ATTACK_DAMAGE_ID, this.weaponDamage, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
-      ItemBuilderUtil.addAttributeModifier(builder, Attributes.ATTACK_SPEED, BASE_ATTACK_SPEED_ID, this.attackInterval, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
-      ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.ATTACK_SPEED_MAIN_HAND, BASE_ATTACK_SPEED_ID, this.attackIntervalMainHand, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.MAINHAND);
-      ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.ATTACK_SPEED_OFF_HAND, BASE_ATTACK_SPEED_ID, this.attackIntervalOffHand, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.OFFHAND);
-      return builder.build();
-    }
-  }
-
-  @FunctionalInterface
-  public interface CreateProjectile<T extends Projectile> {
-    T createProjectile(Level level, LivingEntity owner, ItemStack pickupItemStack, @Nullable ItemStack firedFromWeapon);
   }
 }

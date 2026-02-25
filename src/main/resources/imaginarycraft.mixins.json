@@ -19,6 +19,7 @@
     "requireAnnotations": true
   },
   "client": [
+    "ItemsPreferenceScreenMixin",
     "client.FontMixin",
     "client.GuiMixin",
     "client.KeyMappingMixin"

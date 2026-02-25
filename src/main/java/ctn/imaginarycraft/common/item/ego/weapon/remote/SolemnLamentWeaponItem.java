@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
 import ctn.imaginarycraft.api.LcDamageType;
-import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.remote.RemoteEgoWeaponGeoItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModDamageSources;
 import ctn.imaginarycraft.init.ModParticleTypes;
@@ -49,7 +49,7 @@ public class SolemnLamentWeaponItem extends GunEgoWeaponItem {
   public static final ResourceLocation TWIN_SHOOTING2 = ImaginaryCraft.modRl("solemn_lament_weapon.twin.shooting2");
   public static final ResourceLocation TWIN_SHOOTING3 = ImaginaryCraft.modRl("solemn_lament_weapon.twin.shooting3");
 
-  public SolemnLamentWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
+  public SolemnLamentWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<RemoteEgoWeaponGeoItem> geoModel, GeoModel<RemoteEgoWeaponGeoItem> guiModel) {
     super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 

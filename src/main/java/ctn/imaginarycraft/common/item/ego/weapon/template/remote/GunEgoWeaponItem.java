@@ -22,8 +22,8 @@ import software.bernie.geckolib.model.GeoModel;
  * 继承自GeoRemoteEgoWeaponItem并实现IGunWeapon接口，提供枪械的基本功能实现
  * 包括普通射击、瞄准射击、充能机制等
  */
-public abstract class GunEgoWeaponItem extends GeoRemoteEgoWeaponItem implements IGunWeapon {
-  public GunEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
+public abstract class GunEgoWeaponItem extends RemoteEgoWeaponGeoItem implements IGunWeapon {
+  public GunEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<RemoteEgoWeaponGeoItem> geoModel, GeoModel<RemoteEgoWeaponGeoItem> guiModel) {
     super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 

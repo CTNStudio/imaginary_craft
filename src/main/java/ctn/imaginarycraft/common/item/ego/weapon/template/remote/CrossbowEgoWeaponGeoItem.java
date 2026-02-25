@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.common.item.ego.weapon.template.melee;
+package ctn.imaginarycraft.common.item.ego.weapon.template.remote;
 
 import ctn.imaginarycraft.client.model.GuiItemModel;
 import ctn.imaginarycraft.client.model.ModGeoItemModel;
@@ -14,18 +14,21 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.function.Consumer;
 
-public abstract class MeleeEgoWeaponGeoItem extends MeleeEgoWeaponItem implements GeoItem {
+/**
+ * 弩型EGO武器物品类
+ */
+public class CrossbowEgoWeaponGeoItem extends CrossbowEgoWeaponItem implements GeoItem {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
-  private final GeoModel<MeleeEgoWeaponGeoItem> model;
-  private final @Nullable GeoModel<MeleeEgoWeaponGeoItem> guiModel;
+  private final GeoModel<RemoteEgoWeaponGeoItem> model;
+  private final @Nullable GeoModel<RemoteEgoWeaponGeoItem> guiModel;
 
-  public MeleeEgoWeaponGeoItem(Properties itemProperties, IMeleeEgoWeaponItem.Builder egoWeaponBuilder, GeoModel<MeleeEgoWeaponGeoItem> geoModel, GeoModel<MeleeEgoWeaponGeoItem> guiModel) {
+  public CrossbowEgoWeaponGeoItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<RemoteEgoWeaponGeoItem> geoModel, GeoModel<RemoteEgoWeaponGeoItem> guiModel) {
     super(itemProperties, egoWeaponBuilder);
     this.model = geoModel;
     this.guiModel = guiModel;
   }
 
-  public MeleeEgoWeaponGeoItem(Properties itemProperties, IMeleeEgoWeaponItem.Builder egoWeaponBuilder, String modPath) {
+  public CrossbowEgoWeaponGeoItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
     this(itemProperties, egoWeaponBuilder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
   }
 
@@ -35,7 +38,9 @@ public abstract class MeleeEgoWeaponGeoItem extends MeleeEgoWeaponItem implement
   }
 
   @Override
-  public abstract void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar);
+  public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+
+  }
 
   @Override
   public AnimatableInstanceCache getAnimatableInstanceCache() {

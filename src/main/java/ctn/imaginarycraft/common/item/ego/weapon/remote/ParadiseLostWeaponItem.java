@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.item.ego.weapon.remote;
 
 import ctn.imaginarycraft.common.entity.projectile.ParadiseLostSpikeweed;
-import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GeoRemoteEgoWeaponItem;
+import ctn.imaginarycraft.common.item.ego.weapon.template.remote.RemoteEgoWeaponGeoItem;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
@@ -28,14 +28,14 @@ import java.util.List;
 /**
  * 失乐园武器
  */
-public class ParadiseLostWeaponItem extends GeoRemoteEgoWeaponItem {
+public class ParadiseLostWeaponItem extends RemoteEgoWeaponGeoItem {
   public static final String ATTACK = "player.paradise_lost.attack";
   public static final String CONTINUOUS_ATTACK = "player.paradise_lost.continuous_attack";
   public static final String END = "player.paradise_lost.end";
   private final int NORMAL_ATTACK_TICK = 8;
   private final int CHARGING_ATTACK_TICK = 10;
 
-  public ParadiseLostWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<GeoRemoteEgoWeaponItem> geoModel, GeoModel<GeoRemoteEgoWeaponItem> guiModel) {
+  public ParadiseLostWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<RemoteEgoWeaponGeoItem> geoModel, GeoModel<RemoteEgoWeaponGeoItem> guiModel) {
     super(itemProperties, egoWeaponBuilder, geoModel, guiModel);
   }
 

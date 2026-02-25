@@ -12,7 +12,6 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import yesman.epicfight.api.animation.AnimationManager;
-import yesman.epicfight.client.gui.screen.config.ItemsPreferenceScreen;
 import yesman.epicfight.gameasset.Armatures;
 import yesman.epicfight.model.armature.HumanoidArmature;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
@@ -33,7 +32,7 @@ public final class EpicFightRegistry {
 
   @SubscribeEvent
   public static void register(FMLCommonSetupEvent event) {
-    ItemsPreferenceScreen.registerWeaponCategorizedItemClasses();
+//    ItemsPreferenceScreen.registerWeaponCategorizedItemClasses(IMeleeEgoWeaponItem.class, IRemoteEgoWeaponItem.class);
     event.enqueueWork(EpicFightRegistry::registerWeaponType);
     event.enqueueWork(EpicFightRegistry::registerWeaponTypesByClass);
   }
