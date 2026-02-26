@@ -3,6 +3,7 @@
   "package": "ctn.imaginarycraft.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "BattojutsuSkillMixin",
     "DamageContainerMixin",
     "DamageSourceMixin",
     "ItemStackMixin",

@@ -6,25 +6,18 @@ import ctn.imaginarycraft.datagen.tag.DatagenBlockTag;
 import ctn.imaginarycraft.datagen.tag.DatagenDamageTypeTag;
 import ctn.imaginarycraft.datagen.tag.DatagenItemTag;
 import ctn.imaginarycraft.init.ModDamageTypes;
-import net.minecraft.DetectedVersion;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.DataGenerator;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.metadata.PackMetadataGenerator;
-import net.minecraft.network.chat.Component;
-import net.minecraft.server.packs.PackType;
-import net.minecraft.server.packs.metadata.pack.PackMetadataSection;
-import net.minecraft.util.InclusiveRange;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -39,11 +32,6 @@ public final class ModDatagen {
     CompletableFuture<HolderLookup.Provider> completableFuture = event.getLookupProvider();
 
     ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
-    generator.addProvider(true, new PackMetadataGenerator(output)
-      .add(PackMetadataSection.TYPE, new PackMetadataSection(
-        Component.translatable("pack." + ImaginaryCraft.ID + ".description"),
-        DetectedVersion.BUILT_IN.getPackVersion(PackType.SERVER_DATA),
-        Optional.of(new InclusiveRange<>(0, Integer.MAX_VALUE)))));
     // 服务端数据生成
     buildServer(event, generator, new DatagenDatapackBuiltinEntries(output, new RegistrySetBuilder()
       .add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap),

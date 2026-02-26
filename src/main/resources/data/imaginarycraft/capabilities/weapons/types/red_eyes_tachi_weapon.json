@@ -1,0 +1,57 @@
+{
+  "collider": {
+    "size": [
+      0.4,
+      0.4,
+      0.95
+    ],
+    "number": 3,
+    "center": [
+      0.0,
+      0.0,
+      -0.95
+    ]
+  },
+  "hit_particle": "epicfight:adrenaline_player_beating",
+  "hit_sound": "epicfight:entity.hit.blunt_hard",
+  "livingmotion_modifier": {
+    "one_hand": {
+      "creative_fly": "epicfight:biped/living/hold_tachi",
+      "aim": "epicfight:biped/living/hold_tachi",
+      "idle": "epicfight:biped/living/hold_tachi",
+      "run": "epicfight:biped/living/hold_tachi",
+      "float": "epicfight:biped/living/hold_tachi",
+      "shot": "epicfight:biped/living/hold_tachi",
+      "fly": "epicfight:biped/living/hold_tachi",
+      "creative_idle": "epicfight:biped/living/hold_tachi",
+      "reload": "epicfight:biped/living/hold_tachi",
+      "fall": "epicfight:biped/living/hold_tachi",
+      "block": "epicfight:biped/skill/guard_longsword",
+      "sneak": "epicfight:biped/living/hold_tachi",
+      "walk": "epicfight:biped/living/hold_tachi",
+      "swim": "epicfight:biped/living/hold_tachi",
+      "kneel": "epicfight:biped/living/hold_tachi",
+      "sit": "epicfight:biped/living/hold_tachi"
+    }
+  },
+  "offhand_item_compatible_predicate": [],
+  "swing_sound": "epicfight:entity.weapon.whoosh_hard",
+  "combos": {
+    "one_hand": [
+      "epicfight:biped/combat/tachi_auto1",
+      "epicfight:biped/combat/tachi_auto2",
+      "epicfight:biped/combat/tachi_auto3",
+      "epicfight:biped/combat/tachi_dash",
+      "epicfight:biped/combat/longsword_airslash"
+    ]
+  },
+  "styles": {
+    "default": "one_hand",
+    "cases": []
+  },
+  "category": "tachi",
+  "innate_skills": {
+    "one_hand": "epicfight:battojutsu"
+  },
+  "usable_in_offhand": false
+}

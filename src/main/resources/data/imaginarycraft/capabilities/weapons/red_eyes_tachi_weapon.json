@@ -1,16 +1,16 @@
 {
-  "type": "epicfight:tachi",
+  "type": "imaginarycraft:red_eyes_tachi_weapon",
   "collider": {
     "size": [
-      0.3,
-      0.3,
-      0.7
+      0.4,
+      0.4,
+      0.95
     ],
-    "number": 1,
+    "number": 3,
     "center": [
       0.0,
       0.0,
-      -1.0
+      -0.95
     ]
   },
   "attributes": {
