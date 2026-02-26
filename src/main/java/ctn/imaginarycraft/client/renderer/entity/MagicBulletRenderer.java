@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.client.render.entity;
+package ctn.imaginarycraft.client.renderer.entity;
 
 import ctn.imaginarycraft.common.entity.projectile.MagicBulletEntity;
 import net.minecraft.client.renderer.entity.EntityRenderer;
