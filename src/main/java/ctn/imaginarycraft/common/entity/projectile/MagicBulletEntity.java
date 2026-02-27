@@ -3,9 +3,14 @@ package ctn.imaginarycraft.common.entity.projectile;
 import ctn.imaginarycraft.init.entiey.AbnormalitiesEntityTypes;
 import ctn.imaginarycraft.util.PiercingUtil;
 import ctn.imaginarycraft.util.PiercingUtil.PierceData;
+import ctn.imaginarycraft.init.ModDamageSources;
+import ctn.imaginarycraft.init.ModDamageTypes;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
@@ -23,6 +28,10 @@ public class MagicBulletEntity extends ModBulletEntity {
 
   @CheckForNull
   private LivingEntity target;
+
+  @CheckForNull
+  private int Flying_Ticks = 0;
+  private static final int MAX_FLIGHT_TICK = 100;
 
   public MagicBulletEntity(EntityType<? extends ModBulletEntity> entityType, Level level) {
     super(entityType, level);
@@ -131,10 +140,11 @@ public class MagicBulletEntity extends ModBulletEntity {
         // 每tick强制同步noPhysics
         var config = PiercingUtil.getPiercingConfig(this);
         if (config != null && config.isWallPassThroughEnabled()) {
-            this.noPhysics = true;
+          this.noPhysics = true;
         }
+        this.Flying_Ticks++;
 
-        if (Objects.isNull(this.target) || this.damage < 0.0f) {
+        if (this.damage < 0.0f || this.Flying_Ticks > MAX_FLIGHT_TICK) {
             this.setDead();
             return;
         }
@@ -144,35 +154,48 @@ public class MagicBulletEntity extends ModBulletEntity {
         // 如果有穿透标签，事件监听器会自动处理穿透逻辑
         // 这里只保留追踪逻辑
         super.tick();
+        if(!Objects.isNull(this.target)){
+          var nPos = this.getOnPos();
+          var tPos = this.target.getOnPos();
 
-        var nPos = this.getOnPos();
-        var tPos = this.target.getOnPos();
-
-        if (oPos.distSqr(tPos) > nPos.distSqr(tPos)) {
-            this.correctTrajectory();
+          if (oPos.distSqr(tPos) > nPos.distSqr(tPos)) {
+              this.correctTrajectory();
+          }
         }
     }
 
   @Override
   protected void onHitBlock(BlockHitResult result) {
-    // 如果有穿透标签且启用了穿墙，忽略方块碰撞
-    if (PiercingUtil.hasPiercingTag(this)) {
-      PierceData config = PiercingUtil.getPiercingConfig(this);
-      if(config != null){
-        config.wallPassThrough(true);
-        correctTrajectory();
-        return;
-      }
+    // 检查是否有穿透标签
+    PierceData config = PiercingUtil.getPiercingConfig(this);
+    
+    // 如果有穿透配置并且启用了穿墙，则直接忽略本次碰撞
+    if (config != null && config.isWallPassThroughEnabled()) {
+      return;
     }
     
-    this.correctTrajectory();
+    // 对于其他情况（没有穿透标签，或禁用了穿墙），执行父类方法（销毁弹射物）
+    super.onHitBlock(result);
   }
 
   @Override
   protected void onHitEntity(EntityHitResult result) {
-    // 穿透逻辑由事件监听器处理，这里可以添加额外的命中效果
-    
-    // 如果没有穿透标签，使用默认行为
+    var target = result.getEntity();
+    var owner = this.getOwner();
+
+    // 使用项目自定义的 ModDamageSources 来创建伤害源
+    DamageSource damageSource = ModDamageSources.createDamage(
+      this.level().registryAccess(),
+      ModDamageTypes.REMOTE,
+      this,
+      owner,
+      this.position()
+    );
+
+    // 对被击中的实体造成伤害
+    target.hurt(damageSource, this.damage);
+
+    // 如果没有穿透标签，则执行默认行为（销毁弹射物）
     if (!PiercingUtil.hasPiercingTag(this)) {
       super.onHitEntity(result);
     }
@@ -183,4 +206,3 @@ public class MagicBulletEntity extends ModBulletEntity {
     super.defineSynchedData(builder);
   }
 }
-

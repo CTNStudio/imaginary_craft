@@ -65,8 +65,8 @@ public final class PiercingUtil {
     public static boolean isWallPassThroughEnabled(@NotNull Projectile projectile) {
         return projectile.noPhysics;
     }
-
-    // ==================== 射线检测 ====================
+    //#endregion
+    //#region 射线检测
 
     /**
      * 判断实体是否在射线路径上

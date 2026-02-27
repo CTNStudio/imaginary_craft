@@ -5,11 +5,13 @@ import ctn.imaginarycraft.common.item.ego.weapon.template.remote.GunEgoWeaponIte
 import ctn.imaginarycraft.common.item.ego.weapon.template.remote.RemoteEgoWeaponGeoItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.util.GunWeaponUtil;
+import ctn.imaginarycraft.util.PiercingUtil;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
@@ -98,7 +100,12 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
   protected ProjectileFactory getProjectileFactory() {
       return (level, shooter, itemStack, handUsed) -> {
           MagicBulletEntity magicBullet = new MagicBulletEntity(level, shooter);
-          // 配置魔弹属性（如穿墙、伤害等）
+          float damage = getDamage(shooter, itemStack, handUsed);
+          magicBullet.setDamage(damage);
+          
+          // 添加默认穿透标签，使其可以穿墙
+          PiercingUtil.setPiercingDefault(magicBullet, damage);
+          
           return magicBullet;
       };
   }
