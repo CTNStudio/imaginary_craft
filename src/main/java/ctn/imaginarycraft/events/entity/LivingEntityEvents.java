@@ -60,10 +60,8 @@ public final class LivingEntityEvents {
 
     if (entity.isAlive()) {
       DelayTaskHolder delayTaskHolder = entity.getExistingDataOrNull(ModAttachments.DELAY_TASK_HOLDER);
-      if (delayTaskHolder != null) {
-        if (!ItemStack.isSameItem(event.getFrom(), event.getTo())) {
-          delayTaskHolder.removeTask(slot);
-        }
+      if (delayTaskHolder != null && !ItemStack.isSameItem(event.getFrom(), event.getTo())) {
+        delayTaskHolder.removeTask(slot);
       }
 
       if (slot.getType() == EquipmentSlot.Type.HAND) {
