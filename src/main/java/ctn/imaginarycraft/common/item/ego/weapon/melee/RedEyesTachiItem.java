@@ -1,6 +1,8 @@
 package ctn.imaginarycraft.common.item.ego.weapon.melee;
 
 import ctn.imaginarycraft.api.DelayTaskHolder;
+import ctn.imaginarycraft.client.renderer.item.RedEyesTachiItemWeaponRenderer;
+import ctn.imaginarycraft.client.renderer.providers.ModGeoItemRenderProvider;
 import ctn.imaginarycraft.common.item.ego.weapon.template.melee.IMeleeEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.melee.MeleeEgoWeaponGeoItem;
 import ctn.imaginarycraft.mixin.ConditionalWeaponInnateSkillMixin;
@@ -8,7 +10,9 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.client.GeoRenderProvider;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
@@ -21,6 +25,8 @@ import yesman.epicfight.api.event.types.player.TickPlayerEpicFightModeEvent;
 import yesman.epicfight.skill.SkillSlots;
 import yesman.epicfight.skill.weaponinnate.BattojutsuSkill;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
+
+import java.util.function.Consumer;
 
 public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
@@ -71,16 +77,18 @@ public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
   @Override
   public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
     AnimationController<RedEyesTachiItem> controller = new AnimationController<>(this, (state) -> PlayState.STOP);
-    controller.triggerableAnim("phase1", RawAnimation.begin().thenPlay("phase1"));
     controller.triggerableAnim("phase", RawAnimation.begin().thenPlay("phase"));
+    controller.triggerableAnim("phase1", RawAnimation.begin().thenPlay("phase1"));
     controllerRegistrar.add(controller);
   }
 
   public void phase(ItemStack stack, ServerLevel level) {
+    getManager(stack, level).stopTriggeredAnimation("phase1");
     tryTriggerAnimation(stack, level, "phase");
   }
 
   public void phase1(ItemStack stack, ServerLevel level) {
+    getManager(stack, level).stopTriggeredAnimation("phase");
     tryTriggerAnimation(stack, level, "phase1");
   }
 
@@ -89,6 +97,11 @@ public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
     if (controller.getTriggeredAnimation() == null) {
       controller.tryTriggerAnimation(phase);
     }
+  }
+
+  @Override
+  public void createGeoRenderer(@NotNull Consumer<GeoRenderProvider> rendererConsumer) {
+    rendererConsumer.accept(new ModGeoItemRenderProvider<>((GeoModel<RedEyesTachiItem>) this.getModel(), (GeoModel<RedEyesTachiItem>) this.getGuiModel(), RedEyesTachiItemWeaponRenderer::new));
   }
 
   private AnimationController<RedEyesTachiItem> getController(ItemStack stack, ServerLevel level) {

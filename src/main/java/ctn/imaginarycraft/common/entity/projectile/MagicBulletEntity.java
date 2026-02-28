@@ -1,16 +1,14 @@
 package ctn.imaginarycraft.common.entity.projectile;
 
+import ctn.imaginarycraft.init.ModDamageSources;
+import ctn.imaginarycraft.init.ModDamageTypes;
 import ctn.imaginarycraft.init.entiey.AbnormalitiesEntityTypes;
 import ctn.imaginarycraft.util.PiercingUtil;
 import ctn.imaginarycraft.util.PiercingUtil.PierceData;
-import ctn.imaginarycraft.init.ModDamageSources;
-import ctn.imaginarycraft.init.ModDamageTypes;
 import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.InteractionHand;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;

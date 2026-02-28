@@ -9,7 +9,10 @@ import net.neoforged.neoforge.attachment.AttachmentHolder;
 import net.neoforged.neoforge.attachment.IAttachmentHolder;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DelayTaskHolder {
@@ -32,7 +35,7 @@ public class DelayTaskHolder {
     if (runList.isEmpty()) {
       return;
     }
-    Iterator<ITask> iterator = new HashSet<>(runList.values()).iterator();
+    Iterator<ITask> iterator = runList.values().iterator();
     while (iterator.hasNext()) {
       ITask consumer = iterator.next();
       if (consumer.isRemoved()) {
@@ -90,7 +93,9 @@ public class DelayTaskHolder {
     if (containsTask(slot).isEmpty()) {
       return;
     }
-    for (ResourceLocation key : new HashSet<>(runList.keySet())) {
+    Iterator<ResourceLocation> iterator = runList.keySet().iterator();
+    while (iterator.hasNext()) {
+      ResourceLocation key = iterator.next();
       if (key.getPath().startsWith(slot.getName())) {
         runList.remove(key).removed();
       }

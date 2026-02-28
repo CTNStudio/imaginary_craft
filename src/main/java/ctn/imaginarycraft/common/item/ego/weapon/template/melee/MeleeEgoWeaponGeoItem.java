@@ -37,4 +37,12 @@ public abstract class MeleeEgoWeaponGeoItem extends MeleeEgoWeaponItem implement
   public AnimatableInstanceCache getAnimatableInstanceCache() {
     return cache;
   }
+
+  public GeoModel<? extends MeleeEgoWeaponGeoItem> getModel() {
+    return model;
+  }
+
+  public @Nullable GeoModel<? extends MeleeEgoWeaponGeoItem> getGuiModel() {
+    return guiModel;
+  }
 }

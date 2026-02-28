@@ -4,8 +4,6 @@ import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.api.LcLevelType;
-import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
-import ctn.imaginarycraft.init.ModCapabilitys;
 import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.util.LcDamageUtil;
 import ctn.imaginarycraft.util.LcLevelUtil;
@@ -45,12 +43,14 @@ public abstract class DamageSourceMixin implements IDamageSource {
   @Unique
   private ItemStack imaginaryCraft$attackItemStack;
 
-  @Inject(method = "<init>(Lnet/minecraft/core/Holder;" +
-    "Lnet/minecraft/world/entity/Entity;" +
-    "Lnet/minecraft/world/entity/Entity;" +
-    "Lnet/minecraft/world/phys/Vec3;)V", at = @At("RETURN"))
-  private void imaginaryCraft$DamageSource(Holder<DamageType> type, Entity directEntity, Entity causingEntity,
-                                           Vec3 damageSourcePosition, CallbackInfo ci) {
+  @Inject(method = "<init>(Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)V", at = @At("RETURN"))
+  private void imaginaryCraft$DamageSource(
+    Holder<DamageType> type,
+    Entity directEntity,
+    Entity causingEntity,
+    Vec3 damageSourcePosition,
+    CallbackInfo ci
+  ) {
     DamageSource damageSource = (DamageSource) (Object) this;
     ItemStack itemStack = LcDamageUtil.getDamageItemStack(damageSource);
     this.imaginaryCraft$attackItemStack = itemStack;
@@ -61,10 +61,7 @@ public abstract class DamageSourceMixin implements IDamageSource {
 
     // 从物品获取信息
     if (itemStack != null) {
-      IItemLcDamageType colorDamageTypeItem = itemStack.getCapability(ModCapabilitys.LC_DAMAGE_TYPE_ITEM);
-      if (colorDamageTypeItem != null) {
-        lcDamageType = colorDamageTypeItem.getLcDamageType(itemStack);
-      }
+      lcDamageType = LcDamageUtil.getLcDamageType(itemStack);
 
       if (lcDamageLevel == null) {
         lcDamageLevel = LcLevelUtil.getLevel(itemStack);
@@ -74,14 +71,14 @@ public abstract class DamageSourceMixin implements IDamageSource {
     if (lcDamageLevel == null && directEntity != null) {
       lcDamageLevel = LcLevelUtil.getLevel(directEntity);
     }
+
     if (lcDamageLevel == null && causingEntity != null) {
       lcDamageLevel = LcLevelUtil.getLevel(causingEntity);
     }
 
     // 应用最终值
     this.imaginaryCraft$lcDamageLevel = lcDamageLevel;
-    this.imaginaryCraft$lcDamageType = lcDamageType == null ?
-      LcDamageType.byDamageType(type) : lcDamageType;
+    this.imaginaryCraft$lcDamageType = lcDamageType == null ? LcDamageType.byDamageType(type) : lcDamageType;
   }
 
   @Unique
@@ -98,16 +95,16 @@ public abstract class DamageSourceMixin implements IDamageSource {
   }
 
   @Unique
+  @Override
+  public void setImaginaryCraft$LcDamageType(LcDamageType type) {
+    this.imaginaryCraft$lcDamageType = type;
+  }
+
+  @Unique
   @Nullable
   @Override
   public LcLevelType getImaginaryCraft$LcDamageLevel() {
     return imaginaryCraft$lcDamageLevel;
-  }
-
-  @Unique
-  @Override
-  public void setImaginaryCraft$LcDamageType(LcDamageType type) {
-    this.imaginaryCraft$lcDamageType = type;
   }
 
   @Unique

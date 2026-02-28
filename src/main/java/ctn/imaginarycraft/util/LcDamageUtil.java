@@ -3,6 +3,7 @@ package ctn.imaginarycraft.util;
 import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.api.LcLevelType;
 import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
+import ctn.imaginarycraft.init.ModCapabilitys;
 import ctn.imaginarycraft.init.ModDataComponents;
 import ctn.imaginarycraft.mixed.IDamageSource;
 import net.minecraft.world.damagesource.DamageSource;
@@ -36,6 +37,11 @@ public final class LcDamageUtil {
 
     if (itemStack.getItem() instanceof IItemLcDamageType iItemLcDamageType) {
       return iItemLcDamageType.getLcDamageType(itemStack);
+    }
+
+    IItemLcDamageType colorDamageTypeItem = itemStack.getCapability(ModCapabilitys.LC_DAMAGE_TYPE_ITEM);
+    if (colorDamageTypeItem != null) {
+      return colorDamageTypeItem.getLcDamageType(itemStack);
     }
 
     return LcDamageType.PHYSICS;
