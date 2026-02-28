@@ -3,6 +3,7 @@ package ctn.imaginarycraft.common.item.ego.weapon.melee;
 import ctn.imaginarycraft.api.DelayTaskHolder;
 import ctn.imaginarycraft.common.item.ego.weapon.template.melee.IMeleeEgoWeaponItem;
 import ctn.imaginarycraft.common.item.ego.weapon.template.melee.MeleeEgoWeaponGeoItem;
+import ctn.imaginarycraft.mixin.ConditionalWeaponInnateSkillMixin;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;
@@ -17,9 +18,8 @@ import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import yesman.epicfight.api.animation.types.EntityState;
 import yesman.epicfight.api.event.types.player.TickPlayerEpicFightModeEvent;
-import yesman.epicfight.skill.Skill;
-import yesman.epicfight.skill.SkillContainer;
 import yesman.epicfight.skill.SkillSlots;
+import yesman.epicfight.skill.weaponinnate.BattojutsuSkill;
 import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 
 public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
@@ -37,15 +37,21 @@ public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
 
   public static void phaseSwitch(TickPlayerEpicFightModeEvent event) {
     PlayerPatch<?> playerPatch = event.getPlayerPatch();
-
-    SkillContainer container = playerPatch.getSkill(SkillSlots.WEAPON_INNATE);
-    Skill skill = container.getSkill();
-    if (skill == null) {
+    Player original = playerPatch.getOriginal();
+    if (!(original.level() instanceof ServerLevel level)) {
       return;
     }
 
-    EntityState entityState = playerPatch.getEntityState();
-    if (!entityState.getState(EntityState.ATTACKING)) {
+    if (!playerPatch.getEntityState().getState(EntityState.ATTACKING)) {
+      return;
+    }
+
+    if (!(playerPatch.getSkill(SkillSlots.WEAPON_INNATE).getSkill() instanceof BattojutsuSkill battojutsuSkill)) {
+      return;
+    }
+
+    if (!playerPatch.getServerAnimator().animationPlayer.getRealAnimation().get()
+      .in(((ConditionalWeaponInnateSkillMixin) battojutsuSkill).getAttackAnimations())) {
       return;
     }
 
@@ -53,33 +59,35 @@ public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
     if (!(itemStack.getItem() instanceof RedEyesTachiItem redEyesTachiItem)) {
       return;
     }
-//    EpicFightEventHooks.Animation.END
-    Player original = playerPatch.getOriginal();
-    if (original.level() instanceof ServerLevel level) {
-      redEyesTachiItem.phase1(itemStack, level);
-      DelayTaskHolder.of(original).addTask(InteractionHand.MAIN_HAND, DelayTaskHolder.createTaskBilder()
-        .removedRun(() -> redEyesTachiItem.phase(itemStack, level))
-        .resultRun(() -> redEyesTachiItem.phase(itemStack, level))
-        .removedTick(20 * 2)
-        .build());
-    }
+
+    redEyesTachiItem.phase1(itemStack, level);
+    DelayTaskHolder.of(original).addTask(InteractionHand.MAIN_HAND, DelayTaskHolder.createTaskBilder()
+      .removedRun(() -> redEyesTachiItem.phase(itemStack, level))
+      .resultRun(() -> redEyesTachiItem.phase(itemStack, level))
+      .removedTick(20 * 2)
+      .build());
   }
 
   @Override
   public void registerControllers(AnimatableManager.ControllerRegistrar controllerRegistrar) {
     AnimationController<RedEyesTachiItem> controller = new AnimationController<>(this, (state) -> PlayState.STOP);
     controller.triggerableAnim("phase1", RawAnimation.begin().thenPlay("phase1"));
+    controller.triggerableAnim("phase", RawAnimation.begin().thenPlay("phase"));
     controllerRegistrar.add(controller);
   }
 
   public void phase(ItemStack stack, ServerLevel level) {
-    getManager(stack, level).stopTriggeredAnimation("phase1");
+    tryTriggerAnimation(stack, level, "phase");
   }
 
   public void phase1(ItemStack stack, ServerLevel level) {
+    tryTriggerAnimation(stack, level, "phase1");
+  }
+
+  private void tryTriggerAnimation(ItemStack stack, ServerLevel level, String phase) {
     AnimationController<RedEyesTachiItem> controller = getController(stack, level);
     if (controller.getTriggeredAnimation() == null) {
-      controller.tryTriggerAnimation("phase1");
+      controller.tryTriggerAnimation(phase);
     }
   }
 
