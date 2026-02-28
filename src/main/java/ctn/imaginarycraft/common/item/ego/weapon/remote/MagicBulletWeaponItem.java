@@ -102,10 +102,10 @@ public class MagicBulletWeaponItem extends GunEgoWeaponItem {
           MagicBulletEntity magicBullet = new MagicBulletEntity(level, shooter);
           float damage = getDamage(shooter, itemStack, handUsed);
           magicBullet.setDamage(damage);
-          
+
           // 添加默认穿透标签，使其可以穿墙
           PiercingUtil.setPiercingDefault(magicBullet, damage);
-          
+
           return magicBullet;
       };
   }

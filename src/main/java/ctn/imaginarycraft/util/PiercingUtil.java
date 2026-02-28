@@ -35,7 +35,7 @@ public final class PiercingUtil {
 
     private PiercingUtil() {}
 
-    //#region 穿墙效果配置 
+    //#region 穿墙效果配置
 
     /**
      * 为投射物启用穿墙效果
@@ -179,7 +179,7 @@ public final class PiercingUtil {
      */
     public static boolean canPierceBlock(@NotNull Level level, @NotNull BlockPos pos, @NotNull BlockState state) {
         // 默认：空气、液体、草、花、蜘蛛网等可穿透
-        return 
+        return
             state.isAir()
             || !state.getFluidState().isEmpty()
             || state.getCollisionShape(level, pos, CollisionContext.empty()).isEmpty();
@@ -289,7 +289,7 @@ public final class PiercingUtil {
             return this;
         }
         //#endregion
-        //#region 状态查询 
+        //#region 状态查询
 
         public boolean canPierce() {
             return maxPierceCount < 0 || currentPierceCount < maxPierceCount;
@@ -403,22 +403,22 @@ public final class PiercingUtil {
 
     /**
      * 为弹射物添加穿透标签
-     * 
+     *
      * @param projectile 弹射物实体
      * @param config 穿透配置
      */
     public static void addPiercingTag(@NotNull Projectile projectile, @NotNull PierceData config) {
         CompoundTag nbt = projectile.getPersistentData();
         CompoundTag piercingNbt = new CompoundTag();
-        
+
         // 保存配置
         piercingNbt.putInt("MaxPierce", config.maxPierceCount);
         piercingNbt.putFloat("DamageDecay", config.damageDecay);
         piercingNbt.putBoolean("WallPassThrough", config.wallPassThrough);
         piercingNbt.putFloat("OriginalDamage", config.originalDamage);
-        
+
         nbt.put(PIERCING_CONFIG_KEY, piercingNbt);
-        
+
         // 立即启用穿墙效果
         if (config.wallPassThrough) {
             enableWallPassThrough(projectile);
@@ -427,7 +427,7 @@ public final class PiercingUtil {
 
     /**
      * 检查弹射物是否有穿透标签
-     * 
+     *
      * @param projectile 弹射物实体
      * @return 是否有穿透标签
      */
@@ -437,7 +437,7 @@ public final class PiercingUtil {
 
     /**
      * 从弹射物获取穿透配置
-     * 
+     *
      * @param projectile 弹射物实体
      * @return 穿透配置，如果没有则返回 null
      */
@@ -447,20 +447,20 @@ public final class PiercingUtil {
         if (!nbt.contains(PIERCING_CONFIG_KEY)) {
             return null;
         }
-        
+
         CompoundTag piercingNbt = nbt.getCompound(PIERCING_CONFIG_KEY);
         PierceData config = new PierceData();
         config.maxPierceCount = piercingNbt.getInt("MaxPierce");
         config.damageDecay = piercingNbt.getFloat("DamageDecay");
         config.wallPassThrough = piercingNbt.getBoolean("WallPassThrough");
         config.originalDamage = piercingNbt.getFloat("OriginalDamage");
-        
+
         return config;
     }
 
     /**
      * 更新弹射物的穿透计数（用于持久化）
-     * 
+     *
      * @param projectile 弹射物实体
      * @param data 当前穿透数据
      */
@@ -469,7 +469,7 @@ public final class PiercingUtil {
         if (nbt.contains(PIERCING_CONFIG_KEY)) {
             CompoundTag piercingNbt = nbt.getCompound(PIERCING_CONFIG_KEY);
             piercingNbt.putInt("CurrentPierceCount", data.currentPierceCount);
-            
+
             // 保存已命中的实体ID列表
             ListTag hitList = new ListTag();
             for (Integer entityId : data.hitEntityIds) {
@@ -481,7 +481,7 @@ public final class PiercingUtil {
 
     /**
      * 从 NBT 恢复穿透进度
-     * 
+     *
      * @param projectile 弹射物实体
      * @return 带有进度的穿透数据
      */
@@ -491,13 +491,13 @@ public final class PiercingUtil {
         if (config == null) {
             return null;
         }
-        
+
         CompoundTag nbt = projectile.getPersistentData();
         CompoundTag piercingNbt = nbt.getCompound(PIERCING_CONFIG_KEY);
-        
+
         // 恢复进度
         config.currentPierceCount = piercingNbt.getInt("CurrentPierceCount");
-        
+
         // 恢复已命中实体列表
         ListTag hitList = piercingNbt.getList("HitEntities", 8); // 8 = StringTag type
         for (int i = 0; i < hitList.size(); i++) {
@@ -508,19 +508,19 @@ public final class PiercingUtil {
                 // 忽略无效ID
             }
         }
-        
+
         return config;
     }
 
     /**
      * 快速为弹射物设置穿透效果（简化版）
-     * 
+     *
      * @param projectile 弹射物
      * @param maxPierce 最大穿透数（-1表示无限）
      * @param damageDecay 伤害衰减率
      * @param wallPassThrough 是否穿墙
      */
-    public static void setPiercing(@NotNull Projectile projectile, int maxPierce, 
+    public static void setPiercing(@NotNull Projectile projectile, int maxPierce,
                                     float damageDecay, boolean wallPassThrough) {
         PierceData config = new PierceData(maxPierce, damageDecay, wallPassThrough);
         addPiercingTag(projectile, config);
@@ -528,7 +528,7 @@ public final class PiercingUtil {
 
     /**
      * 快速设置穿透效果（使用默认值：5次穿透，0.75衰减，穿墙）
-     * 
+     *
      * @param projectile 弹射物
      * @param damage 原始伤害
      */

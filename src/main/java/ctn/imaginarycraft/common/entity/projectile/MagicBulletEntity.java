@@ -58,7 +58,7 @@ public class MagicBulletEntity extends ModBulletEntity {
 
   /**
    * 创建带有穿透效果的魔法子弹
-   * 
+   *
    * @param level 世界
    * @param shooter 射击者
    * @param damage 伤害
@@ -75,16 +75,16 @@ public class MagicBulletEntity extends ModBulletEntity {
     entity.setOwner(shooter);
     entity.setDamage(damage);
     entity.setTarget(target);
-    
+
     // 添加穿透标签
     PierceData config = new PierceData()
         .maxPierce(maxPierce)
         .damageDecay(damageDecay)
         .wallPassThrough(wallPassThrough)
         .originalDamage(damage);
-    
+
     PiercingUtil.addPiercingTag(entity, config);
-    
+
     return entity;
   }
 
@@ -168,12 +168,12 @@ public class MagicBulletEntity extends ModBulletEntity {
   protected void onHitBlock(BlockHitResult result) {
     // 检查是否有穿透标签
     PierceData config = PiercingUtil.getPiercingConfig(this);
-    
+
     // 如果有穿透配置并且启用了穿墙，则直接忽略本次碰撞
     if (config != null && config.isWallPassThroughEnabled()) {
       return;
     }
-    
+
     // 对于其他情况（没有穿透标签，或禁用了穿墙），执行父类方法（销毁弹射物）
     super.onHitBlock(result);
   }

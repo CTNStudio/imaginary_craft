@@ -15,8 +15,8 @@ public final class EntityRenderersRegistry {
   public static void registry(EntityRenderersEvent.RegisterRenderers event) {
     event.registerEntityRenderer(AbnormalitiesEntityTypes.GRANT_US_LOVE.get(), GrantUsLove.GrantUsLoveRenderer::new);
     event.registerEntityRenderer(
-        AbnormalitiesEntityTypes.MAGIC_BULLET_ENTITY.get(),
-        MagicBulletRenderer::new
+      AbnormalitiesEntityTypes.MAGIC_BULLET_ENTITY.get(),
+      MagicBulletRenderer::new
     );
 
   }

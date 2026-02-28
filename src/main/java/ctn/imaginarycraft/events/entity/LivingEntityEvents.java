@@ -60,8 +60,10 @@ public final class LivingEntityEvents {
 
     if (entity.isAlive()) {
       DelayTaskHolder delayTaskHolder = entity.getExistingDataOrNull(ModAttachments.DELAY_TASK_HOLDER);
-      if (delayTaskHolder != null && !event.getFrom().getItem().shouldCauseBlockBreakReset(event.getFrom(), event.getTo())) {
-        delayTaskHolder.removeTask(slot);
+      if (delayTaskHolder != null) {
+        if (!ItemStack.isSameItem(event.getFrom(), event.getTo())) {
+          delayTaskHolder.removeTask(slot);
+        }
       }
 
       if (slot.getType() == EquipmentSlot.Type.HAND) {
@@ -78,9 +80,11 @@ public final class LivingEntityEvents {
   public static void tickPre(EntityTickEvent.Pre event) {
     Entity entity = event.getEntity();
     if (entity instanceof LivingEntity livingEntity) {
-      DelayTaskHolder timingRun = livingEntity.getExistingDataOrNull(ModAttachments.DELAY_TASK_HOLDER);
-      if (timingRun != null) {
-        timingRun.tick();
+      if (livingEntity.isAlive()) {
+        DelayTaskHolder timingRun = livingEntity.getExistingDataOrNull(ModAttachments.DELAY_TASK_HOLDER);
+        if (timingRun != null) {
+          timingRun.tick();
+        }
       }
     }
   }
@@ -89,23 +93,25 @@ public final class LivingEntityEvents {
   public static void livingSwapItemsEvent(LivingSwapItemsEvent.Hands event) {
     LivingEntity livingEntity = event.getEntity();
     if (livingEntity.isAlive()) {
-      if (livingEntity instanceof Player player) {
-        ItemStack itemSwappedToMainHand = event.getItemSwappedToMainHand();
-        ItemStack itemSwappedToOffHand = event.getItemSwappedToOffHand();
-        DelayTaskHolder delayTaskHolder = livingEntity.getExistingDataOrNull(ModAttachments.DELAY_TASK_HOLDER);
+      ItemStack itemSwappedToMainHand = event.getItemSwappedToMainHand();
+      ItemStack itemSwappedToOffHand = event.getItemSwappedToOffHand();
+      DelayTaskHolder delayTaskHolder = livingEntity.getExistingDataOrNull(ModAttachments.DELAY_TASK_HOLDER);
 
-        if (!itemSwappedToMainHand.getItem().shouldCauseBlockBreakReset(itemSwappedToMainHand, itemSwappedToOffHand)) {
-          if (delayTaskHolder != null) {
-            delayTaskHolder.removeTask(InteractionHand.MAIN_HAND);
-          }
+      if (!itemSwappedToMainHand.getItem().shouldCauseBlockBreakReset(itemSwappedToMainHand, itemSwappedToOffHand)) {
+        if (delayTaskHolder != null) {
+          delayTaskHolder.removeTask(InteractionHand.MAIN_HAND);
+        }
+        if (livingEntity instanceof Player player) {
           GunWeaponUtil.setIsAttack(player, true, true);
           GunWeaponUtil.resetChargeUp(player, true);
         }
+      }
 
-        if (!itemSwappedToOffHand.getItem().shouldCauseBlockBreakReset(itemSwappedToOffHand, itemSwappedToMainHand)) {
-          if (delayTaskHolder != null) {
-            delayTaskHolder.removeTask(InteractionHand.OFF_HAND);
-          }
+      if (!itemSwappedToOffHand.getItem().shouldCauseBlockBreakReset(itemSwappedToOffHand, itemSwappedToMainHand)) {
+        if (delayTaskHolder != null) {
+          delayTaskHolder.removeTask(InteractionHand.OFF_HAND);
+        }
+        if (livingEntity instanceof Player player) {
           GunWeaponUtil.setIsAttack(player, true, false);
           GunWeaponUtil.resetChargeUp(player, false);
         }

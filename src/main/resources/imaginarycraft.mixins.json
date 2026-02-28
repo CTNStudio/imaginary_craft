@@ -9,6 +9,7 @@
     "ItemStackMixin",
     "LivingDamageEvent$PostMixin",
     "LivingEntityMixin",
+    "LocalPlayerPatchMixin",
     "PlayerMixin",
     "WeaponTypeReloadListenerMixin",
     "client.ModelBuilderMixin"
