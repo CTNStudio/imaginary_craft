@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.event.rationality;
 
-import ctn.imaginarycraft.init.ModAttributes;
+import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.player.Player;
 import net.neoforged.fml.event.IModBusEvent;

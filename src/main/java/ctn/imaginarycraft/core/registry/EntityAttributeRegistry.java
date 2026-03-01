@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.core.registry;
 
-import ctn.imaginarycraft.common.entity.abnormalities.ordeals.violet.GrantUsLove;
+import ctn.imaginarycraft.common.world.entity.abnormalities.ordeals.violet.GrantUsLove;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.ModAttributes;
-import ctn.imaginarycraft.init.entiey.AbnormalitiesEntityTypes;
+import ctn.imaginarycraft.init.world.ModAttributes;
+import ctn.imaginarycraft.init.world.entiey.AbnormalitiesEntityTypes;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.player.Player;

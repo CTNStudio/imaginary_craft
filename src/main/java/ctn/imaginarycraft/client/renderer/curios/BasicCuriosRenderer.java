@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.client.renderer.curios;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import ctn.imaginarycraft.common.item.ego.curio.EgoCurioItem;
+import ctn.imaginarycraft.common.world.item.ego.curio.EgoCurioItem;
 import ctn.imaginarycraft.datagen.DatagenCuriosTest;
 import net.minecraft.client.model.EntityModel;
 import net.minecraft.client.model.HumanoidModel;

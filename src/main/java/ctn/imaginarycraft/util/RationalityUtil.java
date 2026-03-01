@@ -2,7 +2,7 @@ package ctn.imaginarycraft.util;
 
 import ctn.imaginarycraft.core.ModEventHooks;
 import ctn.imaginarycraft.init.ModAttachments;
-import ctn.imaginarycraft.init.ModAttributes;
+import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.world.entity.player.Player;
 
 import java.util.Map;

@@ -2,7 +2,7 @@ package ctn.imaginarycraft.util;
 
 import ctn.imaginarycraft.api.IGunWeapon;
 import ctn.imaginarycraft.init.ModAttachments;
-import ctn.imaginarycraft.init.ModAttributes;
+import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attributes;

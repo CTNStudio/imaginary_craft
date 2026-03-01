@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.core.registry.client;
 
 import ctn.imaginarycraft.client.renderer.curios.BasicCuriosRenderer;
-import ctn.imaginarycraft.common.item.ego.curio.EgoCurioItem;
+import ctn.imaginarycraft.common.world.item.ego.curio.EgoCurioItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.item.ego.EgoCurioItems;
+import ctn.imaginarycraft.init.world.item.ego.EgoCurioItems;
 import net.minecraft.world.item.Item;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;

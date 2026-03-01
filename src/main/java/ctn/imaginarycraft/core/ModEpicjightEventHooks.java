@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.core;
 
-import ctn.imaginarycraft.common.item.ego.weapon.melee.RedEyesTachiItem;
+import ctn.imaginarycraft.common.world.item.ego.weapon.melee.special.RedEyesTachiItem;
 import yesman.epicfight.api.event.EpicFightEventHooks;
 
 public final class ModEpicjightEventHooks {

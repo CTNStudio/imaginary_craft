@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.client.eventexecute;
 
-import ctn.imaginarycraft.common.item.ego.armor.EgoArmorItem;
-import ctn.imaginarycraft.init.item.ego.EgoArmorItems;
-import ctn.imaginarycraft.init.item.ego.EgoArmorRegisterUtil;
+import ctn.imaginarycraft.common.world.item.ego.armor.EgoArmorItem;
+import ctn.imaginarycraft.init.world.item.ego.EgoArmorItems;
+import ctn.imaginarycraft.init.world.item.ego.EgoArmorRegisterUtil;
 import net.minecraft.client.model.PlayerModel;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;

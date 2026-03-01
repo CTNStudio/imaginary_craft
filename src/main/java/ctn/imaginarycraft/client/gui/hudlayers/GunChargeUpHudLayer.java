@@ -2,7 +2,7 @@ package ctn.imaginarycraft.client.gui.hudlayers;
 
 import ctn.imaginarycraft.api.IGunWeapon;
 import ctn.imaginarycraft.client.gui.widget.ImageProgressBar;
-import ctn.imaginarycraft.common.item.ego.weapon.remote.MagicBulletWeaponItem;
+import ctn.imaginarycraft.common.world.item.ego.weapon.remote.gun.MagicBulletWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.util.GunWeaponUtil;
 import net.minecraft.client.AttackIndicatorStatus;

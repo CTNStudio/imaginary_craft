@@ -11,7 +11,7 @@ import ctn.imaginarycraft.core.capability.item.IItemLcLevel;
 import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.core.capability.item.ItemLcLevel;
 import ctn.imaginarycraft.init.ModCapabilitys;
-import ctn.imaginarycraft.init.entiey.AbnormalitiesEntityTypes;
+import ctn.imaginarycraft.init.world.entiey.AbnormalitiesEntityTypes;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.item.Item;

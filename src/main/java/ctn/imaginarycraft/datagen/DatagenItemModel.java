@@ -2,10 +2,10 @@ package ctn.imaginarycraft.datagen;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.core.registry.client.ItemPropertyRenderersRegistrar;
-import ctn.imaginarycraft.init.item.ToolItems;
-import ctn.imaginarycraft.init.item.ego.EgoArmorItems;
-import ctn.imaginarycraft.init.item.ego.EgoCurioItems;
-import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
+import ctn.imaginarycraft.init.world.item.ToolItems;
+import ctn.imaginarycraft.init.world.item.ego.EgoArmorItems;
+import ctn.imaginarycraft.init.world.item.ego.EgoCurioItems;
+import ctn.imaginarycraft.init.world.item.ego.EgoWeaponItems;
 import ctn.imaginarycraft.mixed.client.IModelBuilder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
@@ -31,7 +31,7 @@ import static net.minecraft.resources.ResourceLocation.parse;
  * 物品模型数据生成器
  * 用于为模组中的物品生成对应的模型文件
  */
-public class DatagenItemModel extends ItemModelProvider {
+public final class DatagenItemModel extends ItemModelProvider {
   /**
    * 构造函数
    *
@@ -46,23 +46,20 @@ public class DatagenItemModel extends ItemModelProvider {
   protected void registerModels() {
     withExistingParent(EgoCurioItems.REGISTRY, "item/curios/");
     withExistingParent(EgoArmorItems.REGISTRY, "item/armor/");
-    for (DeferredHolder<Item, ? extends Item> itemDeferredHolder : EgoWeaponItems.REGISTRY.getEntries()) {
-      Item item = itemDeferredHolder.get();
+    EgoWeaponItems.REGISTRY.getEntries().stream().map(DeferredHolder::get).forEach(item -> {
       String path = item.toString();
-      ResourceLocation outputLoc = extendWithFolder(path.contains(":") ? ResourceLocation.parse(path) : ResourceLocation.fromNamespaceAndPath(modid, path));
+      ResourceLocation outputLoc = extendWithFolder(path.contains(":") ? parse(path) : fromNamespaceAndPath(modid, path));
       if (!existingFileHelper.exists(outputLoc, MODEL)) {
         geoItem(item);
       }
-    }
+    });
     creativeRationalityTool(ToolItems.CREATIVE_RATIONALITY_TOOL.get());
     chaosSword(ToolItems.CHAOS_SWORD.get());
   }
 
+
   private ResourceLocation extendWithFolder(ResourceLocation rl) {
-    if (rl.getPath().contains("/")) {
-      return rl;
-    }
-    return ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), folder + "/" + rl.getPath());
+    return rl.getPath().contains("/") ? rl : ResourceLocation.fromNamespaceAndPath(rl.getNamespace(), folder + "/" + rl.getPath());
   }
 
   /**

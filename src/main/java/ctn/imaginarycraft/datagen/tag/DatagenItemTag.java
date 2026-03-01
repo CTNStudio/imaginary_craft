@@ -2,8 +2,8 @@ package ctn.imaginarycraft.datagen.tag;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.core.ImaginaryCraftConstants;
-import ctn.imaginarycraft.init.item.ToolItems;
 import ctn.imaginarycraft.init.tag.ModItemTags;
+import ctn.imaginarycraft.init.world.item.ToolItems;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.ItemTagsProvider;

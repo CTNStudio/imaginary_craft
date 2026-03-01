@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.api.virtue;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.ModAttributes;
+import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.RegistryFriendlyByteBuf;

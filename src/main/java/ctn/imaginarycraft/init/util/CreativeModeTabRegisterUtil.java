@@ -2,7 +2,7 @@ package ctn.imaginarycraft.init.util;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
-import ctn.imaginarycraft.init.ModCreativeModeTabs;
+import ctn.imaginarycraft.init.world.item.ModCreativeModeTabs;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;

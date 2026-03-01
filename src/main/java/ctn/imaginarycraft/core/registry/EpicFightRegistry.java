@@ -3,7 +3,7 @@ package ctn.imaginarycraft.core.registry;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.core.ImaginaryCraftConstants;
 import ctn.imaginarycraft.init.ModWeaponCapabilityPresets;
-import ctn.imaginarycraft.init.item.ego.EgoWeaponItems;
+import ctn.imaginarycraft.init.world.item.ego.EgoWeaponItems;
 import ctn.imaginarycraft.mixin.WeaponTypeReloadListenerMixin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;

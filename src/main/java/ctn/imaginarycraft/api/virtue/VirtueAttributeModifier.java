@@ -2,7 +2,7 @@ package ctn.imaginarycraft.api.virtue;
 
 import com.google.common.collect.LinkedHashMultimap;
 import com.google.common.collect.Multimap;
-import ctn.imaginarycraft.init.ModAttributes;
+import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;

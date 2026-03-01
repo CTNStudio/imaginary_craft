@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.datagen.tag;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.ModDamageTypes;
 import ctn.imaginarycraft.init.tag.ModDamageTypeTags;
+import ctn.imaginarycraft.init.world.ModDamageTypes;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.DamageTypeTagsProvider;

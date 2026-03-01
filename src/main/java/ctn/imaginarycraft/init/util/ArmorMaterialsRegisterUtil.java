@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.init.util;
 
-import ctn.imaginarycraft.init.item.ModArmorMaterials;
+import ctn.imaginarycraft.init.world.item.ModArmorMaterials;
 import net.minecraft.Util;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;

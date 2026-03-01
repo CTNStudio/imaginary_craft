@@ -2,8 +2,8 @@ package ctn.imaginarycraft.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import com.llamalad7.mixinextras.sugar.Local;
-import ctn.imaginarycraft.common.item.ego.weapon.template.melee.IMeleeEgoWeaponItem;
-import ctn.imaginarycraft.common.item.ego.weapon.template.remote.IRemoteEgoWeaponItem;
+import ctn.imaginarycraft.api.world.item.IMeleeEgoWeaponItem;
+import ctn.imaginarycraft.api.world.item.IRemoteEgoWeaponItem;
 import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;

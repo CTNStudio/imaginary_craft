@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.client.renderer.item;
 
-import ctn.imaginarycraft.common.item.ego.weapon.melee.RedEyesTachiItem;
+import ctn.imaginarycraft.common.world.item.ego.weapon.melee.special.RedEyesTachiItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;

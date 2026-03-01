@@ -27,21 +27,13 @@ public final class LcDamageUtil {
 
   @Nullable
   public static LcDamageType getLcDamageType(ItemStack itemStack) {
-    if (itemStack.has(ModDataComponents.LC_DAMAGE_TYPE)) {
-      LcDamageType.Component component = itemStack.get(ModDataComponents.LC_DAMAGE_TYPE);
-      if (component == null) {
-        return LcDamageType.PHYSICS;
-      }
-      return component.lcDamageType();
+    IItemLcDamageType colorDamageTypeItem = itemStack.getCapability(ModCapabilitys.LC_DAMAGE_TYPE_ITEM);
+    if (colorDamageTypeItem != null) {
+      return colorDamageTypeItem.getLcDamageType(itemStack);
     }
 
     if (itemStack.getItem() instanceof IItemLcDamageType iItemLcDamageType) {
       return iItemLcDamageType.getLcDamageType(itemStack);
-    }
-
-    IItemLcDamageType colorDamageTypeItem = itemStack.getCapability(ModCapabilitys.LC_DAMAGE_TYPE_ITEM);
-    if (colorDamageTypeItem != null) {
-      return colorDamageTypeItem.getLcDamageType(itemStack);
     }
 
     return LcDamageType.PHYSICS;

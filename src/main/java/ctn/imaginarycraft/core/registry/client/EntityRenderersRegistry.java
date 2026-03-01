@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.core.registry.client;
 
 import ctn.imaginarycraft.client.renderer.entity.MagicBulletRenderer;
-import ctn.imaginarycraft.common.entity.abnormalities.ordeals.violet.GrantUsLove;
+import ctn.imaginarycraft.common.world.entity.abnormalities.ordeals.violet.GrantUsLove;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.entiey.AbnormalitiesEntityTypes;
+import ctn.imaginarycraft.init.world.entiey.AbnormalitiesEntityTypes;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

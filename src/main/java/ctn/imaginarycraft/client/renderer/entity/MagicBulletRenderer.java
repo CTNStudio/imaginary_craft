@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import ctn.imaginarycraft.common.entity.projectile.MagicBulletEntity;
+import ctn.imaginarycraft.common.world.entity.projectile.MagicBulletEntity;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;

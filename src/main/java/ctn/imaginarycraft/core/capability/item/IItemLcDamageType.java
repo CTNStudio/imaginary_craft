@@ -25,5 +25,7 @@ public interface IItemLcDamageType {
    * 获取可以造成的伤害类型 一般用于描述
    */
   @NotNull
-  Set<LcDamageType> getCanCauseLcDamageTypes(final ItemStack stack);
+  default Set<LcDamageType> getCanCauseLcDamageTypes(final ItemStack stack) {
+    return Set.of();
+  }
 }

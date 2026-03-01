@@ -13,10 +13,10 @@
  *   <li>{@link ctn.imaginarycraft.eventexecute} - 事件执行处理器</li>
  *   <li>{@link ctn.imaginarycraft.events} - 事件处理系统</li>
  *   <li>{@link ctn.imaginarycraft.init} - 初始化注册系统</li>
- *   <li>{@link ctn.imaginarycraft.linkage} - 第三方联动模块</li>
+ *   <li>{@link ctn.imaginarycraft.mixed} - 混合接口和兼容性层</li>
  *   <li>{@link ctn.imaginarycraft.mixin} - Mixin注入代码</li>
  *   <li>{@link ctn.imaginarycraft.network} - 网络通信模块</li>
- *   <li>{@link ctn.imaginarycraft.registry} - 注册表系统</li>
+ *   <li>{@link ctn.imaginarycraft.linkage} - 第三方联动模块</li>
  *   <li>{@link ctn.imaginarycraft.util} - 工具类</li>
  * </ul>
  *

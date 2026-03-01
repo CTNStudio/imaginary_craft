@@ -1,10 +1,10 @@
 package ctn.imaginarycraft.init.util;
 
-import ctn.imaginarycraft.common.attribute.BasicAttribute;
-import ctn.imaginarycraft.common.attribute.MaxAttribute;
-import ctn.imaginarycraft.common.attribute.MinAttribute;
+import ctn.imaginarycraft.common.world.attribute.BasicAttribute;
+import ctn.imaginarycraft.common.world.attribute.MaxAttribute;
+import ctn.imaginarycraft.common.world.attribute.MinAttribute;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.ModAttributes;
+import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.RangedAttribute;
 import net.neoforged.neoforge.common.BooleanAttribute;
