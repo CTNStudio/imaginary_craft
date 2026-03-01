@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.event.rationality;
+package ctn.imaginarycraft.api.event.rationality;
 
 import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;

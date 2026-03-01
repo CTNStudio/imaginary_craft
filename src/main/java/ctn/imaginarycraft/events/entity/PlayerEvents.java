@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.events.entity;
 
+import ctn.imaginarycraft.api.event.rationality.RationalityModifyEvent;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.event.rationality.RationalityModifyEvent;
 import ctn.imaginarycraft.eventexecute.RationalityEventExecutes;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.player.Player;
