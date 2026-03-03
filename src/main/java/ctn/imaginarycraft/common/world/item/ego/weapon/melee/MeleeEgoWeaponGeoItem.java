@@ -20,7 +20,7 @@ public abstract class MeleeEgoWeaponGeoItem extends MeleeEgoWeaponItem implement
   protected final GeoModel<MeleeEgoWeaponGeoItem> model;
   protected final @Nullable GeoModel<MeleeEgoWeaponGeoItem> guiModel;
 
-  public MeleeEgoWeaponGeoItem(Properties itemProperties, IMeleeEgoWeaponItem.Builder egoWeaponBuilder, GeoModel<MeleeEgoWeaponGeoItem> geoModel, GeoModel<MeleeEgoWeaponGeoItem> guiModel) {
+  public MeleeEgoWeaponGeoItem(Properties itemProperties, IMeleeEgoWeaponItem.Builder egoWeaponBuilder, GeoModel<MeleeEgoWeaponGeoItem> geoModel, @Nullable GeoModel<MeleeEgoWeaponGeoItem> guiModel) {
     super(itemProperties, egoWeaponBuilder);
     this.model = geoModel;
     this.guiModel = guiModel;

@@ -1,14 +1,17 @@
 package ctn.imaginarycraft.init.world;
 
-import ctn.imaginarycraft.init.DamageTypeRegisterUtil;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.damagesource.DamageEffects;
 import net.minecraft.world.damagesource.DamageScaling;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.damagesource.DeathMessageType;
+import org.jetbrains.annotations.NotNull;
 
-public final class ModDamageTypes extends DamageTypeRegisterUtil {
+public final class ModDamageTypes {
   /**
    * 物理
    */
@@ -53,5 +56,41 @@ public final class ModDamageTypes extends DamageTypeRegisterUtil {
     register(context, "ego", ModDamageTypes.EGO, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.3f, DamageEffects.HURT, DeathMessageType.DEFAULT);
     register(context, "melee", ModDamageTypes.MELEE, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.0f, DamageEffects.HURT, DeathMessageType.DEFAULT);
     register(context, "remote", ModDamageTypes.REMOTE, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.0f, DamageEffects.HURT, DeathMessageType.DEFAULT);
+  }
+
+  /**
+   * 创建伤害类型
+   */
+  private static @NotNull ResourceKey<DamageType> register(final String name) {
+    return ResourceKey.create(Registries.DAMAGE_TYPE, ImaginaryCraft.modRl(name));
+  }
+
+  private static Holder.@NotNull Reference<DamageType> register(
+    final BootstrapContext<DamageType> context,
+    final String name,
+    final ResourceKey<DamageType> damageType,
+    final DamageScaling damageScaling,
+    final float exhaustion,
+    final DamageEffects damageEffects,
+    final DeathMessageType deathMessageType
+  ) {
+    return register(context, damageType, new DamageType(name, damageScaling, exhaustion, damageEffects, deathMessageType));
+  }
+
+  private static Holder.@NotNull Reference<DamageType> register(
+    final BootstrapContext<DamageType> context,
+    final String name,
+    final ResourceKey<DamageType> damageType,
+    float exhaustion
+  ) {
+    return register(context, name, damageType, DamageScaling.ALWAYS, exhaustion, DamageEffects.HURT, DeathMessageType.DEFAULT);
+  }
+
+  private static Holder.@NotNull Reference<DamageType> register(
+    final @NotNull BootstrapContext<DamageType> context,
+    final ResourceKey<DamageType> damageType,
+    final DamageType damageType1
+  ) {
+    return context.register(damageType, damageType1);
   }
 }

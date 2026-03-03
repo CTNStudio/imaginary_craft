@@ -4,9 +4,10 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.core.Holder;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.sounds.SoundEvent;
+import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 
-public final class ModSoundEvents extends SoundEventsRegisterUtil {
+public final class ModSoundEvents {
   public static final DeferredRegister<SoundEvent> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.SOUND_EVENT);
 
   public static final Holder<SoundEvent> ARMOR_EQUIP_ZAYIN = registerForHolder("armor_equip_zayin", "item.armor.equip_zayin");
@@ -18,4 +19,8 @@ public final class ModSoundEvents extends SoundEventsRegisterUtil {
   public static final Holder<SoundEvent> SOLEMN_LAMENT_WEAPON_ATTACK_WHITE = registerForHolder("solemn_lament_weapon_attack_white", "item.solemn_lament_weapon.attack.white");
   public static final Holder<SoundEvent> SOLEMN_LAMENT_WEAPON_STONGATTACK_BLACK = registerForHolder("solemn_lament_weapon_stongattack_black", "item.solemn_lament_weapon.stongattack.black");
   public static final Holder<SoundEvent> SOLEMN_LAMENT_WEAPON_STONGATTACK_WHITE = registerForHolder("solemn_lament_weapon_stongattack_white", "item.solemn_lament_weapon.stongattack.white");
+
+  private static DeferredHolder<SoundEvent, SoundEvent> registerForHolder(String id, String location) {
+    return ModSoundEvents.REGISTRY.register(id, () -> SoundEvent.createVariableRangeEvent(ImaginaryCraft.modRl(location)));
+  }
 }

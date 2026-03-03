@@ -24,6 +24,7 @@
   },
   "client": [
     "ItemsPreferenceScreenMixin",
+    "client.BlockEntityWithoutLevelRendererMixin",
     "client.FontMixin",
     "client.GuiMixin",
     "client.ItemRendererMixin",

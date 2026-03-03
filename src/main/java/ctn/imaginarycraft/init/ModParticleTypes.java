@@ -1,23 +1,28 @@
 package ctn.imaginarycraft.init;
 
+import com.mojang.serialization.MapCodec;
 import ctn.imaginarycraft.client.particle.DyeingMagicCircleParticle;
 import ctn.imaginarycraft.client.particle.LcDamageIconParticle;
 import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
 import ctn.imaginarycraft.client.particle.text.DamageTextParticle;
 import ctn.imaginarycraft.client.particle.text.TextParticle;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.core.particles.SimpleParticleType;
 import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.function.Supplier;
 
 /**
  * 粒子类型
  */
-public final class ModParticleTypes extends ParticleTypeRegisterUtil {
+public final class ModParticleTypes {
   public static final DeferredRegister<ParticleType<?>> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.PARTICLE_TYPE);
 
   public static final Supplier<ParticleType<TextParticle.Options>> TEXT = register(
@@ -38,4 +43,47 @@ public final class ModParticleTypes extends ParticleTypeRegisterUtil {
     "solemn_lament_butterfly_black", false);
   public static final DeferredHolder<ParticleType<?>, SimpleParticleType> SOLEMN_LAMENT_BUTTERFLY_WHITE = registerSimpleParticle(
     "solemn_lament_butterfly_white", false);
+
+  private static <T extends ParticleOptions> @NotNull DeferredHolder<ParticleType<?>, ParticleType<T>> register(
+    String id,
+    boolean overrideLimiter,
+    MapCodec<T> mapCodec,
+    StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec
+  ) {
+    return register(
+      id, () -> new SpecialParticleType<>(overrideLimiter, mapCodec, streamCodec));
+  }
+
+  private static DeferredHolder<ParticleType<?>, SimpleParticleType> registerSimpleParticle(String id, boolean overrideLimiter) {
+    return register(id, () -> new SimpleParticleType(overrideLimiter));
+  }
+
+  private static <O extends ParticleType<?>> DeferredHolder<ParticleType<?>, O> register(String id, Supplier<O> particleType) {
+    return ModParticleTypes.REGISTRY.register(id, particleType);
+  }
+
+  private static class SpecialParticleType<T extends ParticleOptions> extends ParticleType<T> {
+    private final StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec;
+    private final MapCodec<T> codec;
+
+    private SpecialParticleType(
+      final boolean overrideLimitter,
+      MapCodec<T> codec,
+      StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec
+    ) {
+      super(overrideLimitter);
+      this.codec = codec;
+      this.streamCodec = streamCodec;
+    }
+
+    @Override
+    public MapCodec<T> codec() {
+      return codec;
+    }
+
+    @Override
+    public StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec() {
+      return streamCodec;
+    }
+  }
 }
