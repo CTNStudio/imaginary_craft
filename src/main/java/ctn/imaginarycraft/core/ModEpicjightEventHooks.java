@@ -10,9 +10,6 @@ public final class ModEpicjightEventHooks {
 
   private static void skill() {
     RedEyesTachiItem.phaseSwitch();
-//    EpicFightEventHooks.Player.CAST_SKILL.registerContextAwareEvent(event -> {
-//
-//    });
   }
 
   private ModEpicjightEventHooks() {
