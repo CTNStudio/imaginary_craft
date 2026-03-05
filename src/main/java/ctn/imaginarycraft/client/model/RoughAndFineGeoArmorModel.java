@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.client.model;
 
-import software.bernie.geckolib.animatable.GeoAnimatable;
+import software.bernie.geckolib.animatable.*;
 
 public class RoughAndFineGeoArmorModel<T extends GeoAnimatable> extends ModGeoArmorModel<T> {
   public RoughAndFineGeoArmorModel(String name) {

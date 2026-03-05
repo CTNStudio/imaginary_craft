@@ -1,15 +1,13 @@
 package ctn.imaginarycraft.client;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.StringRepresentable;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.resources.*;
+import net.minecraft.util.*;
+import org.jetbrains.annotations.*;
 
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.*;
+import java.util.concurrent.*;
 
 public enum ModFontIcon implements StringRepresentable {
   PHYSICS(0, "physics", "\uf000", ImaginaryCraft.modRl("particle/damage_type/physics"), 16, 16),

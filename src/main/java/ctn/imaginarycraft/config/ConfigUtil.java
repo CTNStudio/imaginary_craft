@@ -1,11 +1,11 @@
 package ctn.imaginarycraft.config;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.neoforged.neoforge.common.ModConfigSpec;
-import org.apache.commons.lang3.tuple.Pair;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.core.*;
+import net.neoforged.neoforge.common.*;
+import org.apache.commons.lang3.tuple.*;
+import org.jetbrains.annotations.*;
 
-import java.util.function.Function;
+import java.util.function.*;
 
 public abstract class ConfigUtil {
   protected static ModConfigSpec.@NotNull DoubleValue define(ModConfigSpec.@NotNull Builder builder,

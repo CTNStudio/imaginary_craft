@@ -1,18 +1,16 @@
 package ctn.imaginarycraft.client.renderer.providers;
 
-import ctn.imaginarycraft.client.renderer.armor.RoughAndFineArmorRenderer;
-import net.minecraft.client.model.HumanoidModel;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.animatable.client.GeoRenderProvider;
-import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.renderer.GeoArmorRenderer;
+import ctn.imaginarycraft.client.renderer.armor.*;
+import net.minecraft.client.model.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.*;
+import software.bernie.geckolib.animatable.*;
+import software.bernie.geckolib.animatable.client.*;
+import software.bernie.geckolib.model.*;
+import software.bernie.geckolib.renderer.*;
 
-import javax.annotation.Nullable;
-import java.util.function.Function;
+import javax.annotation.*;
+import java.util.function.*;
 
 /**
  * 盔甲渲染提供程序

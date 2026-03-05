@@ -1,13 +1,11 @@
 package ctn.imaginarycraft.client.eventexecute;
 
-import ctn.imaginarycraft.api.IGunWeapon;
-import ctn.imaginarycraft.common.payload.tos.PlayerIGunWeaponPayload;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.Options;
-import net.minecraft.client.player.LocalPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.common.payload.tos.*;
+import net.minecraft.client.*;
+import net.minecraft.client.player.*;
+import net.minecraft.world.*;
+import net.minecraft.world.item.*;
 
 /**
  * 处理玩家输入事件的执行类

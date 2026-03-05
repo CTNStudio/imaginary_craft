@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.core;
 
-import ctn.imaginarycraft.AppMainKt;
+import ctn.imaginarycraft.*;
 
 /**
  * 执行入口。这部分与模组无关，用于处理一些模组外，开发时会用到的工具。

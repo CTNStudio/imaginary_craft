@@ -1,27 +1,24 @@
 package ctn.imaginarycraft.datagen.i18n;
 
-import ctn.imaginarycraft.config.ConfigUtil;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.datagen.DatagenSoundDefinitionsProvider;
-import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponentType;
-import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.sounds.SoundEvent;
-import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.effect.MobEffect;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.common.ModConfigSpec;
-import net.neoforged.neoforge.common.data.LanguageProvider;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.config.*;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.datagen.*;
+import net.minecraft.core.*;
+import net.minecraft.core.component.*;
+import net.minecraft.data.*;
+import net.minecraft.resources.*;
+import net.minecraft.sounds.*;
+import net.minecraft.world.damagesource.*;
+import net.minecraft.world.effect.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.item.*;
+import net.neoforged.neoforge.common.*;
+import net.neoforged.neoforge.common.data.*;
+import org.jetbrains.annotations.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.function.Supplier;
+import java.util.*;
+import java.util.function.*;
 
 
 public abstract class DatagenI18n extends LanguageProvider {

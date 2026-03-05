@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.mixed;
 
-import ctn.imaginarycraft.api.LcImmuneType;
-import net.neoforged.neoforge.common.damagesource.DamageContainer;
-import org.spongepowered.asm.mixin.Unique;
+import ctn.imaginarycraft.api.*;
+import net.neoforged.neoforge.common.damagesource.*;
+import org.spongepowered.asm.mixin.*;
 
 public interface IDamageContainer {
   static IDamageContainer of(DamageContainer damageContainer) {

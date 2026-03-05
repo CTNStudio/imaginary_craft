@@ -1,16 +1,15 @@
 package ctn.imaginarycraft.client.events;
 
-import ctn.imaginarycraft.client.eventexecute.EntityRenderEventExecute;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.entity.EntityRenderDispatcher;
-import net.minecraft.client.renderer.entity.EntityRenderer;
-import net.minecraft.client.renderer.entity.player.PlayerRenderer;
-import net.minecraft.world.entity.player.Player;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RenderPlayerEvent;
+import ctn.imaginarycraft.client.eventexecute.*;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.client.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.client.renderer.entity.player.*;
+import net.minecraft.world.entity.player.*;
+import net.neoforged.api.distmarker.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.fml.common.*;
+import net.neoforged.neoforge.client.event.*;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID, value = Dist.CLIENT)
 public final class EntityRenderEvents {

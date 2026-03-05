@@ -1,12 +1,12 @@
 package ctn.imaginarycraft.eventexecute;
 
-import ctn.imaginarycraft.api.LcLevelType;
-import ctn.imaginarycraft.core.capability.entity.IEntityAbnormalities;
-import ctn.imaginarycraft.util.LcLevelUtil;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.core.capability.entity.*;
+import ctn.imaginarycraft.util.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.*;
 
-import javax.annotation.Nullable;
+import javax.annotation.*;
 
 // TODO 精神伤害之类的不能被原版防御处理
 public final class LcDamageEventExecutes {

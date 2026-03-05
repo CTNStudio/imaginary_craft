@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.mixed.client;
 
-import net.neoforged.neoforge.client.model.generators.ModelBuilder;
-import org.spongepowered.asm.mixin.Unique;
+import net.neoforged.neoforge.client.model.generators.*;
+import org.spongepowered.asm.mixin.*;
 
-import java.util.Map;
+import java.util.*;
 
 public interface IModelBuilder<T extends ModelBuilder<T>> {
   static <T extends ModelBuilder<T>> IModelBuilder<T> of(ModelBuilder<T> modelBuilder) {

@@ -1,13 +1,12 @@
 package ctn.imaginarycraft.api.world.item;
 
-import ctn.imaginarycraft.api.LcDamageType;
-import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
-import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.component.ItemAttributeModifiers;
-import org.jetbrains.annotations.Nullable;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.core.capability.item.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.component.*;
+import org.jetbrains.annotations.*;
 
-import java.util.Set;
+import java.util.*;
 
 /**
  * 所有E.G.O武器都应该继承这个

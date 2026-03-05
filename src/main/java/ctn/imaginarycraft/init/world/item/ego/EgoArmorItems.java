@@ -1,31 +1,24 @@
 package ctn.imaginarycraft.init.world.item.ego;
 
-import com.mojang.datafixers.util.Function5;
-import ctn.imaginarycraft.api.LcLevelType;
-import ctn.imaginarycraft.client.model.ModGeoArmorModel;
-import ctn.imaginarycraft.client.renderer.providers.ModGeoArmourRenderProvider;
-import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
-import ctn.imaginarycraft.common.world.item.ego.armor.EgoArmorItem;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.core.ImaginaryCraftConstants;
-import ctn.imaginarycraft.datagen.i18n.ZhCn;
-import ctn.imaginarycraft.init.world.ModArmorMaterials;
-import ctn.imaginarycraft.init.world.ModAttributes;
-import ctn.imaginarycraft.util.LcLevelUtil;
-import net.minecraft.core.Holder;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.item.ArmorItem;
-import net.minecraft.world.item.ArmorMaterial;
-import net.minecraft.world.item.Item;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.animatable.client.GeoRenderProvider;
+import com.mojang.datafixers.util.*;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.client.model.*;
+import ctn.imaginarycraft.client.renderer.providers.*;
+import ctn.imaginarycraft.common.components.*;
+import ctn.imaginarycraft.common.world.item.ego.armor.*;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.datagen.i18n.*;
+import ctn.imaginarycraft.init.world.*;
+import ctn.imaginarycraft.util.*;
+import net.minecraft.core.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.neoforge.registries.*;
+import org.jetbrains.annotations.*;
+import software.bernie.geckolib.animatable.client.*;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public final class EgoArmorItems {
   public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(ImaginaryCraft.ID);

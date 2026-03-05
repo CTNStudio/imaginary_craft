@@ -1,14 +1,12 @@
 package ctn.imaginarycraft.init.world.entiey;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.world.entity.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.neoforge.registries.*;
 
-import java.util.function.Supplier;
+import java.util.function.*;
 
 public final class ModEntityTypes {
   public static final DeferredRegister<EntityType<?>> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.ENTITY_TYPE);

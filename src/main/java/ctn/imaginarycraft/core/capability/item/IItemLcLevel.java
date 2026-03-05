@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.core.capability.item;
 
-import ctn.imaginarycraft.api.LcLevelType;
-import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.Nullable;
+import ctn.imaginarycraft.api.*;
+import net.minecraft.world.item.*;
+import org.jetbrains.annotations.*;
 
 @FunctionalInterface
 public interface IItemLcLevel {

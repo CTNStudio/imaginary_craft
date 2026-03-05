@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.client.util;
 
-import net.minecraft.network.chat.TextColor;
+import net.minecraft.network.chat.*;
 
 /**
  * 颜色工具类

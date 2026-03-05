@@ -1,12 +1,12 @@
 package ctn.imaginarycraft.core.registry;
 
-import com.mojang.brigadier.CommandDispatcher;
-import ctn.imaginarycraft.common.command.RationalityCommands;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.commands.CommandSourceStack;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.RegisterCommandsEvent;
+import com.mojang.brigadier.*;
+import ctn.imaginarycraft.common.command.*;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.commands.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.fml.common.*;
+import net.neoforged.neoforge.event.*;
 
 /**
  * 指令事件

@@ -1,15 +1,13 @@
 package ctn.imaginarycraft.common.payload.tos;
 
-import ctn.imaginarycraft.api.IPlayerItemAttackClick;
-import ctn.imaginarycraft.common.payload.api.ToServerPayload;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.util.PayloadUtil;
-import ctn.imaginarycraft.util.PlayerKeyClickUtil;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.server.level.ServerPlayer;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.common.payload.api.*;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.util.*;
+import io.netty.buffer.*;
+import net.minecraft.network.codec.*;
+import net.minecraft.network.protocol.common.custom.*;
+import net.minecraft.server.level.*;
 
 public record PlayerKeyClickPayload(
   String keyName,

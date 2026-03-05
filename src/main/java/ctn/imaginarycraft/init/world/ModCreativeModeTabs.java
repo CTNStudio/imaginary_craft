@@ -1,24 +1,16 @@
 package ctn.imaginarycraft.init.world;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.datagen.i18n.ZhCn;
-import ctn.imaginarycraft.init.world.item.ModItems;
-import ctn.imaginarycraft.init.world.item.ToolItems;
-import ctn.imaginarycraft.init.world.item.WeaponItems;
-import ctn.imaginarycraft.init.world.item.ego.EgoArmorItems;
-import ctn.imaginarycraft.init.world.item.ego.EgoCurioItems;
-import ctn.imaginarycraft.init.world.item.ego.EgoItems;
-import ctn.imaginarycraft.init.world.item.ego.EgoWeaponItems;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.ItemStack;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.datagen.i18n.*;
+import ctn.imaginarycraft.init.world.item.*;
+import ctn.imaginarycraft.init.world.item.ego.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.resources.*;
+import net.minecraft.world.item.*;
+import net.neoforged.neoforge.registries.*;
 
-import java.util.function.BiFunction;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /**
  * 创造模式物品栏

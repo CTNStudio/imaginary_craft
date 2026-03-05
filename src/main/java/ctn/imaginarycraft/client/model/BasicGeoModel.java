@@ -1,11 +1,11 @@
 package ctn.imaginarycraft.client.model;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.animatable.GeoAnimatable;
-import software.bernie.geckolib.cache.GeckoLibCache;
-import software.bernie.geckolib.model.GeoModel;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.resources.*;
+import org.jetbrains.annotations.*;
+import software.bernie.geckolib.animatable.*;
+import software.bernie.geckolib.cache.*;
+import software.bernie.geckolib.model.*;
 
 
 public abstract class BasicGeoModel<T extends GeoAnimatable> extends GeoModel<T> {

@@ -1,21 +1,18 @@
 package ctn.imaginarycraft.api.virtue;
 
-import com.mojang.serialization.Codec;
-import ctn.imaginarycraft.api.ColourText;
-import ctn.imaginarycraft.client.util.ColorUtil;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.ModAttachments;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.core.Holder;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.ByIdMap;
-import net.minecraft.util.StringRepresentable;
-import net.neoforged.neoforge.attachment.AttachmentType;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.mojang.serialization.*;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.client.util.*;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.init.*;
+import io.netty.buffer.*;
+import net.minecraft.core.*;
+import net.minecraft.network.codec.*;
+import net.minecraft.util.*;
+import net.neoforged.neoforge.attachment.*;
+import org.jetbrains.annotations.*;
 
-import java.util.function.IntFunction;
+import java.util.function.*;
 
 /**
  * 心核四德 简称 四德

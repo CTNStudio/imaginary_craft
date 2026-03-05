@@ -1,7 +1,6 @@
 package ctn.imaginarycraft.core;
 
-import ctn.imaginarycraft.common.world.item.ego.weapon.melee.special.RedEyesTachiItem;
-import yesman.epicfight.api.event.EpicFightEventHooks;
+import ctn.imaginarycraft.common.world.item.ego.weapon.melee.special.*;
 
 public final class ModEpicjightEventHooks {
 
@@ -10,9 +9,7 @@ public final class ModEpicjightEventHooks {
   }
 
   private static void skill() {
-    EpicFightEventHooks.Player.TICK_EPICFIGHT_MODE.registerEvent(event -> {
-      RedEyesTachiItem.phaseSwitch(event);
-    });
+    RedEyesTachiItem.phaseSwitch();
 //    EpicFightEventHooks.Player.CAST_SKILL.registerContextAwareEvent(event -> {
 //
 //    });

@@ -1,18 +1,17 @@
 package ctn.imaginarycraft.util;
 
-import ctn.imaginarycraft.api.LcLevelType;
-import ctn.imaginarycraft.core.capability.block.IBlockLcLevel;
-import ctn.imaginarycraft.core.capability.entity.IEntityLcLevel;
-import ctn.imaginarycraft.core.capability.item.IItemLcLevel;
-import ctn.imaginarycraft.core.registry.CapabilityRegistry;
-import ctn.imaginarycraft.init.ModCapabilitys;
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.neoforged.neoforge.registries.DeferredItem;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.core.capability.block.*;
+import ctn.imaginarycraft.core.capability.entity.*;
+import ctn.imaginarycraft.core.capability.item.*;
+import ctn.imaginarycraft.core.registry.*;
+import ctn.imaginarycraft.init.*;
+import net.minecraft.core.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.*;
+import net.neoforged.neoforge.registries.*;
+import org.jetbrains.annotations.*;
 
 import javax.annotation.Nullable;
 

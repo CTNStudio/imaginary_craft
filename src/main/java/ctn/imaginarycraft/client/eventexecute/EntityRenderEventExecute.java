@@ -1,17 +1,13 @@
 package ctn.imaginarycraft.client.eventexecute;
 
-import ctn.imaginarycraft.common.world.item.ego.armor.EgoArmorItem;
-import ctn.imaginarycraft.init.world.item.ego.EgoArmorItems;
-import net.minecraft.client.model.PlayerModel;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.Item;
-import net.neoforged.neoforge.registries.DeferredItem;
+import ctn.imaginarycraft.common.world.item.ego.armor.*;
+import ctn.imaginarycraft.init.world.item.ego.*;
+import net.minecraft.client.model.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.*;
+import net.neoforged.neoforge.registries.*;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public final class EntityRenderEventExecute {
   // 预定义需要隐藏模型部件的护甲映射，作为常量以避免重复创建

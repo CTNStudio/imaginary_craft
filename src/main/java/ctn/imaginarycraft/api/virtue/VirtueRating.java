@@ -1,12 +1,10 @@
 package ctn.imaginarycraft.api.virtue;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.util.StringRepresentable;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.util.*;
+import org.jetbrains.annotations.*;
 
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 /**
  * 四德评级

@@ -1,18 +1,16 @@
 package ctn.imaginarycraft.client.events;
 
-import ctn.imaginarycraft.api.LcLevelType;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.util.LcLevelUtil;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.world.item.ItemStack;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.GatherEffectScreenTooltipsEvent;
-import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.util.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.world.item.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.fml.common.*;
+import net.neoforged.neoforge.client.event.*;
+import net.neoforged.neoforge.event.entity.player.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * 物品提示/描述处理

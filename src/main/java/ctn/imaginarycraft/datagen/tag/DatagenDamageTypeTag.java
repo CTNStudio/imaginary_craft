@@ -1,19 +1,18 @@
 package ctn.imaginarycraft.datagen.tag;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.tag.ModDamageTypeTags;
-import ctn.imaginarycraft.init.world.ModDamageTypes;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.DamageTypeTagsProvider;
-import net.minecraft.tags.DamageTypeTags;
-import net.minecraft.world.damagesource.DamageTypes;
-import net.neoforged.neoforge.common.Tags;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.init.tag.*;
+import ctn.imaginarycraft.init.world.*;
+import net.minecraft.core.*;
+import net.minecraft.data.*;
+import net.minecraft.data.tags.*;
+import net.minecraft.tags.*;
+import net.minecraft.world.damagesource.*;
+import net.neoforged.neoforge.common.*;
+import net.neoforged.neoforge.common.data.*;
+import org.jetbrains.annotations.*;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.*;
 
 public final class DatagenDamageTypeTag extends DamageTypeTagsProvider {
   public DatagenDamageTypeTag(final PackOutput output, final CompletableFuture<HolderLookup.Provider> lookupProvider, final ExistingFileHelper existingFileHelper) {

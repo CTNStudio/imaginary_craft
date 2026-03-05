@@ -1,12 +1,9 @@
 package ctn.imaginarycraft.util;
 
-import ctn.imaginarycraft.api.virtue.VirtueFortitude;
-import ctn.imaginarycraft.api.virtue.VirtueJustice;
-import ctn.imaginarycraft.api.virtue.VirtuePrudence;
-import ctn.imaginarycraft.api.virtue.VirtueTemperance;
-import ctn.imaginarycraft.init.ModAttachments;
-import net.minecraft.util.Mth;
-import net.minecraft.world.entity.player.Player;
+import ctn.imaginarycraft.api.virtue.*;
+import ctn.imaginarycraft.init.*;
+import net.minecraft.util.*;
+import net.minecraft.world.entity.player.*;
 
 /**
  * 四德属性系统

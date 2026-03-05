@@ -1,22 +1,18 @@
 package ctn.imaginarycraft.init.world.entiey;
 
-import ctn.imaginarycraft.api.LcLevelType;
-import ctn.imaginarycraft.common.world.entity.abnormalities.TrainingRabbits;
-import ctn.imaginarycraft.common.world.entity.abnormalities.ordeals.violet.GrantUsLove;
-import ctn.imaginarycraft.common.world.entity.projectile.MagicBulletEntity;
-import ctn.imaginarycraft.common.world.entity.projectile.ParadiseLostSpikeweed;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.core.registry.CapabilityRegistry;
-import ctn.imaginarycraft.datagen.i18n.ZhCn;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.MobCategory;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.common.world.entity.abnormalities.*;
+import ctn.imaginarycraft.common.world.entity.abnormalities.ordeals.violet.*;
+import ctn.imaginarycraft.common.world.entity.projectile.*;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.core.registry.*;
+import ctn.imaginarycraft.datagen.i18n.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.world.entity.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.neoforge.registries.*;
 
-import java.util.function.Supplier;
+import java.util.function.*;
 
 public final class AbnormalitiesEntityTypes {
   public static final DeferredRegister<EntityType<?>> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.ENTITY_TYPE);

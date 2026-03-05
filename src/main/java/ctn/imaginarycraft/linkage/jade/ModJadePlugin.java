@@ -1,17 +1,13 @@
 package ctn.imaginarycraft.linkage.jade;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.block.Block;
-import snownee.jade.api.IWailaClientRegistration;
-import snownee.jade.api.IWailaCommonRegistration;
-import snownee.jade.api.IWailaPlugin;
-import snownee.jade.api.WailaPlugin;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.resources.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.block.*;
+import snownee.jade.api.*;
 
 @WailaPlugin
-public final class ModPlugin implements IWailaPlugin {
+public final class ModJadePlugin implements IWailaPlugin {
   public static final ResourceLocation ENTITY_LC_LEVEL = ImaginaryCraft.modRl("entity_lobotomy_corporation_level");
   public static final ResourceLocation BLOCK_LC_LEVEL = ImaginaryCraft.modRl("block_lobotomy_corporation_level");
   public static final ResourceLocation ENTITY_LC_VULNERABLE = ImaginaryCraft.modRl("entity_lobotomy_corporation_vulnerable");

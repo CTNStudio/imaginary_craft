@@ -1,12 +1,11 @@
 package ctn.imaginarycraft.mixed;
 
-import ctn.imaginarycraft.api.LcDamageType;
-import ctn.imaginarycraft.api.LcLevelType;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.item.ItemStack;
-import org.spongepowered.asm.mixin.Unique;
+import ctn.imaginarycraft.api.*;
+import net.minecraft.world.damagesource.*;
+import net.minecraft.world.item.*;
+import org.spongepowered.asm.mixin.*;
 
-import javax.annotation.Nullable;
+import javax.annotation.*;
 
 public interface IDamageSource {
   static IDamageSource of(DamageSource source) {

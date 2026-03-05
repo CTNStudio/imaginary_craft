@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.world.attribute;
 
-import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.*;
 
 public class MinAttribute extends Attribute {
   private final double minValue;

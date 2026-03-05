@@ -1,24 +1,19 @@
 package ctn.imaginarycraft.datagen;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.datagen.i18n.DatagenI18n;
-import ctn.imaginarycraft.datagen.tag.DatagenBlockTag;
-import ctn.imaginarycraft.datagen.tag.DatagenDamageTypeTag;
-import ctn.imaginarycraft.datagen.tag.DatagenItemTag;
-import ctn.imaginarycraft.init.world.ModDamageTypes;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistrySetBuilder;
-import net.minecraft.core.registries.Registries;
-import net.minecraft.data.DataGenerator;
-import net.minecraft.data.DataProvider;
-import net.minecraft.data.PackOutput;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import net.neoforged.neoforge.data.event.GatherDataEvent;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.datagen.i18n.*;
+import ctn.imaginarycraft.datagen.tag.*;
+import ctn.imaginarycraft.init.world.*;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.data.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.fml.common.*;
+import net.neoforged.neoforge.common.data.*;
+import net.neoforged.neoforge.data.event.*;
+import org.jetbrains.annotations.*;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.*;
 
 /**
  * 数据生成主类

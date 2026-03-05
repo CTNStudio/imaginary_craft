@@ -1,11 +1,11 @@
 package ctn.imaginarycraft.client.gui.widget;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.client.gui.components.ImageWidget;
-import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.client.*;
+import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.components.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.resources.*;
+import org.jetbrains.annotations.*;
 
 /**
  * 一个基于图像的进度条控件抽象类，支持水平和垂直方向的渲染。

@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.core.capability.entity;
 
-import ctn.imaginarycraft.api.LcLevelType;
-import org.jetbrains.annotations.Nullable;
+import ctn.imaginarycraft.api.*;
+import org.jetbrains.annotations.*;
 
 @FunctionalInterface
 public interface IEntityLcLevel {

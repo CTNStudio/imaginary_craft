@@ -1,12 +1,11 @@
 package ctn.imaginarycraft.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
-import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
-import net.minecraft.world.phys.HitResult;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import yesman.epicfight.client.world.capabilites.entitypatch.player.LocalPlayerPatch;
+import com.llamalad7.mixinextras.injector.wrapoperation.*;
+import com.llamalad7.mixinextras.sugar.*;
+import net.minecraft.world.phys.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import yesman.epicfight.client.world.capabilites.entitypatch.player.*;
 
 @Mixin(LocalPlayerPatch.class)
 public abstract class LocalPlayerPatchMixin {

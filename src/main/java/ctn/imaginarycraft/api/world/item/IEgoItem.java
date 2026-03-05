@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.api.world.item;
 
-import ctn.imaginarycraft.api.virtue.VirtueRating;
-import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
-import ctn.imaginarycraft.init.ModDataComponents;
-import net.minecraft.world.item.Item;
+import ctn.imaginarycraft.api.virtue.*;
+import ctn.imaginarycraft.common.components.*;
+import ctn.imaginarycraft.init.*;
+import net.minecraft.world.item.*;
 
 /**
  * 所有E.G.O类的物品都应该继承这个

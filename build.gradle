@@ -87,6 +87,8 @@ repositories {
     name = "RedlanceMinecraft"
     url = "https://repo.redlance.org/public"
   }
+
+  maven { url = "https://maven.firstdark.dev/snapshots" }
 }
 
 base {
@@ -186,6 +188,8 @@ dependencies {
 
   // 添加目录的jar文件作为库
   implementation(fileTree(dir: "额外资源/mods", include: ["*.jar"]))
+
+  implementation("com.lowdragmc.ldlib2:ldlib2-neoforge-${minecraft_version}:${ldlib2_version}:all")
 }
 
 

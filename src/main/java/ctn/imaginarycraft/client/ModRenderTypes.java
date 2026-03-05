@@ -1,13 +1,11 @@
 package ctn.imaginarycraft.client;
 
-import com.mojang.blaze3d.vertex.DefaultVertexFormat;
-import com.mojang.blaze3d.vertex.VertexFormat;
-import net.minecraft.Util;
-import net.minecraft.client.renderer.RenderStateShard;
-import net.minecraft.client.renderer.RenderType;
-import net.minecraft.resources.ResourceLocation;
+import com.mojang.blaze3d.vertex.*;
+import net.minecraft.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.resources.*;
 
-import java.util.function.BiFunction;
+import java.util.function.*;
 
 public final class ModRenderTypes {
   public static final BiFunction<ResourceLocation, RenderStateShard.TransparencyStateShard, RenderType> MAGIC_BULLET_MAGIC_CIRCLE = Util.memoize(

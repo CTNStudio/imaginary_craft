@@ -1,16 +1,15 @@
 package ctn.imaginarycraft.init.world.item.ego;
 
-import ctn.imaginarycraft.api.world.item.IEgoItem;
-import ctn.imaginarycraft.common.world.item.ego.EgoItem;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.datagen.i18n.ZhCn;
-import net.minecraft.world.item.Item;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.api.world.item.*;
+import ctn.imaginarycraft.common.world.item.ego.*;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.datagen.i18n.*;
+import net.minecraft.world.item.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.neoforge.registries.*;
+import org.jetbrains.annotations.*;
 
-import java.util.function.Function;
+import java.util.function.*;
 
 public final class EgoItems {
   public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(ImaginaryCraft.ID);

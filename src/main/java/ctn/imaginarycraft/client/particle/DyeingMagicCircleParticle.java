@@ -1,26 +1,23 @@
 package ctn.imaginarycraft.client.particle;
 
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import ctn.imaginarycraft.client.ModParticleRenderTypes;
-import ctn.imaginarycraft.init.ModParticleTypes;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Camera;
-import net.minecraft.client.multiplayer.ClientLevel;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
+import ctn.imaginarycraft.client.*;
+import ctn.imaginarycraft.init.*;
+import io.netty.buffer.*;
+import net.minecraft.client.*;
+import net.minecraft.client.multiplayer.*;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
-import org.joml.Quaternionf;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.texture.*;
+import net.minecraft.core.particles.*;
+import net.minecraft.network.codec.*;
+import net.minecraft.util.*;
+import org.jetbrains.annotations.*;
+import org.joml.*;
 
-import java.util.List;
+import java.util.*;
 
 public class DyeingMagicCircleParticle extends TextureSheetParticle {
   private float xRot;

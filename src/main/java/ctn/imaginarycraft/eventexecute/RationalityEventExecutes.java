@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.eventexecute;
 
-import ctn.imaginarycraft.config.ModConfig;
-import ctn.imaginarycraft.util.RationalityUtil;
-import net.minecraft.server.level.ServerPlayer;
+import ctn.imaginarycraft.config.*;
+import ctn.imaginarycraft.util.*;
+import net.minecraft.server.level.*;
 
 public final class RationalityEventExecutes {
   /**

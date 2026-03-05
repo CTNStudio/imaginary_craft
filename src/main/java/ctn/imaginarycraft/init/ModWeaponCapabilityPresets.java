@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.init;
 
-import net.minecraft.world.item.Item;
-import yesman.epicfight.world.capabilities.item.WeaponCapability;
+import net.minecraft.world.item.*;
+import yesman.epicfight.world.capabilities.item.*;
 
-import java.util.function.Function;
+import java.util.function.*;
 
 public final class ModWeaponCapabilityPresets {
   /**

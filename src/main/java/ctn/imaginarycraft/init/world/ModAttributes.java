@@ -1,18 +1,14 @@
 package ctn.imaginarycraft.init.world;
 
-import ctn.imaginarycraft.common.world.attribute.BasicAttribute;
-import ctn.imaginarycraft.common.world.attribute.MaxAttribute;
-import ctn.imaginarycraft.common.world.attribute.MinAttribute;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.RangedAttribute;
-import net.neoforged.neoforge.common.BooleanAttribute;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.common.world.attribute.*;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.world.entity.ai.attributes.*;
+import net.neoforged.neoforge.common.*;
+import net.neoforged.neoforge.registries.*;
+import org.jetbrains.annotations.*;
 
-import java.util.function.Function;
+import java.util.function.*;
 
 
 public final class ModAttributes {

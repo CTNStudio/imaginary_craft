@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.api;
 
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.player.*;
+import net.minecraft.world.item.*;
+import org.jetbrains.annotations.*;
 
 /**
  * 枪械武器接口

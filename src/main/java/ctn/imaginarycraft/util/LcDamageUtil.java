@@ -1,20 +1,16 @@
 package ctn.imaginarycraft.util;
 
-import ctn.imaginarycraft.api.LcDamageType;
-import ctn.imaginarycraft.api.LcLevelType;
-import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
-import ctn.imaginarycraft.init.ModCapabilitys;
-import ctn.imaginarycraft.init.ModDataComponents;
-import ctn.imaginarycraft.mixed.IDamageSource;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.item.ItemStack;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.core.capability.item.*;
+import ctn.imaginarycraft.init.*;
+import ctn.imaginarycraft.mixed.*;
+import net.minecraft.world.damagesource.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.item.*;
+import org.jetbrains.annotations.*;
 
-import java.util.Set;
+import java.util.*;
 
 public final class LcDamageUtil {
   /**

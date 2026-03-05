@@ -1,12 +1,11 @@
 package ctn.imaginarycraft.mixin;
 
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Accessor;
-import org.spongepowered.asm.mixin.gen.Invoker;
-import yesman.epicfight.api.animation.AnimationManager;
-import yesman.epicfight.api.animation.types.AttackAnimation;
-import yesman.epicfight.skill.weaponinnate.ConditionalWeaponInnateSkill;
-import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.gen.*;
+import yesman.epicfight.api.animation.*;
+import yesman.epicfight.api.animation.types.*;
+import yesman.epicfight.skill.weaponinnate.*;
+import yesman.epicfight.world.capabilities.entitypatch.player.*;
 
 @Mixin(ConditionalWeaponInnateSkill.class)
 public interface ConditionalWeaponInnateSkillMixin {

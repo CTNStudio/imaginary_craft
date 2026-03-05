@@ -1,19 +1,17 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.melee;
 
-import ctn.imaginarycraft.api.world.item.IMeleeEgoWeaponItem;
-import ctn.imaginarycraft.client.model.GuiItemModel;
-import ctn.imaginarycraft.client.model.ModGeoItemModel;
-import ctn.imaginarycraft.client.renderer.providers.ModGeoItemRenderProvider;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.animatable.GeoItem;
-import software.bernie.geckolib.animatable.client.GeoRenderProvider;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.model.GeoModel;
-import software.bernie.geckolib.util.GeckoLibUtil;
+import ctn.imaginarycraft.api.world.item.*;
+import ctn.imaginarycraft.client.model.*;
+import ctn.imaginarycraft.client.renderer.providers.*;
+import org.jetbrains.annotations.*;
+import software.bernie.geckolib.animatable.*;
+import software.bernie.geckolib.animatable.client.*;
+import software.bernie.geckolib.animatable.instance.*;
+import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.model.*;
+import software.bernie.geckolib.util.*;
 
-import java.util.function.Consumer;
+import java.util.function.*;
 
 public abstract class MeleeEgoWeaponGeoItem extends MeleeEgoWeaponItem implements GeoItem {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);

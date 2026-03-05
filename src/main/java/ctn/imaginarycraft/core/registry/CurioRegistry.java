@@ -1,12 +1,12 @@
 package ctn.imaginarycraft.core.registry;
 
-import ctn.imaginarycraft.datagen.DatagenCuriosTest;
-import ctn.imaginarycraft.init.tag.ModItemTags;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
+import ctn.imaginarycraft.datagen.*;
+import ctn.imaginarycraft.init.tag.*;
+import net.minecraft.resources.*;
+import net.minecraft.tags.*;
+import net.minecraft.world.item.*;
 
-import static top.theillusivec4.curios.api.CuriosApi.registerCurioPredicate;
+import static top.theillusivec4.curios.api.CuriosApi.*;
 
 /**
  * 饰品

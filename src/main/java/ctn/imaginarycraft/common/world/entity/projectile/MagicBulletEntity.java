@@ -1,24 +1,17 @@
 package ctn.imaginarycraft.common.world.entity.projectile;
 
-import ctn.imaginarycraft.init.world.ModDamageSources;
-import ctn.imaginarycraft.init.world.ModDamageTypes;
-import ctn.imaginarycraft.init.world.entiey.AbnormalitiesEntityTypes;
-import ctn.imaginarycraft.util.PiercingUtil;
-import ctn.imaginarycraft.util.PiercingUtil.PierceData;
-import net.minecraft.network.syncher.SynchedEntityData;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.level.Level;
-import net.minecraft.world.phys.BlockHitResult;
-import net.minecraft.world.phys.EntityHitResult;
-import net.minecraft.world.phys.Vec3;
+import ctn.imaginarycraft.init.world.*;
+import ctn.imaginarycraft.init.world.entiey.*;
+import ctn.imaginarycraft.util.*;
+import ctn.imaginarycraft.util.PiercingUtil.*;
+import net.minecraft.network.syncher.*;
+import net.minecraft.world.damagesource.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.level.*;
+import net.minecraft.world.phys.*;
 
-import javax.annotation.CheckForNull;
-import javax.annotation.CheckForSigned;
-import javax.annotation.Nonnegative;
-import javax.annotation.Nonnull;
-import java.util.Objects;
+import javax.annotation.*;
+import java.util.*;
 
 public class MagicBulletEntity extends ModBulletEntity {
   @CheckForSigned

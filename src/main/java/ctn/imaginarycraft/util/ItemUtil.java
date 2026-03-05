@@ -1,10 +1,9 @@
 package ctn.imaginarycraft.util;
 
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.*;
 
-import java.util.Arrays;
-import java.util.function.Supplier;
+import java.util.*;
+import java.util.function.*;
 
 public final class ItemUtil {
   @SafeVarargs

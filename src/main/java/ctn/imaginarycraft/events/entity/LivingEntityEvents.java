@@ -1,42 +1,31 @@
 package ctn.imaginarycraft.events.entity;
 
-import ctn.imaginarycraft.api.DelayTaskHolder;
-import ctn.imaginarycraft.api.LcDamageType;
-import ctn.imaginarycraft.api.LcLevelType;
-import ctn.imaginarycraft.client.util.ParticleUtil;
-import ctn.imaginarycraft.common.payload.toc.PlayerDamagePayload;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.eventexecute.LcDamageEventExecutes;
-import ctn.imaginarycraft.init.ModAttachments;
-import ctn.imaginarycraft.mixed.IDamageContainer;
-import ctn.imaginarycraft.mixed.IDamageSource;
-import ctn.imaginarycraft.util.GunWeaponUtil;
-import ctn.imaginarycraft.util.LcDamageUtil;
-import ctn.imaginarycraft.util.RationalityUtil;
-import net.minecraft.core.Holder;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.damagesource.DamageSource;
-import net.minecraft.world.damagesource.DamageType;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.EquipmentSlot;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attribute;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.common.damagesource.DamageContainer;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.client.util.*;
+import ctn.imaginarycraft.common.payload.toc.*;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.eventexecute.*;
+import ctn.imaginarycraft.init.*;
+import ctn.imaginarycraft.mixed.*;
+import ctn.imaginarycraft.util.*;
+import net.minecraft.core.*;
+import net.minecraft.server.level.*;
+import net.minecraft.world.*;
+import net.minecraft.world.damagesource.*;
+import net.minecraft.world.effect.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.player.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.fml.common.*;
+import net.neoforged.neoforge.common.damagesource.*;
 import net.neoforged.neoforge.event.entity.living.*;
-import net.neoforged.neoforge.event.tick.EntityTickEvent;
-import org.jetbrains.annotations.Nullable;
+import net.neoforged.neoforge.event.tick.*;
+import org.jetbrains.annotations.*;
 
-import static net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN;
+import static net.minecraft.world.effect.MobEffects.*;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class LivingEntityEvents {

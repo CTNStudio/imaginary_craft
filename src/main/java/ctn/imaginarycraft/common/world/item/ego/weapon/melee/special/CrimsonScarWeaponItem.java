@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.melee.special;
 
-import ctn.imaginarycraft.api.world.item.IMeleeEgoWeaponItem;
-import ctn.imaginarycraft.common.world.item.ego.weapon.melee.MeleeEgoWeaponGeoItem;
-import software.bernie.geckolib.model.GeoModel;
+import ctn.imaginarycraft.api.world.item.*;
+import ctn.imaginarycraft.common.world.item.ego.weapon.melee.*;
+import software.bernie.geckolib.model.*;
 
 public class CrimsonScarWeaponItem extends MeleeEgoWeaponGeoItem {
 

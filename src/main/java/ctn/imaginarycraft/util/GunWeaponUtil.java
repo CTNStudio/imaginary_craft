@@ -1,12 +1,12 @@
 package ctn.imaginarycraft.util;
 
-import ctn.imaginarycraft.api.IGunWeapon;
-import ctn.imaginarycraft.init.ModAttachments;
-import ctn.imaginarycraft.init.world.ModAttributes;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.player.Player;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.init.*;
+import ctn.imaginarycraft.init.world.*;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.player.*;
 
 /**
  * 枪械武器工具类

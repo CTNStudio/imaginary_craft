@@ -1,42 +1,28 @@
 package ctn.imaginarycraft.client.particle.text;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import com.mojang.math.Axis;
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import ctn.imaginarycraft.client.ModParticleRenderTypes;
-import ctn.imaginarycraft.init.ModParticleTypes;
-import ctn.imaginarycraft.network.codec.CompositeStreamCodecBuilder;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.client.Camera;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.StringSplitter;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.client.particle.TextureSheetParticle;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentSerialization;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.ByIdMap;
-import net.minecraft.util.Mth;
-import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.phys.Vec3;
-import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix4f;
+import com.mojang.blaze3d.vertex.*;
+import com.mojang.math.*;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
+import ctn.imaginarycraft.client.*;
+import ctn.imaginarycraft.init.*;
+import ctn.imaginarycraft.network.codec.*;
+import io.netty.buffer.*;
+import net.minecraft.client.*;
+import net.minecraft.client.gui.*;
+import net.minecraft.client.multiplayer.*;
+import net.minecraft.client.particle.*;
+import net.minecraft.client.renderer.*;
+import net.minecraft.core.particles.*;
+import net.minecraft.network.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.network.codec.*;
+import net.minecraft.util.*;
+import net.minecraft.world.phys.*;
+import org.jetbrains.annotations.*;
+import org.joml.*;
 
-import java.util.List;
+import java.util.*;
 
 // TODO 拆分成伤害，BOSS说话文本，普通文本
 // TODO 待修复显示问题

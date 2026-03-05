@@ -1,19 +1,17 @@
 package ctn.imaginarycraft.init.world.item.ego;
 
-import ctn.imaginarycraft.api.LcDamageType;
-import ctn.imaginarycraft.common.world.item.ego.curio.EgoCurioItem;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.core.ImaginaryCraftConstants;
-import ctn.imaginarycraft.datagen.i18n.ZhCn;
-import net.minecraft.network.chat.Style;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.Item;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.common.world.item.ego.curio.*;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.datagen.i18n.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.neoforge.registries.*;
 
-import java.util.Set;
-import java.util.function.Function;
+import java.util.*;
+import java.util.function.*;
 
 public final class EgoCurioItems {
   public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(ImaginaryCraft.ID);

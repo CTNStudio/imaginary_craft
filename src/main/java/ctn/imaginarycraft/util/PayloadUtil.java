@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.util;
 
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.minecraft.server.level.ServerPlayer;
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.minecraft.network.protocol.common.custom.*;
+import net.minecraft.server.level.*;
+import net.neoforged.neoforge.network.*;
 
 public final class PayloadUtil {
   /**

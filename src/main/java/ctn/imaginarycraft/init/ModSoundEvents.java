@@ -1,11 +1,10 @@
 package ctn.imaginarycraft.init;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.core.Holder;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.sounds.SoundEvent;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.core.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.sounds.*;
+import net.neoforged.neoforge.registries.*;
 
 public final class ModSoundEvents {
   public static final DeferredRegister<SoundEvent> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.SOUND_EVENT);

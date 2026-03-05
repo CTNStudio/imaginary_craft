@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.mixed;
 
-import ctn.imaginarycraft.util.PlayerKeyClickUtil;
-import net.minecraft.world.entity.player.Player;
+import ctn.imaginarycraft.util.*;
+import net.minecraft.world.entity.player.*;
 
 public interface IPlayer {
   static IPlayer of(Player player) {

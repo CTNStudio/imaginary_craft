@@ -1,10 +1,9 @@
 package ctn.imaginarycraft.init.tag;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.ItemTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.resources.*;
+import net.minecraft.tags.*;
+import net.minecraft.world.item.*;
 
 public final class ModItemTags {
   //region E.G.O

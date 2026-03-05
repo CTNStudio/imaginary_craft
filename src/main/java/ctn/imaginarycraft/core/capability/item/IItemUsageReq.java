@@ -1,10 +1,10 @@
 package ctn.imaginarycraft.core.capability.item;
 
-import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
-import ctn.imaginarycraft.init.ModDataComponents;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
+import ctn.imaginarycraft.common.components.*;
+import ctn.imaginarycraft.init.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.*;
 
 /**
  * 带有需求的物品 如果不满足要求则触发

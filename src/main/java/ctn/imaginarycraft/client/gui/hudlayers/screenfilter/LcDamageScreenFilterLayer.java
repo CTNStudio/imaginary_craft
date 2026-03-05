@@ -1,20 +1,17 @@
 package ctn.imaginarycraft.client.gui.hudlayers.screenfilter;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
-import ctn.imaginarycraft.api.LcDamageType;
-import ctn.imaginarycraft.client.gui.hudlayers.BasicHudLayer;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.client.DeltaTracker;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
-import org.jetbrains.annotations.Nullable;
+import com.mojang.blaze3d.systems.*;
+import com.mojang.blaze3d.vertex.*;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.client.gui.hudlayers.*;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.client.*;
+import net.minecraft.client.gui.*;
+import net.minecraft.resources.*;
+import net.minecraft.util.*;
+import org.jetbrains.annotations.*;
 
-import java.util.Iterator;
-import java.util.LinkedHashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class LcDamageScreenFilterLayer extends BasicHudLayer {
   public static final ResourceLocation PHYSICS = ImaginaryCraft.modRl("textures/gui/filter/physics.png");

@@ -1,24 +1,18 @@
 package ctn.imaginarycraft.mixin.client;
 
-import com.mojang.blaze3d.font.GlyphInfo;
-import com.mojang.blaze3d.vertex.VertexConsumer;
-import ctn.imaginarycraft.client.gui.ModStringRenderOutput;
-import ctn.imaginarycraft.mixed.client.IFont;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.font.FontSet;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.Style;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.FormattedCharSequence;
-import net.minecraft.util.StringDecomposer;
-import net.neoforged.neoforge.client.extensions.IFontExtension;
-import org.jetbrains.annotations.NotNull;
-import org.joml.Matrix4f;
-import org.joml.Vector3f;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
+import com.mojang.blaze3d.font.*;
+import com.mojang.blaze3d.vertex.*;
+import ctn.imaginarycraft.client.gui.*;
+import ctn.imaginarycraft.mixed.client.*;
+import net.minecraft.client.gui.*;
+import net.minecraft.client.gui.font.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.resources.*;
+import net.minecraft.util.*;
+import net.neoforged.neoforge.client.extensions.*;
+import org.jetbrains.annotations.*;
+import org.joml.*;
+import org.spongepowered.asm.mixin.*;
 
 @Mixin(Font.class)
 public abstract class FontMixin implements IFontExtension, IFont {

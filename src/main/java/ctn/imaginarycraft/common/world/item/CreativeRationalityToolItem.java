@@ -1,17 +1,15 @@
 package ctn.imaginarycraft.common.world.item;
 
-import ctn.imaginarycraft.init.ModDataComponents;
-import ctn.imaginarycraft.util.RationalityUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.network.chat.Component;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.init.*;
+import ctn.imaginarycraft.util.*;
+import net.minecraft.client.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.*;
+import org.jetbrains.annotations.*;
 
 /**
  * 理智值控制工具

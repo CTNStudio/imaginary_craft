@@ -1,10 +1,9 @@
 package ctn.imaginarycraft.init.tag;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.TagKey;
-import net.minecraft.world.level.block.Block;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.resources.*;
+import net.minecraft.tags.*;
+import net.minecraft.world.level.block.*;
 
 public final class ModBlockTags {
 

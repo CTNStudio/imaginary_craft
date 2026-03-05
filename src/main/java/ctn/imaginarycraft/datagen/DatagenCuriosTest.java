@@ -1,16 +1,15 @@
 package ctn.imaginarycraft.datagen;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.core.HolderLookup;
-import net.minecraft.data.PackOutput;
-import net.minecraft.resources.ResourceLocation;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-import top.theillusivec4.curios.api.CuriosDataProvider;
-import top.theillusivec4.curios.api.type.capability.ICurio;
-import top.theillusivec4.curios.api.type.data.IEntitiesData;
-import top.theillusivec4.curios.api.type.data.ISlotData;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.core.*;
+import net.minecraft.data.*;
+import net.minecraft.resources.*;
+import net.neoforged.neoforge.common.data.*;
+import top.theillusivec4.curios.api.*;
+import top.theillusivec4.curios.api.type.capability.*;
+import top.theillusivec4.curios.api.type.data.*;
 
-import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.*;
 
 public final class DatagenCuriosTest extends CuriosDataProvider {
   public static final String EGO_CURIOS_HEADWEAR = "ego_curios_headwear";

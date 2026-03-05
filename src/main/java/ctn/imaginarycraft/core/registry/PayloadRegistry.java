@@ -1,22 +1,19 @@
 package ctn.imaginarycraft.core.registry;
 
-import ctn.imaginarycraft.common.payload.LivingEntityAttackStrengthTickerPayload;
-import ctn.imaginarycraft.common.payload.api.ToClientPayload;
-import ctn.imaginarycraft.common.payload.api.ToServerAndClientPayload;
-import ctn.imaginarycraft.common.payload.api.ToServerPayload;
-import ctn.imaginarycraft.common.payload.toc.PlayerDamagePayload;
-import ctn.imaginarycraft.common.payload.tos.PlayerIGunWeaponPayload;
-import ctn.imaginarycraft.common.payload.tos.PlayerKeyClickPayload;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.network.handling.DirectionalPayloadHandler;
-import net.neoforged.neoforge.network.registration.PayloadRegistrar;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.common.payload.*;
+import ctn.imaginarycraft.common.payload.api.*;
+import ctn.imaginarycraft.common.payload.toc.*;
+import ctn.imaginarycraft.common.payload.tos.*;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
+import net.minecraft.network.protocol.common.custom.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.fml.common.*;
+import net.neoforged.neoforge.network.event.*;
+import net.neoforged.neoforge.network.handling.*;
+import net.neoforged.neoforge.network.registration.*;
+import org.jetbrains.annotations.*;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class PayloadRegistry {

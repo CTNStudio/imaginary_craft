@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.util;
 
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
 public final class TextUtil {
 

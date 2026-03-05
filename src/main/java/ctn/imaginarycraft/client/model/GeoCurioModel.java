@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.client.model;
 
-import software.bernie.geckolib.animatable.GeoAnimatable;
+import software.bernie.geckolib.animatable.*;
 
 public class GeoCurioModel<T extends GeoAnimatable> extends BasicGeoModel<T> {
 

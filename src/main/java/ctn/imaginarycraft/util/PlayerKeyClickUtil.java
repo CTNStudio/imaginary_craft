@@ -1,21 +1,16 @@
 package ctn.imaginarycraft.util;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.DataResult;
-import ctn.imaginarycraft.api.IPlayerItemAttackClick;
-import ctn.imaginarycraft.mixed.IPlayer;
-import io.netty.buffer.ByteBuf;
-import net.minecraft.client.KeyMapping;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.Options;
-import net.minecraft.client.player.AbstractClientPlayer;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.util.ByIdMap;
-import net.minecraft.util.StringRepresentable;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.entity.player.Player;
-import org.jetbrains.annotations.NotNull;
+import com.mojang.serialization.*;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.mixed.*;
+import io.netty.buffer.*;
+import net.minecraft.client.*;
+import net.minecraft.client.player.*;
+import net.minecraft.network.codec.*;
+import net.minecraft.util.*;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.player.*;
+import org.jetbrains.annotations.*;
 
 public final class PlayerKeyClickUtil {
   public static final String KEY_ATTACK = "key.attack";

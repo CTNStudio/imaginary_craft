@@ -1,20 +1,17 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.remote.gun;
 
-import ctn.imaginarycraft.common.world.entity.projectile.MagicBulletEntity;
-import ctn.imaginarycraft.common.world.item.ego.weapon.remote.RemoteEgoWeaponGeoItem;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.util.GunWeaponUtil;
-import ctn.imaginarycraft.util.PiercingUtil;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.server.level.ServerLevel;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResultHolder;
-import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.model.GeoModel;
+import ctn.imaginarycraft.common.world.entity.projectile.*;
+import ctn.imaginarycraft.common.world.item.ego.weapon.remote.*;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.util.*;
+import net.minecraft.resources.*;
+import net.minecraft.server.level.*;
+import net.minecraft.world.*;
+import net.minecraft.world.entity.player.*;
+import net.minecraft.world.item.*;
+import net.minecraft.world.level.*;
+import org.jetbrains.annotations.*;
+import software.bernie.geckolib.model.*;
 
 // TODO 禁止放到副手
 // TODO 修复动画问题

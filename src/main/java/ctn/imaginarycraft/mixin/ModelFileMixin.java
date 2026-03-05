@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.mixin;
 
-import net.neoforged.neoforge.client.model.generators.ModelFile;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.gen.Invoker;
+import net.neoforged.neoforge.client.model.generators.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.gen.*;
 
 @Mixin(ModelFile.class)
 public interface ModelFileMixin {

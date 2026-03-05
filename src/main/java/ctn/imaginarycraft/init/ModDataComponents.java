@@ -1,19 +1,16 @@
 package ctn.imaginarycraft.init;
 
-import com.mojang.serialization.Codec;
-import ctn.imaginarycraft.api.LcDamageType;
-import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.core.component.DataComponentType;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import com.mojang.serialization.*;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.common.components.*;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.core.component.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
+import net.neoforged.neoforge.registries.*;
 
-import java.util.function.Supplier;
-import java.util.function.UnaryOperator;
+import java.util.function.*;
 
 public final class ModDataComponents {
   public static final DeferredRegister<DataComponentType<?>> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.DATA_COMPONENT_TYPE);

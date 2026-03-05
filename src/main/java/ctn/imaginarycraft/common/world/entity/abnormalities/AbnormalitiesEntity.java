@@ -1,13 +1,11 @@
 package ctn.imaginarycraft.common.world.entity.abnormalities;
 
-import ctn.imaginarycraft.core.capability.entity.IEntityAbnormalities;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.animatable.GeoEntity;
+import ctn.imaginarycraft.core.capability.entity.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.level.*;
+import org.jetbrains.annotations.*;
+import software.bernie.geckolib.animatable.*;
 
 public abstract class AbnormalitiesEntity extends Mob implements IEntityAbnormalities, GeoEntity {
   protected AbnormalitiesEntity(EntityType<? extends Mob> entityType, Level level) {

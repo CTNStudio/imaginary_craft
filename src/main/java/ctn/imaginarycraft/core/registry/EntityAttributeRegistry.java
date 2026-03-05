@@ -1,17 +1,14 @@
 package ctn.imaginarycraft.core.registry;
 
-import ctn.imaginarycraft.common.world.entity.abnormalities.ordeals.violet.GrantUsLove;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.world.ModAttributes;
-import ctn.imaginarycraft.init.world.entiey.AbnormalitiesEntityTypes;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
-import net.neoforged.bus.api.EventPriority;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.event.entity.EntityAttributeCreationEvent;
-import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
+import ctn.imaginarycraft.common.world.entity.abnormalities.ordeals.violet.*;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.init.world.*;
+import ctn.imaginarycraft.init.world.entiey.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.fml.common.*;
+import net.neoforged.neoforge.event.entity.*;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class EntityAttributeRegistry {

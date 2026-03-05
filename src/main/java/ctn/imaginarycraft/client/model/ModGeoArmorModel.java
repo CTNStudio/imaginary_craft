@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.client.model;
 
-import net.minecraft.resources.ResourceLocation;
-import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.animatable.GeoAnimatable;
+import net.minecraft.resources.*;
+import org.jetbrains.annotations.*;
+import software.bernie.geckolib.animatable.*;
 
 public class ModGeoArmorModel<T extends GeoAnimatable> extends BasicGeoModel<T> {
 

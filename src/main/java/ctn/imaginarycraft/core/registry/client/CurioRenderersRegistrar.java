@@ -1,16 +1,16 @@
 package ctn.imaginarycraft.core.registry.client;
 
-import ctn.imaginarycraft.client.renderer.curios.BasicCuriosRenderer;
-import ctn.imaginarycraft.common.world.item.ego.curio.EgoCurioItem;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.world.item.ego.EgoCurioItems;
-import net.minecraft.world.item.Item;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import top.theillusivec4.curios.api.client.CuriosRendererRegistry;
+import ctn.imaginarycraft.client.renderer.curios.*;
+import ctn.imaginarycraft.common.world.item.ego.curio.*;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.init.world.item.ego.*;
+import net.minecraft.world.item.*;
+import net.neoforged.api.distmarker.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.fml.common.*;
+import net.neoforged.fml.event.lifecycle.*;
+import net.neoforged.neoforge.registries.*;
+import top.theillusivec4.curios.api.client.*;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID, value = Dist.CLIENT)
 public final class CurioRenderersRegistrar {

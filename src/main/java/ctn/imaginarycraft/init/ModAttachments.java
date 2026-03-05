@@ -1,25 +1,17 @@
 package ctn.imaginarycraft.init;
 
-import com.mojang.serialization.Codec;
-import ctn.imaginarycraft.api.DelayTaskHolder;
-import ctn.imaginarycraft.api.virtue.VirtueFortitude;
-import ctn.imaginarycraft.api.virtue.VirtueJustice;
-import ctn.imaginarycraft.api.virtue.VirtuePrudence;
-import ctn.imaginarycraft.api.virtue.VirtueTemperance;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.world.entity.Entity;
-import net.minecraft.world.entity.player.Player;
-import net.neoforged.neoforge.attachment.AttachmentType;
-import net.neoforged.neoforge.attachment.IAttachmentHolder;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+import com.mojang.serialization.*;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.api.virtue.*;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.network.codec.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.player.*;
+import net.neoforged.neoforge.attachment.*;
+import net.neoforged.neoforge.registries.*;
+import org.jetbrains.annotations.*;
 
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 public final class ModAttachments {
   public static final DeferredRegister<AttachmentType<?>> REGISTRY = ImaginaryCraft.modRegister(NeoForgeRegistries.ATTACHMENT_TYPES);

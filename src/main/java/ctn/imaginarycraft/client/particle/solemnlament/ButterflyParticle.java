@@ -1,14 +1,10 @@
 package ctn.imaginarycraft.client.particle.solemnlament;
 
-import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.particle.ParticleProvider;
-import net.minecraft.client.particle.ParticleRenderType;
-import net.minecraft.client.particle.SpriteSet;
-import net.minecraft.client.particle.TextureSheetParticle;
-import net.minecraft.core.particles.SimpleParticleType;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.api.distmarker.OnlyIn;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.client.multiplayer.*;
+import net.minecraft.client.particle.*;
+import net.minecraft.core.particles.*;
+import net.neoforged.api.distmarker.*;
+import org.jetbrains.annotations.*;
 
 public class ButterflyParticle extends TextureSheetParticle {
   private final SpriteSet spriteSet;

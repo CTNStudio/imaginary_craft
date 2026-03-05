@@ -1,28 +1,19 @@
 package ctn.imaginarycraft.core;
 
-import ctn.imaginarycraft.config.ModConfig;
-import ctn.imaginarycraft.core.registry.CurioRegistry;
-import ctn.imaginarycraft.init.ModAttachments;
-import ctn.imaginarycraft.init.ModDataComponents;
-import ctn.imaginarycraft.init.ModParticleTypes;
-import ctn.imaginarycraft.init.ModSoundEvents;
-import ctn.imaginarycraft.init.world.ModArmorMaterials;
-import ctn.imaginarycraft.init.world.ModAttributes;
-import ctn.imaginarycraft.init.world.ModCreativeModeTabs;
-import ctn.imaginarycraft.init.world.ModMobEffects;
-import ctn.imaginarycraft.init.world.entiey.ModEntityTypes;
-import ctn.imaginarycraft.init.world.item.ModItems;
-import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.fml.ModContainer;
-import net.neoforged.fml.common.Mod;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.config.*;
+import ctn.imaginarycraft.core.registry.*;
+import ctn.imaginarycraft.init.*;
+import ctn.imaginarycraft.init.world.*;
+import ctn.imaginarycraft.init.world.entiey.*;
+import ctn.imaginarycraft.init.world.item.*;
+import net.minecraft.core.*;
+import net.minecraft.resources.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.fml.*;
+import net.neoforged.fml.common.*;
+import net.neoforged.neoforge.registries.*;
+import org.apache.logging.log4j.*;
+import org.jetbrains.annotations.*;
 
 @Mod(ImaginaryCraft.ID)
 public final class ImaginaryCraft {
@@ -40,6 +31,7 @@ public final class ImaginaryCraft {
     ModParticleTypes.REGISTRY.register(eventBus);
     ModDataComponents.REGISTRY.register(eventBus);
     ModArmorMaterials.REGISTRY.register(eventBus);
+    ModEntieyConditions.REGISTRY.register(eventBus);
     ModItems.init(eventBus);
     ModEntityTypes.init(eventBus);
 

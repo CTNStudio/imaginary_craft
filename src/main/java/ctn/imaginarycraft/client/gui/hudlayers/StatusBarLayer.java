@@ -1,15 +1,13 @@
 package ctn.imaginarycraft.client.gui.hudlayers;
 
-import ctn.imaginarycraft.client.gui.widget.HorizontalStatusBar;
-import ctn.imaginarycraft.mixed.client.IHudLayer;
-import ctn.imaginarycraft.util.TextUtil;
-import net.minecraft.client.DeltaTracker;
-import net.minecraft.client.gui.Font;
-import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.MutableComponent;
-import net.minecraft.util.Mth;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.client.gui.widget.*;
+import ctn.imaginarycraft.mixed.client.*;
+import ctn.imaginarycraft.util.*;
+import net.minecraft.client.*;
+import net.minecraft.client.gui.*;
+import net.minecraft.network.chat.*;
+import net.minecraft.util.*;
+import org.jetbrains.annotations.*;
 
 /**
  * 状态条层

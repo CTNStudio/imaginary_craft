@@ -1,16 +1,12 @@
 package ctn.imaginarycraft.mixin;
 
-import ctn.imaginarycraft.api.LcImmuneType;
-import ctn.imaginarycraft.mixed.IDamageContainer;
-import net.minecraft.world.damagesource.DamageSource;
-import net.neoforged.neoforge.common.damagesource.DamageContainer;
-import org.spongepowered.asm.mixin.Final;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.mixed.*;
+import net.minecraft.world.damagesource.*;
+import net.neoforged.neoforge.common.damagesource.*;
+import org.spongepowered.asm.mixin.*;
+import org.spongepowered.asm.mixin.injection.*;
+import org.spongepowered.asm.mixin.injection.callback.*;
 
 @Mixin(DamageContainer.class)
 public abstract class DamageContainerMixin implements IDamageContainer {

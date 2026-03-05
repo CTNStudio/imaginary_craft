@@ -1,10 +1,10 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.remote.special;
 
-import ctn.imaginarycraft.common.world.item.ego.weapon.remote.RemoteEgoWeaponGeoItem;
-import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.Projectile;
-import org.jetbrains.annotations.Nullable;
-import software.bernie.geckolib.model.GeoModel;
+import ctn.imaginarycraft.common.world.item.ego.weapon.remote.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.projectile.*;
+import org.jetbrains.annotations.*;
+import software.bernie.geckolib.model.*;
 
 public class SoundOfAStarWeaponItem extends RemoteEgoWeaponGeoItem {
 

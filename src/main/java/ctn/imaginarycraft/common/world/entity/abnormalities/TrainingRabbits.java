@@ -1,18 +1,17 @@
 package ctn.imaginarycraft.common.world.entity.abnormalities;
 
-import ctn.imaginarycraft.client.model.ModGeoEntityModel;
-import ctn.imaginarycraft.init.world.ModAttributes;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.Mob;
-import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
-import net.minecraft.world.level.Level;
-import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.renderer.GeoEntityRenderer;
-import software.bernie.geckolib.util.GeckoLibUtil;
+import ctn.imaginarycraft.client.model.*;
+import ctn.imaginarycraft.init.world.*;
+import net.minecraft.client.renderer.entity.*;
+import net.minecraft.resources.*;
+import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.level.*;
+import org.jetbrains.annotations.*;
+import software.bernie.geckolib.animatable.instance.*;
+import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.renderer.*;
+import software.bernie.geckolib.util.*;
 
 public class TrainingRabbits extends AbnormalitiesEntity {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);

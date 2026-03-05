@@ -1,23 +1,18 @@
 package ctn.imaginarycraft.init;
 
-import com.mojang.serialization.MapCodec;
-import ctn.imaginarycraft.client.particle.DyeingMagicCircleParticle;
-import ctn.imaginarycraft.client.particle.LcDamageIconParticle;
-import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
-import ctn.imaginarycraft.client.particle.text.DamageTextParticle;
-import ctn.imaginarycraft.client.particle.text.TextParticle;
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.core.particles.SimpleParticleType;
-import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.StreamCodec;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.NotNull;
+import com.mojang.serialization.*;
+import ctn.imaginarycraft.client.particle.*;
+import ctn.imaginarycraft.client.particle.magicbullet.*;
+import ctn.imaginarycraft.client.particle.text.*;
+import ctn.imaginarycraft.core.*;
+import net.minecraft.core.particles.*;
+import net.minecraft.core.registries.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
+import net.neoforged.neoforge.registries.*;
+import org.jetbrains.annotations.*;
 
-import java.util.function.Supplier;
+import java.util.function.*;
 
 /**
  * 粒子类型

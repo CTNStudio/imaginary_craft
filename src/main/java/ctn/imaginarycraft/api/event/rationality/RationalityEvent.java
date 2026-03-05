@@ -1,10 +1,10 @@
 package ctn.imaginarycraft.api.event.rationality;
 
-import ctn.imaginarycraft.init.world.ModAttributes;
-import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.player.Player;
-import net.neoforged.fml.event.IModBusEvent;
-import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import ctn.imaginarycraft.init.world.*;
+import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.player.*;
+import net.neoforged.fml.event.*;
+import net.neoforged.neoforge.event.entity.player.*;
 
 public abstract class RationalityEvent extends PlayerEvent implements IModBusEvent {
   public RationalityEvent(Player player) {

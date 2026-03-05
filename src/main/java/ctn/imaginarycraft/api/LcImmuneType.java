@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.api;
 
-import net.minecraft.util.StringRepresentable;
-import org.jetbrains.annotations.NotNull;
+import net.minecraft.util.*;
+import org.jetbrains.annotations.*;
 
 /**
  * 免疫类型

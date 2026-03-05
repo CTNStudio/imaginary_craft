@@ -1,10 +1,10 @@
 package ctn.imaginarycraft.core;
 
-import ctn.imaginarycraft.api.event.rationality.RationalityModifyEvent;
-import net.minecraft.world.entity.player.Player;
-import net.neoforged.fml.ModLoader;
+import ctn.imaginarycraft.api.event.rationality.*;
+import net.minecraft.world.entity.player.*;
+import net.neoforged.fml.*;
 
-import java.util.Map;
+import java.util.*;
 
 public final class ModEventHooks {
   public static Map.Entry<Boolean, Float> sourceRationalityPre(Player player, float oldValue, float newValue) {

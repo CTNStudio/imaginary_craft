@@ -1,27 +1,23 @@
 package ctn.imaginarycraft.client.particle;
 
-import com.mojang.serialization.Codec;
-import com.mojang.serialization.MapCodec;
-import com.mojang.serialization.codecs.RecordCodecBuilder;
-import ctn.imaginarycraft.api.LcDamageType;
-import ctn.imaginarycraft.client.ModParticleRenderTypes;
-import ctn.imaginarycraft.init.ModParticleTypes;
-import net.minecraft.client.multiplayer.ClientLevel;
+import com.mojang.serialization.*;
+import com.mojang.serialization.codecs.*;
+import ctn.imaginarycraft.api.*;
+import ctn.imaginarycraft.client.*;
+import ctn.imaginarycraft.init.*;
+import net.minecraft.client.multiplayer.*;
 import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.LightTexture;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.core.Holder;
-import net.minecraft.core.particles.ParticleOptions;
-import net.minecraft.core.particles.ParticleType;
-import net.minecraft.network.RegistryFriendlyByteBuf;
-import net.minecraft.network.codec.ByteBufCodecs;
-import net.minecraft.network.codec.StreamCodec;
-import net.minecraft.world.damagesource.DamageType;
-import net.neoforged.neoforge.common.Tags;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import net.minecraft.client.renderer.*;
+import net.minecraft.client.renderer.texture.*;
+import net.minecraft.core.*;
+import net.minecraft.core.particles.*;
+import net.minecraft.network.*;
+import net.minecraft.network.codec.*;
+import net.minecraft.world.damagesource.*;
+import net.neoforged.neoforge.common.*;
+import org.jetbrains.annotations.*;
 
-import java.util.Optional;
+import java.util.*;
 
 public class LcDamageIconParticle extends TextureSheetParticle {
 
