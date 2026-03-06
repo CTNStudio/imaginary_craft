@@ -4,6 +4,7 @@ import ctn.imaginarycraft.api.*;
 import ctn.imaginarycraft.client.util.*;
 import ctn.imaginarycraft.common.payload.toc.*;
 import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.core.registry.EntityDamageMultiplier;
 import ctn.imaginarycraft.eventexecute.*;
 import ctn.imaginarycraft.init.*;
 import ctn.imaginarycraft.mixed.*;
@@ -128,7 +129,10 @@ public final class LivingEntityEvents {
 
     // 伤害类型
     if (lcDamageType != null) {
-      // 易伤处理
+      // 应用伤害乘数表（Craft模式优先）
+      newDamageAmount *= EntityDamageMultiplier.getMultiplier(entity, lcDamageType);
+
+      // 易伤处理（如果乘数表未配置，则使用属性系统）
       Holder<Attribute> vulnerable = lcDamageType.getVulnerable();
       AttributeInstance attributeInstance = entity.getAttribute(vulnerable);
       if (attributeInstance != null) {

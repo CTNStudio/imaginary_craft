@@ -33,43 +33,71 @@ public final class EntityAttributeRegistry {
   }
 
   private static void vanilla(EntityAttributeModificationEvent event) {
-    lcAttributesVulnerable(event, EntityType.WARDEN, 0.6, 1.2, 0.8, 0.2);
-    lcAttributesVulnerable(event, EntityType.ENDER_DRAGON, 0.5, 0.5, 0.5, 0.5);
-    lcAttributesVulnerable(event, EntityType.WITHER, 0.5, 0.7, -1.0, 1.0);
-    lcAttributesVulnerable(event, EntityType.IRON_GOLEM, 0.5, 0.6, 1.5, 1.0);
-    lcAttributesVulnerable(event, EntityType.ELDER_GUARDIAN, 0.5, 0.8, 0.9, 1.2);
-    lcAttributesVulnerable(event, EntityType.RAVAGER, 0.5, 1.0, 1.5, 1.3);
-    lcAttributesVulnerable(event, EntityType.GUARDIAN, 0.5, 0.8, 0.9, 1.2);
-    lcAttributesVulnerable(event, EntityType.ENDERMAN, 0.8, 0.5, 1.2, 1.5);
-    lcAttributesVulnerable(event, EntityType.GHAST, 0.5, 0.5, 1.2, 1.5);
-    lcAttributesVulnerable(event, EntityType.HOGLIN, 0.8, 1.2, 1.1, 1.2);
-    lcAttributesVulnerable(event, EntityType.PIGLIN_BRUTE, 0.6, 1.3, 1.0, 1.1);
-    lcAttributesVulnerable(event, EntityType.SHULKER, 0.2, 1.5, 1.0, 1.1);
-    lcAttributesVulnerable(event, EntityType.ZOGLIN, 0.5, 1.2, 1.2, 1.3);
-    lcAttributesVulnerable(event, EntityType.EVOKER, 1.0, 1.2, 1.3, 1.3);
-    lcAttributesVulnerable(event, EntityType.VINDICATOR, 0.8, 1.2, 1.3, 1.3);
-    lcAttributesVulnerable(event, EntityType.WITCH, 1.2, 1.1, 1.0, 1.3);
-    lcAttributesVulnerable(event, EntityType.WITHER_SKELETON, 0.8, 0.8, -1.0, 1.1);
-    lcAttributesVulnerable(event, EntityType.BLAZE, 0.7, 0.8, 1.3, 1.2);
-    lcAttributesVulnerable(event, EntityType.BOGGED, 1.0, 0.5, 0.7, 1.0);
-    lcAttributesVulnerable(event, EntityType.SKELETON, 0.9, 0.6, 0.8, 1.0);
-    lcAttributesVulnerable(event, EntityType.STRAY, 0.8, 0.6, 0.8, 1.0);
-    lcAttributesVulnerable(event, EntityType.ZOMBIE, 0.7, 0.8, 0.9, 1.1);
-    lcAttributesVulnerable(event, EntityType.ZOMBIFIED_PIGLIN, 0.6, 0.7, 0.5, 1.3);
-    lcAttributesVulnerable(event, EntityType.DROWNED, 0.8, 0.8, 1.0, 1.1);
-    lcAttributesVulnerable(event, EntityType.BREEZE, 0.5, 0.8, 1.3, 1.2);
-    lcAttributesVulnerable(event, EntityType.CREEPER, 1.2, 0.8, 1.2, 1.2);
-    lcAttributesVulnerable(event, EntityType.HUSK, 0.6, 0.6, 0.8, 1.2);
-    lcAttributesVulnerable(event, EntityType.MAGMA_CUBE, 0.4, 0.6, 1.4, 1.2);
-    lcAttributesVulnerable(event, EntityType.PHANTOM, 0.6, 1.0, 0.8, 1.3);
-    lcAttributesVulnerable(event, EntityType.ENDERMITE, 0.9, 1.2, 1.1, 1.3);
-    lcAttributesVulnerable(event, EntityType.SILVERFISH, 0.8, 1.2, 1.3, 1.3);
-    lcAttributesVulnerable(event, EntityType.VEX, 0.8, 1.3, 1.1, 1.5);
-    lcAttributesVulnerable(event, EntityType.PILLAGER, 0.8, 1.2, 1.3, 1.3);
-    lcAttributesVulnerable(event, EntityType.PIGLIN, 0.8, 1.2, 1.3, 1.2);
-    lcAttributesVulnerable(event, EntityType.SPIDER, 0.7, 1.1, 1.3, 1.1);
-    lcAttributesVulnerable(event, EntityType.CAVE_SPIDER, 0.7, 1.1, 1.0, 1.1);
-    lcAttributesVulnerable(event, EntityType.SLIME, 0.5, 0.7, 1.2, 1.1);
+    // 抗性（前4个）+ 伤害倍数（后4个）
+    configureEntityAttributes(event, EntityType.WARDEN, 0.6, 1.2, 0.8, 0.2, 0.6, 1.2, 0.8, 0.2);
+    configureEntityAttributes(event, EntityType.ENDER_DRAGON, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5);
+    configureEntityAttributes(event, EntityType.WITHER, 0.5, 0.7, -1.0, 1.0, 0.5, 0.7, -1.0, 1.0);
+    configureEntityAttributes(event, EntityType.IRON_GOLEM, 0.5, 0.6, 1.5, 1.0, 0.5, 0.6, 1.5, 1.0);
+    configureEntityAttributes(event, EntityType.ELDER_GUARDIAN, 0.5, 0.8, 0.9, 1.2, 0.5, 0.8, 0.9, 1.2);
+    configureEntityAttributes(event, EntityType.RAVAGER, 0.5, 1.0, 1.5, 1.3, 0.5, 1.0, 1.5, 1.3);
+    configureEntityAttributes(event, EntityType.GUARDIAN, 0.5, 0.8, 0.9, 1.2, 0.5, 0.8, 0.9, 1.2);
+    configureEntityAttributes(event, EntityType.ENDERMAN, 0.8, 0.5, 1.2, 1.5, 0.8, 0.5, 1.2, 1.5);
+    configureEntityAttributes(event, EntityType.GHAST, 0.5, 0.5, 1.2, 1.5, 0.5, 0.5, 1.2, 1.5);
+    configureEntityAttributes(event, EntityType.HOGLIN, 0.8, 1.2, 1.1, 1.2, 0.8, 1.2, 1.1, 1.2);
+    configureEntityAttributes(event, EntityType.PIGLIN_BRUTE, 0.6, 1.3, 1.0, 1.1, 0.6, 1.3, 1.0, 1.1);
+    configureEntityAttributes(event, EntityType.SHULKER, 0.2, 1.5, 1.0, 1.1, 0.2, 1.5, 1.0, 1.1);
+    configureEntityAttributes(event, EntityType.ZOGLIN, 0.5, 1.2, 1.2, 1.3, 0.5, 1.2, 1.2, 1.3);
+    configureEntityAttributes(event, EntityType.EVOKER, 1.0, 1.2, 1.3, 1.3, 1.0, 1.2, 1.3, 1.3);
+    configureEntityAttributes(event, EntityType.VINDICATOR, 0.8, 1.2, 1.3, 1.3, 0.8, 1.2, 1.3, 1.3);
+    configureEntityAttributes(event, EntityType.WITCH, 1.2, 1.1, 1.0, 1.3, 1.2, 1.1, 1.0, 1.3);
+    configureEntityAttributes(event, EntityType.WITHER_SKELETON, 0.8, 0.8, -1.0, 1.1, 0.8, 0.8, -1.0, 1.1);
+    configureEntityAttributes(event, EntityType.BLAZE, 0.7, 0.8, 1.3, 1.2, 0.7, 0.8, 1.3, 1.2);
+    configureEntityAttributes(event, EntityType.BOGGED, 1.0, 0.5, 0.7, 1.0, 1.0, 0.5, 0.7, 1.0);
+    configureEntityAttributes(event, EntityType.SKELETON, 0.9, 0.6, 0.8, 1.0, 0.9, 0.6, 0.8, 1.0);
+    configureEntityAttributes(event, EntityType.STRAY, 0.8, 0.6, 0.8, 1.0, 0.8, 0.6, 0.8, 1.0);
+    configureEntityAttributes(event, EntityType.ZOMBIE, 0.7, 0.8, 0.9, 1.1, 0.7, 0.8, 0.9, 1.1);
+    configureEntityAttributes(event, EntityType.ZOMBIFIED_PIGLIN, 0.6, 0.7, 0.5, 1.3, 0.6, 0.7, 0.5, 1.3);
+    configureEntityAttributes(event, EntityType.DROWNED, 0.8, 0.8, 1.0, 1.1, 0.8, 0.8, 1.0, 1.1);
+    configureEntityAttributes(event, EntityType.BREEZE, 0.5, 0.8, 1.3, 1.2, 0.5, 0.8, 1.3, 1.2);
+    configureEntityAttributes(event, EntityType.CREEPER, 1.2, 0.8, 1.2, 1.2, 1.2, 0.8, 1.2, 1.2);
+    configureEntityAttributes(event, EntityType.HUSK, 0.6, 0.6, 0.8, 1.2, 0.6, 0.6, 0.8, 1.2);
+    configureEntityAttributes(event, EntityType.MAGMA_CUBE, 0.4, 0.6, 1.4, 1.2, 0.4, 0.6, 1.4, 1.2);
+    configureEntityAttributes(event, EntityType.PHANTOM, 0.6, 1.0, 0.8, 1.3, 0.6, 1.0, 0.8, 1.3);
+    configureEntityAttributes(event, EntityType.ENDERMITE, 0.9, 1.2, 1.1, 1.3, 0.9, 1.2, 1.1, 1.3);
+    configureEntityAttributes(event, EntityType.SILVERFISH, 0.8, 1.2, 1.3, 1.3, 0.8, 1.2, 1.3, 1.3);
+    configureEntityAttributes(event, EntityType.VEX, 0.8, 1.3, 1.1, 1.5, 0.8, 1.3, 1.1, 1.5);
+    configureEntityAttributes(event, EntityType.PILLAGER, 0.8, 1.2, 1.3, 1.3, 0.8, 1.2, 1.3, 1.3);
+    configureEntityAttributes(event, EntityType.PIGLIN, 0.8, 1.2, 1.3, 1.2, 0.8, 1.2, 1.3, 1.2);
+    configureEntityAttributes(event, EntityType.SPIDER, 0.7, 1.1, 1.3, 1.1, 0.7, 1.1, 1.3, 1.1);
+    configureEntityAttributes(event, EntityType.CAVE_SPIDER, 0.7, 1.1, 1.0, 1.1, 0.7, 1.1, 1.0, 1.1);
+    configureEntityAttributes(event, EntityType.SLIME, 0.5, 0.7, 1.2, 1.1, 0.5, 0.7, 1.2, 1.1);
+  }
+
+  /**
+   * 统一配置实体属性：抗性 + 伤害倍数
+   * <p>
+   * 参数顺序：抗性（4个）+ 伤害倍数（4个）
+   *
+   * @param event          属性修改事件
+   * @param entityType     实体类型
+   * @param physicsRes     物理抗性
+   * @param spiritRes      精神抗性
+   * @param erosionRes     侵蚀抗性
+   * @param theSoulRes     灵魂抗性
+   * @param physicsDmg     物理伤害倍数
+   * @param spiritDmg      精神伤害倍数
+   * @param erosionDmg     侵蚀伤害倍数
+   * @param theSoulDmg     灵魂伤害倍数
+   */
+  private static void configureEntityAttributes(EntityAttributeModificationEvent event,
+                                                  EntityType<? extends LivingEntity> entityType,
+                                                  double physicsRes, double spiritRes, double erosionRes, double theSoulRes,
+                                                  double physicsDmg, double spiritDmg, double erosionDmg, double theSoulDmg) {
+    // 设置抗性属性
+    lcAttributesVulnerable(event, entityType, physicsRes, spiritRes, erosionRes, theSoulRes);
+    // 设置伤害倍数
+    EntityDamageMultiplier.setMultiplierAll(entityType, physicsRes, spiritRes, erosionRes, theSoulRes,
+                                                  physicsDmg, spiritDmg, erosionDmg, theSoulDmg);
   }
 
   /**
