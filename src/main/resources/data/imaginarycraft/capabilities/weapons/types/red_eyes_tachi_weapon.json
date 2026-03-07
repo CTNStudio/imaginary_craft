@@ -13,7 +13,20 @@
     ]
   },
   "hit_particle": "epicfight:adrenaline_player_beating",
-  "hit_sound": "epicfight:entity.hit.blunt_hard",
+  "hit_sound": {
+    "default": "epicfight:entity.hit.blunt_hard",
+    "cases": [
+      {
+        "conditions": [
+          {
+            "predicate": "imaginarycraft:mob_effects",
+            "effect": "imaginarycraft:red_eyes_hunting"
+          }
+        ],
+        "value": "epicfight:entity.hit.blade"
+      }
+    ]
+  },
   "livingmotion_modifier": {
     "one_hand": {
       "creative_fly": "epicfight:biped/living/hold_tachi",
@@ -35,15 +48,47 @@
     }
   },
   "offhand_item_compatible_predicate": [],
-  "swing_sound": "epicfight:entity.weapon.whoosh_hard",
-  "combos": {
-    "one_hand": [
-      "epicfight:biped/combat/tachi_auto1",
-      "epicfight:biped/combat/tachi_auto2",
-      "epicfight:biped/combat/tachi_auto3",
-      "epicfight:biped/combat/tachi_dash",
-      "epicfight:biped/combat/longsword_airslash"
+  "swing_sound": {
+    "default": "epicfight:entity.weapon.whoosh_hard",
+    "cases": [
+      {
+        "conditions": [
+          {
+            "predicate": "imaginarycraft:mob_effects",
+            "effect": "imaginarycraft:red_eyes_hunting"
+          }
+        ],
+        "value": "epicfight:entity.weapon.whoosh"
+      }
     ]
+  },
+  "combos": {
+    "one_hand": {
+      "default": [
+        "epicfight:biped/combat/tachi_auto1",
+        "epicfight:biped/combat/tachi_auto2",
+        "epicfight:biped/combat/tachi_auto3",
+        "epicfight:biped/combat/tachi_dash",
+        "epicfight:biped/combat/longsword_airslash"
+      ],
+      "cases": [
+        {
+          "conditions": [
+            {
+              "predicate": "imaginarycraft:mob_effects",
+              "effect": "imaginarycraft:red_eyes_hunting"
+            }
+          ],
+          "value": [
+            "epicfight:biped/combat/uchigatana_auto1",
+            "epicfight:biped/combat/uchigatana_auto2",
+            "epicfight:biped/combat/uchigatana_auto3",
+            "epicfight:biped/combat/uchigatana_dash",
+            "epicfight:biped/combat/uchigatana_airslash"
+          ]
+        }
+      ]
+    }
   },
   "styles": {
     "default": "one_hand",

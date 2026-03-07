@@ -1,12 +1,13 @@
-package ctn.imaginarycraft.api;
+package ctn.imaginarycraft.api.epicfight;
 
 import yesman.epicfight.api.animation.*;
 
-public enum LcLivingMotion implements LivingMotion {
+public enum ModLivingMotions implements LivingMotion {
   ;
+
   private final int id;
 
-  LcLivingMotion() {
+  ModLivingMotions() {
     this.id = LivingMotion.ENUM_MANAGER.assign(this);
   }
 

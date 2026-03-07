@@ -41,9 +41,7 @@ public class MobEffectsCondition extends Condition.EntityPatchCondition {
 
   @Override
   public boolean predicate(LivingEntityPatch<?> target) {
-    target.getOriginal().hasEffect(effectHolder);
-
-    return false;
+    return target.getOriginal().hasEffect(effectHolder);
   }
 
   @Override

@@ -72,6 +72,6 @@ public final class EpicFightRegistry {
   }
 
   private static <T extends CapabilityItem.Builder<?>> void register(ResourceLocation rl, Function<Item, T> builder) {
-    WeaponTypeReloadListenerMixin.getPresets().put(rl, builder);
+    WeaponTypeReloadListenerAccessorMixin.getPresets().put(rl, builder);
   }
 }

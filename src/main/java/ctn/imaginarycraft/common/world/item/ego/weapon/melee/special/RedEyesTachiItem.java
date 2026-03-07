@@ -37,6 +37,10 @@ public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
   }
 
   public static void phaseSwitch() {
+//    EpicFightEventHooks.Animation.BEGIN.registerEvent(event -> {
+//      LivingEntityPatch<?> entityPatch = event.getEntityPatch();
+//      AnimationManager.AnimationAccessor<? extends StaticAnimation> animation = event.getAnimation();
+//    });
     EpicFightEventHooks.Player.TICK_EPICFIGHT_MODE.registerEvent(event -> {
       PlayerPatch<?> playerPatch = event.getPlayerPatch();
       Player original = playerPatch.getOriginal();
