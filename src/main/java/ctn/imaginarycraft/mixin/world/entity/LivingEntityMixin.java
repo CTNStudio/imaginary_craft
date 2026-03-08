@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.mixin;
+package ctn.imaginarycraft.mixin.world.entity;
 
 import ctn.imaginarycraft.mixed.*;
 import net.minecraft.world.entity.*;

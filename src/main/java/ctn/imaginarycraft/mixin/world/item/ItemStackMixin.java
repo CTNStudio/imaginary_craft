@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.mixin;
+package ctn.imaginarycraft.mixin.world.item;
 
 import com.llamalad7.mixinextras.expression.*;
 import com.llamalad7.mixinextras.injector.*;

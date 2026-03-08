@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.mixin;
+package ctn.imaginarycraft.mixin.world.item;
 
 import net.minecraft.resources.*;
 import net.minecraft.world.item.*;

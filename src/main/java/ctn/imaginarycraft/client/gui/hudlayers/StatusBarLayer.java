@@ -1,7 +1,6 @@
 package ctn.imaginarycraft.client.gui.hudlayers;
 
 import ctn.imaginarycraft.client.gui.widget.*;
-import ctn.imaginarycraft.mixed.client.*;
 import ctn.imaginarycraft.util.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.*;

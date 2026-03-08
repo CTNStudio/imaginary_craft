@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.mixin;
+package ctn.imaginarycraft.mixin.world;
 
 import ctn.imaginarycraft.api.*;
 import ctn.imaginarycraft.mixed.*;

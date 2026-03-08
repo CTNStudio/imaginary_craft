@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.mixed.client;
+package ctn.imaginarycraft.client.gui.hudlayers;
 
 import net.minecraft.client.*;
 import net.minecraft.client.gui.*;

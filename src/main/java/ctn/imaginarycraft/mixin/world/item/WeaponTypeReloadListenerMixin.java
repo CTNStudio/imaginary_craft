@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.mixin;
+package ctn.imaginarycraft.mixin.world.item;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.*;
 import com.llamalad7.mixinextras.sugar.*;
@@ -29,9 +29,237 @@ import java.util.*;
 import java.util.function.*;
 import java.util.stream.*;
 
+/**
+ * 武器类型重载监听器 Mixin - 扩展武器能力配置的解析逻辑
+ * <p>支持以下 JSON 配置格式：</p>
+ *
+ * <h2>1. hit_particle - 命中粒子效果配置</h2>
+ * <h3>完整格式（支持条件化）：</h3>
+ * <pre><code>{@snippet lang = "json":
+ * {
+ *   "hit_particle": {
+ *     "default": "epicfight:blood",
+ *     "cases": [
+ *       {
+ *         "value": "minecraft:glow_squid_ink",
+ *         "conditions": [
+ *           {
+ *             "predicate": "epicfight:entity_type",
+ *             "entity_type": "minecraft:skeleton"
+ *           }
+ *         ]
+ *       }
+ *     ]
+ *   }
+ * }}</code></pre>
+ * <h3>简单格式：</h3>
+ * <pre><code>{@snippet lang = "json":
+ * {
+ *   "hit_particle": "epicfight:blood"
+ * }}</code></pre>
+ *
+ * <h2>2. swing_sound - 挥舞声音配置</h2>
+ * <h3>完整格式（支持条件化）：</h3>
+ * <pre><code>{@snippet lang = "json":
+ * {
+ *   "swing_sound": {
+ *     "default": "epicfight:blade_swing",
+ *     "cases": [
+ *       {
+ *         "value": "minecraft:entity.warden.attack.swing",
+ *         "conditions": [
+ *           {
+ *             "predicate": "epicfight:has_skill",
+ *             "skill": "imaginarycraft:heavy_weapon"
+ *           }
+ *         ]
+ *       }
+ *     ]
+ *   }
+ * }}</code></pre>
+ * <h3>简单格式：</h3>
+ * <pre><code>{@snippet lang = "json":
+ * {
+ *   "swing_sound": "epicfight:blade_swing"
+ * }}</code></pre>
+ *
+ * <h2>3. hit_sound - 命中声音配置</h2>
+ * <h3>完整格式（支持条件化）：</h3>
+ * <pre><code>{@snippet lang = "json":
+ * {
+ *   "hit_sound": {
+ *     "default": "epicfight:blade_hit",
+ *     "cases": [
+ *       {
+ *         "value": "minecraft:entity.generic.burn",
+ *         "conditions": [
+ *           {
+ *             "predicate": "epicfight:is_on_fire"
+ *           }
+ *         ]
+ *       }
+ *     ]
+ *   }
+ * }}</code></pre>
+ * <h3>简单格式：</h3>
+ * <pre><code>{@snippet lang = "json":
+ * {
+ *   "hit_sound": "epicfight:blade_hit"
+ * }}</code></pre>
+ *
+ * <h2>4. combos - 连招配置</h2>
+ * <h3>简单数组格式：</h3>
+ * <pre><code>{@snippet lang = "json":
+ * {
+ *   "combos": [
+ *     "imaginarycraft:slash_1",
+ *     "imaginarycraft:slash_2",
+ *     "imaginarycraft:stab"
+ *   ]
+ * }}</code></pre>
+ *
+ * <h3>带样式分类的格式：</h3>
+ * <pre><code>{@snippet lang = "json":
+ * {
+ *   "combos": {
+ *     "one_hand": [
+ *       "imaginarycraft:slash_1",
+ *       "imaginarycraft:slash_2",
+ *       "imaginarycraft:stab"
+ *     ]
+ *   }
+ * }}</code></pre>
+ *
+ * <h3>单个动画的条件化配置：</h3>
+ * <pre><code>{@snippet lang = "json":
+ * {
+ *   "combos": {
+ *     "one_hand": [
+ *       {
+ *         "default": "imaginarycraft:slash_1",
+ *         "cases": [
+ *           {
+ *             "value": "imaginarycraft:pierce",
+ *             "conditions": [
+ *               {
+ *                 "predicate": "epicfight:is_sneaking"
+ *               }
+ *             ]
+ *           }
+ *         ]
+ *       },
+ *       "imaginarycraft:slash_2",
+ *       "imaginarycraft:stab"
+ *     ]
+ *   }
+ * }}</code></pre>
+ *
+ * <h3>完整的条件化配置（嵌套）：</h3>
+ * <pre><code>{@snippet lang = "json":
+ * {
+ *   "combos": {
+ *     "one_hand": {
+ *       "default": [
+ *         "imaginarycraft:slash_1",
+ *         "imaginarycraft:slash_2",
+ *         "imaginarycraft:stab"
+ *       ],
+ *       "cases": [
+ *         {
+ *           "value": [
+ *             {
+ *               "default": "imaginarycraft:slash_1",
+ *               "cases": [
+ *                 {
+ *                   "value": "imaginarycraft:pierce",
+ *                   "conditions": [
+ *                     {
+ *                       "predicate": "epicfight:is_sneaking"
+ *                     }
+ *                   ]
+ *                 }
+ *               ]
+ *             },
+ *             "imaginarycraft:slash_2",
+ *             "imaginarycraft:stab"
+ *           ],
+ *           "conditions": [
+ *             {
+ *               "predicate": "epicfight:has_skill",
+ *               "skill": "imaginarycraft:mastery"
+ *             }
+ *           ]
+ *         }
+ *       ]
+ *     }
+ *   }
+ * }}</code></pre>
+ *
+ * <h2>5. innate_skills - 先天技能配置</h2>
+ * <h3>完整格式（支持条件化和样式分类）：</h3>
+ * <pre><code>{@snippet lang = "json":
+ * {
+ *   "innate_skills": {
+ *     "one_hand": {
+ *       "default": "epicfight:battle_mastery",
+ *       "cases": [
+ *         {
+ *           "value": "imaginarycraft:weapon_specialist",
+ *           "conditions": [
+ *             {
+ *               "predicate": "epicfight:has_item",
+ *               "item": "imaginarycraft:ancient_weapon"
+ *             }
+ *           ]
+ *         }
+ *       ]
+ *     }
+ *   }
+ * }}</code></pre>
+ * <h3>简单格式：</h3>
+ * <pre><code>{@snippet lang = "json":
+ * {
+ *   "innate_skills": {
+ *     "one_hand": "epicfight:battle_mastery"
+ *   }
+ * }}</code></pre>
+ *
+ * <h2>6. livingmotion_modifier - 运动动画修饰配置</h2>
+ * <pre><code>{@snippet lang = "json":
+ * {
+ *   "livingmotion_modifier": {
+ *     "one_hand": {
+ *       "idle": {
+ *         "default": "imaginarycraft:idle_combat",
+ *         "cases": [
+ *           {
+ *             "value": "imaginarycraft:idle_berserk",
+ *             "conditions": [
+ *               {
+ *                 "predicate": "epicfight:low_health",
+ *                 "threshold": 0.3
+ *               }
+ *             ]
+ *           }
+ *         ]
+ *       },
+ *       "walk": "imaginarycraft:walk_combat"
+ *     }
+ *   }
+ * }}</code></pre>
+ *
+ * <h2>通用规则说明：</h2>
+ * <ul>
+ *   <li><strong>default</strong>: 默认值，当没有满足任何条件时使用</li>
+ *   <li><strong>cases</strong>: 条件分支数组，按顺序匹配</li>
+ *   <li><strong>value</strong>: 条件满足时使用的值</li>
+ *   <li><strong>conditions</strong>: 条件列表，包含 predicate 和参数</li>
+ *   <li><strong>predicate</strong>: 谓词 ID，用于判断条件是否满足</li>
+ *   <li>第一个匹配成功的 case 会被使用，如果没有匹配的 case 则使用 default</li>
+ * </ul>
+ */
 @Mixin(WeaponTypeReloadListener.class)
 public abstract class WeaponTypeReloadListenerMixin {
-
   @Unique
   private static final String CONFIG_KEY_HIT_PARTICLE = "hit_particle";
   @Unique
@@ -118,6 +346,10 @@ public abstract class WeaponTypeReloadListenerMixin {
       .map(styleTag -> imaginarycraft$parseComboAnimation(resourceLocation, extraEntryProvider, styleTag))
       .collect(Collectors.toList());
   }
+
+  //region collider - 碰撞箱
+  //
+  //endregion
 
   //region hit_particle - 命中粒子效果
 
@@ -284,7 +516,7 @@ public abstract class WeaponTypeReloadListenerMixin {
   }
   //endregion
 
-  //region combos - 连招配置
+  //region combos - 连招
 
   /**
    * 包裹连招配置标签的解析，支持条件化配置

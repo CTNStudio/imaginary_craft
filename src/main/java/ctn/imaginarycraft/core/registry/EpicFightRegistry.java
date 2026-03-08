@@ -3,7 +3,7 @@ package ctn.imaginarycraft.core.registry;
 import ctn.imaginarycraft.core.*;
 import ctn.imaginarycraft.init.*;
 import ctn.imaginarycraft.init.world.item.ego.*;
-import ctn.imaginarycraft.mixin.*;
+import ctn.imaginarycraft.mixin.world.item.*;
 import net.minecraft.resources.*;
 import net.minecraft.world.item.*;
 import net.neoforged.bus.api.*;

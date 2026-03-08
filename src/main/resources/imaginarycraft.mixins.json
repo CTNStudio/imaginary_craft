@@ -3,23 +3,24 @@
   "package": "ctn.imaginarycraft.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "BattojutsuSkillMixin",
-    "ComboAttacksMixin",
-    "ConditionalWeaponInnateSkillMixin",
-    "DamageContainerMixin",
-    "DamageSourceMixin",
-    "ItemStackMixin",
     "LivingDamageEvent$PostMixin",
-    "LivingEntityMixin",
-    "LivingEntityPatchMixin",
-    "LocalPlayerPatchMixin",
-    "ModelFileMixin",
-    "PlayerMixin",
-    "WeaponCapabilityMixin",
     "WeaponCapabilityMixin$BuilderMixin",
-    "WeaponTypeReloadListenerAccessorMixin",
-    "WeaponTypeReloadListenerMixin",
-    "client.ModelBuilderMixin"
+    "client.LocalPlayerPatchMixin",
+    "client.ModelBuilderMixin",
+    "client.ModelFileMixin",
+    "world.DamageContainerMixin",
+    "world.DamageSourceMixin",
+    "world.entity.LivingEntityMixin",
+    "world.entity.LivingEntityPatchMixin",
+    "world.entity.PlayerMixin",
+    "world.item.ItemStackMixin",
+    "world.item.WeaponCapabilityMixin",
+    "world.item.WeaponTypeReloadListenerAccessorMixin",
+    "world.item.WeaponTypeReloadListenerMixin",
+    "world.skill.BattojutsuSkillMixin",
+    "world.skill.ColliderMixin",
+    "world.skill.ComboAttacksMixin",
+    "world.skill.ConditionalWeaponInnateSkillMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -28,11 +29,11 @@
     "requireAnnotations": true
   },
   "client": [
-    "ItemsPreferenceScreenMixin",
     "client.BlockEntityWithoutLevelRendererMixin",
     "client.FontMixin",
     "client.GuiMixin",
     "client.ItemRendererMixin",
+    "client.ItemsPreferenceScreenMixin",
     "client.KeyMappingMixin"
   ],
   "mixinextras": {

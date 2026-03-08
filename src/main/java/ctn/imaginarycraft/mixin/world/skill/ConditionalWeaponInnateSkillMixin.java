@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.mixin;
+package ctn.imaginarycraft.mixin.world.skill;
 
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.gen.*;

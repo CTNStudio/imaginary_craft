@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.mixin;
+package ctn.imaginarycraft.mixin.client;
 
 import net.neoforged.neoforge.client.model.generators.*;
 import org.spongepowered.asm.mixin.*;

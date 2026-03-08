@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.mixin;
+package ctn.imaginarycraft.mixin.world.skill;
 
 import com.llamalad7.mixinextras.injector.*;
 import org.spongepowered.asm.mixin.*;

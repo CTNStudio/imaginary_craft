@@ -5,7 +5,7 @@ import ctn.imaginarycraft.client.renderer.item.*;
 import ctn.imaginarycraft.client.renderer.providers.*;
 import ctn.imaginarycraft.common.world.item.ego.weapon.melee.*;
 import ctn.imaginarycraft.init.world.*;
-import ctn.imaginarycraft.mixin.*;
+import ctn.imaginarycraft.mixin.world.skill.*;
 import net.minecraft.server.level.*;
 import net.minecraft.world.*;
 import net.minecraft.world.effect.*;

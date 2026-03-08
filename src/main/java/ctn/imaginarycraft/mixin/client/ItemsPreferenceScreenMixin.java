@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.mixin;
+package ctn.imaginarycraft.mixin.client;
 
 import com.llamalad7.mixinextras.injector.*;
 import com.llamalad7.mixinextras.sugar.*;

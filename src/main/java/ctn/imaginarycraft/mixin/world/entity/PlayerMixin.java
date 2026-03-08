@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.mixin;
+package ctn.imaginarycraft.mixin.world.entity;
 
 import ctn.imaginarycraft.api.*;
 import ctn.imaginarycraft.common.payload.tos.*;
