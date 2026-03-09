@@ -5,6 +5,7 @@ import ctn.imaginarycraft.mixed.*;
 import net.minecraft.sounds.*;
 import org.spongepowered.asm.mixin.*;
 import org.spongepowered.asm.mixin.injection.*;
+import yesman.epicfight.api.collider.*;
 import yesman.epicfight.particle.*;
 import yesman.epicfight.world.capabilities.entitypatch.*;
 import yesman.epicfight.world.capabilities.item.*;
@@ -22,13 +23,22 @@ public abstract class LivingEntityPatchMixin {
   @WrapOperation(method = "getSwingSound", at = @At(value = "INVOKE",
     target = "Lyesman/epicfight/world/capabilities/item/CapabilityItem;getSmashingSound()Lnet/minecraft/sounds/SoundEvent;"))
   public SoundEvent imaginarycraft$getSwingSound(CapabilityItem instance, Operation<SoundEvent> original) {
-    return imaginarycraft$get(instance, original, IWeaponCapability::getImaginarycraft$swingSound);
+    return imaginarycraft$get(instance, original, IWeaponCapability::getImaginarycraft$smashingSound);
   }
 
   @WrapOperation(method = "getWeaponHitSound", at = @At(value = "INVOKE",
     target = "Lyesman/epicfight/world/capabilities/item/CapabilityItem;getHitSound()Lnet/minecraft/sounds/SoundEvent;"))
   public SoundEvent imaginarycraft$getHitSound(CapabilityItem instance, Operation<SoundEvent> original) {
     return imaginarycraft$get(instance, original, IWeaponCapability::getImaginarycraft$hitSound);
+  }
+
+  @WrapOperation(method = "getColliderMatching", at = @At(value = "INVOKE",
+    target = "Lyesman/epicfight/world/capabilities/item/CapabilityItem;getWeaponCollider()Lyesman/epicfight/api/collider/Collider;"))
+  private Collider imaginarycraft$getColliderMatching(
+    CapabilityItem instance,
+    Operation<Collider> original
+  ) {
+    return imaginarycraft$get(instance, original, IWeaponCapability::getImaginarycraft$weaponCollider);
   }
 
   @Unique

@@ -15,6 +15,7 @@ import org.spongepowered.asm.mixin.injection.*;
 import org.spongepowered.asm.mixin.injection.callback.*;
 import yesman.epicfight.api.animation.*;
 import yesman.epicfight.api.animation.types.*;
+import yesman.epicfight.api.collider.*;
 import yesman.epicfight.particle.*;
 import yesman.epicfight.skill.*;
 import yesman.epicfight.world.capabilities.entitypatch.*;
@@ -33,7 +34,7 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
   @Unique
   private Function<LivingEntityPatch<?>, HitParticleType> imaginarycraft$hitParticleProvider;
   @Unique
-  private Function<LivingEntityPatch<?>, SoundEvent> imaginarycraft$swingSoundProvider;
+  private Function<LivingEntityPatch<?>, SoundEvent> imaginarycraft$smashingSoundProvider;
   @Unique
   private Function<LivingEntityPatch<?>, SoundEvent> imaginarycraft$hitSoundProvider;
   @Unique
@@ -42,6 +43,8 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
   private Map<Style, Function<LivingEntityPatch<?>, Function<ItemStack, Skill>>> imaginarycraft$innateSkillProviderByStyle;
   @Unique
   private Map<Style, Map<LivingMotion, Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends StaticAnimation>>>> imaginarycraft$livingMotionProviderModifiers;
+  @Unique
+  private Function<LivingEntityPatch<?>, Collider> imaginarycraft$colliderProvider;
 
   protected WeaponCapabilityMixin(Builder<?> builder) {
     super(builder);
@@ -75,6 +78,12 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
   @Shadow
   public abstract List<AnimationManager.AnimationAccessor<? extends AttackAnimation>> getAutoAttackMotion(PlayerPatch<?> playerpatch);
 
+  @Shadow
+  public abstract SoundEvent getHitSound();
+
+  @Shadow
+  public abstract HitParticleType getHitParticle();
+
   @Inject(method = "<init>", at = @At("RETURN"))
   private void imaginarycraft$init(
     WeaponCapability.Builder builder,
@@ -83,26 +92,27 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
   ) {
     IBuilder iBuilder = IBuilder.of(weaponBuilder);
     imaginarycraft$hitParticleProvider = iBuilder.getImaginarycraft$hitParticleProvider();
-    imaginarycraft$swingSoundProvider = iBuilder.getImaginarycraft$swingSoundProvider();
+    imaginarycraft$smashingSoundProvider = iBuilder.getImaginarycraft$swingSoundProvider();
     imaginarycraft$hitSoundProvider = iBuilder.getImaginarycraft$hitSoundProvider();
     imaginarycraft$autoAttackMotionsProvider = iBuilder.getImaginarycraft$autoAttackMotionProviderMap();
     imaginarycraft$innateSkillProviderByStyle = iBuilder.getImaginarycraft$innateSkillProviderByStyle();
     imaginarycraft$livingMotionProviderModifiers = iBuilder.getImaginarycraft$livingMotionProviderModifiers();
+    imaginarycraft$colliderProvider = iBuilder.getImaginarycraft$colliderProvider();
   }
 
   @Override
   public HitParticleType getImaginarycraft$hitParticle(LivingEntityPatch<?> entitypatch) {
-    return imaginarycraft$hitParticleProvider == null ? null : imaginarycraft$hitParticleProvider.apply(entitypatch);
+    return imaginarycraft$hitParticleProvider == null ? getHitParticle() : imaginarycraft$hitParticleProvider.apply(entitypatch);
   }
 
   @Override
-  public SoundEvent getImaginarycraft$swingSound(LivingEntityPatch<?> entitypatch) {
-    return imaginarycraft$swingSoundProvider == null ? null : imaginarycraft$swingSoundProvider.apply(entitypatch);
+  public SoundEvent getImaginarycraft$smashingSound(LivingEntityPatch<?> entitypatch) {
+    return imaginarycraft$smashingSoundProvider == null ? getSmashingSound() : imaginarycraft$smashingSoundProvider.apply(entitypatch);
   }
 
   @Override
   public SoundEvent getImaginarycraft$hitSound(LivingEntityPatch<?> entitypatch) {
-    return imaginarycraft$hitSoundProvider == null ? null : imaginarycraft$hitSoundProvider.apply(entitypatch);
+    return imaginarycraft$hitSoundProvider == null ? getHitSound() : imaginarycraft$hitSoundProvider.apply(entitypatch);
   }
 
   @WrapOperation(method = "getAutoAttackMotion", at = @At(value = "INVOKE",
@@ -250,8 +260,19 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
       .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
   }
 
+  @Override
+  public Collider getImaginarycraft$weaponCollider(LivingEntityPatch<?> livingEntityPatch) {
+    if (imaginarycraft$colliderProvider == null) {
+      return getWeaponCollider();
+    }
+    Collider collider = imaginarycraft$colliderProvider.apply(livingEntityPatch);
+    return collider == null ? getWeaponCollider() : collider;
+  }
+
   @Mixin(WeaponCapability.Builder.class)
   public abstract static class BuilderMixin extends CapabilityItem.Builder<WeaponCapability.Builder> implements IWeaponCapability.IBuilder {
+    @Shadow
+    boolean canBePlacedOffhand;
     @Unique
     private Function<LivingEntityPatch<?>, HitParticleType> imaginarycraft$hitParticleProvider;
     @Unique
@@ -264,22 +285,24 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
     private Map<Style, Function<LivingEntityPatch<?>, Function<ItemStack, Skill>>> imaginarycraft$innateSkillProviderByStyle;
     @Unique
     private Map<Style, Map<LivingMotion, Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends StaticAnimation>>>> imaginarycraft$livingMotionProviderModifiers;
+    @Unique
+    private Function<LivingEntityPatch<?>, Collider> imaginarycraft$colliderProvider;
 
     @Override
     public IBuilder imaginarycraft$hitParticle(HitParticleType defaultValue, List<Pair<Predicate<LivingEntityPatch<?>>, HitParticleType>> predicates) {
-      imaginarycraft$hitParticleProvider = ModWeaponTypeReloadListener.getProvider(defaultValue, predicates);
+      imaginarycraft$hitParticleProvider = ConditionalProviderFactory.getProvider(defaultValue, predicates);
       return this;
     }
 
     @Override
     public IBuilder imaginarycraft$swingSound(SoundEvent defaultValue, List<Pair<Predicate<LivingEntityPatch<?>>, SoundEvent>> predicates) {
-      imaginarycraft$swingSoundProvider = ModWeaponTypeReloadListener.getProvider(defaultValue, predicates);
+      imaginarycraft$swingSoundProvider = ConditionalProviderFactory.getProvider(defaultValue, predicates);
       return this;
     }
 
     @Override
     public IBuilder imaginarycraft$hitSound(SoundEvent defaultValue, List<Pair<Predicate<LivingEntityPatch<?>>, SoundEvent>> predicates) {
-      imaginarycraft$hitSoundProvider = ModWeaponTypeReloadListener.getProvider(defaultValue, predicates);
+      imaginarycraft$hitSoundProvider = ConditionalProviderFactory.getProvider(defaultValue, predicates);
       return this;
     }
 
@@ -292,7 +315,7 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
       if (imaginarycraft$autoAttackMotionProviderMap == null) {
         imaginarycraft$autoAttackMotionProviderMap = new HashMap<>();
       }
-      imaginarycraft$autoAttackMotionProviderMap.put(style, ModWeaponTypeReloadListener.getProvider(defaultPredicates, predicates));
+      imaginarycraft$autoAttackMotionProviderMap.put(style, ConditionalProviderFactory.getProvider(defaultPredicates, predicates));
       return this;
     }
 
@@ -301,7 +324,7 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
       if (imaginarycraft$innateSkillProviderByStyle == null) {
         imaginarycraft$innateSkillProviderByStyle = new HashMap<>();
       }
-      imaginarycraft$innateSkillProviderByStyle.put(style, ModWeaponTypeReloadListener.getProvider(defaultValue, predicates));
+      imaginarycraft$innateSkillProviderByStyle.put(style, ConditionalProviderFactory.getProvider(defaultValue, predicates));
       return this;
     }
 
@@ -325,8 +348,14 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
         imaginarycraft$livingMotionProviderModifiers.put(style, new HashMap<>());
       }
 
-      imaginarycraft$livingMotionProviderModifiers.get(style).put(livingMotion, ModWeaponTypeReloadListener.getProvider(defaultValue, predicates));
+      imaginarycraft$livingMotionProviderModifiers.get(style).put(livingMotion, ConditionalProviderFactory.getProvider(defaultValue, predicates));
 
+      return this;
+    }
+
+    @Override
+    public IBuilder imaginarycraft$collider(Collider defaultValue, List<Pair<Predicate<LivingEntityPatch<?>>, Collider>> predicates) {
+      imaginarycraft$colliderProvider = ConditionalProviderFactory.getProvider(defaultValue, predicates);
       return this;
     }
 
@@ -358,6 +387,11 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
     @Override
     public Map<Style, Map<LivingMotion, Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends StaticAnimation>>>> getImaginarycraft$livingMotionProviderModifiers() {
       return imaginarycraft$livingMotionProviderModifiers;
+    }
+
+    @Override
+    public Function<LivingEntityPatch<?>, Collider> getImaginarycraft$colliderProvider() {
+      return imaginarycraft$colliderProvider;
     }
   }
 }

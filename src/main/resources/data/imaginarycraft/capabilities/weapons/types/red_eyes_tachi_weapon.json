@@ -1,18 +1,56 @@
 {
   "collider": {
-    "size": [
-      0.4,
-      0.4,
-      0.95
-    ],
-    "number": 3,
-    "center": [
-      0.0,
-      0.0,
-      -0.95
+    "default": {
+      "size": [
+        0.35,
+        0.35,
+        0.95
+      ],
+      "number": 3,
+      "center": [
+        0.0,
+        0.0,
+        -0.95
+      ]
+    },
+    "cases": [
+      {
+        "conditions": [
+          {
+            "predicate": "imaginarycraft:mob_effects",
+            "effect": "imaginarycraft:red_eyes_hunting"
+          }
+        ],
+        "value": {
+          "size": [
+            0.35,
+            0.35,
+            0.8
+          ],
+          "number": 3,
+          "center": [
+            0.0,
+            0.0,
+            -0.75
+          ]
+        }
+      }
     ]
   },
-  "hit_particle": "epicfight:adrenaline_player_beating",
+  "hit_particle": {
+    "default": "epicfight:hit_blade",
+    "cases": [
+      {
+        "conditions": [
+          {
+            "predicate": "imaginarycraft:mob_effects",
+            "effect": "imaginarycraft:red_eyes_hunting"
+          }
+        ],
+        "value": ""
+      }
+    ]
+  },
   "hit_sound": {
     "default": "epicfight:entity.hit.blunt_hard",
     "cases": [
@@ -29,22 +67,40 @@
   },
   "livingmotion_modifier": {
     "one_hand": {
-      "creative_fly": "epicfight:biped/living/hold_tachi",
-      "aim": "epicfight:biped/living/hold_tachi",
-      "idle": "epicfight:biped/living/hold_tachi",
-      "run": "epicfight:biped/living/hold_tachi",
-      "float": "epicfight:biped/living/hold_tachi",
-      "shot": "epicfight:biped/living/hold_tachi",
-      "fly": "epicfight:biped/living/hold_tachi",
-      "creative_idle": "epicfight:biped/living/hold_tachi",
-      "reload": "epicfight:biped/living/hold_tachi",
-      "fall": "epicfight:biped/living/hold_tachi",
-      "block": "epicfight:biped/skill/guard_longsword",
-      "sneak": "epicfight:biped/living/hold_tachi",
-      "walk": "epicfight:biped/living/hold_tachi",
-      "swim": "epicfight:biped/living/hold_tachi",
-      "kneel": "epicfight:biped/living/hold_tachi",
-      "sit": "epicfight:biped/living/hold_tachi"
+      "default": {
+        "idle": "epicfight:biped/living/hold_tachi",
+        "kneel": "epicfight:biped/living/hold_tachi",
+        "walk": "epicfight:biped/living/hold_tachi",
+        "chase": "epicfight:biped/living/hold_tachi",
+        "run": "epicfight:biped/living/hold_tachi",
+        "sneak": "epicfight:biped/living/hold_tachi",
+        "swim": "epicfight:biped/living/hold_tachi",
+        "float": "epicfight:biped/living/hold_tachi",
+        "fall": "epicfight:biped/living/hold_tachi",
+        "block": "epicfight:biped/skill/guard_longsword"
+      },
+      "cases": [
+        {
+          "conditions": [
+            {
+              "predicate": "imaginarycraft:mob_effects",
+              "effect": "imaginarycraft:red_eyes_hunting"
+            }
+          ],
+          "value": {
+            "idle": "epicfight:biped/living/hold_uchigatana",
+            "kneel": "epicfight:biped/living/hold_uchigatana",
+            "walk": "epicfight:biped/living/hold_uchigatana",
+            "chase": "epicfight:biped/living/hold_uchigatana",
+            "run": "epicfight:biped/living/hold_uchigatana",
+            "sneak": "epicfight:biped/living/hold_uchigatana",
+            "swim": "epicfight:biped/living/hold_uchigatana",
+            "float": "epicfight:biped/living/hold_uchigatana",
+            "fall": "epicfight:biped/living/hold_uchigatana",
+            "block": "epicfight:biped/combat/uchigatana_sheath_airslash"
+          }
+        }
+      ]
     }
   },
   "offhand_item_compatible_predicate": [],

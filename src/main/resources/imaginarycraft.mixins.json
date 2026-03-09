@@ -4,7 +4,6 @@
   "compatibilityLevel": "JAVA_21",
   "mixins": [
     "LivingDamageEvent$PostMixin",
-    "WeaponCapabilityMixin$BuilderMixin",
     "client.LocalPlayerPatchMixin",
     "client.ModelBuilderMixin",
     "client.ModelFileMixin",
@@ -15,12 +14,12 @@
     "world.entity.PlayerMixin",
     "world.item.ItemStackMixin",
     "world.item.WeaponCapabilityMixin",
-    "world.item.WeaponTypeReloadListenerAccessorMixin",
-    "world.item.WeaponTypeReloadListenerMixin",
+    "world.item.WeaponCapabilityMixin$BuilderMixin",
     "world.skill.BattojutsuSkillMixin",
-    "world.skill.ColliderMixin",
     "world.skill.ComboAttacksMixin",
-    "world.skill.ConditionalWeaponInnateSkillMixin"
+    "world.skill.ConditionalWeaponInnateSkillMixin",
+    "world.skill.WeaponTypeReloadListenerAccessorMixin",
+    "world.skill.WeaponTypeReloadListenerMixin"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -3,9 +3,9 @@ package ctn.imaginarycraft.mixed;
 import com.mojang.datafixers.util.*;
 import net.minecraft.sounds.*;
 import net.minecraft.world.item.*;
-import org.jetbrains.annotations.*;
 import yesman.epicfight.api.animation.*;
 import yesman.epicfight.api.animation.types.*;
+import yesman.epicfight.api.collider.*;
 import yesman.epicfight.particle.*;
 import yesman.epicfight.skill.*;
 import yesman.epicfight.world.capabilities.entitypatch.*;
@@ -20,21 +20,19 @@ public interface IWeaponCapability {
     return (IWeaponCapability) builder;
   }
 
-  @Nullable
   HitParticleType getImaginarycraft$hitParticle(LivingEntityPatch<?> entitypatch);
 
-  @Nullable
-  SoundEvent getImaginarycraft$swingSound(LivingEntityPatch<?> entitypatch);
+  SoundEvent getImaginarycraft$smashingSound(LivingEntityPatch<?> entitypatch);
 
-  @Nullable
   SoundEvent getImaginarycraft$hitSound(LivingEntityPatch<?> entitypatch);
 
-  @Nullable
   List<Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>>> getImaginarycraft$autoAttackMotion1(PlayerPatch<?> playerpatch);
 
   List<AnimationManager.AnimationAccessor<? extends AttackAnimation>> getImaginarycraft$mountAttackMotion(LivingEntityPatch<?> entitypatch);
 
   List<Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>>> getImaginarycraft$mountAttackMotion1(LivingEntityPatch<?> entitypatch);
+
+  Collider getImaginarycraft$weaponCollider(LivingEntityPatch<?> livingEntityPatch);
 
   interface IBuilder {
     static IBuilder of(WeaponCapability.Builder builder) {
@@ -64,5 +62,9 @@ public interface IWeaponCapability {
     IBuilder imaginarycraft$livingMotionModifier(Style style, LivingMotion livingmotion, AnimationManager.AnimationAccessor<? extends StaticAnimation> animation, List<Pair<Predicate<LivingEntityPatch<?>>, AnimationManager.AnimationAccessor<? extends StaticAnimation>>> pairs);
 
     Map<Style, Map<LivingMotion, Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends StaticAnimation>>>> getImaginarycraft$livingMotionProviderModifiers();
+
+    IBuilder imaginarycraft$collider(Collider defaultValue, List<Pair<Predicate<LivingEntityPatch<?>>, Collider>> predicates);
+
+    Function<LivingEntityPatch<?>, Collider> getImaginarycraft$colliderProvider();
   }
 }

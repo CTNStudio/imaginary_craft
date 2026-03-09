@@ -78,26 +78,26 @@ public final class EntityAttributeRegistry {
    * <p>
    * 参数顺序：抗性（4个）+ 伤害倍数（4个）
    *
-   * @param event          属性修改事件
-   * @param entityType     实体类型
-   * @param physicsRes     物理抗性
-   * @param spiritRes      精神抗性
-   * @param erosionRes     侵蚀抗性
-   * @param theSoulRes     灵魂抗性
-   * @param physicsDmg     物理伤害倍数
-   * @param spiritDmg      精神伤害倍数
-   * @param erosionDmg     侵蚀伤害倍数
-   * @param theSoulDmg     灵魂伤害倍数
+   * @param event      属性修改事件
+   * @param entityType 实体类型
+   * @param physicsRes 物理抗性
+   * @param spiritRes  精神抗性
+   * @param erosionRes 侵蚀抗性
+   * @param theSoulRes 灵魂抗性
+   * @param physicsDmg 物理伤害倍数
+   * @param spiritDmg  精神伤害倍数
+   * @param erosionDmg 侵蚀伤害倍数
+   * @param theSoulDmg 灵魂伤害倍数
    */
   private static void configureEntityAttributes(EntityAttributeModificationEvent event,
-                                                  EntityType<? extends LivingEntity> entityType,
-                                                  double physicsRes, double spiritRes, double erosionRes, double theSoulRes,
-                                                  double physicsDmg, double spiritDmg, double erosionDmg, double theSoulDmg) {
+                                                EntityType<? extends LivingEntity> entityType,
+                                                double physicsRes, double spiritRes, double erosionRes, double theSoulRes,
+                                                double physicsDmg, double spiritDmg, double erosionDmg, double theSoulDmg) {
     // 设置抗性属性
     lcAttributesVulnerable(event, entityType, physicsRes, spiritRes, erosionRes, theSoulRes);
     // 设置伤害倍数
     EntityDamageMultiplier.setMultiplierAll(entityType, physicsRes, spiritRes, erosionRes, theSoulRes,
-                                                  physicsDmg, spiritDmg, erosionDmg, theSoulDmg);
+      physicsDmg, spiritDmg, erosionDmg, theSoulDmg);
   }
 
   /**

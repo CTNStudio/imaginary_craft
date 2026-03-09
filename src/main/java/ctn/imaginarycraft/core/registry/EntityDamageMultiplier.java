@@ -1,12 +1,10 @@
 package ctn.imaginarycraft.core.registry;
 
-import ctn.imaginarycraft.api.LcDamageType;
-import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.LivingEntity;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.api.*;
+import net.minecraft.world.entity.*;
+import org.jetbrains.annotations.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * 实体伤害乘数表
@@ -55,26 +53,26 @@ public final class EntityDamageMultiplier {
    *
    * @param entityType 实体类型
    * @param damageType 伤害类型
-   * @param multiplier  倍数
+   * @param multiplier 倍数
    */
   public static void setMultiplier(@NotNull EntityType<?> entityType, @NotNull LcDamageType damageType, double multiplier) {
     MULTIPLIER_TABLE
       .computeIfAbsent(entityType, k -> new HashMap<>())
       .put(damageType, multiplier);
   }
-  
+
   /**
    * 设置实体对所有伤害类型的倍数（8个参数版本）
    *
    * @param entityType 实体类型
-   * @param physicsRes    物理抗性
-   * @param spiritRes     精神抗性
-   * @param erosionRes    侵蚀抗性
-   * @param theSoulRes    灵魂抗性
-   * @param physicsDmg    物理伤害倍数
-   * @param spiritDmg     精神伤害倍数
-   * @param erosionDmg    侵蚀伤害倍数
-   * @param theSoulDmg    灵魂伤害倍数
+   * @param physicsRes 物理抗性
+   * @param spiritRes  精神抗性
+   * @param erosionRes 侵蚀抗性
+   * @param theSoulRes 灵魂抗性
+   * @param physicsDmg 物理伤害倍数
+   * @param spiritDmg  精神伤害倍数
+   * @param erosionDmg 侵蚀伤害倍数
+   * @param theSoulDmg 灵魂伤害倍数
    */
   public static void setMultiplierAll(@NotNull EntityType<?> entityType,
                                       double physicsRes, double spiritRes, double erosionRes, double theSoulRes,
