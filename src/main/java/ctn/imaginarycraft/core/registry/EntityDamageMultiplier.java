@@ -9,7 +9,7 @@ import java.util.*;
 /**
  * 实体伤害乘数表
  * <p>
- * 用于管理实体对不同伤害类型的抗性系数，方便统一调整
+ * 用于管理实体对不同伤害类型的伤害系数，方便统一调整
  *
  */
 public final class EntityDamageMultiplier {
@@ -59,28 +59,6 @@ public final class EntityDamageMultiplier {
     MULTIPLIER_TABLE
       .computeIfAbsent(entityType, k -> new HashMap<>())
       .put(damageType, multiplier);
-  }
-
-  /**
-   * 设置实体对所有伤害类型的倍数（8个参数版本）
-   *
-   * @param entityType 实体类型
-   * @param physicsRes 物理抗性
-   * @param spiritRes  精神抗性
-   * @param erosionRes 侵蚀抗性
-   * @param theSoulRes 灵魂抗性
-   * @param physicsDmg 物理伤害倍数
-   * @param spiritDmg  精神伤害倍数
-   * @param erosionDmg 侵蚀伤害倍数
-   * @param theSoulDmg 灵魂伤害倍数
-   */
-  public static void setMultiplierAll(@NotNull EntityType<?> entityType,
-                                      double physicsRes, double spiritRes, double erosionRes, double theSoulRes,
-                                      double physicsDmg, double spiritDmg, double erosionDmg, double theSoulDmg) {
-    setMultiplier(entityType, LcDamageType.PHYSICS, physicsDmg);
-    setMultiplier(entityType, LcDamageType.SPIRIT, spiritDmg);
-    setMultiplier(entityType, LcDamageType.EROSION, erosionDmg);
-    setMultiplier(entityType, LcDamageType.THE_SOUL, theSoulDmg);
   }
 
   /**

@@ -9,6 +9,7 @@ import net.minecraft.world.entity.player.*;
 import net.neoforged.bus.api.*;
 import net.neoforged.fml.common.*;
 import net.neoforged.neoforge.event.entity.*;
+import net.minecraft.world.entity.ai.attributes.*;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class EntityAttributeRegistry {
@@ -33,50 +34,50 @@ public final class EntityAttributeRegistry {
   }
 
   private static void vanilla(EntityAttributeModificationEvent event) {
-    // 抗性（前4个）+ 伤害倍数（后4个）
-    configureEntityAttributes(event, EntityType.WARDEN, 0.6, 1.2, 0.8, 0.2, 0.6, 1.2, 0.8, 0.2);
-    configureEntityAttributes(event, EntityType.ENDER_DRAGON, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5);
-    configureEntityAttributes(event, EntityType.WITHER, 0.5, 0.7, -1.0, 1.0, 0.5, 0.7, -1.0, 1.0);
-    configureEntityAttributes(event, EntityType.IRON_GOLEM, 0.5, 0.6, 1.5, 1.0, 0.5, 0.6, 1.5, 1.0);
-    configureEntityAttributes(event, EntityType.ELDER_GUARDIAN, 0.5, 0.8, 0.9, 1.2, 0.5, 0.8, 0.9, 1.2);
-    configureEntityAttributes(event, EntityType.RAVAGER, 0.5, 1.0, 1.5, 1.3, 0.5, 1.0, 1.5, 1.3);
-    configureEntityAttributes(event, EntityType.GUARDIAN, 0.5, 0.8, 0.9, 1.2, 0.5, 0.8, 0.9, 1.2);
-    configureEntityAttributes(event, EntityType.ENDERMAN, 0.8, 0.5, 1.2, 1.5, 0.8, 0.5, 1.2, 1.5);
-    configureEntityAttributes(event, EntityType.GHAST, 0.5, 0.5, 1.2, 1.5, 0.5, 0.5, 1.2, 1.5);
-    configureEntityAttributes(event, EntityType.HOGLIN, 0.8, 1.2, 1.1, 1.2, 0.8, 1.2, 1.1, 1.2);
-    configureEntityAttributes(event, EntityType.PIGLIN_BRUTE, 0.6, 1.3, 1.0, 1.1, 0.6, 1.3, 1.0, 1.1);
-    configureEntityAttributes(event, EntityType.SHULKER, 0.2, 1.5, 1.0, 1.1, 0.2, 1.5, 1.0, 1.1);
-    configureEntityAttributes(event, EntityType.ZOGLIN, 0.5, 1.2, 1.2, 1.3, 0.5, 1.2, 1.2, 1.3);
-    configureEntityAttributes(event, EntityType.EVOKER, 1.0, 1.2, 1.3, 1.3, 1.0, 1.2, 1.3, 1.3);
-    configureEntityAttributes(event, EntityType.VINDICATOR, 0.8, 1.2, 1.3, 1.3, 0.8, 1.2, 1.3, 1.3);
-    configureEntityAttributes(event, EntityType.WITCH, 1.2, 1.1, 1.0, 1.3, 1.2, 1.1, 1.0, 1.3);
-    configureEntityAttributes(event, EntityType.WITHER_SKELETON, 0.8, 0.8, -1.0, 1.1, 0.8, 0.8, -1.0, 1.1);
-    configureEntityAttributes(event, EntityType.BLAZE, 0.7, 0.8, 1.3, 1.2, 0.7, 0.8, 1.3, 1.2);
-    configureEntityAttributes(event, EntityType.BOGGED, 1.0, 0.5, 0.7, 1.0, 1.0, 0.5, 0.7, 1.0);
-    configureEntityAttributes(event, EntityType.SKELETON, 0.9, 0.6, 0.8, 1.0, 0.9, 0.6, 0.8, 1.0);
-    configureEntityAttributes(event, EntityType.STRAY, 0.8, 0.6, 0.8, 1.0, 0.8, 0.6, 0.8, 1.0);
-    configureEntityAttributes(event, EntityType.ZOMBIE, 0.7, 0.8, 0.9, 1.1, 0.7, 0.8, 0.9, 1.1);
-    configureEntityAttributes(event, EntityType.ZOMBIFIED_PIGLIN, 0.6, 0.7, 0.5, 1.3, 0.6, 0.7, 0.5, 1.3);
-    configureEntityAttributes(event, EntityType.DROWNED, 0.8, 0.8, 1.0, 1.1, 0.8, 0.8, 1.0, 1.1);
-    configureEntityAttributes(event, EntityType.BREEZE, 0.5, 0.8, 1.3, 1.2, 0.5, 0.8, 1.3, 1.2);
-    configureEntityAttributes(event, EntityType.CREEPER, 1.2, 0.8, 1.2, 1.2, 1.2, 0.8, 1.2, 1.2);
-    configureEntityAttributes(event, EntityType.HUSK, 0.6, 0.6, 0.8, 1.2, 0.6, 0.6, 0.8, 1.2);
-    configureEntityAttributes(event, EntityType.MAGMA_CUBE, 0.4, 0.6, 1.4, 1.2, 0.4, 0.6, 1.4, 1.2);
-    configureEntityAttributes(event, EntityType.PHANTOM, 0.6, 1.0, 0.8, 1.3, 0.6, 1.0, 0.8, 1.3);
-    configureEntityAttributes(event, EntityType.ENDERMITE, 0.9, 1.2, 1.1, 1.3, 0.9, 1.2, 1.1, 1.3);
-    configureEntityAttributes(event, EntityType.SILVERFISH, 0.8, 1.2, 1.3, 1.3, 0.8, 1.2, 1.3, 1.3);
-    configureEntityAttributes(event, EntityType.VEX, 0.8, 1.3, 1.1, 1.5, 0.8, 1.3, 1.1, 1.5);
-    configureEntityAttributes(event, EntityType.PILLAGER, 0.8, 1.2, 1.3, 1.3, 0.8, 1.2, 1.3, 1.3);
-    configureEntityAttributes(event, EntityType.PIGLIN, 0.8, 1.2, 1.3, 1.2, 0.8, 1.2, 1.3, 1.2);
-    configureEntityAttributes(event, EntityType.SPIDER, 0.7, 1.1, 1.3, 1.1, 0.7, 1.1, 1.3, 1.1);
-    configureEntityAttributes(event, EntityType.CAVE_SPIDER, 0.7, 1.1, 1.0, 1.1, 0.7, 1.1, 1.0, 1.1);
-    configureEntityAttributes(event, EntityType.SLIME, 0.5, 0.7, 1.2, 1.1, 0.5, 0.7, 1.2, 1.1);
+    // 抗性（前4个）+ 伤害倍数（中间4个）+ 血量（最后1个）
+    configureEntityAttributes(event, EntityType.WARDEN, 0.6, 1.2, 0.8, 0.2, 0.6, 1.2, 0.8, 0.2, 2.0);
+    configureEntityAttributes(event, EntityType.ENDER_DRAGON, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1);
+    configureEntityAttributes(event, EntityType.WITHER, 0.5, 0.7, -1.0, 1.0, 0.5, 0.7, -1.0, 1.0,  1.0);
+    configureEntityAttributes(event, EntityType.IRON_GOLEM, 0.5, 0.6, 1.5, 1.0, 0.5, 0.6, 1.5, 1.0,  1.0);
+    configureEntityAttributes(event, EntityType.ELDER_GUARDIAN, 0.5, 0.8, 0.9, 1.2, 0.5, 0.8, 0.9, 1.2,  1.0);
+    configureEntityAttributes(event, EntityType.RAVAGER, 0.5, 1.0, 1.5, 1.3, 0.5, 1.0, 1.5, 1.3,  1.0);
+    configureEntityAttributes(event, EntityType.GUARDIAN, 0.5, 0.8, 0.9, 1.2, 0.5, 0.8, 0.9, 1.2,  1.0);
+    configureEntityAttributes(event, EntityType.ENDERMAN, 0.8, 0.5, 1.2, 1.5, 0.8, 0.5, 1.2, 1.5,  1.0);
+    configureEntityAttributes(event, EntityType.GHAST, 0.5, 0.5, 1.2, 1.5, 0.5, 0.5, 1.2, 1.5,  1.0);
+    configureEntityAttributes(event, EntityType.HOGLIN, 0.8, 1.2, 1.1, 1.2, 0.8, 1.2, 1.1, 1.2,  1.0);
+    configureEntityAttributes(event, EntityType.PIGLIN_BRUTE, 0.6, 1.3, 1.0, 1.1, 0.6, 1.3, 1.0, 1.1,  1.0);
+    configureEntityAttributes(event, EntityType.SHULKER, 0.2, 1.5, 1.0, 1.1, 0.2, 1.5, 1.0, 1.1,  1.0);
+    configureEntityAttributes(event, EntityType.ZOGLIN, 0.5, 1.2, 1.2, 1.3, 0.5, 1.2, 1.2, 1.3,  1.0);
+    configureEntityAttributes(event, EntityType.EVOKER, 1.0, 1.2, 1.3, 1.3, 1.0, 1.2, 1.3, 1.3,  1.0);
+    configureEntityAttributes(event, EntityType.VINDICATOR, 0.8, 1.2, 1.3, 1.3, 0.8, 1.2, 1.3, 1.3,  1.0);
+    configureEntityAttributes(event, EntityType.WITCH, 1.2, 1.1, 1.0, 1.3, 1.2, 1.1, 1.0, 1.3,  1.0);
+    configureEntityAttributes(event, EntityType.WITHER_SKELETON, 0.8, 0.8, -1.0, 1.1, 0.8, 0.8, -1.0, 1.1,  1.0);
+    configureEntityAttributes(event, EntityType.BLAZE, 0.7, 0.8, 1.3, 1.2, 0.7, 0.8, 1.3, 1.2,  1.0);
+    configureEntityAttributes(event, EntityType.BOGGED, 1.0, 0.5, 0.7, 1.0, 1.0, 0.5, 0.7, 1.0,  1.0);
+    configureEntityAttributes(event, EntityType.SKELETON, 0.9, 0.6, 0.8, 1.0, 0.9, 0.6, 0.8, 1.0,  1.0);
+    configureEntityAttributes(event, EntityType.STRAY, 0.8, 0.6, 0.8, 1.0, 0.8, 0.6, 0.8, 1.0,  1.0);
+    configureEntityAttributes(event, EntityType.ZOMBIE, 0.7, 0.8, 0.9, 1.1, 0.7, 0.8, 0.9, 1.1,  1.0);
+    configureEntityAttributes(event, EntityType.ZOMBIFIED_PIGLIN, 0.6, 0.7, 0.5, 1.3, 0.6, 0.7, 0.5, 1.3,  1.0);
+    configureEntityAttributes(event, EntityType.DROWNED, 0.8, 0.8, 1.0, 1.1, 0.8, 0.8, 1.0, 1.1,  1.0);
+    configureEntityAttributes(event, EntityType.BREEZE, 0.5, 0.8, 1.3, 1.2, 0.5, 0.8, 1.3, 1.2,  1.0);
+    configureEntityAttributes(event, EntityType.CREEPER, 1.2, 0.8, 1.2, 1.2, 1.2, 0.8, 1.2, 1.2,  1.0);
+    configureEntityAttributes(event, EntityType.HUSK, 0.6, 0.6, 0.8, 1.2, 0.6, 0.6, 0.8, 1.2,  1.0);
+    configureEntityAttributes(event, EntityType.MAGMA_CUBE, 0.4, 0.6, 1.4, 1.2, 0.4, 0.6, 1.4, 1.2,  1.0);
+    configureEntityAttributes(event, EntityType.PHANTOM, 0.6, 1.0, 0.8, 1.3, 0.6, 1.0, 0.8, 1.3,  1.0);
+    configureEntityAttributes(event, EntityType.ENDERMITE, 0.9, 1.2, 1.1, 1.3, 0.9, 1.2, 1.1, 1.3,  1.0);
+    configureEntityAttributes(event, EntityType.SILVERFISH, 0.8, 1.2, 1.3, 1.3, 0.8, 1.2, 1.3, 1.3,  1.0);
+    configureEntityAttributes(event, EntityType.VEX, 0.8, 1.3, 1.1, 1.5, 0.8, 1.3, 1.1, 1.5,  1.0);
+    configureEntityAttributes(event, EntityType.PILLAGER, 0.8, 1.2, 1.3, 1.3, 0.8, 1.2, 1.3, 1.3,  1.0);
+    configureEntityAttributes(event, EntityType.PIGLIN, 0.8, 1.2, 1.3, 1.2, 0.8, 1.2, 1.3, 1.2,  1.0);
+    configureEntityAttributes(event, EntityType.SPIDER, 0.7, 1.1, 1.3, 1.1, 0.7, 1.1, 1.3, 1.1,  1.0);
+    configureEntityAttributes(event, EntityType.CAVE_SPIDER, 0.7, 1.1, 1.0, 1.1, 0.7, 1.1, 1.0, 1.1,  1.0);
+    configureEntityAttributes(event, EntityType.SLIME, 0.5, 0.7, 1.2, 1.1, 0.5, 0.7, 1.2, 1.1,  1.0);
   }
 
   /**
-   * 统一配置实体属性：抗性 + 伤害倍数
+   * 统一配置实体属性：抗性 + 伤害倍数 + 血量
    * <p>
-   * 参数顺序：抗性（4个）+ 伤害倍数（4个）
+   * 参数顺序：抗性（4个）+ 伤害倍数（4个）+ 血量值
    *
    * @param event      属性修改事件
    * @param entityType 实体类型
@@ -88,16 +89,19 @@ public final class EntityAttributeRegistry {
    * @param spiritDmg  精神伤害倍数
    * @param erosionDmg 侵蚀伤害倍数
    * @param theSoulDmg 灵魂伤害倍数
+   * @param maxHealth  最大生命值
    */
   private static void configureEntityAttributes(EntityAttributeModificationEvent event,
                                                 EntityType<? extends LivingEntity> entityType,
                                                 double physicsRes, double spiritRes, double erosionRes, double theSoulRes,
-                                                double physicsDmg, double spiritDmg, double erosionDmg, double theSoulDmg) {
+                                                double physicsDmg, double spiritDmg, double erosionDmg, double theSoulDmg,
+                                                double healthMul) {
     // 设置抗性属性
     lcAttributesVulnerable(event, entityType, physicsRes, spiritRes, erosionRes, theSoulRes);
     // 设置伤害倍数
-    EntityDamageMultiplier.setMultiplierAll(entityType, physicsRes, spiritRes, erosionRes, theSoulRes,
-      physicsDmg, spiritDmg, erosionDmg, theSoulDmg);
+    EntityDamageMultiplier.setMultiplier(entityType, physicsDmg, spiritDmg, erosionDmg, theSoulDmg);
+    // 设置生命值
+    event.add(entityType, Attributes.MAX_HEALTH,  getOriginalMaxHealth(entityType)*healthMul);
   }
 
   /**
@@ -155,5 +159,21 @@ public final class EntityAttributeRegistry {
 
     event.add(entityType, ModAttributes.ATTACK_SPEED_MAIN_HAND);
     event.add(entityType, ModAttributes.ATTACK_SPEED_OFF_HAND);
+  }
+  /**
+   * 获取原始最大生命值(可拓展)
+   */
+  private static double getOriginalMaxHealth(EntityType<? extends LivingEntity> entityType) {
+    // 1. 获取该实体类型的默认属性供应器（AttributeSupplier）
+    AttributeSupplier supplier = DefaultAttributes.getSupplier(entityType);
+    if (supplier == null) {
+        return 20.0; // 默认回退值（大多数生物的默认值）
+    }
+    AttributeMap attributeMap = new AttributeMap(supplier);
+    AttributeInstance healthAttr = attributeMap.getInstance(Attributes.MAX_HEALTH);
+    if (healthAttr == null) {
+        return 20.0;
+    }
+    return healthAttr.getBaseValue();
   }
 }

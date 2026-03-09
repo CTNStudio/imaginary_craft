@@ -129,7 +129,7 @@ public final class LivingEntityEvents {
 
     // 伤害类型
     if (lcDamageType != null) {
-      // 应用伤害乘数表（Craft模式优先）
+      // 应用伤害乘数表
       newDamageAmount *= EntityDamageMultiplier.getMultiplier(entity, lcDamageType);
 
       // 易伤处理（如果乘数表未配置，则使用属性系统）
