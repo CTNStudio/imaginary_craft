@@ -7,7 +7,6 @@ import com.mojang.datafixers.util.*;
 import ctn.imaginarycraft.api.data.*;
 import ctn.imaginarycraft.core.*;
 import ctn.imaginarycraft.mixed.*;
-import ctn.imaginarycraft.util.*;
 import net.minecraft.core.particles.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.nbt.*;
@@ -60,11 +59,12 @@ public abstract class WeaponTypeReloadListenerMixin {
     at = @At(value = "INVOKE", ordinal = 0,
       target = "Lyesman/epicfight/gameasset/ColliderPreset;deserializeSimpleCollider(Lnet/minecraft/nbt/CompoundTag;)Lyesman/epicfight/api/collider/Collider;"))
   private static Collider imaginarycraft$deserializeWeaponCapabilityBuilder$applyColliderToBuilder(
-    CompoundTag tag,
+    CompoundTag compTag,
     Operation<Collider> original,
+    @Local(name = "tag") CompoundTag tag,
     @Local(name = "builder") WeaponCapability.Builder builder
   ) {
-    Collider call = original.call(tag);
+    Collider call = original.call(compTag);
     CompoundTag colliderCompTag = tag.getCompound("collider");
     if (!colliderCompTag.contains(ModWeaponTypeReloadListener.CASES_TAG)) {
       return call;

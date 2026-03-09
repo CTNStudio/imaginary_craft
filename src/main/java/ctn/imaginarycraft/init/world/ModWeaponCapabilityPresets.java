@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init;
+package ctn.imaginarycraft.init.world;
 
 import net.minecraft.world.item.*;
 import yesman.epicfight.world.capabilities.item.*;

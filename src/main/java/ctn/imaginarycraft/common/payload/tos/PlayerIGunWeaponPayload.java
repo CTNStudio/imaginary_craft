@@ -12,6 +12,7 @@ import net.minecraft.world.*;
 import net.minecraft.world.item.*;
 import org.jetbrains.annotations.*;
 
+// TODO 替换成史诗战斗的控制系统
 public record PlayerIGunWeaponPayload(
   int operation
 ) implements ToServerPayload {

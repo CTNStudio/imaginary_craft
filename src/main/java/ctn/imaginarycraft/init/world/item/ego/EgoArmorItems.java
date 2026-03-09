@@ -26,7 +26,7 @@ public final class EgoArmorItems {
   //region ZAYIN
 
   public static final EgoArmor PENITENCE = registerSuit(
-    "penitence", "忏悔", LcLevelType.ZAYIN,
+    "penitence", "忏悔", LcLevel.ZAYIN,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -34,7 +34,7 @@ public final class EgoArmorItems {
     0.9, 0.8, 0.9, 2.0);
 
   public static final EgoArmor SODA = registerSuit(
-    "soda", "美味苏打", LcLevelType.ZAYIN,
+    "soda", "美味苏打", LcLevel.ZAYIN,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -42,7 +42,7 @@ public final class EgoArmorItems {
     0.8, 1.0, 1.0, 2.0);
 
   public static final EgoArmor WINGBEAT = registerSuit(
-    "wingbeat", "翅振", LcLevelType.ZAYIN,
+    "wingbeat", "翅振", LcLevel.ZAYIN,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -53,7 +53,7 @@ public final class EgoArmorItems {
   //region TETH
 
   public static final EgoArmor STANDARD_TRAINING_EGO = registerSuit(
-    "standard_training_ego", "教学用E.G.O", LcLevelType.TETH,
+    "standard_training_ego", "教学用E.G.O", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -61,7 +61,7 @@ public final class EgoArmorItems {
     0.5, 1.0, 1.5, 2.0);
 
   public static final EgoArmor FOURTH_MATCH_FLAME = registerSuit(
-    "fourth_match_flame", "终末火柴之光", LcLevelType.TETH,
+    "fourth_match_flame", "终末火柴之光", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -69,7 +69,7 @@ public final class EgoArmorItems {
     0.6, 1.0, 1.5, 2.0);
 
   public static final EgoArmor IN_THE_NAME_OF_LOVE_AND_HATE = registerSuit(
-    "in_the_name_of_love_and_hate", "以爱与恨之名", LcLevelType.TETH,
+    "in_the_name_of_love_and_hate", "以爱与恨之名", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -77,7 +77,7 @@ public final class EgoArmorItems {
     0.7, 0.8, 0.4, 2.0);
 
   public static final EgoArmor RED_EYES = registerSuit(
-    "red_eyes", "赤瞳", LcLevelType.TETH,
+    "red_eyes", "赤瞳", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -85,7 +85,7 @@ public final class EgoArmorItems {
     0.8, 0.8, 0.8, 2.0);
 
   public static final EgoArmor HORN = registerSuit(
-    "horn", "犄角", LcLevelType.TETH,
+    "horn", "犄角", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -93,7 +93,7 @@ public final class EgoArmorItems {
     0.8, 0.8, 1.5, 2.0);
 
   public static final EgoArmor SOLITUDE = registerSuit(
-    "solitude", "孤独", LcLevelType.TETH,
+    "solitude", "孤独", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -101,7 +101,7 @@ public final class EgoArmorItems {
     1.5, 0.8, 0.8, 2.0);
 
   public static final EgoArmor SCREAMING_WEDGE = registerSuit(
-    "screaming_wedge", "刺耳嚎叫", LcLevelType.TETH,
+    "screaming_wedge", "刺耳嚎叫", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -109,7 +109,7 @@ public final class EgoArmorItems {
     1.2, 0.6, 1.0, 2.0);
 
   public static final EgoArmor NOISE = registerSuit(
-    "noise", "噪音", LcLevelType.TETH,
+    "noise", "噪音", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -117,7 +117,7 @@ public final class EgoArmorItems {
     1.2, 0.7, 0.6, 2.0);
 
   public static final EgoArmor WRIST_CUTTER = registerSuit(
-    "wrist_cutter", "割腕者", LcLevelType.TETH,
+    "wrist_cutter", "割腕者", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -125,7 +125,7 @@ public final class EgoArmorItems {
     1.0, 0.6, 1.2, 2.0);
 
   public static final EgoArmor FRAGMENTS_FROM_SOMEWHERE = registerSuit(
-    "fragments_from_somewhere", "彼方的裂片", LcLevelType.TETH,
+    "fragments_from_somewhere", "彼方的裂片", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -133,7 +133,7 @@ public final class EgoArmorItems {
     1.0, 1.2, 0.6, 2.0);
 
   public static final EgoArmor REGRET = registerSuit(
-    "regret", "悔恨", LcLevelType.TETH,
+    "regret", "悔恨", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -141,7 +141,7 @@ public final class EgoArmorItems {
     0.7, 1.2, 0.8, 2.0);
 
   public static final EgoArmor BEAK = registerSuit(
-    "beak", "小喙", LcLevelType.TETH,
+    "beak", "小喙", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -149,7 +149,7 @@ public final class EgoArmorItems {
     0.7, 0.8, 1.2, 2.0);
 
   public static final EgoArmor LANTERN = registerSuit(
-    "lantern", "诱捕幻灯", LcLevelType.TETH,
+    "lantern", "诱捕幻灯", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -157,7 +157,7 @@ public final class EgoArmorItems {
     0.8, 0.7, 1.2, 2.0);
 
   public static final EgoArmor TODAY_IS_EXPRESSION = registerSuit(
-    "today_is_expression", "此刻的神色", LcLevelType.TETH,
+    "today_is_expression", "此刻的神色", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -165,7 +165,7 @@ public final class EgoArmorItems {
     0.7, 0.6, 1.5, 2.0);
 
   public static final EgoArmor SO_CUTE = registerSuit(
-    "so_cute", "超特么可爱！！！", LcLevelType.TETH,
+    "so_cute", "超特么可爱！！！", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -173,7 +173,7 @@ public final class EgoArmorItems {
     0.8, 1.5, 0.8, 2.0);
 
   public static final EgoArmor LIFE_FOR_A_DAREDEVIL = registerSuit(
-    "life_for_a_daredevil", "决死之心", LcLevelType.TETH,
+    "life_for_a_daredevil", "决死之心", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -181,7 +181,7 @@ public final class EgoArmorItems {
     0.6, 0.9, 0.9, 2.0);
 
   public static final EgoArmor ENGULFING_DREAM = registerSuit(
-    "engulfing_dream", "迷魂梦境", LcLevelType.TETH,
+    "engulfing_dream", "迷魂梦境", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -189,7 +189,7 @@ public final class EgoArmorItems {
     1.2, 0.8, 0.7, 2.0);
 
   public static final EgoArmor CHERRY_BLOSSOMS = registerSuit(
-    "cherry_blossoms", "落樱", LcLevelType.TETH,
+    "cherry_blossoms", "落樱", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -197,7 +197,7 @@ public final class EgoArmorItems {
     1.2, 0.6, 0.7, 2.0);
 
   public static final EgoArmor TOUGH = registerSuit(
-    "tough", "谢顶之灾", LcLevelType.TETH,
+    "tough", "谢顶之灾", LcLevel.TETH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -208,7 +208,7 @@ public final class EgoArmorItems {
   //region HE
 
   public static final EgoArmor BEAR_PAWS = registerSuit(
-    "bear_paws", "熊熊抱", LcLevelType.HE,
+    "bear_paws", "熊熊抱", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -216,7 +216,7 @@ public final class EgoArmorItems {
     0.8, 1.0, 1.0, 1.5);
 
   public static final EgoArmor SANGUINE_DESIRE = registerSuit(
-    "sanguine_desire", "血之渴望", LcLevelType.HE,
+    "sanguine_desire", "血之渴望", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -224,7 +224,7 @@ public final class EgoArmorItems {
     0.5, 1.2, 0.8, 1.5);
 
   public static final EgoArmor SYRINX = registerSuit(
-    "syrinx", "泣婴", LcLevelType.HE,
+    "syrinx", "泣婴", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -232,7 +232,7 @@ public final class EgoArmorItems {
     1.2, 0.5, 0.8, 1.5);
 
   public static final EgoArmor DA_CAPO = registerSuit(
-    "da_capo", "Da Capo", LcLevelType.HE,
+    "da_capo", "Da Capo", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -240,7 +240,7 @@ public final class EgoArmorItems {
     0.5, 0.2, 0.5, 1.5);
 
   public static final EgoArmor LOGGING = registerSuit(
-    "logging", "伐木者", LcLevelType.HE,
+    "logging", "伐木者", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -248,7 +248,7 @@ public final class EgoArmorItems {
     0.8, 1.2, 0.8, 1.5);
 
   public static final EgoArmor FROST_SPLINTER = registerSuit(
-    "frost_splinter", "霜之碎片", LcLevelType.HE,
+    "frost_splinter", "霜之碎片", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -256,7 +256,7 @@ public final class EgoArmorItems {
     1.3, 0.6, 0.8, 1.5);
 
   public static final EgoArmor GRINDER_MK4 = registerSuit(
-    "grinder_mk4", "粉碎机Mk4", LcLevelType.HE,
+    "grinder_mk4", "粉碎机Mk4", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -264,7 +264,7 @@ public final class EgoArmorItems {
     0.6, 1.3, 0.9, 1.5);
 
   public static final EgoArmor CHRISTMAS = registerSuit(
-    "christmas", "悲惨圣诞", LcLevelType.HE,
+    "christmas", "悲惨圣诞", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -272,7 +272,7 @@ public final class EgoArmorItems {
     0.8, 0.6, 1.3, 1.5);
 
   public static final EgoArmor HORNET = registerSuit(
-    "hornet", "黄蜂", LcLevelType.HE,
+    "hornet", "黄蜂", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -280,7 +280,7 @@ public final class EgoArmorItems {
     0.7, 0.7, 0.7, 1.5);
 
   public static final EgoArmor OUR_GALAXY = registerSuit(
-    "our_galaxy", "小小银河", LcLevelType.HE,
+    "our_galaxy", "小小银河", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -288,7 +288,7 @@ public final class EgoArmorItems {
     0.8, 0.8, 1.2, 1.5);
 
   public static final EgoArmor LAETITIA = registerSuit(
-    "laetitia", "蕾蒂希娅", LcLevelType.HE,
+    "laetitia", "蕾蒂希娅", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -296,7 +296,7 @@ public final class EgoArmorItems {
     0.7, 0.7, 0.7, 1.5);
 
   public static final EgoArmor SOLEMN_LAMENT = registerSuit(
-    "solemn_lament", "圣宣", LcLevelType.HE,
+    "solemn_lament", "圣宣", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -305,7 +305,7 @@ public final class EgoArmorItems {
 
   // TODO 披风适配
   public static final EgoArmor MAGIC_BULLET = registerSuit(
-    "magic_bullet", "魔弹", LcLevelType.HE,
+    "magic_bullet", "魔弹", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -313,7 +313,7 @@ public final class EgoArmorItems {
     0.7, 0.7, 0.7, 1.5);
 
   public static final EgoArmor BLACK_SWAN = registerSuit(
-    "black_swan", "黑天鹅", LcLevelType.HE,
+    "black_swan", "黑天鹅", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -321,7 +321,7 @@ public final class EgoArmorItems {
     0.6, 1.2, 0.8, 1.5);
 
   public static final EgoArmor PLEASURE = registerSuit(
-    "pleasure", "因乐癫狂", LcLevelType.HE,
+    "pleasure", "因乐癫狂", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -329,7 +329,7 @@ public final class EgoArmorItems {
     1.2, 0.8, 0.8, 1.5);
 
   public static final EgoArmor GAZE = registerSuit(
-    "gaze", "凝视", LcLevelType.HE,
+    "gaze", "凝视", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -337,7 +337,7 @@ public final class EgoArmorItems {
     1.0, 0.8, 1.0, 1.5);
 
   public static final EgoArmor HARVEST = registerSuit(
-    "harvest", "猎头长耙", LcLevelType.HE,
+    "harvest", "猎头长耙", LcLevel.HE,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -348,7 +348,7 @@ public final class EgoArmorItems {
   //region WAW
 
   public static final EgoArmor LAMP = registerSuit(
-    "lamp", "目灯", LcLevelType.WAW,
+    "lamp", "目灯", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -356,7 +356,7 @@ public final class EgoArmorItems {
     0.8, 0.7, 0.4, 1.5);
 
   public static final EgoArmor GREEN_STEM = registerSuit(
-    "green_stem", "绿色枝干", LcLevelType.WAW,
+    "green_stem", "绿色枝干", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -364,7 +364,7 @@ public final class EgoArmorItems {
     0.8, 1.2, 0.6, 1.5);
 
   public static final EgoArmor CRIMSON_SCAR = registerSuit(
-    "crimson_scar", "猩红创痕", LcLevelType.WAW,
+    "crimson_scar", "猩红创痕", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -372,7 +372,7 @@ public final class EgoArmorItems {
     0.6, 0.6, 0.6, 1.5);
 
   public static final EgoArmor COBALT_SCAR = registerSuit(
-    "cobalt_scar", "郁蓝创痕", LcLevelType.WAW,
+    "cobalt_scar", "郁蓝创痕", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -380,7 +380,7 @@ public final class EgoArmorItems {
     0.4, 0.8, 0.7, 2.0);
 
   public static final EgoArmor FAINT_AROMA = registerSuit(
-    "faint_aroma", "余香", LcLevelType.WAW,
+    "faint_aroma", "余香", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -388,7 +388,7 @@ public final class EgoArmorItems {
     1.2, 0.6, 0.8, 1.5);
 
   public static final EgoArmor GOLD_RUSH = registerSuit(
-    "gold_rush", "闪金冲锋", LcLevelType.WAW,
+    "gold_rush", "闪金冲锋", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -396,7 +396,7 @@ public final class EgoArmorItems {
     0.4, 0.7, 0.8, 2.0);
 
   public static final EgoArmor SPORE = registerSuit(
-    "spore", "荧光菌孢", LcLevelType.WAW,
+    "spore", "荧光菌孢", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -404,7 +404,7 @@ public final class EgoArmorItems {
     0.8, 0.6, 1.2, 1.5);
 
   public static final EgoArmor ECSTASY = registerSuit(
-    "ecstasy", "沉醉", LcLevelType.WAW,
+    "ecstasy", "沉醉", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -412,7 +412,7 @@ public final class EgoArmorItems {
     0.8, 0.8, 0.8, 1.5);
 
   public static final EgoArmor HEAVEN = registerSuit(
-    "heaven", "穿刺极乐", LcLevelType.WAW,
+    "heaven", "穿刺极乐", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -420,7 +420,7 @@ public final class EgoArmorItems {
     1.2, 0.8, 0.6, 1.5);
 
   public static final EgoArmor THE_SWORD_SHARPENED_WITH_TEARS = registerSuit(
-    "the_sword_sharpened_with_tears", "盈泪之剑", LcLevelType.WAW,
+    "the_sword_sharpened_with_tears", "盈泪之剑", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -428,7 +428,7 @@ public final class EgoArmorItems {
     0.8, 0.8, 0.8, 0.8);
 
   public static final EgoArmor EXUVIAE = registerSuit(
-    "exuviae", "脱落之皮", LcLevelType.WAW,
+    "exuviae", "脱落之皮", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -436,7 +436,7 @@ public final class EgoArmorItems {
     0.6, 0.8, 1.2, 1.5);
 
   public static final EgoArmor FEATHER_OF_HONOR = registerSuit(
-    "feather_of_honor", "荣耀之羽", LcLevelType.WAW,
+    "feather_of_honor", "荣耀之羽", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -444,7 +444,7 @@ public final class EgoArmorItems {
     0.6, 0.6, 1.3, 2.0);
 
   public static final EgoArmor DISCORD = registerSuit(
-    "discord", "不和", LcLevelType.WAW,
+    "discord", "不和", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -452,7 +452,7 @@ public final class EgoArmorItems {
     1.2, 0.8, 0.6, 1.5);
 
   public static final EgoArmor MOONLIGHT = registerSuit(
-    "moonlight", "月光", LcLevelType.WAW,
+    "moonlight", "月光", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -460,7 +460,7 @@ public final class EgoArmorItems {
     0.8, 0.4, 0.7, 2.0);
 
   public static final EgoArmor HYPOCRISY = registerSuit(
-    "hypocrisy", "伪善", LcLevelType.WAW,
+    "hypocrisy", "伪善", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -468,7 +468,7 @@ public final class EgoArmorItems {
     0.7, 0.5, 1.3, 1.5);
 
   public static final EgoArmor AMITA = registerSuit(
-    "amita", "无量", LcLevelType.WAW,
+    "amita", "无量", LcLevel.WAW,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -479,7 +479,7 @@ public final class EgoArmorItems {
   //region ALEPH
 
   public static final EgoArmor MIMICRY = registerSuit(
-    "mimicry", "拟态", LcLevelType.ALEPH,
+    "mimicry", "拟态", LcLevel.ALEPH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -487,7 +487,7 @@ public final class EgoArmorItems {
     0.2, 0.5, 0.5, 1.0);
 
   public static final EgoArmor PARADISE_LOST = registerSuit(
-    "paradise_lost", "失乐园", LcLevelType.ALEPH,
+    "paradise_lost", "失乐园", LcLevel.ALEPH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -495,7 +495,7 @@ public final class EgoArmorItems {
     0.5, 0.5, 0.5, 0.3);
 
   public static final EgoArmor JUSTITIA = registerSuit(
-    "justitia", "正义裁决者", LcLevelType.ALEPH,
+    "justitia", "正义裁决者", LcLevel.ALEPH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -503,7 +503,7 @@ public final class EgoArmorItems {
     0.5, 0.5, 0.5, 0.5);
 
   public static final EgoArmor TWILIGHT = registerSuit(
-    "twilight", "薄暝", LcLevelType.ALEPH,
+    "twilight", "薄暝", LcLevel.ALEPH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -511,7 +511,7 @@ public final class EgoArmorItems {
     0.3, 0.3, 0.3, 0.5);
 
   public static final EgoArmor SMILE = registerSuit(
-    "smile", "笑靥", LcLevelType.ALEPH,
+    "smile", "笑靥", LcLevel.ALEPH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -519,7 +519,7 @@ public final class EgoArmorItems {
     0.5, 0.5, 0.2, 1.0);
 
   public static final EgoArmor SOUND_OF_A_STAR = registerSuit(
-    "sound_of_a_star", "新星之声", LcLevelType.ALEPH,
+    "sound_of_a_star", "新星之声", LcLevel.ALEPH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -527,7 +527,7 @@ public final class EgoArmorItems {
     0.4, 0.4, 0.4, 1.0);
 
   public static final EgoArmor ADORATION = registerSuit(
-    "adoration", "爱慕", LcLevelType.ALEPH,
+    "adoration", "爱慕", LcLevel.ALEPH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -535,7 +535,7 @@ public final class EgoArmorItems {
     0.3, 0.6, 0.3, 1.0);
 
   public static final EgoArmor PINK = registerSuit(
-    "pink", "粉红军备", LcLevelType.ALEPH,
+    "pink", "粉红军备", LcLevel.ALEPH,
     new ItemVirtueUsageReq.Builder(),
     new EgoArmorItem.Builder(),
     new Item.Properties(),
@@ -550,7 +550,7 @@ public final class EgoArmorItems {
   private static EgoArmor registerSuit(
     String id,
     String zhName,
-    LcLevelType lcLevelType,
+    LcLevel lcLevel,
     ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
     EgoArmorItem.Builder builder,
     Item.Properties properties,
@@ -560,12 +560,12 @@ public final class EgoArmorItems {
     double erosion,
     double theSoul
   ) {
-    return registerSuit(id, zhName, lcLevelType, virtueUsageReqBuilder,
+    return registerSuit(id, zhName, lcLevel, virtueUsageReqBuilder,
       builder, properties, renderProvider, physics, spirit, erosion, theSoul, EgoArmorItem::new);
   }
 
-  public static Holder<ArmorMaterial> getArmorMaterialHolder(LcLevelType lcLevelType) {
-    return switch (lcLevelType) {
+  public static Holder<ArmorMaterial> getArmorMaterialHolder(LcLevel lcLevel) {
+    return switch (lcLevel) {
       case ZAYIN -> ModArmorMaterials.ZAYIN;
       case TETH -> ModArmorMaterials.TETH;
       case HE -> ModArmorMaterials.HE;
@@ -577,7 +577,7 @@ public final class EgoArmorItems {
   private static EgoArmor registerSuit(
     String id,
     String zhName,
-    LcLevelType lcLevelType,
+    LcLevel lcLevel,
     Holder<ArmorMaterial> material,
     ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
     EgoArmorItem.Builder builder,
@@ -588,14 +588,14 @@ public final class EgoArmorItems {
     double erosion,
     double theSoul
   ) {
-    return registerSuit(id, zhName, lcLevelType, material, virtueUsageReqBuilder,
+    return registerSuit(id, zhName, lcLevel, material, virtueUsageReqBuilder,
       builder, properties, renderProvider, physics, spirit, erosion, theSoul, EgoArmorItem::new);
   }
 
   private static <C extends EgoArmorItem> EgoArmor registerSuit(
     String id,
     String zhName,
-    LcLevelType lcLevelType,
+    LcLevel lcLevel,
     Holder<ArmorMaterial> material,
     ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
     EgoArmorItem.Builder builder,
@@ -607,14 +607,14 @@ public final class EgoArmorItems {
     double theSoul,
     Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoRenderProvider, ? extends C> function
   ) {
-    return registerSuit(id, zhName, lcLevelType, material, virtueUsageReqBuilder, builder, properties,
+    return registerSuit(id, zhName, lcLevel, material, virtueUsageReqBuilder, builder, properties,
       renderProvider, physics, spirit, erosion, theSoul, function, function, function);
   }
 
   private static <C extends EgoArmorItem> EgoArmor registerSuit(
     String id,
     String zhName,
-    LcLevelType lcLevelType,
+    LcLevel lcLevel,
     ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
     EgoArmorItem.Builder builder,
     Item.Properties properties,
@@ -625,14 +625,14 @@ public final class EgoArmorItems {
     double theSoul,
     Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoRenderProvider, ? extends C> function
   ) {
-    return registerSuit(id, zhName, lcLevelType, getArmorMaterialHolder(lcLevelType), virtueUsageReqBuilder,
+    return registerSuit(id, zhName, lcLevel, getArmorMaterialHolder(lcLevel), virtueUsageReqBuilder,
       builder, properties, renderProvider, physics, spirit, erosion, theSoul, function, function, function);
   }
 
   private static <C extends EgoArmorItem, L extends EgoArmorItem, B extends EgoArmorItem> EgoArmor registerSuit(
     String id,
     String zhName,
-    LcLevelType lcLevelType,
+    LcLevel lcLevel,
     Holder<ArmorMaterial> material,
     ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
     EgoArmorItem.Builder builder,
@@ -651,9 +651,9 @@ public final class EgoArmorItems {
     double[] erosionArray = splitIntoThreeUnequalParts(erosion - ModAttributes.EROSION_VULNERABLE_DEFAULT_VALUE);
     double[] theSoulArray = splitIntoThreeUnequalParts(theSoul - ModAttributes.THE_SOUL_VULNERABLE_DEFAULT_VALUE);
     return new EgoArmor(
-      register(id + "_" + ArmorItem.Type.CHESTPLATE.getName(), zhName, lcLevelType, ArmorItem.Type.CHESTPLATE, material, virtueUsageReqBuilder, builder, properties, renderProvider, physicsArray[2], spiritArray[2], erosionArray[2], theSoulArray[2], chestplateFunction),
-      register(id + "_" + ArmorItem.Type.LEGGINGS.getName(), zhName, lcLevelType, ArmorItem.Type.LEGGINGS, material, virtueUsageReqBuilder, builder, properties, renderProvider, physicsArray[1], spiritArray[1], erosionArray[1], theSoulArray[1], leggingsFunction),
-      register(id + "_" + ArmorItem.Type.BOOTS.getName(), zhName, lcLevelType, ArmorItem.Type.BOOTS, material, virtueUsageReqBuilder, builder, properties, renderProvider, physicsArray[0], spiritArray[0], erosionArray[0], theSoulArray[0], bootsFunction));
+      register(id + "_" + ArmorItem.Type.CHESTPLATE.getName(), zhName, lcLevel, ArmorItem.Type.CHESTPLATE, material, virtueUsageReqBuilder, builder, properties, renderProvider, physicsArray[2], spiritArray[2], erosionArray[2], theSoulArray[2], chestplateFunction),
+      register(id + "_" + ArmorItem.Type.LEGGINGS.getName(), zhName, lcLevel, ArmorItem.Type.LEGGINGS, material, virtueUsageReqBuilder, builder, properties, renderProvider, physicsArray[1], spiritArray[1], erosionArray[1], theSoulArray[1], leggingsFunction),
+      register(id + "_" + ArmorItem.Type.BOOTS.getName(), zhName, lcLevel, ArmorItem.Type.BOOTS, material, virtueUsageReqBuilder, builder, properties, renderProvider, physicsArray[0], spiritArray[0], erosionArray[0], theSoulArray[0], bootsFunction));
   }
 
   /**
@@ -661,7 +661,7 @@ public final class EgoArmorItems {
    *
    * @param id                    物品的唯一标识符
    * @param zhName                物品的中文名称
-   * @param lcLevelType           Lobotomy Corporation中的等级类型（ZAYIN, TETH, HE, WAW, ALEPH）
+   * @param lcLevel           Lobotomy Corporation中的等级类型（ZAYIN, TETH, HE, WAW, ALEPH）
    * @param builder               EGO护甲构建器
    * @param physics               物理属性值
    * @param spirit                理性属性值
@@ -675,7 +675,7 @@ public final class EgoArmorItems {
   private static <I extends EgoArmorItem> DeferredItem<I> register(
     String id,
     String zhName,
-    LcLevelType lcLevelType,
+    LcLevel lcLevel,
     ArmorItem.Type armorItemType,
     Holder<ArmorMaterial> material,
     ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
@@ -691,7 +691,7 @@ public final class EgoArmorItems {
     DeferredItem<I> deferredItem = EgoArmorItems.REGISTRY.register(id, () -> item.apply(material, armorItemType, properties, builder
       .virtueUsageReqBuilder(virtueUsageReqBuilder)
       .vulnerable(physics, spirit, erosion, theSoul), renderProvider));
-    LcLevelUtil.addItemLcLevelCapability(lcLevelType, deferredItem);
+    LcLevelUtil.addItemLcLevelCapability(lcLevel, deferredItem);
     switch (armorItemType) {
       case HELMET -> ImaginaryCraftConstants.HEAD_ARMOR.add(deferredItem);
       case CHESTPLATE -> ImaginaryCraftConstants.CHEST_ARMOR.add(deferredItem);

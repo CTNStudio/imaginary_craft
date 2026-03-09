@@ -28,7 +28,6 @@ public final class PayloadRegistry {
 
     // 接收来自客户端的数据 发送到 服务端
     playToServer(registrar, PlayerIGunWeaponPayload.TYPE, PlayerIGunWeaponPayload.STREAM_CODEC);
-    playToServer(registrar, PlayerKeyClickPayload.TYPE, PlayerKeyClickPayload.STREAM_CODEC);
     ImaginaryCraft.LOGGER.info("Registering payloads finish");
   }
 

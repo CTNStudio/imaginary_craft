@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.core.registry;
 
 import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.init.*;
+import ctn.imaginarycraft.init.world.*;
 import ctn.imaginarycraft.init.world.item.ego.*;
 import ctn.imaginarycraft.mixin.world.skill.*;
 import net.minecraft.resources.*;

@@ -20,7 +20,7 @@ public final class AbnormalitiesEntityTypes {
   public static final DeferredHolder<EntityType<?>, EntityType<TrainingRabbits>> TRAINING_RABBITS = register(
     "training_rabbits",
     "训练兔兔",
-    LcLevelType.TETH,
+    LcLevel.TETH,
     EntityType.Builder.of(TrainingRabbits::new, MobCategory.MISC)
       .sized(0.625F, 1.375F)
       .eyeHeight(1F)
@@ -31,7 +31,7 @@ public final class AbnormalitiesEntityTypes {
   public static final DeferredHolder<EntityType<?>, EntityType<GrantUsLove>> GRANT_US_LOVE = register(
     "grant_us_love",
     "“请给我们爱”",
-    LcLevelType.HE,
+    LcLevel.HE,
     EntityType.Builder.of(GrantUsLove::new, MobCategory.MISC)
       .sized(1.5F, 3F)
       .eyeHeight(2.0F)
@@ -41,7 +41,7 @@ public final class AbnormalitiesEntityTypes {
   public static final DeferredHolder<EntityType<?>, EntityType<ParadiseLostSpikeweed>> PARADISE_LOST_SPIKEWEED = register(
     "paradise_lost_spikeweed",
     "失乐园尖刺",
-    LcLevelType.ALEPH,
+    LcLevel.ALEPH,
     EntityType.Builder.of(ParadiseLostSpikeweed::new, MobCategory.MISC)
       .sized(2F, 2.5F)
       .clientTrackingRange(6)
@@ -50,7 +50,7 @@ public final class AbnormalitiesEntityTypes {
   public static final DeferredHolder<EntityType<?>, EntityType<MagicBulletEntity>> MAGIC_BULLET_ENTITY = register(
     "magic_bullet",
     "魔弹",
-    LcLevelType.WAW,
+    LcLevel.WAW,
     EntityType.Builder.<MagicBulletEntity>of(MagicBulletEntity::new, MobCategory.MISC)
       .sized(0.2F, 0.2F)
       .clientTrackingRange(6)
@@ -61,16 +61,16 @@ public final class AbnormalitiesEntityTypes {
   }
 
   private static <I extends Entity> DeferredHolder<EntityType<?>, EntityType<I>> register(String name, String zhName,
-                                                                                          LcLevelType lcLevelType,
+                                                                                          LcLevel lcLevel,
                                                                                           EntityType.Builder<I> sup) {
-    return register(name, zhName, lcLevelType, () -> sup.build(name));
+    return register(name, zhName, lcLevel, () -> sup.build(name));
   }
 
   private static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> register(String name, String zhName,
-                                                                                          LcLevelType lcLevelType,
+                                                                                          LcLevel lcLevel,
                                                                                           Supplier<EntityType<T>> sup) {
     DeferredHolder<EntityType<?>, EntityType<T>> holder = REGISTRY.register(name, sup);
-    (switch (lcLevelType) {
+    (switch (lcLevel) {
       case ZAYIN -> CapabilityRegistry.ENTITY_ZAYIN;
       case TETH -> CapabilityRegistry.ENTITY_TETH;
       case HE -> CapabilityRegistry.ENTITY_HE;

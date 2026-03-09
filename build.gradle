@@ -89,6 +89,21 @@ repositories {
   }
 
   maven { url = "https://maven.firstdark.dev/snapshots" }
+
+  maven {
+    url "https://maven.latvian.dev/releases"
+    content {
+      includeGroup "dev.latvian.mods"
+      includeGroup "dev.latvian.apps"
+    }
+  }
+
+  maven {
+    url 'https://jitpack.io'
+    content {
+      includeGroup "com.github.rtyley"
+    }
+  }
 }
 
 base {
@@ -172,24 +187,37 @@ dependencies {
   compileOnly "org.jetbrains.kotlin:kotlin-reflect"
   compileOnly "org.jetbrains.kotlinx:kotlinx-coroutines-core"
 
+  // geckolib
   implementation "software.bernie.geckolib:geckolib-neoforge-${minecraft_version}:${geckolib_version}"
 
-  implementation "maven.modrinth:jade:${jade_version}+neoforge"
-  compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
-  compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
-  localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
-
+  // 饰品
   implementation "top.theillusivec4.curios:curios-neoforge:${curios_api_version}"
   implementation "top.theillusivec4.curios:curios-neoforge:${curios_api_version}:api"
-
   localRuntime "org.javassist:javassist:3.30.2-GA"
 
+  // 史诗战斗
   implementation "maven.modrinth:epic-fight:${epicfight_version}"
 
   // 添加目录的jar文件作为库
   implementation(fileTree(dir: "额外资源/mods", include: ["*.jar"]))
 
+  //======= 非重要依赖 （不装载也可以运行） =======
+
+  // ldlib2
   implementation("com.lowdragmc.ldlib2:ldlib2-neoforge-${minecraft_version}:${ldlib2_version}:all")
+
+  // kubejs
+  api("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
+  interfaceInjectionData("dev.latvian.mods:kubejs-neoforge:$kubejs_version")
+  implementation("dev.latvian.mods:rhino-neoforge:$rhino_version")
+
+  // Jade
+  implementation "maven.modrinth:jade:${jade_version}+neoforge"
+
+  // JEI
+  compileOnly "mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"
+  compileOnly "mezz.jei:jei-${minecraft_version}-neoforge-api:${jei_version}"
+  localRuntime "mezz.jei:jei-${minecraft_version}-neoforge:${jei_version}"
 }
 
 

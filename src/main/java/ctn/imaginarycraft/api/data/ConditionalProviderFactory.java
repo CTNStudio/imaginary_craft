@@ -10,7 +10,7 @@ import java.util.function.*;
  * 条件化提供者工厂
  * <p>创建根据实体条件动态返回值的提供者函数</p>
  */
-public class ConditionalProviderFactory {
+public final class ConditionalProviderFactory {
 
   /**
    * 创建条件化提供者函数

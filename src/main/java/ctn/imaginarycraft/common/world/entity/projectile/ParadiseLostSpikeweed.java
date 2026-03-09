@@ -158,7 +158,7 @@ public class ParadiseLostSpikeweed extends Entity implements TraceableEntity, Ge
     DamageSource source = damageSources().source(THE_SOUL, this, livingentity);
     IDamageSource damageSource = (IDamageSource) source;
     damageSource.setImaginaryCraft$LcDamageType(LcDamageType.THE_SOUL);
-    damageSource.setImaginaryCraft$DamageLevel(LcLevelType.ALEPH);
+    damageSource.setImaginaryCraft$DamageLevel(LcLevel.ALEPH);
     return source;
   }
 

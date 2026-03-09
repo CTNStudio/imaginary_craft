@@ -21,7 +21,7 @@ public final class LcDamageEventExecutes {
    * @param damage        伤害
    * @return 新伤害
    */
-  public static float levelJudgment(final LivingEntity entity, @Nullable final LcLevelType attackerLevel, final float damage) {
+  public static float levelJudgment(final LivingEntity entity, @Nullable final LcLevel attackerLevel, final float damage) {
     if (attackerLevel == null) {
       return damage;
     }
@@ -42,7 +42,7 @@ public final class LcDamageEventExecutes {
       }
 
       // 盔甲等级
-      @Nullable LcLevelType level = LcLevelUtil.getLevel(armorItemStack);
+      @Nullable LcLevel level = LcLevelUtil.getLevel(armorItemStack);
       if (level == null) {
         voidNumber++;
       } else {
@@ -64,7 +64,7 @@ public final class LcDamageEventExecutes {
     if (armorItemStackLaval != -1) {
       armorItemStackLaval /= number;
     }
-    return damage * LcLevelUtil.getDamageMultiple(LcLevelType.byLevel(armorItemStackLaval), attackerLevel);
+    return damage * LcLevelUtil.getDamageMultiple(LcLevel.byLevel(armorItemStackLaval), attackerLevel);
   }
 
   /**
@@ -75,7 +75,7 @@ public final class LcDamageEventExecutes {
    * @param damage        伤害
    * @return 新伤害
    */
-  private static float ontologyLevelCalculate(final LivingEntity entity, @Nullable final LcLevelType attackerLevel, final float damage) {
+  private static float ontologyLevelCalculate(final LivingEntity entity, @Nullable final LcLevel attackerLevel, final float damage) {
     return damage * LcLevelUtil.getDamageMultiple(LcLevelUtil.getLevel(entity), attackerLevel);
   }
 }

@@ -40,7 +40,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> SODA = onRemote()
     .id("soda_weapon")
     .zhName("美味苏打")
-    .lcLevelType(LcLevelType.ZAYIN)
+    .lcLevelType(LcLevel.ZAYIN)
     .type(RemoteTemplateType.PISTOL)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
@@ -53,7 +53,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> PENITENCE = onMelee()
     .id("penitence_weapon")
     .zhName("忏悔")
-    .lcLevelType(LcLevelType.ZAYIN)
+    .lcLevelType(LcLevel.ZAYIN)
     .type(MeleeTemplateType.MACE)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -66,7 +66,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> WINGBEAT = onMelee()
     .id("wingbeat_weapon")
     .zhName("翅振")
-    .lcLevelType(LcLevelType.ZAYIN)
+    .lcLevelType(LcLevel.ZAYIN)
     .type(MeleeTemplateType.MACE)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -81,7 +81,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> FOURTH_MATCH_FLAME = onRemote()
     .id("fourth_match_flame_weapon")
     .zhName("终末火柴之光")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(RemoteTemplateType.CANNON)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
@@ -94,7 +94,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> SOLITUDE = onRemote()
     .id("solitude_weapon")
     .zhName("孤独")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(RemoteTemplateType.PISTOL)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
@@ -107,7 +107,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> BEAK = onRemote()
     .id("beak_weapon")
     .zhName("小喙")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(RemoteTemplateType.PISTOL)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
@@ -120,7 +120,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> TODAY_IS_EXPRESSION = onRemote()
     .id("today_is_expression_weapon")
     .zhName("此刻的神色")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(RemoteTemplateType.PISTOL)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
@@ -135,7 +135,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> TOUGH = onRemote()
     .id("tough_weapon")
     .zhName("谢顶之灾")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(RemoteTemplateType.PISTOL)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
@@ -149,7 +149,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<EngulfingDreamWeaponItem> ENGULFING_DREAM = onRemote()
     .id("engulfing_dream_weapon")
     .zhName("迷魂梦境")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
       .damage(1.5f)
@@ -164,7 +164,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<CherryBlossomsWeaponItem> CHERRY_BLOSSOMS = onRemote()
     .id("cherry_blossoms_weapon")
     .zhName("落樱")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
       .damage(1.5f)
@@ -179,7 +179,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> RED_EYES = onMelee()
     .id("red_eyes_weapon")
     .zhName("赤瞳")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(MeleeTemplateType.MACE)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -192,7 +192,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> RED_EYES_TACHI = onMelee()
     .id("red_eyes_tachi_weapon")
     .zhName("赤瞳-太刀")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(MeleeTemplateType.SWORDS)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -204,7 +204,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> HORN = onMelee()
     .id("horn_weapon")
     .zhName("犄角")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(MeleeTemplateType.SPEAR)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -217,7 +217,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> WRIST_CUTTER = onMelee()
     .id("wrist_cutter_weapon")
     .zhName("割腕者")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(MeleeTemplateType.KNIFE)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -230,7 +230,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> REGRET = onMelee()
     .id("regret_weapon")
     .zhName("悔恨")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(MeleeTemplateType.HAMMER)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -244,7 +244,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> FRAGMENTS_FROM_SOMEWHERE = onMelee()
     .id("fragments_from_somewhere_weapon")
     .zhName("彼方的裂片")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(MeleeTemplateType.SPEAR)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -257,7 +257,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> LANTERN = onMelee()
     .id("lantern_weapon")
     .zhName("诱捕幻灯")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(MeleeTemplateType.HAMMER)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -270,7 +270,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> SO_CUTE = onMelee()
     .id("so_cute_weapon")
     .zhName("超特么可爱！！！")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(MeleeTemplateType.FIST)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -283,7 +283,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> STANDARD_TRAINING_EGO = onMelee()
     .id("standard_training_ego_weapon")
     .zhName("教学用E.G.O武器")
-    .lcLevelType(LcLevelType.TETH)
+    .lcLevelType(LcLevel.TETH)
     .type(MeleeTemplateType.MACE)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -298,7 +298,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> SCREAMING_WEDGE = onRemote()
     .id("screaming_wedge_weapon")
     .zhName("刺耳嚎叫")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .type(RemoteTemplateType.CROSSBOW)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
@@ -312,7 +312,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> HARMONY = onRemote()
     .id("harmony_weapon")
     .zhName("谐奏放射器")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .type(RemoteTemplateType.CANNON)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
@@ -325,7 +325,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> LAETITIA = onRemote()
     .id("laetitia_weapon")
     .zhName("蕾蒂希娅")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .type(RemoteTemplateType.RIFLE)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
@@ -338,7 +338,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<SyrinxWeaponItem> SYRINX = onRemote()
     .id("syrinx_weapon")
     .zhName("泣婴")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
       .damage(3)
@@ -353,7 +353,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<GrinderMk4WeaponItem> GRINDER_MK4 = onMelee()
     .id("grinder_mk4_weapon")
     .zhName("粉碎机Mk4")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(1.5f)
@@ -367,7 +367,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<OurGalaxyWeaponItem> OUR_GALAXY = onMelee()
     .id("our_galaxy_weapon")
     .zhName("小小银河")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(11)
@@ -381,7 +381,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<LifeForADaredevilWeaponItem> LIFE_FOR_A_DAREDEVIL = onMelee()
     .id("life_for_a_daredevil_weapon")
     .zhName("决死之心")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(8)
@@ -397,7 +397,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<GazeWeaponItem> GAZE = onMelee()
     .id("gaze_weapon")
     .zhName("凝视")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(3)
@@ -412,7 +412,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<PleasureWeaponItem> PLEASURE = onMelee()
     .id("pleasure_weapon")
     .zhName("因乐癫狂")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(2.5f)
@@ -426,7 +426,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> BEAR_PAWS = onMelee()
     .id("bear_paws_weapon")
     .zhName("熊熊抱")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .type(MeleeTemplateType.FIST)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -440,7 +440,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> SANGUINE_DESIRE = onMelee()
     .id("sanguine_desire_weapon")
     .zhName("血之渴望")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .type(MeleeTemplateType.AXE)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -453,7 +453,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> LOGGING = onMelee()
     .id("logging_weapon")
     .zhName("伐木者")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .type(MeleeTemplateType.HAMMER)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -467,7 +467,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> FROST_SPLINTER = onMelee()
     .id("frost_splinter_weapon")
     .zhName("霜之碎片")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .type(MeleeTemplateType.SPEAR)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -480,7 +480,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> CHRISTMAS = onMelee()
     .id("christmas_weapon")
     .zhName("悲惨圣诞")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .type(MeleeTemplateType.MACE)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -493,7 +493,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> HARVEST = onMelee()
     .id("harvest_weapon")
     .zhName("猎头长耙")
-    .lcLevelType(LcLevelType.HE)
+    .lcLevelType(LcLevel.HE)
     .type(MeleeTemplateType.SPEAR)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -508,7 +508,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> HORNET = onRemote()
     .id("hornet_weapon")
     .zhName("黄蜂")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .type(RemoteTemplateType.RIFLE)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
@@ -521,7 +521,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> FAINT_AROMA = onRemote()
     .id("faint_aroma_weapon")
     .zhName("余香")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .type(RemoteTemplateType.CROSSBOW)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
@@ -535,7 +535,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> EXUVIAE = onRemote()
     .id("exuviae_weapon")
     .zhName("脱落之皮")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .type(RemoteTemplateType.CANNON)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
@@ -548,7 +548,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> HYPOCRISY = onRemote()
     .id("hypocrisy_weapon")
     .zhName("伪善")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .type(RemoteTemplateType.CROSSBOW)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
@@ -562,7 +562,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<InTheNameOfLoveAndHateWeaponItem> IN_THE_NAME_OF_LOVE_AND_HATE = onRemote()
     .id("in_the_name_of_love_and_hate_weapon")
     .zhName("以爱与恨之名")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
       .damage(6.5f)
@@ -577,7 +577,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<CrimsonScarWeaponItem> CRIMSON_SCAR = onMelee()
     .id("crimson_scar_weapon")
     .zhName("猩红创痕")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(12)
@@ -592,7 +592,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<CobaltScarWeaponItem> COBALT_SCAR = onMelee()
     .id("cobalt_scar_weapon")
     .zhName("郁蓝创痕")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(15)
@@ -606,7 +606,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<SolemnLamentWeaponItem> SOLEMN_LAMENT_BLACK = onRemote()
     .id("solemn_lament_black_weapon")
     .zhName("圣宣-黑")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
       .damage(2)
@@ -620,7 +620,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<SolemnLamentWeaponItem> SOLEMN_LAMENT_WHITE = onRemote()
     .id("solemn_lament_white_weapon")
     .zhName("圣宣-白")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
       .damage(2)
@@ -634,7 +634,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<MagicBulletWeaponItem> MAGIC_BULLET = onRemote()
     .id("magic_bullet_weapon")
     .zhName("魔弹")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
       .damage(21)
@@ -650,7 +650,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<BlackSwanWeaponItem> BLACK_SWAN = onMelee()
     .id("black_swan_weapon")
     .zhName("黑天鹅")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(6)
@@ -664,7 +664,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<EcstasyWeaponItem> ECSTASY = onMelee()
     .id("ecstasy_weapon")
     .zhName("沉醉")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(3)
@@ -679,7 +679,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<TheSwordSharpenedWithTearsWeaponItem> THE_SWORD_SHARPENED_WITH_TEARS = onMelee()
     .id("the_sword_sharpened_with_tears_weapon")
     .zhName("盈泪之剑")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(10.5f)
@@ -693,7 +693,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<FeatherOfHonorWeaponItem> FEATHER_OF_HONOR = onRemote()
     .id("feather_of_honor_weapon")
     .zhName("荣耀之羽")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
       .damage(4.5f)
@@ -708,7 +708,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<DiscordWeaponItem> DISCORD = onMelee()
     .id("discord_weapon")
     .zhName("不和")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(9)
@@ -724,7 +724,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<MoonlightWeaponItem> MOONLIGHT = onMelee()
     .id("moonlight_weapon")
     .zhName("月光")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(9)
@@ -739,7 +739,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<AmitaWeaponItem> AMITA = onMelee()
     .id("amita_weapon")
     .zhName("无量")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(3.5f)
@@ -753,7 +753,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> LAMP = onMelee()
     .id("lamp_weapon")
     .zhName("目灯")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .type(MeleeTemplateType.HAMMER)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -766,7 +766,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> GREEN_STEM = onMelee()
     .id("green_stem_weapon")
     .zhName("绿色枝干")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .type(MeleeTemplateType.SPEAR)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -780,7 +780,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> SPORE = onMelee()
     .id("spore_weapon")
     .zhName("荧光菌孢")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .type(MeleeTemplateType.SPEAR)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -793,7 +793,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> HEAVEN = onMelee()
     .id("heaven_weapon")
     .zhName("穿刺极乐")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .type(MeleeTemplateType.SPEAR)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -806,7 +806,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<?> DIFFRACTION = onMelee()
     .id("diffraction_weapon")
     .zhName("虚无衍射体")
-    .lcLevelType(LcLevelType.WAW)
+    .lcLevelType(LcLevel.WAW)
     .type(MeleeTemplateType.MACE)
     .properties(new Item.Properties())
     .properties(b -> b
@@ -822,7 +822,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<MimicryWeaponItem> MIMICRY = onMelee()
     .id("mimicry_weapon")
     .zhName("拟态")
-    .lcLevelType(LcLevelType.ALEPH)
+    .lcLevelType(LcLevel.ALEPH)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(12)
@@ -837,7 +837,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<JustitiaWeaponItem> JUSTITIA = onMelee()
     .id("justitia_weapon")
     .zhName("正义裁决者")
-    .lcLevelType(LcLevelType.ALEPH)
+    .lcLevelType(LcLevel.ALEPH)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(3)
@@ -854,7 +854,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<ParadiseLostWeaponItem> PARADISE_LOST = onRemote()
     .id("paradise_lost_weapon")
     .zhName("失乐园")
-    .lcLevelType(LcLevelType.ALEPH)
+    .lcLevelType(LcLevel.ALEPH)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
       .damage(24)
@@ -871,7 +871,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<TwilightWeaponItem> TWILIGHT = onMelee()
     .id("twilight_weapon")
     .zhName("薄暝")
-    .lcLevelType(LcLevelType.ALEPH)
+    .lcLevelType(LcLevel.ALEPH)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(14)
@@ -891,7 +891,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<GoldRushWeaponItem> GOLD_RUSH = onMelee()
     .id("gold_rush_weapon")
     .zhName("闪金冲锋")
-    .lcLevelType(LcLevelType.ALEPH)
+    .lcLevelType(LcLevel.ALEPH)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(5.5f)
@@ -909,7 +909,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<SmileWeaponItem> SMILE = onMelee()
     .id("smile_weapon")
     .zhName("笑靥")
-    .lcLevelType(LcLevelType.ALEPH)
+    .lcLevelType(LcLevel.ALEPH)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(13)
@@ -926,7 +926,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<CensoredWeaponItem> CENSORED = onMelee()
     .id("censored_weapon")
     .zhName("CENSORED")
-    .lcLevelType(LcLevelType.ALEPH)
+    .lcLevelType(LcLevel.ALEPH)
     .properties(new Item.Properties())
     .properties(b -> b
       .damage(9)
@@ -945,7 +945,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<SoundOfAStarWeaponItem> SOUND_OF_A_STAR = onRemote()
     .id("sound_of_a_star_weapon")
     .zhName("新星之声")
-    .lcLevelType(LcLevelType.ALEPH)
+    .lcLevelType(LcLevel.ALEPH)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
       .damage(9)
@@ -960,7 +960,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<PinkWeaponItem> PINK = onRemote()
     .id("pink_weapon")
     .zhName("粉红军备")
-    .lcLevelType(LcLevelType.ALEPH)
+    .lcLevelType(LcLevel.ALEPH)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
       .damage(22)
@@ -976,7 +976,7 @@ public final class EgoWeaponItems {
   public static final DeferredItem<AdorationWeaponItem> ADORATION = onRemote()
     .id("adoration_weapon")
     .zhName("爱慕")
-    .lcLevelType(LcLevelType.ALEPH)
+    .lcLevelType(LcLevel.ALEPH)
     .properties(new Item.Properties())
     .weaponBuilder(b -> b
       .damage(33)
@@ -1009,14 +1009,14 @@ public final class EgoWeaponItems {
   private static @NotNull <I extends Item & IEgoItem, B extends IEgoItem.Builder<?>> DeferredItem<I> register(
     String id,
     String zhName,
-    LcLevelType lcLevelType,
+    LcLevel lcLevel,
     @NotNull TemplateType templateType,
     Item.Properties properties,
     B builder,
     BiFunction<Item.Properties, B, I> itemFactory
   ) {
     DeferredItem<I> deferredItem = EgoWeaponItems.REGISTRY.register(id, () -> itemFactory.apply(properties, builder));
-    LcLevelUtil.addItemLcLevelCapability(lcLevelType, deferredItem);
+    LcLevelUtil.addItemLcLevelCapability(lcLevel, deferredItem);
     ImaginaryCraftConstants.EGO_WEAPON.add(deferredItem);
     templateType.addItem(deferredItem);
     ZhCn.addI18nItemText(zhName, deferredItem);
@@ -1181,7 +1181,7 @@ public final class EgoWeaponItems {
   private abstract static class EgoWeaponBuilder<I extends EgoWeaponBuilder<I>> {
     protected String id;
     protected String zhName;
-    protected LcLevelType lcLevelType;
+    protected LcLevel lcLevel;
     protected Item.Properties properties;
     protected String modelPath;
 
@@ -1195,8 +1195,8 @@ public final class EgoWeaponItems {
       return (I) this;
     }
 
-    public I lcLevelType(LcLevelType lcLevelType) {
-      this.lcLevelType = lcLevelType;
+    public I lcLevelType(LcLevel lcLevel) {
+      this.lcLevel = lcLevel;
       return (I) this;
     }
 
@@ -1211,7 +1211,7 @@ public final class EgoWeaponItems {
     }
 
     public int getEnchantmentValue() {
-      return switch (lcLevelType) {
+      return switch (lcLevel) {
         case ZAYIN -> 0;
         case TETH -> 2;
         case HE -> 4;
@@ -1221,7 +1221,7 @@ public final class EgoWeaponItems {
     }
 
     public TagKey<Block> getIncorrectBlocksForDrops() {
-      return switch (lcLevelType) {
+      return switch (lcLevel) {
         case ZAYIN, TETH -> BlockTags.INCORRECT_FOR_IRON_TOOL;
         case HE -> BlockTags.INCORRECT_FOR_DIAMOND_TOOL;
         case WAW, ALEPH -> BlockTags.INCORRECT_FOR_NETHERITE_TOOL;
@@ -1261,17 +1261,17 @@ public final class EgoWeaponItems {
         throw new IllegalStateException("Template type is required when using template");
       }
 
-      return register(id, zhName, lcLevelType, templateType, properties, weaponBuilder, getRemoteItemFactory(templateType));
+      return register(id, zhName, lcLevel, templateType, properties, weaponBuilder, getRemoteItemFactory(templateType));
     }
 
     public <I extends Item & IRemoteEgoWeaponItem> DeferredItem<I> buildAndRegister(BiFunction<Item.Properties, RemoteEgoWeaponItem.Builder, I> itemFactory) {
       this.templateType = null;
       validateRequiredFields();
-      return register(id, zhName, lcLevelType, SpecialTemplateType.MELEE, properties, weaponBuilder, itemFactory);
+      return register(id, zhName, lcLevel, SpecialTemplateType.MELEE, properties, weaponBuilder, itemFactory);
     }
 
     private void validateRequiredFields() {
-      if (id == null || zhName == null || lcLevelType == null || properties == null) {
+      if (id == null || zhName == null || lcLevel == null || properties == null) {
         throw new IllegalStateException("Missing required fields for remote weapon registration");
       }
     }
@@ -1318,16 +1318,16 @@ public final class EgoWeaponItems {
       if (templateType == null) {
         throw new IllegalStateException("Template type is required when using template");
       }
-      return register(id, zhName, lcLevelType, templateType, properties, weaponBuilder, getMeleeItemFactory());
+      return register(id, zhName, lcLevel, templateType, properties, weaponBuilder, getMeleeItemFactory());
     }
 
     public <I extends Item & IMeleeEgoWeaponItem> DeferredItem<I> buildAndRegister(BiFunction<Item.Properties, IMeleeEgoWeaponItem.Builder, I> itemFactory) {
       validateRequiredFields();
-      return register(id, zhName, lcLevelType, SpecialTemplateType.REMOTE, properties, weaponBuilder, itemFactory);
+      return register(id, zhName, lcLevel, SpecialTemplateType.REMOTE, properties, weaponBuilder, itemFactory);
     }
 
     private void validateRequiredFields() {
-      if (id == null || zhName == null || lcLevelType == null || properties == null) {
+      if (id == null || zhName == null || lcLevel == null || properties == null) {
         throw new IllegalStateException("Missing required fields for melee weapon registration");
       }
     }

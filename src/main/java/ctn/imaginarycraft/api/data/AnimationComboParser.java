@@ -1,6 +1,5 @@
-package ctn.imaginarycraft.util;
+package ctn.imaginarycraft.api.data;
 
-import ctn.imaginarycraft.api.data.*;
 import ctn.imaginarycraft.core.*;
 import net.minecraft.nbt.*;
 import net.minecraft.resources.*;
@@ -20,7 +19,7 @@ import java.util.stream.*;
  * 动画连招解析器
  * <p>负责解析武器配置中的动画和连招数据</p>
  */
-public class AnimationComboParser {
+public final class AnimationComboParser {
 
   private static final Logger LOGGER = ImaginaryCraft.LOGGER;
 

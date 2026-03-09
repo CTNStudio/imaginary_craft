@@ -7,6 +7,7 @@ import ctn.imaginarycraft.core.capability.entity.*;
 import ctn.imaginarycraft.core.capability.item.*;
 import ctn.imaginarycraft.init.*;
 import ctn.imaginarycraft.init.world.entiey.*;
+import ctn.imaginarycraft.util.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.item.*;
@@ -16,6 +17,7 @@ import net.minecraft.world.level.block.entity.*;
 import net.neoforged.bus.api.*;
 import net.neoforged.fml.common.*;
 import net.neoforged.neoforge.capabilities.*;
+import org.jetbrains.annotations.*;
 
 import java.util.*;
 import java.util.function.*;
@@ -89,21 +91,21 @@ public final class CapabilityRegistry {
 
   @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void registerHighest(RegisterCapabilitiesEvent event) {
-    itemLevel(event, LcLevelType.ZAYIN, ITEM_ZAYIN);
-    itemLevel(event, LcLevelType.TETH, ITEM_TETH);
-    itemLevel(event, LcLevelType.HE, ITEM_HE);
-    itemLevel(event, LcLevelType.WAW, ITEM_WAW);
-    itemLevel(event, LcLevelType.ALEPH, ITEM_ALEPH);
-    entityLevel(event, LcLevelType.ZAYIN, ENTITY_ZAYIN);
-    entityLevel(event, LcLevelType.TETH, ENTITY_TETH);
-    entityLevel(event, LcLevelType.HE, ENTITY_HE);
-    entityLevel(event, LcLevelType.WAW, ENTITY_WAW);
-    entityLevel(event, LcLevelType.ALEPH, ENTITY_ALEPH);
-    blockLevel(event, LcLevelType.ZAYIN, BLOCK_ZAYIN);
-    blockLevel(event, LcLevelType.TETH, BLOCK_TETH);
-    blockLevel(event, LcLevelType.HE, BLOCK_HE);
-    blockLevel(event, LcLevelType.WAW, BLOCK_WAW);
-    blockLevel(event, LcLevelType.ALEPH, BLOCK_ALEPH);
+    itemLevel(event, LcLevel.ZAYIN, ITEM_ZAYIN);
+    itemLevel(event, LcLevel.TETH, ITEM_TETH);
+    itemLevel(event, LcLevel.HE, ITEM_HE);
+    itemLevel(event, LcLevel.WAW, ITEM_WAW);
+    itemLevel(event, LcLevel.ALEPH, ITEM_ALEPH);
+    entityLevel(event, LcLevel.ZAYIN, ENTITY_ZAYIN);
+    entityLevel(event, LcLevel.TETH, ENTITY_TETH);
+    entityLevel(event, LcLevel.HE, ENTITY_HE);
+    entityLevel(event, LcLevel.WAW, ENTITY_WAW);
+    entityLevel(event, LcLevel.ALEPH, ENTITY_ALEPH);
+    blockLevel(event, LcLevel.ZAYIN, BLOCK_ZAYIN);
+    blockLevel(event, LcLevel.TETH, BLOCK_TETH);
+    blockLevel(event, LcLevel.HE, BLOCK_HE);
+    blockLevel(event, LcLevel.WAW, BLOCK_WAW);
+    blockLevel(event, LcLevel.ALEPH, BLOCK_ALEPH);
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
@@ -176,48 +178,53 @@ public final class CapabilityRegistry {
       capabilityClass.isInstance(entity) ? capabilityClass.cast(entity) : null);
   }
 
-  private static void itemLevel(RegisterCapabilitiesEvent event, LcLevelType lcLevelType, List<ItemLike> list) {
+  private static void itemLevel(RegisterCapabilitiesEvent event, @Nullable LcLevel lcLevel, List<ItemLike> list) {
     if (list.isEmpty()) {
       return;
     }
     event.registerItem(ModCapabilitys.LcLevel.LC_LEVEL_ITEM, (stack, ctx) ->
-      switch (lcLevelType) {
+      switch (lcLevel) {
         case ZAYIN -> ItemLcLevel.ZAYIN;
         case TETH -> ItemLcLevel.TETH;
         case HE -> ItemLcLevel.HE;
         case WAW -> ItemLcLevel.WAW;
         case ALEPH -> ItemLcLevel.ALEPH;
+        case null -> ItemLcLevel.NULL;
       }, list.toArray(new ItemLike[0])
     );
   }
 
-  private static void blockLevel(RegisterCapabilitiesEvent event, LcLevelType lcLevelType, List<Supplier<Block>> list) {
+  private static void blockLevel(RegisterCapabilitiesEvent event, @Nullable LcLevel lcLevel, List<Supplier<Block>> list) {
     if (list.isEmpty()) {
       return;
     }
     event.registerBlock(ModCapabilitys.LcLevel.LC_LEVEL_BLOCK, (level, blockPos, blockState, blockEntity, c) ->
-      switch (lcLevelType) {
+      switch (lcLevel) {
         case ZAYIN -> BlockLcLevel.ZAYIN;
         case TETH -> BlockLcLevel.TETH;
         case HE -> BlockLcLevel.HE;
         case WAW -> BlockLcLevel.WAW;
         case ALEPH -> BlockLcLevel.ALEPH;
+        case null -> BlockLcLevel.NULL;
       }, (Block[]) list.stream().map(Supplier::get).toArray()
     );
   }
 
-  private static void entityLevel(RegisterCapabilitiesEvent event, LcLevelType level, List<Supplier<EntityType<?>>> list) {
+  private static void entityLevel(RegisterCapabilitiesEvent event, @Nullable LcLevel level, List<Supplier<EntityType<?>>> list) {
     if (list.isEmpty()) {
       return;
     }
-    for (Supplier<EntityType<?>> entityType : list) {
-      event.registerEntity(ModCapabilitys.LcLevel.LC_LEVEL_ENTITY, entityType.get(), (stack, ctx) ->
+    for (Supplier<EntityType<?>> entityTypeSupplier : list) {
+      EntityType<?> entityType = entityTypeSupplier.get();
+      LcLevelUtil.ENTITY_TYPE_LEVEL.put(entityType, level);
+      event.registerEntity(ModCapabilitys.LcLevel.LC_LEVEL_ENTITY, entityType, (stack, ctx) ->
         switch (level) {
           case ZAYIN -> EntityLcLevel.ZAYIN;
           case TETH -> EntityLcLevel.TETH;
           case HE -> EntityLcLevel.HE;
           case WAW -> EntityLcLevel.WAW;
           case ALEPH -> EntityLcLevel.ALEPH;
+          case null -> EntityLcLevel.NULL;
         }
       );
     }

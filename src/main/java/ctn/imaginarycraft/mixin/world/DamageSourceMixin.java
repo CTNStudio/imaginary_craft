@@ -27,7 +27,7 @@ public abstract class DamageSourceMixin implements IDamageSource {
 
   @Unique
   @Nullable
-  private LcLevelType imaginaryCraft$lcDamageLevel;
+  private LcLevel imaginaryCraft$lcDamageLevel;
 
   @Unique
   private boolean imaginaryCraft$isLcLevelNull;
@@ -52,7 +52,7 @@ public abstract class DamageSourceMixin implements IDamageSource {
 
     // 初始化默认值
     LcDamageType lcDamageType = null;
-    LcLevelType lcDamageLevel = null;
+    LcLevel lcDamageLevel = null;
 
     // 从物品获取信息
     if (itemStack != null) {
@@ -98,13 +98,13 @@ public abstract class DamageSourceMixin implements IDamageSource {
   @Unique
   @Nullable
   @Override
-  public LcLevelType getImaginaryCraft$LcDamageLevel() {
+  public LcLevel getImaginaryCraft$LcDamageLevel() {
     return imaginaryCraft$lcDamageLevel;
   }
 
   @Unique
   @Override
-  public void setImaginaryCraft$DamageLevel(@Nullable LcLevelType level) {
+  public void setImaginaryCraft$DamageLevel(@Nullable LcLevel level) {
     this.imaginaryCraft$lcDamageLevel = level;
   }
 

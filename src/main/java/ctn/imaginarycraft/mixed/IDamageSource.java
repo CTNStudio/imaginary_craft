@@ -20,9 +20,9 @@ public interface IDamageSource {
   void setImaginaryCraft$LcDamageType(LcDamageType type);
 
   @Nullable
-  LcLevelType getImaginaryCraft$LcDamageLevel();
+  LcLevel getImaginaryCraft$LcDamageLevel();
 
-  void setImaginaryCraft$DamageLevel(@Nullable LcLevelType pmLevel);
+  void setImaginaryCraft$DamageLevel(@Nullable LcLevel pmLevel);
 
   @Unique
   boolean isImaginaryCraft$LcLevelNull();

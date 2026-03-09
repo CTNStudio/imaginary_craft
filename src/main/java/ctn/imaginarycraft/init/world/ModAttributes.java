@@ -34,22 +34,25 @@ public final class ModAttributes {
   public static final DeferredHolder<Attribute, RangedAttribute> ATTACK_SPEED_OFF_HAND = register("attack_speed_off_hand", function ->
     function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), PHYSICS_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
 
-  // TODO 出不是百分比的对应属性
+  // TODO 添加防御类型的值的抗性属性
   /**
    * 物理易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> PHYSICS_VULNERABLE = register("physics_vulnerable", function ->
     function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), PHYSICS_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
+  // TODO 添加防御类型的值的抗性属性
   /**
    * 精神易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> SPIRIT_VULNERABLE = register("spirit_vulnerable", function ->
     function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), SPIRIT_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
+  // TODO 添加防御类型的值的抗性属性
   /**
    * 侵蚀易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> EROSION_VULNERABLE = register("erosion_vulnerable", function ->
     function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), EROSION_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
+  // TODO 添加防御类型的值的抗性属性
   /**
    * 灵魂易伤
    */
@@ -96,10 +99,9 @@ public final class ModAttributes {
     function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0);
 
   // 部门属性
+  // TODO 完善情报部的功能
   /**
    * 情报部门激活
-   * <p>
-   * TODO 未完成
    */
   public static final DeferredHolder<Attribute, BooleanAttribute> INTELLIGENCE_DEPARTMENT_ACTIVATION = register("player.intelligence_department_activation", function ->
     function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), false);

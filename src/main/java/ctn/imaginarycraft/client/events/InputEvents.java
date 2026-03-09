@@ -3,7 +3,6 @@ package ctn.imaginarycraft.client.events;
 import ctn.imaginarycraft.api.*;
 import ctn.imaginarycraft.client.eventexecute.*;
 import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.util.*;
 import net.minecraft.client.*;
 import net.minecraft.client.player.*;
 import net.minecraft.world.entity.player.*;
@@ -22,8 +21,6 @@ public final class InputEvents {
     Minecraft minecraft = Minecraft.getInstance();
     LocalPlayer player = minecraft.player;
     if (player != null) {
-      Options options = minecraft.options;
-      PlayerKeyClickUtil.clientTickProcess(options, minecraft, player);
       if (minecraft.screen == null) {
         InputEventExecute.handleGunWeaponInput(player, minecraft);
       }

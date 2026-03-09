@@ -1,0 +1,1 @@
+ctn.imaginarycraft.linkage.kubejs.ModKubejsPlgin imaginarycraft

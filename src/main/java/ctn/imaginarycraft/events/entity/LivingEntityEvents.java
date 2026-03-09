@@ -121,7 +121,7 @@ public final class LivingEntityEvents {
     DamageContainer damageContainer = event.getContainer();
     IDamageSource iDamageSource = IDamageSource.of(damageSource);
     IDamageContainer iDamageContainer = IDamageContainer.of(damageContainer);
-    @Nullable LcLevelType lcDamageLevel = iDamageSource.getImaginaryCraft$LcDamageLevel();
+    @Nullable LcLevel lcDamageLevel = iDamageSource.getImaginaryCraft$LcDamageLevel();
     LcDamageType lcDamageType = iDamageSource.getImaginaryCraft$LcDamageType();
 
     DamageContainer container = iDamageContainer.getImaginaryCraft$This();

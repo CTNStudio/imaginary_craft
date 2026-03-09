@@ -18,7 +18,7 @@ public enum BlockLcLevel implements IBlockComponentProvider {
 
   @Override
   public void appendTooltip(final ITooltip tooltip, final BlockAccessor accessor, final IPluginConfig config) {
-    @Nullable LcLevelType level = LcLevelUtil.getLevel(accessor.getLevel(), accessor.getPosition());
+    @Nullable LcLevel level = LcLevelUtil.getLevel(accessor.getLevel(), accessor.getPosition());
     if (level == null) {
       return;
     }

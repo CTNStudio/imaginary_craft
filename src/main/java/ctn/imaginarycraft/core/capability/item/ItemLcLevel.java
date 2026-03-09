@@ -7,38 +7,38 @@ import org.jetbrains.annotations.*;
 public enum ItemLcLevel implements IItemLcLevel {
   NULL() {
     @Override
-    public @Nullable LcLevelType getLcLevel(final ItemStack stack) {
+    public @Nullable LcLevel getLcLevel(final ItemStack stack) {
       return null;
     }
   },
   ZAYIN() {
     @Override
-    public @NotNull LcLevelType getLcLevel(final ItemStack stack) {
-      return LcLevelType.ZAYIN;
+    public @NotNull LcLevel getLcLevel(final ItemStack stack) {
+      return LcLevel.ZAYIN;
     }
   },
   TETH() {
     @Override
-    public @NotNull LcLevelType getLcLevel(final ItemStack stack) {
-      return LcLevelType.TETH;
+    public @NotNull LcLevel getLcLevel(final ItemStack stack) {
+      return LcLevel.TETH;
     }
   },
   HE() {
     @Override
-    public @NotNull LcLevelType getLcLevel(final ItemStack stack) {
-      return LcLevelType.HE;
+    public @NotNull LcLevel getLcLevel(final ItemStack stack) {
+      return LcLevel.HE;
     }
   },
   WAW() {
     @Override
-    public @NotNull LcLevelType getLcLevel(final ItemStack stack) {
-      return LcLevelType.WAW;
+    public @NotNull LcLevel getLcLevel(final ItemStack stack) {
+      return LcLevel.WAW;
     }
   },
   ALEPH() {
     @Override
-    public @NotNull LcLevelType getLcLevel(final ItemStack stack) {
-      return LcLevelType.ALEPH;
+    public @NotNull LcLevel getLcLevel(final ItemStack stack) {
+      return LcLevel.ALEPH;
     }
   }
 }

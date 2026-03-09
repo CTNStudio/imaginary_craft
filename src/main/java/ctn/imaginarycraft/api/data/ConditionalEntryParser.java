@@ -18,7 +18,7 @@ import java.util.stream.*;
  * 条件配置条目解析器
  * <p>负责从 NBT 标签中解析条件化的配置条目</p>
  */
-public class ConditionalEntryParser {
+public final class ConditionalEntryParser {
 
   private static final Logger LOGGER = ImaginaryCraft.LOGGER;
 

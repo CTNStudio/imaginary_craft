@@ -25,11 +25,11 @@ public final class ItemTooltipEvents {
     int size = toolTip.size();
 
     // 添加物品等级 ToolTip
-    LcLevelType lcLevelType = LcLevelUtil.getLevel(itemStack);
-    if (lcLevelType != null) {
+    LcLevel lcLevel = LcLevelUtil.getLevel(itemStack);
+    if (lcLevel != null) {
       MutableComponent component = Component
-        .literal(lcLevelType.getName().toUpperCase())
-        .withColor(lcLevelType.getColourValue());
+        .literal(lcLevel.getName().toUpperCase())
+        .withColor(lcLevel.getColourValue());
       toolTip.add(Math.clamp(size, 0, 1), component);
     }
   }
