@@ -3,10 +3,13 @@
   "package": "ctn.imaginarycraft.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "AnimationTrailParticleMixin",
     "LivingDamageEvent$PostMixin",
-    "client.LocalPlayerPatchMixin",
+    "StaticAnimationMixin",
     "client.ModelBuilderMixin",
     "client.ModelFileMixin",
+    "client.world.LocalPlayerPatchMixin",
+    "client.world.RenderItemBaseMixin",
     "world.DamageContainerMixin",
     "world.DamageSourceMixin",
     "world.entity.LivingEntityMixin",
@@ -28,6 +31,7 @@
     "requireAnnotations": true
   },
   "client": [
+    "AnimationTrailParticleMixin$Provider",
     "client.BlockEntityWithoutLevelRendererMixin",
     "client.FontMixin",
     "client.GuiMixin",

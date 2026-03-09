@@ -24,6 +24,7 @@ public abstract class BlockEntityWithoutLevelRendererMixin implements IBlockEnti
 
     final BlockEntityWithoutLevelRenderer geckolibRenderer = GeoRenderProvider.of(stack).getGeoItemRenderer();
     if (geckolibRenderer != null) {
+      // TODO 扩展到更通用版本
       if (geckolibRenderer instanceof RedEyesTachiItemWeaponRenderer renderer) {
         renderer.renderByItem(sourceLivingEntity, stack, displayContext, poseStack, buffer, packedLight, packedOverlay);
         return;

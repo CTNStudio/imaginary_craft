@@ -17,7 +17,38 @@
     ],
     "lifetime": 6,
     "interpolations": 4,
-    "texture_path": "imaginarycraft:textures/particle/trail/red_eyes_tachi_trail.png",
+    "texture_path": "epicfight:textures/particle/swordmaster_trail.png",
     "particle_type": "epicfight:swing_trail"
-  }
+  },
+  "trail_expand": [
+    {
+      "conditions": [
+        {
+          "predicate": "imaginarycraft:mob_effects",
+          "effect": "imaginarycraft:red_eyes_hunting"
+        }
+      ],
+      "value": {
+        "color": [
+          255,
+          255,
+          255
+        ],
+        "begin_pos": [
+          0.0,
+          0.0,
+          -0.2
+        ],
+        "end_pos": [
+          0.0,
+          0.4,
+          -1.55
+        ],
+        "lifetime": 6,
+        "interpolations": 4,
+        "texture_path": "imaginarycraft:textures/particle/trail/red_eyes_tachi_trail.png",
+        "particle_type": "epicfight:swing_trail"
+      }
+    }
+  ]
 }
