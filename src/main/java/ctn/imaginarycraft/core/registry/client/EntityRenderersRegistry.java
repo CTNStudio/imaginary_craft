@@ -3,7 +3,7 @@ package ctn.imaginarycraft.core.registry.client;
 import ctn.imaginarycraft.client.renderer.entity.*;
 import ctn.imaginarycraft.common.world.entity.abnormalities.ordeals.violet.*;
 import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.init.world.entiey.*;
+import ctn.imaginarycraft.init.world.entity.*;
 import net.neoforged.api.distmarker.*;
 import net.neoforged.bus.api.*;
 import net.neoforged.fml.common.*;

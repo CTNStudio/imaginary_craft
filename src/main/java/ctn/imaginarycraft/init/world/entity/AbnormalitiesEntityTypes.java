@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init.world.entiey;
+package ctn.imaginarycraft.init.world.entity;
 
 import ctn.imaginarycraft.api.*;
 import ctn.imaginarycraft.common.world.entity.abnormalities.*;

@@ -6,7 +6,7 @@ import ctn.imaginarycraft.core.capability.block.*;
 import ctn.imaginarycraft.core.capability.entity.*;
 import ctn.imaginarycraft.core.capability.item.*;
 import ctn.imaginarycraft.init.*;
-import ctn.imaginarycraft.init.world.entiey.*;
+import ctn.imaginarycraft.init.world.entity.*;
 import ctn.imaginarycraft.util.*;
 import net.minecraft.core.registries.*;
 import net.minecraft.world.entity.*;

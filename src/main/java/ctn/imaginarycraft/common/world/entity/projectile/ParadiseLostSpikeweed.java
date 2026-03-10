@@ -3,7 +3,7 @@ package ctn.imaginarycraft.common.world.entity.projectile;
 import ctn.imaginarycraft.api.*;
 import ctn.imaginarycraft.client.model.*;
 import ctn.imaginarycraft.init.world.*;
-import ctn.imaginarycraft.init.world.entiey.*;
+import ctn.imaginarycraft.init.world.entity.*;
 import ctn.imaginarycraft.mixed.*;
 import ctn.imaginarycraft.util.*;
 import net.minecraft.client.renderer.entity.*;

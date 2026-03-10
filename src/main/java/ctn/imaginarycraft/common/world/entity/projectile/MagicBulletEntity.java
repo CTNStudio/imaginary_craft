@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.world.entity.projectile;
 
 import ctn.imaginarycraft.init.world.*;
-import ctn.imaginarycraft.init.world.entiey.*;
+import ctn.imaginarycraft.init.world.entity.*;
 import ctn.imaginarycraft.util.*;
 import ctn.imaginarycraft.util.PiercingUtil.*;
 import net.minecraft.network.syncher.*;

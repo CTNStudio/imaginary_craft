@@ -37,7 +37,10 @@ public final class ModCreativeModeTabs {
       addRegistryItem(ToolItems.REGISTRY, output);
       addRegistryItem(WeaponItems.REGISTRY, output);
     }, () -> EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chestplate().get().getDefaultInstance()));
-
+  public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SPAWN_EGG =register(
+    "spwan_egg","异想工艺|刷怪蛋",(name, zhCn) ->createCreativeModeTab(name,zhCn,(parameters,output)->
+      addRegistryItem(AbnormalitiesSpawnEggs.REGISTRY,output),()->
+      AbnormalitiesSpawnEggs.GRANT_US_LOVE_SPAWN_EGG.get().getDefaultInstance()));
   private static DeferredHolder<CreativeModeTab, CreativeModeTab> register(
     String name,
     String zhCn,

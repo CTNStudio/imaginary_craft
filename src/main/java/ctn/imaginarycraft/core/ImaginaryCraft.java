@@ -4,7 +4,7 @@ import ctn.imaginarycraft.config.*;
 import ctn.imaginarycraft.core.registry.*;
 import ctn.imaginarycraft.init.*;
 import ctn.imaginarycraft.init.world.*;
-import ctn.imaginarycraft.init.world.entiey.*;
+import ctn.imaginarycraft.init.world.entity.*;
 import ctn.imaginarycraft.init.world.item.*;
 import net.minecraft.core.*;
 import net.minecraft.resources.*;

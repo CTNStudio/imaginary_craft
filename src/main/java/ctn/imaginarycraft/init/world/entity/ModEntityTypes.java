@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init.world.entiey;
+package ctn.imaginarycraft.init.world.entity;
 
 import ctn.imaginarycraft.core.*;
 import net.minecraft.core.registries.*;
