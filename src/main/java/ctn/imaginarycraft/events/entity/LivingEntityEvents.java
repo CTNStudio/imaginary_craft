@@ -170,7 +170,28 @@ public final class LivingEntityEvents {
       newDamage = LcDamageUtil.theSoulDamage(newDamage, attackedEntity, sourceDirectEntity == null ? sourceCausingEntity : sourceDirectEntity, source);
     }
 
-    if (newDamage > 0) {
+    if (!(newDamage > 0)) {
+      if (newDamage != 0) {
+        // TODO 要注入判断要判断是否符合恢复条件（免疫，吸收，无效处理）
+        // 如果低于0则恢复生命值
+
+        // TODO 应该很早就处理
+        // 恢复理智
+        if (attackedEntity instanceof Player player && isModifyRationality) {
+          RationalityUtil.modifyValue(player, newDamage, true);
+          ParticleUtil.createDamageTextParticles(player, newDamage, true, true);
+        }
+
+        // 恢复血量
+        float healed = Math.abs(newDamage);
+        attackedEntity.heal(healed);
+        ParticleUtil.createDamageTextParticles(attackedEntity, healed, false, true);
+
+        // 最后修改伤害为0表示不造成伤害
+        event.getContainer().setPostAttackInvulnerabilityTicks(0);
+        event.setNewDamage(0);
+      }
+    } else {
       // 修改理智
       if (attackedEntity instanceof Player player && isModifyRationality) {
         RationalityUtil.modifyValue(player, -newDamage, true);
@@ -182,31 +203,7 @@ public final class LivingEntityEvents {
       }
 
       event.setNewDamage(newDamage);
-      return;
     }
-
-    if (newDamage == 0) {
-      return;
-    }
-
-    // TODO 要注入判断要判断是否符合恢复条件（免疫，吸收，无效处理）
-    // 如果低于0则恢复生命值
-
-    // TODO 应该很早就处理
-    // 恢复理智
-    if (attackedEntity instanceof Player player && isModifyRationality) {
-      RationalityUtil.modifyValue(player, newDamage, true);
-      ParticleUtil.createDamageTextParticles(player, newDamage, true, true);
-    }
-
-    // 恢复血量
-    float healed = Math.abs(newDamage);
-    attackedEntity.heal(healed);
-    ParticleUtil.createDamageTextParticles(attackedEntity, healed, false, true);
-
-    // 最后修改伤害为0表示不造成伤害
-    event.getContainer().setPostAttackInvulnerabilityTicks(0);
-    event.setNewDamage(0);
   }
 
   /**

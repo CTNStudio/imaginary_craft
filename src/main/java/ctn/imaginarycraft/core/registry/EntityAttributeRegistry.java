@@ -618,8 +618,6 @@ public final class EntityAttributeRegistry {
     public void build(EntityAttributeModificationEvent event) {
       // 设置抗性属性
       attributes.forEach((key, value) -> event.add(entityType, key, value));
-      // 设置伤害倍数
-      EntityDamageMultiplier.setMultiplier(entityType, physicsDamage, spiritDamage, erosionDamage, theSoulDamage);
     }
 
     public Builder addAttributes(Holder<Attribute> attributeHolder, double value) {
