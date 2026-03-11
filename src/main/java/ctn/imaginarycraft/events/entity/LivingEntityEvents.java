@@ -129,11 +129,7 @@ public final class LivingEntityEvents {
 
     // 伤害类型
     if (lcDamageType != null) {
-      // 应用伤害乘数表
-      // TODO hyw
-//      newDamage *= EntityDamageMultiplier.getMultiplier(entity, lcDamageType);
-
-      // 易伤处理（如果乘数表未配置，则使用属性系统）
+      // 易伤处理
       Holder<Attribute> vulnerable = lcDamageType.getVulnerable();
       AttributeInstance attributeInstance = entity.getAttribute(vulnerable);
       if (attributeInstance != null) {
@@ -167,10 +163,11 @@ public final class LivingEntityEvents {
 
     // TODO 添加免疫，吸收，无效处理
     if (lcDamageType == LcDamageType.THE_SOUL) {
+      // 处理灵魂伤害转换成对应比例的生命值
       newDamage = LcDamageUtil.theSoulDamage(newDamage, attackedEntity, sourceDirectEntity == null ? sourceCausingEntity : sourceDirectEntity, source);
     }
 
-    if (!(newDamage > 0)) {
+    if (newDamage <= 0) {
       if (newDamage != 0) {
         // TODO 要注入判断要判断是否符合恢复条件（免疫，吸收，无效处理）
         // 如果低于0则恢复生命值
