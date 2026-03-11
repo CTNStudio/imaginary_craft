@@ -107,6 +107,7 @@ public final class LivingEntityEvents {
     }
   }
 
+  // TODO 处理伤害异常
   /**
    * 即将受到伤害但还没处理
    */
@@ -125,24 +126,25 @@ public final class LivingEntityEvents {
     LcDamageType lcDamageType = iDamageSource.getImaginaryCraft$LcDamageType();
 
     DamageContainer container = iDamageContainer.getImaginaryCraft$This();
-    float newDamageAmount = LcDamageEventExecutes.levelJudgment(entity, lcDamageLevel, container.getNewDamage());
+    double newDamage = LcDamageEventExecutes.levelJudgment(entity, lcDamageLevel, container.getNewDamage());
 
     // 伤害类型
     if (lcDamageType != null) {
       // 应用伤害乘数表
-      newDamageAmount *= EntityDamageMultiplier.getMultiplier(entity, lcDamageType);
+      // TODO hyw
+      newDamage *= EntityDamageMultiplier.getMultiplier(entity, lcDamageType);
 
       // 易伤处理（如果乘数表未配置，则使用属性系统）
       Holder<Attribute> vulnerable = lcDamageType.getVulnerable();
       AttributeInstance attributeInstance = entity.getAttribute(vulnerable);
       if (attributeInstance != null) {
-        newDamageAmount *= (float) attributeInstance.getValue();
+        newDamage *= attributeInstance.getValue();
       } else {
-        newDamageAmount *= (float) vulnerable.value().getDefaultValue();
+        newDamage *= vulnerable.value().getDefaultValue();
       }
     }
 
-    container.setNewDamage(newDamageAmount);
+    container.setNewDamage((float) newDamage);
   }
 
   /**
