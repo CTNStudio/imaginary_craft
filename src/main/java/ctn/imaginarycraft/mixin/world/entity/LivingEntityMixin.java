@@ -15,13 +15,11 @@ public abstract class LivingEntityMixin extends Entity implements Attackable, IL
     super(entityType, level);
   }
 
-  @Unique
   @Override
   public int getImaginarycraft$AttackStrengthTicker() {
     return attackStrengthTicker;
   }
 
-  @Unique
   @Override
   public void setImaginarycraft$AttackStrengthTicker(int attackStrengthTicker) {
     this.attackStrengthTicker = attackStrengthTicker;

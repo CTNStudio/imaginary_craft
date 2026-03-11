@@ -1,15 +1,18 @@
 package ctn.imaginarycraft.mixed;
 
+import ctn.imaginarycraft.api.*;
 import net.minecraft.world.entity.*;
-import org.spongepowered.asm.mixin.*;
 
 public interface ILivingEntity {
   static ILivingEntity of(LivingEntity livingEntity) {
-    return (ILivingEntity) livingEntity;
+    return livingEntity;
   }
 
-  int getImaginarycraft$AttackStrengthTicker();
+  default int getImaginarycraft$AttackStrengthTicker() {
+    throw new NoMixinException();
+  }
 
-  @Unique
-  void setImaginarycraft$AttackStrengthTicker(int attackStrengthTicker);
+  default void setImaginarycraft$AttackStrengthTicker(int attackStrengthTicker) {
+    throw new NoMixinException();
+  }
 }

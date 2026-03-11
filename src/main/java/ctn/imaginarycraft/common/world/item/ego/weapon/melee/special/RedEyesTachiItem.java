@@ -8,7 +8,9 @@ import ctn.imaginarycraft.init.world.*;
 import ctn.imaginarycraft.mixin.world.skill.*;
 import net.minecraft.server.level.*;
 import net.minecraft.world.*;
+import net.minecraft.world.damagesource.*;
 import net.minecraft.world.effect.*;
+import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.*;
 import net.minecraft.world.item.*;
 import org.jetbrains.annotations.*;
@@ -61,7 +63,7 @@ public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
       }
 
       ItemStack itemStack = playerPatch.getValidItemInHand(InteractionHand.MAIN_HAND);
-      if (!(itemStack.getItem() instanceof RedEyesTachiItem redEyesTachiItem)) {
+      if (!(itemStack.getItem() instanceof RedEyesTachiItem)) {
         return;
       }
       original.addEffect(new MobEffectInstance(ModMobEffects.RED_EYES_HUNTING, 20 * 10));
@@ -76,5 +78,10 @@ public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
   @Override
   public void createGeoRenderer(@NotNull Consumer<GeoRenderProvider> rendererConsumer) {
     rendererConsumer.accept(new ModGeoItemRenderProvider<>((GeoModel<RedEyesTachiItem>) (GeoModel<?>) model, (GeoModel<RedEyesTachiItem>) (GeoModel<?>) guiModel, RedEyesTachiItemWeaponRenderer::new));
+  }
+
+  @Override
+  public float getAttackDamageBonus(Entity target, float damage, DamageSource damageSource) {
+    return super.getAttackDamageBonus(target, damage, damageSource);
   }
 }

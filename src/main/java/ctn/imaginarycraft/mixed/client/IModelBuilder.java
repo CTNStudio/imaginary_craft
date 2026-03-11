@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.mixed.client;
 
+import ctn.imaginarycraft.api.*;
 import net.neoforged.neoforge.client.model.generators.*;
-import org.spongepowered.asm.mixin.*;
 
 import java.util.*;
 
@@ -10,6 +10,7 @@ public interface IModelBuilder<T extends ModelBuilder<T>> {
     return (IModelBuilder<T>) modelBuilder;
   }
 
-  @Unique
-  Map<String, String> imaginarycraft$getTexture();
+  default Map<String, String> imaginarycraft$getTexture() {
+    throw new NoMixinException();
+  }
 }

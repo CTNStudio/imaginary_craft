@@ -1,0 +1,23 @@
+{
+  "net/minecraft/client/renderer/BlockEntityWithoutLevelRenderer": [
+    "ctn/imaginarycraft/mixed/client/IBlockEntityWithoutLevelRenderer"
+  ],
+  "net/minecraft/client/gui/Font": [
+    "ctn/imaginarycraft/mixed/client/IFont"
+  ],
+  "net/minecraft/client/KeyMapping": [
+    "ctn/imaginarycraft/mixed/client/IKeyMapping"
+  ],
+  "net/minecraft/world/damagesource/DamageSource": [
+    "ctn/imaginarycraft/mixed/IDamageSource"
+  ],
+  "net/neoforged/neoforge/event/entity/living/LivingDamageEvent$Post": [
+    "ctn/imaginarycraft/mixed/ILivingDamageEvent$Post"
+  ],
+  "net/minecraft/world/entity/LivingEntity": [
+    "ctn/imaginarycraft/mixed/ILivingEntity"
+  ],
+  "net/minecraft/world/entity/player/Player": [
+    "ctn/imaginarycraft/mixed/IPlayer"
+  ]
+}

@@ -17,21 +17,22 @@ import java.util.function.*;
 public final class ModMobEffects {
   public static final DeferredRegister<MobEffect> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.MOB_EFFECT);
 
-  public static final Holder<MobEffect> RED_EYES_HUNTING = register("red_eyes_hunting", "赤瞳-狩猎", (category, color) -> new ModMobEffect(category, color) {
-    @Override
-    public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
-      if (livingEntity.getMainHandItem().is(EgoWeaponItems.RED_EYES_TACHI) ||
-        livingEntity.getOffhandItem().is(EgoWeaponItems.RED_EYES_TACHI)) {
-        return super.applyEffectTick(livingEntity, amplifier);
+  public static final Holder<MobEffect> RED_EYES_HUNTING = register("red_eyes_hunting", "赤瞳-狩猎", (category, color) ->
+    new ModMobEffect(category, color) {
+      @Override
+      public boolean applyEffectTick(LivingEntity livingEntity, int amplifier) {
+        if (livingEntity.getMainHandItem().is(EgoWeaponItems.RED_EYES_TACHI) ||
+          livingEntity.getOffhandItem().is(EgoWeaponItems.RED_EYES_TACHI)) {
+          return super.applyEffectTick(livingEntity, amplifier);
+        }
+        return false;
       }
-      return false;
-    }
 
-    @Override
-    public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
-      return true;
-    }
-  }, MobEffectCategory.BENEFICIAL, 0xac2323, (e, id) -> e
+      @Override
+      public boolean shouldApplyEffectTickThisTick(int duration, int amplifier) {
+        return true;
+      }
+    }, MobEffectCategory.BENEFICIAL, 0xac2323, (e, id) -> e
     .addAttributeModifier(Attributes.ATTACK_SPEED, id, 0.30, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
     .addAttributeModifier(Attributes.ATTACK_DAMAGE, id, 0.25, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 

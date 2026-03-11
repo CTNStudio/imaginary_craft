@@ -30,21 +30,18 @@ public class ChopFlavorLayer extends BasicHudLayer {
   public static final ResourceLocation SCABBARD_BROKEN2 = ImaginaryCraft.modRl("chop_flavor/red_eyes_tachi/scabbard_broken2");
 
   public static final ChopFlavorLayer INSTANCE = new ChopFlavorLayer();
-  private static final List<Pair<Predicate<ItemStack>, ChopFlavorBar>> list = new ArrayList<>();
+  private static final List<Pair<Predicate<ItemStack>, IChopFlavorBar>> list = new ArrayList<>();
 
-  private Function<ItemStack, ChopFlavorBar> chopFlavorBarProvider;
+  private Function<ItemStack, IChopFlavorBar> chopFlavorBarProvider;
   @Nullable
-  private ChopFlavorBar activateBar;
+  private IChopFlavorBar activateBar;
   private ItemStack mainHandItemStack = net.minecraft.world.item.ItemStack.EMPTY;
   private LocalPlayerPatch localPlayerPatch;
 
   public static void init() {
     list.clear();
-    list.add(Pair.of((itemStack) -> {
-      return itemStack.is(EgoWeaponItems.RED_EYES_TACHI);
-    }, new ChopFlavorBar() {
-      @Override
-      public void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker, int x, int y) {
+    list.add(Pair.of((itemStack) -> itemStack.is(EgoWeaponItems.RED_EYES_TACHI),
+      (guiGraphics, deltaTracker, x, y) -> {
         PoseStack pose = guiGraphics.pose();
         pose.pushPose();
         pose.translate(x, y, 0);
@@ -54,16 +51,18 @@ public class ChopFlavorLayer extends BasicHudLayer {
         LocalPlayer player = INSTANCE.player;
         MobEffectInstance effect = player.getEffect(ModMobEffects.RED_EYES_HUNTING);
         guiGraphics.blitSprite(BOTTOM, 0, 0, 70, 16);
+
         int value;
         int maxValue;
         if (effect == null) {
           value = 1;
           maxValue = 1;
         } else {
-          // TODO EGO共鸣后改成 20*10
-          maxValue = 20 * 5;
+          // TODO EGO共鸣后改成 200
+          maxValue = 100;
           value = maxValue - effect.getDuration();
         }
+
         ImageProgressBar.renderProgressBar(guiGraphics,
           SCABBARD,
           20, 0,
@@ -72,8 +71,7 @@ public class ChopFlavorLayer extends BasicHudLayer {
           value, maxValue,
           false, true);
         pose.popPose();
-      }
-    }));
+      }));
     INSTANCE.chopFlavorBarProvider = ConditionalProviderFactory.getProvider(null, list);
   }
 
@@ -114,7 +112,12 @@ public class ChopFlavorLayer extends BasicHudLayer {
     }
   }
 
-  public static abstract class ChopFlavorBar {
+  public static abstract class ChopFlavorBar implements IChopFlavorBar {
+    @Override
     public abstract void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker, int x, int y);
+  }
+
+  public interface IChopFlavorBar {
+    void render(GuiGraphics guiGraphics, DeltaTracker deltaTracker, int x, int y);
   }
 }

@@ -3,36 +3,49 @@ package ctn.imaginarycraft.mixed;
 import ctn.imaginarycraft.api.*;
 import net.minecraft.world.damagesource.*;
 import net.minecraft.world.item.*;
-import org.spongepowered.asm.mixin.*;
 
 import javax.annotation.*;
 
 public interface IDamageSource {
   static IDamageSource of(DamageSource source) {
-    return (IDamageSource) source;
+    return source;
   }
 
-  void setImaginaryCraft$WeaponItem(ItemStack itemStack);
+  default void setImaginaryCraft$WeaponItem(ItemStack itemStack) {
+    throw new NoMixinException();
+  }
 
   @Nullable
-  LcDamageType getImaginaryCraft$LcDamageType();
+  default LcDamageType getImaginaryCraft$LcDamageType() {
+    throw new NoMixinException();
+  }
 
-  void setImaginaryCraft$LcDamageType(LcDamageType type);
+  default void setImaginaryCraft$LcDamageType(LcDamageType type) {
+    throw new NoMixinException();
+  }
 
   @Nullable
-  LcLevel getImaginaryCraft$LcDamageLevel();
+  default LcLevel getImaginaryCraft$LcDamageLevel() {
+    throw new NoMixinException();
+  }
 
-  void setImaginaryCraft$DamageLevel(@Nullable LcLevel pmLevel);
+  default void setImaginaryCraft$DamageLevel(@Nullable LcLevel pmLevel) {
+    throw new NoMixinException();
+  }
 
-  @Unique
-  boolean isImaginaryCraft$LcLevelNull();
+  default boolean isImaginaryCraft$LcLevelNull() {
+    throw new NoMixinException();
+  }
 
-  @Unique
-  void setImaginaryCraft$LcLevelNull(boolean lcLevelNull);
+  default void setImaginaryCraft$LcLevelNull(boolean lcLevelNull) {
+    throw new NoMixinException();
+  }
 
-  @Unique
-  boolean isImaginaryCraft$LcDamageTypeNull();
+  default boolean isImaginaryCraft$LcDamageTypeNull() {
+    throw new NoMixinException();
+  }
 
-  @Unique
-  void setImaginaryCraft$LcDamageTypeNull(boolean lcDamageTypeNull);
+  default void setImaginaryCraft$LcDamageTypeNull(boolean lcDamageTypeNull) {
+    throw new NoMixinException();
+  }
 }

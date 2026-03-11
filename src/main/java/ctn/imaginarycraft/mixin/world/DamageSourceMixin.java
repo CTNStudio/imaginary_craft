@@ -83,57 +83,48 @@ public abstract class DamageSourceMixin implements IDamageSource {
     this.imaginaryCraft$lcDamageType = lcDamageType == null ? LcDamageType.byDamageType(type) : lcDamageType;
   }
 
-  @Unique
   @Override
   public void setImaginaryCraft$WeaponItem(ItemStack itemStack) {
     imaginaryCraft$attackItemStack = itemStack;
   }
 
-  @Unique
   @Nullable
   @Override
   public LcDamageType getImaginaryCraft$LcDamageType() {
     return imaginaryCraft$lcDamageType;
   }
 
-  @Unique
   @Override
   public void setImaginaryCraft$LcDamageType(LcDamageType type) {
     this.imaginaryCraft$lcDamageType = type;
   }
 
-  @Unique
   @Nullable
   @Override
   public LcLevel getImaginaryCraft$LcDamageLevel() {
     return imaginaryCraft$lcDamageLevel;
   }
 
-  @Unique
   @Override
   public void setImaginaryCraft$DamageLevel(@Nullable LcLevel level) {
     this.imaginaryCraft$lcDamageLevel = level;
   }
 
-  @Unique
   @Override
   public boolean isImaginaryCraft$LcLevelNull() {
     return imaginaryCraft$isLcLevelNull;
   }
 
-  @Unique
   @Override
   public void setImaginaryCraft$LcLevelNull(final boolean lcLevelNull) {
     imaginaryCraft$isLcLevelNull = lcLevelNull;
   }
 
-  @Unique
   @Override
   public boolean isImaginaryCraft$LcDamageTypeNull() {
     return imaginaryCraft$isLcDamageTypeNull;
   }
 
-  @Unique
   @Override
   public void setImaginaryCraft$LcDamageTypeNull(final boolean lcDamageTypeNull) {
     imaginaryCraft$isLcDamageTypeNull = lcDamageTypeNull;

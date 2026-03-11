@@ -2,18 +2,21 @@ package ctn.imaginarycraft.mixed;
 
 import ctn.imaginarycraft.api.*;
 import net.neoforged.neoforge.common.damagesource.*;
-import org.spongepowered.asm.mixin.*;
 
 public interface IDamageContainer {
   static IDamageContainer of(DamageContainer damageContainer) {
     return (IDamageContainer) damageContainer;
   }
 
-  @Unique
-  LcImmuneType getImaginaryCraft$LcImmuneType();
+  default LcImmuneType getImaginaryCraft$LcImmuneType() {
+    throw new NoMixinException();
+  }
 
-  @Unique
-  void getImaginaryCraft$LcImmuneType(LcImmuneType lcImmuneType);
+  default void getImaginaryCraft$LcImmuneType(LcImmuneType lcImmuneType) {
+    throw new NoMixinException();
+  }
 
-  DamageContainer getImaginaryCraft$This();
+  default DamageContainer getImaginaryCraft$This() {
+    throw new NoMixinException();
+  }
 }
