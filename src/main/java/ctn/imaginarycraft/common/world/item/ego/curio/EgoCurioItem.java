@@ -315,5 +315,9 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem, IEgoItem 
       this.tooltipsComponent.add((key) -> Component.translatable(key).setStyle(style));
       return this;
     }
+
+    public EgoCurioItem build() {
+      return new EgoCurioItem(this);
+    }
   }
 }

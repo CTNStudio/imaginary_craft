@@ -46,8 +46,6 @@ public abstract class RenderItemBaseMixin implements IRenderItemBase {
       jsonObj.get("trail_expand").getAsJsonArray().asList().stream()
         .map(JsonObject.class::cast)
         .map(entry -> {
-          // 获取并验证最终值
-          TrailInfo value = TrailInfo.deserialize(jsonObj.get("trail"));
           List<Condition.EntityPatchCondition> conditionList = Lists.newArrayList();
           var conditionsList = entry.getAsJsonArray("conditions");
           for (int i = 0; i < conditionsList.size(); i++) {
@@ -64,8 +62,7 @@ public abstract class RenderItemBaseMixin implements IRenderItemBase {
                 i, predicateId, e.getClass().getSimpleName(), e.getMessage(), e);
             }
           }
-          entry.getAsJsonObject("value");
-          return Pair.of(ConditionalEntryParser.composePredicate(conditionList), value);
+          return Pair.of(ConditionalEntryParser.composePredicate(conditionList), TrailInfo.deserialize(entry.getAsJsonObject("value")));
         }).toList());
   }
 

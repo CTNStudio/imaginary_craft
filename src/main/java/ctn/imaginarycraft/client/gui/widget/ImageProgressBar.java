@@ -30,14 +30,122 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
    * @param texture    进度条使用的纹理资源位置
    * @param tooltipKey 工具提示翻译键
    */
-  private ImageProgressBar(int x, int y,
-                           int width, int height,
-                           double value, double maxValue,
-                           ResourceLocation texture, String tooltipKey) {
+  private ImageProgressBar(int x, int y, int width, int height, double value, double maxValue, ResourceLocation texture, String tooltipKey) {
     super(x, y, width, height, texture);
     this.setValue(value);
     this.setMaxValue(maxValue);
     this.tooltipKey = tooltipKey;
+  }
+
+  /**
+   * 当isVertical为true时：
+   * <br>
+   * 如果是正向绘制（isReverseDirection为false），进度从上往下填充
+   * <br>
+   * 如果是反向绘制（isReverseDirection为true），进度从下往上填充
+   * <p>
+   * 当isVertical为false时：
+   * <br>
+   * 如果是正向绘制（isReverseDirection为false），进度从左往右填充
+   * <br>
+   * 如果是反向绘制（isReverseDirection为true），进度从右往左填
+   */
+  public static void renderProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int width, int height, float value, float maxValue, boolean isVertical, boolean isReverseDirection) {
+    renderProgressBar(guiGraphics, texture, x, y, 0, 0, width, height, value, maxValue, isVertical, isReverseDirection);
+  }
+
+  /**
+   * 当isVertical为true时：
+   * <br>
+   * 如果是正向绘制（isReverseDirection为false），进度从上往下填充
+   * <br>
+   * 如果是反向绘制（isReverseDirection为true），进度从下往上填充
+   * <p>
+   * 当isVertical为false时：
+   * <br>
+   * 如果是正向绘制（isReverseDirection为false），进度从左往右填充
+   * <br>
+   * 如果是反向绘制（isReverseDirection为true），进度从右往左填
+   */
+  public static void renderProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int uPos, int vPos, int textureWidth, int textureHeight, float value, float maxValue, boolean isVertical, boolean isReverseDirection) {
+    if (value <= 0 || maxValue <= 0) {
+      return;
+    }
+
+    float renderValue = Math.min(Math.max(0, value), maxValue);
+
+    // 根据方向选择尺寸参数
+    // 主要尺寸（垂直时是高度，水平时是宽度）
+    int mainDimension = (isVertical ? textureHeight : textureWidth) - uPos;
+    // 交叉尺寸（垂直时是宽度，水平时是高度）
+    int crossDimension = (isVertical ? textureWidth : textureHeight) - vPos;
+
+    // 计算进度值在主维度上的表现
+    int textureValue = (int) (renderValue / maxValue * mainDimension);
+    int textureMainSize = isReverseDirection ? textureValue : mainDimension - textureValue;
+
+    // 计算UV坐标
+    int uPos1 = uPos + (isVertical ? 0 : isReverseDirection ? 0 : textureMainSize);
+    int vPos1 = vPos + (isVertical ? isReverseDirection ? mainDimension - textureMainSize : 0 : 0);
+
+    // 计算绘制位置
+    int x1 = isVertical ? x : isReverseDirection ? x : x + textureMainSize;
+    int y1 = isVertical ? isReverseDirection ? y + (mainDimension - textureMainSize) : y : y + vPos1;
+
+    // 计算绘制尺寸
+    int uWidth = (isVertical ? crossDimension : textureMainSize);
+    int vHeight = (isVertical ? textureMainSize : crossDimension);
+
+    guiGraphics.blitSprite(
+      texture,
+      textureWidth, textureHeight,
+      uPos1, vPos1,
+      x1, y1,
+      uWidth, vHeight);
+  }
+
+  /**
+   * 渲染垂直方向的进度条
+   * <p>
+   * 正向绘制：进度从上往下填充
+   * <br>
+   * 反向绘制：进度从下往上填充
+   */
+  public static void renderVerticalProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int uPos, int vPos, int width, int height, float value, float maxValue, boolean isReverseDirection) {
+    renderProgressBar(guiGraphics, texture, x, y, uPos, vPos, width, height, value, maxValue, true, isReverseDirection);
+  }
+
+  /**
+   * 渲染垂直方向的进度条
+   * <p>
+   * 正向绘制：进度从上往下填充
+   * <br>
+   * 反向绘制：进度从下往上填充
+   */
+  public static void renderVerticalProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int width, int height, float value, float maxValue, boolean isReverseDirection) {
+    renderProgressBar(guiGraphics, texture, x, y, width, height, value, maxValue, true, isReverseDirection);
+  }
+
+  /**
+   * 渲染水平方向的进度条
+   * <p>
+   * 正向绘制：进度从左往右填充
+   * <br>
+   * 反向绘制：进度从右往左填充
+   */
+  public static void renderHorizontalProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int width, int height, float value, float maxValue, boolean isReverseDirection) {
+    renderProgressBar(guiGraphics, texture, x, y, width, height, value, maxValue, false, isReverseDirection);
+  }
+
+  /**
+   * 渲染水平方向的进度条
+   * <p>
+   * 正向绘制：进度从左往右填充
+   * <br>
+   * 反向绘制：进度从右往左填充
+   */
+  public static void renderHorizontalProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int uPos, int vPos, int width, int height, float value, float maxValue, boolean isReverseDirection) {
+    renderProgressBar(guiGraphics, texture, x, y, uPos, vPos, width, height, value, maxValue, false, isReverseDirection);
   }
 
   public String getTooltipKey() {
@@ -150,49 +258,6 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
   }
 
   /**
-   * 当isVertical为true时：
-   * <br>
-   * 如果是正向绘制（isReverseDirection为false），进度从上往下填充
-   * <br>
-   * 如果是反向绘制（isReverseDirection为true），进度从下往上填充
-   * <p>
-   * 当isVertical为false时：
-   * <br>
-   * 如果是正向绘制（isReverseDirection为false），进度从左往右填充
-   * <br>
-   * 如果是反向绘制（isReverseDirection为true），进度从右往左填
-   */
-  public static void renderProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int width, int height,
-                                       float value, float maxValue, boolean isVertical, boolean isReverseDirection) {
-    if (value == 0) {
-      return;
-    }
-    float renderValue = Math.min(Math.max(0, value), maxValue);
-
-    // 根据方向选择尺寸参数
-    int mainDimension = isVertical ? height : width;  // 主要尺寸（垂直时是高度，水平时是宽度）
-    int crossDimension = isVertical ? width : height; // 交叉尺寸（垂直时是宽度，水平时是高度）
-
-    // 计算进度值在主维度上的表现
-    int textureValue = (int) ((renderValue / maxValue) * mainDimension);
-    int textureMainSize = isReverseDirection ? textureValue : mainDimension - textureValue;
-
-    // 计算UV坐标
-    int uPos = isVertical ? 0 : (isReverseDirection ? 0 : textureMainSize);
-    int vPos = isVertical ? (isReverseDirection ? mainDimension - textureMainSize : 0) : 0;
-
-    // 计算绘制位置
-    int textureX = isVertical ? x : (isReverseDirection ? x : x + textureMainSize);
-    int textureY = isVertical ? (isReverseDirection ? y + (mainDimension - textureMainSize) : y) : y + vPos;
-
-    // 计算绘制尺寸
-    int textureUWidth = isVertical ? crossDimension : textureMainSize;
-    int textureVHeight = isVertical ? textureMainSize : crossDimension;
-
-    guiGraphics.blitSprite(texture, width, height, uPos, vPos, textureX, textureY, textureUWidth, textureVHeight);
-  }
-
-  /**
    * 水平方向的进度条实现。
    * <p>
    * 该类重写了部分方法以适应水平方向的绘制逻辑。
@@ -213,11 +278,7 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
      * @param tooltipKey 工具提示翻译键
      * @param isToLeft   是否向左绘制
      */
-    public Horizontal(int x, int y,
-                      int width, int height,
-                      double value, double maxValue,
-                      ResourceLocation texture, String tooltipKey,
-                      boolean isToLeft) {
+    public Horizontal(int x, int y, int width, int height, double value, double maxValue, ResourceLocation texture, String tooltipKey, boolean isToLeft) {
       super(x, y, width, height, value, maxValue, texture, tooltipKey);
       this.isToLeft = isToLeft;
     }
@@ -236,11 +297,7 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
       int x = isToLeft ? this.getX() + xPosition : this.getX();
       int y = this.getY() + yPosition;
 
-      guiGraphics.blitSprite(this.sprite,
-        this.getWidth(), this.getHeight(),
-        isToLeft ? xPosition : 0, 0,
-        x, y,
-        uWidth, vHeight);
+      guiGraphics.blitSprite(this.sprite, this.getWidth(), this.getHeight(), isToLeft ? xPosition : 0, 0, x, y, uWidth, vHeight);
     }
   }
 
@@ -265,11 +322,7 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
      * @param tooltipKey 工具提示翻译键
      * @param isToTop    是否向上绘制
      */
-    public Vertical(int x, int y,
-                    int width, int height,
-                    double value, double maxValue,
-                    ResourceLocation texture,
-                    String tooltipKey, boolean isToTop) {
+    public Vertical(int x, int y, int width, int height, double value, double maxValue, ResourceLocation texture, String tooltipKey, boolean isToTop) {
       super(x, y, width, height, value, maxValue, texture, tooltipKey);
       this.isToTop = isToTop;
     }
@@ -288,11 +341,7 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
       int x = this.getX() + xPosition;
       int y = isToTop ? this.getY() + yPosition : this.getY();
 
-      guiGraphics.blitSprite(this.sprite,
-        this.getWidth(), this.getHeight(),
-        0, yPosition,
-        x, y,
-        uWidth, vHeight);
+      guiGraphics.blitSprite(this.sprite, this.getWidth(), this.getHeight(), 0, yPosition, x, y, uWidth, vHeight);
     }
   }
 }

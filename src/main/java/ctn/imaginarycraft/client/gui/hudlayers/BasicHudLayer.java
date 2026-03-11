@@ -40,7 +40,7 @@ public abstract class BasicHudLayer extends IHudLayer {
     int newScreenWidth = guiGraphics.guiWidth();
     int newScreenHeight = guiGraphics.guiHeight();
 
-    var newPlayer = Objects.requireNonNull(this.minecraft.player);
+    LocalPlayer newPlayer = Objects.requireNonNull(this.minecraft.player);
     if (this.player != newPlayer) {
       playerChange(newPlayer);
     }
@@ -48,7 +48,7 @@ public abstract class BasicHudLayer extends IHudLayer {
     boolean isWidthChange = newScreenWidth != this.screenWidth;
     boolean isHeightChange = newScreenHeight != this.screenHeight;
     if (isWidthChange || isHeightChange) {
-      sizeChange(isWidthChange, isHeightChange, newScreenWidth, newScreenHeight);
+      sizeChange(newScreenWidth, newScreenHeight);
     }
   }
 
@@ -56,13 +56,8 @@ public abstract class BasicHudLayer extends IHudLayer {
     this.player = newPlayer;
   }
 
-  protected void sizeChange(final boolean isWidthChange, final boolean isHeightChange, final int newScreenWidth, final int newScreenHeight) {
-    if (isHeightChange) {
-      this.screenWidth = newScreenWidth;
-    }
-
-    if (isWidthChange) {
-      this.screenHeight = newScreenHeight;
-    }
+  protected void sizeChange(final int newScreenWidth, final int newScreenHeight) {
+    this.screenWidth = newScreenWidth;
+    this.screenHeight = newScreenHeight;
   }
 }

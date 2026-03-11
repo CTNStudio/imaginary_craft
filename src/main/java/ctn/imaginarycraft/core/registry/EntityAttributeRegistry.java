@@ -4,12 +4,15 @@ import ctn.imaginarycraft.common.world.entity.abnormalities.ordeals.violet.*;
 import ctn.imaginarycraft.core.*;
 import ctn.imaginarycraft.init.world.*;
 import ctn.imaginarycraft.init.world.entity.*;
+import net.minecraft.core.*;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.entity.player.*;
 import net.neoforged.bus.api.*;
 import net.neoforged.fml.common.*;
 import net.neoforged.neoforge.event.entity.*;
-import net.minecraft.world.entity.ai.attributes.*;
+
+import java.util.*;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class EntityAttributeRegistry {
@@ -34,74 +37,414 @@ public final class EntityAttributeRegistry {
   }
 
   private static void vanilla(EntityAttributeModificationEvent event) {
-    // 抗性（前4个）+ 伤害倍数（中间4个）+ 血量（最后1个）
-    configureEntityAttributes(event, EntityType.WARDEN, 0.6, 1.2, 0.8, 0.2, 0.6, 1.2, 0.8, 0.2, 2.0);
-    configureEntityAttributes(event, EntityType.ENDER_DRAGON, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1);
-    configureEntityAttributes(event, EntityType.WITHER, 0.5, 0.7, -1.0, 1.0, 0.5, 0.7, -1.0, 1.0,  1.0);
-    configureEntityAttributes(event, EntityType.IRON_GOLEM, 0.5, 0.6, 1.5, 1.0, 0.5, 0.6, 1.5, 1.0,  1.0);
-    configureEntityAttributes(event, EntityType.ELDER_GUARDIAN, 0.5, 0.8, 0.9, 1.2, 0.5, 0.8, 0.9, 1.2,  1.0);
-    configureEntityAttributes(event, EntityType.RAVAGER, 0.5, 1.0, 1.5, 1.3, 0.5, 1.0, 1.5, 1.3,  1.0);
-    configureEntityAttributes(event, EntityType.GUARDIAN, 0.5, 0.8, 0.9, 1.2, 0.5, 0.8, 0.9, 1.2,  1.0);
-    configureEntityAttributes(event, EntityType.ENDERMAN, 0.8, 0.5, 1.2, 1.5, 0.8, 0.5, 1.2, 1.5,  1.0);
-    configureEntityAttributes(event, EntityType.GHAST, 0.5, 0.5, 1.2, 1.5, 0.5, 0.5, 1.2, 1.5,  1.0);
-    configureEntityAttributes(event, EntityType.HOGLIN, 0.8, 1.2, 1.1, 1.2, 0.8, 1.2, 1.1, 1.2,  1.0);
-    configureEntityAttributes(event, EntityType.PIGLIN_BRUTE, 0.6, 1.3, 1.0, 1.1, 0.6, 1.3, 1.0, 1.1,  1.0);
-    configureEntityAttributes(event, EntityType.SHULKER, 0.2, 1.5, 1.0, 1.1, 0.2, 1.5, 1.0, 1.1,  1.0);
-    configureEntityAttributes(event, EntityType.ZOGLIN, 0.5, 1.2, 1.2, 1.3, 0.5, 1.2, 1.2, 1.3,  1.0);
-    configureEntityAttributes(event, EntityType.EVOKER, 1.0, 1.2, 1.3, 1.3, 1.0, 1.2, 1.3, 1.3,  1.0);
-    configureEntityAttributes(event, EntityType.VINDICATOR, 0.8, 1.2, 1.3, 1.3, 0.8, 1.2, 1.3, 1.3,  1.0);
-    configureEntityAttributes(event, EntityType.WITCH, 1.2, 1.1, 1.0, 1.3, 1.2, 1.1, 1.0, 1.3,  1.0);
-    configureEntityAttributes(event, EntityType.WITHER_SKELETON, 0.8, 0.8, -1.0, 1.1, 0.8, 0.8, -1.0, 1.1,  1.0);
-    configureEntityAttributes(event, EntityType.BLAZE, 0.7, 0.8, 1.3, 1.2, 0.7, 0.8, 1.3, 1.2,  1.0);
-    configureEntityAttributes(event, EntityType.BOGGED, 1.0, 0.5, 0.7, 1.0, 1.0, 0.5, 0.7, 1.0,  1.0);
-    configureEntityAttributes(event, EntityType.SKELETON, 0.9, 0.6, 0.8, 1.0, 0.9, 0.6, 0.8, 1.0,  1.0);
-    configureEntityAttributes(event, EntityType.STRAY, 0.8, 0.6, 0.8, 1.0, 0.8, 0.6, 0.8, 1.0,  1.0);
-    configureEntityAttributes(event, EntityType.ZOMBIE, 0.7, 0.8, 0.9, 1.1, 0.7, 0.8, 0.9, 1.1,  1.0);
-    configureEntityAttributes(event, EntityType.ZOMBIFIED_PIGLIN, 0.6, 0.7, 0.5, 1.3, 0.6, 0.7, 0.5, 1.3,  1.0);
-    configureEntityAttributes(event, EntityType.DROWNED, 0.8, 0.8, 1.0, 1.1, 0.8, 0.8, 1.0, 1.1,  1.0);
-    configureEntityAttributes(event, EntityType.BREEZE, 0.5, 0.8, 1.3, 1.2, 0.5, 0.8, 1.3, 1.2,  1.0);
-    configureEntityAttributes(event, EntityType.CREEPER, 1.2, 0.8, 1.2, 1.2, 1.2, 0.8, 1.2, 1.2,  1.0);
-    configureEntityAttributes(event, EntityType.HUSK, 0.6, 0.6, 0.8, 1.2, 0.6, 0.6, 0.8, 1.2,  1.0);
-    configureEntityAttributes(event, EntityType.MAGMA_CUBE, 0.4, 0.6, 1.4, 1.2, 0.4, 0.6, 1.4, 1.2,  1.0);
-    configureEntityAttributes(event, EntityType.PHANTOM, 0.6, 1.0, 0.8, 1.3, 0.6, 1.0, 0.8, 1.3,  1.0);
-    configureEntityAttributes(event, EntityType.ENDERMITE, 0.9, 1.2, 1.1, 1.3, 0.9, 1.2, 1.1, 1.3,  1.0);
-    configureEntityAttributes(event, EntityType.SILVERFISH, 0.8, 1.2, 1.3, 1.3, 0.8, 1.2, 1.3, 1.3,  1.0);
-    configureEntityAttributes(event, EntityType.VEX, 0.8, 1.3, 1.1, 1.5, 0.8, 1.3, 1.1, 1.5,  1.0);
-    configureEntityAttributes(event, EntityType.PILLAGER, 0.8, 1.2, 1.3, 1.3, 0.8, 1.2, 1.3, 1.3,  1.0);
-    configureEntityAttributes(event, EntityType.PIGLIN, 0.8, 1.2, 1.3, 1.2, 0.8, 1.2, 1.3, 1.2,  1.0);
-    configureEntityAttributes(event, EntityType.SPIDER, 0.7, 1.1, 1.3, 1.1, 0.7, 1.1, 1.3, 1.1,  1.0);
-    configureEntityAttributes(event, EntityType.CAVE_SPIDER, 0.7, 1.1, 1.0, 1.1, 0.7, 1.1, 1.0, 1.1,  1.0);
-    configureEntityAttributes(event, EntityType.SLIME, 0.5, 0.7, 1.2, 1.1, 0.5, 0.7, 1.2, 1.1,  1.0);
-  }
-
-  /**
-   * 统一配置实体属性：抗性 + 伤害倍数 + 血量
-   * <p>
-   * 参数顺序：抗性（4个）+ 伤害倍数（4个）+ 血量值
-   *
-   * @param event      属性修改事件
-   * @param entityType 实体类型
-   * @param physicsRes 物理抗性
-   * @param spiritRes  精神抗性
-   * @param erosionRes 侵蚀抗性
-   * @param theSoulRes 灵魂抗性
-   * @param physicsDmg 物理伤害倍数
-   * @param spiritDmg  精神伤害倍数
-   * @param erosionDmg 侵蚀伤害倍数
-   * @param theSoulDmg 灵魂伤害倍数
-   * @param maxHealth  最大生命值
-   */
-  private static void configureEntityAttributes(EntityAttributeModificationEvent event,
-                                                EntityType<? extends LivingEntity> entityType,
-                                                double physicsRes, double spiritRes, double erosionRes, double theSoulRes,
-                                                double physicsDmg, double spiritDmg, double erosionDmg, double theSoulDmg,
-                                                double healthMul) {
-    // 设置抗性属性
-    lcAttributesVulnerable(event, entityType, physicsRes, spiritRes, erosionRes, theSoulRes);
-    // 设置伤害倍数
-    EntityDamageMultiplier.setMultiplier(entityType, physicsDmg, spiritDmg, erosionDmg, theSoulDmg);
-    // 设置生命值
-    event.add(entityType, Attributes.MAX_HEALTH,  getOriginalMaxHealth(entityType)*healthMul);
+    // 抗性（前 4 个）+ 伤害倍数（中间 4 个）+ 血量（最后 1 个）
+    Builder.of().entityType(EntityType.WARDEN)
+      .physicsVulnerable(0.6)
+      .spiritVulnerable(1.2)
+      .erosionVulnerable(0.8)
+      .theSoulVulnerable(0.2)
+      .physicsDamage(0.6)
+      .spiritDamage(1.2)
+      .erosionDamage(0.8)
+      .theSoulDamage(0.2)
+      .maxHealthMultiples(2.0)
+      .build(event);
+    Builder.of().entityType(EntityType.ENDER_DRAGON)
+      .physicsVulnerable(0.5)
+      .spiritVulnerable(0.5)
+      .erosionVulnerable(0.5)
+      .theSoulVulnerable(0.5)
+      .physicsDamage(0.5)
+      .spiritDamage(0.5)
+      .erosionDamage(0.5)
+      .theSoulDamage(0.5)
+      .maxHealthMultiples(1)
+      .build(event);
+    Builder.of().entityType(EntityType.WITHER)
+      .physicsVulnerable(0.5)
+      .spiritVulnerable(0.7)
+      .erosionVulnerable(-1.0)
+      .theSoulVulnerable(1.0)
+      .physicsDamage(0.5)
+      .spiritDamage(0.7)
+      .erosionDamage(-1.0)
+      .theSoulDamage(1.0)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.IRON_GOLEM)
+      .physicsVulnerable(0.5)
+      .spiritVulnerable(0.6)
+      .erosionVulnerable(1.5)
+      .theSoulVulnerable(1.0)
+      .physicsDamage(0.5)
+      .spiritDamage(0.6)
+      .erosionDamage(1.5)
+      .theSoulDamage(1.0)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.ELDER_GUARDIAN)
+      .physicsVulnerable(0.5)
+      .spiritVulnerable(0.8)
+      .erosionVulnerable(0.9)
+      .theSoulVulnerable(1.2)
+      .physicsDamage(0.5)
+      .spiritDamage(0.8)
+      .erosionDamage(0.9)
+      .theSoulDamage(1.2)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.RAVAGER)
+      .physicsVulnerable(0.5)
+      .spiritVulnerable(1.0)
+      .erosionVulnerable(1.5)
+      .theSoulVulnerable(1.3)
+      .physicsDamage(0.5)
+      .spiritDamage(1.0)
+      .erosionDamage(1.5)
+      .theSoulDamage(1.3)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.GUARDIAN)
+      .physicsVulnerable(0.5)
+      .spiritVulnerable(0.8)
+      .erosionVulnerable(0.9)
+      .theSoulVulnerable(1.2)
+      .physicsDamage(0.5)
+      .spiritDamage(0.8)
+      .erosionDamage(0.9)
+      .theSoulDamage(1.2)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.ENDERMAN)
+      .physicsVulnerable(0.8)
+      .spiritVulnerable(0.5)
+      .erosionVulnerable(1.2)
+      .theSoulVulnerable(1.5)
+      .physicsDamage(0.8)
+      .spiritDamage(0.5)
+      .erosionDamage(1.2)
+      .theSoulDamage(1.5)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.GHAST)
+      .physicsVulnerable(0.5)
+      .spiritVulnerable(0.5)
+      .erosionVulnerable(1.2)
+      .theSoulVulnerable(1.5)
+      .physicsDamage(0.5)
+      .spiritDamage(0.5)
+      .erosionDamage(1.2)
+      .theSoulDamage(1.5)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.HOGLIN)
+      .physicsVulnerable(0.8)
+      .spiritVulnerable(1.2)
+      .erosionVulnerable(1.1)
+      .theSoulVulnerable(1.2)
+      .physicsDamage(0.8)
+      .spiritDamage(1.2)
+      .erosionDamage(1.1)
+      .theSoulDamage(1.2)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.PIGLIN_BRUTE)
+      .physicsVulnerable(0.6)
+      .spiritVulnerable(1.3)
+      .erosionVulnerable(1.0)
+      .theSoulVulnerable(1.1)
+      .physicsDamage(0.6)
+      .spiritDamage(1.3)
+      .erosionDamage(1.0)
+      .theSoulDamage(1.1)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.SHULKER)
+      .physicsVulnerable(0.2)
+      .spiritVulnerable(1.5)
+      .erosionVulnerable(1.0)
+      .theSoulVulnerable(1.1)
+      .physicsDamage(0.2)
+      .spiritDamage(1.5)
+      .erosionDamage(1.0)
+      .theSoulDamage(1.1)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.ZOGLIN)
+      .physicsVulnerable(0.5)
+      .spiritVulnerable(1.2)
+      .erosionVulnerable(1.2)
+      .theSoulVulnerable(1.3)
+      .physicsDamage(0.5)
+      .spiritDamage(1.2)
+      .erosionDamage(1.2)
+      .theSoulDamage(1.3)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.EVOKER)
+      .physicsVulnerable(1.0)
+      .spiritVulnerable(1.2)
+      .erosionVulnerable(1.3)
+      .theSoulVulnerable(1.3)
+      .physicsDamage(1.0)
+      .spiritDamage(1.2)
+      .erosionDamage(1.3)
+      .theSoulDamage(1.3)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.VINDICATOR)
+      .physicsVulnerable(0.8)
+      .spiritVulnerable(1.2)
+      .erosionVulnerable(1.3)
+      .theSoulVulnerable(1.3)
+      .physicsDamage(0.8)
+      .spiritDamage(1.2)
+      .erosionDamage(1.3)
+      .theSoulDamage(1.3)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.WITCH)
+      .physicsVulnerable(1.2)
+      .spiritVulnerable(1.1)
+      .erosionVulnerable(1.0)
+      .theSoulVulnerable(1.3)
+      .physicsDamage(1.2)
+      .spiritDamage(1.1)
+      .erosionDamage(1.0)
+      .theSoulDamage(1.3)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.WITHER_SKELETON)
+      .physicsVulnerable(0.8)
+      .spiritVulnerable(0.8)
+      .erosionVulnerable(-1.0)
+      .theSoulVulnerable(1.1)
+      .physicsDamage(0.8)
+      .spiritDamage(0.8)
+      .erosionDamage(-1.0)
+      .theSoulDamage(1.1)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.BLAZE)
+      .physicsVulnerable(0.7)
+      .spiritVulnerable(0.8)
+      .erosionVulnerable(1.3)
+      .theSoulVulnerable(1.2)
+      .physicsDamage(0.7)
+      .spiritDamage(0.8)
+      .erosionDamage(1.3)
+      .theSoulDamage(1.2)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.BOGGED)
+      .physicsVulnerable(1.0)
+      .spiritVulnerable(0.5)
+      .erosionVulnerable(0.7)
+      .theSoulVulnerable(1.0)
+      .physicsDamage(1.0)
+      .spiritDamage(0.5)
+      .erosionDamage(0.7)
+      .theSoulDamage(1.0)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.SKELETON)
+      .physicsVulnerable(0.9)
+      .spiritVulnerable(0.6)
+      .erosionVulnerable(0.8)
+      .theSoulVulnerable(1.0)
+      .physicsDamage(0.9)
+      .spiritDamage(0.6)
+      .erosionDamage(0.8)
+      .theSoulDamage(1.0)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.STRAY)
+      .physicsVulnerable(0.8)
+      .spiritVulnerable(0.6)
+      .erosionVulnerable(0.8)
+      .theSoulVulnerable(1.0)
+      .physicsDamage(0.8)
+      .spiritDamage(0.6)
+      .erosionDamage(0.8)
+      .theSoulDamage(1.0)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.ZOMBIE)
+      .physicsVulnerable(0.7)
+      .spiritVulnerable(0.8)
+      .erosionVulnerable(0.9)
+      .theSoulVulnerable(1.1)
+      .physicsDamage(0.7)
+      .spiritDamage(0.8)
+      .erosionDamage(0.9)
+      .theSoulDamage(1.1)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.ZOMBIFIED_PIGLIN)
+      .physicsVulnerable(0.6)
+      .spiritVulnerable(0.7)
+      .erosionVulnerable(0.5)
+      .theSoulVulnerable(1.3)
+      .physicsDamage(0.6)
+      .spiritDamage(0.7)
+      .erosionDamage(0.5)
+      .theSoulDamage(1.3)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.DROWNED)
+      .physicsVulnerable(0.8)
+      .spiritVulnerable(0.8)
+      .erosionVulnerable(1.0)
+      .theSoulVulnerable(1.1)
+      .physicsDamage(0.8)
+      .spiritDamage(0.8)
+      .erosionDamage(1.0)
+      .theSoulDamage(1.1)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.BREEZE)
+      .physicsVulnerable(0.5)
+      .spiritVulnerable(0.8)
+      .erosionVulnerable(1.3)
+      .theSoulVulnerable(1.2)
+      .physicsDamage(0.5)
+      .spiritDamage(0.8)
+      .erosionDamage(1.3)
+      .theSoulDamage(1.2)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.CREEPER)
+      .physicsVulnerable(1.2)
+      .spiritVulnerable(0.8)
+      .erosionVulnerable(1.2)
+      .theSoulVulnerable(1.2)
+      .physicsDamage(1.2)
+      .spiritDamage(0.8)
+      .erosionDamage(1.2)
+      .theSoulDamage(1.2)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.HUSK)
+      .physicsVulnerable(0.6)
+      .spiritVulnerable(0.6)
+      .erosionVulnerable(0.8)
+      .theSoulVulnerable(1.2)
+      .physicsDamage(0.6)
+      .spiritDamage(0.6)
+      .erosionDamage(0.8)
+      .theSoulDamage(1.2)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.MAGMA_CUBE)
+      .physicsVulnerable(0.4)
+      .spiritVulnerable(0.6)
+      .erosionVulnerable(1.4)
+      .theSoulVulnerable(1.2)
+      .physicsDamage(0.4)
+      .spiritDamage(0.6)
+      .erosionDamage(1.4)
+      .theSoulDamage(1.2)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.PHANTOM)
+      .physicsVulnerable(0.6)
+      .spiritVulnerable(1.0)
+      .erosionVulnerable(0.8)
+      .theSoulVulnerable(1.3)
+      .physicsDamage(0.6)
+      .spiritDamage(1.0)
+      .erosionDamage(0.8)
+      .theSoulDamage(1.3)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.ENDERMITE)
+      .physicsVulnerable(0.9)
+      .spiritVulnerable(1.2)
+      .erosionVulnerable(1.1)
+      .theSoulVulnerable(1.3)
+      .physicsDamage(0.9)
+      .spiritDamage(1.2)
+      .erosionDamage(1.1)
+      .theSoulDamage(1.3)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.SILVERFISH)
+      .physicsVulnerable(0.8)
+      .spiritVulnerable(1.2)
+      .erosionVulnerable(1.3)
+      .theSoulVulnerable(1.3)
+      .physicsDamage(0.8)
+      .spiritDamage(1.2)
+      .erosionDamage(1.3)
+      .theSoulDamage(1.3)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.VEX)
+      .physicsVulnerable(0.8)
+      .spiritVulnerable(1.3)
+      .erosionVulnerable(1.1)
+      .theSoulVulnerable(1.5)
+      .physicsDamage(0.8)
+      .spiritDamage(1.3)
+      .erosionDamage(1.1)
+      .theSoulDamage(1.5)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.PILLAGER)
+      .physicsVulnerable(0.8)
+      .spiritVulnerable(1.2)
+      .erosionVulnerable(1.3)
+      .theSoulVulnerable(1.3)
+      .physicsDamage(0.8)
+      .spiritDamage(1.2)
+      .erosionDamage(1.3)
+      .theSoulDamage(1.3)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.PIGLIN)
+      .physicsVulnerable(0.8)
+      .spiritVulnerable(1.2)
+      .erosionVulnerable(1.3)
+      .theSoulVulnerable(1.2)
+      .physicsDamage(0.8)
+      .spiritDamage(1.2)
+      .erosionDamage(1.3)
+      .theSoulDamage(1.2)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.SPIDER)
+      .physicsVulnerable(0.7)
+      .spiritVulnerable(1.1)
+      .erosionVulnerable(1.3)
+      .theSoulVulnerable(1.1)
+      .physicsDamage(0.7)
+      .spiritDamage(1.1)
+      .erosionDamage(1.3)
+      .theSoulDamage(1.1)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.CAVE_SPIDER)
+      .physicsVulnerable(0.7)
+      .spiritVulnerable(1.1)
+      .erosionVulnerable(1.0)
+      .theSoulVulnerable(1.1)
+      .physicsDamage(0.7)
+      .spiritDamage(1.1)
+      .erosionDamage(1.0)
+      .theSoulDamage(1.1)
+      .maxHealthMultiples(1.0)
+      .build(event);
+    Builder.of().entityType(EntityType.SLIME)
+      .physicsVulnerable(0.5)
+      .spiritVulnerable(0.7)
+      .erosionVulnerable(1.2)
+      .theSoulVulnerable(1.1)
+      .physicsDamage(0.5)
+      .spiritDamage(0.7)
+      .erosionDamage(1.2)
+      .theSoulDamage(1.1)
+      .maxHealthMultiples(1.0)
+      .build(event);
   }
 
   /**
@@ -160,6 +503,7 @@ public final class EntityAttributeRegistry {
     event.add(entityType, ModAttributes.ATTACK_SPEED_MAIN_HAND);
     event.add(entityType, ModAttributes.ATTACK_SPEED_OFF_HAND);
   }
+
   /**
    * 获取原始最大生命值(可拓展)
    */
@@ -167,13 +511,123 @@ public final class EntityAttributeRegistry {
     // 1. 获取该实体类型的默认属性供应器（AttributeSupplier）
     AttributeSupplier supplier = DefaultAttributes.getSupplier(entityType);
     if (supplier == null) {
-        return 20.0; // 默认回退值（大多数生物的默认值）
+      return 20.0; // 默认回退值（大多数生物的默认值）
     }
     AttributeMap attributeMap = new AttributeMap(supplier);
     AttributeInstance healthAttr = attributeMap.getInstance(Attributes.MAX_HEALTH);
     if (healthAttr == null) {
-        return 20.0;
+      return 20.0;
     }
     return healthAttr.getBaseValue();
+  }
+
+  public static class Builder {
+    private EntityType<? extends LivingEntity> entityType;
+    private Map<Holder<Attribute>, Double> attributes;
+    private double physicsDamage = 1.0;
+    private double spiritDamage = 1.0;
+    private double erosionDamage = 1.0;
+    private double theSoulDamage = 1.0;
+
+    public static Builder of() {
+      return new Builder();
+    }
+
+    /**
+     * 设置实体类型
+     */
+    public Builder entityType(EntityType<? extends LivingEntity> entityType) {
+      this.entityType = entityType;
+      return this;
+    }
+
+    /**
+     * 物理易伤
+     */
+    public Builder physicsVulnerable(double value) {
+      return addAttributes(ModAttributes.PHYSICS_VULNERABLE, value);
+    }
+
+    /**
+     * 精神易伤
+     */
+    public Builder spiritVulnerable(double value) {
+      return addAttributes(ModAttributes.SPIRIT_VULNERABLE, value);
+    }
+
+    /**
+     * 侵蚀易伤
+     */
+    public Builder erosionVulnerable(double value) {
+      return addAttributes(ModAttributes.EROSION_VULNERABLE, value);
+    }
+
+    /**
+     * 灵魂易伤
+     */
+    public Builder theSoulVulnerable(double value) {
+      return addAttributes(ModAttributes.THE_SOUL_VULNERABLE, value);
+    }
+
+    /**
+     * 物理伤害倍数
+     */
+    public Builder physicsDamage(double value) {
+      this.physicsDamage = value;
+      return this;
+    }
+
+    /**
+     * 精神伤害倍数
+     */
+    public Builder spiritDamage(double value) {
+      this.spiritDamage = value;
+      return this;
+    }
+
+    /**
+     * 侵蚀伤害倍数
+     */
+    public Builder erosionDamage(double value) {
+      this.erosionDamage = value;
+      return this;
+    }
+
+    /**
+     * 灵魂伤害倍数
+     */
+    public Builder theSoulDamage(double value) {
+      this.theSoulDamage = value;
+      return this;
+    }
+
+    /**
+     * 最大生命值倍数
+     */
+    public Builder maxHealthMultiples(double value) {
+      return this.addAttributes(Attributes.MAX_HEALTH, getOriginalMaxHealth(entityType) * value);
+    }
+
+    /**
+     * 最大生命值
+     */
+    public Builder maxHealth(double value) {
+      return this.addAttributes(Attributes.MAX_HEALTH, value);
+    }
+
+    public void build(EntityAttributeModificationEvent event) {
+      // 设置抗性属性
+      attributes.forEach((key, value) -> event.add(entityType, key, value));
+      // 设置伤害倍数
+      EntityDamageMultiplier.setMultiplier(entityType, physicsDamage, spiritDamage, erosionDamage, theSoulDamage);
+    }
+
+    public Builder addAttributes(Holder<Attribute> attributeHolder, double value) {
+      if (attributes == null) {
+        attributes = new HashMap<>();
+      }
+      attributes.put(attributeHolder, value);
+      return this;
+    }
   }
 }

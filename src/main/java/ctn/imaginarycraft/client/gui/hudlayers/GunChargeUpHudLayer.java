@@ -107,20 +107,16 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
   }
 
   @Override
-  protected void sizeChange(boolean isWidthChange, boolean isHeightChange, int newScreenWidth, int newScreenHeight) {
-    super.sizeChange(isWidthChange, isHeightChange, newScreenWidth, newScreenHeight);
+  protected void sizeChange(int newScreenWidth, int newScreenHeight) {
+    super.sizeChange(newScreenWidth, newScreenHeight);
     if (player == null) {
       return;
     }
-    if (isWidthChange) {
-      setLeftPos(newScreenWidth / 2);
-    }
-    if (isHeightChange) {
-      switch (attackIndicatorStatus) {
-        case CROSSHAIR -> setTopPos(newScreenHeight / 2 - 16 / 2);
-        case HOTBAR -> setTopPos(newScreenHeight - 32);
-        default -> throw new IllegalStateException("Unexpected value: " + attackIndicatorStatus);
-      }
+    setLeftPos(newScreenWidth / 2);
+    switch (attackIndicatorStatus) {
+      case CROSSHAIR -> setTopPos(newScreenHeight / 2 - 16 / 2);
+      case HOTBAR -> setTopPos(newScreenHeight - 32);
+      default -> throw new IllegalStateException("Unexpected value: " + attackIndicatorStatus);
     }
   }
 }

@@ -70,11 +70,7 @@ public final class EntityDamageMultiplier {
    * @param erosion    侵蚀
    * @param theSoul    灵魂
    */
-  public static void setMultiplier(@NotNull EntityType<?> entityType,
-                                   double physics,
-                                   double spirit,
-                                   double erosion,
-                                   double theSoul) {
+  public static void setMultiplier(@NotNull EntityType<?> entityType, double physics, double spirit, double erosion, double theSoul) {
     setMultiplier(entityType, LcDamageType.PHYSICS, physics);
     setMultiplier(entityType, LcDamageType.SPIRIT, spirit);
     setMultiplier(entityType, LcDamageType.EROSION, erosion);

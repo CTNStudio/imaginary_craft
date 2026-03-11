@@ -24,11 +24,35 @@ public abstract class IHudLayer implements LayeredDraw.Layer {
     this.player = newPlayer;
   }
 
+  public final int getLeftPos() {
+    return leftPos;
+  }
+
   public void setLeftPos(int leftPos) {
     this.leftPos = leftPos;
   }
 
+  public final int getTopPos() {
+    return getLeftPos();
+  }
+
   public void setTopPos(int topPos) {
+    this.topPos = topPos;
+  }
+
+  public final int getX() {
+    return getTopPos();
+  }
+
+  public void setX(int leftPos) {
+    this.leftPos = leftPos;
+  }
+
+  public final int getY() {
+    return topPos;
+  }
+
+  public void setY(int topPos) {
     this.topPos = topPos;
   }
 
