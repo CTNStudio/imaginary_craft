@@ -1,29 +1,29 @@
 package ctn.imaginarycraft.init.world.item;
 
-import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.datagen.i18n.ZhCn;
-import ctn.imaginarycraft.init.world.entity.AbnormalitiesEntityTypes;
-import net.minecraft.world.item.Item;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.registries.DeferredItem;
-import net.neoforged.neoforge.registries.DeferredRegister;
-import org.jetbrains.annotations.NotNull;
+import ctn.imaginarycraft.common.world.item.*;
+import ctn.imaginarycraft.core.*;
+import ctn.imaginarycraft.datagen.i18n.*;
+import ctn.imaginarycraft.init.world.entity.*;
+import net.minecraft.world.item.*;
+import net.neoforged.bus.api.*;
+import net.neoforged.neoforge.registries.*;
+import org.jetbrains.annotations.*;
 
-import java.util.function.Function;
+import java.util.function.*;
 
 public class AbnormalitiesSpawnEggs {
   public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(ImaginaryCraft.ID);
 
+  public static final DeferredItem<Item> GRANT_US_LOVE_SPAWN_EGG = register(
+    "grant_us_love_spawn_egg",
+    "\"请给我们爱\" 生物蛋",
+    properties -> new ModEggItem(AbnormalitiesEntityTypes.GRANT_US_LOVE, properties),
+    new Item.Properties()
+  );
+
   static void init(IEventBus bus) {
     REGISTRY.register(bus);
   }
-
-  public static final DeferredItem<Item> GRANT_US_LOVE_SPAWN_EGG =register(
-    "grant_us_love_spawn_egg",
-    "请给我们爱刷怪蛋",
-    properties -> new AbnormalitiesSpawnEggItem(AbnormalitiesEntityTypes.GRANT_US_LOVE.get(), properties),
-    new Item.Properties()
-  );
 
   private static DeferredItem<Item> register(
     String id,

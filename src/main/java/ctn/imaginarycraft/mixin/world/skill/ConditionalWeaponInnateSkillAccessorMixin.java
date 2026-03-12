@@ -10,8 +10,8 @@ import yesman.epicfight.world.capabilities.entitypatch.player.*;
 @Mixin(ConditionalWeaponInnateSkill.class)
 public interface ConditionalWeaponInnateSkillAccessorMixin {
   @Accessor("attackAnimations")
-  AnimationManager.AnimationAccessor<? extends AttackAnimation>[] getAttackAnimations();
+  AnimationManager.AnimationAccessor<? extends AttackAnimation>[] imaginarycraft$getAttackAnimations();
 
   @Invoker("getAnimationInCondition")
-  int getAnimationInCondition(ServerPlayerPatch serverPlayerPatch);
+  int imaginarycraft$getAnimationInCondition(ServerPlayerPatch serverPlayerPatch);
 }

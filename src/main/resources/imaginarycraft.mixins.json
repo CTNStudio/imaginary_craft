@@ -7,7 +7,7 @@
     "LivingDamageEvent$PostMixin",
     "StaticAnimationMixin",
     "client.ModelBuilderMixin",
-    "client.ModelFileMixin",
+    "client.ModelFileAccessorMixin",
     "client.world.LocalPlayerPatchMixin",
     "client.world.RenderItemBaseMixin",
     "world.CombatRulesMixin",

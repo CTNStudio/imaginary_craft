@@ -58,7 +58,7 @@ public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
         return;
       }
 
-      if (!playerPatch.getServerAnimator().animationPlayer.getRealAnimation().get().in(((ConditionalWeaponInnateSkillAccessorMixin) battojutsuSkill).getAttackAnimations())) {
+      if (!playerPatch.getServerAnimator().animationPlayer.getRealAnimation().get().in(((ConditionalWeaponInnateSkillAccessorMixin) battojutsuSkill).imaginarycraft$getAttackAnimations())) {
         return;
       }
 
@@ -100,7 +100,7 @@ public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
       // TODO EGO共鸣后改成 200
       int max = 100;
       effect.duration = Math.clamp(effectDuration + increase, 0, Math.max(effectDuration, max));
-      ((LivingEntityAccessorMixin) attacker).onEffectUpdated(effect, true, attacker);
+      ((LivingEntityAccessorMixin) attacker).imaginarycraft$onEffectUpdated(effect, true, attacker);
     }
   }
 }

@@ -10,11 +10,11 @@ import javax.annotation.*;
 @Mixin(LivingEntity.class)
 public interface LivingEntityAccessorMixin {
   @Accessor("attackStrengthTicker")
-  int getAttackStrengthTicker();
+  int imaginarycraft$getAttackStrengthTicker();
 
   @Accessor("attackStrengthTicker")
-  void setAttackStrengthTicker(int attackStrengthTicker);
+  void imaginarycraft$setAttackStrengthTicker(int attackStrengthTicker);
 
   @Invoker("onEffectUpdated")
-  void onEffectUpdated(MobEffectInstance effectInstance, boolean forced, @Nullable Entity entity);
+  void imaginarycraft$onEffectUpdated(MobEffectInstance effectInstance, boolean forced, @Nullable Entity entity);
 }

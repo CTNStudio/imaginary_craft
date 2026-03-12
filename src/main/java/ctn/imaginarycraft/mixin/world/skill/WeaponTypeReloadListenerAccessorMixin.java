@@ -13,7 +13,7 @@ import java.util.function.*;
 public interface WeaponTypeReloadListenerAccessorMixin {
 
   @Accessor("PRESETS")
-  static Map<ResourceLocation, Function<Item, ? extends CapabilityItem.Builder<?>>> getPresets() {
+  static Map<ResourceLocation, Function<Item, ? extends CapabilityItem.Builder<?>>> imaginarycraft$getPresets() {
     throw new AssertionError();
   }
 }

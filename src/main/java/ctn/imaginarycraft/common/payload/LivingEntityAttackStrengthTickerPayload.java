@@ -34,6 +34,6 @@ public record LivingEntityAttackStrengthTickerPayload(
   }
 
   public void to(Player player) {
-    ((LivingEntityAccessorMixin) player).setAttackStrengthTicker(attackStrengthTicker());
+    ((LivingEntityAccessorMixin) player).imaginarycraft$setAttackStrengthTicker(attackStrengthTicker());
   }
 }
