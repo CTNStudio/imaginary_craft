@@ -1,18 +1,13 @@
-package ctn.imaginarycraft.client.gui.hudlayers;
+package ctn.imaginarycraft.client.gui.hudlayers.chop_flavor;
 
 
-import com.mojang.blaze3d.vertex.*;
 import com.mojang.datafixers.util.*;
 import ctn.imaginarycraft.api.data.*;
-import ctn.imaginarycraft.client.gui.widget.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.init.world.*;
+import ctn.imaginarycraft.client.gui.hudlayers.*;
 import ctn.imaginarycraft.init.world.item.ego.*;
 import net.minecraft.client.*;
 import net.minecraft.client.gui.*;
 import net.minecraft.client.player.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.effect.*;
 import net.minecraft.world.item.*;
 import org.jetbrains.annotations.*;
 import yesman.epicfight.client.world.capabilites.entitypatch.player.*;
@@ -23,12 +18,6 @@ import java.util.*;
 import java.util.function.*;
 
 public class ChopFlavorLayer extends BasicHudLayer {
-  public static final ResourceLocation BOTTOM = ImaginaryCraft.modRl("chop_flavor/red_eyes_tachi/bottom");
-  public static final ResourceLocation SCABBARD = ImaginaryCraft.modRl("chop_flavor/red_eyes_tachi/scabbard");
-  public static final ResourceLocation SCABBARD_BROKEN0 = ImaginaryCraft.modRl("chop_flavor/red_eyes_tachi/scabbard_broken0");
-  public static final ResourceLocation SCABBARD_BROKEN1 = ImaginaryCraft.modRl("chop_flavor/red_eyes_tachi/scabbard_broken1");
-  public static final ResourceLocation SCABBARD_BROKEN2 = ImaginaryCraft.modRl("chop_flavor/red_eyes_tachi/scabbard_broken2");
-
   public static final ChopFlavorLayer INSTANCE = new ChopFlavorLayer();
   private static final List<Pair<Predicate<ItemStack>, IChopFlavorBar>> list = new ArrayList<>();
 
@@ -40,38 +29,7 @@ public class ChopFlavorLayer extends BasicHudLayer {
 
   public static void init() {
     list.clear();
-    list.add(Pair.of((itemStack) -> itemStack.is(EgoWeaponItems.RED_EYES_TACHI),
-      (guiGraphics, deltaTracker, x, y) -> {
-        PoseStack pose = guiGraphics.pose();
-        pose.pushPose();
-        pose.translate(x, y, 0);
-        pose.scale(1, 1, 1);
-        pose.translate(-35f, 0, 0);
-
-        LocalPlayer player = INSTANCE.player;
-        MobEffectInstance effect = player.getEffect(ModMobEffects.RED_EYES_HUNTING);
-        guiGraphics.blitSprite(BOTTOM, 0, 0, 70, 16);
-
-        int value;
-        int maxValue;
-        if (effect == null) {
-          value = 1;
-          maxValue = 1;
-        } else {
-          // TODO EGO共鸣后改成 200
-          maxValue = 100;
-          value = maxValue - effect.getDuration();
-        }
-
-        ImageProgressBar.renderProgressBar(guiGraphics,
-          SCABBARD,
-          20, 0,
-          20, 0,
-          70, 16,
-          value, maxValue,
-          false, true);
-        pose.popPose();
-      }));
+    list.add(Pair.of((itemStack) -> itemStack.is(EgoWeaponItems.RED_EYES_TACHI), new RedEyesTachiChopFlavor()));
     INSTANCE.chopFlavorBarProvider = ConditionalProviderFactory.getProvider(null, list);
   }
 
@@ -85,7 +43,7 @@ public class ChopFlavorLayer extends BasicHudLayer {
   @Override
   public void init(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
     super.init(guiGraphics, deltaTracker);
-    ItemStack mainHandItem = player.getMainHandItem();
+    ItemStack mainHandItem = getPlayer().getMainHandItem();
     if (mainHandItem != mainHandItemStack) {
       activateBar = chopFlavorBarProvider.apply(mainHandItem);
       mainHandItemStack = mainHandItem;

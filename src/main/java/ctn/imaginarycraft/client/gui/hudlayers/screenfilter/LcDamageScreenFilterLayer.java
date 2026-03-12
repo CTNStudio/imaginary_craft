@@ -40,12 +40,12 @@ public class LcDamageScreenFilterLayer extends BasicHudLayer {
 
   @Override
   public int getWidth() {
-    return screenWidth;
+    return getScreenWidth();
   }
 
   @Override
   public int getHeight() {
-    return screenHeight;
+    return getScreenHeight();
   }
 
   @Override

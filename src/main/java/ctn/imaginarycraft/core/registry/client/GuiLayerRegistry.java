@@ -3,6 +3,7 @@ package ctn.imaginarycraft.core.registry.client;
 import com.mojang.blaze3d.vertex.*;
 import ctn.imaginarycraft.client.*;
 import ctn.imaginarycraft.client.gui.hudlayers.*;
+import ctn.imaginarycraft.client.gui.hudlayers.chop_flavor.*;
 import ctn.imaginarycraft.client.gui.hudlayers.screenfilter.*;
 import ctn.imaginarycraft.core.*;
 import net.neoforged.api.distmarker.*;

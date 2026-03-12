@@ -11,8 +11,8 @@ import java.util.*;
  */
 public abstract class BasicHudLayer extends IHudLayer {
   protected final Minecraft minecraft;
-  protected LocalPlayer player;
   protected final Font font;
+  protected LocalPlayer player;
   protected int screenWidth;
   protected int screenHeight;
 
@@ -59,5 +59,26 @@ public abstract class BasicHudLayer extends IHudLayer {
   protected void sizeChange(final int newScreenWidth, final int newScreenHeight) {
     this.screenWidth = newScreenWidth;
     this.screenHeight = newScreenHeight;
+  }
+
+  public Minecraft getMinecraft() {
+    return minecraft;
+  }
+
+  public LocalPlayer getPlayer() {
+    return player;
+  }
+
+  @Override
+  public Font getFont() {
+    return font;
+  }
+
+  public int getScreenWidth() {
+    return screenWidth;
+  }
+
+  public int getScreenHeight() {
+    return screenHeight;
   }
 }

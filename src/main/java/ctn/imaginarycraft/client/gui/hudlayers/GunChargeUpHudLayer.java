@@ -40,8 +40,8 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
 
   @Override
   protected void renderDrawLayer(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
-    ItemStack mainHandItem = player.getMainHandItem();
-    ItemStack offHandItem = player.getOffhandItem();
+    ItemStack mainHandItem = getPlayer().getMainHandItem();
+    ItemStack offHandItem = getPlayer().getOffhandItem();
     final Item mainHandItemItem = mainHandItem.getItem();
     final Item offHandItemItem = offHandItem.getItem();
     final boolean isMainArmRight = mainArm == HumanoidArm.RIGHT;
@@ -90,17 +90,17 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
   public void init(GuiGraphics guiGraphics, DeltaTracker deltaTracker) {
     super.init(guiGraphics, deltaTracker);
 
-    float mainHandValue = GunWeaponUtil.getChargeUpPercentage(player, InteractionHand.MAIN_HAND);
+    float mainHandValue = GunWeaponUtil.getChargeUpPercentage(getPlayer(), InteractionHand.MAIN_HAND);
     if (this.mainHandValue != mainHandValue) {
       this.mainHandValue = mainHandValue;
     }
 
-    float offHandValue = GunWeaponUtil.getChargeUpPercentage(player, InteractionHand.OFF_HAND);
+    float offHandValue = GunWeaponUtil.getChargeUpPercentage(getPlayer(), InteractionHand.OFF_HAND);
     if (this.offHandValue != offHandValue) {
       this.offHandValue = offHandValue;
     }
 
-    HumanoidArm mainArm = player.getMainArm();
+    HumanoidArm mainArm = getPlayer().getMainArm();
     if (mainArm != this.mainArm) {
       this.mainArm = mainArm;
     }
@@ -109,7 +109,7 @@ public class GunChargeUpHudLayer extends BasicHudLayer {
   @Override
   protected void sizeChange(int newScreenWidth, int newScreenHeight) {
     super.sizeChange(newScreenWidth, newScreenHeight);
-    if (player == null) {
+    if (getPlayer() == null) {
       return;
     }
     setLeftPos(newScreenWidth / 2);
