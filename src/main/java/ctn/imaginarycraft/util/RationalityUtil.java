@@ -50,6 +50,10 @@ public class RationalityUtil {
     return Math.clamp(player.getData(ModAttachments.RATIONALITY), -maxRationalityValue, maxRationalityValue);
   }
 
+  public static void setValue(Player player, float value, boolean isEvent) {
+    setValue(player, value, isEvent, true);
+  }
+
   /**
    * 设置理智值
    */

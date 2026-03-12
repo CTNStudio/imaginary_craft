@@ -2,7 +2,7 @@ package ctn.imaginarycraft.common.payload;
 
 import ctn.imaginarycraft.common.payload.api.*;
 import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.mixed.*;
+import ctn.imaginarycraft.mixin.world.entity.*;
 import io.netty.buffer.*;
 import net.minecraft.client.player.*;
 import net.minecraft.network.codec.*;
@@ -34,6 +34,6 @@ public record LivingEntityAttackStrengthTickerPayload(
   }
 
   public void to(Player player) {
-    ILivingEntity.of(player).setImaginarycraft$AttackStrengthTicker(attackStrengthTicker());
+    ((LivingEntityAccessorMixin) player).setAttackStrengthTicker(attackStrengthTicker());
   }
 }
