@@ -17,19 +17,19 @@ public abstract class LivingEntityPatchMixin {
   @WrapOperation(method = "getWeaponHitParticle", at = @At(value = "INVOKE",
     target = "Lyesman/epicfight/world/capabilities/item/CapabilityItem;getHitParticle()Lyesman/epicfight/particle/HitParticleType;"))
   public HitParticleType imaginarycraft$getWeaponHitParticle(CapabilityItem instance, Operation<HitParticleType> original) {
-    return imaginarycraft$get(instance, original, IWeaponCapability::getImaginarycraft$hitParticle);
+    return imaginarycraft$get(instance, original, IWeaponCapability::imaginaryCraft$getHitParticle);
   }
 
   @WrapOperation(method = "getSwingSound", at = @At(value = "INVOKE",
     target = "Lyesman/epicfight/world/capabilities/item/CapabilityItem;getSmashingSound()Lnet/minecraft/sounds/SoundEvent;"))
   public SoundEvent imaginarycraft$getSwingSound(CapabilityItem instance, Operation<SoundEvent> original) {
-    return imaginarycraft$get(instance, original, IWeaponCapability::getImaginarycraft$smashingSound);
+    return imaginarycraft$get(instance, original, IWeaponCapability::imaginaryCraft$getSmashingSound);
   }
 
   @WrapOperation(method = "getWeaponHitSound", at = @At(value = "INVOKE",
     target = "Lyesman/epicfight/world/capabilities/item/CapabilityItem;getHitSound()Lnet/minecraft/sounds/SoundEvent;"))
   public SoundEvent imaginarycraft$getHitSound(CapabilityItem instance, Operation<SoundEvent> original) {
-    return imaginarycraft$get(instance, original, IWeaponCapability::getImaginarycraft$hitSound);
+    return imaginarycraft$get(instance, original, IWeaponCapability::imaginaryCraft$getHitSound);
   }
 
   @WrapOperation(method = "getColliderMatching", at = @At(value = "INVOKE",
@@ -38,7 +38,7 @@ public abstract class LivingEntityPatchMixin {
     CapabilityItem instance,
     Operation<Collider> original
   ) {
-    return imaginarycraft$get(instance, original, IWeaponCapability::getImaginarycraft$weaponCollider);
+    return imaginarycraft$get(instance, original, IWeaponCapability::imaginaryCraft$getWeaponCollider);
   }
 
   @Unique

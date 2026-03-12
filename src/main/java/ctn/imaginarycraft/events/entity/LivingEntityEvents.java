@@ -121,11 +121,10 @@ public final class LivingEntityEvents {
     DamageContainer damageContainer = event.getContainer();
     IDamageSource iDamageSource = IDamageSource.of(damageSource);
     IDamageContainer iDamageContainer = IDamageContainer.of(damageContainer);
-    @Nullable LcLevel lcDamageLevel = iDamageSource.getImaginaryCraft$LcDamageLevel();
-    LcDamageType lcDamageType = iDamageSource.getImaginaryCraft$LcDamageType();
+    @Nullable LcLevel lcDamageLevel = iDamageSource.imaginaryCraft$getLcDamageLevel();
+    LcDamageType lcDamageType = iDamageSource.imaginaryCraft$getLcDamageType();
 
-    DamageContainer container = iDamageContainer.getImaginaryCraft$This();
-    double newDamage = LcDamageEventExecutes.levelJudgment(entity, lcDamageLevel, container.getNewDamage());
+    double newDamage = LcDamageEventExecutes.levelJudgment(entity, lcDamageLevel, damageContainer.getNewDamage());
 
     // 伤害类型
     if (lcDamageType != null) {
@@ -139,7 +138,7 @@ public final class LivingEntityEvents {
       }
     }
 
-    container.setNewDamage((float) newDamage);
+    damageContainer.setNewDamage((float) newDamage);
   }
 
   /**
@@ -154,7 +153,7 @@ public final class LivingEntityEvents {
     IDamageSource iDamageSource = IDamageSource.of(source);
     Entity sourceDirectEntity = source.getDirectEntity();
     Entity sourceCausingEntity = source.getEntity();
-    LcDamageType lcDamageType = iDamageSource.getImaginaryCraft$LcDamageType();
+    LcDamageType lcDamageType = iDamageSource.imaginaryCraft$getLcDamageType();
 
     // 建议在每个有返回值的方法执行后再获取一次以求准确
     float newDamage = event.getNewDamage();
@@ -223,7 +222,7 @@ public final class LivingEntityEvents {
     }
 
     // 低抗缓慢
-    @Nullable LcDamageType lcDamageType = IDamageSource.of(source).getImaginaryCraft$LcDamageType();
+    @Nullable LcDamageType lcDamageType = IDamageSource.of(source).imaginaryCraft$getLcDamageType();
     if (lcDamageType != null) {
       AttributeInstance attributeInstance = entity.getAttribute(lcDamageType.getVulnerable());
       if (attributeInstance != null && attributeInstance.getValue() > LcDamageEventExecutes.VULNERABILITY_DECELERATE_THRESHOLD) {

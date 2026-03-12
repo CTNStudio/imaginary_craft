@@ -16,7 +16,7 @@ public interface IBlockEntityWithoutLevelRenderer {
     throw new NoMixinException();
   }
 
-  default @Nullable LivingEntity getImaginarycraft$sourceLivingEntity() {
+  default @Nullable LivingEntity imaginarycraft$getSourceLivingEntity() {
     throw new NoMixinException();
   }
 }

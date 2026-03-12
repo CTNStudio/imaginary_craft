@@ -19,7 +19,7 @@ public abstract class LivingDamageEvent$PostMixin implements ILivingDamageEvent$
   }
 
   @Override
-  public DamageContainer getImaginaryCraft$DamageContainer() {
+  public DamageContainer imaginaryCraft$getDamageContainer() {
     return projectMoon$damageContainer;
   }
 }

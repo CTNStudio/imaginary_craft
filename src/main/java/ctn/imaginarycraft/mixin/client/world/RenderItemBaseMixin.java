@@ -67,7 +67,7 @@ public abstract class RenderItemBaseMixin implements IRenderItemBase {
   }
 
   @Override
-  public TrailInfo getImaginarycraft$trailInfoProvider(LivingEntityPatch<?> livingEntityPatch) {
+  public TrailInfo imaginarycraft$getTrailInfoProvider(LivingEntityPatch<?> livingEntityPatch) {
     return imaginarycraft$trailInfoProvider != null ? imaginarycraft$trailInfoProvider.apply(livingEntityPatch) : trailInfo();
   }
 }

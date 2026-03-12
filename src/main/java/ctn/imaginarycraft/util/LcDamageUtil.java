@@ -56,7 +56,7 @@ public final class LcDamageUtil {
     damage /= 100;
     float maxHealth = 0;
     @Nullable LcLevel attackedLevel = LcLevelUtil.getLevel(attackedEntity);
-    @Nullable LcLevel attackerLevel = IDamageSource.of(damageSource).getImaginaryCraft$LcDamageLevel();
+    @Nullable LcLevel attackerLevel = IDamageSource.of(damageSource).imaginaryCraft$getLcDamageLevel();
     if (sourceEntity instanceof LivingEntity living) {
       maxHealth = (float) living.getAttributeValue(Attributes.MAX_HEALTH);
     }

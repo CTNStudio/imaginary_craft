@@ -4,6 +4,6 @@ import net.minecraft.world.entity.player.*;
 
 public interface IPlayer {
   static IPlayer of(Player player) {
-    return (IPlayer) player;
+    return player;
   }
 }

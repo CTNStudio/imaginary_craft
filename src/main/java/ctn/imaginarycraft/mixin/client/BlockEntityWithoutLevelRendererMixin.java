@@ -39,7 +39,7 @@ public abstract class BlockEntityWithoutLevelRendererMixin implements IBlockEnti
   }
 
   @Override
-  public @Nullable LivingEntity getImaginarycraft$sourceLivingEntity() {
+  public @Nullable LivingEntity imaginarycraft$getSourceLivingEntity() {
     return imaginarycraft$sourceLivingEntity;
   }
 }

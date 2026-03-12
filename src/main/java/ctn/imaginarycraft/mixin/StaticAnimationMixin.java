@@ -14,7 +14,7 @@ import yesman.epicfight.world.capabilities.entitypatch.*;
 public abstract class StaticAnimationMixin {
   @Unique
   private static TrailInfo imaginarycraft$getTrailInfo(RenderItemBase instance, LivingEntityPatch<?> entitypatch) {
-    return IRenderItemBase.of(instance).getImaginarycraft$trailInfoProvider(entitypatch);
+    return IRenderItemBase.of(instance).imaginarycraft$getTrailInfoProvider(entitypatch);
   }
 
   @WrapOperation(method = "lambda$begin$6", at = @At(value = "INVOKE",

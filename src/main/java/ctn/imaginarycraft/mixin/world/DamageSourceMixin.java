@@ -84,49 +84,49 @@ public abstract class DamageSourceMixin implements IDamageSource {
   }
 
   @Override
-  public void setImaginaryCraft$WeaponItem(ItemStack itemStack) {
+  public void imaginaryCraft$setWeaponItem(ItemStack itemStack) {
     imaginaryCraft$attackItemStack = itemStack;
   }
 
   @Nullable
   @Override
-  public LcDamageType getImaginaryCraft$LcDamageType() {
+  public LcDamageType imaginaryCraft$getLcDamageType() {
     return imaginaryCraft$lcDamageType;
   }
 
   @Override
-  public void setImaginaryCraft$LcDamageType(LcDamageType type) {
+  public void imaginaryCraft$setLcDamageType(LcDamageType type) {
     this.imaginaryCraft$lcDamageType = type;
   }
 
   @Nullable
   @Override
-  public LcLevel getImaginaryCraft$LcDamageLevel() {
+  public LcLevel imaginaryCraft$getLcDamageLevel() {
     return imaginaryCraft$lcDamageLevel;
   }
 
   @Override
-  public void setImaginaryCraft$DamageLevel(@Nullable LcLevel level) {
+  public void imaginaryCraft$setDamageLevel(@Nullable LcLevel level) {
     this.imaginaryCraft$lcDamageLevel = level;
   }
 
   @Override
-  public boolean isImaginaryCraft$LcLevelNull() {
+  public boolean imaginaryCraft$isLcLevelNull() {
     return imaginaryCraft$isLcLevelNull;
   }
 
   @Override
-  public void setImaginaryCraft$LcLevelNull(final boolean lcLevelNull) {
+  public void imaginaryCraft$setLcLevelNull(final boolean lcLevelNull) {
     imaginaryCraft$isLcLevelNull = lcLevelNull;
   }
 
   @Override
-  public boolean isImaginaryCraft$LcDamageTypeNull() {
+  public boolean imaginaryCraft$isLcDamageTypeNull() {
     return imaginaryCraft$isLcDamageTypeNull;
   }
 
   @Override
-  public void setImaginaryCraft$LcDamageTypeNull(final boolean lcDamageTypeNull) {
+  public void imaginaryCraft$setLcDamageTypeNull(final boolean lcDamageTypeNull) {
     imaginaryCraft$isLcDamageTypeNull = lcDamageTypeNull;
   }
 

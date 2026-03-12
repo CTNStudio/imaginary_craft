@@ -21,31 +21,31 @@ public interface IWeaponCapability {
     return (IWeaponCapability) builder;
   }
 
-  default HitParticleType getImaginarycraft$hitParticle(LivingEntityPatch<?> entitypatch) {
+  default HitParticleType imaginaryCraft$getHitParticle(LivingEntityPatch<?> entitypatch) {
     throw new NoMixinException();
   }
 
-  default SoundEvent getImaginarycraft$smashingSound(LivingEntityPatch<?> entitypatch) {
+  default SoundEvent imaginaryCraft$getSmashingSound(LivingEntityPatch<?> entitypatch) {
     throw new NoMixinException();
   }
 
-  default SoundEvent getImaginarycraft$hitSound(LivingEntityPatch<?> entitypatch) {
+  default SoundEvent imaginaryCraft$getHitSound(LivingEntityPatch<?> entitypatch) {
     throw new NoMixinException();
   }
 
-  default List<Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>>> getImaginarycraft$autoAttackMotion1(PlayerPatch<?> playerpatch) {
+  default List<Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>>> imaginaryCraft$getAutoAttackMotionFunction(PlayerPatch<?> playerpatch) {
     throw new NoMixinException();
   }
 
-  default List<AnimationManager.AnimationAccessor<? extends AttackAnimation>> getImaginarycraft$mountAttackMotion(LivingEntityPatch<?> entitypatch) {
+  default List<AnimationManager.AnimationAccessor<? extends AttackAnimation>> imaginaryCraft$getMountAttackMotion(LivingEntityPatch<?> entitypatch) {
     throw new NoMixinException();
   }
 
-  default List<Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>>> getImaginarycraft$mountAttackMotion1(LivingEntityPatch<?> entitypatch) {
+  default List<Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>>> imaginaryCraft$getMountAttackMotionFunction(LivingEntityPatch<?> entitypatch) {
     throw new NoMixinException();
   }
 
-  default Collider getImaginarycraft$weaponCollider(LivingEntityPatch<?> livingEntityPatch) {
+  default Collider imaginaryCraft$getWeaponCollider(LivingEntityPatch<?> livingEntityPatch) {
     throw new NoMixinException();
   }
 
@@ -58,7 +58,7 @@ public interface IWeaponCapability {
       throw new NoMixinException();
     }
 
-    default Function<LivingEntityPatch<?>, HitParticleType> getImaginarycraft$hitParticleProvider() {
+    default Function<LivingEntityPatch<?>, HitParticleType> imaginaryCraft$getHitParticleProvider() {
       throw new NoMixinException();
     }
 
@@ -66,7 +66,7 @@ public interface IWeaponCapability {
       throw new NoMixinException();
     }
 
-    default Function<LivingEntityPatch<?>, SoundEvent> getImaginarycraft$swingSoundProvider() {
+    default Function<LivingEntityPatch<?>, SoundEvent> imaginaryCraft$getSwingSoundProvider() {
       throw new NoMixinException();
     }
 
@@ -74,7 +74,7 @@ public interface IWeaponCapability {
       throw new NoMixinException();
     }
 
-    default Function<LivingEntityPatch<?>, SoundEvent> getImaginarycraft$hitSoundProvider() {
+    default Function<LivingEntityPatch<?>, SoundEvent> imaginaryCraft$getHitSoundProvider() {
       throw new NoMixinException();
     }
 
@@ -82,7 +82,7 @@ public interface IWeaponCapability {
       throw new NoMixinException();
     }
 
-    default Map<Style, Function<LivingEntityPatch<?>, List<Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>>>>> getImaginarycraft$autoAttackMotionProviderMap() {
+    default Map<Style, Function<LivingEntityPatch<?>, List<Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>>>>> imaginaryCraft$getAutoAttackMotionProviderMap() {
       throw new NoMixinException();
     }
 
@@ -90,7 +90,7 @@ public interface IWeaponCapability {
       throw new NoMixinException();
     }
 
-    default Map<Style, Function<LivingEntityPatch<?>, Function<ItemStack, Skill>>> getImaginarycraft$innateSkillProviderByStyle() {
+    default Map<Style, Function<LivingEntityPatch<?>, Function<ItemStack, Skill>>> imaginaryCraft$getInnateSkillProviderByStyle() {
       throw new NoMixinException();
     }
 
@@ -98,7 +98,7 @@ public interface IWeaponCapability {
       throw new NoMixinException();
     }
 
-    default Map<Style, Map<LivingMotion, Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends StaticAnimation>>>> getImaginarycraft$livingMotionProviderModifiers() {
+    default Map<Style, Map<LivingMotion, Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends StaticAnimation>>>> imaginaryCraft$getLivingMotionProviderModifiers() {
       throw new NoMixinException();
     }
 
@@ -106,7 +106,7 @@ public interface IWeaponCapability {
       throw new NoMixinException();
     }
 
-    default Function<LivingEntityPatch<?>, Collider> getImaginarycraft$colliderProvider() {
+    default Function<LivingEntityPatch<?>, Collider> imaginaryCraft$getColliderProvider() {
       throw new NoMixinException();
     }
   }

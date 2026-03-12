@@ -16,7 +16,7 @@ public abstract class AnimationTrailParticleMixin {
   public abstract static class Provider {
     @Unique
     private static TrailInfo imaginarycraft$getTrailInfo(RenderItemBase instance, LivingEntityPatch<?> entitypatch) {
-      return IRenderItemBase.of(instance).getImaginarycraft$trailInfoProvider(entitypatch);
+      return IRenderItemBase.of(instance).imaginarycraft$getTrailInfoProvider(entitypatch);
     }
 
     @WrapOperation(method = "createParticle(Lnet/minecraft/core/particles/SimpleParticleType;Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDD)Lnet/minecraft/client/particle/Particle;", at = @At(value = "INVOKE",

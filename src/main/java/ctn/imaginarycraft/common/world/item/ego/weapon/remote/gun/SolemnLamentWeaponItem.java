@@ -72,9 +72,9 @@ public class SolemnLamentWeaponItem extends GunEgoWeaponItem {
       DamageSource damageSources = ModDamageSources.remoteDamage(shooterEntity);
       // 一般来说使用物品攻击时这些会自动添加，但是因为原版的机制导致副手攻击物品时可能无法正确识别，所以这里手动添加
       IDamageSource iDamageSource = IDamageSource.of(damageSources);
-      iDamageSource.setImaginaryCraft$WeaponItem(weaponItem);
-      iDamageSource.setImaginaryCraft$DamageLevel(LcLevelUtil.getLevel(weaponItem));
-      iDamageSource.setImaginaryCraft$LcDamageType(lcDamageColorDamageType);
+      iDamageSource.imaginaryCraft$setWeaponItem(weaponItem);
+      iDamageSource.imaginaryCraft$setDamageLevel(LcLevelUtil.getLevel(weaponItem));
+      iDamageSource.imaginaryCraft$setLcDamageType(lcDamageColorDamageType);
       entity.hurt(damageSources, getDamage(shooterEntity, weaponItem, handUsed));
     }
 

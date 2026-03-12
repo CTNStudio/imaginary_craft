@@ -9,7 +9,7 @@ public interface ILivingDamageEvent$Post {
     return (ILivingDamageEvent$Post) o;
   }
 
-  default DamageContainer getImaginaryCraft$DamageContainer() {
+  default DamageContainer imaginaryCraft$getDamageContainer() {
     throw new NoMixinException();
   }
 }

@@ -29,18 +29,18 @@ public abstract class DamageContainerMixin implements IDamageContainer {
 
   @Unique
   @Override
-  public LcImmuneType getImaginaryCraft$LcImmuneType() {
+  public LcImmuneType imaginaryCraft$getLcImmuneType() {
     return imaginaryCraft$lcImmuneType;
   }
 
   @Unique
   @Override
-  public void getImaginaryCraft$LcImmuneType(final LcImmuneType lcImmuneType) {
+  public void imaginaryCraft$setLcImmuneType(final LcImmuneType lcImmuneType) {
     this.imaginaryCraft$lcImmuneType = lcImmuneType;
   }
 
-  @Override
-  public DamageContainer getImaginaryCraft$This() {
+  @Unique
+  public DamageContainer imaginaryCraft$this() {
     return (DamageContainer) (Object) this;
   }
 }

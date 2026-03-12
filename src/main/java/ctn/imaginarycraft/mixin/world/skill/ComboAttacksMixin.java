@@ -23,6 +23,6 @@ public abstract class ComboAttacksMixin {
     @Local(name = "executor") ServerPlayerPatch executor,
     @Local(name = "cap") CapabilityItem cap
   ) {
-    return cap instanceof IWeaponCapability weaponCapability ? weaponCapability.getImaginarycraft$mountAttackMotion(executor) : original.call(instance);
+    return cap instanceof IWeaponCapability weaponCapability ? weaponCapability.imaginaryCraft$getMountAttackMotion(executor) : original.call(instance);
   }
 }

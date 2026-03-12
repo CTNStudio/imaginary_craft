@@ -5,10 +5,10 @@ import ctn.imaginarycraft.client.renderer.item.*;
 import ctn.imaginarycraft.client.renderer.providers.*;
 import ctn.imaginarycraft.common.world.item.ego.weapon.melee.*;
 import ctn.imaginarycraft.init.world.*;
+import ctn.imaginarycraft.mixin.world.entity.*;
 import ctn.imaginarycraft.mixin.world.skill.*;
 import net.minecraft.server.level.*;
 import net.minecraft.world.*;
-import net.minecraft.world.damagesource.*;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.*;
 import net.minecraft.world.entity.player.*;
@@ -58,7 +58,7 @@ public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
         return;
       }
 
-      if (!playerPatch.getServerAnimator().animationPlayer.getRealAnimation().get().in(((ConditionalWeaponInnateSkillMixin) battojutsuSkill).getAttackAnimations())) {
+      if (!playerPatch.getServerAnimator().animationPlayer.getRealAnimation().get().in(((ConditionalWeaponInnateSkillAccessorMixin) battojutsuSkill).getAttackAnimations())) {
         return;
       }
 
@@ -66,7 +66,8 @@ public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
       if (!(itemStack.getItem() instanceof RedEyesTachiItem)) {
         return;
       }
-      original.addEffect(new MobEffectInstance(ModMobEffects.RED_EYES_HUNTING, 20 * 10));
+      // TODO EGO共鸣后改成 400
+      original.addEffect(new MobEffectInstance(ModMobEffects.RED_EYES_HUNTING, 200));
     });
   }
 
@@ -81,7 +82,25 @@ public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
   }
 
   @Override
-  public float getAttackDamageBonus(Entity target, float damage, DamageSource damageSource) {
-    return super.getAttackDamageBonus(target, damage, damageSource);
+  public boolean hurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    MobEffectInstance effect = attacker.getEffect(ModMobEffects.RED_EYES_HUNTING);
+    if (effect != null) {
+      return true;
+    }
+    return super.hurtEnemy(stack, target, attacker);
+  }
+
+  @Override
+  public void postHurtEnemy(ItemStack stack, LivingEntity target, LivingEntity attacker) {
+    MobEffectInstance effect = attacker.getEffect(ModMobEffects.RED_EYES_HUNTING);
+    if (effect != null) {
+      int effectDuration = effect.getDuration();
+      // TODO EGO共鸣后改成 20
+      int increase = 10;
+      // TODO EGO共鸣后改成 200
+      int max = 100;
+      effect.duration = Math.clamp(effectDuration + increase, 0, Math.max(effectDuration, max));
+      ((LivingEntityAccessorMixin) attacker).onEffectUpdated(effect, true, attacker);
+    }
   }
 }

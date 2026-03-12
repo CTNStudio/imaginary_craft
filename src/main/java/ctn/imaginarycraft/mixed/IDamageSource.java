@@ -11,41 +11,41 @@ public interface IDamageSource {
     return source;
   }
 
-  default void setImaginaryCraft$WeaponItem(ItemStack itemStack) {
+  default void imaginaryCraft$setWeaponItem(ItemStack itemStack) {
     throw new NoMixinException();
   }
 
   @Nullable
-  default LcDamageType getImaginaryCraft$LcDamageType() {
+  default LcDamageType imaginaryCraft$getLcDamageType() {
     throw new NoMixinException();
   }
 
-  default void setImaginaryCraft$LcDamageType(LcDamageType type) {
+  default void imaginaryCraft$setLcDamageType(LcDamageType type) {
     throw new NoMixinException();
   }
 
   @Nullable
-  default LcLevel getImaginaryCraft$LcDamageLevel() {
+  default LcLevel imaginaryCraft$getLcDamageLevel() {
     throw new NoMixinException();
   }
 
-  default void setImaginaryCraft$DamageLevel(@Nullable LcLevel pmLevel) {
+  default void imaginaryCraft$setDamageLevel(@Nullable LcLevel pmLevel) {
     throw new NoMixinException();
   }
 
-  default boolean isImaginaryCraft$LcLevelNull() {
+  default boolean imaginaryCraft$isLcLevelNull() {
     throw new NoMixinException();
   }
 
-  default void setImaginaryCraft$LcLevelNull(boolean lcLevelNull) {
+  default void imaginaryCraft$setLcLevelNull(boolean lcLevelNull) {
     throw new NoMixinException();
   }
 
-  default boolean isImaginaryCraft$LcDamageTypeNull() {
+  default boolean imaginaryCraft$isLcDamageTypeNull() {
     throw new NoMixinException();
   }
 
-  default void setImaginaryCraft$LcDamageTypeNull(boolean lcDamageTypeNull) {
+  default void imaginaryCraft$setLcDamageTypeNull(boolean lcDamageTypeNull) {
     throw new NoMixinException();
   }
 }

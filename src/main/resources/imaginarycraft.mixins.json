@@ -12,6 +12,7 @@
     "client.world.RenderItemBaseMixin",
     "world.DamageContainerMixin",
     "world.DamageSourceMixin",
+    "world.entity.LivingEntityAccessorMixin",
     "world.entity.LivingEntityMixin",
     "world.entity.LivingEntityPatchMixin",
     "world.entity.PlayerMixin",
@@ -20,7 +21,7 @@
     "world.item.WeaponCapabilityMixin$BuilderMixin",
     "world.skill.BattojutsuSkillMixin",
     "world.skill.ComboAttacksMixin",
-    "world.skill.ConditionalWeaponInnateSkillMixin",
+    "world.skill.ConditionalWeaponInnateSkillAccessorMixin",
     "world.skill.WeaponTypeReloadListenerAccessorMixin",
     "world.skill.WeaponTypeReloadListenerMixin"
   ],

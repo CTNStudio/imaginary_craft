@@ -8,15 +8,11 @@ public interface IDamageContainer {
     return (IDamageContainer) damageContainer;
   }
 
-  default LcImmuneType getImaginaryCraft$LcImmuneType() {
+  default LcImmuneType imaginaryCraft$getLcImmuneType() {
     throw new NoMixinException();
   }
 
-  default void getImaginaryCraft$LcImmuneType(LcImmuneType lcImmuneType) {
-    throw new NoMixinException();
-  }
-
-  default DamageContainer getImaginaryCraft$This() {
+  default void imaginaryCraft$setLcImmuneType(LcImmuneType lcImmuneType) {
     throw new NoMixinException();
   }
 }

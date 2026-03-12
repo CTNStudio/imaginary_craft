@@ -10,7 +10,7 @@ public interface IRenderItemBase {
     return (IRenderItemBase) renderItemBase;
   }
 
-  default TrailInfo getImaginarycraft$trailInfoProvider(LivingEntityPatch<?> livingEntityPatch) {
+  default TrailInfo imaginarycraft$getTrailInfoProvider(LivingEntityPatch<?> livingEntityPatch) {
     throw new NoMixinException();
   }
 }
