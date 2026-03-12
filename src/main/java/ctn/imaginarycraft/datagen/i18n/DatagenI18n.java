@@ -52,7 +52,15 @@ public abstract class DatagenI18n extends LanguageProvider {
     map.forEach((holder, zhName) -> add(holder.get(), zhName));
   }
 
-  protected void addMobEffect(Map<Supplier<? extends MobEffect>, String> map) {
+  protected void addMobEffectList(Map<Supplier<? extends MobEffect>, String> map) {
+    map.forEach((holder, zhName) -> add(holder.get(), zhName));
+  }
+
+  protected void addAttributeList(Map<Supplier<? extends Attribute>, String> map) {
+    map.forEach((holder, zhName) -> add(holder.get(), zhName));
+  }
+
+  protected void addSoundEventList(Map<Supplier<? extends SoundEvent>, String> map) {
     map.forEach((holder, zhName) -> add(holder.get(), zhName));
   }
 
@@ -95,7 +103,7 @@ public abstract class DatagenI18n extends LanguageProvider {
   /**
    * 声音字幕翻译
    */
-  protected void addSoundEvents(Holder<SoundEvent> damageType, String name) {
+  protected void addSoundEvent(Holder<SoundEvent> damageType, String name) {
     add(damageType.value(), name);
   }
 

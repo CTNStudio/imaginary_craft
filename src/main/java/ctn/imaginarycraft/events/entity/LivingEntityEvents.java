@@ -25,6 +25,8 @@ import net.neoforged.neoforge.event.entity.living.*;
 import net.neoforged.neoforge.event.tick.*;
 import org.jetbrains.annotations.*;
 
+import java.util.concurrent.atomic.*;
+
 import static net.minecraft.world.effect.MobEffects.*;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
@@ -106,39 +108,50 @@ public final class LivingEntityEvents {
     }
   }
 
-  // TODO 处理伤害异常
   /**
    * 即将受到伤害但还没处理
    */
   @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void livingIncomingDamageEvent(LivingIncomingDamageEvent event) {
     LivingEntity entity = event.getEntity();
-    if (!(entity.level() instanceof ServerLevel serverLevel)) {
-      return;
+    if (entity.level() instanceof ServerLevel) {
+      DamageSource damageSource = event.getSource();
+      DamageContainer damageContainer = event.getContainer();
+
+      LcDamageEventExecutes.levelReduction(entity, damageContainer, damageSource);
+      LcDamageEventExecutes.vulnerableReduction(entity, damageContainer, damageSource);
     }
+  }
 
-    DamageSource damageSource = event.getSource();
-    DamageContainer damageContainer = event.getContainer();
-    IDamageSource iDamageSource = IDamageSource.of(damageSource);
-    IDamageContainer iDamageContainer = IDamageContainer.of(damageContainer);
-    @Nullable LcLevel lcDamageLevel = iDamageSource.imaginaryCraft$getLcDamageLevel();
-    LcDamageType lcDamageType = iDamageSource.imaginaryCraft$getLcDamageType();
-
-    double newDamage = LcDamageEventExecutes.levelJudgment(entity, lcDamageLevel, damageContainer.getNewDamage());
-
-    // 伤害类型
-    if (lcDamageType != null) {
-      // 易伤处理
-      Holder<Attribute> vulnerable = lcDamageType.getVulnerable();
-      AttributeInstance attributeInstance = entity.getAttribute(vulnerable);
-      if (attributeInstance != null) {
-        newDamage *= attributeInstance.getValue();
-      } else {
-        newDamage *= vulnerable.value().getDefaultValue();
-      }
-    }
-
-    damageContainer.setNewDamage((float) newDamage);
+  /**
+   * 处理护甲受伤事件，根据伤害类型和护甲等级计算最终伤害值
+   *
+   * @param event 护甲受伤事件，包含伤害源、装备槽位和伤害信息
+   */
+  @SubscribeEvent(priority = EventPriority.HIGHEST)
+  public static void armorHurtEvent(ArmorHurtEvent event) {
+    DamageSource damageSource = event.getDamageSource();
+    LcDamageType lcDamageType = damageSource.imaginaryCraft$getLcDamageType();
+    Holder<Attribute> vulnerable = lcDamageType == null ? null : lcDamageType.getVulnerable();
+    Holder<Attribute> defense = lcDamageType == null ? null : lcDamageType.getDefense();
+    LcLevel lcLevel = damageSource.imaginaryCraft$getLcDamageLevel();
+    // 遍历所有装备槽位的护甲物品
+    event.getArmorMap().forEach((slot, armorEntry) -> {
+      LcLevel armorLevel = LcLevelUtil.getLevel(armorEntry.armorItemStack);
+      AtomicBoolean hasResistance = new AtomicBoolean(false);
+      // 检查护甲是否具有对该伤害类型的抗性属性
+      armorEntry.armorItemStack.getAttributeModifiers().forEach(slot, (attribute, modifier) -> {
+        if (lcDamageType != null) {
+          if (attribute == vulnerable || attribute == defense) {
+            hasResistance.set(true);
+          }
+        }
+      });
+      // 根据物品等级来减少物品受到的伤害
+      float reducedDamage = armorEntry.originalDamage * LcLevelUtil.getDamageMultiple(lcLevel, armorLevel);
+      float resistanceMultiplier = hasResistance.get() ? 1.2f : 1f;
+      armorEntry.newDamage = reducedDamage * resistanceMultiplier;
+    });
   }
 
   /**
@@ -146,51 +159,44 @@ public final class LivingEntityEvents {
    */
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void dealingWithDamageEffects(LivingDamageEvent.Pre event) {
-    DamageContainer container = event.getContainer();
-    IDamageContainer iDamageContainer = IDamageContainer.of(container);
     LivingEntity attackedEntity = event.getEntity();
-    DamageSource source = event.getSource();
-    IDamageSource iDamageSource = IDamageSource.of(source);
-    Entity sourceDirectEntity = source.getDirectEntity();
-    Entity sourceCausingEntity = source.getEntity();
-    LcDamageType lcDamageType = iDamageSource.imaginaryCraft$getLcDamageType();
+    DamageSource damageSource = event.getSource();
+    Entity sourceDirectEntity = damageSource.getDirectEntity();
+    Entity sourceCausingEntity = damageSource.getEntity();
+    LcDamageType lcDamageType = damageSource.imaginaryCraft$getLcDamageType();
 
-    // 建议在每个有返回值的方法执行后再获取一次以求准确
-    float newDamage = event.getNewDamage();
-    // 是否会修改理智
-    boolean isModifyRationality = lcDamageType == LcDamageType.SPIRIT || lcDamageType == LcDamageType.EROSION;
-
-    // TODO 添加免疫，吸收，无效处理
     if (lcDamageType == LcDamageType.THE_SOUL) {
       // 处理灵魂伤害转换成对应比例的生命值
-      newDamage = LcDamageUtil.theSoulDamage(newDamage, attackedEntity, sourceDirectEntity == null ? sourceCausingEntity : sourceDirectEntity, source);
+      event.setNewDamage(LcDamageEventExecutes.theSoulDamage(event.getNewDamage(), attackedEntity, sourceDirectEntity == null ? sourceCausingEntity : sourceDirectEntity, damageSource));
     }
 
-    if (newDamage <= 0) {
-      if (newDamage != 0) {
-        // TODO 要注入判断要判断是否符合恢复条件（免疫，吸收，无效处理）
-        // 如果低于0则恢复生命值
-
-        // TODO 应该很早就处理
-        // 恢复理智
-        if (attackedEntity instanceof Player player && isModifyRationality) {
-          RationalityUtil.modifyValue(player, newDamage, true);
-          ParticleUtil.createDamageTextParticles(player, newDamage, true, true);
-        }
-
-        // 恢复血量
-        float healed = Math.abs(newDamage);
-        attackedEntity.heal(healed);
-        ParticleUtil.createDamageTextParticles(attackedEntity, healed, false, true);
-
-        // 最后修改伤害为0表示不造成伤害
-        event.getContainer().setPostAttackInvulnerabilityTicks(0);
-        event.setNewDamage(0);
+    // 如果低于0则恢复生命值
+    if (event.getNewDamage() < 0) {
+      // 恢复理智
+      if (attackedEntity instanceof Player player &&
+        (lcDamageType == LcDamageType.SPIRIT || lcDamageType == LcDamageType.EROSION)
+      ) {
+        RationalityUtil.modifyValue(player, event.getOriginalDamage(), true);
+        ParticleUtil.createDamageTextParticles(player, event.getOriginalDamage(), true, true);
       }
-    } else {
+
+      // 恢复血量
+      float healed = Math.abs(event.getOriginalDamage());
+      attackedEntity.heal(healed);
+      ParticleUtil.createDamageTextParticles(attackedEntity, healed, false, true);
+
+      // 最后修改伤害为0表示不造成伤害
+      event.getContainer().setPostAttackInvulnerabilityTicks(0);
+      event.setNewDamage(0);
+      return;
+    }
+
+    if (event.getNewDamage() > 0) {
       // 修改理智
-      if (attackedEntity instanceof Player player && isModifyRationality) {
-        RationalityUtil.modifyValue(player, -newDamage, true);
+      if (attackedEntity instanceof Player player &&
+        (lcDamageType == LcDamageType.SPIRIT || lcDamageType == LcDamageType.EROSION)
+      ) {
+        RationalityUtil.modifyValue(player, -event.getNewDamage(), true, lcDamageType == LcDamageType.SPIRIT);
         if (lcDamageType == LcDamageType.SPIRIT) {
           event.getContainer().setPostAttackInvulnerabilityTicks(0);
           event.setNewDamage(0);
@@ -198,7 +204,7 @@ public final class LivingEntityEvents {
         }
       }
 
-      event.setNewDamage(newDamage);
+      event.setNewDamage(event.getNewDamage());
     }
   }
 

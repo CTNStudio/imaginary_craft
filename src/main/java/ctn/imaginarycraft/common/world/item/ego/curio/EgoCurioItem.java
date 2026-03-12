@@ -69,7 +69,7 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem, IEgoItem 
   public void onUnequip(final SlotContext slotContext, final ItemStack newStackInSlot, final ItemStack stackBeingUnequipped) {
     ICurioItem.super.onUnequip(slotContext, newStackInSlot, stackBeingUnequipped);
     if (slotContext.entity() instanceof Player player) {
-      RationalityUtil.restrictValue(player, true);
+      RationalityUtil.restrictValue(player);
     }
   }
 
@@ -77,7 +77,7 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem, IEgoItem 
   public void onEquip(final SlotContext slotContext, final ItemStack previousStack, final ItemStack stackBeingEquipped) {
     ICurioItem.super.onEquip(slotContext, previousStack, stackBeingEquipped);
     if (slotContext.entity() instanceof Player player) {
-      RationalityUtil.restrictValue(player, true);
+      RationalityUtil.restrictValue(player);
     }
   }
 

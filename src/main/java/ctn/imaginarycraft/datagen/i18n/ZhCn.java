@@ -6,14 +6,15 @@ import ctn.imaginarycraft.common.components.*;
 import ctn.imaginarycraft.common.world.item.ego.curio.*;
 import ctn.imaginarycraft.config.*;
 import ctn.imaginarycraft.datagen.*;
-import ctn.imaginarycraft.init.*;
 import ctn.imaginarycraft.init.tag.*;
 import ctn.imaginarycraft.init.world.*;
 import ctn.imaginarycraft.init.world.item.ego.*;
 import ctn.imaginarycraft.linkage.jade.*;
 import net.minecraft.data.*;
+import net.minecraft.sounds.*;
 import net.minecraft.world.effect.*;
 import net.minecraft.world.entity.*;
+import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.item.*;
 import net.neoforged.fml.loading.*;
 import net.neoforged.neoforge.registries.*;
@@ -25,10 +26,48 @@ public final class ZhCn extends DatagenI18n {
   private static final Map<Supplier<? extends Item>, String> ITEMS = new HashMap<>();
   private static final Map<Supplier<? extends EntityType<?>>, String> ENTITY = new HashMap<>();
   private static final Map<Supplier<? extends MobEffect>, String> MOB_EFFECT = new HashMap<>();
+  private static final Map<Supplier<? extends Attribute>, String> ATTRIBUTE = new HashMap<>();
+  private static final Map<Supplier<? extends SoundEvent>, String> SOUND_EVENT = new HashMap<>();
   private static final Map<String, String> MAP = new HashMap<>();
 
   public ZhCn(final PackOutput output) {
     super(output, "zh_cn");
+  }
+
+  public static void addI18nText(String zhCn, String key) {
+    if (!FMLEnvironment.production) {
+      ZhCn.MAP.put(key, zhCn);
+    }
+  }
+
+  public static void addI18nItemText(String zhName, Supplier<? extends Item> deferredItem) {
+    if (!FMLEnvironment.production) {
+      ZhCn.ITEMS.put(deferredItem, zhName);
+    }
+  }
+
+  public static void addI18nEntityTypeText(String zhName, Supplier<? extends EntityType<?>> supplier) {
+    if (!FMLEnvironment.production) {
+      ZhCn.ENTITY.put(supplier, zhName);
+    }
+  }
+
+  public static void addI18nMobEffectText(String zhName, Supplier<? extends MobEffect> supplier) {
+    if (!FMLEnvironment.production) {
+      ZhCn.MOB_EFFECT.put(supplier, zhName);
+    }
+  }
+
+  public static void addI18nAttributeText(String zhName, Supplier<? extends Attribute> supplier) {
+    if (!FMLEnvironment.production) {
+      ZhCn.ATTRIBUTE.put(supplier, zhName);
+    }
+  }
+
+  public static void addI18nSoundEventText(String zhName, Supplier<? extends SoundEvent> supplier) {
+    if (!FMLEnvironment.production) {
+      ZhCn.SOUND_EVENT.put(supplier, zhName);
+    }
   }
 
   @Override
@@ -36,8 +75,11 @@ public final class ZhCn extends DatagenI18n {
     add("pack.imaginarycraft.description", "异想工艺");
     addItemList(ITEMS);
     addEntityList(ENTITY);
-    addMobEffect(MOB_EFFECT);
+    addMobEffectList(MOB_EFFECT);
+    addAttributeList(ATTRIBUTE);
+    addSoundEventList(SOUND_EVENT);
     MAP.forEach(this::add);
+
     addJadePlugin(ModJadePlugin.ENTITY_LC_LEVEL, "生物等级");
     addJadePlugin(ModJadePlugin.BLOCK_LC_LEVEL, "方块等级");
     addJadePlugin(ModJadePlugin.ENTITY_LC_VULNERABLE, "生物易伤");
@@ -46,30 +88,6 @@ public final class ZhCn extends DatagenI18n {
     add(LivingEntityVulnerable.SPIRIT_KEY, "精神易伤");
     add(LivingEntityVulnerable.EROSION_KEY, "侵蚀易伤");
     add(LivingEntityVulnerable.THE_SOUL_KEY, "灵魂易伤");
-
-    //region 声音字幕
-    addSoundEvents(ModSoundEvents.SOLEMN_LAMENT_WEAPON_ATTACK_BLACK, "圣宣：射击-黑");
-    addSoundEvents(ModSoundEvents.SOLEMN_LAMENT_WEAPON_ATTACK_WHITE, "圣宣：射击-白");
-    addSoundEvents(ModSoundEvents.SOLEMN_LAMENT_WEAPON_STONGATTACK_BLACK, "圣宣：特殊射击-黑");
-    addSoundEvents(ModSoundEvents.SOLEMN_LAMENT_WEAPON_STONGATTACK_WHITE, "圣宣：特殊射击-白");
-    //endregion
-
-    //region 属性
-    add(ModAttributes.ATTACK_SPEED_MAIN_HAND.get(), "主手攻击速度");
-    add(ModAttributes.ATTACK_SPEED_OFF_HAND.get(), "副手攻击速度");
-    add(ModAttributes.PHYSICS_VULNERABLE.get(), "物理易伤");
-    add(ModAttributes.SPIRIT_VULNERABLE.get(), "精神易伤");
-    add(ModAttributes.EROSION_VULNERABLE.get(), "侵蚀易伤");
-    add(ModAttributes.THE_SOUL_VULNERABLE.get(), "灵魂易伤");
-    add(ModAttributes.MAX_RATIONALITY.get(), "最大理智值");
-    add(ModAttributes.RATIONALITY_NATURAL_RECOVERY_WAIT_TIME.get(), "理智值自然恢复等待时间");
-    add(ModAttributes.RATIONALITY_RECOVERY_AMOUNT.get(), "理智值自然恢复量");
-    add(ModAttributes.FORTITUDE_POINTS.get(), "勇气点数");
-    add(ModAttributes.PRUDENCE_POINTS.get(), "谨慎点数");
-    add(ModAttributes.TEMPERANCE_POINTS.get(), "自律点数");
-    add(ModAttributes.JUSTICE_POINTS.get(), "正义点数");
-    add(ModAttributes.INTELLIGENCE_DEPARTMENT_ACTIVATION.get(), "情报部效果");
-    //endregion
 
     //region 命令
     add(getFormattedKey(RationalityCommands.SET_KEY, RationalityCommands.ProcessType.VALUE.getName()), "已设置%s的理智值为：%d");
@@ -168,29 +186,5 @@ public final class ZhCn extends DatagenI18n {
     add(VirtueType.JUSTICE.getTooltipName(), "正义");
     add(VirtueType.COMPOSITE.getTooltipName(), "综合");
     //endregion
-  }
-
-  public static void addI18nText(String zhCn, String key) {
-    if (!FMLEnvironment.production) {
-      ZhCn.MAP.put(key, zhCn);
-    }
-  }
-
-  public static void addI18nItemText(String zhName, Supplier<? extends Item> deferredItem) {
-    if (!FMLEnvironment.production) {
-      ZhCn.ITEMS.put(deferredItem, zhName);
-    }
-  }
-
-  public static void addI18nEntityTypeText(String zhName, Supplier<? extends EntityType<?>> entityType) {
-    if (!FMLEnvironment.production) {
-      ZhCn.ENTITY.put(entityType, zhName);
-    }
-  }
-
-  public static void addI18nMobEffectText(String zhName, Supplier<? extends MobEffect> entityType) {
-    if (!FMLEnvironment.production) {
-      ZhCn.MOB_EFFECT.put(entityType, zhName);
-    }
   }
 }

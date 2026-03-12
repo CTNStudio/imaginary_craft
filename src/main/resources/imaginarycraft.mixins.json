@@ -10,6 +10,7 @@
     "client.ModelFileMixin",
     "client.world.LocalPlayerPatchMixin",
     "client.world.RenderItemBaseMixin",
+    "world.CombatRulesMixin",
     "world.DamageContainerMixin",
     "world.DamageSourceMixin",
     "world.entity.LivingEntityAccessorMixin",

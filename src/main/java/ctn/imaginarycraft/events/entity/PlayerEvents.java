@@ -1,7 +1,5 @@
 package ctn.imaginarycraft.events.entity;
 
-import ctn.imaginarycraft.api.event.rationality.*;
-import ctn.imaginarycraft.client.util.*;
 import ctn.imaginarycraft.core.*;
 import ctn.imaginarycraft.eventexecute.*;
 import net.minecraft.server.level.*;
@@ -23,22 +21,6 @@ public final class PlayerEvents {
     if (player instanceof ServerPlayer serverPlayer) {
       RationalityEventExecutes.refreshRationalityValue(serverPlayer);
     }
-  }
-
-  @SubscribeEvent(priority = EventPriority.LOWEST)
-  public static void rationalityModifyPost(RationalityModifyEvent.Post event) {
-    Player player = event.getEntity();
-
-    if (!(player instanceof ServerPlayer serverPlayer)) {
-      return;
-    }
-
-    float difference = event.getOldValue() - event.getNewValue();
-    if (difference == 0) {
-      return;
-    }
-
-    ParticleUtil.createDamageTextParticles(player, difference, true, difference < 0);
   }
 
   /**

@@ -3,16 +3,13 @@ package ctn.imaginarycraft.util;
 import ctn.imaginarycraft.api.*;
 import ctn.imaginarycraft.core.capability.item.*;
 import ctn.imaginarycraft.init.*;
-import ctn.imaginarycraft.mixed.*;
 import net.minecraft.world.damagesource.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.*;
 import net.minecraft.world.item.*;
 import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-public final class LcDamageUtil {
+public final class LcDamageTypeUtil {
   /**
    * 获取伤害物品
    */
@@ -45,28 +42,5 @@ public final class LcDamageUtil {
       return iItemLcDamageType.getCanCauseLcDamageTypes(itemStack);
     }
     return Set.of();
-  }
-
-  /**
-   * 灵魂伤害计算
-   *
-   * @return 计算后的灵魂伤害值
-   */
-  public static float theSoulDamage(float damage, LivingEntity attackedEntity, @Nullable Entity sourceEntity, DamageSource damageSource) {
-    damage /= 100;
-    float maxHealth = 0;
-    @Nullable LcLevel attackedLevel = LcLevelUtil.getLevel(attackedEntity);
-    @Nullable LcLevel attackerLevel = IDamageSource.of(damageSource).imaginaryCraft$getLcDamageLevel();
-    if (sourceEntity instanceof LivingEntity living) {
-      maxHealth = (float) living.getAttributeValue(Attributes.MAX_HEALTH);
-    }
-
-    // 如果未获取到最大生命值，则使用默认值20
-    if (maxHealth == 0) {
-      maxHealth = 20;
-    }
-    // TODO 重新调整灵魂伤害算法
-    // 根据伤害等级差异计算最终伤害
-    return damage * (maxHealth / 5) * LcLevelUtil.getDamageMultiple(attackedLevel, attackerLevel);
   }
 }

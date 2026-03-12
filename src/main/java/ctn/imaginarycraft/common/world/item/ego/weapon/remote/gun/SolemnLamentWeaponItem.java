@@ -66,7 +66,7 @@ public class SolemnLamentWeaponItem extends GunEgoWeaponItem {
     boolean isBlack = false;
     HitResult hitResult = getHitResult(world, shooterEntity, handUsed, weaponItem);
 
-    LcDamageType lcDamageColorDamageType = LcDamageUtil.getLcDamageType(weaponItem);
+    LcDamageType lcDamageColorDamageType = LcDamageTypeUtil.getLcDamageType(weaponItem);
     if (hitResult instanceof EntityHitResult entityHitResult) {
       Entity entity = entityHitResult.getEntity();
       DamageSource damageSources = ModDamageSources.remoteDamage(shooterEntity);

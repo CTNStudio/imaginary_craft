@@ -47,7 +47,7 @@ public abstract class DamageSourceMixin implements IDamageSource {
     CallbackInfo ci
   ) {
     DamageSource damageSource = (DamageSource) (Object) this;
-    ItemStack itemStack = LcDamageUtil.getDamageItemStack(damageSource);
+    ItemStack itemStack = LcDamageTypeUtil.getDamageItemStack(damageSource);
     this.imaginaryCraft$attackItemStack = itemStack;
 
     // 初始化默认值
@@ -59,10 +59,10 @@ public abstract class DamageSourceMixin implements IDamageSource {
       if (itemStack.isEmpty()) {
         lcDamageType = LcDamageType.byDamageType(type);
         if (lcDamageType == null) {
-          lcDamageType = LcDamageUtil.getLcDamageType(itemStack);
+          lcDamageType = LcDamageTypeUtil.getLcDamageType(itemStack);
         }
       } else {
-        lcDamageType = LcDamageUtil.getLcDamageType(itemStack);
+        lcDamageType = LcDamageTypeUtil.getLcDamageType(itemStack);
       }
 
       if (lcDamageLevel == null) {

@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.util;
 
+import ctn.imaginarycraft.client.util.*;
 import ctn.imaginarycraft.core.*;
 import ctn.imaginarycraft.init.*;
 import ctn.imaginarycraft.init.world.*;
@@ -10,27 +11,35 @@ import java.util.*;
 /**
  * 理智工具
  */
-public final class RationalityUtil {
+public class RationalityUtil {
   /**
    * 修改理智值
    */
-  public static void modifyValue(Player player, float value, final boolean isEvent) {
-    setValue(player, getValue(player) + value, isEvent);
+  public static void modifyValue(Player player, float value, boolean isEvent, boolean isParticle) {
+    setValue(player, getValue(player) + value, isEvent, isParticle);
+  }
+
+
+  /**
+   * 修改理智值
+   */
+  public static void modifyValue(Player player, float value, boolean isEvent) {
+    setValue(player, getValue(player) + value, isEvent, true);
   }
 
   /**
    * 限制理智
    */
-  public static void restrictValue(Player player, final boolean isEvent) {
-    restrictValue(player, getValue(player), isEvent);
+  public static void restrictValue(Player player) {
+    restrictValue(player, getValue(player));
   }
 
   /**
    * 限制理智
    */
-  public static void restrictValue(Player player, float value, final boolean isEvent) {
+  private static void restrictValue(Player player, float value) {
     float maxRationalityValue = getMaxValue(player);
-    setValue(player, Math.clamp(value, -maxRationalityValue, maxRationalityValue), isEvent);
+    setValue(player, Math.clamp(value, -maxRationalityValue, maxRationalityValue), false, false);
   }
 
   /**
@@ -44,7 +53,7 @@ public final class RationalityUtil {
   /**
    * 设置理智值
    */
-  public static void setValue(final Player player, final float value, final boolean isEvent) {
+  public static void setValue(Player player, float value, boolean isEvent, boolean isParticle) {
     float oldValue = getValue(player);
     float newValue = value;
     if (isEvent) {
@@ -63,6 +72,11 @@ public final class RationalityUtil {
 
     if (isEvent) {
       ModEventHooks.sourceRationalityPost(player, oldValue, newValue);
+    }
+
+    if (isParticle) {
+      float particles = oldValue - newValue;
+      ParticleUtil.createDamageTextParticles(player, particles, true, particles < 0);
     }
   }
 
@@ -98,7 +112,7 @@ public final class RationalityUtil {
    * 获取理智值自然恢复量
    */
   public static float getRationalityRecoveryAmount(Player player) {
-    restrictValue(player, true);
+    restrictValue(player);
     return (float) player.getAttributeValue(ModAttributes.RATIONALITY_RECOVERY_AMOUNT);
   }
 

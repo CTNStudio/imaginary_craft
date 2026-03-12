@@ -30,23 +30,50 @@ public enum LcDamageType implements ColourText, StringRepresentable {
   /**
    * 物理
    */
-  PHYSICS(0, "physics", ModFontIcon.PHYSICS, ModFontIcon.PHYSICS_8X, ModAttributes.PHYSICS_VULNERABLE, ModDamageTypes.PHYSICS, "#ff0000"),
+  PHYSICS(0,
+    "physics",
+    ModFontIcon.PHYSICS,
+    ModFontIcon.PHYSICS_8X,
+    ModAttributes.PHYSICS_VULNERABLE,
+    ModAttributes.PHYSICS_DEFENSE,
+    ModDamageTypes.PHYSICS,
+    "#ff0000"),
   /**
    * 精神
    */
-  SPIRIT(1, "spirit", ModFontIcon.SPIRIT, ModFontIcon.SPIRIT_8X, ModAttributes.SPIRIT_VULNERABLE, ModDamageTypes.SPIRIT, "#ffffff"),
+  SPIRIT(1,
+    "spirit",
+    ModFontIcon.SPIRIT,
+    ModFontIcon.SPIRIT_8X,
+    ModAttributes.SPIRIT_VULNERABLE,
+    ModAttributes.SPIRIT_DEFENSE,
+    ModDamageTypes.SPIRIT,
+    "#ffffff"),
   /**
    * 侵蚀
    * <p>
    * 同时造成物理和精神伤害
    */
-  EROSION(2, "erosion", ModFontIcon.EROSION, ModFontIcon.EROSION_8X, ModAttributes.EROSION_VULNERABLE, ModDamageTypes.EROSION, "#8a2be2"),
+  EROSION(2,
+    "erosion",
+    ModFontIcon.EROSION,
+    ModFontIcon.EROSION_8X,
+    ModAttributes.EROSION_VULNERABLE,
+    ModAttributes.EROSION_DEFENSE,
+    ModDamageTypes.EROSION,
+    "#8a2be2"),
   /**
    * 灵魂
    * <p>
-   * 伤害计算参考 {@link LcDamageUtil#theSoulDamage(float, LivingEntity, Entity, DamageSource)}
+   * 伤害计算参考 {@link LcDamageTypeUtil#theSoulDamage(float, LivingEntity, Entity, DamageSource)}
    */
-  THE_SOUL(3, "the_soul", ModFontIcon.THE_SOUL, ModFontIcon.THE_SOUL_8X, ModAttributes.THE_SOUL_VULNERABLE, ModDamageTypes.THE_SOUL, "#00ffff"),
+  THE_SOUL(3, "the_soul",
+    ModFontIcon.THE_SOUL,
+    ModFontIcon.THE_SOUL_8X,
+    ModAttributes.THE_SOUL_VULNERABLE,
+    ModAttributes.THE_SOUL_DEFENSE,
+    ModDamageTypes.THE_SOUL,
+    "#00ffff"),
   ;
 
   public static final Codec<LcDamageType> CODEC = StringRepresentable
@@ -62,22 +89,30 @@ public enum LcDamageType implements ColourText, StringRepresentable {
    * 对应的易伤属性
    */
   private final Holder<Attribute> vulnerable;
+  /**
+   * 对应的防御属性
+   */
+  private final Holder<Attribute> defense;
   private final ResourceKey<DamageType> damageTypeResourceKey;
   private final String colour;
   private final int colourValue;
 
-  LcDamageType(final int index,
-               final String name,
-               final ModFontIcon charIcon,
-               final ModFontIcon char8xIcon,
-               final Holder<Attribute> vulnerable,
-               final ResourceKey<DamageType> damageType,
-               final String colour) {
+  LcDamageType(
+    int index,
+    String name,
+    ModFontIcon charIcon,
+    ModFontIcon char8xIcon,
+    Holder<Attribute> vulnerable,
+    Holder<Attribute> defense,
+    ResourceKey<DamageType> damageType,
+    String colour
+  ) {
     this.index = index;
     this.name = name;
     this.charIcon = charIcon;
     this.char8xIcon = char8xIcon;
     this.vulnerable = vulnerable;
+    this.defense = defense;
     this.damageTypeResourceKey = damageType;
     this.colour = colour;
     this.colourValue = ColorUtil.rgbColor(colour);
@@ -184,6 +219,9 @@ public enum LcDamageType implements ColourText, StringRepresentable {
     return char8xIcon;
   }
 
+  public Holder<Attribute> getDefense() {
+    return defense;
+  }
 
   public record Component(LcDamageType lcDamageType, Set<LcDamageType> canCauseLcDamageTypes) {
     public static final Codec<Set<LcDamageType>> SET_CODEC = Codec.list(LcDamageType.CODEC).xmap(Sets::newHashSet, Lists::newArrayList);
