@@ -1,21 +1,23 @@
 package ctn.imaginarycraft.client.gui.hudlayers.chop_flavor;
 
 
-import com.mojang.datafixers.util.*;
-import ctn.imaginarycraft.api.data.*;
-import ctn.imaginarycraft.client.gui.hudlayers.*;
-import ctn.imaginarycraft.init.world.item.ego.*;
-import net.minecraft.client.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.player.*;
-import net.minecraft.world.item.*;
-import org.jetbrains.annotations.*;
-import yesman.epicfight.client.world.capabilites.entitypatch.player.*;
-import yesman.epicfight.skill.*;
-import yesman.epicfight.world.capabilities.*;
+import com.mojang.datafixers.util.Pair;
+import ctn.imaginarycraft.api.data.ConditionalProviderFactory;
+import ctn.imaginarycraft.client.gui.hudlayers.BasicHudLayer;
+import ctn.imaginarycraft.init.world.item.ego.EgoWeaponItems;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
+import yesman.epicfight.client.world.capabilites.entitypatch.player.LocalPlayerPatch;
+import yesman.epicfight.skill.SkillContainer;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 public class ChopFlavorLayer extends BasicHudLayer {
   public static final ChopFlavorLayer INSTANCE = new ChopFlavorLayer();

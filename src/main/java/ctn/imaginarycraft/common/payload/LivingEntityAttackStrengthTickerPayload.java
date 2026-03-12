@@ -1,14 +1,15 @@
 package ctn.imaginarycraft.common.payload;
 
-import ctn.imaginarycraft.common.payload.api.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.mixin.world.entity.*;
-import io.netty.buffer.*;
-import net.minecraft.client.player.*;
-import net.minecraft.network.codec.*;
-import net.minecraft.network.protocol.common.custom.*;
-import net.minecraft.server.level.*;
-import net.minecraft.world.entity.player.*;
+import ctn.imaginarycraft.common.payload.api.ToServerAndClientPayload;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.mixin.world.entity.LivingEntityAccessorMixin;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
 
 public record LivingEntityAttackStrengthTickerPayload(
   int attackStrengthTicker

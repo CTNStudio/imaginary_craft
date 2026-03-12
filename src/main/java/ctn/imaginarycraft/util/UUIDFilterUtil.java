@@ -1,16 +1,17 @@
 package ctn.imaginarycraft.util;
 
-import com.mojang.serialization.*;
-import com.mojang.serialization.codecs.*;
-import io.netty.buffer.*;
-import net.minecraft.core.*;
-import net.minecraft.network.codec.*;
-import net.minecraft.world.entity.player.*;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.entity.*;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.core.UUIDUtil;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.entity.EntityAccess;
 
 import java.util.*;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
 public final class UUIDFilterUtil {
   public static final Codec<UUIDFilterUtil> CODEC = RecordCodecBuilder.create(instance -> instance.group(

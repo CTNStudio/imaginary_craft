@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.world.attribute;
 
-import net.minecraft.world.entity.ai.attributes.*;
+import net.minecraft.world.entity.ai.attributes.Attribute;
 
 public class MaxAttribute extends Attribute {
   private final double maxValue;

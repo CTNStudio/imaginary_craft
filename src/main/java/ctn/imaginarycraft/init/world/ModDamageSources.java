@@ -1,12 +1,15 @@
 package ctn.imaginarycraft.init.world;
 
-import net.minecraft.core.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.damagesource.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.phys.*;
-import org.jetbrains.annotations.*;
+import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageSources;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
 
 import javax.annotation.Nullable;
 

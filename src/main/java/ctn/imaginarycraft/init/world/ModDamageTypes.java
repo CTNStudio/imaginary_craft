@@ -1,12 +1,15 @@
 package ctn.imaginarycraft.init.world;
 
-import ctn.imaginarycraft.core.*;
-import net.minecraft.core.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.data.worldgen.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.damagesource.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.data.worldgen.BootstrapContext;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.damagesource.DamageEffects;
+import net.minecraft.world.damagesource.DamageScaling;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.damagesource.DeathMessageType;
+import org.jetbrains.annotations.NotNull;
 
 public final class ModDamageTypes {
   /**

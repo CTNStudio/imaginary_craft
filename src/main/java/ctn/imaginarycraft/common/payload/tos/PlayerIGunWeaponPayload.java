@@ -1,16 +1,17 @@
 package ctn.imaginarycraft.common.payload.tos;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.common.payload.api.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.util.*;
-import io.netty.buffer.*;
-import net.minecraft.network.codec.*;
-import net.minecraft.network.protocol.common.custom.*;
-import net.minecraft.server.level.*;
-import net.minecraft.world.*;
-import net.minecraft.world.item.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.api.IGunWeapon;
+import ctn.imaginarycraft.common.payload.api.ToServerPayload;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.util.PayloadUtil;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 // TODO 替换成史诗战斗的控制系统
 public record PlayerIGunWeaponPayload(

@@ -1,15 +1,19 @@
 package ctn.imaginarycraft.init.world;
 
-import ctn.imaginarycraft.common.world.attribute.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.datagen.i18n.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.world.entity.ai.attributes.*;
-import net.neoforged.neoforge.common.*;
-import net.neoforged.neoforge.registries.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.common.world.attribute.BasicAttribute;
+import ctn.imaginarycraft.common.world.attribute.MaxAttribute;
+import ctn.imaginarycraft.common.world.attribute.MinAttribute;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.datagen.i18n.ZhCn;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.RangedAttribute;
+import net.neoforged.neoforge.common.BooleanAttribute;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.function.*;
+import java.util.function.Function;
 
 
 public final class ModAttributes {
@@ -28,7 +32,7 @@ public final class ModAttributes {
    */
   public static final DeferredHolder<Attribute, RangedAttribute> ATTACK_SPEED_MAIN_HAND = register(
     "attack_speed_main_hand", "主手攻击速度", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), PHYSICS_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), PHYSICS_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
   /**
    * 攻击速度（副手）
    * <p>
@@ -36,32 +40,32 @@ public final class ModAttributes {
    */
   public static final DeferredHolder<Attribute, RangedAttribute> ATTACK_SPEED_OFF_HAND = register(
     "attack_speed_off_hand", "副手攻击速度", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), PHYSICS_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), PHYSICS_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
 
   /**
    * 物理易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> PHYSICS_VULNERABLE = register(
     "physics_vulnerable", "物理易伤", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), PHYSICS_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), PHYSICS_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
   /**
    * 精神易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> SPIRIT_VULNERABLE = register(
     "spirit_vulnerable", "精神易伤", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), SPIRIT_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), SPIRIT_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
   /**
    * 侵蚀易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> EROSION_VULNERABLE = register(
     "erosion_vulnerable", "侵蚀易伤", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), EROSION_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), EROSION_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
   /**
    * 灵魂易伤
    */
   public static final DeferredHolder<Attribute, RangedAttribute> THE_SOUL_VULNERABLE = register(
     "the_soul_vulnerable", "灵魂易伤", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), THE_SOUL_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), THE_SOUL_VULNERABLE_DEFAULT_VALUE, -1024, 1024);
   /**
    * 物理防御
    */
@@ -93,19 +97,19 @@ public final class ModAttributes {
    */
   public static final DeferredHolder<Attribute, MinAttribute> MAX_RATIONALITY = registerMin(
     "max_rationality", "最大理智值", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 20, 0);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 20, 0);
   /**
    * 理智值自然恢复等待时间
    */
   public static final DeferredHolder<Attribute, MinAttribute> RATIONALITY_NATURAL_RECOVERY_WAIT_TIME = registerMin(
     "rationality_natural_recovery_wait_time", "理智值自然恢复等待时间", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), 0.5, 0);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.NEGATIVE), 0.5, 0);
   /**
    * 理智值自然恢复量
    */
   public static final DeferredHolder<Attribute, MinAttribute> RATIONALITY_RECOVERY_AMOUNT = registerMin(
     "rationality_recovery_amount", "理智值自然恢复量", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 1, 0);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 1, 0);
 
   /// 四徳
   /**
@@ -113,25 +117,25 @@ public final class ModAttributes {
    */
   public static final DeferredHolder<Attribute, BasicAttribute> FORTITUDE_POINTS = register(
     "fortitude_points", "勇气点数", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0);
   /**
    * 谨慎
    */
   public static final DeferredHolder<Attribute, BasicAttribute> PRUDENCE_POINTS = register(
     "prudence_points", "谨慎点数", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0);
   /**
    * 自律
    */
   public static final DeferredHolder<Attribute, BasicAttribute> TEMPERANCE_POINTS = register(
     "temperance_points", "自律点数", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0);
   /**
    * 正义
    */
   public static final DeferredHolder<Attribute, BasicAttribute> JUSTICE_POINTS = register(
     "justice_points", "正义点数", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), 0);
 
   // 部门属性
   // TODO 完善情报部的功能
@@ -140,7 +144,7 @@ public final class ModAttributes {
    */
   public static final DeferredHolder<Attribute, BooleanAttribute> INTELLIGENCE_DEPARTMENT_ACTIVATION = register(
     "player.intelligence_department_activation", "情报部效果", function ->
-    function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), false);
+      function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), false);
 
   private static @NotNull <T extends Attribute> DeferredHolder<Attribute, T> register(
     final String name,

@@ -1,23 +1,33 @@
 package ctn.imaginarycraft.common.components;
 
-import com.mojang.serialization.*;
-import com.mojang.serialization.codecs.*;
-import ctn.imaginarycraft.api.virtue.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.init.*;
-import ctn.imaginarycraft.init.world.*;
-import io.netty.buffer.*;
-import net.minecraft.client.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.network.codec.*;
-import net.minecraft.util.*;
-import net.minecraft.world.entity.player.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.*;
-import org.jetbrains.annotations.*;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.DataResult;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import ctn.imaginarycraft.api.virtue.VirtueRating;
+import ctn.imaginarycraft.api.virtue.VirtueType;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.init.ModDataComponents;
+import ctn.imaginarycraft.init.world.ModAttributes;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.client.Minecraft;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.util.ByIdMap;
+import net.minecraft.util.StringRepresentable;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipProvider;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * 物品四色属性能力使用要求提示

@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.client.model;
 
-import ctn.imaginarycraft.core.*;
-import net.minecraft.resources.*;
-import software.bernie.geckolib.animatable.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib.animatable.GeoAnimatable;
 
 public class GuiItemModel<T extends GeoAnimatable> extends ModGeoItemModel<T> {
   private static final ResourceLocation MODELLED_PATH = modelPath("item/gui_item_model");

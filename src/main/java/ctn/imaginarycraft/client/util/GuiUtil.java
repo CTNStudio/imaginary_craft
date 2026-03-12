@@ -1,16 +1,15 @@
 package ctn.imaginarycraft.client.util;
 
-import com.mojang.blaze3d.systems.*;
+import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.client.resources.metadata.gui.*;
-import net.minecraft.resources.*;
-import org.jetbrains.annotations.*;
-import org.joml.*;
-
-import java.lang.Math;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.client.resources.metadata.gui.GuiSpriteScaling;
+import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
+import org.joml.Matrix4f;
 
 /**
  * GUI工具类，提供各种绘制精灵图的方法

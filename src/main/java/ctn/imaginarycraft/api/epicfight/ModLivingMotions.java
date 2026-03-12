@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.api.epicfight;
 
-import yesman.epicfight.api.animation.*;
+import yesman.epicfight.api.animation.LivingMotion;
 
 public enum ModLivingMotions implements LivingMotion {
   ;

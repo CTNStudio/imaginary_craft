@@ -1,12 +1,13 @@
 package ctn.imaginarycraft.datagen;
 
-import ctn.imaginarycraft.core.*;
-import net.minecraft.core.*;
-import net.minecraft.data.*;
-import net.neoforged.neoforge.common.data.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.data.PackOutput;
+import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.Set;
+import java.util.concurrent.CompletableFuture;
 
 /**
  * 创建一个数据包内置条目

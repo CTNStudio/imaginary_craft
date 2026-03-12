@@ -1,13 +1,13 @@
 package ctn.imaginarycraft.client.events;
 
-import ctn.imaginarycraft.client.renderer.item.*;
-import ctn.imaginarycraft.core.*;
-import net.minecraft.client.player.*;
-import net.minecraft.client.renderer.*;
-import net.neoforged.api.distmarker.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.fml.common.*;
-import net.neoforged.neoforge.client.event.*;
+import ctn.imaginarycraft.client.renderer.item.MagicBulletMagicCircleRenderer;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RenderPlayerEvent;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID, value = Dist.CLIENT)
 public final class PlayerRenderEvents {

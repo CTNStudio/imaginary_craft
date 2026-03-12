@@ -1,25 +1,27 @@
 package ctn.imaginarycraft.common.world.item.ego.armor;
 
-import ctn.imaginarycraft.api.world.item.*;
-import ctn.imaginarycraft.common.components.*;
-import ctn.imaginarycraft.core.capability.item.*;
-import ctn.imaginarycraft.init.*;
-import ctn.imaginarycraft.init.world.*;
-import ctn.imaginarycraft.util.*;
-import net.minecraft.core.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.*;
-import org.jetbrains.annotations.*;
-import software.bernie.geckolib.animatable.*;
-import software.bernie.geckolib.animatable.client.*;
-import software.bernie.geckolib.animatable.instance.*;
-import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.util.*;
+import ctn.imaginarycraft.api.world.item.IEgoItem;
+import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
+import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
+import ctn.imaginarycraft.init.ModDataComponents;
+import ctn.imaginarycraft.init.world.ModAttributes;
+import ctn.imaginarycraft.util.ItemBuilderUtil;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.client.GeoRenderProvider;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
-import java.util.function.*;
+import java.util.function.Consumer;
 
 public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, IEgoItem {
   protected final GeoRenderProvider renderProvider;

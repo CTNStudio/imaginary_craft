@@ -1,17 +1,19 @@
 package ctn.imaginarycraft.api.virtue;
 
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.init.world.*;
-import net.minecraft.core.*;
-import net.minecraft.nbt.*;
-import net.minecraft.network.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.entity.ai.attributes.*;
-import net.minecraft.world.entity.player.*;
-import net.neoforged.neoforge.attachment.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.init.world.ModAttributes;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.attachment.IAttachmentHolder;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 谨慎

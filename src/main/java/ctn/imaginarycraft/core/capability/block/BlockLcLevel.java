@@ -1,9 +1,10 @@
 package ctn.imaginarycraft.core.capability.block;
 
-import ctn.imaginarycraft.api.*;
-import net.minecraft.core.*;
-import net.minecraft.world.level.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.api.LcLevel;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public enum BlockLcLevel implements IBlockLcLevel {
   NULL() {

@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.linkage.kubejs;
 
-import dev.latvian.mods.kubejs.plugin.*;
+import dev.latvian.mods.kubejs.plugin.KubeJSPlugin;
 
 public final class ModKubejsPlgin implements KubeJSPlugin {
   // TODO 给实体，物品，方块添加LcLevel

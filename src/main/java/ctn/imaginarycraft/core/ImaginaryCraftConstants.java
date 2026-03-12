@@ -1,9 +1,10 @@
 package ctn.imaginarycraft.core;
 
-import net.minecraft.world.item.*;
-import net.neoforged.neoforge.registries.*;
+import net.minecraft.world.item.Item;
+import net.neoforged.neoforge.registries.DeferredItem;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 public final class ImaginaryCraftConstants {
   public static final Set<DeferredItem<? extends Item>> EGO_CURIOS_HEADWEAR = new HashSet<>();

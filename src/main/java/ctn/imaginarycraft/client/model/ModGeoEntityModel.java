@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.client.model;
 
-import net.minecraft.resources.*;
-import software.bernie.geckolib.animatable.*;
+import net.minecraft.resources.ResourceLocation;
+import software.bernie.geckolib.animatable.GeoAnimatable;
 
 public class ModGeoEntityModel<T extends GeoAnimatable> extends BasicGeoModel<T> {
   public ModGeoEntityModel(String name) {

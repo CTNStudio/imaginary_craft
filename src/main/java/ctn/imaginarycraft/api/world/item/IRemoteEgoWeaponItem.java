@@ -1,14 +1,17 @@
 package ctn.imaginarycraft.api.world.item;
 
-import ctn.imaginarycraft.init.world.*;
-import ctn.imaginarycraft.util.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.*;
-import net.minecraft.world.entity.projectile.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.*;
-import net.minecraft.world.level.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.init.world.ModAttributes;
+import ctn.imaginarycraft.util.ItemBuilderUtil;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 所有E.G.O远程武器都应该继承这个

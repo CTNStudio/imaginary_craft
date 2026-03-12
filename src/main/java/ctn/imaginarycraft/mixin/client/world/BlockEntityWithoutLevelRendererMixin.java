@@ -1,14 +1,18 @@
-package ctn.imaginarycraft.mixin.client;
+package ctn.imaginarycraft.mixin.client.world;
 
-import com.mojang.blaze3d.vertex.*;
-import ctn.imaginarycraft.client.renderer.item.*;
-import ctn.imaginarycraft.mixed.client.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.item.*;
-import org.jetbrains.annotations.*;
-import org.spongepowered.asm.mixin.*;
-import software.bernie.geckolib.animatable.client.*;
+import com.mojang.blaze3d.vertex.PoseStack;
+import ctn.imaginarycraft.client.renderer.item.RedEyesTachiItemWeaponRenderer;
+import ctn.imaginarycraft.mixed.client.IBlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.BlockEntityWithoutLevelRenderer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import software.bernie.geckolib.animatable.client.GeoRenderProvider;
 
 @Mixin(value = BlockEntityWithoutLevelRenderer.class, priority = 10000)
 public abstract class BlockEntityWithoutLevelRendererMixin implements IBlockEntityWithoutLevelRenderer {

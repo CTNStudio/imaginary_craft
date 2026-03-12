@@ -1,19 +1,22 @@
 package ctn.imaginarycraft.init.world;
 
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.init.*;
-import net.minecraft.*;
-import net.minecraft.core.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.resources.*;
-import net.minecraft.sounds.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.crafting.*;
-import net.neoforged.neoforge.registries.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.init.ModSoundEvents;
+import net.minecraft.Util;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.item.ArmorItem;
+import net.minecraft.world.item.ArmorMaterial;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.Ingredient;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.EnumMap;
+import java.util.List;
+import java.util.function.Supplier;
 
 public final class ModArmorMaterials {
   public static final DeferredRegister<ArmorMaterial> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.ARMOR_MATERIAL);

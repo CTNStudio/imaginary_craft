@@ -1,10 +1,14 @@
 package ctn.imaginarycraft.init;
 
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.core.capability.block.*;
-import ctn.imaginarycraft.core.capability.entity.*;
-import ctn.imaginarycraft.core.capability.item.*;
-import net.neoforged.neoforge.capabilities.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.core.capability.block.IBlockLcLevel;
+import ctn.imaginarycraft.core.capability.entity.IEntityLcLevel;
+import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
+import ctn.imaginarycraft.core.capability.item.IItemLcLevel;
+import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
+import net.neoforged.neoforge.capabilities.BlockCapability;
+import net.neoforged.neoforge.capabilities.EntityCapability;
+import net.neoforged.neoforge.capabilities.ItemCapability;
 
 public final class ModCapabilitys {
   /**

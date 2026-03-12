@@ -1,17 +1,17 @@
 package ctn.imaginarycraft.client.gui.hudlayers.screenfilter;
 
-import com.mojang.blaze3d.systems.*;
-import com.mojang.blaze3d.vertex.*;
-import ctn.imaginarycraft.client.gui.hudlayers.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.util.*;
-import net.minecraft.client.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.components.*;
-import net.minecraft.client.gui.narration.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.resources.*;
-import net.minecraft.util.*;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.PoseStack;
+import ctn.imaginarycraft.client.gui.hudlayers.BasicHudLayer;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.util.RationalityUtil;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public class RationalityScreenFilterLayer extends BasicHudLayer {
   public static final ResourceLocation RATIONALITY = ImaginaryCraft.modRl("textures/gui/filter/rationality.png");

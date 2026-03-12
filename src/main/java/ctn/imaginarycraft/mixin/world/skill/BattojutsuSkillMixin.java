@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.mixin.world.skill;
 
-import com.llamalad7.mixinextras.injector.*;
-import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.*;
-import yesman.epicfight.skill.weaponinnate.*;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import yesman.epicfight.skill.weaponinnate.BattojutsuSkill;
 
 @Mixin(BattojutsuSkill.class)
 public abstract class BattojutsuSkillMixin {

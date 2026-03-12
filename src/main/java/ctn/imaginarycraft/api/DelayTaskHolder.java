@@ -1,15 +1,19 @@
 package ctn.imaginarycraft.api;
 
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.init.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.*;
-import net.minecraft.world.entity.*;
-import net.neoforged.neoforge.attachment.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.init.ModAttachments;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.neoforged.neoforge.attachment.AttachmentHolder;
+import net.neoforged.neoforge.attachment.IAttachmentHolder;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class DelayTaskHolder {
   private final IAttachmentHolder attachmentHolder;

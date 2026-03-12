@@ -1,10 +1,12 @@
 package ctn.imaginarycraft.mixed;
 
-import ctn.imaginarycraft.api.*;
-import net.minecraft.world.damagesource.*;
-import net.minecraft.world.item.*;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.api.LcLevel;
+import ctn.imaginarycraft.api.NoMixinException;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.item.ItemStack;
 
-import javax.annotation.*;
+import javax.annotation.Nullable;
 
 public interface IDamageSource {
   static IDamageSource of(DamageSource source) {

@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.core;
 
-import ctn.imaginarycraft.common.world.item.ego.weapon.melee.special.*;
+import ctn.imaginarycraft.common.world.item.ego.weapon.melee.special.RedEyesTachiItem;
 
 public final class ModEpicjightEventHooks {
 

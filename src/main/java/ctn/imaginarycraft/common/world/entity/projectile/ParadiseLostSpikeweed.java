@@ -1,37 +1,41 @@
 package ctn.imaginarycraft.common.world.entity.projectile;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.client.model.*;
-import ctn.imaginarycraft.init.world.*;
-import ctn.imaginarycraft.init.world.entity.*;
-import ctn.imaginarycraft.mixed.*;
-import ctn.imaginarycraft.util.*;
-import net.minecraft.client.renderer.entity.*;
-import net.minecraft.nbt.*;
-import net.minecraft.network.syncher.*;
-import net.minecraft.resources.*;
-import net.minecraft.server.level.*;
-import net.minecraft.sounds.*;
-import net.minecraft.world.damagesource.*;
-import net.minecraft.world.effect.*;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.api.LcLevel;
+import ctn.imaginarycraft.client.model.ModGeoEntityModel;
+import ctn.imaginarycraft.init.world.ModDamageTypes;
+import ctn.imaginarycraft.init.world.entity.AbnormalitiesEntityTypes;
+import ctn.imaginarycraft.mixed.IDamageSource;
+import ctn.imaginarycraft.util.RationalityUtil;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.item.*;
-import net.minecraft.world.entity.player.*;
-import net.minecraft.world.entity.projectile.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.*;
-import net.minecraft.world.phys.*;
-import org.jetbrains.annotations.*;
-import software.bernie.geckolib.animatable.*;
-import software.bernie.geckolib.animatable.instance.*;
-import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.renderer.*;
-import software.bernie.geckolib.util.*;
+import net.minecraft.world.entity.item.ItemEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoEntity;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib.util.GeckoLibUtil;
 
 import javax.annotation.Nullable;
-import java.util.*;
+import java.util.List;
+import java.util.UUID;
 
-import static net.minecraft.world.effect.MobEffects.*;
+import static net.minecraft.world.effect.MobEffects.MOVEMENT_SLOWDOWN;
 
 /**
  * 失乐园尖刺

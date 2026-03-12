@@ -1,16 +1,17 @@
 package ctn.imaginarycraft.core.registry.client;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.init.*;
-import ctn.imaginarycraft.init.world.item.*;
-import net.minecraft.client.renderer.item.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.item.*;
-import net.neoforged.api.distmarker.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.fml.common.*;
-import net.neoforged.fml.event.lifecycle.*;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.init.ModDataComponents;
+import ctn.imaginarycraft.init.world.item.ToolItems;
+import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
+import net.minecraft.client.renderer.item.ItemProperties;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
 
 /**
  * 物品渲染附加

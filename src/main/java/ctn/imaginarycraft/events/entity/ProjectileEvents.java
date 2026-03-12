@@ -1,16 +1,18 @@
 package ctn.imaginarycraft.events.entity;
 
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.util.*;
-import ctn.imaginarycraft.util.PiercingUtil.*;
-import net.minecraft.world.damagesource.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.projectile.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.fml.common.*;
-import net.neoforged.neoforge.event.tick.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.util.PiercingUtil;
+import ctn.imaginarycraft.util.PiercingUtil.PierceData;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.tick.EntityTickEvent;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * 弹射物事件监听器

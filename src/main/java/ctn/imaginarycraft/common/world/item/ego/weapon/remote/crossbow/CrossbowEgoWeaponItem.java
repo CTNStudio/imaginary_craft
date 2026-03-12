@@ -1,14 +1,20 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.remote.crossbow;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.api.world.item.*;
-import net.minecraft.server.level.*;
-import net.minecraft.world.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.projectile.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.api.world.item.IEgoWeaponItem;
+import ctn.imaginarycraft.api.world.item.IRemoteEgoWeaponItem;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ArrowItem;
+import net.minecraft.world.item.CrossbowItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * 弩型EGO武器物品类

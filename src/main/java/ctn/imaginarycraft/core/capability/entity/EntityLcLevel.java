@@ -1,7 +1,8 @@
 package ctn.imaginarycraft.core.capability.entity;
 
-import ctn.imaginarycraft.api.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.api.LcLevel;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public enum EntityLcLevel implements IEntityLcLevel {
   NULL() {

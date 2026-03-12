@@ -1,31 +1,34 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.melee.special;
 
-import ctn.imaginarycraft.api.world.item.*;
-import ctn.imaginarycraft.client.renderer.item.*;
-import ctn.imaginarycraft.client.renderer.providers.*;
-import ctn.imaginarycraft.common.world.item.ego.weapon.melee.*;
-import ctn.imaginarycraft.init.world.*;
-import ctn.imaginarycraft.mixin.world.entity.*;
-import ctn.imaginarycraft.mixin.world.skill.*;
-import net.minecraft.server.level.*;
-import net.minecraft.world.*;
-import net.minecraft.world.effect.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.player.*;
-import net.minecraft.world.item.*;
-import org.jetbrains.annotations.*;
-import software.bernie.geckolib.animatable.*;
-import software.bernie.geckolib.animatable.client.*;
-import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.model.*;
-import yesman.epicfight.api.animation.types.*;
-import yesman.epicfight.api.event.*;
-import yesman.epicfight.skill.*;
-import yesman.epicfight.skill.weaponinnate.*;
-import yesman.epicfight.world.capabilities.entitypatch.player.*;
+import ctn.imaginarycraft.api.world.item.IMeleeEgoWeaponItem;
+import ctn.imaginarycraft.client.renderer.item.RedEyesTachiItemWeaponRenderer;
+import ctn.imaginarycraft.client.renderer.providers.ModGeoItemRenderProvider;
+import ctn.imaginarycraft.common.world.item.ego.weapon.melee.MeleeEgoWeaponGeoItem;
+import ctn.imaginarycraft.init.world.ModMobEffects;
+import ctn.imaginarycraft.mixin.world.entity.LivingEntityAccessorMixin;
+import ctn.imaginarycraft.mixin.world.skill.ConditionalWeaponInnateSkillAccessorMixin;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoItem;
+import software.bernie.geckolib.animatable.client.GeoRenderProvider;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.model.GeoModel;
+import yesman.epicfight.api.animation.types.EntityState;
+import yesman.epicfight.api.event.EpicFightEventHooks;
+import yesman.epicfight.skill.SkillSlots;
+import yesman.epicfight.skill.weaponinnate.BattojutsuSkill;
+import yesman.epicfight.world.capabilities.entitypatch.player.PlayerPatch;
 
-import java.util.function.*;
+import java.util.function.Consumer;
 
+// TODO 补充特效
 public class RedEyesTachiItem extends MeleeEgoWeaponGeoItem {
 
   public RedEyesTachiItem(Properties itemProperties, IMeleeEgoWeaponItem.Builder egoWeaponBuilder, GeoModel<MeleeEgoWeaponGeoItem> geoModel, GeoModel<MeleeEgoWeaponGeoItem> guiModel) {

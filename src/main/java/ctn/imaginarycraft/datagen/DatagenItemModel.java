@@ -1,22 +1,30 @@
 package ctn.imaginarycraft.datagen;
 
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.core.registry.client.*;
-import ctn.imaginarycraft.init.world.item.*;
-import ctn.imaginarycraft.init.world.item.ego.*;
-import ctn.imaginarycraft.mixed.client.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.data.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.item.*;
-import net.neoforged.neoforge.client.model.generators.*;
-import net.neoforged.neoforge.common.data.*;
-import net.neoforged.neoforge.registries.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.core.registry.client.ItemPropertyRenderersRegistrar;
+import ctn.imaginarycraft.init.world.item.ToolItems;
+import ctn.imaginarycraft.init.world.item.ego.EgoArmorItems;
+import ctn.imaginarycraft.init.world.item.ego.EgoCurioItems;
+import ctn.imaginarycraft.init.world.item.ego.EgoWeaponItems;
+import ctn.imaginarycraft.mixed.client.IModelBuilder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.neoforged.neoforge.client.model.generators.ItemModelBuilder;
+import net.neoforged.neoforge.client.model.generators.ItemModelProvider;
+import net.neoforged.neoforge.client.model.generators.ModelFile;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 
-import static net.minecraft.resources.ResourceLocation.*;
+import static net.minecraft.resources.ResourceLocation.fromNamespaceAndPath;
+import static net.minecraft.resources.ResourceLocation.parse;
 
 
 /**

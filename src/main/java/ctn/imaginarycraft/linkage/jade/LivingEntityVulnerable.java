@@ -1,16 +1,18 @@
 package ctn.imaginarycraft.linkage.jade;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.core.*;
-import net.minecraft.core.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.*;
-import snownee.jade.*;
-import snownee.jade.api.*;
-import snownee.jade.api.config.*;
-import snownee.jade.api.ui.*;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.core.Holder;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import snownee.jade.JadeInternals;
+import snownee.jade.api.EntityAccessor;
+import snownee.jade.api.IEntityComponentProvider;
+import snownee.jade.api.ITooltip;
+import snownee.jade.api.config.IPluginConfig;
+import snownee.jade.api.ui.IElementHelper;
 
 public enum LivingEntityVulnerable implements IEntityComponentProvider {
   INSTANCE;

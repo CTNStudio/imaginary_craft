@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.melee.mace;
 
-import ctn.imaginarycraft.api.world.item.*;
-import ctn.imaginarycraft.common.world.item.ego.weapon.melee.*;
-import software.bernie.geckolib.model.*;
+import ctn.imaginarycraft.api.world.item.IMeleeEgoWeaponItem;
+import ctn.imaginarycraft.common.world.item.ego.weapon.melee.MeleeEgoWeaponGeoItem;
+import software.bernie.geckolib.model.GeoModel;
 
 public class MaceEgoWeaponItem extends MeleeEgoWeaponGeoItem {
 

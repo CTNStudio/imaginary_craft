@@ -1,19 +1,22 @@
 package ctn.imaginarycraft.api.data;
 
-import ctn.imaginarycraft.core.*;
-import net.minecraft.nbt.*;
-import net.minecraft.resources.*;
-import org.apache.logging.log4j.*;
-import org.jetbrains.annotations.*;
-import org.spongepowered.asm.mixin.*;
-import yesman.epicfight.api.animation.*;
-import yesman.epicfight.api.animation.types.*;
-import yesman.epicfight.world.capabilities.entitypatch.*;
-import yesman.epicfight.world.capabilities.provider.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Unique;
+import yesman.epicfight.api.animation.AnimationManager;
+import yesman.epicfight.api.animation.types.AttackAnimation;
+import yesman.epicfight.api.animation.types.StaticAnimation;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
+import yesman.epicfight.world.capabilities.provider.ExtraEntryProvider;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * 动画连招解析器

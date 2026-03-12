@@ -1,16 +1,18 @@
 package ctn.imaginarycraft.mixin.world.entity;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.*;
-import ctn.imaginarycraft.mixed.*;
-import net.minecraft.sounds.*;
-import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.*;
-import yesman.epicfight.api.collider.*;
-import yesman.epicfight.particle.*;
-import yesman.epicfight.world.capabilities.entitypatch.*;
-import yesman.epicfight.world.capabilities.item.*;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import ctn.imaginarycraft.mixed.IWeaponCapability;
+import net.minecraft.sounds.SoundEvent;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import yesman.epicfight.api.collider.Collider;
+import yesman.epicfight.particle.HitParticleType;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
+import yesman.epicfight.world.capabilities.item.CapabilityItem;
 
-import java.util.function.*;
+import java.util.function.BiFunction;
 
 @Mixin(LivingEntityPatch.class)
 public abstract class LivingEntityPatchMixin {

@@ -1,16 +1,19 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.api.world.item.*;
-import ctn.imaginarycraft.core.capability.item.*;
-import net.minecraft.core.*;
-import net.minecraft.world.entity.player.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.state.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.api.world.item.IEgoWeaponItem;
+import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
+import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.state.BlockState;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Set;
 
 /**
  * EGO武器

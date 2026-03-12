@@ -1,10 +1,14 @@
 package ctn.imaginarycraft.linkage.jade;
 
-import ctn.imaginarycraft.core.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.level.block.*;
-import snownee.jade.api.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.level.block.Block;
+import snownee.jade.api.IWailaClientRegistration;
+import snownee.jade.api.IWailaCommonRegistration;
+import snownee.jade.api.IWailaPlugin;
+import snownee.jade.api.WailaPlugin;
 
 @WailaPlugin
 public final class ModJadePlugin implements IWailaPlugin {

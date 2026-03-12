@@ -1,11 +1,11 @@
 package ctn.imaginarycraft.config;
 
-import ctn.imaginarycraft.core.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.fml.*;
-import net.neoforged.fml.common.*;
-import net.neoforged.fml.event.config.*;
-import net.neoforged.neoforge.common.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.ModContainer;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.config.ModConfigEvent;
+import net.neoforged.neoforge.common.ModConfigSpec;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class ModConfig extends ConfigUtil {

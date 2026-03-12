@@ -1,13 +1,13 @@
 package ctn.imaginarycraft.client.gui.widget;
 
-import ctn.imaginarycraft.client.util.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.components.*;
-import net.minecraft.client.gui.narration.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.resources.*;
-import net.minecraft.util.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.client.util.GuiUtil;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.components.AbstractWidget;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
+import org.jetbrains.annotations.NotNull;
 
 public class HorizontalStatusBar extends AbstractWidget {
   private final @NotNull TextureLayer bottomLayer;

@@ -18,8 +18,8 @@
     "world.entity.LivingEntityPatchMixin",
     "world.entity.PlayerMixin",
     "world.item.ItemStackMixin",
+    "world.item.WeaponCapability$BuilderMixin",
     "world.item.WeaponCapabilityMixin",
-    "world.item.WeaponCapabilityMixin$BuilderMixin",
     "world.skill.BattojutsuSkillMixin",
     "world.skill.ComboAttacksMixin",
     "world.skill.ConditionalWeaponInnateSkillAccessorMixin",
@@ -33,13 +33,14 @@
     "requireAnnotations": true
   },
   "client": [
-    "AnimationTrailParticleMixin$Provider",
-    "client.BlockEntityWithoutLevelRendererMixin",
     "client.FontMixin",
     "client.GuiMixin",
-    "client.ItemRendererMixin",
-    "client.ItemsPreferenceScreenMixin",
-    "client.KeyMappingMixin"
+    "client.KeyMappingMixin",
+    "client.world.AbstractTrailParticleMixin",
+    "client.world.AnimationTrailParticle$Provider",
+    "client.world.BlockEntityWithoutLevelRendererMixin",
+    "client.world.ItemRendererMixin",
+    "client.world.ItemsPreferenceScreenMixin"
   ],
   "mixinextras": {
     "minVersion": "0.5.0"

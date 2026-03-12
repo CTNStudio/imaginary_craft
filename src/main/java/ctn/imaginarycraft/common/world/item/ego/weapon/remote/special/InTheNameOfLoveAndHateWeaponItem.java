@@ -1,12 +1,12 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.remote.special;
 
-import ctn.imaginarycraft.common.world.item.ego.weapon.remote.*;
-import ctn.imaginarycraft.core.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.projectile.*;
-import org.jetbrains.annotations.*;
-import software.bernie.geckolib.model.*;
+import ctn.imaginarycraft.common.world.item.ego.weapon.remote.RemoteEgoWeaponGeoItem;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.projectile.Projectile;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.model.GeoModel;
 
 public class InTheNameOfLoveAndHateWeaponItem extends RemoteEgoWeaponGeoItem {
   public static final ResourceLocation STANDBY = ImaginaryCraft.modRl("in_the_name_of_love_and_hate_weapon.standby");

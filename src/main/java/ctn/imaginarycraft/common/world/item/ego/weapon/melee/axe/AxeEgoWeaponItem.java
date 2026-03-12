@@ -1,11 +1,15 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.melee.axe;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.api.world.item.*;
-import net.minecraft.world.item.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.api.world.item.IEgoWeaponItem;
+import ctn.imaginarycraft.api.world.item.IMeleeEgoWeaponItem;
+import net.minecraft.world.item.AxeItem;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Tier;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Set;
 
 public class AxeEgoWeaponItem extends AxeItem implements IMeleeEgoWeaponItem {
   private final @Nullable LcDamageType lcDamageType;

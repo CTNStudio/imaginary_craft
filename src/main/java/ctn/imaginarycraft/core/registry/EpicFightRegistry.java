@@ -1,23 +1,25 @@
 package ctn.imaginarycraft.core.registry;
 
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.init.world.*;
-import ctn.imaginarycraft.init.world.item.ego.*;
-import ctn.imaginarycraft.mixin.world.skill.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.item.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.fml.common.*;
-import net.neoforged.fml.event.lifecycle.*;
-import net.neoforged.neoforge.registries.*;
-import yesman.epicfight.api.animation.*;
-import yesman.epicfight.gameasset.*;
-import yesman.epicfight.model.armature.*;
-import yesman.epicfight.world.capabilities.*;
-import yesman.epicfight.world.capabilities.item.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.core.ImaginaryCraftConstants;
+import ctn.imaginarycraft.init.world.ModWeaponCapabilityPresets;
+import ctn.imaginarycraft.init.world.item.ego.EgoWeaponItems;
+import ctn.imaginarycraft.mixin.world.skill.WeaponTypeReloadListenerAccessorMixin;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.neoforge.registries.DeferredItem;
+import yesman.epicfight.api.animation.AnimationManager;
+import yesman.epicfight.gameasset.Armatures;
+import yesman.epicfight.model.armature.HumanoidArmature;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.item.CapabilityItem;
+import yesman.epicfight.world.capabilities.item.WeaponCapabilityPresets;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Set;
+import java.util.function.Function;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class EpicFightRegistry {

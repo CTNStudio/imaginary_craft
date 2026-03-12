@@ -1,14 +1,16 @@
 package ctn.imaginarycraft.linkage.jade;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.util.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.item.*;
-import org.jetbrains.annotations.*;
-import snownee.jade.api.*;
-import snownee.jade.api.config.*;
+import ctn.imaginarycraft.api.LcLevel;
+import ctn.imaginarycraft.util.LcLevelUtil;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.item.ItemEntity;
+import org.jetbrains.annotations.Nullable;
+import snownee.jade.api.EntityAccessor;
+import snownee.jade.api.IEntityComponentProvider;
+import snownee.jade.api.ITooltip;
+import snownee.jade.api.config.IPluginConfig;
 
 public enum EntityLcLevel implements IEntityComponentProvider {
   INSTANCE;

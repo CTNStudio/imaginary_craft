@@ -1,20 +1,23 @@
 package ctn.imaginarycraft.client.util;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.client.*;
-import ctn.imaginarycraft.client.particle.text.*;
-import ctn.imaginarycraft.util.*;
-import net.minecraft.core.*;
-import net.minecraft.network.chat.*;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.client.ModFontIcon;
+import ctn.imaginarycraft.client.particle.text.DamageTextParticle;
+import ctn.imaginarycraft.client.particle.text.TextParticle;
+import ctn.imaginarycraft.util.TextUtil;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
-import net.minecraft.server.level.*;
-import net.minecraft.world.damagesource.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.phys.*;
-import net.neoforged.neoforge.common.*;
-import org.jetbrains.annotations.*;
+import net.minecraft.network.chat.MutableComponent;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
+import net.neoforged.neoforge.common.Tags;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import static ctn.imaginarycraft.api.LcDamageType.*;
+import static ctn.imaginarycraft.api.LcDamageType.PHYSICS;
 
 public final class ParticleUtil {
 

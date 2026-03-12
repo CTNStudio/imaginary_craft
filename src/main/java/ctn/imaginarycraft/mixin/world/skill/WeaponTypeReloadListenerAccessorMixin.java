@@ -1,13 +1,14 @@
 package ctn.imaginarycraft.mixin.world.skill;
 
-import net.minecraft.resources.*;
-import net.minecraft.world.item.*;
-import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.gen.*;
-import yesman.epicfight.world.capabilities.item.*;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.item.Item;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.gen.Accessor;
+import yesman.epicfight.world.capabilities.item.CapabilityItem;
+import yesman.epicfight.world.capabilities.item.WeaponTypeReloadListener;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.Map;
+import java.util.function.Function;
 
 @Mixin(WeaponTypeReloadListener.class)
 public interface WeaponTypeReloadListenerAccessorMixin {

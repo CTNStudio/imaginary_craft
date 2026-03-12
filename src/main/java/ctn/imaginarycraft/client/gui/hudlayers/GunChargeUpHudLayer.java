@@ -1,16 +1,18 @@
 package ctn.imaginarycraft.client.gui.hudlayers;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.client.gui.widget.*;
-import ctn.imaginarycraft.common.world.item.ego.weapon.remote.gun.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.util.*;
-import net.minecraft.client.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.item.*;
+import ctn.imaginarycraft.api.IGunWeapon;
+import ctn.imaginarycraft.client.gui.widget.ImageProgressBar;
+import ctn.imaginarycraft.common.world.item.ego.weapon.remote.gun.MagicBulletWeaponItem;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.util.GunWeaponUtil;
+import net.minecraft.client.AttackIndicatorStatus;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.HumanoidArm;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 
 public class GunChargeUpHudLayer extends BasicHudLayer {
 

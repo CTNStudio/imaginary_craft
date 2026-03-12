@@ -1,9 +1,10 @@
 package ctn.imaginarycraft.client.renderer.item;
 
-import ctn.imaginarycraft.client.*;
-import ctn.imaginarycraft.core.*;
-import net.minecraft.client.player.*;
-import net.minecraft.client.renderer.*;
+import ctn.imaginarycraft.client.ModRenderTypes;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
 
 /**
  * 魔弹法阵渲染

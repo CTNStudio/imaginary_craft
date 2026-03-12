@@ -1,24 +1,32 @@
 package ctn.imaginarycraft.mixin.client.world;
 
-import com.google.common.collect.*;
-import com.google.gson.*;
-import com.llamalad7.mixinextras.sugar.*;
-import com.mojang.datafixers.util.*;
-import ctn.imaginarycraft.api.data.*;
-import ctn.imaginarycraft.mixed.client.*;
-import net.minecraft.resources.*;
-import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.callback.*;
-import top.theillusivec4.curios.api.type.capability.*;
-import yesman.epicfight.api.client.animation.property.*;
-import yesman.epicfight.client.renderer.patched.item.*;
-import yesman.epicfight.data.conditions.*;
-import yesman.epicfight.registry.entries.*;
-import yesman.epicfight.world.capabilities.entitypatch.*;
+import com.google.common.collect.Lists;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.mojang.datafixers.util.Pair;
+import ctn.imaginarycraft.api.data.ConditionalEntryParser;
+import ctn.imaginarycraft.api.data.ConditionalProviderFactory;
+import ctn.imaginarycraft.api.data.ModWeaponTypeReloadListener;
+import ctn.imaginarycraft.mixed.client.IRenderItemBase;
+import net.minecraft.resources.ResourceLocation;
+import org.spongepowered.asm.mixin.Final;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import top.theillusivec4.curios.api.type.capability.ICuriosItemHandler;
+import yesman.epicfight.api.client.animation.property.TrailInfo;
+import yesman.epicfight.client.renderer.patched.item.RenderItemBase;
+import yesman.epicfight.data.conditions.Condition;
+import yesman.epicfight.registry.entries.EpicFightConditions;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 @Mixin(RenderItemBase.class)
 public abstract class RenderItemBaseMixin implements IRenderItemBase {
@@ -39,11 +47,11 @@ public abstract class RenderItemBaseMixin implements IRenderItemBase {
     CallbackInfo ci,
     @Local(name = "jsonObj") JsonObject jsonObj
   ) {
-    if (!jsonObj.has("trail_expand")) {
+    if (!jsonObj.has("trail_cases")) {
       return;
     }
     imaginarycraft$trailInfoProvider = ConditionalProviderFactory.getProvider(trailInfo,
-      jsonObj.get("trail_expand").getAsJsonArray().asList().stream()
+      jsonObj.get("trail_cases").getAsJsonArray().asList().stream()
         .map(JsonObject.class::cast)
         .map(entry -> {
           List<Condition.EntityPatchCondition> conditionList = Lists.newArrayList();

@@ -1,18 +1,20 @@
 package ctn.imaginarycraft.common.payload.toc;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.client.gui.hudlayers.screenfilter.*;
-import ctn.imaginarycraft.common.payload.api.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.util.*;
-import io.netty.buffer.*;
-import net.minecraft.network.codec.*;
-import net.minecraft.network.protocol.common.custom.*;
-import net.minecraft.server.level.*;
-import net.minecraft.world.entity.player.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.client.gui.hudlayers.screenfilter.LcDamageScreenFilterLayer;
+import ctn.imaginarycraft.common.payload.api.ToClientPayload;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.util.PayloadUtil;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.Optional;
 
 public record PlayerDamagePayload(
   Optional<@Nullable LcDamageType> lcDamageType,

@@ -1,8 +1,9 @@
 package ctn.imaginarycraft.core.capability.item;
 
-import ctn.imaginarycraft.api.*;
-import net.minecraft.world.item.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.api.LcLevel;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 public enum ItemLcLevel implements IItemLcLevel {
   NULL() {

@@ -1,18 +1,23 @@
 package ctn.imaginarycraft.api.data;
 
-import com.google.common.collect.*;
-import com.mojang.datafixers.util.*;
-import ctn.imaginarycraft.core.*;
-import net.minecraft.nbt.*;
-import net.minecraft.resources.*;
-import org.apache.logging.log4j.*;
-import yesman.epicfight.data.conditions.*;
-import yesman.epicfight.registry.entries.*;
-import yesman.epicfight.world.capabilities.entitypatch.*;
+import com.google.common.collect.Lists;
+import com.mojang.datafixers.util.Pair;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
+import org.apache.logging.log4j.Logger;
+import yesman.epicfight.data.conditions.Condition;
+import yesman.epicfight.registry.entries.EpicFightConditions;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.function.BiPredicate;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * 条件配置条目解析器

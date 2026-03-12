@@ -1,12 +1,12 @@
 package ctn.imaginarycraft.util;
 
-import ctn.imaginarycraft.client.util.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.init.*;
-import ctn.imaginarycraft.init.world.*;
-import net.minecraft.world.entity.player.*;
+import ctn.imaginarycraft.client.util.ParticleUtil;
+import ctn.imaginarycraft.core.ModEventHooks;
+import ctn.imaginarycraft.init.ModAttachments;
+import ctn.imaginarycraft.init.world.ModAttributes;
+import net.minecraft.world.entity.player.Player;
 
-import java.util.*;
+import java.util.Map;
 
 /**
  * 理智工具

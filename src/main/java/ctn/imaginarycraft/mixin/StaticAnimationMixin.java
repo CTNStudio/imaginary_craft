@@ -1,14 +1,16 @@
 package ctn.imaginarycraft.mixin;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.*;
-import com.llamalad7.mixinextras.sugar.*;
-import ctn.imaginarycraft.mixed.client.*;
-import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.*;
-import yesman.epicfight.api.animation.types.*;
-import yesman.epicfight.api.client.animation.property.*;
-import yesman.epicfight.client.renderer.patched.item.*;
-import yesman.epicfight.world.capabilities.entitypatch.*;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import ctn.imaginarycraft.mixed.client.IRenderItemBase;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import yesman.epicfight.api.animation.types.StaticAnimation;
+import yesman.epicfight.api.client.animation.property.TrailInfo;
+import yesman.epicfight.client.renderer.patched.item.RenderItemBase;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 @Mixin(StaticAnimation.class)
 public abstract class StaticAnimationMixin {

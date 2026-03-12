@@ -1,11 +1,14 @@
 package ctn.imaginarycraft.linkage.lowdraglib2.screen;
 
-import com.lowdragmc.lowdraglib2.gui.ui.*;
-import com.lowdragmc.lowdraglib2.gui.ui.elements.*;
-import com.lowdragmc.lowdraglib2.gui.ui.styletemplate.*;
-import ctn.imaginarycraft.core.*;
-import net.minecraft.client.gui.screens.*;
-import net.minecraft.network.chat.*;
+import com.lowdragmc.lowdraglib2.gui.ui.ModularUI;
+import com.lowdragmc.lowdraglib2.gui.ui.UI;
+import com.lowdragmc.lowdraglib2.gui.ui.UIElement;
+import com.lowdragmc.lowdraglib2.gui.ui.elements.Button;
+import com.lowdragmc.lowdraglib2.gui.ui.elements.Label;
+import com.lowdragmc.lowdraglib2.gui.ui.styletemplate.Sprites;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.network.chat.Component;
 
 public class EpicJightDataPacketScreen extends Screen {
   public static final String EPIC_JIGHT_DATA_PACKET = "epic_jight_data_packet";

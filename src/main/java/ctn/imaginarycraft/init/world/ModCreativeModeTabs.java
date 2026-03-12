@@ -1,16 +1,25 @@
 package ctn.imaginarycraft.init.world;
 
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.datagen.i18n.*;
-import ctn.imaginarycraft.init.world.item.*;
-import ctn.imaginarycraft.init.world.item.ego.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.item.*;
-import net.neoforged.neoforge.registries.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.datagen.i18n.ZhCn;
+import ctn.imaginarycraft.init.world.item.AbnormalitiesSpawnEggs;
+import ctn.imaginarycraft.init.world.item.ModItems;
+import ctn.imaginarycraft.init.world.item.ToolItems;
+import ctn.imaginarycraft.init.world.item.WeaponItems;
+import ctn.imaginarycraft.init.world.item.ego.EgoArmorItems;
+import ctn.imaginarycraft.init.world.item.ego.EgoCurioItems;
+import ctn.imaginarycraft.init.world.item.ego.EgoItems;
+import ctn.imaginarycraft.init.world.item.ego.EgoWeaponItems;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.function.*;
+import java.util.function.BiFunction;
+import java.util.function.Supplier;
 
 /**
  * 创造模式物品栏
@@ -37,10 +46,11 @@ public final class ModCreativeModeTabs {
       addRegistryItem(ToolItems.REGISTRY, output);
       addRegistryItem(WeaponItems.REGISTRY, output);
     }, () -> EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chestplate().get().getDefaultInstance()));
-  public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SPAWN_EGG =register(
-    "spwan_egg","异想工艺|刷怪蛋",(name, zhCn) ->createCreativeModeTab(name,zhCn,(parameters,output)->
-      addRegistryItem(AbnormalitiesSpawnEggs.REGISTRY,output),()->
+  public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SPAWN_EGG = register(
+    "spwan_egg", "异想工艺|刷怪蛋", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
+      addRegistryItem(AbnormalitiesSpawnEggs.REGISTRY, output), () ->
       AbnormalitiesSpawnEggs.GRANT_US_LOVE_SPAWN_EGG.get().getDefaultInstance()));
+
   private static DeferredHolder<CreativeModeTab, CreativeModeTab> register(
     String name,
     String zhCn,

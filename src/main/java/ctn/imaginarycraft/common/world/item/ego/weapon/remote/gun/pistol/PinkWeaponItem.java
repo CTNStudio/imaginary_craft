@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.remote.gun.pistol;
 
-import ctn.imaginarycraft.common.world.item.ego.weapon.remote.*;
-import ctn.imaginarycraft.common.world.item.ego.weapon.remote.gun.*;
-import software.bernie.geckolib.model.*;
+import ctn.imaginarycraft.common.world.item.ego.weapon.remote.RemoteEgoWeaponGeoItem;
+import ctn.imaginarycraft.common.world.item.ego.weapon.remote.gun.GunEgoWeaponItem;
+import software.bernie.geckolib.model.GeoModel;
 
 public class PinkWeaponItem extends GunEgoWeaponItem {
 

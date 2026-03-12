@@ -1,10 +1,11 @@
 package ctn.imaginarycraft.client.renderer.entity;
 
-import com.mojang.blaze3d.vertex.*;
-import ctn.imaginarycraft.common.world.entity.projectile.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.entity.*;
-import net.minecraft.resources.*;
+import com.mojang.blaze3d.vertex.PoseStack;
+import ctn.imaginarycraft.common.world.entity.projectile.MagicBulletEntity;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.entity.EntityRenderer;
+import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.resources.ResourceLocation;
 
 public class MagicBulletRenderer extends EntityRenderer<MagicBulletEntity> {
   public MagicBulletRenderer(EntityRendererProvider.Context context) {

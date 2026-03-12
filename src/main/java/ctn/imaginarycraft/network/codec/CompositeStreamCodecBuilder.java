@@ -1,10 +1,12 @@
 package ctn.imaginarycraft.network.codec;
 
-import net.minecraft.network.codec.*;
-import org.jetbrains.annotations.*;
+import net.minecraft.network.codec.StreamCodec;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.function.Function;
 
 /**
  * 用于创建具有不同组件数量的复合StreamCodecs的构建器。

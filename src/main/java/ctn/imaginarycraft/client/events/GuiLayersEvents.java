@@ -1,16 +1,16 @@
 package ctn.imaginarycraft.client.events;
 
-import ctn.imaginarycraft.client.*;
-import ctn.imaginarycraft.config.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.util.*;
-import net.minecraft.client.*;
-import net.minecraft.resources.*;
-import net.neoforged.api.distmarker.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.fml.common.*;
-import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.client.gui.*;
+import ctn.imaginarycraft.client.ModGuiLayers;
+import ctn.imaginarycraft.config.ModConfig;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.util.GunWeaponUtil;
+import net.minecraft.client.Minecraft;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RenderGuiLayerEvent;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID, value = Dist.CLIENT)
 public final class GuiLayersEvents {

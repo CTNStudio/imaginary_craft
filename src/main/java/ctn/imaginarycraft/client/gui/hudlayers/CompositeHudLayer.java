@@ -1,13 +1,18 @@
 package ctn.imaginarycraft.client.gui.hudlayers;
 
-import com.mojang.blaze3d.vertex.*;
-import net.minecraft.client.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.player.*;
+import com.mojang.blaze3d.vertex.PoseStack;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.player.LocalPlayer;
 
-import java.util.*;
-import java.util.concurrent.atomic.*;
-import java.util.function.*;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
+import java.util.Set;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.function.BooleanSupplier;
 
 /**
  * 组合层

@@ -1,12 +1,13 @@
 package ctn.imaginarycraft.init.world;
 
-import ctn.imaginarycraft.common.world.entity.condition.*;
-import ctn.imaginarycraft.core.*;
-import net.neoforged.neoforge.registries.*;
-import yesman.epicfight.data.conditions.*;
-import yesman.epicfight.registry.*;
+import ctn.imaginarycraft.common.world.entity.condition.MobEffectsCondition;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import yesman.epicfight.data.conditions.Condition;
+import yesman.epicfight.registry.EpicFightRegistries;
 
-import java.util.function.*;
+import java.util.function.Supplier;
 
 public final class ModEntieyConditions {
   public static final DeferredRegister<Supplier<Condition<?>>> REGISTRY = ImaginaryCraft.modRegister(EpicFightRegistries.CONDITION);

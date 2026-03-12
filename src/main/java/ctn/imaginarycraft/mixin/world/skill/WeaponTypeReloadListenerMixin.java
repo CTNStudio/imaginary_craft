@@ -1,33 +1,45 @@
 package ctn.imaginarycraft.mixin.world.skill;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.*;
-import com.llamalad7.mixinextras.sugar.*;
-import com.llamalad7.mixinextras.sugar.ref.*;
-import com.mojang.datafixers.util.*;
-import ctn.imaginarycraft.api.data.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.mixed.*;
-import net.minecraft.core.particles.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.nbt.*;
-import net.minecraft.resources.*;
-import net.minecraft.sounds.*;
-import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.callback.*;
-import yesman.epicfight.api.animation.*;
-import yesman.epicfight.api.animation.types.*;
-import yesman.epicfight.api.collider.*;
-import yesman.epicfight.gameasset.*;
-import yesman.epicfight.particle.*;
-import yesman.epicfight.registry.*;
-import yesman.epicfight.skill.*;
-import yesman.epicfight.world.capabilities.entitypatch.*;
-import yesman.epicfight.world.capabilities.item.*;
-import yesman.epicfight.world.capabilities.provider.*;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.sugar.Share;
+import com.llamalad7.mixinextras.sugar.ref.LocalRef;
+import com.mojang.datafixers.util.Pair;
+import ctn.imaginarycraft.api.data.AnimationComboParser;
+import ctn.imaginarycraft.api.data.ConditionalEntryParser;
+import ctn.imaginarycraft.api.data.ModWeaponTypeReloadListener;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.mixed.IWeaponCapability$Builder;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.ListTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.sounds.SoundEvent;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
+import yesman.epicfight.api.animation.AnimationManager;
+import yesman.epicfight.api.animation.LivingMotion;
+import yesman.epicfight.api.animation.types.AttackAnimation;
+import yesman.epicfight.api.collider.Collider;
+import yesman.epicfight.gameasset.ColliderPreset;
+import yesman.epicfight.particle.HitParticleType;
+import yesman.epicfight.registry.EpicFightRegistries;
+import yesman.epicfight.skill.Skill;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
+import yesman.epicfight.world.capabilities.item.Style;
+import yesman.epicfight.world.capabilities.item.WeaponCapability;
+import yesman.epicfight.world.capabilities.item.WeaponTypeReloadListener;
+import yesman.epicfight.world.capabilities.provider.ExtraEntryProvider;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 @Mixin(WeaponTypeReloadListener.class)
 public abstract class WeaponTypeReloadListenerMixin {
@@ -69,7 +81,7 @@ public abstract class WeaponTypeReloadListenerMixin {
     if (!colliderCompTag.contains(ModWeaponTypeReloadListener.CASES_TAG)) {
       return call;
     }
-    IWeaponCapability.IBuilder.of(builder).imaginarycraft$collider(call,
+    IWeaponCapability$Builder.of(builder).imaginarycraft$collider(call,
       ConditionalEntryParser.parseConditionalEntriesFromTag(colliderCompTag,
         args -> ColliderPreset.deserializeSimpleCollider((CompoundTag) args),
         (a, f) -> a != null));
@@ -120,7 +132,7 @@ public abstract class WeaponTypeReloadListenerMixin {
     }
 
     //noinspection unchecked
-    IWeaponCapability.IBuilder.of(builder).imaginarycraft$hitParticle((HitParticleType) particleType, (List<Pair<Predicate<LivingEntityPatch<?>>, HitParticleType>>) (List<?>) ConditionalEntryParser.parseConditionalEntriesFromString(
+    IWeaponCapability$Builder.of(builder).imaginarycraft$hitParticle((HitParticleType) particleType, (List<Pair<Predicate<LivingEntityPatch<?>>, HitParticleType>>) (List<?>) ConditionalEntryParser.parseConditionalEntriesFromString(
       hitParticleCompTag, BuiltInRegistries.PARTICLE_TYPE, (particleType1, string) -> {
         if (particleType1 == null) {
           ImaginaryCraft.LOGGER.warn("Cannot find particle type '{}' in {}", string, resourceLocation);
@@ -178,7 +190,7 @@ public abstract class WeaponTypeReloadListenerMixin {
       return;
     }
 
-    IWeaponCapability.IBuilder.of(builder).imaginarycraft$swingSound(sound, ConditionalEntryParser.parseConditionalEntriesFromString(
+    IWeaponCapability$Builder.of(builder).imaginarycraft$swingSound(sound, ConditionalEntryParser.parseConditionalEntriesFromString(
       swingSoundCompTag, BuiltInRegistries.SOUND_EVENT, (soundEvent, string) -> {
         if (soundEvent != null) {
           return true;
@@ -232,7 +244,7 @@ public abstract class WeaponTypeReloadListenerMixin {
       return;
     }
 
-    IWeaponCapability.IBuilder.of(builder).imaginarycraft$hitSound(sound, ConditionalEntryParser.parseConditionalEntriesFromString(
+    IWeaponCapability$Builder.of(builder).imaginarycraft$hitSound(sound, ConditionalEntryParser.parseConditionalEntriesFromString(
       hitSoundCompTag, BuiltInRegistries.SOUND_EVENT, (soundEvent, string) -> {
         if (soundEvent != null) {
           return true;
@@ -355,7 +367,7 @@ public abstract class WeaponTypeReloadListenerMixin {
       return;
     }
 
-    IWeaponCapability.IBuilder.of(builder).imaginarycraft$newStryleCombo(style, defaultPredicates, predicates);
+    IWeaponCapability$Builder.of(builder).imaginarycraft$newStryleCombo(style, defaultPredicates, predicates);
   }
   //endregion
 
@@ -401,7 +413,7 @@ public abstract class WeaponTypeReloadListenerMixin {
       return;
     }
 
-    IWeaponCapability.IBuilder.of(builder).imaginarycraft$innateSkill(style, itemstack -> skill, ConditionalEntryParser.parseConditionalEntries(casesCompoundTag,
+    IWeaponCapability$Builder.of(builder).imaginarycraft$innateSkill(style, itemstack -> skill, ConditionalEntryParser.parseConditionalEntries(casesCompoundTag,
       (a) -> {
         Skill skill1 = EpicFightRegistries.SKILL.get(ResourceLocation.parse(a));
         return itemstack -> skill1;
@@ -479,12 +491,9 @@ public abstract class WeaponTypeReloadListenerMixin {
       return;
     }
 
-    IWeaponCapability.IBuilder.of(builder).imaginarycraft$livingMotionModifier(style, livingmotion, animation, ConditionalEntryParser.parseConditionalEntries(
+    IWeaponCapability$Builder.of(builder).imaginarycraft$livingMotionModifier(style, livingmotion, animation, ConditionalEntryParser.parseConditionalEntries(
       motionCompoundTag, (animId) -> AnimationComboParser.getAnimationAccessor(resourceLocation, extraEntryProvider, animId),
       (a, b) -> false));
   }
   //endregion
 }
-
-
-

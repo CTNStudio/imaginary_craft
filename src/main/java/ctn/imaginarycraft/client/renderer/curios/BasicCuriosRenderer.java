@@ -1,18 +1,21 @@
 package ctn.imaginarycraft.client.renderer.curios;
 
-import com.mojang.blaze3d.vertex.*;
-import ctn.imaginarycraft.common.world.item.ego.curio.*;
-import ctn.imaginarycraft.datagen.*;
-import net.minecraft.client.model.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.entity.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.item.*;
-import org.jetbrains.annotations.*;
-import software.bernie.geckolib.animatable.instance.*;
-import software.bernie.geckolib.renderer.*;
-import top.theillusivec4.curios.api.*;
-import top.theillusivec4.curios.api.client.*;
+import com.mojang.blaze3d.vertex.PoseStack;
+import ctn.imaginarycraft.common.world.item.ego.curio.EgoCurioItem;
+import ctn.imaginarycraft.datagen.DatagenCuriosTest;
+import net.minecraft.client.model.EntityModel;
+import net.minecraft.client.model.HumanoidModel;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.entity.RenderLayerParent;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
+import software.bernie.geckolib.renderer.GeoArmorRenderer;
+import top.theillusivec4.curios.api.SlotContext;
+import top.theillusivec4.curios.api.client.ICurioRenderer;
 
 public class BasicCuriosRenderer implements ICurioRenderer {
   protected final AnimatableInstanceCache animatableInstanceCache;

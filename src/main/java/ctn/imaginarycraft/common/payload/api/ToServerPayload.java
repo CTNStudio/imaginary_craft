@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.common.payload.api;
 
-import net.minecraft.client.player.*;
-import net.minecraft.server.level.*;
-import net.neoforged.neoforge.network.handling.*;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.server.level.ServerPlayer;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public interface ToServerPayload extends ToServerAndClientPayload {
   @Override

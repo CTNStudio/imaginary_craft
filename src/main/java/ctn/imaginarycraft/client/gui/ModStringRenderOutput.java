@@ -1,17 +1,19 @@
 package ctn.imaginarycraft.client.gui;
 
-import com.google.common.collect.*;
-import com.mojang.blaze3d.font.*;
-import com.mojang.blaze3d.vertex.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.gui.font.*;
-import net.minecraft.client.gui.font.glyphs.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.util.*;
-import org.joml.*;
+import com.google.common.collect.Lists;
+import com.mojang.blaze3d.font.GlyphInfo;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.font.FontSet;
+import net.minecraft.client.gui.font.glyphs.BakedGlyph;
+import net.minecraft.client.gui.font.glyphs.EmptyGlyph;
+import net.minecraft.network.chat.Style;
+import net.minecraft.network.chat.TextColor;
+import net.minecraft.util.FormattedCharSink;
+import org.joml.Matrix4f;
 
-import javax.annotation.*;
-import java.util.*;
+import javax.annotation.Nullable;
+import java.util.List;
 
 public class ModStringRenderOutput implements FormattedCharSink {
   private final VertexConsumer vertexConsumer;

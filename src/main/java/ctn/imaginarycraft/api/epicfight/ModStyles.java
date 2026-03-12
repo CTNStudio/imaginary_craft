@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.api.epicfight;
 
-import yesman.epicfight.world.capabilities.item.*;
+import yesman.epicfight.world.capabilities.item.Style;
 
 public enum ModStyles implements Style {
   ;

@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.melee;
 
-import ctn.imaginarycraft.api.world.item.*;
-import ctn.imaginarycraft.common.world.item.ego.weapon.*;
+import ctn.imaginarycraft.api.world.item.IMeleeEgoWeaponItem;
+import ctn.imaginarycraft.common.world.item.ego.weapon.EgoWeaponItem;
 
 public abstract class MeleeEgoWeaponItem extends EgoWeaponItem implements IMeleeEgoWeaponItem {
 

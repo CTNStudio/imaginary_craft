@@ -1,18 +1,22 @@
 package ctn.imaginarycraft.client.renderer.item;
 
-import com.mojang.blaze3d.vertex.*;
-import ctn.imaginarycraft.common.world.item.ego.weapon.melee.special.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.init.world.*;
-import net.minecraft.client.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.item.*;
-import org.jetbrains.annotations.*;
-import software.bernie.geckolib.cache.object.*;
-import software.bernie.geckolib.model.*;
-import software.bernie.geckolib.renderer.layer.*;
+import com.mojang.blaze3d.vertex.PoseStack;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import ctn.imaginarycraft.common.world.item.ego.weapon.melee.special.RedEyesTachiItem;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.init.world.ModMobEffects;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.MultiBufferSource;
+import net.minecraft.client.renderer.RenderType;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.item.ItemDisplayContext;
+import net.minecraft.world.item.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.cache.object.BakedGeoModel;
+import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer;
 
 public class RedEyesTachiItemWeaponRenderer extends ModGeoItemRenderer<RedEyesTachiItem> {
   public static final @NotNull ResourceLocation GLOWING_TEXTURE = ImaginaryCraft.modRl("textures/geo/item/weapon/red_eyes_tachi_shine.png");

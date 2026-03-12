@@ -1,26 +1,36 @@
 package ctn.imaginarycraft.core.registry;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.core.capability.block.*;
-import ctn.imaginarycraft.core.capability.entity.*;
-import ctn.imaginarycraft.core.capability.item.*;
-import ctn.imaginarycraft.init.*;
-import ctn.imaginarycraft.init.world.entity.*;
-import ctn.imaginarycraft.util.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.*;
-import net.minecraft.world.level.block.entity.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.fml.common.*;
-import net.neoforged.neoforge.capabilities.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.api.LcLevel;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.core.capability.block.BlockLcLevel;
+import ctn.imaginarycraft.core.capability.block.IBlockLcLevel;
+import ctn.imaginarycraft.core.capability.entity.EntityLcLevel;
+import ctn.imaginarycraft.core.capability.entity.IEntityLcLevel;
+import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
+import ctn.imaginarycraft.core.capability.item.IItemLcLevel;
+import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
+import ctn.imaginarycraft.core.capability.item.ItemLcLevel;
+import ctn.imaginarycraft.init.ModCapabilitys;
+import ctn.imaginarycraft.init.world.entity.AbnormalitiesEntityTypes;
+import ctn.imaginarycraft.util.LcLevelUtil;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.capabilities.BlockCapability;
+import net.neoforged.neoforge.capabilities.EntityCapability;
+import net.neoforged.neoforge.capabilities.ItemCapability;
+import net.neoforged.neoforge.capabilities.RegisterCapabilitiesEvent;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 
 
 /**

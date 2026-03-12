@@ -1,13 +1,14 @@
 package ctn.imaginarycraft.init.world.item;
 
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.datagen.i18n.*;
-import net.minecraft.world.item.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.neoforge.registries.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.datagen.i18n.ZhCn;
+import net.minecraft.world.item.Item;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.function.*;
+import java.util.function.Function;
 
 public final class WeaponItems {
   public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(ImaginaryCraft.ID);

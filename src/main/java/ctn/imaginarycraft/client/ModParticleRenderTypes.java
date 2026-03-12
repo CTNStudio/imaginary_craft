@@ -1,10 +1,14 @@
 package ctn.imaginarycraft.client;
 
-import com.mojang.blaze3d.systems.*;
-import com.mojang.blaze3d.vertex.*;
-import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.*;
-import net.minecraft.client.renderer.texture.*;
+import com.mojang.blaze3d.systems.RenderSystem;
+import com.mojang.blaze3d.vertex.BufferBuilder;
+import com.mojang.blaze3d.vertex.DefaultVertexFormat;
+import com.mojang.blaze3d.vertex.Tesselator;
+import com.mojang.blaze3d.vertex.VertexFormat;
+import net.minecraft.client.particle.ParticleRenderType;
+import net.minecraft.client.renderer.GameRenderer;
+import net.minecraft.client.renderer.texture.TextureAtlas;
+import net.minecraft.client.renderer.texture.TextureManager;
 
 public final class ModParticleRenderTypes {
   public static final ParticleRenderType LOBOTOMY_CORPORATION_DAMAGE_ICON_PARTICLE = new ParticleRenderType() {

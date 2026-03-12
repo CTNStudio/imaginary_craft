@@ -1,16 +1,17 @@
 package ctn.imaginarycraft.init.world.item;
 
-import ctn.imaginarycraft.api.world.item.*;
-import ctn.imaginarycraft.common.world.item.*;
-import ctn.imaginarycraft.common.world.item.ego.weapon.melee.swords.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.datagen.i18n.*;
-import net.minecraft.world.item.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.neoforge.registries.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.api.world.item.IMeleeEgoWeaponItem;
+import ctn.imaginarycraft.common.world.item.CreativeRationalityToolItem;
+import ctn.imaginarycraft.common.world.item.ego.weapon.melee.swords.ChaosKnifeItem;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.datagen.i18n.ZhCn;
+import net.minecraft.world.item.Item;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredItem;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.function.*;
+import java.util.function.Function;
 
 public final class ToolItems {
   public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(ImaginaryCraft.ID);

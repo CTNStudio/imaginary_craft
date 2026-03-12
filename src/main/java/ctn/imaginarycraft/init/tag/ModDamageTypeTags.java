@@ -1,11 +1,11 @@
 package ctn.imaginarycraft.init.tag;
 
-import ctn.imaginarycraft.core.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.resources.*;
-import net.minecraft.tags.*;
-import net.minecraft.world.damagesource.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.damagesource.DamageType;
+import org.jetbrains.annotations.NotNull;
 
 public final class ModDamageTypeTags {
   /**

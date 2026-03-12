@@ -1,18 +1,23 @@
 package ctn.imaginarycraft.init.world;
 
-import ctn.imaginarycraft.common.world.effect.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.datagen.i18n.*;
-import ctn.imaginarycraft.init.world.item.ego.*;
-import net.minecraft.core.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.effect.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.*;
-import net.neoforged.neoforge.registries.*;
+import ctn.imaginarycraft.common.world.effect.ModMobEffect;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.datagen.i18n.ZhCn;
+import ctn.imaginarycraft.init.world.item.ego.EgoWeaponItems;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectCategory;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
 
-import java.util.function.*;
+import java.util.function.BiFunction;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 public final class ModMobEffects {
   public static final DeferredRegister<MobEffect> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.MOB_EFFECT);

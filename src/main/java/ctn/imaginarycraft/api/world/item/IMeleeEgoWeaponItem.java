@@ -1,10 +1,11 @@
 package ctn.imaginarycraft.api.world.item;
 
-import ctn.imaginarycraft.util.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.*;
+import ctn.imaginarycraft.util.ItemBuilderUtil;
+import net.minecraft.world.entity.EquipmentSlotGroup;
+import net.minecraft.world.entity.ai.attributes.AttributeModifier;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.ItemAttributeModifiers;
 
 /**
  * 所有E.G.O近战武器都应该继承这个

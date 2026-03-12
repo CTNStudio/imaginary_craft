@@ -1,9 +1,10 @@
 package ctn.imaginarycraft.api.data;
 
-import com.mojang.datafixers.util.*;
+import com.mojang.datafixers.util.Pair;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.List;
+import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * 条件化提供者工厂

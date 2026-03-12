@@ -1,26 +1,28 @@
 package ctn.imaginarycraft.datagen.i18n;
 
-import ctn.imaginarycraft.api.virtue.*;
-import ctn.imaginarycraft.common.command.*;
-import ctn.imaginarycraft.common.components.*;
-import ctn.imaginarycraft.common.world.item.ego.curio.*;
-import ctn.imaginarycraft.config.*;
-import ctn.imaginarycraft.datagen.*;
-import ctn.imaginarycraft.init.tag.*;
-import ctn.imaginarycraft.init.world.*;
-import ctn.imaginarycraft.init.world.item.ego.*;
-import ctn.imaginarycraft.linkage.jade.*;
-import net.minecraft.data.*;
-import net.minecraft.sounds.*;
-import net.minecraft.world.effect.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.*;
-import net.minecraft.world.item.*;
-import net.neoforged.fml.loading.*;
-import net.neoforged.neoforge.registries.*;
+import ctn.imaginarycraft.api.virtue.VirtueType;
+import ctn.imaginarycraft.common.command.RationalityCommands;
+import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
+import ctn.imaginarycraft.common.world.item.ego.curio.EgoCurioItem;
+import ctn.imaginarycraft.config.ModConfig;
+import ctn.imaginarycraft.datagen.DatagenCuriosTest;
+import ctn.imaginarycraft.init.tag.ModItemTags;
+import ctn.imaginarycraft.init.world.ModDamageTypes;
+import ctn.imaginarycraft.init.world.item.ego.EgoCurioItems;
+import ctn.imaginarycraft.linkage.jade.LivingEntityVulnerable;
+import ctn.imaginarycraft.linkage.jade.ModJadePlugin;
+import net.minecraft.data.PackOutput;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.item.Item;
+import net.neoforged.fml.loading.FMLEnvironment;
+import net.neoforged.neoforge.registries.DeferredHolder;
 
-import java.util.*;
-import java.util.function.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.function.Supplier;
 
 public final class ZhCn extends DatagenI18n {
   private static final Map<Supplier<? extends Item>, String> ITEMS = new HashMap<>();

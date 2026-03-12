@@ -1,17 +1,18 @@
 package ctn.imaginarycraft.mixin.world.skill;
 
-import com.llamalad7.mixinextras.injector.wrapoperation.*;
-import com.llamalad7.mixinextras.sugar.*;
-import ctn.imaginarycraft.mixed.*;
-import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.*;
-import yesman.epicfight.api.animation.*;
-import yesman.epicfight.api.animation.types.*;
-import yesman.epicfight.skill.common.*;
-import yesman.epicfight.world.capabilities.entitypatch.player.*;
-import yesman.epicfight.world.capabilities.item.*;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import ctn.imaginarycraft.mixed.IWeaponCapability;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import yesman.epicfight.api.animation.AnimationManager;
+import yesman.epicfight.api.animation.types.AttackAnimation;
+import yesman.epicfight.skill.common.ComboAttacks;
+import yesman.epicfight.world.capabilities.entitypatch.player.ServerPlayerPatch;
+import yesman.epicfight.world.capabilities.item.CapabilityItem;
 
-import java.util.*;
+import java.util.List;
 
 @Mixin(ComboAttacks.class)
 public abstract class ComboAttacksMixin {

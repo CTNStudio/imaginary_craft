@@ -1,21 +1,27 @@
 package ctn.imaginarycraft.util;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.core.capability.block.*;
-import ctn.imaginarycraft.core.capability.entity.*;
-import ctn.imaginarycraft.core.capability.item.*;
-import ctn.imaginarycraft.core.registry.*;
-import ctn.imaginarycraft.init.*;
-import net.minecraft.core.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.*;
-import net.minecraft.world.level.block.entity.*;
-import net.minecraft.world.level.block.state.*;
-import net.neoforged.neoforge.registries.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.api.LcLevel;
+import ctn.imaginarycraft.core.capability.block.IBlockLcLevel;
+import ctn.imaginarycraft.core.capability.entity.IEntityLcLevel;
+import ctn.imaginarycraft.core.capability.item.IItemLcLevel;
+import ctn.imaginarycraft.core.registry.CapabilityRegistry;
+import ctn.imaginarycraft.init.ModCapabilitys;
+import net.minecraft.core.BlockPos;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.SpawnEggItem;
+import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.registries.DeferredItem;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 public final class LcLevelUtil {
   // 仅内部开发使用

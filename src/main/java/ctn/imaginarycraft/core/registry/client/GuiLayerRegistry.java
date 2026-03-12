@@ -1,16 +1,18 @@
 package ctn.imaginarycraft.core.registry.client;
 
-import com.mojang.blaze3d.vertex.*;
-import ctn.imaginarycraft.client.*;
-import ctn.imaginarycraft.client.gui.hudlayers.*;
-import ctn.imaginarycraft.client.gui.hudlayers.chop_flavor.*;
-import ctn.imaginarycraft.client.gui.hudlayers.screenfilter.*;
-import ctn.imaginarycraft.core.*;
-import net.neoforged.api.distmarker.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.fml.common.*;
-import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.client.gui.*;
+import com.mojang.blaze3d.vertex.PoseStack;
+import ctn.imaginarycraft.client.ModGuiLayers;
+import ctn.imaginarycraft.client.gui.hudlayers.GunChargeUpHudLayer;
+import ctn.imaginarycraft.client.gui.hudlayers.LeftBarLayer;
+import ctn.imaginarycraft.client.gui.hudlayers.chop_flavor.ChopFlavorLayer;
+import ctn.imaginarycraft.client.gui.hudlayers.screenfilter.LcDamageScreenFilterLayer;
+import ctn.imaginarycraft.client.gui.hudlayers.screenfilter.RationalityScreenFilterLayer;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.RegisterGuiLayersEvent;
+import net.neoforged.neoforge.client.gui.VanillaGuiLayers;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID, value = Dist.CLIENT)
 public final class GuiLayerRegistry {

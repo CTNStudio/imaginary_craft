@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.datagen;
 
-import ctn.imaginarycraft.core.*;
-import net.minecraft.data.*;
-import net.neoforged.neoforge.client.model.generators.*;
-import net.neoforged.neoforge.common.data.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.data.PackOutput;
+import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 public final class DatagenBlockState extends BlockStateProvider {
   public DatagenBlockState(PackOutput output, ExistingFileHelper exFileHelper) {

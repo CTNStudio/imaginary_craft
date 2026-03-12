@@ -1,14 +1,14 @@
 package ctn.imaginarycraft.client.gui.hudlayers.chop_flavor;
 
-import com.mojang.blaze3d.vertex.*;
-import ctn.imaginarycraft.client.gui.widget.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.init.world.*;
-import net.minecraft.client.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.player.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.effect.*;
+import com.mojang.blaze3d.vertex.PoseStack;
+import ctn.imaginarycraft.client.gui.widget.ImageProgressBar;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.init.world.ModMobEffects;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffectInstance;
 
 public class RedEyesTachiChopFlavor extends ChopFlavorLayer.ChopFlavorBar {
   public static final ResourceLocation BOTTOM = ImaginaryCraft.modRl("chop_flavor/red_eyes_tachi/bottom");

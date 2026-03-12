@@ -1,17 +1,22 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.remote.gun;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.common.world.item.ego.weapon.remote.*;
-import ctn.imaginarycraft.util.*;
-import net.minecraft.server.level.*;
-import net.minecraft.world.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.player.*;
-import net.minecraft.world.entity.projectile.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.level.*;
-import org.jetbrains.annotations.*;
-import software.bernie.geckolib.model.*;
+import ctn.imaginarycraft.api.DelayTaskHolder;
+import ctn.imaginarycraft.api.IGunWeapon;
+import ctn.imaginarycraft.common.world.item.ego.weapon.remote.RemoteEgoWeaponGeoItem;
+import ctn.imaginarycraft.util.GunWeaponUtil;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.Projectile;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.Level;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.model.GeoModel;
 
 /**
  * 枪械EGO武器物品抽象类

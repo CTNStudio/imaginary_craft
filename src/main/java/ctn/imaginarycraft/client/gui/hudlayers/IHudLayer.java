@@ -1,8 +1,11 @@
 package ctn.imaginarycraft.client.gui.hudlayers;
 
-import net.minecraft.client.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.client.player.*;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.gui.LayeredDraw;
+import net.minecraft.client.player.LocalPlayer;
 
 public abstract class IHudLayer implements LayeredDraw.Layer {
   protected int leftPos;

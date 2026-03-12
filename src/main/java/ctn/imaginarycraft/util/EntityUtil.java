@@ -1,9 +1,10 @@
 package ctn.imaginarycraft.util;
 
-import net.minecraft.world.phys.*;
+import net.minecraft.world.phys.Vec3;
 
-import java.util.*;
-import java.util.concurrent.*;
+import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class EntityUtil {
   public static double angleBetween(Vec3 v1, Vec3 v2) {

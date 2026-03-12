@@ -1,13 +1,13 @@
 package ctn.imaginarycraft.events.entity;
 
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.eventexecute.*;
-import net.minecraft.server.level.*;
-import net.minecraft.world.entity.player.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.fml.common.*;
-import net.neoforged.neoforge.event.entity.player.*;
-import net.neoforged.neoforge.event.tick.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.eventexecute.RationalityEventExecutes;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.event.entity.player.PlayerEvent;
+import net.neoforged.neoforge.event.tick.PlayerTickEvent;
 
 /**
  * 玩家相关事件

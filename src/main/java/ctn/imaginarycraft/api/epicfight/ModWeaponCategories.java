@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.api.epicfight;
 
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.datagen.i18n.*;
-import net.minecraft.network.chat.*;
-import yesman.epicfight.world.capabilities.item.*;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.datagen.i18n.ZhCn;
+import net.minecraft.network.chat.Component;
+import yesman.epicfight.world.capabilities.item.WeaponCategory;
 
 public enum ModWeaponCategories implements WeaponCategory {
   HAMMER("weapon_category." + ImaginaryCraft.modRlText("hammer"), "锤"),

@@ -1,18 +1,23 @@
 package ctn.imaginarycraft.init;
 
-import com.mojang.serialization.*;
-import ctn.imaginarycraft.client.particle.*;
-import ctn.imaginarycraft.client.particle.magicbullet.*;
-import ctn.imaginarycraft.client.particle.text.*;
-import ctn.imaginarycraft.core.*;
-import net.minecraft.core.particles.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.network.*;
-import net.minecraft.network.codec.*;
-import net.neoforged.neoforge.registries.*;
-import org.jetbrains.annotations.*;
+import com.mojang.serialization.MapCodec;
+import ctn.imaginarycraft.client.particle.DyeingMagicCircleParticle;
+import ctn.imaginarycraft.client.particle.LcDamageIconParticle;
+import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
+import ctn.imaginarycraft.client.particle.text.DamageTextParticle;
+import ctn.imaginarycraft.client.particle.text.TextParticle;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.core.particles.SimpleParticleType;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.RegistryFriendlyByteBuf;
+import net.minecraft.network.codec.StreamCodec;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.function.*;
+import java.util.function.Supplier;
 
 /**
  * 粒子类型
@@ -21,23 +26,23 @@ public final class ModParticleTypes {
   public static final DeferredRegister<ParticleType<?>> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.PARTICLE_TYPE);
 
   public static final Supplier<ParticleType<TextParticle.Options>> TEXT = register(
-    "text", false, TextParticle.Options.CODEC, TextParticle.Options.STREAM_CODEC);
+    "text", true, TextParticle.Options.CODEC, TextParticle.Options.STREAM_CODEC);
   public static final Supplier<ParticleType<DamageTextParticle.Options>> DAMAGE_TEXT = register(
-    "damage_text", false, DamageTextParticle.Options.CODEC, DamageTextParticle.Options.STREAM_CODEC);
+    "damage_text", true, DamageTextParticle.Options.CODEC, DamageTextParticle.Options.STREAM_CODEC);
 
   public static final Supplier<ParticleType<LcDamageIconParticle.Options>> LC_DAMAGE_ICON = register(
-    "lobotomycorporation_damage_icon", false, LcDamageIconParticle.Options.CODEC, LcDamageIconParticle.Options.STREAM_CODEC);
+    "lobotomycorporation_damage_icon", true, LcDamageIconParticle.Options.CODEC, LcDamageIconParticle.Options.STREAM_CODEC);
 
   public static final Supplier<ParticleType<DyeingMagicCircleParticle.Options>> DYEING_MAGIC_CIRCLE = register(
-    "dyeing_magic_circle", false, DyeingMagicCircleParticle.Options.CODEC, DyeingMagicCircleParticle.Options.STREAM_CODEC);
+    "dyeing_magic_circle", true, DyeingMagicCircleParticle.Options.CODEC, DyeingMagicCircleParticle.Options.STREAM_CODEC);
 
   public static final Supplier<ParticleType<MagicBulletMagicCircleParticle.Options>> MAGIC_BULLET_MAGIC_CIRCLE = register(
-    "magic_bullet_magic_circle", false, MagicBulletMagicCircleParticle.Options.CODEC, MagicBulletMagicCircleParticle.Options.STREAM_CODEC);
+    "magic_bullet_magic_circle", true, MagicBulletMagicCircleParticle.Options.CODEC, MagicBulletMagicCircleParticle.Options.STREAM_CODEC);
 
   public static final DeferredHolder<ParticleType<?>, SimpleParticleType> SOLEMN_LAMENT_BUTTERFLY_BLACK = registerSimpleParticle(
-    "solemn_lament_butterfly_black", false);
+    "solemn_lament_butterfly_black", true);
   public static final DeferredHolder<ParticleType<?>, SimpleParticleType> SOLEMN_LAMENT_BUTTERFLY_WHITE = registerSimpleParticle(
-    "solemn_lament_butterfly_white", false);
+    "solemn_lament_butterfly_white", true);
 
   private static <T extends ParticleOptions> @NotNull DeferredHolder<ParticleType<?>, ParticleType<T>> register(
     String id,

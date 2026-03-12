@@ -1,20 +1,25 @@
 package ctn.imaginarycraft.mixin.world;
 
-import com.llamalad7.mixinextras.injector.wrapmethod.*;
-import com.llamalad7.mixinextras.injector.wrapoperation.*;
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.mixed.*;
-import ctn.imaginarycraft.util.*;
-import net.minecraft.core.*;
-import net.minecraft.world.damagesource.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.phys.*;
-import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.*;
-import org.spongepowered.asm.mixin.injection.callback.*;
+import com.llamalad7.mixinextras.injector.wrapmethod.WrapMethod;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.api.LcLevel;
+import ctn.imaginarycraft.mixed.IDamageSource;
+import ctn.imaginarycraft.util.LcDamageTypeUtil;
+import ctn.imaginarycraft.util.LcLevelUtil;
+import net.minecraft.core.Holder;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.damagesource.DamageType;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.phys.Vec3;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-import javax.annotation.*;
+import javax.annotation.Nullable;
 
 /**
  * @author 尽

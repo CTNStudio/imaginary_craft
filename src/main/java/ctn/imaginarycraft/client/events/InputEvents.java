@@ -1,17 +1,20 @@
 package ctn.imaginarycraft.client.events;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.client.eventexecute.*;
-import ctn.imaginarycraft.core.*;
-import net.minecraft.client.*;
-import net.minecraft.client.player.*;
-import net.minecraft.world.entity.player.*;
-import net.minecraft.world.item.*;
-import net.neoforged.api.distmarker.*;
-import net.neoforged.bus.api.*;
-import net.neoforged.fml.common.*;
-import net.neoforged.neoforge.client.event.*;
-import net.neoforged.neoforge.event.entity.player.*;
+import ctn.imaginarycraft.api.IGunWeapon;
+import ctn.imaginarycraft.api.IPlayerItemAttackClick;
+import ctn.imaginarycraft.client.eventexecute.InputEventExecute;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.player.LocalPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.EventPriority;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ClientTickEvent;
+import net.neoforged.neoforge.client.event.InputEvent;
+import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
 
 @EventBusSubscriber(modid = ImaginaryCraft.ID, value = Dist.CLIENT)
 public final class InputEvents {

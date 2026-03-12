@@ -1,10 +1,10 @@
 package ctn.imaginarycraft.common.payload.api;
 
-import net.minecraft.client.player.*;
-import net.minecraft.network.protocol.common.custom.*;
-import net.minecraft.server.level.*;
-import net.minecraft.world.entity.player.*;
-import net.neoforged.neoforge.network.handling.*;
+import net.minecraft.client.player.AbstractClientPlayer;
+import net.minecraft.network.protocol.common.custom.CustomPacketPayload;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.player.Player;
+import net.neoforged.neoforge.network.handling.IPayloadContext;
 
 public interface ToServerAndClientPayload extends CustomPacketPayload {
   default void handle(IPayloadContext context) {

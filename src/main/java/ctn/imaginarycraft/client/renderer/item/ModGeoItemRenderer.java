@@ -1,11 +1,12 @@
 package ctn.imaginarycraft.client.renderer.item;
 
-import net.minecraft.world.item.*;
-import org.jetbrains.annotations.*;
-import software.bernie.geckolib.animatable.*;
-import software.bernie.geckolib.model.*;
-import software.bernie.geckolib.renderer.*;
-import software.bernie.geckolib.renderer.layer.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemDisplayContext;
+import org.jetbrains.annotations.Nullable;
+import software.bernie.geckolib.animatable.GeoAnimatable;
+import software.bernie.geckolib.model.GeoModel;
+import software.bernie.geckolib.renderer.GeoItemRenderer;
+import software.bernie.geckolib.renderer.layer.BlockAndItemGeoLayer;
 
 /**
  * 一个特殊的物品渲染可在GUI和世界中以不同的模型渲染

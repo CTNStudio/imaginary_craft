@@ -1,11 +1,11 @@
 package ctn.imaginarycraft.mixed.client;
 
-import com.mojang.blaze3d.vertex.*;
-import ctn.imaginarycraft.api.*;
-import net.minecraft.client.gui.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.util.*;
-import org.joml.*;
+import com.mojang.blaze3d.vertex.VertexConsumer;
+import ctn.imaginarycraft.api.NoMixinException;
+import net.minecraft.client.gui.Font;
+import net.minecraft.network.chat.Component;
+import net.minecraft.util.FormattedCharSequence;
+import org.joml.Matrix4f;
 
 /**
  * 字体渲染扩展接口，提供额外的字体绘制功能

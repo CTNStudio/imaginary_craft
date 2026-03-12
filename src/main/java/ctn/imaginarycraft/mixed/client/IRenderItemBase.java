@@ -1,9 +1,9 @@
 package ctn.imaginarycraft.mixed.client;
 
-import ctn.imaginarycraft.api.*;
-import yesman.epicfight.api.client.animation.property.*;
-import yesman.epicfight.client.renderer.patched.item.*;
-import yesman.epicfight.world.capabilities.entitypatch.*;
+import ctn.imaginarycraft.api.NoMixinException;
+import yesman.epicfight.api.client.animation.property.TrailInfo;
+import yesman.epicfight.client.renderer.patched.item.RenderItemBase;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 public interface IRenderItemBase {
   static IRenderItemBase of(RenderItemBase renderItemBase) {

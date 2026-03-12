@@ -1,20 +1,24 @@
 package ctn.imaginarycraft.common.world.entity.condition;
 
-import com.ibm.icu.text.*;
-import net.minecraft.client.gui.screens.*;
-import net.minecraft.core.*;
-import net.minecraft.core.registries.*;
-import net.minecraft.nbt.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.resources.*;
-import net.minecraft.world.effect.*;
-import yesman.epicfight.api.utils.*;
-import yesman.epicfight.api.utils.side.*;
-import yesman.epicfight.client.gui.datapack.widgets.*;
-import yesman.epicfight.data.conditions.*;
-import yesman.epicfight.world.capabilities.entitypatch.*;
+import com.ibm.icu.text.MessageFormat;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.core.Holder;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.nbt.CompoundTag;
+import net.minecraft.nbt.StringTag;
+import net.minecraft.nbt.Tag;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
+import yesman.epicfight.api.utils.ParseUtil;
+import yesman.epicfight.api.utils.side.ClientOnly;
+import yesman.epicfight.client.gui.datapack.widgets.PopupBox;
+import yesman.epicfight.data.conditions.Condition;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
-import java.util.*;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 public class MobEffectsCondition extends Condition.EntityPatchCondition {
   private Holder<MobEffect> effectHolder;

@@ -1,20 +1,28 @@
 package ctn.imaginarycraft.mixin.world.item;
 
-import com.llamalad7.mixinextras.expression.*;
-import com.llamalad7.mixinextras.injector.*;
-import com.llamalad7.mixinextras.injector.wrapoperation.*;
-import com.llamalad7.mixinextras.sugar.*;
-import ctn.imaginarycraft.client.event.*;
-import ctn.imaginarycraft.init.*;
-import net.minecraft.core.component.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.*;
-import org.jetbrains.annotations.*;
-import org.spongepowered.asm.mixin.*;
-import org.spongepowered.asm.mixin.injection.*;
+import com.llamalad7.mixinextras.expression.Definition;
+import com.llamalad7.mixinextras.expression.Expression;
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import com.llamalad7.mixinextras.sugar.Local;
+import ctn.imaginarycraft.client.event.AddItemDataComponentTooltipEvent;
+import ctn.imaginarycraft.init.ModDataComponents;
+import net.minecraft.core.component.DataComponentHolder;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipProvider;
+import org.jetbrains.annotations.NotNull;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
+import org.spongepowered.asm.mixin.injection.At;
 
-import java.util.function.*;
+import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin implements DataComponentHolder, net.neoforged.neoforge.common.MutableDataComponentHolder, net.neoforged.neoforge.common.extensions.IItemStackExtension {

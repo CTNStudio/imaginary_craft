@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.remote.gun;
 
-import ctn.imaginarycraft.common.world.item.ego.weapon.remote.*;
-import software.bernie.geckolib.model.*;
+import ctn.imaginarycraft.common.world.item.ego.weapon.remote.RemoteEgoWeaponGeoItem;
+import software.bernie.geckolib.model.GeoModel;
 
 public class PistolEgoWeaponItem extends GunEgoWeaponItem {
   public PistolEgoWeaponItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<RemoteEgoWeaponGeoItem> geoModel, GeoModel<RemoteEgoWeaponGeoItem> guiModel) {

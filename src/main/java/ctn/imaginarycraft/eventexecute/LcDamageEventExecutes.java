@@ -1,16 +1,20 @@
 package ctn.imaginarycraft.eventexecute;
 
-import ctn.imaginarycraft.api.*;
-import ctn.imaginarycraft.mixed.*;
-import ctn.imaginarycraft.util.*;
-import net.minecraft.core.*;
-import net.minecraft.world.damagesource.*;
-import net.minecraft.world.entity.*;
-import net.minecraft.world.entity.ai.attributes.*;
-import net.minecraft.world.item.*;
-import net.neoforged.neoforge.common.damagesource.*;
+import ctn.imaginarycraft.api.LcDamageType;
+import ctn.imaginarycraft.api.LcLevel;
+import ctn.imaginarycraft.mixed.IDamageSource;
+import ctn.imaginarycraft.util.LcLevelUtil;
+import net.minecraft.core.Holder;
+import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.ai.attributes.Attribute;
+import net.minecraft.world.entity.ai.attributes.AttributeInstance;
+import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.item.ItemStack;
+import net.neoforged.neoforge.common.damagesource.DamageContainer;
 
-import javax.annotation.*;
+import javax.annotation.Nullable;
 
 // TODO 精神伤害之类的不能被原版防御处理
 public final class LcDamageEventExecutes {

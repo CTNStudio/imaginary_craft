@@ -1,17 +1,18 @@
 package ctn.imaginarycraft.datagen;
 
-import ctn.imaginarycraft.client.particle.*;
-import ctn.imaginarycraft.core.*;
-import ctn.imaginarycraft.init.*;
-import net.minecraft.core.particles.*;
-import net.minecraft.data.*;
-import net.minecraft.resources.*;
-import net.neoforged.neoforge.common.data.*;
-import org.jetbrains.annotations.*;
+import ctn.imaginarycraft.client.particle.LcDamageIconParticle;
+import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.init.ModParticleTypes;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+import net.neoforged.neoforge.common.data.ParticleDescriptionProvider;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.Arrays;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 public final class DatagenParticle extends ParticleDescriptionProvider {
   public DatagenParticle(PackOutput output, ExistingFileHelper fileHelper) {

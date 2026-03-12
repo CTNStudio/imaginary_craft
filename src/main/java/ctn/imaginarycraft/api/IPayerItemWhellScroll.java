@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.api;
 
-import net.minecraft.world.*;
-import net.minecraft.world.entity.player.*;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.player.Player;
 
 // TODO 待完成
 public interface IPayerItemWhellScroll {

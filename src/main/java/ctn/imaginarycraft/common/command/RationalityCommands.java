@@ -1,17 +1,19 @@
 package ctn.imaginarycraft.common.command;
 
-import com.mojang.brigadier.*;
-import com.mojang.brigadier.arguments.*;
-import com.mojang.brigadier.builder.*;
-import ctn.imaginarycraft.init.world.*;
-import ctn.imaginarycraft.util.*;
-import net.minecraft.commands.*;
-import net.minecraft.commands.arguments.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.server.level.*;
-import org.jetbrains.annotations.*;
+import com.mojang.brigadier.Command;
+import com.mojang.brigadier.CommandDispatcher;
+import com.mojang.brigadier.arguments.FloatArgumentType;
+import com.mojang.brigadier.builder.LiteralArgumentBuilder;
+import ctn.imaginarycraft.init.world.ModAttributes;
+import ctn.imaginarycraft.util.RationalityUtil;
+import net.minecraft.commands.CommandSourceStack;
+import net.minecraft.commands.Commands;
+import net.minecraft.commands.arguments.EntityArgument;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerPlayer;
+import org.jetbrains.annotations.NotNull;
 
-import static ctn.imaginarycraft.datagen.i18n.DatagenI18n.*;
+import static ctn.imaginarycraft.datagen.i18n.DatagenI18n.getFormattedKey;
 
 public class RationalityCommands {
   public static final String SET_KEY = "set_rationality";

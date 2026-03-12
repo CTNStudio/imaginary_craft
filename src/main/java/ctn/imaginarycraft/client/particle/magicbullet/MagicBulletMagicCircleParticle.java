@@ -1,18 +1,24 @@
 package ctn.imaginarycraft.client.particle.magicbullet;
 
-import com.mojang.serialization.*;
-import com.mojang.serialization.codecs.*;
-import ctn.imaginarycraft.client.particle.*;
-import ctn.imaginarycraft.init.*;
-import io.netty.buffer.*;
-import net.minecraft.client.multiplayer.*;
-import net.minecraft.client.particle.*;
-import net.minecraft.client.renderer.texture.*;
-import net.minecraft.core.particles.*;
-import net.minecraft.network.codec.*;
-import org.jetbrains.annotations.*;
+import com.mojang.serialization.Codec;
+import com.mojang.serialization.MapCodec;
+import com.mojang.serialization.codecs.RecordCodecBuilder;
+import ctn.imaginarycraft.client.particle.DyeingMagicCircleParticle;
+import ctn.imaginarycraft.init.ModParticleTypes;
+import io.netty.buffer.ByteBuf;
+import net.minecraft.client.multiplayer.ClientLevel;
+import net.minecraft.client.particle.Particle;
+import net.minecraft.client.particle.ParticleEngine;
+import net.minecraft.client.particle.ParticleProvider;
+import net.minecraft.client.particle.SpriteSet;
+import net.minecraft.client.renderer.texture.TextureAtlasSprite;
+import net.minecraft.core.particles.ParticleOptions;
+import net.minecraft.core.particles.ParticleType;
+import net.minecraft.network.codec.ByteBufCodecs;
+import net.minecraft.network.codec.StreamCodec;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.List;
 
 public class MagicBulletMagicCircleParticle extends DyeingMagicCircleParticle {
 

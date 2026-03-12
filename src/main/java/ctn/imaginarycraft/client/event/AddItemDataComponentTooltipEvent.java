@@ -1,12 +1,15 @@
 package ctn.imaginarycraft.client.event;
 
-import net.minecraft.core.component.*;
-import net.minecraft.network.chat.*;
-import net.minecraft.world.item.*;
-import net.minecraft.world.item.component.*;
-import net.neoforged.bus.api.*;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.TooltipFlag;
+import net.minecraft.world.item.component.TooltipProvider;
+import net.neoforged.bus.api.Event;
+import net.neoforged.bus.api.ICancellableEvent;
 
-import java.util.function.*;
+import java.util.function.Consumer;
 
 /**
  * 在{@link ItemStack#addToTooltip(DataComponentType, Item.TooltipContext, Consumer, TooltipFlag)}中调用
