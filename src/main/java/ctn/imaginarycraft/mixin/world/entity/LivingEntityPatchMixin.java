@@ -49,7 +49,7 @@ public abstract class LivingEntityPatchMixin {
       return original.call(instance);
     }
 
-    T t = function.apply(iWeaponCapability, imaginarycraft$getLivingEntitypatch());
+    T t = function.apply(iWeaponCapability, imaginarycraft$getThis());
     if (t != null) {
       return t;
     }
@@ -57,7 +57,7 @@ public abstract class LivingEntityPatchMixin {
   }
 
   @Unique
-  private LivingEntityPatch<?> imaginarycraft$getLivingEntitypatch() {
+  private LivingEntityPatch<?> imaginarycraft$getThis() {
     return (LivingEntityPatch<?>) (Object) this;
   }
 }

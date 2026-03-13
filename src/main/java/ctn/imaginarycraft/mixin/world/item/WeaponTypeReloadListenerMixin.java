@@ -8,7 +8,6 @@ import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import com.mojang.datafixers.util.Pair;
 import ctn.imaginarycraft.api.data.AnimationComboParser;
 import ctn.imaginarycraft.api.data.ConditionalEntryParser;
-import ctn.imaginarycraft.api.data.ModWeaponTypeReloadListener;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.mixed.IWeaponCapability$Builder;
 import net.minecraft.core.particles.ParticleType;
@@ -214,7 +213,7 @@ public abstract class WeaponTypeReloadListenerMixin {
       return original.call(compoundTag, key, tagTypeInt);
     }
 
-    Tag defaultStyleTag = styleCompoundTag.get(ModWeaponTypeReloadListener.DEFAULT);
+    Tag defaultStyleTag = styleCompoundTag.get(ConditionalEntryParser.DEFAULT);
     if (defaultStyleTag == null) {
       ImaginaryCraft.LOGGER.warn("Cannot find default combos config in {}", resourceLocation);
       return original.call(compoundTag, key, tagTypeInt);
@@ -256,8 +255,8 @@ public abstract class WeaponTypeReloadListenerMixin {
       return original.call(listTag, index);
     }
 
-    if (tagCompound.contains(ModWeaponTypeReloadListener.DEFAULT)) {
-      return tagCompound.getString(ModWeaponTypeReloadListener.DEFAULT);
+    if (tagCompound.contains(ConditionalEntryParser.DEFAULT)) {
+      return tagCompound.getString(ConditionalEntryParser.DEFAULT);
     }
 
     ImaginaryCraft.LOGGER.warn("Cannot find default animation in {}", resourceLocation);
@@ -306,8 +305,8 @@ public abstract class WeaponTypeReloadListenerMixin {
     String key,
     Operation<String> original
   ) {
-    if (compoundTag.contains(ModWeaponTypeReloadListener.DEFAULT)) {
-      return compoundTag.getString(ModWeaponTypeReloadListener.DEFAULT);
+    if (compoundTag.contains(ConditionalEntryParser.DEFAULT)) {
+      return compoundTag.getString(ConditionalEntryParser.DEFAULT);
     }
     return original.call(compoundTag, key);
   }
@@ -357,8 +356,8 @@ public abstract class WeaponTypeReloadListenerMixin {
     Operation<Set<String>> original
   ) {
     var call = original.call(instance);
-    if (call.contains(ModWeaponTypeReloadListener.DEFAULT)) {
-      return instance.getCompound(ModWeaponTypeReloadListener.DEFAULT).getAllKeys();
+    if (call.contains(ConditionalEntryParser.DEFAULT)) {
+      return instance.getCompound(ConditionalEntryParser.DEFAULT).getAllKeys();
     }
 
     return call;
@@ -376,14 +375,14 @@ public abstract class WeaponTypeReloadListenerMixin {
     String key,
     Operation<String> original
   ) {
-    var tag1 = compoundTag.get(ModWeaponTypeReloadListener.DEFAULT);
+    var tag1 = compoundTag.get(ConditionalEntryParser.DEFAULT);
     if (!(tag1 instanceof CompoundTag compTag)) {
       return original.call(compoundTag, key);
     }
 
     Tag tag = compTag.get(key);
     if (tag instanceof CompoundTag tagCompound) {
-      return tagCompound.getString(ModWeaponTypeReloadListener.DEFAULT);
+      return tagCompound.getString(ConditionalEntryParser.DEFAULT);
     }
     return tag.getAsString();
   }

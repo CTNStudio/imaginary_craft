@@ -7,7 +7,6 @@ import com.llamalad7.mixinextras.sugar.Local;
 import com.mojang.datafixers.util.Pair;
 import ctn.imaginarycraft.api.data.ConditionalEntryParser;
 import ctn.imaginarycraft.api.data.ConditionalProviderFactory;
-import ctn.imaginarycraft.api.data.ModWeaponTypeReloadListener;
 import ctn.imaginarycraft.mixed.client.IRenderItemBase;
 import net.minecraft.resources.ResourceLocation;
 import org.spongepowered.asm.mixin.Final;
@@ -58,7 +57,7 @@ public abstract class RenderItemBaseMixin implements IRenderItemBase {
           var conditionsList = entry.getAsJsonArray("conditions");
           for (int i = 0; i < conditionsList.size(); i++) {
             var jsonObject = conditionsList.get(i).getAsJsonObject();
-            String predicateId = jsonObject.get(ModWeaponTypeReloadListener.PREDICATE).getAsString();
+            String predicateId = jsonObject.get(ConditionalEntryParser.PREDICATE).getAsString();
 
             try {
               Supplier<Condition.EntityPatchCondition> conditionProvider = EpicFightConditions.getConditionOrThrow(ResourceLocation.parse(predicateId));

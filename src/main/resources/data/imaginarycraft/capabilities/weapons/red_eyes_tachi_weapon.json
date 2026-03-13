@@ -1,5 +1,7 @@
 {
   "type": "imaginarycraft:red_eyes_tachi_weapon",
   "attributes": {
+    "impact": 2.1,
+    "max_strikes": 2
   }
 }

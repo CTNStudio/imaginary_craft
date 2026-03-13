@@ -2,9 +2,8 @@ package ctn.imaginarycraft.core.registry;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.core.ImaginaryCraftConstants;
-import ctn.imaginarycraft.init.world.ModWeaponCapabilityPresets;
 import ctn.imaginarycraft.init.world.item.ego.EgoWeaponItems;
-import ctn.imaginarycraft.mixin.world.skill.WeaponTypeReloadListenerAccessorMixin;
+import ctn.imaginarycraft.mixin.world.item.WeaponTypeReloadListenerAccessorMixin;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -37,27 +36,27 @@ public final class EpicFightRegistry {
   }
 
   private static void registerWeaponType() {
-    register(ImaginaryCraft.modRl("hammer"), ModWeaponCapabilityPresets.HAMMER);
-    register(ImaginaryCraft.modRl("mace"), ModWeaponCapabilityPresets.MACE);
-    register(ImaginaryCraft.modRl("cannon"), ModWeaponCapabilityPresets.CANNON);
-    register(ImaginaryCraft.modRl("gun"), ModWeaponCapabilityPresets.GUN);
-    register(ImaginaryCraft.modRl("pistol"), ModWeaponCapabilityPresets.PISTOL);
-    register(ImaginaryCraft.modRl("rifle"), ModWeaponCapabilityPresets.RIFLE);
+//    register(ImaginaryCraft.modRl("hammer"), ModWeaponCapabilityPresets.HAMMER);
+//    register(ImaginaryCraft.modRl("mace"), ModWeaponCapabilityPresets.MACE);
+//    register(ImaginaryCraft.modRl("cannon"), ModWeaponCapabilityPresets.CANNON);
+//    register(ImaginaryCraft.modRl("gun"), ModWeaponCapabilityPresets.GUN);
+//    register(ImaginaryCraft.modRl("pistol"), ModWeaponCapabilityPresets.PISTOL);
+//    register(ImaginaryCraft.modRl("rifle"), ModWeaponCapabilityPresets.RIFLE);
   }
 
   private static void registerWeaponTypesByClass() {
-    register(ImaginaryCraftConstants.GUN, ModWeaponCapabilityPresets.GUN);
-    register(ImaginaryCraftConstants.PISTOL, ModWeaponCapabilityPresets.PISTOL);
-    register(ImaginaryCraftConstants.RIFLE, ModWeaponCapabilityPresets.RIFLE);
-    register(ImaginaryCraftConstants.CANNON, ModWeaponCapabilityPresets.CANNON);
+//    register(ImaginaryCraftConstants.GUN, ModWeaponCapabilityPresets.GUN);
+//    register(ImaginaryCraftConstants.PISTOL, ModWeaponCapabilityPresets.PISTOL);
+//    register(ImaginaryCraftConstants.RIFLE, ModWeaponCapabilityPresets.RIFLE);
+//    register(ImaginaryCraftConstants.CANNON, ModWeaponCapabilityPresets.CANNON);
     register(ImaginaryCraftConstants.CROSSBOW, WeaponCapabilityPresets.CROSSBOW);
     register(ImaginaryCraftConstants.BOW, WeaponCapabilityPresets.BOW);
     register(ImaginaryCraftConstants.KNIFE, WeaponCapabilityPresets.DAGGER);
-    register(ImaginaryCraftConstants.HAMMER, ModWeaponCapabilityPresets.HAMMER);
+//    register(ImaginaryCraftConstants.HAMMER, ModWeaponCapabilityPresets.HAMMER);
     register(ImaginaryCraftConstants.FIST, WeaponCapabilityPresets.FIST);
     register(ImaginaryCraftConstants.SPEAR, WeaponCapabilityPresets.SPEAR);
     register(ImaginaryCraftConstants.AXE, WeaponCapabilityPresets.AXE);
-    register(ImaginaryCraftConstants.MACE, ModWeaponCapabilityPresets.MACE);
+//    register(ImaginaryCraftConstants.MACE, ModWeaponCapabilityPresets.MACE);
     register(ImaginaryCraftConstants.SWORDS, WeaponCapabilityPresets.SWORD);
     register(EgoWeaponItems.RED_EYES_TACHI.get(), WeaponCapabilityPresets.TACHI);
   }
@@ -70,7 +69,12 @@ public final class EpicFightRegistry {
   }
 
   private static void register(Item item1, Function<Item, ? extends CapabilityItem.Builder<?>> builder) {
-    EpicFightCapabilities.ITEM_CAPABILITY_PROVIDER.put(item1, builder.apply(item1).build());
+    CapabilityItem capability = builder.apply(item1).build();
+    if (capability != null) {
+      EpicFightCapabilities.ITEM_CAPABILITY_PROVIDER.put(item1, capability);
+    } else {
+      ImaginaryCraft.LOGGER.warn("Failed to build weapon capability for item: {}, skipping registration", item1.getDescriptionId());
+    }
   }
 
   private static <T extends CapabilityItem.Builder<?>> void register(ResourceLocation rl, Function<Item, T> builder) {

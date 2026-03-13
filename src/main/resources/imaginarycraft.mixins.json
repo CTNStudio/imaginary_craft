@@ -16,7 +16,6 @@
     "world.entity.LivingEntityMixin",
     "world.entity.LivingEntityPatchMixin",
     "world.entity.PlayerMixin",
-    "world.item.ItemCapabilityReloadListenerMixin",
     "world.item.ItemStackMixin",
     "world.item.WeaponCapability$BuilderMixin",
     "world.item.WeaponCapabilityMixin",

@@ -67,7 +67,7 @@ public final class AnimationComboParser {
       var defaultAnim = AnimationComboParser.<AttackAnimation>getAnimationAccessor(resourceLocation, extraEntryProvider, styleTag.getAsString());
       return entitypatch -> defaultAnim;
     }
-    return ConditionalProviderFactory.getProvider(AnimationComboParser.<AttackAnimation>getAnimationAccessor(resourceLocation, extraEntryProvider, styleCompoundTag.getString(ModWeaponTypeReloadListener.DEFAULT)), ConditionalEntryParser.parseCases(styleCompoundTag, valueString -> (AnimationManager.AnimationAccessor<? extends AttackAnimation>) AnimationComboParser.getAnimationAccessor(resourceLocation, extraEntryProvider, valueString), (accessor, string) -> accessor != null));
+    return ConditionalProviderFactory.getProvider(AnimationComboParser.<AttackAnimation>getAnimationAccessor(resourceLocation, extraEntryProvider, styleCompoundTag.getString(ConditionalEntryParser.DEFAULT)), ConditionalEntryParser.parseCases(styleCompoundTag, valueString -> (AnimationManager.AnimationAccessor<? extends AttackAnimation>) AnimationComboParser.getAnimationAccessor(resourceLocation, extraEntryProvider, valueString), (accessor, string) -> accessor != null));
   }
 
   /**

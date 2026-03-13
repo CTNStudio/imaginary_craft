@@ -24,6 +24,27 @@ import java.util.stream.Collectors;
  * 条件配置条目解析器
  */
 public final class ConditionalEntryParser {
+  /**
+   * 条件案例列表标签
+   */
+  public static final String CASES = "cases";
+  /**
+   * 条件列表标签
+   */
+  public static final String CONDITIONS = "conditions";
+  /**
+   * 值标签
+   */
+  public static final String VALUE = "value";
+  /**
+   * 默认值标签
+   */
+  public static final String DEFAULT = "default";
+  /**
+   * 谓词 ID 标签
+   */
+  public static final String PREDICATE = "predicate";
+
   private static final Logger LOGGER = ImaginaryCraft.LOGGER;
 
   /**
@@ -32,7 +53,7 @@ public final class ConditionalEntryParser {
   public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseCasesFromTag(
     CompoundTag configCompTag, Function<Tag, T> getValueFunc, BiPredicate<T, Tag> validator
   ) {
-    return parseCasesValue(configCompTag, tag -> tag.get(ModWeaponTypeReloadListener.VALUE), getValueFunc, validator);
+    return parseCasesValue(configCompTag, tag -> tag.get(VALUE), getValueFunc, validator);
   }
 
   /**
@@ -41,7 +62,7 @@ public final class ConditionalEntryParser {
   public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseCasesFromRegistryString(
     CompoundTag configCompTag, Registry<T> registry, BiPredicate<T, String> validator
   ) {
-    return parseCasesValue(configCompTag, tag -> tag.getString(ModWeaponTypeReloadListener.VALUE), valueString -> registry.get(ResourceLocation.parse(valueString)), validator);
+    return parseCasesValue(configCompTag, tag -> tag.getString(VALUE), valueString -> registry.get(ResourceLocation.parse(valueString)), validator);
   }
 
   /**
@@ -50,7 +71,7 @@ public final class ConditionalEntryParser {
   public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseCases(
     CompoundTag configCompTag, Function<String, T> getValueFunc, BiPredicate<T, String> validator
   ) {
-    return parseCasesValue(configCompTag, tag -> tag.getString(ModWeaponTypeReloadListener.VALUE), getValueFunc, validator);
+    return parseCasesValue(configCompTag, tag -> tag.getString(VALUE), getValueFunc, validator);
   }
 
   /**
@@ -59,7 +80,7 @@ public final class ConditionalEntryParser {
   public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseFromTag(
     ListTag list, Function<Tag, T> getValueFunc, BiPredicate<T, Tag> validator
   ) {
-    return parseValue(list, tag -> tag.get(ModWeaponTypeReloadListener.VALUE), getValueFunc, validator);
+    return parseValue(list, tag -> tag.get(VALUE), getValueFunc, validator);
   }
 
   /**
@@ -68,7 +89,7 @@ public final class ConditionalEntryParser {
   public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseFromRegistryString(
     ListTag list, Registry<T> registry, BiPredicate<T, String> validator
   ) {
-    return parseValue(list, tag -> tag.getString(ModWeaponTypeReloadListener.VALUE), valueString -> registry.get(ResourceLocation.parse(valueString)), validator);
+    return parseValue(list, tag -> tag.getString(VALUE), valueString -> registry.get(ResourceLocation.parse(valueString)), validator);
   }
 
   /**
@@ -77,7 +98,7 @@ public final class ConditionalEntryParser {
   public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parse(
     ListTag list, Function<String, T> getValueFunc, BiPredicate<T, String> validator
   ) {
-    return parseValue(list, tag -> tag.getString(ModWeaponTypeReloadListener.VALUE), getValueFunc, validator);
+    return parseValue(list, tag -> tag.getString(VALUE), getValueFunc, validator);
   }
 
   /**
@@ -86,7 +107,7 @@ public final class ConditionalEntryParser {
   public static <T> Pair<Predicate<LivingEntityPatch<?>>, T> parseCase(
     CompoundTag caseCompTag, Function<Tag, T> getValueFunc, BiPredicate<T, Tag> validator
   ) {
-    return parse(caseCompTag, tag -> tag.get(ModWeaponTypeReloadListener.VALUE), getValueFunc, validator);
+    return parse(caseCompTag, tag -> tag.get(VALUE), getValueFunc, validator);
   }
 
   /**
@@ -95,7 +116,7 @@ public final class ConditionalEntryParser {
   public static <T> Pair<Predicate<LivingEntityPatch<?>>, T> parseCaseEntry(
     CompoundTag caseCompTag, Function<String, T> getValueFunc, BiPredicate<T, String> validator
   ) {
-    return parse(caseCompTag, tag -> tag.getString(ModWeaponTypeReloadListener.VALUE), getValueFunc, validator);
+    return parse(caseCompTag, tag -> tag.getString(VALUE), getValueFunc, validator);
   }
 
   /**
@@ -113,7 +134,7 @@ public final class ConditionalEntryParser {
   public static <T, V> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseCasesValue(
     CompoundTag configCompTag, Function<CompoundTag, V> getValueObjFunc, Function<V, T> getValueFunc, BiPredicate<T, V> validator
   ) {
-    return parseValue(configCompTag.getList(ModWeaponTypeReloadListener.CASES, Tag.TAG_COMPOUND), getValueObjFunc, getValueFunc, validator);
+    return parseValue(configCompTag.getList(CASES, Tag.TAG_COMPOUND), getValueObjFunc, getValueFunc, validator);
   }
 
   public static <T, V> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseValue(
@@ -136,7 +157,7 @@ public final class ConditionalEntryParser {
     // 解析值对象
     V valueObj = getValueObjFunc.apply(caseCompTag);
     if (valueObj == null) {
-      LOGGER.warn("Missing '{}' field in conditional case entry: {}", ModWeaponTypeReloadListener.VALUE, caseCompTag.getAsString());
+      LOGGER.warn("Missing '{}' field in conditional case entry: {}", VALUE, caseCompTag.getAsString());
       return Pair.of(entitypatch -> false, null);
     }
 
@@ -148,10 +169,10 @@ public final class ConditionalEntryParser {
     }
 
     // 解析条件列表
-    ListTag conditionsList = caseCompTag.getList(ModWeaponTypeReloadListener.CONDITIONS, Tag.TAG_COMPOUND);
+    ListTag conditionsList = caseCompTag.getList(CONDITIONS, Tag.TAG_COMPOUND);
     for (int i = 0; i < conditionsList.size(); i++) {
       CompoundTag conditionCompTag = (CompoundTag) conditionsList.get(i);
-      String predicateId = conditionCompTag.getString(ModWeaponTypeReloadListener.PREDICATE);
+      String predicateId = conditionCompTag.getString(PREDICATE);
 
       try {
         Supplier<Condition.EntityPatchCondition> conditionProvider = EpicFightConditions.getConditionOrThrow(ResourceLocation.parse(predicateId));
