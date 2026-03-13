@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.mixin.world.skill;
+package ctn.imaginarycraft.mixin.world.item;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
@@ -46,70 +46,32 @@ public abstract class WeaponTypeReloadListenerMixin {
   //region ==================== collider - 碰撞箱 ====================
 
   /**
-   * 包裹碰撞箱配置标签的解析，支持条件化配置
-   */
-  @WrapOperation(
-    method = "deserializeWeaponCapabilityBuilder(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/nbt/CompoundTag;Lyesman/epicfight/world/capabilities/provider/ExtraEntryProvider;)Lyesman/epicfight/world/capabilities/item/WeaponCapability$Builder;",
-    at = @At(value = "INVOKE", ordinal = 0,
-      target = "Lnet/minecraft/nbt/CompoundTag;getCompound(Ljava/lang/String;)Lnet/minecraft/nbt/CompoundTag;"))
-  private static CompoundTag imaginarycraft$deserializeWeaponCapabilityBuilder$wrapColliderCompoundTag(
-    CompoundTag instance,
-    String string,
-    Operation<CompoundTag> original
-  ) {
-    if (instance.getCompound(string).contains(ModWeaponTypeReloadListener.DEFAULT_TAG)) {
-      return original.call(instance.getCompound(string), ModWeaponTypeReloadListener.DEFAULT_TAG);
-    }
-    return original.call(instance, string);
-  }
-
-  /**
    * 应用碰撞箱到构建器，支持条件化配置
    */
   @WrapOperation(
     method = "deserializeWeaponCapabilityBuilder(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/nbt/CompoundTag;Lyesman/epicfight/world/capabilities/provider/ExtraEntryProvider;)Lyesman/epicfight/world/capabilities/item/WeaponCapability$Builder;",
-    at = @At(value = "INVOKE", ordinal = 0,
-      target = "Lyesman/epicfight/gameasset/ColliderPreset;deserializeSimpleCollider(Lnet/minecraft/nbt/CompoundTag;)Lyesman/epicfight/api/collider/Collider;"))
+    at = @At(value = "INVOKE", ordinal = 0, target = "Lyesman/epicfight/gameasset/ColliderPreset;deserializeSimpleCollider(Lnet/minecraft/nbt/CompoundTag;)Lyesman/epicfight/api/collider/Collider;"))
   private static Collider imaginarycraft$deserializeWeaponCapabilityBuilder$applyColliderToBuilder(
     CompoundTag compTag,
     Operation<Collider> original,
     @Local(name = "tag") CompoundTag tag,
     @Local(name = "builder") WeaponCapability.Builder builder
   ) {
-    Collider call = original.call(compTag);
-    CompoundTag colliderCompTag = tag.getCompound("collider");
-    if (!colliderCompTag.contains(ModWeaponTypeReloadListener.CASES_TAG)) {
-      return call;
+    Collider defaultCollider = original.call(compTag);
+    if (!tag.contains("collider_cases")) {
+      return defaultCollider;
     }
-    IWeaponCapability$Builder.of(builder).imaginarycraft$collider(call,
-      ConditionalEntryParser.parseConditionalEntriesFromTag(colliderCompTag,
-        args -> ColliderPreset.deserializeSimpleCollider((CompoundTag) args),
-        (a, f) -> a != null));
 
-    return call;
+    IWeaponCapability$Builder.of(builder).imaginarycraft$collider(defaultCollider, ConditionalEntryParser.parseFromTag(
+      tag.getList("collider_cases", Tag.TAG_COMPOUND),
+      args -> ColliderPreset.deserializeSimpleCollider((CompoundTag) args),
+      (a, f) -> a != null));
+
+    return defaultCollider;
   }
   //endregion
 
   //region ==================== hit_particle - 命中粒子效果 ====================
-
-  /**
-   * 包裹命中粒子的默认值解析，支持条件化配置
-   */
-  @WrapOperation(
-    method = "deserializeWeaponCapabilityBuilder(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/nbt/CompoundTag;Lyesman/epicfight/world/capabilities/provider/ExtraEntryProvider;)Lyesman/epicfight/world/capabilities/item/WeaponCapability$Builder;",
-    at = @At(value = "INVOKE", ordinal = 2,
-      target = "Lnet/minecraft/nbt/CompoundTag;getString(Ljava/lang/String;)Ljava/lang/String;"))
-  private static String imaginarycraft$hitParticle$wrapDefaultValue(
-    CompoundTag compoundTag,
-    String key,
-    Operation<String> original
-  ) {
-    CompoundTag hitParticleCompTag = compoundTag.getCompound(key);
-    if (hitParticleCompTag.contains(ModWeaponTypeReloadListener.DEFAULT_TAG)) {
-      return original.call(hitParticleCompTag, ModWeaponTypeReloadListener.DEFAULT_TAG);
-    }
-    return original.call(compoundTag, key);
-  }
 
   /**
    * 应用命中粒子的条件谓词到构建器
@@ -119,28 +81,27 @@ public abstract class WeaponTypeReloadListenerMixin {
     at = @At(value = "INVOKE",
       target = "Lyesman/epicfight/world/capabilities/item/WeaponCapability$Builder;hitParticle(Lyesman/epicfight/particle/HitParticleType;)Lyesman/epicfight/world/capabilities/item/WeaponCapability$Builder;"))
   private static void imaginarycraft$hitParticle$applyPredicates(
-    ResourceLocation resourceLocation,
-    CompoundTag configTag,
+    ResourceLocation rl,
+    CompoundTag tag,
     @SuppressWarnings("removal") ExtraEntryProvider extraEntryProvider,
     CallbackInfoReturnable<WeaponCapability.Builder> callbackInfo,
     @Local(name = "builder") WeaponCapability.Builder builder,
     @Local(name = "particleType") ParticleType<?> particleType
   ) {
-    CompoundTag hitParticleCompTag = configTag.getCompound("hit_particle");
-    if (!hitParticleCompTag.contains(ModWeaponTypeReloadListener.CASES_TAG)) {
+    if (!tag.contains("hit_particle_cases")) {
       return;
     }
 
     //noinspection unchecked
-    IWeaponCapability$Builder.of(builder).imaginarycraft$hitParticle((HitParticleType) particleType, (List<Pair<Predicate<LivingEntityPatch<?>>, HitParticleType>>) (List<?>) ConditionalEntryParser.parseConditionalEntriesFromString(
-      hitParticleCompTag, BuiltInRegistries.PARTICLE_TYPE, (particleType1, string) -> {
+    IWeaponCapability$Builder.of(builder).imaginarycraft$hitParticle((HitParticleType) particleType, (List<Pair<Predicate<LivingEntityPatch<?>>, HitParticleType>>) (List<?>) ConditionalEntryParser.parseFromRegistryString(
+      tag.getList("hit_particle_cases", Tag.TAG_COMPOUND), BuiltInRegistries.PARTICLE_TYPE, (particleType1, string) -> {
         if (particleType1 == null) {
-          ImaginaryCraft.LOGGER.warn("Cannot find particle type '{}' in {}", string, resourceLocation);
+          ImaginaryCraft.LOGGER.warn("Cannot find particle type '{}' in {}", string, rl);
           return false;
         }
 
         if (!(particleType1 instanceof HitParticleType)) {
-          ImaginaryCraft.LOGGER.warn("'{}' is not a hit particle type in {}", string, resourceLocation);
+          ImaginaryCraft.LOGGER.warn("'{}' is not a hit particle type in {}", string, rl);
           return false;
         }
         return true;
@@ -152,25 +113,6 @@ public abstract class WeaponTypeReloadListenerMixin {
   //region ==================== swing_sound - 挥舞声音 ====================
 
   /**
-   * 包裹挥舞声音的默认值解析，支持条件化配置
-   */
-  @WrapOperation(
-    method = "deserializeWeaponCapabilityBuilder(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/nbt/CompoundTag;Lyesman/epicfight/world/capabilities/provider/ExtraEntryProvider;)Lyesman/epicfight/world/capabilities/item/WeaponCapability$Builder;",
-    at = @At(value = "INVOKE", ordinal = 5,
-      target = "Lnet/minecraft/nbt/CompoundTag;getString(Ljava/lang/String;)Ljava/lang/String;"))
-  private static String imaginarycraft$swingSound$wrapDefaultValue(
-    CompoundTag compoundTag,
-    String key,
-    Operation<String> original
-  ) {
-    CompoundTag swingSoundCompTag = compoundTag.getCompound(key);
-    if (swingSoundCompTag.contains(ModWeaponTypeReloadListener.DEFAULT_TAG)) {
-      return original.call(swingSoundCompTag, ModWeaponTypeReloadListener.DEFAULT_TAG);
-    }
-    return original.call(compoundTag, key);
-  }
-
-  /**
    * 应用挥舞声音的条件谓词到构建器
    */
   @Inject(
@@ -178,25 +120,24 @@ public abstract class WeaponTypeReloadListenerMixin {
     at = @At(value = "INVOKE",
       target = "Lyesman/epicfight/world/capabilities/item/WeaponCapability$Builder;swingSound(Lnet/minecraft/sounds/SoundEvent;)Lyesman/epicfight/world/capabilities/item/WeaponCapability$Builder;"))
   private static void imaginarycraft$swingSound$applyPredicates(
-    ResourceLocation resourceLocation,
-    CompoundTag configTag,
+    ResourceLocation rl,
+    CompoundTag tag,
     @SuppressWarnings("removal") ExtraEntryProvider extraEntryProvider,
     CallbackInfoReturnable<WeaponCapability.Builder> callbackInfo,
     @Local(name = "builder") WeaponCapability.Builder builder,
     @Local(name = "sound") SoundEvent sound
   ) {
-    CompoundTag swingSoundCompTag = configTag.getCompound("swing_sound");
-    if (!swingSoundCompTag.contains(ModWeaponTypeReloadListener.CASES_TAG)) {
+    if (!tag.contains("swing_sound_cases")) {
       return;
     }
 
-    IWeaponCapability$Builder.of(builder).imaginarycraft$swingSound(sound, ConditionalEntryParser.parseConditionalEntriesFromString(
-      swingSoundCompTag, BuiltInRegistries.SOUND_EVENT, (soundEvent, string) -> {
+    IWeaponCapability$Builder.of(builder).imaginarycraft$swingSound(sound, ConditionalEntryParser.parseFromRegistryString(
+      tag.getList("swing_sound_cases", Tag.TAG_COMPOUND), BuiltInRegistries.SOUND_EVENT, (soundEvent, string) -> {
         if (soundEvent != null) {
           return true;
         }
 
-        ImaginaryCraft.LOGGER.warn("Cannot find swing sound '{}' in {}", string, resourceLocation);
+        ImaginaryCraft.LOGGER.warn("Cannot find swing sound '{}' in {}", string, rl);
         return false;
       })
     );
@@ -206,25 +147,6 @@ public abstract class WeaponTypeReloadListenerMixin {
   //region ==================== hit_sound - 命中声音 ====================
 
   /**
-   * 包裹命中声音的默认值解析，支持条件化配置
-   */
-  @WrapOperation(
-    method = "deserializeWeaponCapabilityBuilder(Lnet/minecraft/resources/ResourceLocation;Lnet/minecraft/nbt/CompoundTag;Lyesman/epicfight/world/capabilities/provider/ExtraEntryProvider;)Lyesman/epicfight/world/capabilities/item/WeaponCapability$Builder;",
-    at = @At(value = "INVOKE", ordinal = 7,
-      target = "Lnet/minecraft/nbt/CompoundTag;getString(Ljava/lang/String;)Ljava/lang/String;"))
-  private static String imaginarycraft$hitSound$wrapDefaultValue(
-    CompoundTag compoundTag,
-    String key,
-    Operation<String> original
-  ) {
-    CompoundTag hitSoundCompTag = compoundTag.getCompound(key);
-    if (hitSoundCompTag.contains(ModWeaponTypeReloadListener.DEFAULT_TAG)) {
-      return original.call(hitSoundCompTag, ModWeaponTypeReloadListener.DEFAULT_TAG);
-    }
-    return original.call(compoundTag, key);
-  }
-
-  /**
    * 应用命中声音的条件谓词到构建器
    */
   @Inject(
@@ -232,25 +154,24 @@ public abstract class WeaponTypeReloadListenerMixin {
     at = @At(value = "INVOKE",
       target = "Lyesman/epicfight/world/capabilities/item/WeaponCapability$Builder;hitSound(Lnet/minecraft/sounds/SoundEvent;)Lyesman/epicfight/world/capabilities/item/WeaponCapability$Builder;"))
   private static void imaginarycraft$hitSound$applyPredicates(
-    ResourceLocation resourceLocation,
-    CompoundTag configTag,
+    ResourceLocation rl,
+    CompoundTag tag,
     @SuppressWarnings("removal") ExtraEntryProvider extraEntryProvider,
     CallbackInfoReturnable<WeaponCapability.Builder> callbackInfo,
     @Local(name = "builder") WeaponCapability.Builder builder,
     @Local(name = "sound") SoundEvent sound
   ) {
-    CompoundTag hitSoundCompTag = configTag.getCompound("hit_sound");
-    if (!hitSoundCompTag.contains(ModWeaponTypeReloadListener.CASES_TAG)) {
+    if (!tag.contains("hit_sound_cases")) {
       return;
     }
 
-    IWeaponCapability$Builder.of(builder).imaginarycraft$hitSound(sound, ConditionalEntryParser.parseConditionalEntriesFromString(
-      hitSoundCompTag, BuiltInRegistries.SOUND_EVENT, (soundEvent, string) -> {
+    IWeaponCapability$Builder.of(builder).imaginarycraft$hitSound(sound, ConditionalEntryParser.parseFromRegistryString(
+      tag.getList("hit_sound_cases", Tag.TAG_COMPOUND), BuiltInRegistries.SOUND_EVENT, (soundEvent, string) -> {
         if (soundEvent != null) {
           return true;
         }
 
-        ImaginaryCraft.LOGGER.warn("Cannot find hit sound '{}' in {}", string, resourceLocation);
+        ImaginaryCraft.LOGGER.warn("Cannot find hit sound '{}' in {}", string, rl);
         return false;
       })
     );
@@ -293,7 +214,7 @@ public abstract class WeaponTypeReloadListenerMixin {
       return original.call(compoundTag, key, tagTypeInt);
     }
 
-    Tag defaultStyleTag = styleCompoundTag.get(ModWeaponTypeReloadListener.DEFAULT_TAG);
+    Tag defaultStyleTag = styleCompoundTag.get(ModWeaponTypeReloadListener.DEFAULT);
     if (defaultStyleTag == null) {
       ImaginaryCraft.LOGGER.warn("Cannot find default combos config in {}", resourceLocation);
       return original.call(compoundTag, key, tagTypeInt);
@@ -309,7 +230,7 @@ public abstract class WeaponTypeReloadListenerMixin {
       defaultComboListShare.set(parsedDefaultCombos);
     }
 
-    casesComboListShare.set(ConditionalEntryParser.parseConditionalEntriesFromTag(
+    casesComboListShare.set(ConditionalEntryParser.parseCasesFromTag(
       styleCompoundTag,
       tag -> AnimationComboParser.parseComboAnimations(resourceLocation, extraEntryProvider, (ListTag) tag),
       (functions, tag) -> functions != null && !functions.isEmpty()));
@@ -335,8 +256,8 @@ public abstract class WeaponTypeReloadListenerMixin {
       return original.call(listTag, index);
     }
 
-    if (tagCompound.contains(ModWeaponTypeReloadListener.DEFAULT_TAG)) {
-      return tagCompound.getString(ModWeaponTypeReloadListener.DEFAULT_TAG);
+    if (tagCompound.contains(ModWeaponTypeReloadListener.DEFAULT)) {
+      return tagCompound.getString(ModWeaponTypeReloadListener.DEFAULT);
     }
 
     ImaginaryCraft.LOGGER.warn("Cannot find default animation in {}", resourceLocation);
@@ -385,8 +306,8 @@ public abstract class WeaponTypeReloadListenerMixin {
     String key,
     Operation<String> original
   ) {
-    if (compoundTag.contains(ModWeaponTypeReloadListener.DEFAULT_TAG)) {
-      return compoundTag.getString(ModWeaponTypeReloadListener.DEFAULT_TAG);
+    if (compoundTag.contains(ModWeaponTypeReloadListener.DEFAULT)) {
+      return compoundTag.getString(ModWeaponTypeReloadListener.DEFAULT);
     }
     return original.call(compoundTag, key);
   }
@@ -413,7 +334,7 @@ public abstract class WeaponTypeReloadListenerMixin {
       return;
     }
 
-    IWeaponCapability$Builder.of(builder).imaginarycraft$innateSkill(style, itemstack -> skill, ConditionalEntryParser.parseConditionalEntries(casesCompoundTag,
+    IWeaponCapability$Builder.of(builder).imaginarycraft$innateSkill(style, itemstack -> skill, ConditionalEntryParser.parseCases(casesCompoundTag,
       (a) -> {
         Skill skill1 = EpicFightRegistries.SKILL.get(ResourceLocation.parse(a));
         return itemstack -> skill1;
@@ -436,8 +357,8 @@ public abstract class WeaponTypeReloadListenerMixin {
     Operation<Set<String>> original
   ) {
     var call = original.call(instance);
-    if (call.contains(ModWeaponTypeReloadListener.DEFAULT_TAG)) {
-      return instance.getCompound(ModWeaponTypeReloadListener.DEFAULT_TAG).getAllKeys();
+    if (call.contains(ModWeaponTypeReloadListener.DEFAULT)) {
+      return instance.getCompound(ModWeaponTypeReloadListener.DEFAULT).getAllKeys();
     }
 
     return call;
@@ -455,14 +376,14 @@ public abstract class WeaponTypeReloadListenerMixin {
     String key,
     Operation<String> original
   ) {
-    var tag1 = compoundTag.get(ModWeaponTypeReloadListener.DEFAULT_TAG);
+    var tag1 = compoundTag.get(ModWeaponTypeReloadListener.DEFAULT);
     if (!(tag1 instanceof CompoundTag compTag)) {
       return original.call(compoundTag, key);
     }
 
     Tag tag = compTag.get(key);
     if (tag instanceof CompoundTag tagCompound) {
-      return tagCompound.getString(ModWeaponTypeReloadListener.DEFAULT_TAG);
+      return tagCompound.getString(ModWeaponTypeReloadListener.DEFAULT);
     }
     return tag.getAsString();
   }
@@ -491,7 +412,7 @@ public abstract class WeaponTypeReloadListenerMixin {
       return;
     }
 
-    IWeaponCapability$Builder.of(builder).imaginarycraft$livingMotionModifier(style, livingmotion, animation, ConditionalEntryParser.parseConditionalEntries(
+    IWeaponCapability$Builder.of(builder).imaginarycraft$livingMotionModifier(style, livingmotion, animation, ConditionalEntryParser.parseCases(
       motionCompoundTag, (animId) -> AnimationComboParser.getAnimationAccessor(resourceLocation, extraEntryProvider, animId),
       (a, b) -> false));
   }

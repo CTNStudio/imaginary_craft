@@ -36,11 +36,7 @@ public final class AnimationComboParser {
    */
   @Nullable
   @Unique
-  public static <T extends StaticAnimation> AnimationManager.AnimationAccessor<? extends T> getAnimationAccessor(
-    ResourceLocation resourceLocation,
-    @SuppressWarnings("removal") @Nullable ExtraEntryProvider extraEntryProvider,
-    String animationId
-  ) {
+  public static <T extends StaticAnimation> AnimationManager.AnimationAccessor<? extends T> getAnimationAccessor(ResourceLocation resourceLocation, @SuppressWarnings("removal") @Nullable ExtraEntryProvider extraEntryProvider, String animationId) {
     AnimationManager.AnimationAccessor<? extends T> animation;
     if (extraEntryProvider == null) {
       animation = AnimationManager.byKey(animationId);
@@ -66,22 +62,12 @@ public final class AnimationComboParser {
    */
   @Unique
   @SuppressWarnings("unchecked")
-  public static Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>> parseComboAnimation(
-    ResourceLocation resourceLocation,
-    @SuppressWarnings("removal") ExtraEntryProvider extraEntryProvider,
-    Tag styleTag
-  ) {
+  public static Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>> parseComboAnimation(ResourceLocation resourceLocation, @SuppressWarnings("removal") ExtraEntryProvider extraEntryProvider, Tag styleTag) {
     if (!(styleTag instanceof CompoundTag styleCompoundTag)) {
-      var defaultAnim = AnimationComboParser.<AttackAnimation>getAnimationAccessor(
-        resourceLocation,
-        extraEntryProvider, styleTag.getAsString());
+      var defaultAnim = AnimationComboParser.<AttackAnimation>getAnimationAccessor(resourceLocation, extraEntryProvider, styleTag.getAsString());
       return entitypatch -> defaultAnim;
     }
-    return ConditionalProviderFactory.getProvider(
-      AnimationComboParser.<AttackAnimation>getAnimationAccessor(resourceLocation, extraEntryProvider, styleCompoundTag.getString(ModWeaponTypeReloadListener.DEFAULT_TAG)),
-      ConditionalEntryParser.parseConditionalEntries(styleCompoundTag,
-        valueString -> (AnimationManager.AnimationAccessor<? extends AttackAnimation>) AnimationComboParser.getAnimationAccessor(resourceLocation, extraEntryProvider, valueString),
-        (accessor, string) -> accessor != null));
+    return ConditionalProviderFactory.getProvider(AnimationComboParser.<AttackAnimation>getAnimationAccessor(resourceLocation, extraEntryProvider, styleCompoundTag.getString(ModWeaponTypeReloadListener.DEFAULT)), ConditionalEntryParser.parseCases(styleCompoundTag, valueString -> (AnimationManager.AnimationAccessor<? extends AttackAnimation>) AnimationComboParser.getAnimationAccessor(resourceLocation, extraEntryProvider, valueString), (accessor, string) -> accessor != null));
   }
 
   /**
@@ -93,13 +79,7 @@ public final class AnimationComboParser {
    * @return 动画提供者函数列表
    */
   @Unique
-  public static List<Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>>> parseComboAnimations(
-    ResourceLocation resourceLocation,
-    @SuppressWarnings("removal") ExtraEntryProvider extraEntryProvider,
-    ListTag styleListTag
-  ) {
-    return styleListTag.stream()
-      .map(styleTag -> parseComboAnimation(resourceLocation, extraEntryProvider, styleTag))
-      .collect(Collectors.toList());
+  public static List<Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>>> parseComboAnimations(ResourceLocation resourceLocation, @SuppressWarnings("removal") ExtraEntryProvider extraEntryProvider, ListTag styleListTag) {
+    return styleListTag.stream().map(styleTag -> parseComboAnimation(resourceLocation, extraEntryProvider, styleTag)).collect(Collectors.toList());
   }
 }

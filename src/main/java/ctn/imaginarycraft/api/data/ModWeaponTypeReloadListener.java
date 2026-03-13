@@ -6,25 +6,24 @@ public final class ModWeaponTypeReloadListener {
   /**
    * 条件案例列表标签
    */
-  public static final String CASES_TAG = "cases";
+  public static final String CASES = "cases";
   /**
    * 条件列表标签
    */
-  public static final String CONDITIONS_TAG = "conditions";
+  public static final String CONDITIONS = "conditions";
   /**
    * 值标签
    */
-  public static final String VALUE_TAG = "value";
+  public static final String VALUE = "value";
   /**
    * 默认值标签
    */
-  public static final String DEFAULT_TAG = "default";
+  public static final String DEFAULT = "default";
   /**
    * 谓词 ID 标签
    */
-  public static final String PREDICATE_TAG = "predicate";
+  public static final String PREDICATE = "predicate";
 
-  // 私有构造函数，防止实例化
   private ModWeaponTypeReloadListener() {
   }
 }

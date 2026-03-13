@@ -3,7 +3,6 @@
   "package": "ctn.imaginarycraft.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "AnimationTrailParticleMixin",
     "LivingDamageEvent$PostMixin",
     "StaticAnimationMixin",
     "client.ModelBuilderMixin",
@@ -17,14 +16,15 @@
     "world.entity.LivingEntityMixin",
     "world.entity.LivingEntityPatchMixin",
     "world.entity.PlayerMixin",
+    "world.item.ItemCapabilityReloadListenerMixin",
     "world.item.ItemStackMixin",
     "world.item.WeaponCapability$BuilderMixin",
     "world.item.WeaponCapabilityMixin",
+    "world.item.WeaponTypeReloadListenerAccessorMixin",
+    "world.item.WeaponTypeReloadListenerMixin",
     "world.skill.BattojutsuSkillMixin",
     "world.skill.ComboAttacksMixin",
-    "world.skill.ConditionalWeaponInnateSkillAccessorMixin",
-    "world.skill.WeaponTypeReloadListenerAccessorMixin",
-    "world.skill.WeaponTypeReloadListenerMixin"
+    "world.skill.ConditionalWeaponInnateSkillAccessorMixin"
   ],
   "injectors": {
     "defaultRequire": 1

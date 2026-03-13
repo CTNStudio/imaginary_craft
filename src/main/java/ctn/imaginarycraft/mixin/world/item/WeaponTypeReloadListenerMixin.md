@@ -7,34 +7,32 @@
 ## 目录
 
 <!-- TOC -->
-
 * [武器类型重载监听器配置文档](#武器类型重载监听器配置文档)
   * [配置格式说明](#配置格式说明)
   * [目录](#目录)
     * [通用规则](#通用规则)
   * [1. hit_particle - 命中粒子效果配置](#1-hit_particle---命中粒子效果配置)
-    * [完整格式（支持条件化）](#完整格式支持条件化)
     * [简单格式](#简单格式)
+    * [完整格式（支持条件化）](#完整格式支持条件化)
   * [2. swing_sound - 挥舞声音配置](#2-swing_sound---挥舞声音配置)
-    * [完整格式（支持条件化）](#完整格式支持条件化-1)
     * [简单格式](#简单格式-1)
+    * [完整格式（支持条件化）](#完整格式支持条件化-1)
   * [3. hit_sound - 命中声音配置](#3-hit_sound---命中声音配置)
-    * [完整格式（支持条件化）](#完整格式支持条件化-2)
     * [简单格式](#简单格式-2)
+    * [完整格式（支持条件化）](#完整格式支持条件化-2)
   * [4. combos - 连招配置](#4-combos---连招配置)
-    * [基本的格式](#基本的格式)
+    * [简单格式](#简单格式-3)
     * [单个动画的条件化配置](#单个动画的条件化配置)
     * [完整的条件化配置（嵌套）](#完整的条件化配置嵌套)
   * [5. innate_skills - 先天技能配置](#5-innate_skills---先天技能配置)
-    * [完整格式（支持条件化和样式分类）](#完整格式支持条件化和样式分类)
-    * [简单格式](#简单格式-3)
-  * [6. livingmotion_modifier - 运动动画修饰配置](#6-livingmotion_modifier---运动动画修饰配置)
-  * [7. collider - 碰撞箱](#7-collider---碰撞箱)
     * [简单格式](#简单格式-4)
-    * [完整格式（支持条件化和样式分类）](#完整格式支持条件化和样式分类-1)
+    * [完整格式](#完整格式支持条件化和样式分类)
+  * [6. livingmotion_modifier - 运动动画修饰配置](#6-livingmotion_modifier---运动动画修饰配置)
+  * [简单格式](#简单格式-5)
+  * [完整格式](#完整格式)
+  * [7. collider - 碰撞箱](#7-collider---碰撞箱)
   * [示例文件](#示例文件)
   * [相关代码](#相关代码)
-
 <!-- TOC -->
 
 ### 通用规则
@@ -49,33 +47,20 @@
 ---
 
 ## 1. hit_particle - 命中粒子效果配置
-
-### 简单格式
-
 ```json
 {
-  "hit_particle": "epicfight:blood"
-}
-```
-
-### 完整格式（支持条件化）
-
-```json
-{
-  "hit_particle": {
-    "default": "epicfight:blood",
-    "cases": [
-      {
-        "value": "minecraft:glow_squid_ink",
-        "conditions": [
-          {
-            "predicate": "epicfight:entity_type",
-            "entity_type": "minecraft:skeleton"
-          }
-        ]
-      }
-    ]
-  }
+  "hit_particle": "epicfight:blood",
+  "hit_particle_cases": [
+    {
+      "value": "minecraft:glow_squid_ink",
+      "conditions": [
+        {
+          "predicate": "epicfight:entity_type",
+          "entity_type": "minecraft:skeleton"
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -83,32 +68,20 @@
 
 ## 2. swing_sound - 挥舞声音配置
 
-### 简单格式
-
 ```json
 {
-  "swing_sound": "epicfight:blade_swing"
-}
-```
-
-### 完整格式（支持条件化）
-
-```json
-{
-  "swing_sound": {
-    "default": "epicfight:blade_swing",
-    "cases": [
-      {
-        "value": "minecraft:entity.warden.attack.swing",
-        "conditions": [
-          {
-            "predicate": "epicfight:has_skill",
-            "skill": "imaginarycraft:heavy_weapon"
-          }
-        ]
-      }
-    ]
-  }
+  "swing_sound": "epicfight:blade_swing",
+  "swing_sound_cases": [
+    {
+      "value": "minecraft:entity.warden.attack.swing",
+      "conditions": [
+        {
+          "predicate": "epicfight:has_skill",
+          "skill": "imaginarycraft:heavy_weapon"
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -116,31 +89,19 @@
 
 ## 3. hit_sound - 命中声音配置
 
-### 简单格式
-
 ```json
 {
-  "hit_sound": "epicfight:blade_hit"
-}
-```
-
-### 完整格式（支持条件化）
-
-```json
-{
-  "hit_sound": {
-    "default": "epicfight:blade_hit",
-    "cases": [
-      {
-        "value": "minecraft:entity.generic.burn",
-        "conditions": [
-          {
-            "predicate": "epicfight:is_on_fire"
-          }
-        ]
-      }
-    ]
-  }
+  "hit_sound": "epicfight:blade_hit",
+  "hit_sound_cases": [
+    {
+      "value": "minecraft:entity.generic.burn",
+      "conditions": [
+        {
+          "predicate": "epicfight:is_on_fire"
+        }
+      ]
+    }
+  ]
 }
 ```
 
@@ -257,7 +218,7 @@
 }
 ```
 
-### 完整格式（支持条件化和样式分类）
+### 完整格式
 
 ```json
 {
@@ -303,21 +264,24 @@
 {
   "livingmotion_modifier": {
     "one_hand": {
-      "idle": {
-        "default": "imaginarycraft:idle_combat",
-        "cases": [
-          {
-            "value": "imaginarycraft:idle_berserk",
-            "conditions": [
-              {
-                "predicate": "epicfight:low_health",
-                "threshold": 0.3
-              }
-            ]
-          }
-        ]
+      "default": {
+        "idle": "imaginarycraft:idle_combat",
+        "walk": "imaginarycraft:walk_combat"
       },
-      "walk": "imaginarycraft:walk_combat"
+      "cases": [
+        {
+          "value": {
+            "idle": "imaginarycraft:idle_combat",
+            "walk": "imaginarycraft:walk_combat"
+          },
+          "conditions": [
+            {
+              "predicate": "epicfight:low_health",
+              "threshold": 0.3
+            }
+          ]
+        }
+      ]
     }
   }
 }
@@ -327,44 +291,36 @@
 
 ## 7. collider - 碰撞箱
 
-### 简单格式
-
 ```json
 {
   "collider": {
     "size": [0.4, 0.4, 0.95],
     "number": 3,
     "center": [0.0, 0.0, -0.95]
-  }
-}
-```
-
-### 完整格式（支持条件化和样式分类）
-
-```json
-{
-  "collider": {
-    "default": {
-      "size": [0.4, 0.4, 0.95],
-      "number": 3,
-      "center": [0.0, 0.0, -0.95]
-    },
-    "cases": [
-      {
-        "value": {
-          "size": [0.4, 0.4, 0.95],
-          "number": 3,
-          "center": [0.0, 0.0, -0.95]
-        },
-        "conditions": [
-          {
-            "predicate": "epicfight:low_health",
-            "threshold": 0.3
-          }
+  },
+  "collider_cases": [
+    {
+      "value": {
+        "size": [
+          0.4,
+          0.4,
+          0.95
+        ],
+        "number": 3,
+        "center": [
+          0.0,
+          0.0,
+          -0.95
         ]
-      }
-    ]
-  }
+      },
+      "conditions": [
+        {
+          "predicate": "epicfight:low_health",
+          "threshold": 0.3
+        }
+      ]
+    }
+  ]
 }
 ```
 

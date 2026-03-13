@@ -3,6 +3,7 @@ package ctn.imaginarycraft.api.data;
 import com.google.common.collect.Lists;
 import com.mojang.datafixers.util.Pair;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import net.minecraft.core.Registry;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.ListTag;
 import net.minecraft.nbt.Tag;
@@ -21,261 +22,136 @@ import java.util.stream.Collectors;
 
 /**
  * 条件配置条目解析器
- * <p>负责从 NBT 标签中解析条件化的配置条目</p>
  */
 public final class ConditionalEntryParser {
-
   private static final Logger LOGGER = ImaginaryCraft.LOGGER;
 
-  // ==================== 公共解析方法（从父标签获取）====================
-
   /**
-   * 从父标签解析条件配置列表（直接获取 Tag 值）
-   *
-   * @param parentTag    父级 NBT 标签
-   * @param key          配置键名
-   * @param getValueFunc 值获取函数
-   * @param validator    验证器
-   * @param <T>          返回值类型
-   * @return 条件化配置列表，解析失败时返回 null
+   * 从配置标签解析（Tag 值）
    */
-  public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseConditionalEntriesFromTag(
-    CompoundTag parentTag,
-    String key,
-    Function<Tag, T> getValueFunc,
-    BiPredicate<T, Tag> validator
+  public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseCasesFromTag(
+    CompoundTag configCompTag, Function<Tag, T> getValueFunc, BiPredicate<T, Tag> validator
   ) {
-    return parseConditionalEntriesFromParentTag(parentTag, key, tag -> tag.get(ModWeaponTypeReloadListener.VALUE_TAG), getValueFunc, validator);
+    return parseCasesValue(configCompTag, tag -> tag.get(ModWeaponTypeReloadListener.VALUE), getValueFunc, validator);
   }
 
   /**
-   * 从配置复合标签解析条件配置列表（直接获取 Tag 值）
-   *
-   * @param configCompTag 配置复合标签
-   * @param getValueFunc  值获取函数
-   * @param validator     验证器
-   * @param <T>           返回值类型
-   * @return 条件化配置列表
+   * 从配置标签解析（Registry）
    */
-  public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseConditionalEntriesFromTag(
-    CompoundTag configCompTag,
-    Function<Tag, T> getValueFunc,
-    BiPredicate<T, Tag> validator
+  public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseCasesFromRegistryString(
+    CompoundTag configCompTag, Registry<T> registry, BiPredicate<T, String> validator
   ) {
-    return parseConditionalEntriesValue(configCompTag, tag -> tag.get(ModWeaponTypeReloadListener.VALUE_TAG), getValueFunc, validator);
+    return parseCasesValue(configCompTag, tag -> tag.getString(ModWeaponTypeReloadListener.VALUE), valueString -> registry.get(ResourceLocation.parse(valueString)), validator);
   }
 
   /**
-   * 解析单个条件配置项（直接获取 Tag 值）
-   *
-   * @param getValueFunc 值获取函数
-   * @param validator    验证器
-   * @param caseCompTag  条件复合标签
-   * @param <T>          返回值类型
-   * @return 条件化配置项
+   * 从配置标签解析（Function）
    */
-  public static <T> Pair<Predicate<LivingEntityPatch<?>>, T> parseCaseEntryFromTag(
-    Function<Tag, T> getValueFunc,
-    BiPredicate<T, Tag> validator,
-    CompoundTag caseCompTag
+  public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseCases(
+    CompoundTag configCompTag, Function<String, T> getValueFunc, BiPredicate<T, String> validator
   ) {
-    return parseCaseEntryInternal(caseCompTag, tag -> caseCompTag.get(ModWeaponTypeReloadListener.VALUE_TAG), getValueFunc, validator);
-  }
-
-  // ==================== 公共解析方法（基于 Registry）====================
-
-  /**
-   * 从父标签解析条件配置列表（基于 Registry）
-   *
-   * @param parentTag 父级 NBT 标签
-   * @param key       配置键名
-   * @param registry  注册表
-   * @param validator 验证器
-   * @param <T>       返回值类型
-   * @return 条件化配置列表
-   */
-  public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseConditionalEntriesFromString(
-    CompoundTag parentTag,
-    String key,
-    net.minecraft.core.Registry<T> registry,
-    BiPredicate<T, String> validator
-  ) {
-    return parseConditionalEntriesFromParentTag(parentTag, key,
-      tag -> tag.getString(ModWeaponTypeReloadListener.VALUE_TAG),
-      valueString -> registry.get(ResourceLocation.parse(valueString)),
-      validator);
+    return parseCasesValue(configCompTag, tag -> tag.getString(ModWeaponTypeReloadListener.VALUE), getValueFunc, validator);
   }
 
   /**
-   * 从配置复合标签解析条件配置列表（基于 Registry）
-   *
-   * @param configCompTag 配置复合标签
-   * @param registry      注册表
-   * @param validator     验证器
-   * @param <T>           返回值类型
-   * @return 条件化配置列表
+   * 从配置标签解析（Tag 值）
    */
-  public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseConditionalEntriesFromString(
-    CompoundTag configCompTag,
-    net.minecraft.core.Registry<T> registry,
-    BiPredicate<T, String> validator
+  public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseFromTag(
+    ListTag list, Function<Tag, T> getValueFunc, BiPredicate<T, Tag> validator
   ) {
-    return parseConditionalEntriesValue(configCompTag,
-      tag -> tag.getString(ModWeaponTypeReloadListener.VALUE_TAG),
-      valueString -> registry.get(ResourceLocation.parse(valueString)),
-      validator);
-  }
-
-  // ==================== 公共解析方法（基于 Function）====================
-
-  /**
-   * 从父标签解析条件配置列表（自定义值获取函数）
-   *
-   * @param parentTag    父级 NBT 标签
-   * @param key          配置键名
-   * @param getValueFunc 值获取函数
-   * @param validator    验证器
-   * @param <T>          返回值类型
-   * @return 条件化配置列表
-   */
-  public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseConditionalEntries(
-    CompoundTag parentTag,
-    String key,
-    Function<String, T> getValueFunc,
-    BiPredicate<T, String> validator
-  ) {
-    return parseConditionalEntriesFromParentTag(parentTag, key,
-      tag -> tag.getString(ModWeaponTypeReloadListener.VALUE_TAG),
-      getValueFunc,
-      validator);
+    return parseValue(list, tag -> tag.get(ModWeaponTypeReloadListener.VALUE), getValueFunc, validator);
   }
 
   /**
-   * 从配置复合标签解析条件配置列表（自定义值获取函数）
-   *
-   * @param configCompTag 配置复合标签
-   * @param getValueFunc  值获取函数
-   * @param validator     验证器
-   * @param <T>           返回值类型
-   * @return 条件化配置列表
+   * 从配置标签解析（Registry）
    */
-  public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseConditionalEntries(
-    CompoundTag configCompTag,
-    Function<String, T> getValueFunc,
-    BiPredicate<T, String> validator
+  public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseFromRegistryString(
+    ListTag list, Registry<T> registry, BiPredicate<T, String> validator
   ) {
-    return parseConditionalEntriesValue(configCompTag,
-      tag -> tag.getString(ModWeaponTypeReloadListener.VALUE_TAG),
-      getValueFunc,
-      validator);
+    return parseValue(list, tag -> tag.getString(ModWeaponTypeReloadListener.VALUE), valueString -> registry.get(ResourceLocation.parse(valueString)), validator);
   }
 
-  // ==================== 单个条件项解析方法 ====================
+  /**
+   * 从配置标签解析（Function）
+   */
+  public static <T> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parse(
+    ListTag list, Function<String, T> getValueFunc, BiPredicate<T, String> validator
+  ) {
+    return parseValue(list, tag -> tag.getString(ModWeaponTypeReloadListener.VALUE), getValueFunc, validator);
+  }
 
   /**
-   * 解析单个条件配置项（自定义值获取函数）
-   *
-   * @param getValueFunc 值获取函数
-   * @param validator    验证器
-   * @param caseCompTag  条件复合标签
-   * @param <T>          返回值类型
-   * @return 条件化配置项
+   * 解析单个配置项（Tag 值）
+   */
+  public static <T> Pair<Predicate<LivingEntityPatch<?>>, T> parseCase(
+    CompoundTag caseCompTag, Function<Tag, T> getValueFunc, BiPredicate<T, Tag> validator
+  ) {
+    return parse(caseCompTag, tag -> tag.get(ModWeaponTypeReloadListener.VALUE), getValueFunc, validator);
+  }
+
+  /**
+   * 解析单个配置项（Function）
    */
   public static <T> Pair<Predicate<LivingEntityPatch<?>>, T> parseCaseEntry(
-    Function<String, T> getValueFunc,
-    BiPredicate<T, String> validator,
-    CompoundTag caseCompTag
+    CompoundTag caseCompTag, Function<String, T> getValueFunc, BiPredicate<T, String> validator
   ) {
-    return parseCaseEntryInternal(caseCompTag,
-      tag -> tag.getString(ModWeaponTypeReloadListener.VALUE_TAG),
-      getValueFunc,
-      validator);
-  }
-
-  // ==================== 谓词组合方法 ====================
-
-  /**
-   * 组合多个条件为复合谓词（所有条件必须满足）
-   *
-   * @param conditionList 条件列表
-   * @return 复合谓词
-   */
-  public static java.util.function.Predicate<LivingEntityPatch<?>> composePredicate(List<Condition.EntityPatchCondition> conditionList) {
-    return entitypatch -> conditionList.stream()
-      .allMatch(condition -> condition.predicate(entitypatch));
-  }
-
-  // ==================== 内部实现方法 ====================
-
-  /**
-   * 从父标签提取配置并委托解析
-   */
-  private static <T, V> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseConditionalEntriesFromParentTag(
-    CompoundTag parentTag,
-    String key,
-    Function<CompoundTag, V> getValueObjFunc,
-    Function<V, T> getValueFunc,
-    BiPredicate<T, V> validator
-  ) {
-    Tag configTag = parentTag.get(key);
-    if (configTag instanceof CompoundTag configCompTag) {
-      return parseConditionalEntriesValue(configCompTag, getValueObjFunc, getValueFunc, validator);
-    }
-
-    LOGGER.warn("Invalid config tag [{}]: expected CompoundTag, but got {}",
-      key, configTag != null ? configTag.getClass().getSimpleName() : "null");
-    return null;
+    return parse(caseCompTag, tag -> tag.getString(ModWeaponTypeReloadListener.VALUE), getValueFunc, validator);
   }
 
   /**
-   * 解析条件配置列表的核心实现
+   * 组合多个条件为复合谓词
    */
-  public static <T, V> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseConditionalEntriesValue(
-    CompoundTag configCompTag,
-    Function<CompoundTag, V> getValueObjFunc,
-    Function<V, T> getValueFunc,
-    BiPredicate<T, V> validator
+  public static java.util.function.Predicate<LivingEntityPatch<?>> compose(
+    List<Condition.EntityPatchCondition> conditionList
   ) {
-    ListTag casesList = configCompTag.getList(ModWeaponTypeReloadListener.CASES_TAG, Tag.TAG_COMPOUND);
+    return entitypatch -> conditionList.stream().allMatch(condition -> condition.predicate(entitypatch));
+  }
 
-    return casesList.stream()
+  /**
+   * 解析配置列表核心实现
+   */
+  public static <T, V> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseCasesValue(
+    CompoundTag configCompTag, Function<CompoundTag, V> getValueObjFunc, Function<V, T> getValueFunc, BiPredicate<T, V> validator
+  ) {
+    return parseValue(configCompTag.getList(ModWeaponTypeReloadListener.CASES, Tag.TAG_COMPOUND), getValueObjFunc, getValueFunc, validator);
+  }
+
+  public static <T, V> List<Pair<Predicate<LivingEntityPatch<?>>, T>> parseValue(
+    ListTag list, Function<CompoundTag, V> getValueObjFunc, Function<V, T> getValueFunc, BiPredicate<T, V> validator
+  ) {
+    return list.stream()
       .map(CompoundTag.class::cast)
-      .map(caseTag -> parseCaseEntryInternal(caseTag, getValueObjFunc, getValueFunc, validator))
+      .map(caseTag -> parse(caseTag, getValueObjFunc, getValueFunc, validator))
       .collect(Collectors.toList());
   }
 
   /**
-   * 解析单个条件配置项的内部实现
+   * 解析单个配置项核心实现
    */
-  public static <T, V> Pair<Predicate<LivingEntityPatch<?>>, T> parseCaseEntryInternal(
-    CompoundTag caseCompTag,
-    Function<CompoundTag, V> getValueObjFunc,
-    Function<V, T> getValueFunc,
-    BiPredicate<T, V> validator
+  private static <T, V> Pair<Predicate<LivingEntityPatch<?>>, T> parse(
+    CompoundTag caseCompTag, Function<CompoundTag, V> getValueObjFunc, Function<V, T> getValueFunc, BiPredicate<T, V> validator
   ) {
     List<Condition.EntityPatchCondition> conditionList = Lists.newArrayList();
 
     // 解析值对象
     V valueObj = getValueObjFunc.apply(caseCompTag);
     if (valueObj == null) {
-      LOGGER.warn("Missing '{}' field in conditional case entry: {}", ModWeaponTypeReloadListener.VALUE_TAG, caseCompTag.getAsString());
+      LOGGER.warn("Missing '{}' field in conditional case entry: {}", ModWeaponTypeReloadListener.VALUE, caseCompTag.getAsString());
       return Pair.of(entitypatch -> false, null);
     }
 
-    // 获取并验证最终值
+    // 验证值
     T value = getValueFunc.apply(valueObj);
-
     if (!validator.test(value, valueObj)) {
       LOGGER.warn("Conditional case entry validation failed: value={}, originalData={}", value, valueObj);
       return Pair.of(entitypatch -> false, value);
     }
 
     // 解析条件列表
-    ListTag conditionsList = caseCompTag.getList(ModWeaponTypeReloadListener.CONDITIONS_TAG, Tag.TAG_COMPOUND);
-
+    ListTag conditionsList = caseCompTag.getList(ModWeaponTypeReloadListener.CONDITIONS, Tag.TAG_COMPOUND);
     for (int i = 0; i < conditionsList.size(); i++) {
       CompoundTag conditionCompTag = (CompoundTag) conditionsList.get(i);
-      String predicateId = conditionCompTag.getString(ModWeaponTypeReloadListener.PREDICATE_TAG);
+      String predicateId = conditionCompTag.getString(ModWeaponTypeReloadListener.PREDICATE);
 
       try {
         Supplier<Condition.EntityPatchCondition> conditionProvider = EpicFightConditions.getConditionOrThrow(ResourceLocation.parse(predicateId));
@@ -283,11 +159,10 @@ public final class ConditionalEntryParser {
         entityPatchCondition.read(conditionCompTag);
         conditionList.add(entityPatchCondition);
       } catch (Exception e) {
-        LOGGER.error("Failed to parse condition [index={}, predicate={}, error={}]: {}",
-          i, predicateId, e.getClass().getSimpleName(), e.getMessage(), e);
+        LOGGER.error("Failed to parse condition [index={}, predicate={}, error={}]: {}", i, predicateId, e.getClass().getSimpleName(), e.getMessage(), e);
       }
     }
 
-    return Pair.of(composePredicate(conditionList), value);
+    return Pair.of(compose(conditionList), value);
   }
 }

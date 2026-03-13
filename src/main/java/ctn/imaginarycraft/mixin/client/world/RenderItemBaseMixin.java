@@ -58,7 +58,7 @@ public abstract class RenderItemBaseMixin implements IRenderItemBase {
           var conditionsList = entry.getAsJsonArray("conditions");
           for (int i = 0; i < conditionsList.size(); i++) {
             var jsonObject = conditionsList.get(i).getAsJsonObject();
-            String predicateId = jsonObject.get(ModWeaponTypeReloadListener.PREDICATE_TAG).getAsString();
+            String predicateId = jsonObject.get(ModWeaponTypeReloadListener.PREDICATE).getAsString();
 
             try {
               Supplier<Condition.EntityPatchCondition> conditionProvider = EpicFightConditions.getConditionOrThrow(ResourceLocation.parse(predicateId));
@@ -70,7 +70,7 @@ public abstract class RenderItemBaseMixin implements IRenderItemBase {
                 i, predicateId, e.getClass().getSimpleName(), e.getMessage(), e);
             }
           }
-          return Pair.of(ConditionalEntryParser.composePredicate(conditionList), TrailInfo.deserialize(entry.getAsJsonObject("value")));
+          return Pair.of(ConditionalEntryParser.compose(conditionList), TrailInfo.deserialize(entry.getAsJsonObject("value")));
         }).toList());
   }
 
