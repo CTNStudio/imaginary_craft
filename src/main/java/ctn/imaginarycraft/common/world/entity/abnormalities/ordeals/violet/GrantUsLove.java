@@ -97,6 +97,13 @@ public class GrantUsLove extends AbnormalitiesEntity {
     public static final float CRASH_ATTACK_KNOCKBACK_STRENGTH = 1.0F;
   }
 
+  @Override
+  public void doWhenSpawnByEggs() {
+    this.crashAttackReady = false;
+    this.crashAttackCooldown = Config.CRASH_ATTACK_COOLDOWN;
+    this.crashPortalOpeningTime = Config.CRASH_PORTAL_OPENING_TIME;
+  }
+
   //普攻
   private void executeAoeAttack() {
     AABB aoeBox = this.getBoundingBox()

@@ -17,4 +17,7 @@ public abstract class AbnormalitiesEntity extends Mob implements IEntityAbnormal
   public static AttributeSupplier.@NotNull Builder createAbnormalitiesAttributes() {
     return createMobAttributes().add(Attributes.KNOCKBACK_RESISTANCE, 1);
   }
+
+  public void doWhenSpawnByEggs() {
+  }// 需要特化刷怪蛋生成时调用
 }
