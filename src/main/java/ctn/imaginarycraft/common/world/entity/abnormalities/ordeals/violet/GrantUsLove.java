@@ -17,6 +17,7 @@ import ctn.imaginarycraft.init.world.ModAttributes;
 import ctn.imaginarycraft.init.world.ModDamageSources;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
+import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.resources.ResourceLocation;
@@ -24,6 +25,7 @@ import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
@@ -486,6 +488,18 @@ public class GrantUsLove extends AbnormalitiesEntity {
   }
 
   @Override
+  public void lookAt(EntityAnchorArgument.Anchor anchor, Vec3 target) {
+  }
+
+  @Override
+  public void lookAt(Entity entity, float maxYRotIncrease, float maxXRotIncrease) {
+  }
+
+  @Override
+  protected void clampHeadRotationToBody() {
+  }
+
+  @Override
   public void makeStuckInBlock(@NotNull BlockState state, @NotNull Vec3 motionMultiplier) {
   }
 
@@ -495,7 +509,8 @@ public class GrantUsLove extends AbnormalitiesEntity {
   }
 
   private PlayState predicate(AnimationState<GrantUsLove> animationState) {
-    animationState.getController().setAnimation(RawAnimation.begin().thenPlay("idle"));
+    //TODO:动画
+//    animationState.getController().setAnimation(RawAnimation.begin().thenPlay("idle"));
     return PlayState.CONTINUE;
   }
 
@@ -513,7 +528,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
     @Override
     public void render(GrantUsLove entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
       poseStack.pushPose();
-      float scale = 0.4f;
+      float scale = 1.0f;
       poseStack.scale(scale, scale, scale);
       super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
       poseStack.popPose();

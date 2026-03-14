@@ -37,7 +37,7 @@ public final class AbnormalitiesEntityTypes {
     "“请给我们爱”",
     LcLevel.HE,
     EntityType.Builder.of(GrantUsLove::new, MobCategory.MISC)
-      .sized(1.5F, 3F)
+      .sized(2.0F, 5F)
       .eyeHeight(2.0F)
       .clientTrackingRange(8)
       .updateInterval(2));
