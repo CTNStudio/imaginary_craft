@@ -13,6 +13,7 @@ import com.mojang.blaze3d.vertex.PoseStack;
 import ctn.imaginarycraft.client.model.ModGeoEntityModel;
 import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
 import ctn.imaginarycraft.common.world.entity.abnormalities.AbnormalitiesEntity;
+import ctn.imaginarycraft.init.ModSoundEvents;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import ctn.imaginarycraft.init.world.ModDamageSources;
 import net.minecraft.client.renderer.MultiBufferSource;
@@ -74,6 +75,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
   private final List<LivingEntity> recentAttackers = new ArrayList<>(); // 最近攻击者列表
   private final Map<LivingEntity, Integer> lastAttackTimeMap = new HashMap<>(); // 记录攻击时间
   private Vec3 crashPortalPosition = null;
+  private int idleSoundCooldown = 0;
 
   // ========== 可配置参数 ==========
   private static final class Config {
@@ -128,9 +130,17 @@ public class GrantUsLove extends AbnormalitiesEntity {
         // 视觉效果
         this.showAttackEffect();
 
-        // 音效（如果有命中目标，播放不同音效）
+        // 音效
         this.playAttackSound();
       }
+    }
+    if(!targets.isEmpty()){
+      this.playAttackSound();
+    }else if(idleSoundCooldown <= 0){
+      this.playIdleSound();
+      idleSoundCooldown = 2;
+    }else {
+      idleSoundCooldown--;
     }
   }
 
@@ -179,14 +189,19 @@ public class GrantUsLove extends AbnormalitiesEntity {
   }
 
   @Override
-  protected void playAttackSound() {//TODO: 播放音效
+  protected void playAttackSound() {
+    playSound(ModSoundEvents.VIOLET_NOON_ATK.value(), 1.0F, 1.0F);
   }
 
   private void showAttackEffect() {//TODO: 播放特效
   }
 
-  private void playCrashAttackSound() {//TODO: 播放大招音效
-    playSound(SoundEvents.ANVIL_LAND, 2.0F, 1.0F);
+  private void playCrashAttackSound() {
+    playSound(ModSoundEvents.VIOLET_NOON_DOWN.value(), 2.0F, 1.0F);
+  }
+
+  private void playIdleSound() {
+    playSound(ModSoundEvents.VIOLET_NOON_idle.value(), 1.0F, 1.0F);
   }
 
   /**

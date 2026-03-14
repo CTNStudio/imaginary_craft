@@ -29,6 +29,14 @@ public final class ModSoundEvents {
     "solemn_lament_weapon_stongattack_black", "圣宣-黑：特殊射击", "item.solemn_lament_weapon.stongattack.black");
   public static final Holder<SoundEvent> SOLEMN_LAMENT_WEAPON_STONGATTACK_WHITE = registerForHolder(
     "solemn_lament_weapon_stongattack_white", "圣宣-白：特殊射击", "item.solemn_lament_weapon.stongattack.white");
+  public static final Holder<SoundEvent> VIOLET_NOON_DOWN = registerForHolder(
+    "violet_noon_down","紫罗兰正午-下砸","entity.violet.grant_us_love.down");
+  public static final Holder<SoundEvent> VIOLET_NOON_ATK = registerForHolder(
+    "violet_noon_atk","紫罗兰正午-攻击","entity.violet.grant_us_love.atk");
+  public static final Holder<SoundEvent> VIOLET_NOON_idle = registerForHolder(
+    "violet_noon_idle","紫罗兰正午-待机","entity.violet.grant_us_love.idle");
+  public static final Holder<SoundEvent> VIOLET_NOON_DEATH = registerForHolder(
+    "violet_noon_death","紫罗兰正午-死亡","entity.violet.grant_us_love.death");
 
   private static DeferredHolder<SoundEvent, SoundEvent> registerForHolder(String id, String zhName, String location) {
     DeferredHolder<SoundEvent, SoundEvent> register = ModSoundEvents.REGISTRY.register(id, () -> SoundEvent.createVariableRangeEvent(ImaginaryCraft.modRl(location)));
