@@ -19,19 +19,18 @@ import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.NotNull;
 
 public class DamageTextParticle extends TextParticle {
+  protected final boolean isHeal;
   private final boolean isCrit;
-  private int phase = 0;
   private final int numberLifetime = 30;
+  private int phase = 0;
   private int phaseTimer = 0;
   private float startX, startY, startZ;
   private float targetX, targetY, targetZ;
-  private final float startSize;
-  private float targetSize;
-  protected final boolean isHeal;
+  private float currentSizeScale = 0.5f;
+  private float targetSizeScale = 0.5f;
 
   protected DamageTextParticle(ClientLevel level, double x, double y, double z, Options options, boolean isHeal) {
     super(level, x, y, z, options.options);
-    this.startSize = size;
     this.isHeal = isHeal;
     this.isCrit = false;
     this.startX = (float) x;
@@ -51,20 +50,34 @@ public class DamageTextParticle extends TextParticle {
     double dz = getZ(partialTicks) - cameraPosition.z;
     double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-    float distanceScale = (float) distance * 0.25f;
-    float finalScale = this.quadSize * distanceScale;
+    float distanceScale = 0.1f + (float) distance * 0.5f;
+    targetSizeScale = 0.5f * this.baseSize * distanceScale;
 
     float minScale = 0.1f;
-    if (finalScale < this.quadSize * minScale) {
-      finalScale = this.quadSize * minScale;
+    if (targetSizeScale < this.baseSize * minScale) {
+      targetSizeScale = this.baseSize * minScale;
     }
 
     float maxScale = 5.5f;
-    if (finalScale > this.quadSize * maxScale) {
-      finalScale = this.quadSize * maxScale;
+    if (targetSizeScale > this.baseSize * maxScale) {
+      targetSizeScale = this.baseSize * maxScale;
     }
 
-    this.size = finalScale;
+    switch (phase) {
+      case 0 -> {
+        float smoothProgress = Math.min(1.0f, phaseTimer / 10.0f);
+        smoothProgress = smoothStep(smoothProgress);
+        currentSizeScale = Mth.lerp(smoothProgress, 0.0f, targetSizeScale);
+      }
+      case 1 -> {
+        currentSizeScale = Mth.lerp(0.1f, currentSizeScale, targetSizeScale);
+      }
+      case 2 -> {
+        currentSizeScale = Mth.lerp(0.15f, currentSizeScale, targetSizeScale);
+      }
+    }
+
+    this.size = currentSizeScale;
 
     super.render(vertexConsumer, camera, partialTicks);
   }
@@ -104,7 +117,6 @@ public class DamageTextParticle extends TextParticle {
   }
 
   private void handleHoverPhase() {
-    quadSize = baseSize * 2;
     int hoverTime = this.isCrit ? numberLifetime * 2 : numberLifetime / 3;
 
     if (phaseTimer >= hoverTime) {
@@ -120,7 +132,6 @@ public class DamageTextParticle extends TextParticle {
   }
 
   private void handleFallPhase() {
-    quadSize = quadSize * 0.1f;
     int fallTime = this.isCrit ? numberLifetime * 2 : numberLifetime / 3;
     float fallProgress = Math.min(1.0f, phaseTimer / (float) fallTime);
     fallProgress = easeOutCubic(fallProgress);
@@ -145,13 +156,12 @@ public class DamageTextParticle extends TextParticle {
 
   @Override
   public void tick() {
-    this.xo = this.x;
-    this.yo = this.y;
-    this.zo = this.z;
+    super.tick();
+  }
 
-    if (this.age++ >= this.lifetime) {
-      this.remove();
-    } else {
+  @Override
+  protected void tickAge() {
+    if (this.age < this.lifetime) {
       phaseTimer++;
       switch (phase) {
         case 0 -> handleRisePhase();
@@ -159,16 +169,17 @@ public class DamageTextParticle extends TextParticle {
         case 2 -> handleFallPhase();
       }
     }
+    super.tickAge();
   }
 
-  public record Options(TextParticle.Options options, boolean isHeal) implements ParticleOptions {
+  public record Options(TextParticleOptions options, boolean isHeal) implements ParticleOptions {
     public static final MapCodec<Options> CODEC = RecordCodecBuilder.mapCodec(instance -> instance.group(
-      TextParticle.Options.CODEC.fieldOf("options").forGetter(Options::options),
+      TextParticleOptions.CODEC.fieldOf("options").forGetter(Options::options),
       Codec.BOOL.fieldOf("isHeal").forGetter(Options::isHeal)
     ).apply(instance, Options::new));
 
     public static final StreamCodec<RegistryFriendlyByteBuf, Options> STREAM_CODEC = StreamCodec.composite(
-      TextParticle.Options.STREAM_CODEC, Options::options,
+      TextParticleOptions.STREAM_CODEC, Options::options,
       ByteBufCodecs.BOOL, Options::isHeal,
       Options::new);
 

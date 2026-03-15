@@ -2,8 +2,7 @@ package ctn.imaginarycraft.client.util;
 
 import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.client.ModFontIcon;
-import ctn.imaginarycraft.client.particle.text.DamageTextParticle;
-import ctn.imaginarycraft.client.particle.text.TextParticle;
+import ctn.imaginarycraft.client.particle.text.*;
 import ctn.imaginarycraft.util.TextUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
@@ -36,27 +35,25 @@ public final class ParticleUtil {
     double yOffset,
     double zOffset
   ) {
-//    world.sendParticles(new DamageNumberParticle.Options(component), x, y, z, 1, xOffset, yOffset, zOffset, 11);
-
-    TextParticle.Options built = getBuild(component, damageTypeHolder, lcDamageType, isRationality, isHeal)
-      .align(TextParticle.AlignType.CENTER)
+    TextParticleOptions built = getBuild(component, damageTypeHolder, lcDamageType, isRationality, isHeal)
+      .align(TextParticleAlignType.CENTER)
       .targetingPlayers(true)
       .particleLifeTime(isHeal ? 20 : 20 * 3)
-      .strokeType(TextParticle.StrokeType.SHADOW)
+      .strokeType(TextParticleStrokeType.SHADOW)
       .shine(true)
       .seeThrough(true)
       .buildOptions();
     world.sendParticles(new DamageTextParticle.Options(built, isHeal), x, y, z, 1, xOffset, yOffset, zOffset, 0);
   }
 
-  private static TextParticle.Builder getBuild(
+  private static TextParticleBuilder getBuild(
     final Component component,
     final @Nullable Holder<DamageType> damageTypeHolder,
     final @Nullable LcDamageType lcDamageType,
     final boolean isRationality,
     final boolean isHeal
   ) {
-    TextParticle.Builder builder = new TextParticle.Builder();
+    TextParticleBuilder builder = new TextParticleBuilder();
     Component iconComponent;
     int fontColor;
     int strokeColor;

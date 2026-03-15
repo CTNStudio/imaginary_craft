@@ -4,9 +4,8 @@ import com.mojang.serialization.MapCodec;
 import ctn.imaginarycraft.client.particle.DyeingMagicCircleParticle;
 import ctn.imaginarycraft.client.particle.LcDamageIconParticle;
 import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
-import ctn.imaginarycraft.client.particle.text.DamageNumberParticle;
 import ctn.imaginarycraft.client.particle.text.DamageTextParticle;
-import ctn.imaginarycraft.client.particle.text.TextParticle;
+import ctn.imaginarycraft.client.particle.text.TextParticleOptions;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.core.particles.ParticleOptions;
 import net.minecraft.core.particles.ParticleType;
@@ -26,13 +25,10 @@ import java.util.function.Supplier;
 public final class ModParticleTypes {
   public static final DeferredRegister<ParticleType<?>> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.PARTICLE_TYPE);
 
-  public static final Supplier<ParticleType<TextParticle.Options>> TEXT = register(
-    "text", true, TextParticle.Options.CODEC, TextParticle.Options.STREAM_CODEC);
+  public static final Supplier<ParticleType<TextParticleOptions>> TEXT = register(
+    "text", true, TextParticleOptions.CODEC, TextParticleOptions.STREAM_CODEC);
   public static final Supplier<ParticleType<DamageTextParticle.Options>> DAMAGE_TEXT = register(
     "damage_text", true, DamageTextParticle.Options.CODEC, DamageTextParticle.Options.STREAM_CODEC);
-
-  public static final Supplier<ParticleType<DamageNumberParticle.Options>> DAMAGE_NUMBER_PARTICLE = register(
-    "damagenumberparticle", true, DamageNumberParticle.Options.CODEC, DamageNumberParticle.Options.STREAM_CODEC);
 
   public static final Supplier<ParticleType<LcDamageIconParticle.Options>> LC_DAMAGE_ICON = register(
     "lobotomycorporation_damage_icon", true, LcDamageIconParticle.Options.CODEC, LcDamageIconParticle.Options.STREAM_CODEC);
