@@ -42,6 +42,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.*;
 
+// TODO 技能或大招剩余时间要持久化
 public class GrantUsLove extends AbnormalitiesEntity {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 

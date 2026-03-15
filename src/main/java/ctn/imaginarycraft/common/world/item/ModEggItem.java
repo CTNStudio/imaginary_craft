@@ -16,7 +16,6 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.Spawner;
 import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.SpawnerBlockEntity;
@@ -32,7 +31,7 @@ import java.util.function.Supplier;
 public class ModEggItem extends DeferredSpawnEggItem {
 
   public ModEggItem(Supplier<? extends EntityType<? extends Mob>> entityType, Properties properties) {
-    super(entityType, 0, 0, properties);
+    super(entityType, -1, -1, properties);
   }
 
   @Override
