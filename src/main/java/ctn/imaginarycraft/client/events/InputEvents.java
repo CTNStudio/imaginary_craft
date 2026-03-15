@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.client.events;
 
-import ctn.imaginarycraft.api.IGunWeapon;
-import ctn.imaginarycraft.api.IPlayerItemAttackClick;
+import ctn.imaginarycraft.api.world.item.IGunWeapon;
+import ctn.imaginarycraft.api.world.item.IPlayerItemAttackClick;
 import ctn.imaginarycraft.client.eventexecute.InputEventExecute;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.minecraft.client.Minecraft;

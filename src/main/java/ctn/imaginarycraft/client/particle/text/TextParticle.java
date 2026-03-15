@@ -39,7 +39,7 @@ public class TextParticle extends Particle {
   protected List<Component> textComponent;
   protected int strokeColor, strokeColorO;
   protected int fontColor, fontColorO;
-  protected float size;
+  protected float size, sizeO;
   protected float xRot, xRotO;
   protected float yRot, yRotO;
 
@@ -63,6 +63,7 @@ public class TextParticle extends Particle {
     this.yRotO = options.yRot();
     this.baseSize = options.size();
     this.size = options.size();
+    this.sizeO = options.size();
     this.fontColor = options.fontColor();
     this.fontColorO = options.fontColor();
     this.strokeColor = options.strokeColor();
@@ -76,6 +77,7 @@ public class TextParticle extends Particle {
     zo = z;
     xRotO = xRot;
     yRotO = yRot;
+    sizeO = size;
     fontColorO = fontColor;
     strokeColorO = strokeColor;
     tickAge();
@@ -99,7 +101,7 @@ public class TextParticle extends Particle {
 
     Vec3 camPos = camera.getPosition();
     int getLightColor = getLightColor(partialTicks);
-    float size = this.size;
+    float size = getSize(partialTicks);
     double x = getX(partialTicks);
     double y = getY(partialTicks);
     double z = getZ(partialTicks);
@@ -219,6 +221,10 @@ public class TextParticle extends Particle {
     return Mth.lerp(partialTicks, this.zo, this.z);
   }
 
+  protected float getSize(float partialTicks) {
+    return Mth.lerp(partialTicks, this.sizeO, this.size);
+  }
+
   protected int getStrokeColor(float partialTicks) {
     return Mth.floor(Mth.lerp(partialTicks, this.strokeColorO, this.strokeColor));
   }
@@ -242,6 +248,7 @@ public class TextParticle extends Particle {
 
   public void setSize(float size) {
     setSize(size, size);
+    this.sizeO = this.size;
     this.size = size;
   }
 

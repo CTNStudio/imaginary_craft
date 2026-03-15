@@ -1,24 +1,14 @@
-/**
- * ordeals--violet noon
- * 考验--紫罗兰色正午
- * Grant Us Love
- * 请给我们爱
- * 2025/12/22
- * 尘昨喧
- */
-
 package ctn.imaginarycraft.common.world.entity.ordeals.violet;
 
+import ctn.imaginarycraft.api.world.entity.IAbnormalitiesEntity;
 import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
-import ctn.imaginarycraft.common.world.entity.abnormalities.AbnormalitiesEntity;
 import ctn.imaginarycraft.init.ModSoundEvents;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import ctn.imaginarycraft.init.world.ModDamageSources;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.util.Mth;
+import net.minecraft.tags.DamageTypeTags;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
@@ -33,25 +23,59 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
 import software.bernie.geckolib.animation.AnimationState;
 import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
+import yesman.epicfight.api.utils.LevelUtil;
+import yesman.epicfight.api.utils.math.Vec2i;
+import yesman.epicfight.gameasset.Animations;
+import yesman.epicfight.registry.entries.EpicFightParticles;
+import yesman.epicfight.world.damagesource.EpicFightDamageSources;
+import yesman.epicfight.world.damagesource.EpicFightDamageTypeTags;
+import yesman.epicfight.world.damagesource.StunType;
 
+import javax.annotation.Nullable;
 import java.util.*;
+import java.util.function.Predicate;
 
 // TODO 技能或大招剩余时间要持久化
-public class GrantUsLove extends AbnormalitiesEntity {
+// TODO 需要免疫中毒，细雪，火焰，漂浮
+
+/**
+ * 英文编号：ordeals--violet noon
+ * <p>
+ * 中文编号：考验--紫罗兰色正午
+ * <p>
+ * 英文名：Grant Us Love
+ * <p>
+ * 中文名： 请给我们爱
+ * <p>
+ * 2025/12/22 尘昨喧
+ */
+public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+  private final List<LivingEntity> recentAttackers = new ArrayList<>(); // 最近攻击者列表
+  private final Map<LivingEntity, Integer> lastAttackTimeMap = new HashMap<>(); // 记录攻击时间
+  private LivingEntity primaryTarget = null; // 主要目标（优先玩家）
+  private int attackCooldown = Config.NORMAL_ATTACK_COOLDOWN;
+  private int crashAttackCooldown = 0;
+  private int stateDuration = 0; // 当前状态持续时间
+  private boolean crashAttackReady = false; //一个状态，大招冷却结束但未释放
+  private int crashPortalOpeningTime = 1;
+  private Vec3 crashPortalPosition = null;
+  private int idleSoundCooldown = 0;
 
   public GrantUsLove(EntityType<? extends Mob> entityType, Level level) {
     super(entityType, level);
   }
 
   public static AttributeSupplier.Builder createAttributes() {
-    return createAbnormalitiesAttributes()
+    return createMobAttributes()
+      .add(Attributes.KNOCKBACK_RESISTANCE, 1)
       .add(Attributes.MAX_HEALTH, 350.0)
       .add(Attributes.ATTACK_DAMAGE, 1.0)
       .add(Attributes.MOVEMENT_SPEED, 0)
@@ -63,45 +87,122 @@ public class GrantUsLove extends AbnormalitiesEntity {
       .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0);
   }
 
-  private LivingEntity primaryTarget = null; // 主要目标（优先玩家）
-  private int attackCooldown = Config.NORMAL_ATTACK_COOLDOWN;
-  private int crashAttackCooldown = 0;
-  private int stateDuration = 0; // 当前状态持续时间
-  private boolean crashAttackReady = false; //一个状态，大招冷却结束但未释放
-  private int crashPortalOpeningTime = 1;
-  private final List<LivingEntity> recentAttackers = new ArrayList<>(); // 最近攻击者列表
-  private final Map<LivingEntity, Integer> lastAttackTimeMap = new HashMap<>(); // 记录攻击时间
-  private Vec3 crashPortalPosition = null;
-  private int idleSoundCooldown = 0;
+  public static Set<Entity> spreadShockwave(Level level, Vec3 center, Vec3 direction, double length, int edgeX, int edgeZ) {
+    Set<Entity> entityBeingHit = new HashSet<>();
 
-  // ========== 可配置参数 ==========
-  private static final class Config {
-    // 攻击参数
-    public static final int NORMAL_ATTACK_COOLDOWN = 30; // 基础攻击间隔（1.5秒）
-    public static final int CRASH_ATTACK_COOLDOWN = 600; // 大招攻击间隔（30秒）
-    public static final int CRASH_PORTAL_OPENING_TIME = 100;
-    public static final float TARGETED_ATTACK_RADIUS = 50.0F; // 锁定半径（针对玩家，脱离后解除锁定）
+    if (direction.lengthSqr() == 0) {
+      return entityBeingHit;
+    }
 
-    // 目标锁定参数
-    public static final int TARGET_LOCK_DURATION = 600; // 锁定目标持续时间（30秒）
-    public static final int RECENT_ATTACKER_MEMORY = 200; // 记住攻击者的时间（10秒）
-    public static final float PLAYER_TARGET_PRIORITY = 10.0F; // 玩家目标优先级权重
+    Vec3 edgeOfShockwave = center.add(direction.normalize().scale((float) length));
+    int xFrom = (int) Math.min(Math.floor(center.x), edgeX);
+    int xTo = (int) Math.max(Math.floor(center.x), edgeX);
+    int zFrom = (int) Math.min(Math.floor(center.z), edgeZ);
+    int zTo = (int) Math.max(Math.floor(center.z), edgeZ);
 
-    // 普攻参数
-    public static final float NORMAL_ATTACK_DAMAGE = 1.0F;
-    public static final float CRASH_ATTACK_DAMAGE = 100.0F;
-    public static final float NORMAL_ATTACK_AOE_RADIUS = 4.0F; // 普攻群攻半径
-    public static final float NORMAL_ATTACK_AOE_HEIGHT = 4.0F;  // 普攻群攻高度
-    public static final float CRASH_ATTACK_AOE_RADIUS = 10.0F;
-    public static final float CRASH_ATTACK_AOE_HEIGHT = 7.0F;
-    public static final float NORMAL_ATTACK_KNOCKBACK_STRENGTH = 0.0F; // 击退强度
-    public static final float CRASH_ATTACK_KNOCKBACK_STRENGTH = 1.0F;
+    List<Entity> entitiesInArea = level.isClientSide ? null : level.getEntities(null, new AABB(xFrom, center.y - length, zFrom, xTo, center.y + length, zTo));
+
+    for (int k = zFrom; k <= zTo; k++) {
+      for (int l = xFrom; l <= xTo; l++) {
+        Vec2i blockCoord = new Vec2i(l, k);
+
+        if (!isBlockOverlapLine(blockCoord, center, edgeOfShockwave)) {
+          continue;
+        }
+
+        BlockPos bp = new BlockPos.MutableBlockPos(blockCoord.x, (int) center.y, blockCoord.y);
+
+        Vec3 blockCenter = new Vec3(bp.getX() + 0.5D, bp.getY(), bp.getZ() + 0.5D);
+        double distance = blockCenter.subtract(center).horizontalDistance();
+
+        if (length < distance) {
+          continue;
+        }
+
+        BlockState bs = level.getBlockState(bp);
+        BlockPos aboveBp = bp.above();
+        BlockState aboveState = level.getBlockState(aboveBp);
+
+        if (LevelUtil.canTransferShockWave(level, aboveBp, aboveState)) {
+          BlockPos aboveTwoBp = aboveBp.above();
+          BlockState aboveTwoState = level.getBlockState(aboveTwoBp);
+
+          if (!LevelUtil.canTransferShockWave(level, aboveTwoBp, aboveTwoState)) {
+            bp = aboveBp;
+            bs = aboveState;
+          }
+        }
+
+        if (!LevelUtil.canTransferShockWave(level, bp, bs)) {
+          BlockPos belowBp = bp.below();
+          BlockState belowState = level.getBlockState(belowBp);
+
+          if (LevelUtil.canTransferShockWave(level, belowBp, belowState)) {
+            bp = belowBp;
+            bs = belowState;
+          }
+        }
+
+        if (level.isClientSide) {
+          continue;
+        }
+
+        for (Entity entity : entitiesInArea) {
+          if (bp.getX() != entity.getBlockX()) {
+            continue;
+          }
+
+          if (bp.getZ() != entity.getBlockZ()) {
+            continue;
+          }
+
+          double entityY = entity.getY();
+          if (bp.getY() + 1 < entityY || bp.getY() > entityY) {
+            continue;
+          }
+
+          entityBeingHit.add(entity);
+        }
+      }
+    }
+
+    return entityBeingHit;
+  }
+
+  private static boolean isBlockOverlapLine(Vec2i vec2, Vec3 from, Vec3 to) {
+    return isLinesCross(vec2.x, vec2.y, vec2.x + 1, vec2.y, from.x, from.z, to.x, to.z)
+      || isLinesCross(vec2.x, vec2.y, vec2.x, vec2.y + 1, from.x, from.z, to.x, to.z)
+      || isLinesCross(vec2.x + 1, vec2.y, vec2.x + 1, vec2.y + 1, from.x, from.z, to.x, to.z)
+      || isLinesCross(vec2.x, vec2.y + 1, vec2.x + 1, vec2.y + 1, from.x, from.z, to.x, to.z);
+  }
+
+  private static boolean isLinesCross(double x1, double y1, double x2, double y2, double x3, double y3, double x4, double y4) {
+    double v1 = (x2 - x1) * (y4 - y3) - (x4 - x3) * (y2 - y1);
+    double u = ((x4 - x3) * (y1 - y3) - (y4 - y3) * (x1 - x3)) / v1;
+    double v = ((x2 - x1) * (y1 - y3) - (y2 - y1) * (x1 - x3)) / v1;
+
+    return 0 < u && u < 1 && 0 < v && v < 1;
+  }
+
+  private float rot(float rot) {
+    return (float) Math.floor(rot / 90.0) * 90.0F;
+  }
+
+  @Override
+  public float getYRot() {
+    return Math.round(super.getYRot() / 90.0F) * 90.0F;
+  }
+
+  @Override
+  public void setYRot(float xRot) {
+    super.setYRot(rot(xRot));
   }
 
   @Override
   public void doWhenSpawnByEggs() {
     this.crashAttackReady = false;
     this.crashAttackCooldown = Config.CRASH_ATTACK_COOLDOWN;
+    this.crashAttackCooldown = 20 * 2;
     this.crashPortalOpeningTime = Config.CRASH_PORTAL_OPENING_TIME;
   }
 
@@ -116,7 +217,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
     List<LivingEntity> targets = this.level().getEntitiesOfClass(
       LivingEntity.class,
       aoeBox,
-      entity -> entity != this && entity.isAlive() && this.canAttackTarget(entity)
+      entity -> entity != this && entity.isAlive() && this.isTarget(entity)
     );
 
     DamageSource damageSource = ModDamageSources.erosionDamage(this);//黑伤
@@ -131,39 +232,72 @@ public class GrantUsLove extends AbnormalitiesEntity {
         this.playAttackSound();
       }
     }
-    if(!targets.isEmpty()){
+    if (!targets.isEmpty()) {
       this.playAttackSound();
-    }else if(idleSoundCooldown <= 0){
+    } else if (idleSoundCooldown <= 0) {
       this.playIdleSound();
       idleSoundCooldown = 2;
-    }else {
+    } else {
       idleSoundCooldown--;
     }
   }
 
   //大招
   private void executeCrashAttack() {
-    AABB aoeBox = this.getBoundingBox()
-      .inflate(Config.CRASH_ATTACK_AOE_RADIUS,
-        Config.CRASH_ATTACK_AOE_HEIGHT / 2,
-        Config.CRASH_ATTACK_AOE_RADIUS)
-      .move(0, Config.CRASH_ATTACK_AOE_HEIGHT / 4, 0);
-    List<LivingEntity> targets = this.level().getEntitiesOfClass(
-      LivingEntity.class,
-      aoeBox,
-      entity -> entity != this && entity.isAlive() && this.canAttackTarget(entity)
-    );
+    final float crashAttackAoeRadius = 10.0F;
+    final float crashAttackDamage = 200.0F;
+    this.spawnGroundParticlesInAABB(crashAttackAoeRadius + 1);
+    this.playCrashAttackSound();
+    hurt(this, this.level(), position().subtract(0, 1, 0),
+      crashAttackAoeRadius + 1, crashAttackDamage, this::canAttackTarget);
+  }
 
-    DamageSource damageSource = ModDamageSources.physicsDamage(this);
-
-    for (LivingEntity target : targets) {
-      this.applyAttackToTarget(target,
-        damageSource, Config.CRASH_ATTACK_DAMAGE, Config.CRASH_ATTACK_KNOCKBACK_STRENGTH);
+  private void hurt(@Nullable LivingEntity caster, Level level, Vec3 center, double radius, float maxDamage, Predicate<Entity> filter) {
+    if (radius <= 0) {
+      return;
     }
 
-    this.spawnGroundParticlesInAABB(aoeBox); //在整个AABB区域的地表生成粒子
+    int xFrom = (int) Math.floor(center.x - radius);
+    int xTo = (int) Math.ceil(center.x + radius);
+    int zFrom = (int) Math.floor(center.z - radius);
+    int zTo = (int) Math.ceil(center.z + radius);
+    Set<Entity> entityBeingHit = new HashSet<>();
 
-    this.playCrashAttackSound();
+    for (int k = zFrom; k <= zTo; k++) {
+      for (int l = xFrom; l <= xTo; l++) {
+        Vec3 blockCenter = new Vec3(l + 0.5D, center.y, k + 0.5D);
+
+        if (blockCenter.subtract(center).horizontalDistance() > radius) {
+          continue;
+        }
+
+        Vec3 direction = blockCenter.subtract(center).normalize();
+        entityBeingHit.addAll(spreadShockwave(level, center, direction, radius, l, k));
+      }
+    }
+
+    if (level.isClientSide) {
+      return;
+    }
+
+    for (Entity entity : entityBeingHit) {
+      if (caster == null || entity.is(caster) || !filter.test(entity)) {
+        continue;
+      }
+
+      double distance = entity.position().distanceTo(center);
+      double damageRatio = 1.0D - (distance / radius);
+      float damage = (float) Math.max(0, maxDamage * damageRatio);
+
+      entity.hurt(EpicFightDamageSources
+          .shockwave(caster)
+          .setAnimation(Animations.EMPTY_ANIMATION)
+          .setInitialPosition(center)
+          .addRuntimeTag(EpicFightDamageTypeTags.FINISHER)
+          .addRuntimeTag(DamageTypeTags.IS_EXPLOSION)
+          .setStunType(StunType.KNOCKDOWN),
+        damage);
+    }
   }
 
   private boolean applyAttackToTarget(LivingEntity target, DamageSource damageSource, float damageAmount, double strength) {
@@ -204,59 +338,31 @@ public class GrantUsLove extends AbnormalitiesEntity {
   /**
    * 简单的地面尘土粒子效果
    */
-  private void spawnGroundParticlesInAABB(AABB area) {
+  private void spawnGroundParticlesInAABB(double radius) {
     if (this.level().isClientSide) return;
-
-    ServerLevel serverLevel = (ServerLevel) this.level();
-
-    // 在AABB底部平面上均匀生成粒子
-    double minX = area.minX;
-    double maxX = area.maxX;
-    double minZ = area.minZ;
-    double maxZ = area.maxZ;
-    double baseY = area.minY + 3.1;
-
-    // 采样点数量（根据区域大小调整）
-    int samples = Math.min(40, (int) ((maxX - minX) * (maxZ - minZ) / 4));
-
-    for (int i = 0; i < samples; i++) {
-      // 在区域内随机位置
-      double x = minX + this.random.nextDouble() * (maxX - minX);
-      double z = minZ + this.random.nextDouble() * (maxZ - minZ);
-
-      // 向下检测找到地面
-      double groundY = baseY;
-      for (int dy = 0; dy < 8; dy++) {
-        BlockPos pos = new BlockPos(Mth.floor(x), Mth.floor(baseY - dy), Mth.floor(z));
-        if (!this.level().getBlockState(pos).isAir()) {
-          groundY = pos.getY() + 1.1; // 在地面之上
-          break;
-        }
-      }
-
-      // 生成尘土粒子
-      serverLevel.sendParticles(
-        ParticleTypes.DUST_PLUME,
-        x, groundY, z,
-        3, // 每个点生成3个粒子
-        0.2, 0.1, 0.2, // 粒子扩散范围
-        0.05 // 基础速度
-      );
-    }
+    Vec3 position = position();
+    ServerLevel level = (ServerLevel) this.level();
+    LevelUtil.circleSlamFracture(this, level, position.subtract(0, 1, 0), radius, false, false, true);
+    EpicFightParticles.AIR_BURST.get().spawnParticleWithArgument(level,
+      position.x, position.y, position.z,
+      0, 0, radius * 2);
   }
 
-
-  private boolean canAttackTarget(LivingEntity entity) {
+  private boolean isTarget(Entity entity) {
     // 不攻击自己
     if (entity == this) return false;
 
     // 对玩家的特殊处理
     if (entity instanceof Player player) {
-      return !player.isCreative();
+      return !player.isCreative() && !player.isSpectator();
     }
     // 不攻击紫罗兰系列考验，由于没几个，我直接用硬编码
     // TODO 后续采用tag的形式处理
     return !(entity instanceof GrantUsLove);
+  }
+
+  private boolean canAttackTarget(Entity entity) {
+    return entity.isAlive() && entity.isAttackable() && this.isTarget(entity);
   }
 
   @Override
@@ -271,6 +377,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
     if (!this.crashAttackReady) {//无大招时
       if (crashAttackCooldown <= 0) {
         crashAttackCooldown = Config.CRASH_ATTACK_COOLDOWN;
+        crashAttackCooldown = 20 * 3;
         this.crashAttackReady = true;
       } else {
         crashAttackCooldown--;
@@ -284,7 +391,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
     } else if (this.crashPortalOpeningTime > 0) {
       if (this.crashPortalOpeningTime == Config.CRASH_PORTAL_OPENING_TIME) {//砸击开始时,锁定传送位置
         this.crashPortalPosition = Objects.requireNonNullElse(this.primaryTarget, this).position()
-          .add(0, 15, 0);
+          .add(0, 20, 0);
         this.createPortal();
       } else if (this.crashPortalOpeningTime == 1) {
         if (this.crashPortalPosition == null) {
@@ -293,7 +400,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
         this.setPos(crashPortalPosition.x, crashPortalPosition.y, crashPortalPosition.z);
       }
       this.crashPortalOpeningTime--;
-    } else if (this.isOnGround()) {//砸到地上时伤害
+    } else if (this.onGround()) {//砸到地上时伤害
       this.crashAttackReady = false;
       this.crashPortalOpeningTime = Config.CRASH_PORTAL_OPENING_TIME;
       this.executeCrashAttack();
@@ -309,7 +416,6 @@ public class GrantUsLove extends AbnormalitiesEntity {
 
     // 状态超时检查
     this.checkStateTimeout();
-
   }
 
   private void createPortal() {
@@ -322,10 +428,6 @@ public class GrantUsLove extends AbnormalitiesEntity {
       .radius(5.0f)
       .particleLifeTime(110)
       .buildOptions(0), pos.x, pos.y, pos.z, 1, 0, 0, 0, 0);
-  }
-
-  private boolean isOnGround() {
-    return this.onGround();
   }
 
   @Override
@@ -360,7 +462,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
     float bestScore = -1;
 
     for (LivingEntity attacker : recentAttackers) {
-      if (!attacker.isAlive() || !this.canAttackTarget(attacker)) continue;
+      if (!attacker.isAlive() || !this.isTarget(attacker)) continue;
 
       float score = this.calculateTargetScore(attacker);
 
@@ -472,7 +574,7 @@ public class GrantUsLove extends AbnormalitiesEntity {
 
   @Override
   protected void registerGoals() {
-  }//原版ai
+  }
 
   @Override
   public boolean isPushable() {
@@ -482,6 +584,22 @@ public class GrantUsLove extends AbnormalitiesEntity {
   @Override
   public boolean isPushedByFluid(@NotNull FluidType type) {
     return false;
+  }
+
+  @Override
+  public boolean canBeCollidedWith() {
+    return true;
+  }
+
+  @Override
+  public void setDeltaMovement(Vec3 deltaMovement) {
+    if (onGround()) {
+      return;
+    }
+    if (deltaMovement.y > 0) {
+      return;
+    }
+    super.setDeltaMovement(new Vec3(0, deltaMovement.y, 0));
   }
 
   @Override
@@ -529,5 +647,25 @@ public class GrantUsLove extends AbnormalitiesEntity {
   @Override
   public AnimatableInstanceCache getAnimatableInstanceCache() {
     return cache;
+  }
+
+  // ========== 可配置参数 ==========
+  private static final class Config {
+    // 攻击参数
+    public static final int NORMAL_ATTACK_COOLDOWN = 30; // 基础攻击间隔（1.5秒）
+    public static final int CRASH_ATTACK_COOLDOWN = 600; // 大招攻击间隔（30秒）
+    public static final int CRASH_PORTAL_OPENING_TIME = 100;
+    public static final float TARGETED_ATTACK_RADIUS = 50.0F; // 锁定半径（针对玩家，脱离后解除锁定）
+
+    // 目标锁定参数
+    public static final int TARGET_LOCK_DURATION = 600; // 锁定目标持续时间（30秒）
+    public static final int RECENT_ATTACKER_MEMORY = 200; // 记住攻击者的时间（10秒）
+    public static final float PLAYER_TARGET_PRIORITY = 10.0F; // 玩家目标优先级权重
+
+    // 普攻参数
+    public static final float NORMAL_ATTACK_DAMAGE = 1.0F;
+    public static final float NORMAL_ATTACK_AOE_RADIUS = 4.0F; // 普攻群攻半径
+    public static final float NORMAL_ATTACK_AOE_HEIGHT = 4.0F;  // 普攻群攻高度
+    public static final float NORMAL_ATTACK_KNOCKBACK_STRENGTH = 0.0F; // 击退强度
   }
 }

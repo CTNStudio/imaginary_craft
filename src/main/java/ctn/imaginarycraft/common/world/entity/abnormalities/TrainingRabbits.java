@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.common.world.entity.abnormalities;
 
+import ctn.imaginarycraft.api.world.entity.IAbnormalitiesEntity;
 import ctn.imaginarycraft.client.model.ModGeoEntityModel;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -9,12 +10,13 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.NotNull;
+import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class TrainingRabbits extends AbnormalitiesEntity {
+public class TrainingRabbits extends Mob implements IAbnormalitiesEntity, GeoEntity {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
   public TrainingRabbits(EntityType<? extends Mob> entityType, Level level) {
@@ -22,7 +24,7 @@ public class TrainingRabbits extends AbnormalitiesEntity {
   }
 
   public static AttributeSupplier.Builder createAttributes() {
-    return createAbnormalitiesAttributes()
+    return createMobAttributes()
       .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0)
       .add(ModAttributes.EROSION_VULNERABLE, 1.0);
   }

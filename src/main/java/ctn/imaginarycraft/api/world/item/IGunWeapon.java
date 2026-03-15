@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api;
+package ctn.imaginarycraft.api.world.item;
 
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.player.Player;

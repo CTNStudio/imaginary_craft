@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.payload.tos;
 
-import ctn.imaginarycraft.api.IGunWeapon;
+import ctn.imaginarycraft.api.world.item.IGunWeapon;
 import ctn.imaginarycraft.common.payload.api.ToServerPayload;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.util.PayloadUtil;

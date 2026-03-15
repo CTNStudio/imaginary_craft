@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.client.eventexecute;
 
-import ctn.imaginarycraft.api.IGunWeapon;
+import ctn.imaginarycraft.api.world.item.IGunWeapon;
 import ctn.imaginarycraft.common.payload.tos.PlayerIGunWeaponPayload;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.Options;

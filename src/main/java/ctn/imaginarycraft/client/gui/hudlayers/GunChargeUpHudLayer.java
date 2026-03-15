@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.client.gui.hudlayers;
 
-import ctn.imaginarycraft.api.IGunWeapon;
+import ctn.imaginarycraft.api.world.item.IGunWeapon;
 import ctn.imaginarycraft.client.gui.widget.ImageProgressBar;
 import ctn.imaginarycraft.common.world.item.ego.weapon.remote.gun.MagicBulletWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;

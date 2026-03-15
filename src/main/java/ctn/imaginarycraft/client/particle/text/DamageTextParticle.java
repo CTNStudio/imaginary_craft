@@ -76,8 +76,7 @@ public class DamageTextParticle extends TextParticle {
         currentSizeScale = Mth.lerp(0.15f, currentSizeScale, targetSizeScale);
       }
     }
-
-    this.size = currentSizeScale;
+    setSize(currentSizeScale);
 
     super.render(vertexConsumer, camera, partialTicks);
   }

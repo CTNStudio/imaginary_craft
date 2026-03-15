@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.remote.gun;
 
 import ctn.imaginarycraft.api.DelayTaskHolder;
-import ctn.imaginarycraft.api.IGunWeapon;
+import ctn.imaginarycraft.api.world.item.IGunWeapon;
 import ctn.imaginarycraft.common.world.item.ego.weapon.remote.RemoteEgoWeaponGeoItem;
 import ctn.imaginarycraft.util.GunWeaponUtil;
 import net.minecraft.server.level.ServerLevel;
