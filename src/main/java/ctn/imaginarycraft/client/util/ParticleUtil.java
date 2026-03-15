@@ -36,12 +36,15 @@ public final class ParticleUtil {
     double yOffset,
     double zOffset
   ) {
+//    world.sendParticles(new DamageNumberParticle.Options(component), x, y, z, 1, xOffset, yOffset, zOffset, 11);
+
     TextParticle.Options built = getBuild(component, damageTypeHolder, lcDamageType, isRationality, isHeal)
       .align(TextParticle.AlignType.CENTER)
-      .targetingPlayers()
+      .targetingPlayers(true)
       .particleLifeTime(isHeal ? 20 : 20 * 3)
-      .shadow()
-      .seeThrough()
+      .strokeType(TextParticle.StrokeType.SHADOW)
+      .shine(true)
+      .seeThrough(true)
       .buildOptions();
     world.sendParticles(new DamageTextParticle.Options(built, isHeal), x, y, z, 1, xOffset, yOffset, zOffset, 0);
   }
@@ -67,14 +70,14 @@ public final class ParticleUtil {
         fontColor = 0xA81919;
         strokeColor = 0x4d0000;
       }
-      return builder.textComponent(Component.empty()
+      return builder.addTextComponent(Component.empty()
           .append(iconComponent)
           .append(component))
         .fontColor(fontColor)
         .strokeColor(strokeColor);
     }
     if (isHeal) {
-      return builder.textComponent(component)
+      return builder.addTextComponent(component)
         .strokeColor(0x1c501f)
         .fontColor(0x89ff6a);
     }
@@ -111,7 +114,7 @@ public final class ParticleUtil {
       }
     }
 
-    return builder.textComponent(Component.empty().append(iconComponent)
+    return builder.addTextComponent(Component.empty().append(iconComponent)
         .append(component))
       .fontColor(fontColor)
       .strokeColor(strokeColor);

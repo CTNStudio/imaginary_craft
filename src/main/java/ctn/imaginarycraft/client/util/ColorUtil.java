@@ -20,21 +20,11 @@ public final class ColorUtil {
   /**
    * 将RGBA颜色字符串转换为16位整数颜色值
    *
-   * @param color RGBA颜色字符串，格式为"#RRGGBBAA"
-   * @return 16位整数颜色值
-   */
-  public static int rgbaColor(String color) {
-    return parseColorTo16Bit(color);
-  }
-
-  /**
-   * 将RGBA颜色字符串转换为16位整数颜色值
-   *
    * @param colorString RGBA颜色字符串，格式为"#RRGGBBAA"
    * @return 16位整数颜色值
    * @throws IllegalArgumentException 当颜色字符串格式不正确时抛出
    */
-  public static int parseColorTo16Bit(String colorString) {
+  public static int rgbaColor(String colorString) {
     if (!colorString.startsWith("#") || colorString.length() != 9) {
       throw new IllegalArgumentException("Invalid color format, expected #RRGGBBAA");
     }
@@ -46,16 +36,23 @@ public final class ColorUtil {
       int b = Integer.parseInt(hex.substring(4, 6), 16);
       int a = Integer.parseInt(hex.substring(6, 8), 16);
 
-      // 转换为16位格式 (RGBA -> 4444)
-      int r16 = (r >> 4) & 0xF;
-      int g16 = (g >> 4) & 0xF;
-      int b16 = (b >> 4) & 0xF;
-      int a16 = (a >> 4) & 0xF;
-
-      return (r16 << 12) | (g16 << 8) | (b16 << 4) | a16;
+      return rgbaColor(r, g, b, a);
     } catch (NumberFormatException e) {
       throw new IllegalArgumentException("Invalid hex color format: " + colorString);
     }
+  }
+
+  public static int rgbaColor(int r, int g, int b, int a) {
+    // 转换为16位格式 (RGBA -> 4444)
+    int r16 = (r >> 4) & 0xF;
+    int g16 = (g >> 4) & 0xF;
+    int b16 = (b >> 4) & 0xF;
+    int a16 = (a >> 4) & 0xF;
+    return (r16 << 12) | (g16 << 8) | (b16 << 4) | a16;
+  }
+
+  public static int rgbaColor(float r, float g, float b, float a) {
+    return rgbaColor(colorValue(r), colorValue(g), colorValue(b), colorValue(a));
   }
 
   /**

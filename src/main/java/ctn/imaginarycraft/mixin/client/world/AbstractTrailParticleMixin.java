@@ -55,7 +55,7 @@ public abstract class AbstractTrailParticleMixin extends TextureSheetParticle im
   @Unique
   private void imaginarycraft$init(TrailInfo trailInfo) {
     String path = trailInfo.texturePath().toString();
-    ResourceLocation textureLight = ResourceLocation.parse(path.substring(0, path.lastIndexOf(".png")) + "_light.png");
+    ResourceLocation textureLight = ResourceLocation.parse(path.substring(0, path.lastIndexOf(".png")) + "_glowmask.png");
     Minecraft minecraft = Minecraft.getInstance();
     if (minecraft.getResourceManager().getResource(textureLight).isPresent()) {
       TextureManager texturemanager = Minecraft.getInstance().getTextureManager();

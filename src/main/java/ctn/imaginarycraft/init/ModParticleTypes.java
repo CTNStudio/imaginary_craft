@@ -4,6 +4,7 @@ import com.mojang.serialization.MapCodec;
 import ctn.imaginarycraft.client.particle.DyeingMagicCircleParticle;
 import ctn.imaginarycraft.client.particle.LcDamageIconParticle;
 import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
+import ctn.imaginarycraft.client.particle.text.DamageNumberParticle;
 import ctn.imaginarycraft.client.particle.text.DamageTextParticle;
 import ctn.imaginarycraft.client.particle.text.TextParticle;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -29,6 +30,9 @@ public final class ModParticleTypes {
     "text", true, TextParticle.Options.CODEC, TextParticle.Options.STREAM_CODEC);
   public static final Supplier<ParticleType<DamageTextParticle.Options>> DAMAGE_TEXT = register(
     "damage_text", true, DamageTextParticle.Options.CODEC, DamageTextParticle.Options.STREAM_CODEC);
+
+  public static final Supplier<ParticleType<DamageNumberParticle.Options>> DAMAGE_NUMBER_PARTICLE = register(
+    "damagenumberparticle", true, DamageNumberParticle.Options.CODEC, DamageNumberParticle.Options.STREAM_CODEC);
 
   public static final Supplier<ParticleType<LcDamageIconParticle.Options>> LC_DAMAGE_ICON = register(
     "lobotomycorporation_damage_icon", true, LcDamageIconParticle.Options.CODEC, LcDamageIconParticle.Options.STREAM_CODEC);

@@ -23,7 +23,12 @@ import java.util.function.Function;
 public final class ModRenderTypes {
   public static final BiFunction<ResourceLocation, RenderStateShard.TransparencyStateShard, RenderType> MAGIC_BULLET_MAGIC_CIRCLE = Util.memoize(
     (resourceLocation, transparencyStateShard) -> RenderType.create(
-      "magic_bullet_magic_circle", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 1536, false, true,
+      "imaginarycraft:magic_bullet_magic_circle",
+      DefaultVertexFormat.NEW_ENTITY,
+      VertexFormat.Mode.QUADS,
+      1536,
+      false,
+      true,
       RenderType.CompositeState.builder()
         .setShaderState(RenderStateShard.RENDERTYPE_EYES_SHADER)
         .setTextureState(new RenderStateShard.TextureStateShard(resourceLocation, false, false))

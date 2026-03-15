@@ -9,21 +9,15 @@
 
 package ctn.imaginarycraft.common.world.entity.abnormalities.ordeals.violet;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import ctn.imaginarycraft.client.model.ModGeoEntityModel;
 import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
 import ctn.imaginarycraft.common.world.entity.abnormalities.AbnormalitiesEntity;
 import ctn.imaginarycraft.init.ModSoundEvents;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import ctn.imaginarycraft.init.world.ModDamageSources;
-import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.util.Mth;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -40,8 +34,10 @@ import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.renderer.GeoEntityRenderer;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.AnimationState;
+import software.bernie.geckolib.animation.PlayState;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import java.util.*;
@@ -532,26 +528,5 @@ public class GrantUsLove extends AbnormalitiesEntity {
   @Override
   public AnimatableInstanceCache getAnimatableInstanceCache() {
     return cache;
-  }
-
-  public static class GrantUsLoveRenderer extends GeoEntityRenderer<GrantUsLove> {
-    public GrantUsLoveRenderer(EntityRendererProvider.Context context) {
-      super(context, new ModGeoEntityModel<>("grant_us_love"));
-      this.shadowRadius = 1.5f;
-    }
-
-    @Override
-    public void render(GrantUsLove entity, float entityYaw, float partialTick, PoseStack poseStack, MultiBufferSource bufferSource, int packedLight) {
-      poseStack.pushPose();
-      float scale = 1.0f;
-      poseStack.scale(scale, scale, scale);
-      super.render(entity, entityYaw, partialTick, poseStack, bufferSource, packedLight);
-      poseStack.popPose();
-    }
-
-    @Override
-    public @NotNull ResourceLocation getTextureLocation(@NotNull GrantUsLove animatable) {
-      return ModGeoEntityModel.getTexturePath("grant_us_love");
-    }
   }
 }

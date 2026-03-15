@@ -19,7 +19,7 @@ import software.bernie.geckolib.model.GeoModel;
 import software.bernie.geckolib.renderer.layer.AutoGlowingGeoLayer;
 
 public class RedEyesTachiItemWeaponRenderer extends ModGeoItemRenderer<RedEyesTachiItem> {
-  public static final @NotNull ResourceLocation GLOWING_TEXTURE = ImaginaryCraft.modRl("textures/geo/item/weapon/red_eyes_tachi_shine.png");
+  public static final @NotNull ResourceLocation GLOWMASK_TEXTURE = ImaginaryCraft.modRl("textures/geo/item/weapon/red_eyes_tachi_glowmask.png");
   public static final @NotNull ResourceLocation GEO_HUNTIOG_TEXTURE = ImaginaryCraft.modRl("textures/geo/item/weapon/red_eyes_tachi_hunting.png");
   public static final @NotNull ResourceLocation HUNTIOG_TEXTURE = ImaginaryCraft.modRl("textures/item/weapon/red_eyes_tachi_hunting.png");
   private boolean isHunting;
@@ -32,7 +32,7 @@ public class RedEyesTachiItemWeaponRenderer extends ModGeoItemRenderer<RedEyesTa
       @Override
       protected RenderType getRenderType(RedEyesTachiItem animatable, @Nullable MultiBufferSource bufferSource) {
         if (weaponRenderer.renderPerspective != ItemDisplayContext.GUI) {
-          return RenderType.eyes(GLOWING_TEXTURE);
+          return RenderType.eyes(GLOWMASK_TEXTURE);
         }
         return super.getRenderType(animatable, bufferSource);
       }

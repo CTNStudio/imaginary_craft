@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.core.registry.client;
 
+import ctn.imaginarycraft.client.renderer.entity.GrantUsLoveRenderer;
 import ctn.imaginarycraft.client.renderer.entity.MagicBulletRenderer;
-import ctn.imaginarycraft.common.world.entity.abnormalities.ordeals.violet.GrantUsLove;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.world.entity.AbnormalitiesEntityTypes;
 import net.neoforged.api.distmarker.Dist;
@@ -13,11 +13,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 public final class EntityRenderersRegistry {
   @SubscribeEvent
   public static void registry(EntityRenderersEvent.RegisterRenderers event) {
-    event.registerEntityRenderer(AbnormalitiesEntityTypes.GRANT_US_LOVE.get(), GrantUsLove.GrantUsLoveRenderer::new);
-    event.registerEntityRenderer(
-      AbnormalitiesEntityTypes.MAGIC_BULLET_ENTITY.get(),
-      MagicBulletRenderer::new
-    );
-
+    event.registerEntityRenderer(AbnormalitiesEntityTypes.GRANT_US_LOVE.get(), GrantUsLoveRenderer::new);
+    event.registerEntityRenderer(AbnormalitiesEntityTypes.MAGIC_BULLET_ENTITY.get(), MagicBulletRenderer::new);
   }
 }

@@ -14,6 +14,7 @@ import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import yesman.epicfight.registry.entries.EpicFightAttributes;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -38,6 +39,8 @@ public final class ModMobEffects {
         return true;
       }
     }, MobEffectCategory.BENEFICIAL, 0xac2323, (e, id) -> e
+    .addAttributeModifier(EpicFightAttributes.MAX_STAMINA, id, 1, AttributeModifier.Operation.ADD_VALUE)
+    .addAttributeModifier(EpicFightAttributes.IMPACT, id, -0.2, AttributeModifier.Operation.ADD_VALUE)
     .addAttributeModifier(Attributes.ATTACK_SPEED, id, 0.30, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
     .addAttributeModifier(Attributes.ATTACK_DAMAGE, id, 0.25, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 

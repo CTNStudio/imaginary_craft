@@ -22,21 +22,40 @@ public final class ModParticleRenderTypes {
 
     @Override
     public String toString() {
-      return "LOBOTOMY_CORPORATION_DAMAGE_ICON_PARTICLE";
+      return "imaginarycraft:LOBOTOMY_CORPORATION_DAMAGE_ICON_PARTICLE";
     }
   };
 
   public static final ParticleRenderType TEXT_PARTICLE = new ParticleRenderType() {
     @Override
     public BufferBuilder begin(Tesselator tesselator, TextureManager textureManager) {
-      RenderSystem.depthMask(true);
-      RenderSystem.disableBlend();
+      RenderSystem.enableBlend();
+      RenderSystem.defaultBlendFunc();
+      RenderSystem.depthMask(false);
+      RenderSystem.disableCull();
       return tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
     }
 
     @Override
     public String toString() {
-      return "TEXT_PARTICLE";
+      return "imaginarycraft:TEXT_PARTICLE";
+    }
+  };
+
+  public static final ParticleRenderType TEXT_PARTICLE_THROUGH = new ParticleRenderType() {
+    @Override
+    public BufferBuilder begin(Tesselator tesselator, TextureManager textureManager) {
+      RenderSystem.enableBlend();
+      RenderSystem.defaultBlendFunc();
+      RenderSystem.disableDepthTest();
+      RenderSystem.depthMask(false);
+      RenderSystem.disableCull();
+      return tesselator.begin(VertexFormat.Mode.QUADS, DefaultVertexFormat.PARTICLE);
+    }
+
+    @Override
+    public String toString() {
+      return "imaginarycraft:TEXT_PARTICLE_THROUGH";
     }
   };
 
@@ -52,7 +71,7 @@ public final class ModParticleRenderTypes {
 
     @Override
     public String toString() {
-      return "MAGIC_CIRCLE_PARTICLE";
+      return "imaginarycraft:MAGIC_CIRCLE_PARTICLE";
     }
 
     @Override

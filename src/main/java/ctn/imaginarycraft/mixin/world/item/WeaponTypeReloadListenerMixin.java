@@ -261,7 +261,6 @@ public abstract class WeaponTypeReloadListenerMixin {
 
     ImaginaryCraft.LOGGER.warn("Cannot find default animation in {}", resourceLocation);
     return "";
-
   }
 
   /**
