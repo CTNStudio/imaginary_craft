@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.init.world.entity;
 
 import ctn.imaginarycraft.api.LcLevel;
-import ctn.imaginarycraft.common.world.entity.abnormalities.TrainingRabbits;
+import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLove;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -14,19 +14,20 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public final class AbnormalitiesEntityTypes {
+public final class OrdealsEntityTypes {
   public static final DeferredRegister<EntityType<?>> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.ENTITY_TYPE);
 
-  public static final DeferredHolder<EntityType<?>, EntityType<TrainingRabbits>> TRAINING_RABBITS = register(
-    "training_rabbits",
-    "训练兔兔",
-    LcLevel.TETH,
-    EntityType.Builder.of(TrainingRabbits::new, MobCategory.MISC)
-      .sized(0.625F, 1.375F)
-      .eyeHeight(1F)
+  //region 紫罗兰
+  public static final DeferredHolder<EntityType<?>, EntityType<GrantUsLove>> GRANT_US_LOVE = register(
+    "grant_us_love",
+    "“请给我们爱”",
+    LcLevel.HE,
+    EntityType.Builder.of(GrantUsLove::new, MobCategory.MISC)
+      .sized(2.0F, 5F)
+      .eyeHeight(2.0F)
       .clientTrackingRange(8)
-      .updateInterval(2)
-      .canSpawnFarFromPlayer());
+      .updateInterval(2));
+  //endregion
 
   static void init(IEventBus bus) {
     REGISTRY.register(bus);

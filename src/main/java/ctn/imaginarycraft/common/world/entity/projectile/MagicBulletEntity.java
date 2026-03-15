@@ -2,7 +2,7 @@ package ctn.imaginarycraft.common.world.entity.projectile;
 
 import ctn.imaginarycraft.init.world.ModDamageSources;
 import ctn.imaginarycraft.init.world.ModDamageTypes;
-import ctn.imaginarycraft.init.world.entity.AbnormalitiesEntityTypes;
+import ctn.imaginarycraft.init.world.entity.ProjectileEntityTypes;
 import ctn.imaginarycraft.util.PiercingUtil;
 import ctn.imaginarycraft.util.PiercingUtil.PierceData;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -37,7 +37,7 @@ public class MagicBulletEntity extends ModBulletEntity {
   }
 
   public MagicBulletEntity(Level level, LivingEntity shooter) {
-    super(AbnormalitiesEntityTypes.MAGIC_BULLET_ENTITY.get(), shooter, level);
+    super(ProjectileEntityTypes.MAGIC_BULLET_ENTITY.get(), shooter, level);
     this.setNoGravity(true);
   }
 

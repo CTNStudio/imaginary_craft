@@ -2,8 +2,8 @@ package ctn.imaginarycraft.init.world;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
-import ctn.imaginarycraft.init.world.item.AbnormalitiesSpawnEggs;
 import ctn.imaginarycraft.init.world.item.ModItems;
+import ctn.imaginarycraft.init.world.item.ModSpawnEggItems;
 import ctn.imaginarycraft.init.world.item.ToolItems;
 import ctn.imaginarycraft.init.world.item.WeaponItems;
 import ctn.imaginarycraft.init.world.item.ego.EgoArmorItems;
@@ -28,28 +28,33 @@ public final class ModCreativeModeTabs {
   public static final DeferredRegister<CreativeModeTab> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.CREATIVE_MODE_TAB);
 
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EGO_CURIOS = register(
-    "ego_curios", "异想工艺|E.G.O饰品", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
-      addRegistryItem(EgoCurioItems.REGISTRY, output), () ->
-      EgoCurioItems.BENEDICTION.get().getDefaultInstance()));
+          "ego_curios", "异想工艺 | E.G.O饰品", (name, zhCn) ->
+                  createCreativeModeTab(name, zhCn, (parameters, output) ->
+                          addRegistryItem(EgoCurioItems.REGISTRY, output), () ->
+                          EgoCurioItems.BENEDICTION.get().getDefaultInstance()));
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EGO_WEAPON = register(
-    "ego_weapon", "异想工艺|E.G.O武器", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
-      addRegistryItem(EgoWeaponItems.REGISTRY, output), () ->
-      EgoWeaponItems.IN_THE_NAME_OF_LOVE_AND_HATE.get().getDefaultInstance()));
+          "ego_weapon", "异想工艺 | E.G.O武器", (name, zhCn) ->
+                  createCreativeModeTab(name, zhCn, (parameters, output) ->
+                          addRegistryItem(EgoWeaponItems.REGISTRY, output), () ->
+                          EgoWeaponItems.IN_THE_NAME_OF_LOVE_AND_HATE.get().getDefaultInstance()));
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> EGO_ARMOR = register(
-    "ego_armor", "异想工艺|E.G.O护甲", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
-      addRegistryItem(EgoArmorItems.REGISTRY, output), () ->
-      EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chestplate().get().getDefaultInstance()));
+          "ego_armor", "异想工艺 | E.G.O护甲", (name, zhCn) ->
+                  createCreativeModeTab(name, zhCn, (parameters, output) ->
+                          addRegistryItem(EgoArmorItems.REGISTRY, output), () ->
+                          EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chestplate().get().getDefaultInstance()));
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> ITEMS = register(
-    "items", "异想工艺|物品", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) -> {
-      addRegistryItem(EgoItems.REGISTRY, output);
-      addRegistryItem(ModItems.REGISTRY, output);
-      addRegistryItem(ToolItems.REGISTRY, output);
-      addRegistryItem(WeaponItems.REGISTRY, output);
-    }, () -> EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chestplate().get().getDefaultInstance()));
+          "items", "异想工艺 | 物品", (name, zhCn) ->
+                  createCreativeModeTab(name, zhCn, (parameters, output) -> {
+                    addRegistryItem(EgoItems.REGISTRY, output);
+                    addRegistryItem(ModItems.REGISTRY, output);
+                    addRegistryItem(ToolItems.REGISTRY, output);
+                    addRegistryItem(WeaponItems.REGISTRY, output);
+                  }, () -> EgoArmorItems.IN_THE_NAME_OF_LOVE_AND_HATE.chestplate().get().getDefaultInstance()));
   public static final DeferredHolder<CreativeModeTab, CreativeModeTab> SPAWN_EGG = register(
-    "spwan_egg", "异想工艺|刷怪蛋", (name, zhCn) -> createCreativeModeTab(name, zhCn, (parameters, output) ->
-      addRegistryItem(AbnormalitiesSpawnEggs.REGISTRY, output), () ->
-      AbnormalitiesSpawnEggs.GRANT_US_LOVE_SPAWN_EGG.get().getDefaultInstance()));
+          "spwan_egg", "异想工艺 | 刷怪蛋", (name, zhCn) ->
+                  createCreativeModeTab(name, zhCn, (parameters, output) ->
+                          addRegistryItem(ModSpawnEggItems.REGISTRY, output), () ->
+                          ModSpawnEggItems.GRANT_US_LOVE_SPAWN_EGG.get().getDefaultInstance()));
 
   private static DeferredHolder<CreativeModeTab, CreativeModeTab> register(
     String name,

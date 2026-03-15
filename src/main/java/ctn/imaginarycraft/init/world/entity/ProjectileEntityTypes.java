@@ -1,7 +1,8 @@
 package ctn.imaginarycraft.init.world.entity;
 
 import ctn.imaginarycraft.api.LcLevel;
-import ctn.imaginarycraft.common.world.entity.abnormalities.TrainingRabbits;
+import ctn.imaginarycraft.common.world.entity.projectile.MagicBulletEntity;
+import ctn.imaginarycraft.common.world.entity.projectile.ParadiseLostSpikeweed;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -14,19 +15,26 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 
 import java.util.function.Supplier;
 
-public final class AbnormalitiesEntityTypes {
+public final class ProjectileEntityTypes {
   public static final DeferredRegister<EntityType<?>> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.ENTITY_TYPE);
 
-  public static final DeferredHolder<EntityType<?>, EntityType<TrainingRabbits>> TRAINING_RABBITS = register(
-    "training_rabbits",
-    "训练兔兔",
-    LcLevel.TETH,
-    EntityType.Builder.of(TrainingRabbits::new, MobCategory.MISC)
-      .sized(0.625F, 1.375F)
-      .eyeHeight(1F)
-      .clientTrackingRange(8)
-      .updateInterval(2)
-      .canSpawnFarFromPlayer());
+  public static final DeferredHolder<EntityType<?>, EntityType<ParadiseLostSpikeweed>> PARADISE_LOST_SPIKEWEED = register(
+    "paradise_lost_spikeweed",
+    "失乐园尖刺",
+    LcLevel.ALEPH,
+    EntityType.Builder.of(ParadiseLostSpikeweed::new, MobCategory.MISC)
+      .sized(2F, 2.5F)
+      .clientTrackingRange(6)
+      .updateInterval(2));
+
+  public static final DeferredHolder<EntityType<?>, EntityType<MagicBulletEntity>> MAGIC_BULLET_ENTITY = register(
+    "magic_bullet",
+    "魔弹",
+    LcLevel.WAW,
+    EntityType.Builder.<MagicBulletEntity>of(MagicBulletEntity::new, MobCategory.MISC)
+      .sized(0.2F, 0.2F)
+      .clientTrackingRange(6)
+      .updateInterval(1));
 
   static void init(IEventBus bus) {
     REGISTRY.register(bus);

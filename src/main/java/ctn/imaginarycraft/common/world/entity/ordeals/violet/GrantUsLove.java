@@ -7,7 +7,7 @@
  * 尘昨喧
  */
 
-package ctn.imaginarycraft.common.world.entity.abnormalities.ordeals.violet;
+package ctn.imaginarycraft.common.world.entity.ordeals.violet;
 
 import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
 import ctn.imaginarycraft.common.world.entity.abnormalities.AbnormalitiesEntity;

@@ -20,7 +20,7 @@ public final class ModItems {
     WeaponItems.init(bus);
     ArmorItems.init(bus);
     EgoItems.init(bus);
-    AbnormalitiesSpawnEggs.init(bus);
+    ModSpawnEggItems.init(bus);
   }
 
   @NotNull

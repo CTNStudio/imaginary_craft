@@ -4,7 +4,7 @@ import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.api.LcLevel;
 import ctn.imaginarycraft.client.model.ModGeoEntityModel;
 import ctn.imaginarycraft.init.world.ModDamageTypes;
-import ctn.imaginarycraft.init.world.entity.AbnormalitiesEntityTypes;
+import ctn.imaginarycraft.init.world.entity.ProjectileEntityTypes;
 import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.util.RationalityUtil;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -64,7 +64,7 @@ public class ParadiseLostSpikeweed extends Entity implements TraceableEntity, Ge
   }
 
   public static @NotNull ParadiseLostSpikeweed create(Level level, double x, double y, double z, int targetNumber, LivingEntity owner) {
-    ParadiseLostSpikeweed entity = new ParadiseLostSpikeweed(AbnormalitiesEntityTypes.PARADISE_LOST_SPIKEWEED.get(), level);
+    ParadiseLostSpikeweed entity = new ParadiseLostSpikeweed(ProjectileEntityTypes.PARADISE_LOST_SPIKEWEED.get(), level);
     entity.targetNumber = targetNumber == 0 ? 1 : targetNumber;
     entity.setPos(x, y, z);
     entity.setOwner(owner);
@@ -78,7 +78,7 @@ public class ParadiseLostSpikeweed extends Entity implements TraceableEntity, Ge
   }
 
   public static @NotNull ParadiseLostSpikeweed create(Level level, Vec3 vec3, int targetNumber, LivingEntity owner) {
-    ParadiseLostSpikeweed entity = new ParadiseLostSpikeweed(AbnormalitiesEntityTypes.PARADISE_LOST_SPIKEWEED.get(), level);
+    ParadiseLostSpikeweed entity = new ParadiseLostSpikeweed(ProjectileEntityTypes.PARADISE_LOST_SPIKEWEED.get(), level);
     entity.targetNumber = targetNumber == 0 ? 1 : targetNumber;
     entity.setPos(vec3);
     entity.setOwner(owner);

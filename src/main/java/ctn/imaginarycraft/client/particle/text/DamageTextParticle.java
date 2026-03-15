@@ -51,7 +51,7 @@ public class DamageTextParticle extends TextParticle {
     double dz = getZ(partialTicks) - cameraPosition.z;
     double distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
-    float distanceScale = 0.5f + (float) distance * 0.1f;
+    float distanceScale = (float) distance * 0.25f;
     float finalScale = this.quadSize * distanceScale;
 
     float minScale = 0.1f;

@@ -2,6 +2,7 @@ package ctn.imaginarycraft.datagen;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.core.registry.client.ItemPropertyRenderersRegistrar;
+import ctn.imaginarycraft.init.world.item.ModSpawnEggItems;
 import ctn.imaginarycraft.init.world.item.ToolItems;
 import ctn.imaginarycraft.init.world.item.ego.EgoArmorItems;
 import ctn.imaginarycraft.init.world.item.ego.EgoCurioItems;
@@ -46,6 +47,7 @@ public final class DatagenItemModel extends ItemModelProvider {
   protected void registerModels() {
     withExistingParent(EgoCurioItems.REGISTRY, "item/curios/");
     withExistingParent(EgoArmorItems.REGISTRY, "item/armor/");
+    withExistingParent(ModSpawnEggItems.REGISTRY, "item/spawn_egg/");
     EgoWeaponItems.REGISTRY.getEntries().stream().map(DeferredHolder::get).forEach(item -> {
       String path = item.toString();
       ResourceLocation outputLoc = extendWithFolder(path.contains(":") ? parse(path) : fromNamespaceAndPath(modid, path));
