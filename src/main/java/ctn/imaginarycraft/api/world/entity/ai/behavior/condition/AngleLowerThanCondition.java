@@ -1,0 +1,22 @@
+package ctn.imaginarycraft.api.world.entity.ai.behavior.condition;
+
+import ctn.imaginarycraft.util.EntityUtil;
+import net.minecraft.world.entity.Mob;
+
+public class AngleLowerThanCondition extends AbstractConditionLeaf {
+  final Mob mob;
+  final double angle;
+
+  public AngleLowerThanCondition(Mob mob, double angle) {
+    this.mob = mob;
+    this.angle = angle;
+  }
+
+  @Override
+  public boolean check() {
+    if (mob.getTarget() == null) {
+      return false;
+    }
+    return EntityUtil.angleBetween(mob.getDeltaMovement(), mob.getTarget().position().subtract(mob.position())) < angle;
+  }
+}

@@ -24,7 +24,7 @@ public final class OrdealsEntityTypes {
     LcLevel.HE,
     EntityType.Builder.of(GrantUsLove::new, MobCategory.MISC)
       .sized(2.0F, 5F)
-      .eyeHeight(2.0F)
+      .eyeHeight(2.5F)
       .clientTrackingRange(8)
       .updateInterval(2));
   //endregion

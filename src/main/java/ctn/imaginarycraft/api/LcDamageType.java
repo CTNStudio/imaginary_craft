@@ -8,11 +8,11 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import ctn.imaginarycraft.client.ModFontIcon;
 import ctn.imaginarycraft.client.util.ColorUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
+import ctn.imaginarycraft.eventexecute.LcDamageEventExecutes;
 import ctn.imaginarycraft.init.tag.ModDamageTypeTags;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import ctn.imaginarycraft.init.world.ModDamageSources;
 import ctn.imaginarycraft.init.world.ModDamageTypes;
-import ctn.imaginarycraft.util.LcDamageTypeUtil;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
@@ -43,50 +43,35 @@ public enum LcDamageType implements ColourText, StringRepresentable {
   /**
    * 物理
    */
-  PHYSICS(0,
-    "physics",
-    ModFontIcon.PHYSICS,
-    ModFontIcon.PHYSICS_8X,
-    ModAttributes.PHYSICS_VULNERABLE,
-    ModAttributes.PHYSICS_DEFENSE,
-    ModDamageTypes.PHYSICS,
-    "#ff0000"),
+  PHYSICS(0, "physics",
+    ModFontIcon.PHYSICS, ModFontIcon.PHYSICS_8X,
+    ModAttributes.PHYSICS_VULNERABLE, ModAttributes.PHYSICS_DEFENSE,
+    ModDamageTypes.PHYSICS, "#ff0000"),
   /**
    * 精神
    */
-  SPIRIT(1,
-    "spirit",
-    ModFontIcon.SPIRIT,
-    ModFontIcon.SPIRIT_8X,
-    ModAttributes.SPIRIT_VULNERABLE,
-    ModAttributes.SPIRIT_DEFENSE,
-    ModDamageTypes.SPIRIT,
-    "#ffffff"),
+  SPIRIT(1, "spirit",
+    ModFontIcon.SPIRIT, ModFontIcon.SPIRIT_8X,
+    ModAttributes.SPIRIT_VULNERABLE, ModAttributes.SPIRIT_DEFENSE,
+    ModDamageTypes.SPIRIT, "#ffffff"),
   /**
    * 侵蚀
    * <p>
    * 同时造成物理和精神伤害
    */
-  EROSION(2,
-    "erosion",
-    ModFontIcon.EROSION,
-    ModFontIcon.EROSION_8X,
-    ModAttributes.EROSION_VULNERABLE,
-    ModAttributes.EROSION_DEFENSE,
-    ModDamageTypes.EROSION,
-    "#8a2be2"),
+  EROSION(2, "erosion",
+    ModFontIcon.EROSION, ModFontIcon.EROSION_8X,
+    ModAttributes.EROSION_VULNERABLE, ModAttributes.EROSION_DEFENSE,
+    ModDamageTypes.EROSION, "#8a2be2"),
   /**
    * 灵魂
    * <p>
-   * 伤害计算参考 {@link LcDamageTypeUtil#theSoulDamage(float, LivingEntity, Entity, DamageSource)}
+   * 伤害计算参考 {@link LcDamageEventExecutes#theSoulDamage(float, LivingEntity, Entity, DamageSource)}
    */
   THE_SOUL(3, "the_soul",
-    ModFontIcon.THE_SOUL,
-    ModFontIcon.THE_SOUL_8X,
-    ModAttributes.THE_SOUL_VULNERABLE,
-    ModAttributes.THE_SOUL_DEFENSE,
-    ModDamageTypes.THE_SOUL,
-    "#00ffff"),
+    ModFontIcon.THE_SOUL, ModFontIcon.THE_SOUL_8X,
+    ModAttributes.THE_SOUL_VULNERABLE, ModAttributes.THE_SOUL_DEFENSE,
+    ModDamageTypes.THE_SOUL, "#00ffff"),
   ;
 
   public static final Codec<LcDamageType> CODEC = StringRepresentable

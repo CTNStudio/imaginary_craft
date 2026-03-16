@@ -70,7 +70,7 @@ public class ModEggItem extends DeferredSpawnEggItem {
       MobSpawnType.SPAWN_EGG, true, !Objects.equals(pos, spawnPos) && direction == Direction.UP);
     if (entity != null) {
       if (entity instanceof IAbnormalitiesEntity abnormalities) {
-        abnormalities.doWhenSpawnByEggs();
+        abnormalities.onSpawnByEgg();
       }
 
       stack.shrink(1);
@@ -109,7 +109,7 @@ public class ModEggItem extends DeferredSpawnEggItem {
     }
 
     if (entity instanceof IAbnormalitiesEntity abnormalities) {
-      abnormalities.doWhenSpawnByEggs();
+      abnormalities.onSpawnByEgg();
     }
 
     stack.consume(1, player);

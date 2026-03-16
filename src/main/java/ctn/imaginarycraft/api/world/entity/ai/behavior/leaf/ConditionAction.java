@@ -1,0 +1,25 @@
+package ctn.imaginarycraft.api.world.entity.ai.behavior.leaf;
+
+
+import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.Condition;
+
+/**
+ * 条件检查动作 - 根据条件返回成功或失败，用于短路 Sequence 或 Selector 节点
+ * <p>当条件满足时返回 SUCCESS，否则返回 FAILURE</p>
+ */
+public class ConditionAction extends BTNode {
+  final Condition condition;
+
+  public ConditionAction(Condition condition) {
+    this.condition = condition;
+  }
+
+  @Override
+  public BTStatus execute() {
+    if (condition.check()) {
+      return BTStatus.SUCCESS;
+    }
+    return BTStatus.FAILURE;
+  }
+}

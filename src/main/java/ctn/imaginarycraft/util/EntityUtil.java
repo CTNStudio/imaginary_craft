@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ThreadLocalRandom;
 
-public class EntityUtil {
+public final class EntityUtil {
   public static double angleBetween(Vec3 v1, Vec3 v2) {
     return Math.acos(v1.dot(v2) / v1.length() / v2.length());
   }

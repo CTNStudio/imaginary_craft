@@ -1,0 +1,33 @@
+package ctn.imaginarycraft.api.world.entity.ai.behavior.condition;
+
+import ctn.imaginarycraft.util.DateUtils;
+import net.minecraft.world.level.Level;
+
+public class TimeCondition extends AbstractConditionLeaf {
+  final int from;
+  final int to;
+  final Level level;
+
+  public TimeCondition(int from, int to, Level level) {
+    this.from = from;
+    this.to = to;
+    this.level = level;
+  }
+
+  @Override
+  public boolean check() {
+    int dayTime = (int) (level.dayTime() % 24000);
+    if (from > to) {
+      return (dayTime >= from || dayTime <= to);
+    }
+    return (dayTime >= from && dayTime <= to);
+  }
+
+  public static TimeCondition isDay(Level level) {
+    return new TimeCondition(DateUtils._04$30, DateUtils._19$30, level);
+  }
+
+  public static TimeCondition isNight(Level level) {
+    return new TimeCondition(DateUtils._19$30, DateUtils._04$30, level);
+  }
+}
