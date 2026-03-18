@@ -112,6 +112,38 @@ public final class ModAttachments {
       .sync(new VirtueJustice.Sync())
       .copyOnDeath());
 
+  /**
+   *四色护盾量
+   */
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Float>> PHYSIC_DAMAGE_ABSORPTION_AMOUNT = registerEntity(
+    "physic_damage_absorption_amount",
+    entity -> 0f,
+    builder -> builder
+      .serialize(Codec.FLOAT)
+      .sync(ByteBufCodecs.FLOAT)
+  );
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Float>> SPIRIT_DAMAGE_ABSORPTION_AMOUNT = registerEntity(
+    "spirit_damage_absorption_amount",
+    entity -> 0f,
+    builder -> builder
+      .serialize(Codec.FLOAT)
+      .sync(ByteBufCodecs.FLOAT)
+  );
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Float>> EROSION_DAMAGE_ABSORPTION_AMOUNT = registerEntity(
+    "erosion_damage_absorption_amount",
+    entity -> 0f,
+    builder -> builder
+      .serialize(Codec.FLOAT)
+      .sync(ByteBufCodecs.FLOAT)
+  );
+  public static final DeferredHolder<AttachmentType<?>, AttachmentType<Float>> SOUL_DAMAGE_ABSORPTION_AMOUNT = registerEntity(
+    "soul_damage_absorption_amount",
+    entity -> 0f,
+    builder -> builder
+      .serialize(Codec.FLOAT)
+      .sync(ByteBufCodecs.FLOAT)
+  );
+
 
   private static <T> @NotNull DeferredHolder<AttachmentType<?>, AttachmentType<T>> registerPlayer(
     final String name,

@@ -5,9 +5,11 @@ import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.api.LcLevel;
 import ctn.imaginarycraft.client.util.ParticleUtil;
 import ctn.imaginarycraft.common.payload.toc.PlayerDamagePayload;
+import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.eventexecute.LcDamageEventExecutes;
 import ctn.imaginarycraft.init.ModAttachments;
+import ctn.imaginarycraft.init.world.ModAbsorptionShieldRegistry;
 import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.util.GunWeaponUtil;
 import ctn.imaginarycraft.util.LcLevelUtil;
@@ -136,7 +138,7 @@ public final class LivingEntityEvents {
   /**
    * 处理护甲受伤事件，根据伤害类型和护甲等级计算最终伤害值
    *
-   * @param event 护甲受伤事件，包含伤害源、装备槽位和伤害信息
+   * @param event 护甲受伤事件，包含伤害源、装备槽位和伤害信息，以及护盾获得
    */
   @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void armorHurtEvent(ArmorHurtEvent event) {
@@ -174,6 +176,46 @@ public final class LivingEntityEvents {
     Entity sourceDirectEntity = damageSource.getDirectEntity();
     Entity sourceCausingEntity = damageSource.getEntity();
     LcDamageType lcDamageType = damageSource.imaginaryCraft$getLcDamageType();
+
+    //护盾处理
+    if(!attackedEntity.level().isClientSide){
+      for(var entry : ModAbsorptionShieldRegistry.getAll()){
+        MobEffectInstance effect = attackedEntity.getEffect(entry.effect());
+
+        if (effect == null) continue;
+        if (lcDamageType != null && !lcDamageType.getDamageTypeResourceKey().location().equals(entry.damageTypeTag())) {
+          continue;
+        }
+
+        float current = attackedEntity.getData(entry.attachment().get());//护盾量
+        if (current <= 0) continue;
+
+        float original = event.getNewDamage();//伤害量
+        if(original <= 0) continue;
+        float absorbed = Math.min(current, original);
+        float remaining = original - absorbed;//剩余伤害
+
+        float newAmount = current - absorbed;//新护盾量
+        attackedEntity.setData(entry.attachment().get(), newAmount);//保存护盾量
+
+        if (newAmount <= 0) {
+          attackedEntity.removeEffect(entry.effect());
+          if (attackedEntity instanceof Player player) {
+            entry.playShieldBreakSound(player);      // 只对该玩家播放
+          }
+          if(ModConfig.SERVER.enableShieldDamageImmunity.isTrue()){
+            event.setNewDamage(0);
+            continue;//碎盾抗一下(只抗对应伤害)
+          }
+        }
+
+        if (remaining <= 0) {
+          event.setNewDamage(0);
+        } else {
+          event.setNewDamage(remaining);
+        }
+      }
+    }
 
     if (lcDamageType == LcDamageType.THE_SOUL) {
       // 处理灵魂伤害转换成对应比例的生命值
@@ -276,5 +318,64 @@ public final class LivingEntityEvents {
     if (entity instanceof ServerPlayer player) {
       PlayerDamagePayload.send(player, lcDamageType, newDamage);
     }
+  }
+
+  /**
+   * 效果获得事件
+   */
+  @SubscribeEvent(priority = EventPriority.LOWEST)
+  public static void effectApplyEvent(MobEffectEvent.Added event) {
+    System.out.println("[LivingEntityEvents] effectApplyEvent triggered for effect: " + event.getEffectInstance().getEffect().getRegisteredName());
+    System.out.println("Shield registry size: " + ModAbsorptionShieldRegistry.getAll().size());
+    LivingEntity entity = event.getEntity();
+    if (entity.level().isClientSide) return;
+
+    MobEffectInstance newEffect = event.getEffectInstance();
+    for (var entry : ModAbsorptionShieldRegistry.getAll()) {
+      if (newEffect.getEffect().getRegisteredName().equals(entry.effect().getRegisteredName())) {
+
+        if(ModConfig.SERVER.enableMultiShield.isFalse()){
+          for(var oldEntry : ModAbsorptionShieldRegistry.getAll()){
+            if (oldEntry.effect() == entry.effect()) continue;
+            MobEffectInstance existing = entity.getEffect(oldEntry.effect());
+            if (existing != null) {
+              entity.removeEffect(oldEntry.effect());
+            }
+          }
+        }
+
+        int newAmp = newEffect.getAmplifier();
+        float oldAmount = entity.getData(entry.attachment().get());
+        float newAmount = entry.initialAmount().apply(newAmp, oldAmount);
+
+        // 如果存在旧效果且等级低于新效果，则不更新
+        MobEffectInstance oldEffect = event.getOldEffectInstance();
+        if (oldEffect != null && oldEffect.getAmplifier() > newAmp) {
+          return;
+        }
+        entity.setData(entry.attachment().get(), newAmount);
+        break;
+      }
+    }
+  }
+
+  // 效果移除/过期：清除吸收值
+  private static void clearAmount(LivingEntity entity, MobEffectInstance effect) {
+    if (entity.level().isClientSide) return;
+    for (var entry : ModAbsorptionShieldRegistry.getAll()) {
+      if (effect.getEffect() == entry.effect()) {
+        entity.setData(entry.attachment().get(), 0.0f);
+        break;
+      }
+    }
+  }
+  @SubscribeEvent(priority = EventPriority.LOWEST)
+  public static void onEffectRemoved(MobEffectEvent.Remove event) {
+    clearAmount(event.getEntity(), event.getEffectInstance());
+  }
+
+  @SubscribeEvent(priority = EventPriority.LOWEST)
+  public static void onEffectExpired(MobEffectEvent.Expired event) {
+    clearAmount(event.getEntity(), event.getEffectInstance());
   }
 }

@@ -44,6 +44,21 @@ public final class ModMobEffects {
     .addAttributeModifier(Attributes.ATTACK_SPEED, id, 0.30, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL)
     .addAttributeModifier(Attributes.ATTACK_DAMAGE, id, 0.25, AttributeModifier.Operation.ADD_MULTIPLIED_TOTAL));
 
+
+  //TODO:改颜色码
+  public static final Holder<MobEffect> PHYSIC_ABSORPTION_SHIELD = register("physic_absorption_shield", "物理吸收护盾", (category, color) ->
+    new ModMobEffect(category, color) {
+    }, MobEffectCategory.BENEFICIAL, 0xff0000);
+  public static final Holder<MobEffect> SPIRIT_ABSORPTION_SHIELD = register("spirit_absorption_shield", "精神吸收护盾", (category, color) ->
+    new ModMobEffect(category, color) {
+    }, MobEffectCategory.BENEFICIAL, 0xffffff);
+  public static final Holder<MobEffect> EROSION_ABSORPTION_SHIELD = register("erosion_absorption_shield", "侵蚀吸收护盾", (category, color) ->
+    new ModMobEffect(category, color) {
+    }, MobEffectCategory.BENEFICIAL, 0x8a2be2);
+  public static final Holder<MobEffect> SOUL_ABSORPTION_SHIELD = register("soul_absorption_shield", "灵魂吸收护盾", (category, color) ->
+    new ModMobEffect(category, color) {
+    }, MobEffectCategory.BENEFICIAL, 0x00ffff);
+
   private static <T extends MobEffect> DeferredHolder<MobEffect, T> register(String name, String zhCnText, Supplier<T> supplier) {
     DeferredHolder<MobEffect, T> holder = REGISTRY.register(name, supplier);
     ZhCn.addI18nMobEffectText(zhCnText, holder);

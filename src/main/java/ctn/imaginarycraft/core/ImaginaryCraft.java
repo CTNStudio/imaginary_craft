@@ -41,6 +41,7 @@ public final class ImaginaryCraft {
     ModEntieyConditions.REGISTRY.register(eventBus);
     ModItems.init(eventBus);
     ModEntityTypes.init(eventBus);
+    ModAbsorptionShieldRegistry.init();
 
     ModCreativeModeTabs.REGISTRY.register(eventBus);
     CurioRegistry.registry();
