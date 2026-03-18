@@ -4,6 +4,10 @@ import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
 
+/**
+ * 跳跃攻击动作 - 实体向目标方向跳跃并发动攻击
+ * <p>包含水平速度和垂直附加速度的控制</p>
+ */
 public class JumpAttackAction extends BTNode {
   final Mob mob;
   final float horizonPower;

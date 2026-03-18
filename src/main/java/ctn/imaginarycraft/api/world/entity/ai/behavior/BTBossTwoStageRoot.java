@@ -5,7 +5,7 @@ import ctn.imaginarycraft.api.world.entity.ai.behavior.blackboard.Blackboard;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.blackboard.IBlackboardHolder;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.blackboard.KeyType;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.composite.SequenceNode;
-import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.Condition;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.ConditionBT;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.leaf.SyncAction;
 import net.minecraft.world.entity.PathfinderMob;
 
@@ -20,7 +20,7 @@ public abstract class BTBossTwoStageRoot<T extends PathfinderMob & IBlackboardHo
   /**
    * 转换二阶段条件
    */
-  protected abstract Condition createStageCondition();
+  protected abstract ConditionBT createStageCondition();
 
   /**
    * 转换阶段前，可以添加延迟和共享状态位
@@ -56,7 +56,7 @@ public abstract class BTBossTwoStageRoot<T extends PathfinderMob & IBlackboardHo
           .setDesc("转换阶段")
       )
       // 一阶段
-      .addWithCondition(Condition.and(this.createStageCondition(), Blackboard.containsValue(this.mob, KeyType.STAGE, v -> v == 1).setConDesc("STAGE == 1")), BTFactory.sequence()
+      .addWithCondition(ConditionBT.and(this.createStageCondition(), Blackboard.containsValue(this.mob, KeyType.STAGE, v -> v == 1).setConDesc("STAGE == 1")), BTFactory.sequence()
         .addChild(Blackboard.setValue(this.mob, KeyType.STAGE, () -> 2).setDesc("STAGE = 2"))
         .addChild(new SyncAction<>(this.mob, this.mob.get_DATA_STATUS_STATUS(), () -> 2).setDesc("sync status = 2"))
         .setDesc("一阶段")

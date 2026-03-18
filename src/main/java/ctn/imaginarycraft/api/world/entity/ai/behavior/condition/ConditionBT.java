@@ -4,10 +4,11 @@ import com.google.common.collect.Lists;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * 行为树条件接口
+ * 行为树条件接口 - 用于检查行为执行的前提条件
+ * <p>实现此接口的类可用于条件节点或带条件的行为添加</p>
  */
 @FunctionalInterface
-public interface Condition {
+public interface ConditionBT {
 
   boolean check();
 
@@ -15,19 +16,28 @@ public interface Condition {
     return null;
   }
 
-  default Condition setConDesc(String desc) {
+  default ConditionBT setConDesc(String desc) {
     return this;
   }
 
-  static NotCondition not(Condition condition) {
+  /**
+   * 非
+   */
+  static NotCondition not(ConditionBT condition) {
     return new NotCondition(condition);
   }
 
-  static AndCondition and(Condition... conditions) {
+  /**
+   * 与
+   */
+  static AndCondition and(ConditionBT... conditions) {
     return new AndCondition(Lists.newArrayList(conditions));
   }
 
-  static OrCondition or(Condition... conditions) {
+  /**
+   * 或
+   */
+  static OrCondition or(ConditionBT... conditions) {
     return new OrCondition(Lists.newArrayList(conditions));
   }
 

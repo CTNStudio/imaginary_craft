@@ -4,6 +4,10 @@ import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
 
+/**
+ * 向前跳跃动作 - 实体向当前朝向方向跳跃
+ * <p>包含水平速度和垂直附加速度的控制，不依赖目标</p>
+ */
 public class JumpForwardAction extends BTNode {
   final Mob mob;
   final float horizonPower;

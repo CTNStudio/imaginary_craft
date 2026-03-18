@@ -1,9 +1,12 @@
 package ctn.imaginarycraft.api.world.entity.ai.behavior.condition;
 
+/**
+ * 逻辑非条件
+ */
 public class NotCondition extends AbstractConditionLeaf {
-  Condition child;
+  ConditionBT child;
 
-  public NotCondition(Condition child) {
+  public NotCondition(ConditionBT child) {
     this.child = child;
   }
 

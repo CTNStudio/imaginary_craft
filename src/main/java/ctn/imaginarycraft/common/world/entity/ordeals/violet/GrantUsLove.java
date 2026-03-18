@@ -1,11 +1,22 @@
 package ctn.imaginarycraft.common.world.entity.ordeals.violet;
 
 import ctn.imaginarycraft.api.world.entity.IAbnormalitiesEntity;
+import ctn.imaginarycraft.api.world.entity.IBehaviorTreeMob;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.BTFactory;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.BTRoot;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.composite.ParallelNode;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.ConditionBT;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.DistanceLowerThanCondition;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.TargetExistCondition;
 import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
 import ctn.imaginarycraft.init.ModSoundEvents;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import ctn.imaginarycraft.init.world.ModDamageSources;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
+import net.minecraft.network.syncher.EntityDataAccessor;
+import net.minecraft.network.syncher.EntityDataSerializers;
+import net.minecraft.network.syncher.SynchedEntityData;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
@@ -23,10 +34,7 @@ import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.AnimatableManager;
-import software.bernie.geckolib.animation.AnimationController;
-import software.bernie.geckolib.animation.AnimationState;
-import software.bernie.geckolib.animation.PlayState;
+import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
 import yesman.epicfight.api.utils.LevelUtil;
 import yesman.epicfight.registry.entries.EpicFightParticles;
@@ -47,7 +55,10 @@ import java.util.*;
  * <p>
  * 2025/12/22 尘昨喧
  */
-public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity {
+public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity, IBehaviorTreeMob<GrantUsLove> {
+  // 大招读条状态
+  protected static final EntityDataAccessor<Boolean> CRASH_ATK_READING = SynchedEntityData.defineId(GrantUsLove.class, EntityDataSerializers.BOOLEAN);
+
   // 普通攻击冷却时间 (tick)
   public static final int NORMAL_ATK_CD = 30;
   // 大招冷却时间 (tick)
@@ -88,16 +99,19 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity 
   private final List<LivingEntity> attackers = new ArrayList<>();
   private final Map<LivingEntity, Integer> lastAtkTimeMap = new HashMap<>();
   private LivingEntity target = null;
-  private int atkCd = NORMAL_ATK_CD;
-  private int crashAtkCd = 0;
+  // TODO 后面替换成触手的独立处理
+  private int normalAtkCd = NORMAL_ATK_CD; // 普通攻击冷却时间
+  private int crashAtkCd = 0; // 大招冷却时间
+
   private int stateTime = 0;
-  private boolean crashAtkReady = false;
-  private int portalOpenTime = 1;
-  private Vec3 portalPos = null;
-  private int idleSoundCd = 0;
+  private boolean crashAtkReady = false; // 大招是否准备就绪
+  private int portalOpenTime = 1; // 大招 Portal 开启时间
+  private Vec3 portalPos = null; // 大招 Portal 位置
+  private int idleSoundCd = 0; // 闲置音效间隔
 
   public GrantUsLove(EntityType<? extends Mob> entityType, Level level) {
     super(entityType, level);
+    entityData.set(CRASH_ATK_READING, false);
   }
 
   public static AttributeSupplier.Builder createAttributes() {
@@ -112,6 +126,22 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity 
       .add(ModAttributes.SPIRIT_VULNERABLE, 2.0)
       .add(ModAttributes.EROSION_VULNERABLE, 0.8)
       .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0);
+  }
+
+  @Override
+  protected void defineSynchedData(SynchedEntityData.Builder builder) {
+    super.defineSynchedData(builder);
+    builder.define(CRASH_ATK_READING, false);
+  }
+
+  @Override
+  public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
+    super.onSyncedDataUpdated(key);
+  }
+
+  @Override
+  public void onSyncedDataUpdated(List<SynchedEntityData.DataValue<?>> dataValues) {
+    super.onSyncedDataUpdated(dataValues);
   }
 
   private float rot(float rot) {
@@ -256,11 +286,11 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity 
         this.crashAtkReady = true;
       } else {
         crashAtkCd--;
-        if (atkCd > 0) {
-          atkCd--;
+        if (normalAtkCd > 0) {
+          normalAtkCd--;
         } else {
           this.aoeAttack();
-          atkCd = NORMAL_ATK_CD;
+          normalAtkCd = NORMAL_ATK_CD;
         }
       }
     } else if (this.portalOpenTime > 0) {
@@ -268,7 +298,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity 
         // 在目标上方生成传送门
         this.portalPos = Objects.requireNonNullElse(this.target, this).position()
           .add(0, CRASH_PORTAL_HEIGHT_OFFSET, 0);
-        this.createPortal();
+        this.createPortal(this.portalPos);
       } else if (this.portalOpenTime == 1) {
         if (this.portalPos == null) {
           portalPos = this.position().add(0, CRASH_PORTAL_HEIGHT_OFFSET, 0);
@@ -291,12 +321,14 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity 
     this.checkStateTime();
   }
 
-  private void createPortal() {
+  /**
+   * 生成传送门
+   */
+  protected void createPortal(Vec3 pos) {
     if (!(this.level() instanceof ServerLevel serverLevel)) {
       return;
     }
-
-    Vec3 pos = this.portalPos;
+    // TODO 替换成独立粒子
     serverLevel.sendParticles(new MagicBulletMagicCircleParticle.Builder(-90, 0) // -90 度旋转的魔法阵粒子
       .radius(5.0f) // 魔法阵半径
       .particleLifeTime(110) // 粒子存活时间 (比 portalOpenTime 多 10 tick)
@@ -409,6 +441,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity 
 
   @Override
   protected void registerGoals() {
+//    this.goalSelector.addGoal(5, this.createBehaviorTree());
   }
 
   @Override
@@ -470,6 +503,9 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity 
 
   @Override
   public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+    var door = new AnimationController<>(this, "door", (animationState) -> PlayState.CONTINUE);
+    door.triggerableAnim("open", RawAnimation.begin().thenLoop("open"));
+    controllers.add(door);
     controllers.add(new AnimationController<>(this, "tentacle_left1", 2, this::tentacleHandler));
     controllers.add(new AnimationController<>(this, "tentacle_left2", 2, this::tentacleHandler));
     controllers.add(new AnimationController<>(this, "tentacle_left3", 2, this::tentacleHandler));
@@ -486,5 +522,49 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity 
   @Override
   public AnimatableInstanceCache getAnimatableInstanceCache() {
     return cache;
+  }
+
+  @Override
+  public BTRoot<GrantUsLove> createBehaviorTree() {
+    return new GrantUsLoveBT(this);
+  }
+
+  public static class GrantUsLoveBT extends BTRoot<GrantUsLove> {
+
+    public GrantUsLoveBT(GrantUsLove mob) {
+      super(mob);
+    }
+
+    @Override
+    protected @NotNull BTNode createBehaviorTree() {
+      return BTFactory.parallel(ParallelNode.Policy.REQUIRE_ALL, ParallelNode.Policy.REQUIRE_ALL)
+        .addChild(BTFactory.infinite(BTFactory.selector()
+//          .addWithCondition(, )
+          // 目标不存在
+          .addWithCondition(ConditionBT.not(new TargetExistCondition(this.mob)), BTFactory.sequence())
+          // 目标存在
+          .addChild(BTFactory.infinite(BTFactory.selector()
+            // 释放大招
+            .addWithCondition(ConditionBT.and(new DistanceLowerThanCondition(this.mob, TARGET_ATK_RADIUS)), BTFactory.sequence()
+              // 设置基本
+              .addChild(BTFactory.success(() -> {
+                // 播放开门的动画
+                mob.triggerAnim("door", "open");
+              }))
+              // 等待5秒
+              .addChild(BTFactory.sequence()
+                  .addChild(BTFactory.wait(100))
+//                  .addWithCondition(,)
+              ))))))
+        // 其他处理例如：技能冷却
+        .addChild(BTFactory.infinite(BTFactory.success(() -> {
+          if (mob.normalAtkCd != 0) {
+            mob.normalAtkCd--;
+          }
+          if (mob.normalAtkCd != 0) {
+            mob.normalAtkCd--;
+          }
+        })));
+    }
   }
 }

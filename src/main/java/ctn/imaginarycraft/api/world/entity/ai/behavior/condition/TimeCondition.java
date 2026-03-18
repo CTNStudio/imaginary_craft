@@ -3,6 +3,9 @@ package ctn.imaginarycraft.api.world.entity.ai.behavior.condition;
 import ctn.imaginarycraft.util.DateUtils;
 import net.minecraft.world.level.Level;
 
+/**
+ * 时间条件
+ */
 public class TimeCondition extends AbstractConditionLeaf {
   final int from;
   final int to;

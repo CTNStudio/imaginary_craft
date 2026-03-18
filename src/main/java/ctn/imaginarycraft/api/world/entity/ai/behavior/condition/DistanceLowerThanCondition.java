@@ -3,6 +3,9 @@ package ctn.imaginarycraft.api.world.entity.ai.behavior.condition;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 
+/**
+ * 距离目标小于指定距离条件
+ */
 public class DistanceLowerThanCondition extends AbstractConditionLeaf {
   final Mob mob;
   final double distance;

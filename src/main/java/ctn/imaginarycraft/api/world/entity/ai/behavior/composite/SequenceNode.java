@@ -2,11 +2,12 @@ package ctn.imaginarycraft.api.world.entity.ai.behavior.composite;
 
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTFactory;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
-import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.Condition;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.ConditionBT;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 序列节点（按顺序执行，全部成功才算成功）
+ * 序列节点 - 按顺序执行子节点，全部成功才算成功
+ * <p>类似逻辑与 (AND) 操作，所有子节点都成功才返回成功</p>
  */
 public class SequenceNode extends CompositeNode {
   private int currentIndex = 0;
@@ -16,12 +17,12 @@ public class SequenceNode extends CompositeNode {
     return this;
   }
 
-  public SequenceNode addWithCondition(Condition condition, BTNode child) {
+  public SequenceNode addWithCondition(ConditionBT condition, BTNode child) {
     children.add(BTFactory.condition(condition, child));
     return this;
   }
 
-  public SequenceNode addWithCondition(Condition condition, String desc, BTNode child) {
+  public SequenceNode addWithCondition(ConditionBT condition, String desc, BTNode child) {
     children.add(BTFactory.condition(condition, child).setDesc(desc));
     return this;
   }

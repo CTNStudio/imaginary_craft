@@ -2,10 +2,13 @@ package ctn.imaginarycraft.api.world.entity.ai.behavior.condition;
 
 import org.jetbrains.annotations.Nullable;
 
-public abstract class DescriptableCondition implements Condition {
+/**
+ * 可描述条件抽象类
+ */
+public abstract class DescriptableCondition implements ConditionBT {
   private String description;
 
-  public Condition setConDesc(String description) {
+  public ConditionBT setConDesc(String description) {
     this.description = description;
     return this;
   }

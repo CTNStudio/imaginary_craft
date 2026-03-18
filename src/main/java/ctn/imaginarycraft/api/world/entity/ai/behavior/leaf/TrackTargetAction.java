@@ -5,6 +5,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
 
+/**
+ * 追踪目标动作 - 实体使用惯性物理系统平滑追踪目标
+ * <p>实现类似追踪导弹的效果，包含加速度限制、速度限制和空气阻力模拟</p>
+ */
 public class TrackTargetAction extends BTNode {
   private final Mob mob;
   private final float speed;

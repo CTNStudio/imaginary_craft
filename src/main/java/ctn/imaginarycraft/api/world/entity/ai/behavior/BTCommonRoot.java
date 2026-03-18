@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.api.world.entity.ai.behavior;
 
 import ctn.imaginarycraft.api.world.entity.ai.behavior.composite.ParallelNode;
-import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.Condition;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.ConditionBT;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.TargetExistCondition;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.leaf.RandomStrollAction;
 import net.minecraft.world.entity.PathfinderMob;
@@ -39,7 +39,7 @@ public abstract class BTCommonRoot<T extends PathfinderMob> extends BTRoot<T> {
       // AI
       .addChild(BTFactory.infinite(BTFactory.selector()
         // 游走
-        .addWithCondition(Condition.not(new TargetExistCondition(mob)), BTFactory.infinite(this.createWonderBehavior()))
+        .addWithCondition(ConditionBT.not(new TargetExistCondition(mob)), BTFactory.infinite(this.createWonderBehavior()))
         // 攻击
         .addWithCondition(new TargetExistCondition(mob), this.createAttackBehavior())
         .setDesc("AI")

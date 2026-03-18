@@ -7,7 +7,8 @@ import net.minecraft.world.phys.Vec3;
 import javax.annotation.Nullable;
 
 /**
- * 地面游走
+ * 地面随机游走动作 - 在地面上随机选择一个位置移动
+ * <p>使用 {@link LandRandomPos} 计算目标位置，适用于陆地生物</p>
  */
 public class LandRandomStrollAction extends RandomStrollAction {
   public LandRandomStrollAction(PathfinderMob mob, double speedModifier, int interval) {

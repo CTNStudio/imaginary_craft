@@ -2,6 +2,10 @@ package ctn.imaginarycraft.api.world.entity.ai.behavior.decoration;
 
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
 
+/**
+ * 装饰节点 - 包含单个子节点的抽象基类，用于增强或修改子节点行为
+ * <p>典型应用：条件检查、中断控制、时间控制等</p>
+ */
 public abstract class DecorationNode extends BTNode {
   protected final BTNode child;
 

@@ -2,11 +2,12 @@ package ctn.imaginarycraft.api.world.entity.ai.behavior.composite;
 
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTFactory;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
-import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.Condition;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.ConditionBT;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 选择节点（执行直到一个子节点成功）
+ * 选择节点 - 按顺序执行子节点，直到有一个子节点成功或全部失败
+ * <p>类似逻辑或 (OR) 操作，只要有一个子节点成功就返回成功</p>
  */
 public class SelectorNode extends CompositeNode {
   private int currentIndex = 0;
@@ -16,12 +17,12 @@ public class SelectorNode extends CompositeNode {
     return this;
   }
 
-  public SelectorNode addWithCondition(Condition condition, BTNode child) {
+  public SelectorNode addWithCondition(ConditionBT condition, BTNode child) {
     children.add(BTFactory.condition(condition, child));
     return this;
   }
 
-  public SelectorNode addWithCondition(Condition condition, String desc, BTNode child) {
+  public SelectorNode addWithCondition(ConditionBT condition, String desc, BTNode child) {
     children.add(BTFactory.condition(condition, child).setDesc(desc));
     return this;
   }

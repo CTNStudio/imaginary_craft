@@ -2,6 +2,7 @@ package ctn.imaginarycraft.core;
 
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.core.registry.CurioRegistry;
+import ctn.imaginarycraft.core.registry.EpicFightRegistry;
 import ctn.imaginarycraft.init.ModAttachments;
 import ctn.imaginarycraft.init.ModDataComponents;
 import ctn.imaginarycraft.init.ModParticleTypes;
@@ -43,6 +44,8 @@ public final class ImaginaryCraft {
 
     ModCreativeModeTabs.REGISTRY.register(eventBus);
     CurioRegistry.registry();
+    EpicFightRegistry.registerEntityPatch();
+    EpicFightRegistry.registerPatchedEntityRenderers();
   }
 
   @Contract("_ -> new")

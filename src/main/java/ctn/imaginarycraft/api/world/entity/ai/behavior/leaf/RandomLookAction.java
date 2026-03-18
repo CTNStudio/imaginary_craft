@@ -7,7 +7,8 @@ import net.minecraft.world.entity.Mob;
 import net.minecraft.world.phys.Vec3;
 
 /**
- * 看向目标
+ * 随机环顾动作 - 实体随机看向周围某个方向
+ * <p>在实体周围 1 格半径的球面上随机选择观察点</p>
  */
 public class RandomLookAction extends BTNode {
 

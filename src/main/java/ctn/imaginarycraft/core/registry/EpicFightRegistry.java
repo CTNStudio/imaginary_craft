@@ -12,6 +12,8 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.neoforged.neoforge.registries.DeferredItem;
 import yesman.epicfight.api.animation.AnimationManager;
+import yesman.epicfight.api.client.event.EpicFightClientEventHooks;
+import yesman.epicfight.api.event.EpicFightEventHooks;
 import yesman.epicfight.gameasset.Armatures;
 import yesman.epicfight.model.armature.HumanoidArmature;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
@@ -24,7 +26,7 @@ import java.util.function.Function;
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class EpicFightRegistry {
   @SubscribeEvent
-  public static void animationsRegistry(AnimationManager.AnimationRegistryEvent event) {
+  public static void registryAnimations(AnimationManager.AnimationRegistryEvent event) {
     event.newBuilder(ImaginaryCraft.ID, builder -> {
       Armatures.ArmatureAccessor<HumanoidArmature> armatureAccessor = Armatures.BIPED;
     });
@@ -34,6 +36,22 @@ public final class EpicFightRegistry {
   public static void register(FMLCommonSetupEvent event) {
     event.enqueueWork(EpicFightRegistry::registerWeaponType);
     event.enqueueWork(EpicFightRegistry::registerWeaponTypesByClass);
+    event.enqueueWork(EpicFightRegistry::registerEntityTypeArmatures);
+  }
+
+  public static void registerPatchedEntityRenderers() {
+    EpicFightClientEventHooks.Registry.ADD_PATCHED_ENTITY.registerEvent(event -> {
+    });
+  }
+
+  public static void registerEntityPatch() {
+    EpicFightEventHooks.Registry.ENTITY_PATCH.registerEvent(event -> {
+//      event.registerEntityPatch(OrdealsEntityTypes.GRANT_US_LOVE.get(), GrantUsLovePatch::new);
+    });
+  }
+
+  private static void registerEntityTypeArmatures() {
+//    Armatures.registerEntityTypeArmature(OrdealsEntityTypes.GRANT_US_LOVE.get(), Armatures.BIPED);
   }
 
   private static void registerWeaponType() {

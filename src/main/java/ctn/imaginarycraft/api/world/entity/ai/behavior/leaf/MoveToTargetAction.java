@@ -4,6 +4,10 @@ import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 
+/**
+ * 接近目标动作 - 实体使用寻路系统接近目标直到进入触发距离
+ * <p>支持设置触发距离和寻路间隔，当与目标距离小于等于触发距离时返回成功</p>
+ */
 public class MoveToTargetAction extends BTNode {
   PathfinderMob mob;
   final int triggerDistance;

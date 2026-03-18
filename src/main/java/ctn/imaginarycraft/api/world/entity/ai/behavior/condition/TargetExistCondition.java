@@ -3,7 +3,7 @@ package ctn.imaginarycraft.api.world.entity.ai.behavior.condition;
 import net.minecraft.world.entity.Mob;
 
 /**
- * 目标存在条件
+ * 生物目标存在条件
  */
 public class TargetExistCondition extends AbstractConditionLeaf {
   final Mob mob;

@@ -3,7 +3,8 @@ package ctn.imaginarycraft.api.world.entity.ai.behavior.leaf;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
 
 /**
- * 等待节点，到达指定时间返回{@link BTStatus#SUCCESS SUCCESS}
+ * 等待动作 - 在指定 tick 数内保持运行状态，超时后返回成功
+ * <p>用于延迟执行或暂停行为树</p>
  */
 public class WaitAction extends BTNode {
   protected int waitTicks;

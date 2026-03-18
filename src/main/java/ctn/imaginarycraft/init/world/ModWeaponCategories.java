@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.api.epicfight;
+package ctn.imaginarycraft.init.world;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;

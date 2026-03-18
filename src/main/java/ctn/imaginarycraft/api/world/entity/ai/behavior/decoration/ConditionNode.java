@@ -1,16 +1,17 @@
 package ctn.imaginarycraft.api.world.entity.ai.behavior.decoration;
 
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
-import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.Condition;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.ConditionBT;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * 条件节点（检查条件，不满足则失败）
+ * 条件装饰节点 - 在执行子节点前检查条件，不满足则立即失败
+ * <p>继承自 {@link DecorationNode}，用于在行为执行前进行前置条件验证</p>
  */
 public class ConditionNode extends DecorationNode {
-  private final Condition condition;
+  private final ConditionBT condition;
 
-  public ConditionNode(Condition condition, BTNode child) {
+  public ConditionNode(ConditionBT condition, BTNode child) {
     super(child);
     this.condition = condition;
   }

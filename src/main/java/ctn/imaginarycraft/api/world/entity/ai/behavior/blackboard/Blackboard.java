@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.api.world.entity.ai.behavior.blackboard;
 
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
-import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.Condition;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.ConditionBT;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -64,29 +64,29 @@ public class Blackboard {
   /**
    * 存在键的条件
    */
-  public static <V> Condition containsKey(IBlackboardHolder holder, KeyType<V> key) {
+  public static <V> ConditionBT containsKey(IBlackboardHolder holder, KeyType<V> key) {
     return new ContainsKey(holder, key);
   }
 
   /**
    * 不存在键的条件
    */
-  public static <V> Condition notContainsKey(IBlackboardHolder holder, KeyType<V> key) {
-    return Condition.not(containsKey(holder, key));
+  public static <V> ConditionBT notContainsKey(IBlackboardHolder holder, KeyType<V> key) {
+    return ConditionBT.not(containsKey(holder, key));
   }
 
   /**
    * 存在值的条件
    */
-  public static <V> Condition containsValue(IBlackboardHolder holder, KeyType<V> key, Predicate<V> valuePredicate) {
+  public static <V> ConditionBT containsValue(IBlackboardHolder holder, KeyType<V> key, Predicate<V> valuePredicate) {
     return new ContainsValue<>(holder, key, valuePredicate);
   }
 
   /**
    * 不存在值的条件
    */
-  public static <V> Condition notContainsValue(IBlackboardHolder holder, KeyType<V> key, Predicate<V> valuePredicate) {
-    return Condition.not(containsValue(holder, key, valuePredicate));
+  public static <V> ConditionBT notContainsValue(IBlackboardHolder holder, KeyType<V> key, Predicate<V> valuePredicate) {
+    return ConditionBT.not(containsValue(holder, key, valuePredicate));
   }
 
   /**
@@ -104,7 +104,7 @@ public class Blackboard {
   }
 
 
-  public record ContainsKey(IBlackboardHolder holder, KeyType<?> key) implements Condition {
+  public record ContainsKey(IBlackboardHolder holder, KeyType<?> key) implements ConditionBT {
     @Override
     public boolean check() {
       return holder.getBlackboard().containsKey(key);
@@ -112,7 +112,7 @@ public class Blackboard {
   }
 
   public record ContainsValue<V>(IBlackboardHolder holder, KeyType<V> key,
-                                 Predicate<V> valuePredicate) implements Condition {
+                                 Predicate<V> valuePredicate) implements ConditionBT {
     @Override
     public boolean check() {
       return holder.getBlackboard().containsValue(key, valuePredicate);

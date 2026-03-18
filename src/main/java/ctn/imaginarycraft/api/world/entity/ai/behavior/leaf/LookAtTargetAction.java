@@ -4,7 +4,8 @@ import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
 import net.minecraft.world.entity.Mob;
 
 /**
- * 看向目标
+ * 注视目标动作 - 实体持续看向当前目标
+ * <p>同时设置头部旋转和视线控制</p>
  */
 public class LookAtTargetAction extends BTNode {
   final Mob mob;

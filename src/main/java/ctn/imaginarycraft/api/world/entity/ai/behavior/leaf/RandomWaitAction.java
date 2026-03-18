@@ -2,7 +2,10 @@ package ctn.imaginarycraft.api.world.entity.ai.behavior.leaf;
 
 import net.minecraft.util.RandomSource;
 
-/// 随机时长的WaitAction
+/**
+ * 随机时长等待动作 - 在指定范围内随机等待一定时间
+ * <p>继承自 {@link WaitAction}，每次重启时会重新随机化等待时长</p>
+ */
 public class RandomWaitAction extends WaitAction {
   private final Runnable waitTicksApplier;
 

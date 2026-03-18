@@ -10,7 +10,8 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 /**
- * 飞行生物游走
+ * 空中随机游走动作 - 飞行生物在空中随机移动
+ * <p>使用 {@link AirRandomPos} 计算目标位置，按固定间隔重新选择路径点</p>
  */
 public class RandomStrollAction extends BTNode {
 

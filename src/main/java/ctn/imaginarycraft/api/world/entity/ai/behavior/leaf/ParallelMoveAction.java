@@ -5,8 +5,8 @@ import ctn.imaginarycraft.api.world.entity.ai.motion.DashComponent;
 import net.minecraft.world.entity.Mob;
 
 /**
- * <p>平行于目标移动，如魔焰眼一阶段</p>
- * <p>或者在目标头顶，如激光眼二阶段</p>
+ * 平行移动动作 - 实体平行于目标位置移动或悬停在目标上方
+ * <p>典型应用：魔焰眼一阶段的环绕移动、激光眼二阶段的头顶悬停</p>
  */
 public class ParallelMoveAction extends BTNode {
   final Mob mob;

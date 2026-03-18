@@ -2,11 +2,12 @@ package ctn.imaginarycraft.api.world.entity.ai.behavior.composite;
 
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTFactory;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
-import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.Condition;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.ConditionBT;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * 并行节点（同时执行所有子节点）
+ * 并行节点 - 同时执行所有子节点，根据策略判断成功或失败
+ * <p>支持两种策略：成功策略和失败策略，每种策略可以是 REQUIRE_ONE（只需一个）或 REQUIRE_ALL（需要全部）</p>
  */
 public class ParallelNode extends CompositeNode {
   private final Policy successPolicy;
@@ -22,12 +23,27 @@ public class ParallelNode extends CompositeNode {
     return this;
   }
 
-  public ParallelNode addWithCondition(Condition condition, BTNode child) {
+  /**
+   * 添加子节点，并添加条件
+   *
+   * @param condition 条件
+   * @param child     子节点
+   * @return this
+   */
+  public ParallelNode addWithCondition(ConditionBT condition, BTNode child) {
     children.add(BTFactory.condition(condition, child));
     return this;
   }
 
-  public ParallelNode addWithCondition(Condition condition, String desc, BTNode child) {
+  /**
+   * 添加子节点，并添加条件
+   *
+   * @param condition 条件
+   * @param desc      描述
+   * @param child     子节点
+   * @return this
+   */
+  public ParallelNode addWithCondition(ConditionBT condition, String desc, BTNode child) {
     children.add(BTFactory.condition(condition, child).setDesc(desc));
     return this;
   }
@@ -44,9 +60,9 @@ public class ParallelNode extends CompositeNode {
 
       if (child.getStatus() == BTStatus.RUNNING) {
         child.tick();
-//                if(!child.canContinueToUse()) {
-//                    child.setStatus(BTStatus.FAILURE);
-//                }
+//        if(!child.canContinueToUse()) {
+//            child.setStatus(BTStatus.FAILURE);
+//        }
       }
 
       switch (child.getStatus()) {
@@ -78,9 +94,9 @@ public class ParallelNode extends CompositeNode {
   @Override
   protected void cleanup() {
     for (BTNode child : children) {
-//            if(child.getStatus() == BTStatus.RUNNING){
+//      if(child.getStatus() == BTStatus.RUNNING){
       child.stop();
-//            }
+//      }
     }
   }
 
@@ -93,7 +109,13 @@ public class ParallelNode extends CompositeNode {
   }
 
   public enum Policy {
-    REQUIRE_ONE,    // 只需一个
-    REQUIRE_ALL     // 需要全部
+    /**
+     * 只需一个
+     */
+    REQUIRE_ONE,
+    /**
+     * 需要全部
+     */
+    REQUIRE_ALL
   }
 }

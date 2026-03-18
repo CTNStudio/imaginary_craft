@@ -5,6 +5,10 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.phys.Vec3;
 
+/**
+ * 冲刺组件 - 为实体提供移动和定位功能
+ * <p>支持悬停、加速、匀速移动、预判等运动控制</p>
+ */
 public class DashComponent {
   Vec3 direction;
   public Vec3 targetPos;

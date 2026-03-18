@@ -3,6 +3,9 @@ package ctn.imaginarycraft.api.world.entity.ai.behavior.condition;
 import ctn.imaginarycraft.util.EntityUtil;
 import net.minecraft.world.entity.Mob;
 
+/**
+ * 角度小于条件
+ */
 public class AngleLowerThanCondition extends AbstractConditionLeaf {
   final Mob mob;
   final double angle;

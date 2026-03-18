@@ -5,7 +5,10 @@ import ctn.imaginarycraft.api.world.entity.SharedFlagController;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
 
 /**
- * 同步共享状态
+ * 同步共享标志位动作 - 设置实体的共享状态标志
+ * <p>用于控制客户端可访问的共享状态，如动画播放、特效显示等</p>
+ *
+ * @param <T> 实体类型，需实现 {@link ISharedFlagControllerHolder}
  */
 public class SyncFlagAction<T extends ISharedFlagControllerHolder> extends BTNode {
   protected final T entity;

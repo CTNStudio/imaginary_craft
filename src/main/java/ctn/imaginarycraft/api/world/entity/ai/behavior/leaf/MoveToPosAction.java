@@ -9,7 +9,8 @@ import javax.annotation.Nullable;
 import java.util.EnumSet;
 
 /**
- * 移动到目标
+ * 移动到位置动作 - 实体使用寻路系统移动到指定坐标
+ * <p>支持设置目标点和移动速度，到达后返回成功</p>
  */
 public class MoveToPosAction extends BTNode {
   private final PathfinderMob mob;

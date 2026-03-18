@@ -7,6 +7,10 @@ import ctn.imaginarycraft.util.EntityUtil;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 权重随机节点 - 根据权重随机选择一个子节点执行
+ * <p>使用加权随机算法从子节点中选择一个执行，适用于随机行为选择</p>
+ */
 public class WeightNode extends CompositeNode {
   private final List<Integer> weights;
   private BTNode currentChild;

@@ -6,7 +6,9 @@ import net.minecraft.world.entity.ai.goal.Goal;
 import java.util.EnumSet;
 
 /**
- * 包装现有的Goal作为行为，大概率有问题，极不推荐使用
+ * 目标包装器 - 将现有的 Goal 包装为行为树节点
+ * <p><strong>警告：</strong>此实现可能存在兼容性问题，极不推荐使用</p>
+ * <p>仅用于临时迁移或测试目的</p>
  */
 public class GoalWrapper extends BTNode {
   private final Goal goal;

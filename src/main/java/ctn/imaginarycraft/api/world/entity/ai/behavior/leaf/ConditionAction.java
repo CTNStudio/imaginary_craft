@@ -2,16 +2,16 @@ package ctn.imaginarycraft.api.world.entity.ai.behavior.leaf;
 
 
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
-import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.Condition;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.ConditionBT;
 
 /**
  * 条件检查动作 - 根据条件返回成功或失败，用于短路 Sequence 或 Selector 节点
  * <p>当条件满足时返回 SUCCESS，否则返回 FAILURE</p>
  */
 public class ConditionAction extends BTNode {
-  final Condition condition;
+  final ConditionBT condition;
 
-  public ConditionAction(Condition condition) {
+  public ConditionAction(ConditionBT condition) {
     this.condition = condition;
   }
 

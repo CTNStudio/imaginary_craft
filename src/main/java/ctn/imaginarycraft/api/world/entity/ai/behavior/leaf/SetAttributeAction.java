@@ -5,6 +5,10 @@ import net.minecraft.core.Holder;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 
+/**
+ * 设置属性动作 - 直接设置实体的属性基础值
+ * <p>会覆盖属性的当前值，不添加修饰符</p>
+ */
 public class SetAttributeAction extends BTNode {
 
   final LivingEntity living;

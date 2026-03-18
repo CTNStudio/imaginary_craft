@@ -2,22 +2,25 @@ package ctn.imaginarycraft.api.world.entity.ai.behavior.condition;
 
 import java.util.List;
 
+/**
+ * 与条件
+ */
 public class AndCondition extends CompositeCondition {
   public AndCondition() {
   }
 
-  public AndCondition(List<Condition> children) {
+  public AndCondition(List<ConditionBT> children) {
     super(children);
   }
 
   @Override
-  public AndCondition addChild(Condition child) {
+  public AndCondition addChild(ConditionBT child) {
     this.children.add(child);
     return this;
   }
 
   @Override
   public boolean check() {
-    return children.stream().allMatch(Condition::check);
+    return children.stream().allMatch(ConditionBT::check);
   }
 }

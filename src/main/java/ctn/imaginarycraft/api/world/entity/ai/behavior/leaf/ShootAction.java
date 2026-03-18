@@ -5,7 +5,10 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 
 /**
- * 射击行为
+ * 射击动作 - 实体向目标发射投射物
+ * <p>抽象类，子类需实现具体的射击逻辑 {@link #shoot(LivingEntity)}</p>
+ *
+ * @param <T> 实体类型，必须是 {@link Mob} 的子类
  */
 public abstract class ShootAction<T extends Mob> extends BTNode {
 
