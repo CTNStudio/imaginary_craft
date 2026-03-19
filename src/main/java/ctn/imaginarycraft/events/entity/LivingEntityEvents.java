@@ -334,9 +334,12 @@ public final class LivingEntityEvents {
     for (var entry : ModAbsorptionShieldRegistry.getAll()) {
       if (newEffect.getEffect().getRegisteredName().equals(entry.effect().getRegisteredName())) {
 
-        if(ModConfig.SERVER.enableMultiShield.isFalse()){
+        if(ModConfig.SERVER.enableMultiShield.isFalse()&& entry.isShieldConflict()){
           for(var oldEntry : ModAbsorptionShieldRegistry.getAll()){
-            if (oldEntry.effect() == entry.effect()) continue;
+            if (!oldEntry.isShieldConflict()||
+              oldEntry.effect().getRegisteredName().equals(entry.effect().getRegisteredName()))
+              continue;
+
             MobEffectInstance existing = entity.getEffect(oldEntry.effect());
             if (existing != null) {
               entity.removeEffect(oldEntry.effect());

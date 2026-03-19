@@ -17,6 +17,12 @@ import java.util.function.Supplier;
 /**
  * 用于注册单一类型伤害吸收护盾
  * <p>
+ * 护盾添加方法：
+ * 1.注册新的护盾效果
+ * 2.注册ModAttachments
+ * 3.在此注册即可
+ *
+ * <P>
  * 2026/3/18 尘昨暄
  */
 public class ModAbsorptionShieldRegistry {
@@ -25,12 +31,16 @@ public class ModAbsorptionShieldRegistry {
     ResourceLocation damageTypeTag,
     Supplier<AttachmentType<Float>> attachment,
     BiFunction<Integer, Float, Float> initialAmount,
-    SoundEvent shieldBreakSound
+    SoundEvent shieldBreakSound,
+    boolean shieldConflict
   ) {
     public void playShieldBreakSound(Player player) {
       if (shieldBreakSound != null) {
         player.playSound(shieldBreakSound);
       }
+    }
+    public boolean isShieldConflict(){
+      return shieldConflict;
     }
   }
 
@@ -41,9 +51,20 @@ public class ModAbsorptionShieldRegistry {
     ResourceLocation damageTypeTag,
     Supplier<AttachmentType<Float>> attachment,
     BiFunction<Integer, Float, Float> initialAmount,
+    SoundEvent shieldBreakSound,
+    boolean shieldConflict
+  ) {
+    SHIELDS.add(new ShieldEntry(effect, damageTypeTag, attachment, initialAmount, shieldBreakSound,shieldConflict));
+  }
+
+  private static void register(
+    Holder<MobEffect> effect,
+    ResourceLocation damageTypeTag,
+    Supplier<AttachmentType<Float>> attachment,
+    BiFunction<Integer, Float, Float> initialAmount,
     SoundEvent shieldBreakSound
   ) {
-    SHIELDS.add(new ShieldEntry(effect, damageTypeTag, attachment, initialAmount, shieldBreakSound));
+    register(effect, damageTypeTag, attachment, initialAmount, shieldBreakSound, true);
   }
 
   public static List<ShieldEntry> getAll() {
