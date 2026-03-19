@@ -19,4 +19,10 @@ public class EmptyLivingEntityRenderer<T extends LivingEntity> extends LivingEnt
   public @NotNull ResourceLocation getTextureLocation(@NotNull T entity) {
     return texture;
   }
+
+  // TODO 需要更好的方案
+  @Override
+  protected boolean shouldShowName(T entity) {
+    return false;
+  }
 }
