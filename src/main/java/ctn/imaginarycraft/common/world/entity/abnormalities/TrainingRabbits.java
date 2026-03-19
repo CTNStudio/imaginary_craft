@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.world.entity.abnormalities;
 
 import ctn.imaginarycraft.api.world.entity.IAbnormalitiesEntity;
-import ctn.imaginarycraft.client.model.ModGeoEntityModel;
+import ctn.imaginarycraft.client.model.entity.ModGeoEntityModel;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;

@@ -1,5 +1,6 @@
-package ctn.imaginarycraft.client.model;
+package ctn.imaginarycraft.client.model.item;
 
+import ctn.imaginarycraft.client.model.BasicGeoModel;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 
 public class ModGeoItemModel<T extends GeoAnimatable> extends BasicGeoModel<T> {

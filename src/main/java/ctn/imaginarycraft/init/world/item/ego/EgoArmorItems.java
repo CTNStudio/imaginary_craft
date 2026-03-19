@@ -2,7 +2,7 @@ package ctn.imaginarycraft.init.world.item.ego;
 
 import com.mojang.datafixers.util.Function5;
 import ctn.imaginarycraft.api.LcLevel;
-import ctn.imaginarycraft.client.model.ModGeoArmorModel;
+import ctn.imaginarycraft.client.model.armor.ModGeoArmorModel;
 import ctn.imaginarycraft.client.renderer.providers.ModGeoArmourRenderProvider;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
 import ctn.imaginarycraft.common.world.item.ego.armor.EgoArmorItem;

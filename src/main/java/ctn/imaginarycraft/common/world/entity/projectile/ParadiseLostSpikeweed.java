@@ -2,7 +2,7 @@ package ctn.imaginarycraft.common.world.entity.projectile;
 
 import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.api.LcLevel;
-import ctn.imaginarycraft.client.model.ModGeoEntityModel;
+import ctn.imaginarycraft.client.model.entity.ModGeoEntityModel;
 import ctn.imaginarycraft.init.world.ModDamageTypes;
 import ctn.imaginarycraft.init.world.entity.ProjectileEntityTypes;
 import ctn.imaginarycraft.mixed.IDamageSource;

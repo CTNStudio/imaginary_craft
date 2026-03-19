@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.melee.swords;
 
 import ctn.imaginarycraft.api.world.item.IMeleeEgoWeaponItem;
-import ctn.imaginarycraft.client.model.GuiItemModel;
-import ctn.imaginarycraft.client.model.ModGeoItemModel;
+import ctn.imaginarycraft.client.model.item.GuiItemModel;
+import ctn.imaginarycraft.client.model.item.ModGeoItemModel;
 import ctn.imaginarycraft.client.renderer.providers.ModGeoItemRenderProvider;
 import ctn.imaginarycraft.common.world.item.ego.weapon.melee.MeleeEgoWeaponGeoItem;
 import net.minecraft.world.item.Tier;

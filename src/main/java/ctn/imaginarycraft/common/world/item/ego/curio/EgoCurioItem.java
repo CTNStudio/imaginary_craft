@@ -3,7 +3,7 @@ package ctn.imaginarycraft.common.world.item.ego.curio;
 import com.google.common.collect.Multimap;
 import ctn.imaginarycraft.api.virtue.VirtueAttributeModifier;
 import ctn.imaginarycraft.api.world.item.IEgoItem;
-import ctn.imaginarycraft.client.model.GeoCurioModel;
+import ctn.imaginarycraft.client.model.curio.GeoCurioModel;
 import ctn.imaginarycraft.client.renderer.curios.BasicCuriosRenderer;
 import ctn.imaginarycraft.init.ModDataComponents;
 import ctn.imaginarycraft.util.RationalityUtil;

@@ -3,10 +3,7 @@ package ctn.imaginarycraft.core;
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.core.registry.CurioRegistry;
 import ctn.imaginarycraft.core.registry.EpicFightRegistry;
-import ctn.imaginarycraft.init.ModAttachments;
-import ctn.imaginarycraft.init.ModDataComponents;
-import ctn.imaginarycraft.init.ModParticleTypes;
-import ctn.imaginarycraft.init.ModSoundEvents;
+import ctn.imaginarycraft.init.*;
 import ctn.imaginarycraft.init.world.*;
 import ctn.imaginarycraft.init.world.entity.ModEntityTypes;
 import ctn.imaginarycraft.init.world.item.ModItems;
@@ -29,6 +26,9 @@ public final class ImaginaryCraft {
   public static final Logger LOGGER = LogManager.getLogger(ID);
 
   public ImaginaryCraft(IEventBus eventBus, ModContainer container) {
+    ModArmatures.init();
+    ModMeshes.init();
+
     ModEpicjightEventHooks.listenerRegister();
     ModConfig.init(container);
     ModSoundEvents.REGISTRY.register(eventBus);

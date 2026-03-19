@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.common.world.item.ego.weapon.remote.crossbow;
 
 import ctn.imaginarycraft.api.world.item.IRemoteEgoWeaponItem;
-import ctn.imaginarycraft.client.model.GuiItemModel;
-import ctn.imaginarycraft.client.model.ModGeoItemModel;
+import ctn.imaginarycraft.client.model.item.GuiItemModel;
+import ctn.imaginarycraft.client.model.item.ModGeoItemModel;
 import ctn.imaginarycraft.client.renderer.providers.ModGeoItemRenderProvider;
 import ctn.imaginarycraft.common.world.item.ego.weapon.remote.RemoteEgoWeaponGeoItem;
 import org.jetbrains.annotations.NotNull;

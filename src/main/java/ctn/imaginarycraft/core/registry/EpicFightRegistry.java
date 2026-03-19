@@ -1,8 +1,13 @@
 package ctn.imaginarycraft.core.registry;
 
+import ctn.imaginarycraft.client.renderer.entity.GrantUsLovePatchRenderer;
+import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLovePatch;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.core.ImaginaryCraftConstants;
+import ctn.imaginarycraft.init.ModAnimations;
+import ctn.imaginarycraft.init.ModArmatures;
 import ctn.imaginarycraft.init.world.ModWeaponCapabilityPresets;
+import ctn.imaginarycraft.init.world.entity.OrdealsEntityTypes;
 import ctn.imaginarycraft.init.world.item.ego.EgoWeaponItems;
 import ctn.imaginarycraft.mixin.world.item.WeaponTypeReloadListenerAccessorMixin;
 import net.minecraft.resources.ResourceLocation;
@@ -10,12 +15,12 @@ import net.minecraft.world.item.Item;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
+import net.neoforged.fml.loading.FMLEnvironment;
 import net.neoforged.neoforge.registries.DeferredItem;
 import yesman.epicfight.api.animation.AnimationManager;
 import yesman.epicfight.api.client.event.EpicFightClientEventHooks;
 import yesman.epicfight.api.event.EpicFightEventHooks;
 import yesman.epicfight.gameasset.Armatures;
-import yesman.epicfight.model.armature.HumanoidArmature;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.item.CapabilityItem;
 import yesman.epicfight.world.capabilities.item.WeaponCapabilityPresets;
@@ -26,32 +31,34 @@ import java.util.function.Function;
 @EventBusSubscriber(modid = ImaginaryCraft.ID)
 public final class EpicFightRegistry {
   @SubscribeEvent
-  public static void registryAnimations(AnimationManager.AnimationRegistryEvent event) {
-    event.newBuilder(ImaginaryCraft.ID, builder -> {
-      Armatures.ArmatureAccessor<HumanoidArmature> armatureAccessor = Armatures.BIPED;
-    });
-  }
-
-  @SubscribeEvent
   public static void register(FMLCommonSetupEvent event) {
     event.enqueueWork(EpicFightRegistry::registerWeaponType);
     event.enqueueWork(EpicFightRegistry::registerWeaponTypesByClass);
     event.enqueueWork(EpicFightRegistry::registerEntityTypeArmatures);
   }
 
+  @SubscribeEvent
+  public static void registerAnimations(AnimationManager.AnimationRegistryEvent event) {
+    event.newBuilder(ImaginaryCraft.ID, ModAnimations::build);
+  }
+
   public static void registerPatchedEntityRenderers() {
+    if (!FMLEnvironment.dist.isClient()) {
+      return;
+    }
     EpicFightClientEventHooks.Registry.ADD_PATCHED_ENTITY.registerEvent(event -> {
+      event.addPatchedEntityRenderer(OrdealsEntityTypes.GRANT_US_LOVE.get(), entityType -> new GrantUsLovePatchRenderer(event.getContext()));
     });
   }
 
   public static void registerEntityPatch() {
     EpicFightEventHooks.Registry.ENTITY_PATCH.registerEvent(event -> {
-//      event.registerEntityPatch(OrdealsEntityTypes.GRANT_US_LOVE.get(), GrantUsLovePatch::new);
+      event.registerEntityPatch(OrdealsEntityTypes.GRANT_US_LOVE.get(), GrantUsLovePatch::new);
     });
   }
 
   private static void registerEntityTypeArmatures() {
-//    Armatures.registerEntityTypeArmature(OrdealsEntityTypes.GRANT_US_LOVE.get(), Armatures.BIPED);
+    Armatures.registerEntityTypeArmature(OrdealsEntityTypes.GRANT_US_LOVE.get(), ModArmatures.GRANT_US_LOVE);
   }
 
   private static void registerWeaponType() {

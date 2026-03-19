@@ -163,7 +163,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity,
     this.crashAtkCd = CRASH_ATK_CD;
     this.portalOpenTime = CRASH_PORTAL_OPEN_TIME;
     // TODO 调试用：缩短大招冷却时间
-    this.crashAtkCd = 20 * 2; // 2 秒后释放大招
+//    this.crashAtkCd = 20 * 2; // 2 秒后释放大招
   }
 
   private void aoeAttack() {

@@ -1,5 +1,6 @@
-package ctn.imaginarycraft.client.model;
+package ctn.imaginarycraft.client.model.entity;
 
+import ctn.imaginarycraft.client.model.BasicGeoModel;
 import net.minecraft.resources.ResourceLocation;
 import software.bernie.geckolib.animatable.GeoAnimatable;
 
