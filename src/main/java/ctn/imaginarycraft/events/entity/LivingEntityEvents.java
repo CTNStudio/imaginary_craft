@@ -325,8 +325,6 @@ public final class LivingEntityEvents {
    */
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void effectApplyEvent(MobEffectEvent.Added event) {
-    System.out.println("[LivingEntityEvents] effectApplyEvent triggered for effect: " + event.getEffectInstance().getEffect().getRegisteredName());
-    System.out.println("Shield registry size: " + ModAbsorptionShieldRegistry.getAll().size());
     LivingEntity entity = event.getEntity();
     if (entity.level().isClientSide) return;
 
