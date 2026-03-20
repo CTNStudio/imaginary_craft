@@ -1,0 +1,62 @@
+package ctn.imaginarycraft.client.gui.hudlayers.shield;
+
+import ctn.imaginarycraft.client.gui.hudlayers.StatusBarLayer;
+import ctn.imaginarycraft.client.gui.widget.HorizontalStatusBar;
+import ctn.imaginarycraft.config.ModConfig;
+import ctn.imaginarycraft.init.world.ModAbsorptionShieldRegistry;
+import net.minecraft.client.DeltaTracker;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.effect.MobEffect;
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Objects;
+
+public abstract class ShieldBarLayer extends StatusBarLayer {
+
+  protected final ResourceLocation TEXTURE;
+  protected final ResourceLocation BOTTOM_TEXTURE;
+  protected final ResourceLocation LIGHT_TEXTURE;
+  protected final Holder<MobEffect> absorptionEffect;
+
+  public ShieldBarLayer(ResourceLocation  texture, ResourceLocation  bottomTexture, ResourceLocation  lightTexture, Holder<MobEffect> absorptionEffect) {
+    super(new HorizontalStatusBar(93, 11,
+      new HorizontalStatusBar.TextureLayer(0, 0, 93, 11, bottomTexture),
+      new HorizontalStatusBar.TextureLayer(14, 2, 78, 7, texture),
+      new HorizontalStatusBar.TextureLayer(0, 0, 93, 11, lightTexture)));
+    TEXTURE = texture;
+    BOTTOM_TEXTURE = bottomTexture;
+    LIGHT_TEXTURE = lightTexture;
+    this.absorptionEffect = absorptionEffect;
+  }
+
+  @Override
+  protected float getMaxValueFromSource() {
+    if(this.player.getEffect(absorptionEffect)==null){
+      return 0;
+    }
+    return (float) (ModConfig.SERVER.shieldAdditionalValuePerLevel.get() * (this.player.getEffect(absorptionEffect).getAmplifier()+1));
+  }
+
+  @Override
+  protected float getCurrentValueFromSource() {
+    float shieldAmount = 0.0f;
+    for (var entry : ModAbsorptionShieldRegistry.getAll()) {
+      if(entry.effect().equals(absorptionEffect))
+        shieldAmount = player.getData(entry.attachment().get());
+    }
+    return shieldAmount;
+  }
+
+  @Override
+  protected void updateStatusBarAppearance() {
+
+  }
+
+  @Override
+  public void renderStatusBar(GuiGraphics guiGraphics, @NotNull DeltaTracker deltaTracker) {
+    if(getCurrentValueFromSource()!=0)
+      super.renderStatusBar(guiGraphics, deltaTracker);
+  }
+}
