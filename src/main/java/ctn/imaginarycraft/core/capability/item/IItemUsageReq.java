@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.core.capability.item;
 
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
-import ctn.imaginarycraft.init.ModDataComponents;
+import ctn.imaginarycraft.init.world.ModDataComponents;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;

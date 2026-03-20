@@ -4,7 +4,7 @@ import ctn.imaginarycraft.api.virtue.VirtueFortitude;
 import ctn.imaginarycraft.api.virtue.VirtueJustice;
 import ctn.imaginarycraft.api.virtue.VirtuePrudence;
 import ctn.imaginarycraft.api.virtue.VirtueTemperance;
-import ctn.imaginarycraft.init.ModAttachments;
+import ctn.imaginarycraft.init.world.ModAttachments;
 import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Player;
 

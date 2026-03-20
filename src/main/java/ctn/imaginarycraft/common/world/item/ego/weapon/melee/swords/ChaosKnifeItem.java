@@ -4,7 +4,7 @@ import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.api.world.item.IMeleeEgoWeaponItem;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
-import ctn.imaginarycraft.init.ModDataComponents;
+import ctn.imaginarycraft.init.world.ModDataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.InteractionHand;

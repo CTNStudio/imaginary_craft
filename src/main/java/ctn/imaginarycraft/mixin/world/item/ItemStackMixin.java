@@ -7,7 +7,7 @@ import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import com.llamalad7.mixinextras.sugar.Local;
 import ctn.imaginarycraft.client.event.AddItemDataComponentTooltipEvent;
-import ctn.imaginarycraft.init.ModDataComponents;
+import ctn.imaginarycraft.init.world.ModDataComponents;
 import net.minecraft.core.component.DataComponentHolder;
 import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;

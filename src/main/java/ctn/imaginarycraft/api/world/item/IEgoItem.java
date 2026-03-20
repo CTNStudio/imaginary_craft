@@ -2,7 +2,7 @@ package ctn.imaginarycraft.api.world.item;
 
 import ctn.imaginarycraft.api.virtue.VirtueRating;
 import ctn.imaginarycraft.common.components.ItemVirtueUsageReq;
-import ctn.imaginarycraft.init.ModDataComponents;
+import ctn.imaginarycraft.init.world.ModDataComponents;
 import net.minecraft.world.item.Item;
 
 /**

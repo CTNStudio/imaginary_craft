@@ -3,7 +3,7 @@ package ctn.imaginarycraft.util;
 import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.core.capability.item.IItemLcDamageType;
 import ctn.imaginarycraft.init.ModCapabilitys;
-import ctn.imaginarycraft.init.ModDataComponents;
+import ctn.imaginarycraft.init.world.ModDataComponents;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.NotNull;

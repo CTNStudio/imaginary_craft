@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import ctn.imaginarycraft.api.ColourText;
 import ctn.imaginarycraft.client.util.ColorUtil;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.ModAttachments;
+import ctn.imaginarycraft.init.world.ModAttachments;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.core.Holder;
 import net.minecraft.network.codec.ByteBufCodecs;

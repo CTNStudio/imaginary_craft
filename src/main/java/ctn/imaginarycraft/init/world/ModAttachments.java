@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init;
+package ctn.imaginarycraft.init.world;
 
 import com.mojang.serialization.Codec;
 import ctn.imaginarycraft.api.DelayTaskHolder;

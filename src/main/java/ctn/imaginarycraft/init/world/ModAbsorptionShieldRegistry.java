@@ -1,7 +1,6 @@
 package ctn.imaginarycraft.init.world;
 
 import ctn.imaginarycraft.config.ModConfig;
-import ctn.imaginarycraft.init.ModAttachments;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;

@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.world.item;
 
-import ctn.imaginarycraft.init.ModDataComponents;
+import ctn.imaginarycraft.init.world.ModDataComponents;
 import ctn.imaginarycraft.util.RationalityUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.network.chat.Component;

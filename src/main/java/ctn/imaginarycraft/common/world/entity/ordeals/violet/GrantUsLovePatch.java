@@ -16,7 +16,7 @@ public class GrantUsLovePatch extends MobPatch<GrantUsLove> {
 
   @Override
   public AssetAccessor<? extends StaticAnimation> getHitAnimation(StunType stunType) {
-    return ModAnimations.GRANT_US_LOVE_DEFAULT;
+    return ModAnimations.GRANT_US_LOVE_IDLE;
   }
 
   @Override
@@ -47,18 +47,18 @@ public class GrantUsLovePatch extends MobPatch<GrantUsLove> {
   public void initAnimator(Animator animator) {
     super.initAnimator(animator);
     // 待机
-    animator.addLivingAnimation(LivingMotions.IDLE, ModAnimations.GRANT_US_LOVE_DEFAULT);
+    animator.addLivingAnimation(LivingMotions.IDLE, ModAnimations.GRANT_US_LOVE_IDLE);
     // 死亡
-    animator.addLivingAnimation(LivingMotions.DEATH, ModAnimations.GRANT_US_LOVE_DEFAULT);
-    animator.addLivingAnimation(LivingMotions.WALK, ModAnimations.GRANT_US_LOVE_DEFAULT);
-    animator.addLivingAnimation(LivingMotions.RUN, ModAnimations.GRANT_US_LOVE_DEFAULT);
-    animator.addLivingAnimation(LivingMotions.FALL, ModAnimations.GRANT_US_LOVE_DEFAULT);
-    animator.addLivingAnimation(LivingMotions.SIT, ModAnimations.GRANT_US_LOVE_DEFAULT);
-    animator.addLivingAnimation(LivingMotions.JUMP, ModAnimations.GRANT_US_LOVE_DEFAULT);
-    animator.addLivingAnimation(LivingMotions.SLEEP, ModAnimations.GRANT_US_LOVE_DEFAULT);
-    animator.addLivingAnimation(LivingMotions.AIM, ModAnimations.GRANT_US_LOVE_DEFAULT);
-    animator.addLivingAnimation(LivingMotions.SHOT, ModAnimations.GRANT_US_LOVE_DEFAULT);
-    animator.addLivingAnimation(LivingMotions.DRINK, ModAnimations.GRANT_US_LOVE_DEFAULT);
-    animator.addLivingAnimation(LivingMotions.EAT, ModAnimations.GRANT_US_LOVE_DEFAULT);
+    animator.addLivingAnimation(LivingMotions.DEATH, ModAnimations.GRANT_US_LOVE_IDLE);
+    animator.addLivingAnimation(LivingMotions.WALK, ModAnimations.GRANT_US_LOVE_IDLE);
+    animator.addLivingAnimation(LivingMotions.RUN, ModAnimations.GRANT_US_LOVE_IDLE);
+    animator.addLivingAnimation(LivingMotions.FALL, ModAnimations.GRANT_US_LOVE_IDLE);
+    animator.addLivingAnimation(LivingMotions.SIT, ModAnimations.GRANT_US_LOVE_IDLE);
+    animator.addLivingAnimation(LivingMotions.JUMP, ModAnimations.GRANT_US_LOVE_IDLE);
+    animator.addLivingAnimation(LivingMotions.SLEEP, ModAnimations.GRANT_US_LOVE_IDLE);
+    animator.addLivingAnimation(LivingMotions.AIM, ModAnimations.GRANT_US_LOVE_IDLE);
+    animator.addLivingAnimation(LivingMotions.SHOT, ModAnimations.GRANT_US_LOVE_IDLE);
+    animator.addLivingAnimation(LivingMotions.DRINK, ModAnimations.GRANT_US_LOVE_IDLE);
+    animator.addLivingAnimation(LivingMotions.EAT, ModAnimations.GRANT_US_LOVE_IDLE);
   }
 }

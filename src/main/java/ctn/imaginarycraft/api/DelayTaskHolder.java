@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.api;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.ModAttachments;
+import ctn.imaginarycraft.init.world.ModAttachments;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.EquipmentSlot;

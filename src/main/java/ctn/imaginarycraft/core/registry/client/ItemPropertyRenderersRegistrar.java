@@ -2,7 +2,7 @@ package ctn.imaginarycraft.core.registry.client;
 
 import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.ModDataComponents;
+import ctn.imaginarycraft.init.world.ModDataComponents;
 import ctn.imaginarycraft.init.world.item.ToolItems;
 import net.minecraft.client.renderer.item.ClampedItemPropertyFunction;
 import net.minecraft.client.renderer.item.ItemProperties;

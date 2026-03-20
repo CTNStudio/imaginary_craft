@@ -5,7 +5,7 @@ import ctn.imaginarycraft.api.virtue.VirtueAttributeModifier;
 import ctn.imaginarycraft.api.world.item.IEgoItem;
 import ctn.imaginarycraft.client.model.curio.GeoCurioModel;
 import ctn.imaginarycraft.client.renderer.curios.BasicCuriosRenderer;
-import ctn.imaginarycraft.init.ModDataComponents;
+import ctn.imaginarycraft.init.world.ModDataComponents;
 import ctn.imaginarycraft.util.RationalityUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
