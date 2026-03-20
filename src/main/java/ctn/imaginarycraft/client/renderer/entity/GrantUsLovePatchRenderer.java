@@ -11,13 +11,11 @@ import ctn.imaginarycraft.init.ModMeshes;
 import ctn.imaginarycraft.init.world.entity.OrdealsEntityTypes;
 import ctn.imaginarycraft.util.ModUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
 
 public class GrantUsLovePatchRenderer extends ModPatchedLivingEntityRenderer<GrantUsLove, GrantUsLovePatch, EmptyEntityModel<GrantUsLove>, EmptyLivingEntityRenderer<GrantUsLove>, GrantUsLoveMesh> {
   private static final ResourceLocation GLOWMASK_TEXTURE = ModGeoEntityModel.getTexturePath("grant_us_love_glowmask");
-  private static final RenderType GLOWMASK_RENDER_TYPE = RenderType.eyes(GLOWMASK_TEXTURE);
   private final float[] glowmaskValue = new float[1];
 
   public GrantUsLovePatchRenderer(EntityRendererProvider.Context context) {

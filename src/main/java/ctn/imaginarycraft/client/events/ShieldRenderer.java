@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.events.render;
+package ctn.imaginarycraft.client.events;
 
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -9,30 +9,20 @@ import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.LivingEntity;
-import net.neoforged.api.distmarker.Dist;
-import net.neoforged.bus.api.SubscribeEvent;
-import net.neoforged.fml.common.EventBusSubscriber;
-import net.neoforged.neoforge.client.event.RenderLivingEvent;
 
-@EventBusSubscriber(modid = ImaginaryCraft.ID, value = Dist.CLIENT)
 public class ShieldRenderer {
-  private static final ResourceLocation SHIELD_TEXTURE =
-    ResourceLocation.fromNamespaceAndPath(ImaginaryCraft.ID, "textures/entity/shield.png");
+  private static final ResourceLocation SHIELD_TEXTURE = ImaginaryCraft.modRl("textures/entity/shield.png");
   private static final ShieldSphereMesh SPHERE_MESH = new ShieldSphereMesh();
 
-  @SubscribeEvent
-  public static void onRenderLivingPost(RenderLivingEvent.Post<?, ?> event) {
-    LivingEntity entity = event.getEntity();
-    renderShieldIfPresent(entity, event.getPoseStack(), event.getMultiBufferSource(), event.getPackedLight());
-  }
-
-  private static void renderShieldIfPresent(LivingEntity entity, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
+  public static void renderShieldIfPresent(LivingEntity entity, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
     for (var entry : ModAbsorptionShieldRegistry.getAll()) {
-      if (entity.hasEffect(entry.effect())) {
-        System.out.println("render shield");
-        renderShield(entity, poseStack, buffer, packedLight,entry);
-        break;
+      if (!entity.hasEffect(entry.effect())) {
+        continue;
       }
+      // TODO 调试代码
+      System.out.println("render shield");
+      renderShield(entity, poseStack, buffer, packedLight, entry);
+      break;
     }
   }
 

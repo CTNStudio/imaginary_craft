@@ -2,17 +2,22 @@ package ctn.imaginarycraft.eventexecute;
 
 import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.api.LcLevel;
+import ctn.imaginarycraft.config.ModConfig;
+import ctn.imaginarycraft.init.world.ModAbsorptionShieldRegistry;
 import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.util.LcLevelUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.world.damagesource.DamageSource;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
+import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
 
 import javax.annotation.Nullable;
 
@@ -114,5 +119,51 @@ public final class LcDamageEventExecutes {
     // TODO 重新调整灵魂伤害算法
     // 根据伤害等级差异计算最终伤害
     return damage * (maxHealth / 5) * LcLevelUtil.getDamageMultiple(attackedLevel, attackerLevel);
+  }
+
+  /**
+   * 护盾处理
+   */
+  public static void absorptionShield(LivingDamageEvent.Pre event, LivingEntity attackedEntity, LcDamageType lcDamageType) {
+    if (attackedEntity.level().isClientSide) {
+      return;
+    }
+
+    for (var entry : ModAbsorptionShieldRegistry.getAll()) {
+      MobEffectInstance effect = attackedEntity.getEffect(entry.effect());
+
+      if (effect == null) continue;
+      if (lcDamageType != null && !lcDamageType.getDamageTypeResourceKey().location().equals(entry.damageTypeTag())) {
+        continue;
+      }
+
+      float current = attackedEntity.getData(entry.attachment().get());//护盾量
+      if (current <= 0) continue;
+
+      float original = event.getNewDamage();//伤害量
+      if (original <= 0) continue;
+      float absorbed = Math.min(current, original);
+      float remaining = original - absorbed;//剩余伤害
+
+      float newAmount = current - absorbed;//新护盾量
+      attackedEntity.setData(entry.attachment().get(), newAmount);//保存护盾量
+
+      if (newAmount <= 0) {
+        attackedEntity.removeEffect(entry.effect());
+        if (attackedEntity instanceof Player player) {
+          entry.playShieldBreakSound(player);      // 只对该玩家播放
+        }
+        if (ModConfig.SERVER.enableShieldDamageImmunity.isTrue()) {
+          event.setNewDamage(0);
+          continue;//碎盾抗一下(只抗对应伤害)
+        }
+      }
+
+      if (remaining <= 0) {
+        event.setNewDamage(0);
+      } else {
+        event.setNewDamage(remaining);
+      }
+    }
   }
 }

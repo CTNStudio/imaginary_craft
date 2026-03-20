@@ -7,6 +7,7 @@
     "StaticAnimationMixin",
     "client.ModelBuilderMixin",
     "client.ModelFileAccessorMixin",
+    "client.PatchedEntityRendererMixin",
     "client.world.LocalPlayerPatchMixin",
     "client.world.RenderItemBaseMixin",
     "world.CombatRulesMixin",

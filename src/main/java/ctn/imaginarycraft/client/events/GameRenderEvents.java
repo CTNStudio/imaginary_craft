@@ -16,7 +16,7 @@ import net.neoforged.neoforge.client.event.RenderLevelStageEvent;
 public final class GameRenderEvents {
 
   @SubscribeEvent
-  public static void levelRender(final RenderLevelStageEvent event) {
+  public static void levelRender(RenderLevelStageEvent event) {
     RenderLevelStageEvent.Stage stage = event.getStage();
     Minecraft minecraft = Minecraft.getInstance();
     ClientLevel level = minecraft.level;

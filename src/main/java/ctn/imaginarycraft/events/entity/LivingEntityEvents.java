@@ -178,44 +178,7 @@ public final class LivingEntityEvents {
     LcDamageType lcDamageType = damageSource.imaginaryCraft$getLcDamageType();
 
     //护盾处理
-    if(!attackedEntity.level().isClientSide){
-      for(var entry : ModAbsorptionShieldRegistry.getAll()){
-        MobEffectInstance effect = attackedEntity.getEffect(entry.effect());
-
-        if (effect == null) continue;
-        if (lcDamageType != null && !lcDamageType.getDamageTypeResourceKey().location().equals(entry.damageTypeTag())) {
-          continue;
-        }
-
-        float current = attackedEntity.getData(entry.attachment().get());//护盾量
-        if (current <= 0) continue;
-
-        float original = event.getNewDamage();//伤害量
-        if(original <= 0) continue;
-        float absorbed = Math.min(current, original);
-        float remaining = original - absorbed;//剩余伤害
-
-        float newAmount = current - absorbed;//新护盾量
-        attackedEntity.setData(entry.attachment().get(), newAmount);//保存护盾量
-
-        if (newAmount <= 0) {
-          attackedEntity.removeEffect(entry.effect());
-          if (attackedEntity instanceof Player player) {
-            entry.playShieldBreakSound(player);      // 只对该玩家播放
-          }
-          if(ModConfig.SERVER.enableShieldDamageImmunity.isTrue()){
-            event.setNewDamage(0);
-            continue;//碎盾抗一下(只抗对应伤害)
-          }
-        }
-
-        if (remaining <= 0) {
-          event.setNewDamage(0);
-        } else {
-          event.setNewDamage(remaining);
-        }
-      }
-    }
+    LcDamageEventExecutes.absorptionShield(event, attackedEntity, lcDamageType);
 
     if (lcDamageType == LcDamageType.THE_SOUL) {
       // 处理灵魂伤害转换成对应比例的生命值
@@ -245,9 +208,7 @@ public final class LivingEntityEvents {
 
     if (event.getNewDamage() > 0) {
       // 修改理智
-      if (attackedEntity instanceof Player player &&
-        (lcDamageType == LcDamageType.SPIRIT || lcDamageType == LcDamageType.EROSION)
-      ) {
+      if (attackedEntity instanceof Player player && (lcDamageType == LcDamageType.SPIRIT || lcDamageType == LcDamageType.EROSION)) {
         RationalityUtil.modifyValue(player, -event.getNewDamage(), true, lcDamageType == LcDamageType.SPIRIT);
         if (lcDamageType == LcDamageType.SPIRIT) {
           event.getContainer().setPostAttackInvulnerabilityTicks(0);
@@ -332,9 +293,9 @@ public final class LivingEntityEvents {
     for (var entry : ModAbsorptionShieldRegistry.getAll()) {
       if (newEffect.getEffect().getRegisteredName().equals(entry.effect().getRegisteredName())) {
 
-        if(ModConfig.SERVER.enableMultiShield.isFalse()&& entry.isShieldConflict()){
-          for(var oldEntry : ModAbsorptionShieldRegistry.getAll()){
-            if (!oldEntry.isShieldConflict()||
+        if (ModConfig.SERVER.enableMultiShield.isFalse() && entry.isShieldConflict()) {
+          for (var oldEntry : ModAbsorptionShieldRegistry.getAll()) {
+            if (!oldEntry.isShieldConflict() ||
               oldEntry.effect().getRegisteredName().equals(entry.effect().getRegisteredName()))
               continue;
 
@@ -370,6 +331,7 @@ public final class LivingEntityEvents {
       }
     }
   }
+
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void onEffectRemoved(MobEffectEvent.Remove event) {
     clearAmount(event.getEntity(), event.getEffectInstance());
