@@ -1,13 +1,13 @@
 package ctn.imaginarycraft.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
+import ctn.imaginarycraft.client.model.animmodels.mesh.GrantUsLoveMesh;
 import ctn.imaginarycraft.client.model.entity.EmptyEntityModel;
-import ctn.imaginarycraft.client.model.entity.GrantUsLoveMesh;
 import ctn.imaginarycraft.client.model.entity.ModGeoEntityModel;
 import ctn.imaginarycraft.client.renderer.renderlayer.GlowmaskModelRenderPatchedLayer;
 import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLove;
 import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLovePatch;
-import ctn.imaginarycraft.init.ModMeshes;
+import ctn.imaginarycraft.init.animmodels.ModMeshes;
 import ctn.imaginarycraft.init.world.entity.OrdealsEntityTypes;
 import ctn.imaginarycraft.util.ModUtils;
 import net.minecraft.client.renderer.MultiBufferSource;

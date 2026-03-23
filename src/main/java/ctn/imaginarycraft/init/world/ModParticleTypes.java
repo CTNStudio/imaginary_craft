@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init;
+package ctn.imaginarycraft.init.world;
 
 import com.mojang.serialization.MapCodec;
 import ctn.imaginarycraft.client.particle.DyeingMagicCircleParticle;

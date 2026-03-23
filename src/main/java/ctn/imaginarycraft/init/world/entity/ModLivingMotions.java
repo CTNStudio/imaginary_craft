@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init.world;
+package ctn.imaginarycraft.init.world.entity;
 
 import yesman.epicfight.api.animation.LivingMotion;
 

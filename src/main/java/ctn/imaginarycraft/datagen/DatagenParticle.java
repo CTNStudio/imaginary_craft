@@ -2,7 +2,7 @@ package ctn.imaginarycraft.datagen;
 
 import ctn.imaginarycraft.client.particle.LcDamageIconParticle;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.ModParticleTypes;
+import ctn.imaginarycraft.init.world.ModParticleTypes;
 import net.minecraft.core.particles.ParticleType;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;

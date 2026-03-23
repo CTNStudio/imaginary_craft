@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init.world;
+package ctn.imaginarycraft.init.world.item;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModSoundEvents;

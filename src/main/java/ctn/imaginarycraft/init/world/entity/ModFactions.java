@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init.world;
+package ctn.imaginarycraft.init.world.entity;
 
 import net.minecraft.resources.ResourceLocation;
 import yesman.epicfight.client.gui.HealthBar;

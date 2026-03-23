@@ -5,7 +5,7 @@ import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.client.ModParticleRenderTypes;
-import ctn.imaginarycraft.init.ModParticleTypes;
+import ctn.imaginarycraft.init.world.ModParticleTypes;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.*;
 import net.minecraft.client.renderer.LightTexture;

@@ -3,7 +3,7 @@ package ctn.imaginarycraft.client.particle.text;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import ctn.imaginarycraft.init.ModParticleTypes;
+import ctn.imaginarycraft.init.world.ModParticleTypes;
 import ctn.imaginarycraft.network.codec.CompositeStreamCodecBuilder;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.core.particles.ParticleOptions;

@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init.world;
+package ctn.imaginarycraft.init.world.item;
 
 import yesman.epicfight.world.capabilities.item.Style;
 

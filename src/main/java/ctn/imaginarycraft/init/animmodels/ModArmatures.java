@@ -1,12 +1,15 @@
-package ctn.imaginarycraft.init;
+package ctn.imaginarycraft.init.animmodels;
 
+import ctn.imaginarycraft.client.model.animmodels.armature.GrantUsLoveArmature;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import yesman.epicfight.api.model.Armature;
 import yesman.epicfight.gameasset.Armatures;
-import yesman.epicfight.model.armature.HumanoidArmature;
 
+/**
+ * 骨骼
+ */
 public final class ModArmatures {
-  public static final Armatures.ArmatureAccessor<HumanoidArmature> GRANT_US_LOVE = create("armatures/entity/grant_us_love", HumanoidArmature::new);
+  public static final Armatures.ArmatureAccessor<GrantUsLoveArmature> GRANT_US_LOVE = create("entity/grant_us_love", GrantUsLoveArmature::new);
 
   public static void init() {
   }

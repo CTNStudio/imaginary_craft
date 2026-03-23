@@ -4,7 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import ctn.imaginarycraft.client.particle.DyeingMagicCircleParticle;
-import ctn.imaginarycraft.init.ModParticleTypes;
+import ctn.imaginarycraft.init.world.ModParticleTypes;
 import io.netty.buffer.ByteBuf;
 import net.minecraft.client.multiplayer.ClientLevel;
 import net.minecraft.client.particle.Particle;

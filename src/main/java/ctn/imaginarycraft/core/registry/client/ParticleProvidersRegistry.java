@@ -7,7 +7,7 @@ import ctn.imaginarycraft.client.particle.solemnlament.ButterflyParticle;
 import ctn.imaginarycraft.client.particle.text.DamageTextParticle;
 import ctn.imaginarycraft.client.particle.text.TextParticleProvider;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.ModParticleTypes;
+import ctn.imaginarycraft.init.world.ModParticleTypes;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;

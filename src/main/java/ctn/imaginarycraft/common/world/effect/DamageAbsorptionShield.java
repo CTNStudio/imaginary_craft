@@ -1,10 +1,7 @@
-package ctn.imaginarycraft.init.world.effect;
+package ctn.imaginarycraft.common.world.effect;
 
-import ctn.imaginarycraft.common.world.effect.ModMobEffect;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffectCategory;
-
-import static com.lowdragmc.lowdraglib2.gui.util.UISoundUtils.playSound;
 /**
  * 2026/3/18 尘昨暄
  */

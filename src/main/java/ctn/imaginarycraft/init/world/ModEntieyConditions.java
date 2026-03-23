@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.init.world;
 
-import ctn.imaginarycraft.common.world.entity.condition.MobEffectsCondition;
+import ctn.imaginarycraft.common.epicfight.condition.MobEffectsCondition;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;

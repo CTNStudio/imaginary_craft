@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.common.world.entity.ordeals.violet;
 
-import ctn.imaginarycraft.init.ModAnimations;
-import ctn.imaginarycraft.init.world.ModFactions;
+import ctn.imaginarycraft.init.animmodels.ModAnimations;
+import ctn.imaginarycraft.init.world.entity.ModFactions;
 import yesman.epicfight.api.animation.Animator;
 import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.api.animation.types.StaticAnimation;

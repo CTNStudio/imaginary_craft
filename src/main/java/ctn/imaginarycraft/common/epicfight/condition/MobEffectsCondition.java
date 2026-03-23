@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.common.world.entity.condition;
+package ctn.imaginarycraft.common.epicfight.condition;
 
 import com.ibm.icu.text.MessageFormat;
 import net.minecraft.client.gui.screens.Screen;

@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init.world;
+package ctn.imaginarycraft.init.world.item;
 
 import net.minecraft.world.item.Item;
 import yesman.epicfight.world.capabilities.item.WeaponCapability;
