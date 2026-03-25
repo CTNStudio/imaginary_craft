@@ -2,9 +2,7 @@ package ctn.imaginarycraft.client.gui.hudlayers.shield;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.world.ModMobEffects;
-import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.effect.MobEffect;
 
 public class PhysicShieldLayer extends ShieldBarLayer{
   protected static final ResourceLocation TEXTURE = ImaginaryCraft.modRl("hud_bar/shield/physic_shield_bar");

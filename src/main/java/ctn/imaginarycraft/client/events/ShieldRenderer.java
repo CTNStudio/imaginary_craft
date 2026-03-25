@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.client.events;
 
-import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.DefaultVertexFormat;
 import com.mojang.blaze3d.vertex.PoseStack;
 import com.mojang.blaze3d.vertex.VertexConsumer;
@@ -35,14 +34,17 @@ public class ShieldRenderer {
       .createCompositeState(true)
   );
 
-  public static void renderShieldIfPresent(LivingEntity entity, PoseStack poseStack, MultiBufferSource buffer, int packedLight) {
-    for (var entry : ModAbsorptionShieldRegistry.getAll()) {
-      if (!entity.hasEffect(entry.effect())) {
-        continue;
-      }
-      renderShield(entity, poseStack, buffer, packedLight, entry);
-      break;
-    }
+  public static void renderShieldIfPresent(LivingEntity entity,
+                                           PoseStack poseStack,
+                                           MultiBufferSource buffer,
+                                           int packedLight) {
+    final var list = ModAbsorptionShieldRegistry.getAll();
+    final var livingEffects = entity.getActiveEffectsMap().keySet();
+
+    list.parallelStream()
+      .filter( it -> livingEffects.contains(it.effect()))
+      .findFirst()
+      .ifPresent(it -> renderShield(entity, poseStack, buffer, packedLight, it));
   }
 
   private static void renderShield(LivingEntity entity, PoseStack poseStack, MultiBufferSource buffer, int packedLight, ModAbsorptionShieldRegistry.ShieldEntry entry) {

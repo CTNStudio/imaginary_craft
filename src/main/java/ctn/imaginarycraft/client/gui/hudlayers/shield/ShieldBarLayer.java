@@ -9,6 +9,7 @@ import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
+import net.minecraft.world.effect.MobEffectInstance;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Objects;
@@ -20,11 +21,15 @@ public abstract class ShieldBarLayer extends StatusBarLayer {
   protected final ResourceLocation LIGHT_TEXTURE;
   protected final Holder<MobEffect> absorptionEffect;
 
-  public ShieldBarLayer(ResourceLocation  texture, ResourceLocation  bottomTexture, ResourceLocation  lightTexture, Holder<MobEffect> absorptionEffect) {
+  public ShieldBarLayer(ResourceLocation texture,
+                        ResourceLocation bottomTexture,
+                        ResourceLocation lightTexture,
+                        Holder<MobEffect> absorptionEffect) {
     super(new HorizontalStatusBar(93, 11,
       new HorizontalStatusBar.TextureLayer(0, 0, 93, 11, bottomTexture),
       new HorizontalStatusBar.TextureLayer(14, 2, 78, 7, texture),
-      new HorizontalStatusBar.TextureLayer(0, 0, 93, 11, lightTexture)));
+      new HorizontalStatusBar.TextureLayer(0, 0, 93, 11, lightTexture))
+    );
     TEXTURE = texture;
     BOTTOM_TEXTURE = bottomTexture;
     LIGHT_TEXTURE = lightTexture;
@@ -33,10 +38,13 @@ public abstract class ShieldBarLayer extends StatusBarLayer {
 
   @Override
   protected float getMaxValueFromSource() {
-    if(this.player.getEffect(absorptionEffect)==null){
+    final MobEffectInstance effect = this.player.getEffect(absorptionEffect);
+    final float level = ModConfig.SERVER.shieldAdditionalValuePerLevel.get().floatValue();
+    if(Objects.isNull(effect)){
       return 0;
     }
-    return (float) (ModConfig.SERVER.shieldAdditionalValuePerLevel.get() * (this.player.getEffect(absorptionEffect).getAmplifier()+1));
+
+    return level * effect.getAmplifier() + 1;
   }
 
   @Override
