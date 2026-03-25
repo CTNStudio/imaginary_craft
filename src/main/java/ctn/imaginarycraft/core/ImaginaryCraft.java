@@ -31,6 +31,7 @@ public final class ImaginaryCraft {
   public ImaginaryCraft(IEventBus eventBus, ModContainer container) {
     ModArmatures.init();
     ModMeshes.init();
+    ModColliders.init();
 
     ModEpicjightEventHooks.listenerRegister();
     ModConfig.init(container);
@@ -44,7 +45,7 @@ public final class ImaginaryCraft {
     ModEntieyConditions.REGISTRY.register(eventBus);
     ModItems.init(eventBus);
     ModEntityTypes.init(eventBus);
-    ModAbsorptionShieldRegistry.init();
+    ModAbsorptionShieldsRegistry.init();
 
     ModCreativeModeTabs.REGISTRY.register(eventBus);
     CurioRegistry.registry();

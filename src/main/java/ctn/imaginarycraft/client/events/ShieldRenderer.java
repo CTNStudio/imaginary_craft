@@ -6,7 +6,7 @@ import com.mojang.blaze3d.vertex.VertexConsumer;
 import com.mojang.blaze3d.vertex.VertexFormat;
 import ctn.imaginarycraft.client.renderer.effect.shield.ShieldSphereMesh;
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.world.ModAbsorptionShieldRegistry;
+import ctn.imaginarycraft.init.world.ModAbsorptionShieldsRegistry;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
@@ -38,7 +38,7 @@ public class ShieldRenderer {
                                            PoseStack poseStack,
                                            MultiBufferSource buffer,
                                            int packedLight) {
-    final var list = ModAbsorptionShieldRegistry.getAll();
+    final var list = ModAbsorptionShieldsRegistry.getAll();
     final var livingEffects = entity.getActiveEffectsMap().keySet();
 
     list.parallelStream()
@@ -47,7 +47,7 @@ public class ShieldRenderer {
       .ifPresent(it -> renderShield(entity, poseStack, buffer, packedLight, it));
   }
 
-  private static void renderShield(LivingEntity entity, PoseStack poseStack, MultiBufferSource buffer, int packedLight, ModAbsorptionShieldRegistry.ShieldEntry entry) {
+  private static void renderShield(LivingEntity entity, PoseStack poseStack, MultiBufferSource buffer, int packedLight, ModAbsorptionShieldsRegistry.ShieldEntry entry) {
     float radius = Math.max(entity.getBbWidth(), entity.getBbHeight()) * 1.2f;
     int color = entry.effect().value().getColor();
     float r = ((color >> 16) & 0xFF) / 255f;

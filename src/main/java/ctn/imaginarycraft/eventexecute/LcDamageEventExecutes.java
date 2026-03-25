@@ -3,7 +3,7 @@ package ctn.imaginarycraft.eventexecute;
 import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.api.LcLevel;
 import ctn.imaginarycraft.config.ModConfig;
-import ctn.imaginarycraft.init.world.ModAbsorptionShieldRegistry;
+import ctn.imaginarycraft.init.world.ModAbsorptionShieldsRegistry;
 import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.util.LcLevelUtil;
 import net.minecraft.core.Holder;
@@ -129,7 +129,7 @@ public final class LcDamageEventExecutes {
       return;
     }
 
-    for (var entry : ModAbsorptionShieldRegistry.getAll()) {
+    for (var entry : ModAbsorptionShieldsRegistry.getAll()) {
       MobEffectInstance effect = attackedEntity.getEffect(entry.effect());
 
       if (effect == null) continue;

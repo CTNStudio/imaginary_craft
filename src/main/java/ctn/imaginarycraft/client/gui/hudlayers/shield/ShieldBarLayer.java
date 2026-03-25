@@ -3,7 +3,7 @@ package ctn.imaginarycraft.client.gui.hudlayers.shield;
 import ctn.imaginarycraft.client.gui.hudlayers.StatusBarLayer;
 import ctn.imaginarycraft.client.gui.widget.HorizontalStatusBar;
 import ctn.imaginarycraft.config.ModConfig;
-import ctn.imaginarycraft.init.world.ModAbsorptionShieldRegistry;
+import ctn.imaginarycraft.init.world.ModAbsorptionShieldsRegistry;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.core.Holder;
@@ -11,8 +11,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.jetbrains.annotations.NotNull;
-
-import java.util.Objects;
 
 public abstract class ShieldBarLayer extends StatusBarLayer {
 
@@ -50,7 +48,7 @@ public abstract class ShieldBarLayer extends StatusBarLayer {
   @Override
   protected float getCurrentValueFromSource() {
     float shieldAmount = 0.0f;
-    for (var entry : ModAbsorptionShieldRegistry.getAll()) {
+    for (var entry : ModAbsorptionShieldsRegistry.getAll()) {
       if(entry.effect().equals(absorptionEffect))
         shieldAmount = player.getData(entry.attachment().get());
     }

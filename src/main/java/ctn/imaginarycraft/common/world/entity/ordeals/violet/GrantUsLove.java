@@ -11,6 +11,7 @@ import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.DistanceLowerTh
 import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.TargetExistCondition;
 import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
 import ctn.imaginarycraft.init.ModSoundEvents;
+import ctn.imaginarycraft.init.animmodels.ModAnimations;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import ctn.imaginarycraft.init.world.ModDamageSources;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
@@ -25,6 +26,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
@@ -36,8 +38,13 @@ import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.*;
 import software.bernie.geckolib.util.GeckoLibUtil;
+import yesman.epicfight.api.animation.AnimationManager;
+import yesman.epicfight.api.animation.types.AttackAnimation;
 import yesman.epicfight.api.utils.LevelUtil;
+import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.registry.entries.EpicFightParticles;
+import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 import java.util.*;
 
@@ -55,10 +62,7 @@ import java.util.*;
  * <p>
  * 2025/12/22 尘昨喧
  */
-public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity, IBehaviorTreeMob<GrantUsLove> {
-  // 大招读条状态
-  protected static final EntityDataAccessor<Boolean> CRASH_ATK_READING = SynchedEntityData.defineId(GrantUsLove.class, EntityDataSerializers.BOOLEAN);
-
+public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorTreeMob<GrantUsLove>, Enemy {
   // 普通攻击冷却时间 (tick)
   public static final int NORMAL_ATK_CD = 30;
   // 大招冷却时间 (tick)
@@ -67,14 +71,12 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity,
   public static final int CRASH_PORTAL_OPEN_TIME = 100;
   // 目标锁定攻击半径
   public static final float TARGET_ATK_RADIUS = 50.0F;
-
   // 目标锁定持续时间 (tick)
   public static final int TARGET_LOCK_TIME = 600;
   // 攻击者记忆时间 (tick)
   public static final int ATTACKER_MEM_TIME = 200;
   // 玩家目标优先级基础分
   public static final float PLAYER_PRIORITY = 10.0F;
-
   // 普通攻击伤害
   public static final float NORMAL_ATK_DMG = 1.0F;
   // 普通攻击 AOE 半径
@@ -83,7 +85,6 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity,
   public static final float NORMAL_ATK_AOE_HEIGHT = 4.0F;
   // 普通攻击击退强度
   public static final float NORMAL_ATK_KNOCKBACK = 0.0F;
-
   // 大招生成 Portal 时的高度偏移
   public static final int CRASH_PORTAL_HEIGHT_OFFSET = 20;
   // 大招落地检测后的冷却时间 (tick)
@@ -94,11 +95,10 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity,
   public static final float CRASH_ATK_AOE_RADIUS = 10.0F;
   // 大招伤害
   public static final float CRASH_ATK_DMG = 200.0F;
-
-  private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+  // 大招读条状态
+  protected static final EntityDataAccessor<Boolean> CRASH_ATK_READING = SynchedEntityData.defineId(GrantUsLove.class, EntityDataSerializers.BOOLEAN);
   private final List<LivingEntity> attackers = new ArrayList<>();
   private final Map<LivingEntity, Integer> lastAtkTimeMap = new HashMap<>();
-  private LivingEntity target = null;
   // TODO 后面替换成触手的独立处理
   private int normalAtkCd = NORMAL_ATK_CD; // 普通攻击冷却时间
   private int crashAtkCd = 0; // 大招冷却时间
@@ -126,6 +126,20 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity,
       .add(ModAttributes.SPIRIT_VULNERABLE, 2.0)
       .add(ModAttributes.EROSION_VULNERABLE, 0.8)
       .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0);
+  }
+
+  /**
+   * 快速规范化角度到 [-180, 180] 范围
+   */
+  private static double normalizeAngle(double angle) {
+    // 使用取模运算代替循环，性能更优
+    angle = angle % 360;
+    if (angle > 180) {
+      angle -= 360;
+    } else if (angle < -180) {
+      angle += 360;
+    }
+    return angle;
   }
 
   @Override
@@ -282,21 +296,22 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity,
     if (!this.crashAtkReady) {
       if (crashAtkCd <= 0) {
         crashAtkCd = CRASH_ATK_CD;
-        crashAtkCd = CRASH_ATTACK_LANDING_DELAY; // 3 秒后释放大招
+//        crashAtkCd = CRASH_ATTACK_LANDING_DELAY; // 3 秒后释放大招
         this.crashAtkReady = true;
       } else {
         crashAtkCd--;
         if (normalAtkCd > 0) {
           normalAtkCd--;
         } else {
-          this.aoeAttack();
+//          this.aoeAttack();
+          tentacleAttack(getTarget());
           normalAtkCd = NORMAL_ATK_CD;
         }
       }
     } else if (this.portalOpenTime > 0) {
       if (this.portalOpenTime == CRASH_PORTAL_OPEN_TIME) {
         // 在目标上方生成传送门
-        this.portalPos = Objects.requireNonNullElse(this.target, this).position()
+        this.portalPos = Objects.requireNonNullElse(getTarget(), this).position()
           .add(0, CRASH_PORTAL_HEIGHT_OFFSET, 0);
         this.createPortal(this.portalPos);
       } else if (this.portalOpenTime == 1) {
@@ -347,12 +362,12 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity,
 
   private void updateTarget() {
     if (attackers.isEmpty()) {
-      target = null;
+      setTarget(null);
       return;
     }
 
-    if (target != null && target.isAlive() &&
-      this.distanceTo(target) <= TARGET_ATK_RADIUS) {
+    if (getTarget() != null && getTarget().isAlive() &&
+      this.distanceTo(getTarget()) <= TARGET_ATK_RADIUS) {
       return;
     }
 
@@ -370,7 +385,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity,
       }
     }
 
-    target = bestTarget;
+    setTarget(bestTarget);
   }
 
   private float calcTargetScore(LivingEntity entity) {
@@ -404,20 +419,18 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity,
   }
 
   private void checkTargetRange() {
-    if (target != null && target.isAlive()) {
-      float distance = this.distanceTo(target);
+    if (getTarget() != null && getTarget().isAlive()) {
+      float distance = this.distanceTo(getTarget());
 
       if (distance > TARGET_ATK_RADIUS) {
-        target = null;
-        this.triggerAnim("controller", "target_lost");
+        setTarget(null);
       }
     }
   }
 
   private void checkStateTime() {
-    if (target != null && stateTime > TARGET_LOCK_TIME) {
-      target = null;
-      this.triggerAnim("controller", "timeout");
+    if (getTarget() != null && stateTime > TARGET_LOCK_TIME) {
+      setTarget(null);
     }
   }
 
@@ -434,8 +447,8 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity,
 
     lastAtkTimeMap.entrySet().removeIf(entry -> !entry.getKey().isAlive() || (this.tickCount - entry.getValue()) > ATTACKER_MEM_TIME);
 
-    if (attackers.isEmpty() && target != null) {
-      target = null;
+    if (attackers.isEmpty() && getTarget() != null) {
+      setTarget(null);
     }
   }
 
@@ -501,27 +514,93 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity,
   public void makeStuckInBlock(@NotNull BlockState state, @NotNull Vec3 motionMultiplier) {
   }
 
-  @Override
-  public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-    var door = new AnimationController<>(this, "door", (animationState) -> PlayState.CONTINUE);
-    door.triggerableAnim("open", RawAnimation.begin().thenLoop("open"));
-    controllers.add(door);
-    controllers.add(new AnimationController<>(this, "tentacle_left1", 2, this::tentacleHandler));
-    controllers.add(new AnimationController<>(this, "tentacle_left2", 2, this::tentacleHandler));
-    controllers.add(new AnimationController<>(this, "tentacle_left3", 2, this::tentacleHandler));
-    controllers.add(new AnimationController<>(this, "tentacle_right1", 2, this::tentacleHandler));
-    controllers.add(new AnimationController<>(this, "tentacle_right2", 2, this::tentacleHandler));
-    controllers.add(new AnimationController<>(this, "tentacle_right3", 2, this::tentacleHandler));
+  public boolean tentacleAttack(LivingEntity target) {
+    // 快速路径：目标为空检查
+    if (target == null) {
+      return false;
+    }
+
+    getGrantUsLovePatch().playAnimationSynchronized(ModAnimations.GRANT_US_LOVE_SLASH, 0.1f);
+    if (true) {
+      return true;
+    }
+
+    // 计算相对位置（使用平方距离避免开方运算）
+    double dx = target.getX() - this.getX();
+    double dz = target.getZ() - this.getZ();
+    double dy = target.getY() - this.getY();
+    double horizontalDistSq = dx * dx + dz * dz;
+
+    // 快速路径：距离检查（使用平方比较）
+    if (horizontalDistSq > 10 * 10) {
+      return false;
+    }
+
+    // 快速路径：高度差检查（避免打空气）
+    if (Math.abs(dy) > getBbHeight() * 1.5f) {
+      return false;
+    }
+
+    // 计算相对角度并优化规范化到 [-180, 180]
+    double angleToTarget = Math.toDegrees(Math.atan2(dz, dx)) - this.getYRot();
+    angleToTarget = normalizeAngle(angleToTarget);
+
+    // 获取动画（内联优化，避免方法调用开销）
+    AnimationManager.AnimationAccessor<AttackAnimation> animation;
+
+    // 角度绝对值预计算
+    double absAngle = Math.abs(angleToTarget);
+
+    if (absAngle <= 45) {
+      // 重叠区域（-45° 到 45°）：左右随机选择
+      int tentacleIndex = this.random.nextInt(3) + 1;
+      boolean useLeft = this.random.nextBoolean();
+      animation = getTentacleAnimation(useLeft, tentacleIndex);
+    } else if (angleToTarget > 45) {
+      // 左侧区域（45° 到 180°）
+      int tentacleIndex = this.random.nextInt(3) + 1;
+      animation = getLeftTentacleAnimation(tentacleIndex);
+    } else {
+      // 右侧区域（-180° 到 -45°）
+      int tentacleIndex = this.random.nextInt(3) + 1;
+      animation = getRightTentacleAnimation(tentacleIndex);
+    }
+    // 播放动画
+    getGrantUsLovePatch().playAnimationSynchronized(animation, 1);
+    return true;
   }
 
-  private PlayState tentacleHandler(AnimationState<GrantUsLove> animationState) {
-    var controller = animationState.getController();
-    return PlayState.CONTINUE;
+  /**
+   * 根据方向和触手索引获取动画（内联版本）
+   */
+  private AnimationManager.AnimationAccessor<AttackAnimation> getTentacleAnimation(boolean useLeft, int index) {
+    return useLeft ? getLeftTentacleAnimation(index) : getRightTentacleAnimation(index);
   }
 
-  @Override
-  public AnimatableInstanceCache getAnimatableInstanceCache() {
-    return cache;
+  /**
+   * 获取左侧触手攻击动画
+   */
+  private AnimationManager.AnimationAccessor<AttackAnimation> getLeftTentacleAnimation(int index) {
+    return switch (index) {
+      case 2 -> ModAnimations.GRANT_US_LOVE_SWING_L2;
+      case 3 -> ModAnimations.GRANT_US_LOVE_SWING_L3;
+      default -> ModAnimations.GRANT_US_LOVE_SWING_L1;
+    };
+  }
+
+  /**
+   * 获取右侧触手攻击动画
+   */
+  private AnimationManager.AnimationAccessor<AttackAnimation> getRightTentacleAnimation(int index) {
+    return switch (index) {
+      case 2 -> ModAnimations.GRANT_US_LOVE_SWING_R2;
+      case 3 -> ModAnimations.GRANT_US_LOVE_SWING_R3;
+      default -> ModAnimations.GRANT_US_LOVE_SWING_R1;
+    };
+  }
+
+  private GrantUsLovePatch getGrantUsLovePatch() {
+    return EpicFightCapabilities.getEntityPatch(this, GrantUsLovePatch.class);
   }
 
   @Override
@@ -548,8 +627,6 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity,
             .addWithCondition(ConditionBT.and(new DistanceLowerThanCondition(this.mob, TARGET_ATK_RADIUS)), BTFactory.sequence()
               // 设置基本
               .addChild(BTFactory.success(() -> {
-                // 播放开门的动画
-                mob.triggerAnim("door", "open");
               }))
               // 等待5秒
               .addChild(BTFactory.sequence()
@@ -561,8 +638,8 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, GeoEntity,
           if (mob.normalAtkCd != 0) {
             mob.normalAtkCd--;
           }
-          if (mob.normalAtkCd != 0) {
-            mob.normalAtkCd--;
+          if (mob.crashAtkCd != 0) {
+            mob.crashAtkCd--;
           }
         })));
     }

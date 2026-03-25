@@ -8,7 +8,7 @@ import ctn.imaginarycraft.common.payload.toc.PlayerDamagePayload;
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.eventexecute.LcDamageEventExecutes;
-import ctn.imaginarycraft.init.world.ModAbsorptionShieldRegistry;
+import ctn.imaginarycraft.init.world.ModAbsorptionShieldsRegistry;
 import ctn.imaginarycraft.init.world.ModAttachments;
 import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.util.GunWeaponUtil;
@@ -290,11 +290,11 @@ public final class LivingEntityEvents {
     if (entity.level().isClientSide) return;
 
     MobEffectInstance newEffect = event.getEffectInstance();
-    for (var entry : ModAbsorptionShieldRegistry.getAll()) {
+    for (var entry : ModAbsorptionShieldsRegistry.getAll()) {
       if (newEffect.getEffect().getRegisteredName().equals(entry.effect().getRegisteredName())) {
 
         if (ModConfig.SERVER.enableMultiShield.isFalse() && entry.isShieldConflict()) {
-          for (var oldEntry : ModAbsorptionShieldRegistry.getAll()) {
+          for (var oldEntry : ModAbsorptionShieldsRegistry.getAll()) {
             if (!oldEntry.isShieldConflict() ||
               oldEntry.effect().getRegisteredName().equals(entry.effect().getRegisteredName()))
               continue;
@@ -324,7 +324,7 @@ public final class LivingEntityEvents {
   // 效果移除/过期：清除吸收值
   private static void clearAmount(LivingEntity entity, MobEffectInstance effect) {
     if (entity.level().isClientSide) return;
-    for (var entry : ModAbsorptionShieldRegistry.getAll()) {
+    for (var entry : ModAbsorptionShieldsRegistry.getAll()) {
       if (effect.getEffect() == entry.effect()) {
         entity.setData(entry.attachment().get(), 0.0f);
         break;

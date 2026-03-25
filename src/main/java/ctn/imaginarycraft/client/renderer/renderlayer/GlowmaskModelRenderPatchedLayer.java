@@ -33,8 +33,8 @@ public class GlowmaskModelRenderPatchedLayer<E extends LivingEntity, T extends L
     float glowmaskValue = getGlowmaskValue();
     RenderSystem.setShaderColor(glowmaskValue, glowmaskValue, glowmaskValue, 1);
     MultiBufferSource.BufferSource bufferSource = Minecraft.getInstance().renderBuffers().bufferSource();
-    this.mesh.get().draw(poseStack, bufferSource, this.renderType, LightTexture.FULL_BRIGHT, 1.0F, 1.0F, 1.0F, 1.0F, OverlayTexture.NO_OVERLAY, entitypatch.getArmature(), poses);
-    bufferSource.endBatch();
+    this.mesh.get().draw(poseStack, buffer, this.renderType, LightTexture.FULL_BRIGHT, 1.0F, 1.0F, 1.0F, 1.0F, OverlayTexture.NO_OVERLAY, entitypatch.getArmature(), poses);
+    bufferSource.endBatch(this.renderType);
     RenderSystem.setShaderColor(1, 1, 1, 1);
   }
 

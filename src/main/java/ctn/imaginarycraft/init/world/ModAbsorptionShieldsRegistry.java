@@ -24,7 +24,7 @@ import java.util.function.Supplier;
  * <P>
  * 2026/3/18 尘昨暄
  */
-public class ModAbsorptionShieldRegistry {
+public final class ModAbsorptionShieldsRegistry {
   public record ShieldEntry(
     Holder<MobEffect> effect,
     ResourceLocation damageTypeTag,

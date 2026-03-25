@@ -6,6 +6,7 @@ import yesman.epicfight.api.animation.Animator;
 import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.api.asset.AssetAccessor;
+import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.world.capabilities.entitypatch.MobPatch;
 import yesman.epicfight.world.damagesource.StunType;
 
@@ -32,15 +33,6 @@ public class GrantUsLovePatch extends MobPatch<GrantUsLove> {
   @Override
   protected void initAI() {
     super.initAI();
-//
-//    this.original.goalSelector.addGoal(
-//      1,
-//      new AnimatedAttackGoal<>(this, new CombatBehaviors.Builder<>().build(this))
-//    );
-//    this.original.goalSelector.addGoal(2, new TargetChasingGoal(this, this.getOriginal(), 1.2f, true));
-//    this.original.goalSelector.addGoal(3, new RandomStrollGoal(original, 1.0f));
-//
-//    this.original.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(original, Player.class, true));
   }
 
   @Override
@@ -49,16 +41,17 @@ public class GrantUsLovePatch extends MobPatch<GrantUsLove> {
     // 待机
     animator.addLivingAnimation(LivingMotions.IDLE, ModAnimations.GRANT_US_LOVE_IDLE);
     // 死亡
-    animator.addLivingAnimation(LivingMotions.DEATH, ModAnimations.GRANT_US_LOVE_IDLE);
-    animator.addLivingAnimation(LivingMotions.WALK, ModAnimations.GRANT_US_LOVE_IDLE);
-    animator.addLivingAnimation(LivingMotions.RUN, ModAnimations.GRANT_US_LOVE_IDLE);
-    animator.addLivingAnimation(LivingMotions.FALL, ModAnimations.GRANT_US_LOVE_IDLE);
-    animator.addLivingAnimation(LivingMotions.SIT, ModAnimations.GRANT_US_LOVE_IDLE);
-    animator.addLivingAnimation(LivingMotions.JUMP, ModAnimations.GRANT_US_LOVE_IDLE);
-    animator.addLivingAnimation(LivingMotions.SLEEP, ModAnimations.GRANT_US_LOVE_IDLE);
-    animator.addLivingAnimation(LivingMotions.AIM, ModAnimations.GRANT_US_LOVE_IDLE);
-    animator.addLivingAnimation(LivingMotions.SHOT, ModAnimations.GRANT_US_LOVE_IDLE);
-    animator.addLivingAnimation(LivingMotions.DRINK, ModAnimations.GRANT_US_LOVE_IDLE);
-    animator.addLivingAnimation(LivingMotions.EAT, ModAnimations.GRANT_US_LOVE_IDLE);
+    animator.addLivingAnimation(LivingMotions.DEATH, ModAnimations.GRANT_US_LOVE_DEATH);
+
+//    animator.addLivingAnimation(LivingMotions.WALK,  Animations.EMPTY_ANIMATION);
+//    animator.addLivingAnimation(LivingMotions.RUN,  Animations.EMPTY_ANIMATION);
+//    animator.addLivingAnimation(LivingMotions.FALL,  Animations.EMPTY_ANIMATION);
+//    animator.addLivingAnimation(LivingMotions.SIT,  Animations.EMPTY_ANIMATION);
+//    animator.addLivingAnimation(LivingMotions.JUMP,  Animations.EMPTY_ANIMATION);
+//    animator.addLivingAnimation(LivingMotions.SLEEP,  Animations.EMPTY_ANIMATION);
+//    animator.addLivingAnimation(LivingMotions.AIM,  Animations.EMPTY_ANIMATION);
+//    animator.addLivingAnimation(LivingMotions.SHOT,  Animations.EMPTY_ANIMATION);
+//    animator.addLivingAnimation(LivingMotions.DRINK,  Animations.EMPTY_ANIMATION);
+//    animator.addLivingAnimation(LivingMotions.EAT,  Animations.EMPTY_ANIMATION);
   }
 }
