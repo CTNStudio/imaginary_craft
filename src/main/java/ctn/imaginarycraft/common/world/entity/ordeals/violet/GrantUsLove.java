@@ -2,6 +2,7 @@ package ctn.imaginarycraft.common.world.entity.ordeals.violet;
 
 import ctn.imaginarycraft.api.world.entity.IAbnormalitiesEntity;
 import ctn.imaginarycraft.api.world.entity.IBehaviorTreeMob;
+import ctn.imaginarycraft.api.world.entity.ai.ModHurtByTargetGoal;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTFactory;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTRoot;
@@ -35,20 +36,17 @@ import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
-import software.bernie.geckolib.animatable.GeoEntity;
-import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
-import software.bernie.geckolib.util.GeckoLibUtil;
 import yesman.epicfight.api.animation.AnimationManager;
 import yesman.epicfight.api.animation.types.AttackAnimation;
 import yesman.epicfight.api.utils.LevelUtil;
-import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.registry.entries.EpicFightAttributes;
 import yesman.epicfight.registry.entries.EpicFightParticles;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
-import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 // TODO 技能或大招剩余时间要持久化
 // TODO 需要免疫中毒，细雪，火焰，漂浮
@@ -108,7 +106,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
   private int stateTime = 0;
   private boolean crashAtkReady = false; // 大招是否准备就绪
   private int portalOpenTime = 1; // 大招 Portal 开启时间
-  private Vec3 portalPos = null; // 大招 Portal 位置
+  private final Vec3 portalPos = null; // 大招 Portal 位置
   private int idleSoundCd = 0; // 闲置音效间隔
 
   public GrantUsLove(EntityType<? extends Mob> entityType, Level level) {
@@ -128,8 +126,8 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
       .add(ModAttributes.SPIRIT_VULNERABLE, 2.0)
       .add(ModAttributes.EROSION_VULNERABLE, 0.8)
       .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0)
-      .add(EpicFightAttributes.MAX_STRIKES, Double.MAX_VALUE)
-      .add(EpicFightAttributes.IMPACT, 12.0D);
+      .add(EpicFightAttributes.IMPACT, 8.0D)
+      .add(EpicFightAttributes.MAX_STRIKES, Double.MAX_VALUE);
   }
 
   /**
@@ -144,6 +142,66 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
       angle += 360;
     }
     return angle;
+  }
+
+  @Override
+  protected void registerGoals() {
+    this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Player.class, true));
+    this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, true, this::canTarget));
+    this.targetSelector.addGoal(2, new ModHurtByTargetGoal(this).setAlertOthers(GrantUsLove.class)); // TODO 以及其他考验等
+  }
+
+  @Override
+  public void tick() {
+    super.tick();
+//
+//    if (this.level().isClientSide) {
+//      return;
+//    }
+//
+//    stateTime++;
+//    if (!this.crashAtkReady) {
+//      if (crashAtkCd <= 0) {
+//        crashAtkCd = CRASH_ATK_CD;
+////        crashAtkCd = CRASH_ATTACK_LANDING_DELAY; // 3 秒后释放大招
+//        this.crashAtkReady = true;
+//      } else {
+//        crashAtkCd--;
+//        if (normalAtkCd > 0) {
+//          normalAtkCd--;
+//        } else {
+////          this.aoeAttack();
+//          if (tentacleAttack(getTarget())) {
+//            normalAtkCd = NORMAL_ATK_CD;
+//          }
+//        }
+//      }
+//    } else if (this.portalOpenTime > 0) {
+//      if (this.portalOpenTime == CRASH_PORTAL_OPEN_TIME) {
+//        // 在目标上方生成传送门
+//        this.portalPos = Objects.requireNonNullElse(getTarget(), this).position()
+//          .add(0, CRASH_PORTAL_HEIGHT_OFFSET, 0);
+//        this.createPortal(this.portalPos);
+//      } else if (this.portalOpenTime == 1) {
+//        if (this.portalPos == null) {
+//          portalPos = this.position().add(0, CRASH_PORTAL_HEIGHT_OFFSET, 0);
+//        }
+//        this.setPos(portalPos.x, portalPos.y, portalPos.z);
+//      }
+//      this.portalOpenTime--;
+//    } else if (this.onGround()) {
+//      this.crashAtkReady = false;
+//      this.portalOpenTime = CRASH_PORTAL_OPEN_TIME;
+//      this.crashAttack();
+//    }
+//
+//    this.checkTargetRange();
+//
+//    if (this.tickCount % 100 == 0) { // 每 5 秒清理一次攻击者记录
+//      this.cleanAttackers();
+//    }
+//
+//    this.checkStateTime();
   }
 
   @Override
@@ -176,6 +234,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
     super.setYRot(rot(xRot));
   }
 
+  @Override
   public void onSpawnByEgg() {
     this.crashAtkReady = false;
     this.crashAtkCd = CRASH_ATK_CD;
@@ -286,59 +345,6 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
 
   protected boolean canTarget(Entity entity) {
     return entity.isAlive() && entity.isAttackable() && this.isTarget(entity);
-  }
-
-  @Override
-  public void tick() {
-    super.tick();
-//
-//    if (this.level().isClientSide) {
-//      return;
-//    }
-//
-//    stateTime++;
-//    if (!this.crashAtkReady) {
-//      if (crashAtkCd <= 0) {
-//        crashAtkCd = CRASH_ATK_CD;
-////        crashAtkCd = CRASH_ATTACK_LANDING_DELAY; // 3 秒后释放大招
-//        this.crashAtkReady = true;
-//      } else {
-//        crashAtkCd--;
-//        if (normalAtkCd > 0) {
-//          normalAtkCd--;
-//        } else {
-////          this.aoeAttack();
-//          if (tentacleAttack(getTarget())) {
-//            normalAtkCd = NORMAL_ATK_CD;
-//          }
-//        }
-//      }
-//    } else if (this.portalOpenTime > 0) {
-//      if (this.portalOpenTime == CRASH_PORTAL_OPEN_TIME) {
-//        // 在目标上方生成传送门
-//        this.portalPos = Objects.requireNonNullElse(getTarget(), this).position()
-//          .add(0, CRASH_PORTAL_HEIGHT_OFFSET, 0);
-//        this.createPortal(this.portalPos);
-//      } else if (this.portalOpenTime == 1) {
-//        if (this.portalPos == null) {
-//          portalPos = this.position().add(0, CRASH_PORTAL_HEIGHT_OFFSET, 0);
-//        }
-//        this.setPos(portalPos.x, portalPos.y, portalPos.z);
-//      }
-//      this.portalOpenTime--;
-//    } else if (this.onGround()) {
-//      this.crashAtkReady = false;
-//      this.portalOpenTime = CRASH_PORTAL_OPEN_TIME;
-//      this.crashAttack();
-//    }
-//
-//    this.checkTargetRange();
-//
-//    if (this.tickCount % 100 == 0) { // 每 5 秒清理一次攻击者记录
-//      this.cleanAttackers();
-//    }
-//
-//    this.checkStateTime();
   }
 
   /**
@@ -458,12 +464,6 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
   }
 
   @Override
-  protected void registerGoals() {
-    this.targetSelector.addGoal(10, new NearestAttackableTargetGoal<>(this, Player.class, true));
-    this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Mob.class, true, this::canTarget));
-  }
-
-  @Override
   public boolean isPushable() {
     return false;
   }
@@ -491,7 +491,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
 
   @Override
   protected boolean isImmobile() {
-    return true;
+    return false;
   }
 
   @Override

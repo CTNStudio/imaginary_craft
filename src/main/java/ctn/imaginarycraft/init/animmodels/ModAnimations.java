@@ -50,13 +50,13 @@ public final class ModAnimations {
           AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle2_2_L, ModColliders.TENTACLE),
           AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle3_2_L, ModColliders.TENTACLE)))
         .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
-        .addEvents(AnimationEvent.InTimeEvent.create(0.367f, Animations.ReusableSources.FRACTURE_GROUND_SIMPLE, AnimationEvent.Side.SERVER)
-          .params(new Vec3f(1, 0, 1), ModArmatures.GRANT_US_LOVE.get().tentacle1_2_R, 1.1D, 0.55F)
-          .params(new Vec3f(1, 0, -1), ModArmatures.GRANT_US_LOVE.get().tentacle2_2_R, 1.1D, 0.55F)
-          .params(new Vec3f(1, 0, 0), ModArmatures.GRANT_US_LOVE.get().tentacle3_2_R, 1.1D, 0.55F)
-          .params(new Vec3f(-1, 0, 1), ModArmatures.GRANT_US_LOVE.get().tentacle1_2_L, 1.1D, 0.55F)
-          .params(new Vec3f(-1, 0, -1), ModArmatures.GRANT_US_LOVE.get().tentacle2_2_L, 1.1D, 0.55F)
-          .params(new Vec3f(-1, 0, 0), ModArmatures.GRANT_US_LOVE.get().tentacle3_2_L, 1.1D, 0.55F))
+        .addEvents(AnimationEvent.InTimeEvent.create(0.367f, Animations.ReusableSources.FRACTURE_METEOR_STRIKE, AnimationEvent.Side.SERVER)
+          .params(new Vec3f(2, -0.2F, 2), ModArmatures.GRANT_US_LOVE.get().tentacle1_2_R, 0.3F)
+          .params(new Vec3f(2, -0.2F, -2), ModArmatures.GRANT_US_LOVE.get().tentacle2_2_R, 0.3F)
+          .params(new Vec3f(2, -0.2F, 0), ModArmatures.GRANT_US_LOVE.get().tentacle3_2_R, 0.3F)
+          .params(new Vec3f(-2, -0.2F, 2), ModArmatures.GRANT_US_LOVE.get().tentacle1_2_L, 0.3F)
+          .params(new Vec3f(-2, -0.2F, -2), ModArmatures.GRANT_US_LOVE.get().tentacle2_2_L, 0.3F)
+          .params(new Vec3f(-2, -0.2F, 0), ModArmatures.GRANT_US_LOVE.get().tentacle3_2_L, 0.3F))
     );
 
     GRANT_US_LOVE_SWING_L1 = builder.nextAccessor("entity/grant_us_love/swing_l1", (accessor) ->
