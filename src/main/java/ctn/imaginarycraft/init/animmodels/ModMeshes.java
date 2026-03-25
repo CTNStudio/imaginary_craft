@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.init.animmodels;
 
-import ctn.imaginarycraft.client.model.animmodels.mesh.GrantUsLoveMesh;
+import ctn.imaginarycraft.client.animmodels.mesh.GrantUsLoveMesh;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import yesman.epicfight.api.client.model.Meshes;
 import yesman.epicfight.api.client.model.SkinnedMesh;

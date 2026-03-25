@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.client.model.animmodels.animations.grantuslove;
+package ctn.imaginarycraft.client.animmodels.animations.grantuslove;
 
 import net.minecraft.world.InteractionHand;
 import org.jetbrains.annotations.Nullable;

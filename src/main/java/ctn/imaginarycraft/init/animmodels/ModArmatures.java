@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.init.animmodels;
 
-import ctn.imaginarycraft.client.model.animmodels.armature.GrantUsLoveArmature;
+import ctn.imaginarycraft.client.animmodels.armature.GrantUsLoveArmature;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import yesman.epicfight.api.model.Armature;
 import yesman.epicfight.gameasset.Armatures;

@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.client.renderer.entity;
 
 import com.mojang.blaze3d.vertex.PoseStack;
-import ctn.imaginarycraft.client.model.animmodels.mesh.GrantUsLoveMesh;
+import ctn.imaginarycraft.client.animmodels.mesh.GrantUsLoveMesh;
 import ctn.imaginarycraft.client.model.entity.EmptyEntityModel;
 import ctn.imaginarycraft.client.model.entity.ModGeoEntityModel;
 import ctn.imaginarycraft.client.renderer.renderlayer.GlowmaskModelRenderPatchedLayer;

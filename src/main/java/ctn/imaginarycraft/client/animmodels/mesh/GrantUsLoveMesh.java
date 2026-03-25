@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.client.model.animmodels.mesh;
+package ctn.imaginarycraft.client.animmodels.mesh;
 
 import org.jetbrains.annotations.Nullable;
 import yesman.epicfight.api.client.model.MeshPartDefinition;

@@ -26,6 +26,7 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -42,6 +43,7 @@ import yesman.epicfight.api.animation.AnimationManager;
 import yesman.epicfight.api.animation.types.AttackAnimation;
 import yesman.epicfight.api.utils.LevelUtil;
 import yesman.epicfight.gameasset.Animations;
+import yesman.epicfight.registry.entries.EpicFightAttributes;
 import yesman.epicfight.registry.entries.EpicFightParticles;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
@@ -64,7 +66,7 @@ import java.util.*;
  */
 public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorTreeMob<GrantUsLove>, Enemy {
   // 普通攻击冷却时间 (tick)
-  public static final int NORMAL_ATK_CD = 30;
+  public static final int NORMAL_ATK_CD = 20 * 3;
   // 大招冷却时间 (tick)
   public static final int CRASH_ATK_CD = 600;
   // 大招 Portal 开启持续时间 (tick)
@@ -74,7 +76,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
   // 目标锁定持续时间 (tick)
   public static final int TARGET_LOCK_TIME = 600;
   // 攻击者记忆时间 (tick)
-  public static final int ATTACKER_MEM_TIME = 200;
+  public static final int ATTACKER_MEM_TIME = 500;
   // 玩家目标优先级基础分
   public static final float PLAYER_PRIORITY = 10.0F;
   // 普通攻击伤害
@@ -118,14 +120,16 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
     return createMobAttributes()
       .add(Attributes.KNOCKBACK_RESISTANCE, 1)
       .add(Attributes.MAX_HEALTH, 350.0)
-      .add(Attributes.ATTACK_DAMAGE, 1.0)
+      .add(Attributes.ATTACK_DAMAGE, 5)
       .add(Attributes.MOVEMENT_SPEED, 0)
-      .add(Attributes.ATTACK_KNOCKBACK, 0)
-      .add(Attributes.GRAVITY, 0.08)
+      .add(Attributes.ATTACK_KNOCKBACK, 1)
+      .add(Attributes.GRAVITY, 0.1)
       .add(ModAttributes.PHYSICS_VULNERABLE, 0.8)
       .add(ModAttributes.SPIRIT_VULNERABLE, 2.0)
       .add(ModAttributes.EROSION_VULNERABLE, 0.8)
-      .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0);
+      .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0)
+      .add(EpicFightAttributes.MAX_STRIKES, Double.MAX_VALUE)
+      .add(EpicFightAttributes.IMPACT, 12.0D);
   }
 
   /**
@@ -280,60 +284,61 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
     return IAbnormalitiesEntity.super.isEtHnicGroup(entity) || entity instanceof GrantUsLove;
   }
 
-  private boolean canTarget(Entity entity) {
+  protected boolean canTarget(Entity entity) {
     return entity.isAlive() && entity.isAttackable() && this.isTarget(entity);
   }
 
   @Override
   public void tick() {
     super.tick();
-
-    if (this.level().isClientSide) {
-      return;
-    }
-
-    stateTime++;
-    if (!this.crashAtkReady) {
-      if (crashAtkCd <= 0) {
-        crashAtkCd = CRASH_ATK_CD;
-//        crashAtkCd = CRASH_ATTACK_LANDING_DELAY; // 3 秒后释放大招
-        this.crashAtkReady = true;
-      } else {
-        crashAtkCd--;
-        if (normalAtkCd > 0) {
-          normalAtkCd--;
-        } else {
-//          this.aoeAttack();
-          tentacleAttack(getTarget());
-          normalAtkCd = NORMAL_ATK_CD;
-        }
-      }
-    } else if (this.portalOpenTime > 0) {
-      if (this.portalOpenTime == CRASH_PORTAL_OPEN_TIME) {
-        // 在目标上方生成传送门
-        this.portalPos = Objects.requireNonNullElse(getTarget(), this).position()
-          .add(0, CRASH_PORTAL_HEIGHT_OFFSET, 0);
-        this.createPortal(this.portalPos);
-      } else if (this.portalOpenTime == 1) {
-        if (this.portalPos == null) {
-          portalPos = this.position().add(0, CRASH_PORTAL_HEIGHT_OFFSET, 0);
-        }
-        this.setPos(portalPos.x, portalPos.y, portalPos.z);
-      }
-      this.portalOpenTime--;
-    } else if (this.onGround()) {
-      this.crashAtkReady = false;
-      this.portalOpenTime = CRASH_PORTAL_OPEN_TIME;
-      this.crashAttack();
-    }
-
-    this.checkTargetRange();
-
-    if (this.tickCount % 100 == 0) { // 每 5 秒清理一次攻击者记录
-      this.cleanAttackers();
-    }
-
-    this.checkStateTime();
+//
+//    if (this.level().isClientSide) {
+//      return;
+//    }
+//
+//    stateTime++;
+//    if (!this.crashAtkReady) {
+//      if (crashAtkCd <= 0) {
+//        crashAtkCd = CRASH_ATK_CD;
+////        crashAtkCd = CRASH_ATTACK_LANDING_DELAY; // 3 秒后释放大招
+//        this.crashAtkReady = true;
+//      } else {
+//        crashAtkCd--;
+//        if (normalAtkCd > 0) {
+//          normalAtkCd--;
+//        } else {
+////          this.aoeAttack();
+//          if (tentacleAttack(getTarget())) {
+//            normalAtkCd = NORMAL_ATK_CD;
+//          }
+//        }
+//      }
+//    } else if (this.portalOpenTime > 0) {
+//      if (this.portalOpenTime == CRASH_PORTAL_OPEN_TIME) {
+//        // 在目标上方生成传送门
+//        this.portalPos = Objects.requireNonNullElse(getTarget(), this).position()
+//          .add(0, CRASH_PORTAL_HEIGHT_OFFSET, 0);
+//        this.createPortal(this.portalPos);
+//      } else if (this.portalOpenTime == 1) {
+//        if (this.portalPos == null) {
+//          portalPos = this.position().add(0, CRASH_PORTAL_HEIGHT_OFFSET, 0);
+//        }
+//        this.setPos(portalPos.x, portalPos.y, portalPos.z);
+//      }
+//      this.portalOpenTime--;
+//    } else if (this.onGround()) {
+//      this.crashAtkReady = false;
+//      this.portalOpenTime = CRASH_PORTAL_OPEN_TIME;
+//      this.crashAttack();
+//    }
+//
+//    this.checkTargetRange();
+//
+//    if (this.tickCount % 100 == 0) { // 每 5 秒清理一次攻击者记录
+//      this.cleanAttackers();
+//    }
+//
+//    this.checkStateTime();
   }
 
   /**
@@ -454,7 +459,8 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
 
   @Override
   protected void registerGoals() {
-//    this.goalSelector.addGoal(5, this.createBehaviorTree());
+    this.targetSelector.addGoal(10, new NearestAttackableTargetGoal<>(this, Player.class, true));
+    this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Mob.class, true, this::canTarget));
   }
 
   @Override
@@ -515,58 +521,54 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
   }
 
   public boolean tentacleAttack(LivingEntity target) {
-    // 快速路径：目标为空检查
     if (target == null) {
       return false;
     }
 
-    getGrantUsLovePatch().playAnimationSynchronized(ModAnimations.GRANT_US_LOVE_SLASH, 0.1f);
-    if (true) {
-      return true;
-    }
-
-    // 计算相对位置（使用平方距离避免开方运算）
-    double dx = target.getX() - this.getX();
-    double dz = target.getZ() - this.getZ();
-    double dy = target.getY() - this.getY();
-    double horizontalDistSq = dx * dx + dz * dz;
-
-    // 快速路径：距离检查（使用平方比较）
-    if (horizontalDistSq > 10 * 10) {
-      return false;
-    }
-
-    // 快速路径：高度差检查（避免打空气）
-    if (Math.abs(dy) > getBbHeight() * 1.5f) {
-      return false;
-    }
-
-    // 计算相对角度并优化规范化到 [-180, 180]
-    double angleToTarget = Math.toDegrees(Math.atan2(dz, dx)) - this.getYRot();
-    angleToTarget = normalizeAngle(angleToTarget);
-
-    // 获取动画（内联优化，避免方法调用开销）
-    AnimationManager.AnimationAccessor<AttackAnimation> animation;
-
-    // 角度绝对值预计算
-    double absAngle = Math.abs(angleToTarget);
-
-    if (absAngle <= 45) {
-      // 重叠区域（-45° 到 45°）：左右随机选择
-      int tentacleIndex = this.random.nextInt(3) + 1;
-      boolean useLeft = this.random.nextBoolean();
-      animation = getTentacleAnimation(useLeft, tentacleIndex);
-    } else if (angleToTarget > 45) {
-      // 左侧区域（45° 到 180°）
-      int tentacleIndex = this.random.nextInt(3) + 1;
-      animation = getLeftTentacleAnimation(tentacleIndex);
-    } else {
-      // 右侧区域（-180° 到 -45°）
-      int tentacleIndex = this.random.nextInt(3) + 1;
-      animation = getRightTentacleAnimation(tentacleIndex);
-    }
-    // 播放动画
-    getGrantUsLovePatch().playAnimationSynchronized(animation, 1);
+    getGrantUsLovePatch().playAnimationSynchronized(ModAnimations.GRANT_US_LOVE_SLASH, 0.08F);
+//
+//    // 计算相对位置（使用平方距离避免开方运算）
+//    double dx = target.getX() - this.getX();
+//    double dz = target.getZ() - this.getZ();
+//    double dy = target.getY() - this.getY();
+//    double horizontalDistSq = dx * dx + dz * dz;
+//
+//    // 快速路径：距离检查（使用平方比较）
+//    if (horizontalDistSq > 10 * 10) {
+//      return false;
+//    }
+//
+//    // 快速路径：高度差检查（避免打空气）
+//    if (Math.abs(dy) > getBbHeight() * 1.5f) {
+//      return false;
+//    }
+//
+//    // 计算相对角度并优化规范化到 [-180, 180]
+//    double angleToTarget = Math.toDegrees(Math.atan2(dz, dx)) - this.getYRot();
+//    angleToTarget = normalizeAngle(angleToTarget);
+//
+//    // 获取动画（内联优化，避免方法调用开销）
+//    AnimationManager.AnimationAccessor<AttackAnimation> animation;
+//
+//    // 角度绝对值预计算
+//    double absAngle = Math.abs(angleToTarget);
+//
+//    if (absAngle <= 45) {
+//      // 重叠区域（-45° 到 45°）：左右随机选择
+//      int tentacleIndex = this.random.nextInt(3) + 1;
+//      boolean useLeft = this.random.nextBoolean();
+//      animation = getTentacleAnimation(useLeft, tentacleIndex);
+//    } else if (angleToTarget > 45) {
+//      // 左侧区域（45° 到 180°）
+//      int tentacleIndex = this.random.nextInt(3) + 1;
+//      animation = getLeftTentacleAnimation(tentacleIndex);
+//    } else {
+//      // 右侧区域（-180° 到 -45°）
+//      int tentacleIndex = this.random.nextInt(3) + 1;
+//      animation = getRightTentacleAnimation(tentacleIndex);
+//    }
+//    // 播放动画
+//    getGrantUsLovePatch().playAnimationSynchronized(animation, 1);
     return true;
   }
 

@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.client.model.animmodels.armature;
+package ctn.imaginarycraft.client.animmodels.armature;
 
 import yesman.epicfight.api.animation.Joint;
 import yesman.epicfight.api.model.Armature;
