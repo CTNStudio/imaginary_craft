@@ -12,6 +12,8 @@ import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.effect.MobEffectInstance;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Objects;
+
 public abstract class ShieldBarLayer extends StatusBarLayer {
 
   protected final ResourceLocation TEXTURE;
