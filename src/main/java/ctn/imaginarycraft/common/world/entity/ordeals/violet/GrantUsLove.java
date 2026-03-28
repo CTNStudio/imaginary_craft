@@ -47,6 +47,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.function.Predicate;
 
 // TODO 技能或大招剩余时间要持久化
 // TODO 需要免疫中毒，细雪，火焰，漂浮
@@ -99,14 +100,13 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
   protected static final EntityDataAccessor<Boolean> CRASH_ATK_READING = SynchedEntityData.defineId(GrantUsLove.class, EntityDataSerializers.BOOLEAN);
   private final List<LivingEntity> attackers = new ArrayList<>();
   private final Map<LivingEntity, Integer> lastAtkTimeMap = new HashMap<>();
+  private final Vec3 portalPos = null; // 大招 Portal 位置
   // TODO 后面替换成触手的独立处理
   private int normalAtkCd = NORMAL_ATK_CD; // 普通攻击冷却时间
   private int crashAtkCd = 0; // 大招冷却时间
-
   private int stateTime = 0;
   private boolean crashAtkReady = false; // 大招是否准备就绪
   private int portalOpenTime = 1; // 大招 Portal 开启时间
-  private final Vec3 portalPos = null; // 大招 Portal 位置
   private int idleSoundCd = 0; // 闲置音效间隔
 
   public GrantUsLove(EntityType<? extends Mob> entityType, Level level) {
@@ -127,7 +127,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
       .add(ModAttributes.EROSION_VULNERABLE, 0.8)
       .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0)
       .add(EpicFightAttributes.IMPACT, 8.0D)
-      .add(EpicFightAttributes.MAX_STRIKES, Double.MAX_VALUE);
+      .add(EpicFightAttributes.MAX_STRIKES, 32.0D);
   }
 
   /**
@@ -146,8 +146,9 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
 
   @Override
   protected void registerGoals() {
-    this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Player.class, true));
-    this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, true, this::canTarget));
+    Predicate<LivingEntity> predicate = entity -> canTarget(entity) && entity.distanceTo(entity) <= 2.5;
+    this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Player.class, true, predicate));
+    this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, true, predicate));
     this.targetSelector.addGoal(2, new ModHurtByTargetGoal(this).setAlertOthers(GrantUsLove.class)); // TODO 以及其他考验等
   }
 

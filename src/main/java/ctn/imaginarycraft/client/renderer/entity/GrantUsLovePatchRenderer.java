@@ -17,7 +17,7 @@ import net.minecraft.resources.ResourceLocation;
 // TODO 死亡之后光芒变暗
 public class GrantUsLovePatchRenderer extends ModPatchedLivingEntityRenderer<GrantUsLove, GrantUsLovePatch, EmptyEntityModel<GrantUsLove>, EmptyLivingEntityRenderer<GrantUsLove>, GrantUsLoveMesh> {
   private static final ResourceLocation GLOWMASK_TEXTURE = ModGeoEntityModel.getTexturePath("grant_us_love_glowmask");
-  private final float[] glowmaskValue = new float[1];
+  private final float[] glowmaskValue = {1F};
 
   public GrantUsLovePatchRenderer(EntityRendererProvider.Context context) {
     super(context, OrdealsEntityTypes.GRANT_US_LOVE.get(), ModMeshes.GRANT_US_LOVE);
@@ -26,7 +26,7 @@ public class GrantUsLovePatchRenderer extends ModPatchedLivingEntityRenderer<Gra
 
   @Override
   public void render(GrantUsLove entity, GrantUsLovePatch entitypatch, EmptyLivingEntityRenderer<GrantUsLove> renderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, float partialTicks) {
-    super.render(entity, entitypatch, renderer, buffer, poseStack, packedLight, partialTicks);
     this.glowmaskValue[0] = ModUtils.calculateSineCycle(0.9f, 2f, 4.0f);
+    super.render(entity, entitypatch, renderer, buffer, poseStack, packedLight, partialTicks);
   }
 }

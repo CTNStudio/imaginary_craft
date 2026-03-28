@@ -3,13 +3,10 @@ package ctn.imaginarycraft.common.world.entity.ordeals.violet;
 import ctn.imaginarycraft.api.world.entity.ai.ModMeleeAttackGoal;
 import ctn.imaginarycraft.init.animmodels.ModAnimations;
 import ctn.imaginarycraft.init.world.entity.ModFactions;
-import ctn.imaginarycraft.init.world.entity.OrdealsEntityTypes;
-import net.neoforged.neoforge.event.entity.EntityAttributeModificationEvent;
 import yesman.epicfight.api.animation.Animator;
 import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.api.asset.AssetAccessor;
-import yesman.epicfight.registry.entries.EpicFightAttributes;
 import yesman.epicfight.world.capabilities.entitypatch.MobPatch;
 import yesman.epicfight.world.damagesource.StunType;
 import yesman.epicfight.world.entity.ai.goal.AnimatedAttackGoal;
@@ -26,12 +23,7 @@ public class GrantUsLovePatch extends MobPatch<GrantUsLove> {
           .animationBehavior(ModAnimations.GRANT_US_LOVE_SLASH)
 //          .health(5, HealthPoint.Comparator.LESS_RATIO)
 //          .withinEyeHeight()
-          .withinDistance(0.0D, 5.0D)));
-
-  public static void initAttributes(EntityAttributeModificationEvent event) {
-    event.add(OrdealsEntityTypes.GRANT_US_LOVE.get(), EpicFightAttributes.IMPACT, 8.0D);
-    event.add(OrdealsEntityTypes.GRANT_US_LOVE.get(), EpicFightAttributes.MAX_STRIKES, Double.MAX_VALUE);
-  }
+          .withinDistance(0.0D, 2.6D)));
 
   public GrantUsLovePatch(GrantUsLove entity) {
     super(entity, ModFactions.ORDEALS_VIOLET);
@@ -40,11 +32,6 @@ public class GrantUsLovePatch extends MobPatch<GrantUsLove> {
   @Override
   public AssetAccessor<? extends StaticAnimation> getHitAnimation(StunType stunType) {
     return ModAnimations.GRANT_US_LOVE_IDLE;
-  }
-
-  @Override
-  public <A extends Animator> A getAnimator() {
-    return super.getAnimator();
   }
 
   @Override

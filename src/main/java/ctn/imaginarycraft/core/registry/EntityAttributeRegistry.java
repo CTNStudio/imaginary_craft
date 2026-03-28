@@ -3,7 +3,6 @@ package ctn.imaginarycraft.core.registry;
 import ctn.imaginarycraft.api.LcLevel;
 import ctn.imaginarycraft.common.world.entity.abnormalities.TrainingRabbits;
 import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLove;
-import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLovePatch;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import ctn.imaginarycraft.init.world.entity.AbnormalitiesEntityTypes;
@@ -100,8 +99,6 @@ public final class EntityAttributeRegistry {
     event.getTypes().forEach(entityType -> lcAttributesVulnerable(event, entityType));
     vanilla(event);
     addPlayerAttributes(event, EntityType.PLAYER);
-
-    GrantUsLovePatch.initAttributes(event);
   }
 
   private static void vanilla(EntityAttributeModificationEvent event) {

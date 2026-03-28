@@ -36,6 +36,7 @@ public abstract class AbstractTrailParticleMixin extends TextureSheetParticle im
   protected TrailInfo trailInfo;
   @Unique
   private Integer imaginarycraft$textureLightId;
+  @Unique
   private ResourceLocation imaginarycraft$textureLight;
 
   protected AbstractTrailParticleMixin(ClientLevel level, double x, double y, double z) {
@@ -103,15 +104,28 @@ public abstract class AbstractTrailParticleMixin extends TextureSheetParticle im
       GlStateManager.SourceFactor.ONE,
       GlStateManager.DestFactor.SRC_ALPHA,
       GlStateManager.SourceFactor.ONE,
-      GlStateManager.DestFactor.SRC_COLOR
-    );
+      GlStateManager.DestFactor.SRC_COLOR);
     int light1 = LightTexture.FULL_BRIGHT;
 
     RenderSystem.setShaderTexture(0, imaginarycraft$textureLight);
-    vertexConsumer.addVertex(pos1.x(), pos1.y(), pos1.z()).setUv(from, 1.0F).setColor(rCol, gCol, bCol, alpha * alphaFrom * fading).setLight(light1);
-    vertexConsumer.addVertex(pos2.x(), pos2.y(), pos2.z()).setUv(from, 0.0F).setColor(rCol, gCol, bCol, alpha * alphaFrom * fading).setLight(light1);
-    vertexConsumer.addVertex(pos3.x(), pos3.y(), pos3.z()).setUv(to, 0.0F).setColor(rCol, gCol, bCol, alpha * alphaTo * fading).setLight(light1);
-    vertexConsumer.addVertex(pos4.x(), pos4.y(), pos4.z()).setUv(to, 1.0F).setColor(rCol, gCol, bCol, alpha * alphaTo * fading).setLight(light1);
+    float alpha1 = alpha * alphaFrom * fading;
+    float alpha2 = alpha * alphaTo * fading;
+    vertexConsumer.addVertex(pos1.x(), pos1.y(), pos1.z())
+      .setUv(from, 1.0F)
+      .setColor(rCol, gCol, bCol, alpha1).
+      setLight(light1);
+    vertexConsumer.addVertex(pos2.x(), pos2.y(), pos2.z())
+      .setUv(from, 0.0F)
+      .setColor(rCol, gCol, bCol, alpha1)
+      .setLight(light1);
+    vertexConsumer.addVertex(pos3.x(), pos3.y(), pos3.z())
+      .setUv(to, 0.0F)
+      .setColor(rCol, gCol, bCol, alpha2)
+      .setLight(light1);
+    vertexConsumer.addVertex(pos4.x(), pos4.y(), pos4.z())
+      .setUv(to, 1.0F)
+      .setColor(rCol, gCol, bCol, alpha2)
+      .setLight(light1);
 
     RenderSystem.setShaderColor(1, 1, 1, 1);
     RenderSystem.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
