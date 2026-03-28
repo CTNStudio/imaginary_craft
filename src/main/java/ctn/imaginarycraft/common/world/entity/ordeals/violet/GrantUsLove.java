@@ -522,11 +522,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
   }
 
   public boolean tentacleAttack(LivingEntity target) {
-    if (target == null) {
-      return false;
-    }
-
-    getGrantUsLovePatch().playAnimationSynchronized(ModAnimations.GRANT_US_LOVE_SLASH, 0.08F);
+    return target != null;
 //
 //    // 计算相对位置（使用平方距离避免开方运算）
 //    double dx = target.getX() - this.getX();
@@ -570,7 +566,6 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
 //    }
 //    // 播放动画
 //    getGrantUsLovePatch().playAnimationSynchronized(animation, 1);
-    return true;
   }
 
   /**
