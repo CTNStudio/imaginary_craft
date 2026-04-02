@@ -1,0 +1,28 @@
+{
+  "joints": [
+    "Tentacle1_0.L",
+    "Tentacle1_1.L",
+    "Tentacle1_2.L",
+    "Tentacle2_0.L",
+    "Tentacle2_1.L",
+    "Tentacle2_2.L",
+    "Tentacle3_0.L",
+    "Tentacle3_1.L",
+    "Tentacle3_2.L",
+    "Tentacle1_0.R",
+    "Tentacle1_1.R",
+    "Tentacle1_2.R",
+    "Tentacle2_0.R",
+    "Tentacle2_1.R",
+    "Tentacle2_2.R",
+    "Tentacle3_0.R",
+    "Tentacle3_1.R",
+    "Tentacle3_2.R",
+    "Tentacle1_3.L",
+    "Tentacle2_3.L",
+    "Tentacle3_3.L",
+    "Tentacle1_3.R",
+    "Tentacle2_3.R",
+    "Tentacle3_3.R"
+  ]
+}

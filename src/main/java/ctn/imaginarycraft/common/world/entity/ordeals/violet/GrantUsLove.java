@@ -117,17 +117,17 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
   public static AttributeSupplier.Builder createAttributes() {
     return createMobAttributes()
       .add(Attributes.KNOCKBACK_RESISTANCE, 1)
-      .add(Attributes.MAX_HEALTH, 350.0)
-      .add(Attributes.ATTACK_DAMAGE, 5)
+      .add(Attributes.MAX_HEALTH, 350)
+      .add(Attributes.ATTACK_DAMAGE, 7)
       .add(Attributes.MOVEMENT_SPEED, 0)
       .add(Attributes.ATTACK_KNOCKBACK, 1)
       .add(Attributes.GRAVITY, 0.1)
       .add(ModAttributes.PHYSICS_VULNERABLE, 0.8)
       .add(ModAttributes.SPIRIT_VULNERABLE, 2.0)
       .add(ModAttributes.EROSION_VULNERABLE, 0.8)
-      .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0)
-      .add(EpicFightAttributes.IMPACT, 8.0D)
-      .add(EpicFightAttributes.MAX_STRIKES, 32.0D);
+      .add(ModAttributes.THE_SOUL_VULNERABLE, 1)
+      .add(EpicFightAttributes.IMPACT, 8)
+      .add(EpicFightAttributes.MAX_STRIKES, 8);
   }
 
   /**
