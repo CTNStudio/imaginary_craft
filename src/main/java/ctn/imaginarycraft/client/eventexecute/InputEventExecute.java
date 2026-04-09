@@ -115,5 +115,5 @@ public final class InputEventExecute {
       (offHandItem.getItem() instanceof IGunWeapon iGunWeapon) &&
       iGunWeapon.isOffHandShoot(player, offHandItem) &&
       iGunWeapon.gunShoot(player, offHandItem, InteractionHand.OFF_HAND);
-  }
+	}
 }

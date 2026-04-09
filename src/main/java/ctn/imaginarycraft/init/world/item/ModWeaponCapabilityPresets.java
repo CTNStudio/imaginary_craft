@@ -52,5 +52,5 @@ public final class ModWeaponCapabilityPresets {
   public static final Function<Item, WeaponCapability.Builder> RIFLE = (item) -> {
     WeaponCapability.Builder builder = WeaponCapability.builder();
     return builder;
-  };
+	};
 }

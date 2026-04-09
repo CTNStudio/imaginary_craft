@@ -22,13 +22,13 @@ import software.bernie.geckolib.util.RenderUtil;
  * 盔甲渲染
  */
 public class RoughAndFineArmorRenderer<T extends Item & GeoItem> extends GeoArmorRenderer<T> {
-  protected @Nullable GeoBone fineRightArm;
-  protected @Nullable GeoBone fineLeftArm;
-  protected @Nullable GeoBone armorPants;
   /**
    * 是否是细手臂渲染
    */
   public boolean isFine;
+  protected @Nullable GeoBone fineRightArm;
+  protected @Nullable GeoBone fineLeftArm;
+  protected @Nullable GeoBone armorPants;
 
   public RoughAndFineArmorRenderer(GeoModel<T> model) {
     super(model);
@@ -106,12 +106,8 @@ public class RoughAndFineArmorRenderer<T extends Item & GeoItem> extends GeoArmo
     }
   }
 
-  @Override
-  protected void setAllBonesVisible(boolean visible) {
-    super.setAllBonesVisible(visible);
-
-    setBoneVisible(this.fineRightArm, visible);
-    setBoneVisible(this.fineLeftArm, visible);
+  private boolean isABoolean(@Nullable GeoBone slimArm) {
+    return slimArm == null || !this.isFine;
   }
 
   @Override
@@ -178,15 +174,19 @@ public class RoughAndFineArmorRenderer<T extends Item & GeoItem> extends GeoArmo
     }
   }
 
+  @Override
+  protected void setAllBonesVisible(boolean visible) {
+    super.setAllBonesVisible(visible);
+
+    setBoneVisible(this.fineRightArm, visible);
+    setBoneVisible(this.fineLeftArm, visible);
+  }
+
   private void HandApplyBoneVisibilityBySlot(HumanoidModel<?> model) {
     setBoneVisible(this.rightArm, model.rightArm.visible && !this.isFine);
     setBoneVisible(this.leftArm, model.leftArm.visible && !this.isFine);
 
     setBoneVisible(this.fineRightArm, model.rightArm.visible && this.isFine);
     setBoneVisible(this.fineLeftArm, model.leftArm.visible && this.isFine);
-  }
-
-  private boolean isABoolean(@Nullable GeoBone slimArm) {
-    return slimArm == null || !this.isFine;
   }
 }

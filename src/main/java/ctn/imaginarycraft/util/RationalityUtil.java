@@ -42,14 +42,6 @@ public class RationalityUtil {
     setValue(player, Math.clamp(value, -maxRationalityValue, maxRationalityValue), false, false);
   }
 
-  /**
-   * 获取理智值
-   */
-  public static float getValue(Player player) {
-    float maxRationalityValue = getMaxValue(player);
-    return Math.clamp(player.getData(ModAttachments.RATIONALITY), -maxRationalityValue, maxRationalityValue);
-  }
-
   public static void setValue(Player player, float value, boolean isEvent) {
     setValue(player, value, isEvent, true);
   }
@@ -82,6 +74,14 @@ public class RationalityUtil {
       float particles = oldValue - newValue;
       ParticleUtil.createDamageTextParticles(player, particles, true, particles < 0);
     }
+  }
+
+  /**
+   * 获取理智值
+   */
+  public static float getValue(Player player) {
+    float maxRationalityValue = getMaxValue(player);
+    return Math.clamp(player.getData(ModAttachments.RATIONALITY), -maxRationalityValue, maxRationalityValue);
   }
 
   /**
@@ -139,5 +139,5 @@ public class RationalityUtil {
    */
   public static void setRecoveryTick(Player player, int value) {
     player.setData(ModAttachments.RATIONALITY_PAUSE_RECOVERY_TICK, value);
-  }
+	}
 }

@@ -16,6 +16,7 @@ public class ModMeleeAttackGoal extends Goal {
   private final double speedModifier;
   private final boolean followingTargetEvenIfNotSeen;
   private final int attackInterval = 20;
+  private final boolean canPenalize = false;
   private Path path;
   private double pathedTargetX;
   private double pathedTargetY;
@@ -24,7 +25,6 @@ public class ModMeleeAttackGoal extends Goal {
   private int ticksUntilNextAttack;
   private long lastCanUseCheck;
   private int failedPathFindingPenalty = 0;
-  private final boolean canPenalize = false;
 
   public ModMeleeAttackGoal(Mob mob, double speedModifier, boolean followingTargetEvenIfNotSeen) {
     this.mob = mob;
@@ -170,12 +170,12 @@ public class ModMeleeAttackGoal extends Goal {
     this.ticksUntilNextAttack = this.adjustedTickDelay(20);
   }
 
-  protected boolean isTimeToAttack() {
-    return this.ticksUntilNextAttack <= 0;
-  }
-
   protected boolean canPerformAttack(LivingEntity entity) {
     return this.isTimeToAttack() && this.mob.isWithinMeleeAttackRange(entity) && this.mob.getSensing().hasLineOfSight(entity);
+  }
+
+  protected boolean isTimeToAttack() {
+    return this.ticksUntilNextAttack <= 0;
   }
 
   protected int getTicksUntilNextAttack() {

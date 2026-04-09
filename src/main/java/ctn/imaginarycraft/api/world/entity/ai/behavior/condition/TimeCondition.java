@@ -17,6 +17,14 @@ public class TimeCondition extends AbstractConditionLeaf {
     this.level = level;
   }
 
+  public static TimeCondition isDay(Level level) {
+    return new TimeCondition(DateUtils._04$30, DateUtils._19$30, level);
+  }
+
+  public static TimeCondition isNight(Level level) {
+    return new TimeCondition(DateUtils._19$30, DateUtils._04$30, level);
+  }
+
   @Override
   public boolean check() {
     int dayTime = (int) (level.dayTime() % 24000);
@@ -24,13 +32,5 @@ public class TimeCondition extends AbstractConditionLeaf {
       return (dayTime >= from || dayTime <= to);
     }
     return (dayTime >= from && dayTime <= to);
-  }
-
-  public static TimeCondition isDay(Level level) {
-    return new TimeCondition(DateUtils._04$30, DateUtils._19$30, level);
-  }
-
-  public static TimeCondition isNight(Level level) {
-    return new TimeCondition(DateUtils._19$30, DateUtils._04$30, level);
   }
 }

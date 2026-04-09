@@ -33,16 +33,16 @@ public final class ToolItems {
   }
 
   @NotNull
-  private static DeferredItem<Item> register(String name, String zhName, Function<Item.Properties, ? extends Item> item) {
-    return register(name, zhName, item, new Item.Properties());
-  }
-
-  @NotNull
   private static <I extends Item> DeferredItem<I> register(String name, String zhName,
                                                            Function<Item.Properties, ? extends I> item,
                                                            Item.Properties properties) {
     DeferredItem<I> deferredItem = REGISTRY.registerItem(name, item, properties);
     ZhCn.addI18nItemText(zhName, deferredItem);
     return deferredItem;
+  }
+
+  @NotNull
+  private static DeferredItem<Item> register(String name, String zhName, Function<Item.Properties, ? extends Item> item) {
+    return register(name, zhName, item, new Item.Properties());
   }
 }

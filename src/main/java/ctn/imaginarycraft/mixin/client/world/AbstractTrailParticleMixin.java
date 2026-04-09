@@ -48,11 +48,6 @@ public abstract class AbstractTrailParticleMixin extends TextureSheetParticle im
     imaginarycraft$init(trailInfo);
   }
 
-  @Inject(method = "<init>(Lnet/minecraft/client/multiplayer/ClientLevel;Lyesman/epicfight/world/capabilities/entitypatch/EntityPatch;Lyesman/epicfight/api/client/animation/property/TrailInfo;)V", at = @At("RETURN"))
-  private void imaginarycraft$init(ClientLevel level, EntityPatch<?> entitypatch, TrailInfo trailInfo, CallbackInfo ci) {
-    imaginarycraft$init(trailInfo);
-  }
-
   @Unique
   private void imaginarycraft$init(TrailInfo trailInfo) {
     String path = trailInfo.texturePath().toString();
@@ -64,6 +59,11 @@ public abstract class AbstractTrailParticleMixin extends TextureSheetParticle im
       imaginarycraft$textureLightId = abstracttexture.getId();
       imaginarycraft$textureLight = textureLight;
     }
+  }
+
+  @Inject(method = "<init>(Lnet/minecraft/client/multiplayer/ClientLevel;Lyesman/epicfight/world/capabilities/entitypatch/EntityPatch;Lyesman/epicfight/api/client/animation/property/TrailInfo;)V", at = @At("RETURN"))
+  private void imaginarycraft$init(ClientLevel level, EntityPatch<?> entitypatch, TrailInfo trailInfo, CallbackInfo ci) {
+    imaginarycraft$init(trailInfo);
   }
 
   @Inject(method = "getRenderType", at = @At("HEAD"))

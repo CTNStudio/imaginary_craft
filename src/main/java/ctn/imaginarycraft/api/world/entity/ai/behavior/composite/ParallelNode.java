@@ -117,5 +117,5 @@ public class ParallelNode extends CompositeNode {
      * 需要全部
      */
     REQUIRE_ALL
-  }
+	}
 }

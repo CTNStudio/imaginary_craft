@@ -83,14 +83,22 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
     return detailed ? Component.literal(String.valueOf(value)) : Component.translatable(VirtueRating.getRating(value).getName());
   }
 
-  private List<UsageReq> getAttributeList(VirtueType attribute) {
-    return switch (attribute) {
-      case FORTITUDE -> this.fortitude;
-      case PRUDENCE -> this.prudence;
-      case TEMPERANCE -> this.temperance;
-      case JUSTICE -> this.justice;
-      case COMPOSITE -> this.composite;
-    };
+  @Override
+  public void addToTooltip(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag) {
+    if (isEmpty()) {
+      return;
+    }
+    Player player = Minecraft.getInstance().player;
+    tooltipAdder.accept(Component.translatable(USE_CONDITION).withColor(0xAAAAAA));
+
+    boolean detailed = player != null && (player.isCreative() && tooltipFlag.hasShiftDown() || player.getAttributeValue(ModAttributes.INTELLIGENCE_DEPARTMENT_ACTIVATION) >= 1);
+    for (VirtueType type : VirtueType.values()) {
+      Component component = analysisUsageReq(type, detailed);
+      if (component == null) {
+        continue;
+      }
+      tooltipAdder.accept(Component.literal(" ").append(component));
+    }
   }
 
   /**
@@ -112,6 +120,16 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
     }
 
     return Component.empty().append(mutableComponent).append(getUsageReqComponent(list, isDetailed));
+  }
+
+  private List<UsageReq> getAttributeList(VirtueType attribute) {
+    return switch (attribute) {
+      case FORTITUDE -> this.fortitude;
+      case PRUDENCE -> this.prudence;
+      case TEMPERANCE -> this.temperance;
+      case JUSTICE -> this.justice;
+      case COMPOSITE -> this.composite;
+    };
   }
 
   /**
@@ -170,24 +188,6 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
     return this.fortitude.isEmpty() && this.prudence.isEmpty() && this.temperance.isEmpty() && this.justice.isEmpty() && this.composite.isEmpty();
   }
 
-  @Override
-  public void addToTooltip(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag tooltipFlag) {
-    if (isEmpty()) {
-      return;
-    }
-    Player player = Minecraft.getInstance().player;
-    tooltipAdder.accept(Component.translatable(USE_CONDITION).withColor(0xAAAAAA));
-
-    boolean detailed = player != null && (player.isCreative() && tooltipFlag.hasShiftDown() || player.getAttributeValue(ModAttributes.INTELLIGENCE_DEPARTMENT_ACTIVATION) >= 1);
-    for (VirtueType type : VirtueType.values()) {
-      Component component = analysisUsageReq(type, detailed);
-      if (component == null) {
-        continue;
-      }
-      tooltipAdder.accept(Component.literal(" ").append(component));
-    }
-  }
-
   public static class Builder {
     private final List<UsageReq> fortitude = new ArrayList<>();
     private final List<UsageReq> prudence = new ArrayList<>();
@@ -223,6 +223,63 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
     }
 
     /**
+     * 设置勇气属性要求（不低于）
+     *
+     * @param value 要求等级
+     * @return 构建器本身
+     */
+    public Builder fortitude(VirtueRating value) {
+      return updateList(fortitude, value.getMinValue(), false);
+    }
+
+    // 更新单个值列表
+    private Builder updateList(List<UsageReq> list, int value, boolean isNotToExceed) {
+      list.clear();
+      list.add(new UsageReq(value, isNotToExceed ? UsageReq.Type.NOT_TO_EXCEED : UsageReq.Type.NOT_LOWER_THAN));
+      return this;
+    }
+
+    /**
+     * 设置谨慎属性要求（不低于）
+     *
+     * @param value 要求等级
+     * @return 构建器本身
+     */
+    public Builder prudence(VirtueRating value) {
+      return updateList(prudence, value.getMinValue(), false);
+    }
+
+    /**
+     * 设置自律属性要求（不低于）
+     *
+     * @param value 要求等级
+     * @return 构建器本身
+     */
+    public Builder temperance(VirtueRating value) {
+      return updateList(temperance, value.getMinValue(), false);
+    }
+
+    /**
+     * 设置正义属性要求（不低于）
+     *
+     * @param value 要求等级
+     * @return 构建器本身
+     */
+    public Builder justice(VirtueRating value) {
+      return updateList(justice, value.getMinValue(), false);
+    }
+
+    /**
+     * 设置综合属性要求（不低于）
+     *
+     * @param value 要求等级
+     * @return 构建器本身
+     */
+    public Builder composite(VirtueRating value) {
+      return updateList(composite, value.getMinValue(), false);
+    }
+
+    /**
      * @param fortitude  勇气
      * @param prudence   谨慎
      * @param temperance 自律
@@ -250,6 +307,56 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
     }
 
     /**
+     * 设置勇气属性要求（不低于）
+     *
+     * @param value 要求值
+     * @return 构建器本身
+     */
+    public Builder fortitude(int value) {
+      return updateList(fortitude, value, false);
+    }
+
+    /**
+     * 设置谨慎属性要求（不低于）
+     *
+     * @param value 要求值
+     * @return 构建器本身
+     */
+    public Builder prudence(int value) {
+      return updateList(prudence, value, false);
+    }
+
+    /**
+     * 设置自律属性要求（不低于）
+     *
+     * @param value 要求值
+     * @return 构建器本身
+     */
+    public Builder temperance(int value) {
+      return updateList(temperance, value, false);
+    }
+
+    /**
+     * 设置正义属性要求（不低于）
+     *
+     * @param value 要求值
+     * @return 构建器本身
+     */
+    public Builder justice(int value) {
+      return updateList(justice, value, false);
+    }
+
+    /**
+     * 设置综合属性要求（不低于）
+     *
+     * @param value 要求值
+     * @return 构建器本身
+     */
+    public Builder composite(int value) {
+      return updateList(composite, value, false);
+    }
+
+    /**
      * 将构建器添加到物品属性中
      *
      * @param properties 物品属性
@@ -261,6 +368,33 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
       }
 
       properties.component(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, builder.build());
+    }
+
+    /**
+     * 构建品德使用要求对象
+     *
+     * @return 品德使用要求对象
+     */
+    public ItemVirtueUsageReq build() {
+      return new ItemVirtueUsageReq(
+        Collections.unmodifiableList(this.fortitude),
+        Collections.unmodifiableList(this.prudence),
+        Collections.unmodifiableList(this.temperance),
+        Collections.unmodifiableList(this.justice),
+        Collections.unmodifiableList(this.composite));
+    }
+
+    /**
+     * 判断是否为空（没有任何属性要求）
+     *
+     * @return 如果没有设置任何属性要求则返回true，否则返回false
+     */
+    public boolean isEmpty() {
+      return this.fortitude.isEmpty() &&
+        this.prudence.isEmpty() &&
+        this.temperance.isEmpty() &&
+        this.justice.isEmpty() &&
+        this.composite.isEmpty();
     }
 
     /**
@@ -296,6 +430,14 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
       return updateListRange(fortitude, min, max);
     }
 
+    // 更新区间值列表
+    private Builder updateListRange(List<UsageReq> list, int min, int max) {
+      list.clear();
+      list.add(new UsageReq(min, UsageReq.Type.NOT_TO_EXCEED));
+      list.add(new UsageReq(max, UsageReq.Type.NOT_LOWER_THAN));
+      return this;
+    }
+
     /**
      * 设置勇气属性区间要求
      *
@@ -308,26 +450,6 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
     }
 
     /**
-     * 设置勇气属性要求（不低于）
-     *
-     * @param value 要求值
-     * @return 构建器本身
-     */
-    public Builder fortitude(int value) {
-      return updateList(fortitude, value, false);
-    }
-
-    /**
-     * 设置勇气属性要求（不低于）
-     *
-     * @param value 要求等级
-     * @return 构建器本身
-     */
-    public Builder fortitude(VirtueRating value) {
-      return updateList(fortitude, value.getMinValue(), false);
-    }
-
-    /**
      * 设置勇气属性多个特定值要求
      *
      * @param values 特定值数组
@@ -335,6 +457,15 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      */
     public Builder fortitudeOf(int... values) {
       return updateListValues(fortitude, values);
+    }
+
+    // 更新多个特定值列表（整数版本）
+    private Builder updateListValues(List<UsageReq> list, int... values) {
+      list.clear();
+      for (int value : values) {
+        list.add(new UsageReq(value, UsageReq.Type.EQUAL));
+      }
+      return this;
     }
 
     /**
@@ -345,6 +476,15 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      */
     public Builder fortitudeOf(VirtueRating... values) {
       return updateListValues(fortitude, values);
+    }
+
+    // 更新多个特定值列表（等级版本）
+    private Builder updateListValues(List<UsageReq> list, VirtueRating... values) {
+      list.clear();
+      for (VirtueRating value : values) {
+        list.add(new UsageReq(value.getRating(), UsageReq.Type.EQUAL));
+      }
+      return this;
     }
 
     /**
@@ -389,26 +529,6 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      */
     public Builder prudence(VirtueRating min, VirtueRating max) {
       return updateListRange(prudence, min.getMinValue(), max.getMinValue());
-    }
-
-    /**
-     * 设置谨慎属性要求（不低于）
-     *
-     * @param value 要求值
-     * @return 构建器本身
-     */
-    public Builder prudence(int value) {
-      return updateList(prudence, value, false);
-    }
-
-    /**
-     * 设置谨慎属性要求（不低于）
-     *
-     * @param value 要求等级
-     * @return 构建器本身
-     */
-    public Builder prudence(VirtueRating value) {
-      return updateList(prudence, value.getMinValue(), false);
     }
 
     /**
@@ -476,26 +596,6 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
     }
 
     /**
-     * 设置自律属性要求（不低于）
-     *
-     * @param value 要求值
-     * @return 构建器本身
-     */
-    public Builder temperance(int value) {
-      return updateList(temperance, value, false);
-    }
-
-    /**
-     * 设置自律属性要求（不低于）
-     *
-     * @param value 要求等级
-     * @return 构建器本身
-     */
-    public Builder temperance(VirtueRating value) {
-      return updateList(temperance, value.getMinValue(), false);
-    }
-
-    /**
      * 设置自律属性多个特定值要求
      *
      * @param values 特定值数组
@@ -560,26 +660,6 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
     }
 
     /**
-     * 设置正义属性要求（不低于）
-     *
-     * @param value 要求值
-     * @return 构建器本身
-     */
-    public Builder justice(int value) {
-      return updateList(justice, value, false);
-    }
-
-    /**
-     * 设置正义属性要求（不低于）
-     *
-     * @param value 要求等级
-     * @return 构建器本身
-     */
-    public Builder justice(VirtueRating value) {
-      return updateList(justice, value.getMinValue(), false);
-    }
-
-    /**
      * 设置正义属性多个特定值要求
      *
      * @param values 特定值数组
@@ -619,26 +699,6 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
      */
     public Builder composite(VirtueRating value, boolean isNotToExceed) {
       return updateList(composite, value.getMinValue(), isNotToExceed);
-    }
-
-    /**
-     * 设置综合属性要求（不低于）
-     *
-     * @param value 要求值
-     * @return 构建器本身
-     */
-    public Builder composite(int value) {
-      return updateList(composite, value, false);
-    }
-
-    /**
-     * 设置综合属性要求（不低于）
-     *
-     * @param value 要求等级
-     * @return 构建器本身
-     */
-    public Builder composite(VirtueRating value) {
-      return updateList(composite, value.getMinValue(), false);
     }
 
     /**
@@ -682,66 +742,6 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
     public Builder compositeOf(VirtueRating... values) {
       return updateListValues(composite, values);
     }
-
-    // 更新单个值列表
-    private Builder updateList(List<UsageReq> list, int value, boolean isNotToExceed) {
-      list.clear();
-      list.add(new UsageReq(value, isNotToExceed ? UsageReq.Type.NOT_TO_EXCEED : UsageReq.Type.NOT_LOWER_THAN));
-      return this;
-    }
-
-    // 更新区间值列表
-    private Builder updateListRange(List<UsageReq> list, int min, int max) {
-      list.clear();
-      list.add(new UsageReq(min, UsageReq.Type.NOT_TO_EXCEED));
-      list.add(new UsageReq(max, UsageReq.Type.NOT_LOWER_THAN));
-      return this;
-    }
-
-    // 更新多个特定值列表（整数版本）
-    private Builder updateListValues(List<UsageReq> list, int... values) {
-      list.clear();
-      for (int value : values) {
-        list.add(new UsageReq(value, UsageReq.Type.EQUAL));
-      }
-      return this;
-    }
-
-    // 更新多个特定值列表（等级版本）
-    private Builder updateListValues(List<UsageReq> list, VirtueRating... values) {
-      list.clear();
-      for (VirtueRating value : values) {
-        list.add(new UsageReq(value.getRating(), UsageReq.Type.EQUAL));
-      }
-      return this;
-    }
-
-    /**
-     * 构建品德使用要求对象
-     *
-     * @return 品德使用要求对象
-     */
-    public ItemVirtueUsageReq build() {
-      return new ItemVirtueUsageReq(
-        Collections.unmodifiableList(this.fortitude),
-        Collections.unmodifiableList(this.prudence),
-        Collections.unmodifiableList(this.temperance),
-        Collections.unmodifiableList(this.justice),
-        Collections.unmodifiableList(this.composite));
-    }
-
-    /**
-     * 判断是否为空（没有任何属性要求）
-     *
-     * @return 如果没有设置任何属性要求则返回true，否则返回false
-     */
-    public boolean isEmpty() {
-      return this.fortitude.isEmpty() &&
-        this.prudence.isEmpty() &&
-        this.temperance.isEmpty() &&
-        this.justice.isEmpty() &&
-        this.composite.isEmpty();
-    }
   }
 
   public record UsageReq(int value, Type type) {
@@ -775,29 +775,19 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
       EQUAL(3, "equal", '='),
       ;
 
-      private final int index;
-      private final String name;
-      private final char symbol;
-
       public static final Codec<Type> CODEC = StringRepresentable
         .fromEnum(Type::values).validate(DataResult::success);
       public static final StreamCodec<ByteBuf, Type> STREAM_CODEC = ByteBufCodecs
         .idMapper(ByIdMap.continuous(Type::getIndex, values(), ByIdMap.OutOfBoundsStrategy.WRAP), Type::getIndex);
+      private final int index;
+      private final String name;
+      private final char symbol;
 
 
       Type(final int index, final String name, final char symbol) {
         this.index = index;
         this.name = name;
         this.symbol = symbol;
-      }
-
-      @Override
-      public @NotNull String getSerializedName() {
-        return name;
-      }
-
-      public int getIndex() {
-        return index;
       }
 
       public static Type byName(String name) {
@@ -818,9 +808,18 @@ public record ItemVirtueUsageReq(List<UsageReq> fortitude, List<UsageReq> pruden
         return NONE;
       }
 
-      public char getSymbol() {
-        return symbol;
-      }
-    }
-  }
+      @Override
+			public @NotNull String getSerializedName() {
+				return name;
+			}
+
+			public int getIndex() {
+				return index;
+			}
+
+			public char getSymbol() {
+				return symbol;
+			}
+		}
+	}
 }

@@ -62,6 +62,13 @@ public interface IVirtue {
   int getPoints();
 
   /**
+   * 设置点数
+   *
+   * @param points 点数
+   */
+  void setPoints(int points);
+
+  /**
    * 获取评级点数
    *
    * @return 评级点数
@@ -74,13 +81,6 @@ public interface IVirtue {
    * @return 振幅ID
    */
   ResourceLocation getAmplitudeId();
-
-  /**
-   * 设置点数
-   *
-   * @param points 点数
-   */
-  void setPoints(int points);
 
   /**
    * 设置点数

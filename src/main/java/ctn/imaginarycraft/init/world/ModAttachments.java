@@ -161,6 +161,13 @@ public final class ModAttachments {
       instanceofPlayer(defaultValue, holder, name)))::build);
   }
 
+  private static <T> @NotNull DeferredHolder<AttachmentType<?>, AttachmentType<T>> register(
+    final String name,
+    final Supplier<AttachmentType<T>> builder
+  ) {
+    return ModAttachments.REGISTRY.register(name, builder);
+  }
+
   private static <T> @NotNull DeferredHolder<AttachmentType<?>, AttachmentType<T>> registerEntity(
     final String name,
     final Function<Entity, T> defaultValue
@@ -194,12 +201,5 @@ public final class ModAttachments {
     final AttachmentType.@NotNull Builder<T> builder
   ) {
     return register(name, builder::build);
-  }
-
-  private static <T> @NotNull DeferredHolder<AttachmentType<?>, AttachmentType<T>> register(
-    final String name,
-    final Supplier<AttachmentType<T>> builder
-  ) {
-    return ModAttachments.REGISTRY.register(name, builder);
-  }
+	}
 }

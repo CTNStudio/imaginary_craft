@@ -146,15 +146,14 @@ public final class ModAttributes {
     "player.intelligence_department_activation", "情报部效果", function ->
       function.setSyncable(true).setSentiment(Attribute.Sentiment.POSITIVE), false);
 
-  private static @NotNull <T extends Attribute> DeferredHolder<Attribute, T> register(
+  private static @NotNull DeferredHolder<Attribute, RangedAttribute> register(
     final String name,
     final String zhName,
-    final Function<T, Attribute> function,
-    final T attribute
+    final Function<RangedAttribute, Attribute> function,
+    final double minValue,
+    final double maxValue
   ) {
-    DeferredHolder<Attribute, T> register = ModAttributes.REGISTRY.register(name, () -> (T) function.apply(attribute));
-    ZhCn.addI18nAttributeText(zhName, register);
-    return register;
+    return register(name, zhName, function, minValue, minValue, maxValue);
   }
 
   private static @NotNull DeferredHolder<Attribute, RangedAttribute> register(
@@ -168,14 +167,19 @@ public final class ModAttributes {
     return register(name, zhName, function, new RangedAttribute(descriptionId(name), defaultValue, minValue, maxValue));
   }
 
-  private static @NotNull DeferredHolder<Attribute, RangedAttribute> register(
+  private static @NotNull <T extends Attribute> DeferredHolder<Attribute, T> register(
     final String name,
     final String zhName,
-    final Function<RangedAttribute, Attribute> function,
-    final double minValue,
-    final double maxValue
+    final Function<T, Attribute> function,
+    final T attribute
   ) {
-    return register(name, zhName, function, minValue, minValue, maxValue);
+    DeferredHolder<Attribute, T> register = ModAttributes.REGISTRY.register(name, () -> (T) function.apply(attribute));
+    ZhCn.addI18nAttributeText(zhName, register);
+    return register;
+  }
+
+  private static @NotNull String descriptionId(String name) {
+    return ImaginaryCraft.ID + ".attribute.name." + name;
   }
 
   private static @NotNull DeferredHolder<Attribute, BasicAttribute> register(
@@ -214,9 +218,5 @@ public final class ModAttributes {
     final boolean defaultValue
   ) {
     return register(name, zhName, function, new BooleanAttribute(descriptionId(name), defaultValue));
-  }
-
-  private static @NotNull String descriptionId(String name) {
-    return ImaginaryCraft.ID + ".attribute.name." + name;
-  }
+	}
 }

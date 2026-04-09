@@ -27,6 +27,11 @@ public interface IEgoItem {
       return self();
     }
 
+    @SuppressWarnings("unchecked")
+    protected T self() {
+      return (T) this;
+    }
+
     /**
      * @param fortitude  勇气
      * @param prudence   谨慎
@@ -49,11 +54,6 @@ public interface IEgoItem {
     public T virtueUsageReq(int fortitude, int prudence, int temperance, int justice, int composite) {
       this.virtueUsageReqBuilder = ItemVirtueUsageReq.Builder.of(fortitude, prudence, temperance, justice, composite);
       return self();
-    }
-
-    @SuppressWarnings("unchecked")
-    protected T self() {
-      return (T) this;
-    }
-  }
+		}
+	}
 }

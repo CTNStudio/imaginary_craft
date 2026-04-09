@@ -47,6 +47,12 @@ public abstract class ItemStackMixin implements DataComponentHolder, MutableData
     new AddItemDataComponentTooltipEvent.Down<>(imaginarycraft$itemStack, component, context, tooltipAdder, tooltipFlag);
   }
 
+  @Unique
+  @NotNull
+  private ItemStack getImaginarycraft$itemStack() {
+    return (ItemStack) (Object) this;
+  }
+
   @Definition(id = "has", method = "Lnet/minecraft/world/item/ItemStack;has(Lnet/minecraft/core/component/DataComponentType;)Z")
   @Definition(id = "HIDE_ADDITIONAL_TOOLTIP", field = "HIDE_ADDITIONAL_TOOLTIP", type = DataComponents.class)
   @Expression("this.has(HIDE_ADDITIONAL_TOOLTIP)")
@@ -59,11 +65,5 @@ public abstract class ItemStackMixin implements DataComponentHolder, MutableData
     // 添加物品使用要求
     addToTooltip(ModDataComponents.ITEM_VIRTUE_USAGE_REQ, tooltipContext, instance, tooltipFlag);
     return original;
-  }
-
-  @Unique
-  @NotNull
-  private ItemStack getImaginarycraft$itemStack() {
-    return (ItemStack) (Object) this;
   }
 }

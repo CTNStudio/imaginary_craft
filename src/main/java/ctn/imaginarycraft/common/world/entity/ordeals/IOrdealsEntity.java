@@ -7,6 +7,11 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 
 public interface IOrdealsEntity {
+  default void registerGoals() {
+    getTargetSelector().addGoal(0, new NearestAttackableTargetGoal<>(getMob(), Player.class, true, this::canTarget));
+    getTargetSelector().addGoal(2, new NearestAttackableTargetGoal<>(getMob(), Mob.class, true, this::canTarget));
+  }
+
   /**
    * 目标选择
    */
@@ -40,16 +45,11 @@ public interface IOrdealsEntity {
     return getMob().getType().equals(entity.getType());
   }
 
-  default Mob getMob() {
-    return (Mob) this;
-  }
-
-  default void registerGoals() {
-    getTargetSelector().addGoal(0, new NearestAttackableTargetGoal<>(getMob(), Player.class, true, this::canTarget));
-    getTargetSelector().addGoal(2, new NearestAttackableTargetGoal<>(getMob(), Mob.class, true, this::canTarget));
-  }
-
   default GoalSelector getTargetSelector() {
     return getMob().targetSelector;
   }
+
+  default Mob getMob() {
+    return (Mob) this;
+	}
 }

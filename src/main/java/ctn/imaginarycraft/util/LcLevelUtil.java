@@ -45,12 +45,13 @@ public final class LcLevelUtil {
    * 如果有，则尝试从能力系统中获取如果获取的是null那就返回null
    */
   @Nullable
-  public static LcLevel getLevel(@NotNull EntityType<?> entity) {
-    if (!ENTITY_TYPE_LEVEL.containsKey(entity)) {
-      ENTITY_TYPE_LEVEL.put(entity, LcLevel.ZAYIN);
-      return LcLevel.ZAYIN;
+  public static LcLevel getLevel(@NotNull ItemStack itemStack) {
+    if (itemStack.getItem() instanceof SpawnEggItem spawnEggItem) {
+      // 如果是刷怪蛋就按照生物等级来获取
+      return getLevel(spawnEggItem.getType(itemStack));
     }
-    return ENTITY_TYPE_LEVEL.get(entity);
+    IItemLcLevel capability = itemStack.getCapability(ModCapabilitys.LcLevel.LC_LEVEL_ITEM);
+    return capability == null ? LcLevel.ZAYIN : capability.getLcLevel(itemStack);
   }
 
   /**
@@ -59,13 +60,12 @@ public final class LcLevelUtil {
    * 如果有，则尝试从能力系统中获取如果获取的是null那就返回null
    */
   @Nullable
-  public static LcLevel getLevel(@NotNull ItemStack itemStack) {
-    if (itemStack.getItem() instanceof SpawnEggItem spawnEggItem) {
-      // 如果是刷怪蛋就按照生物等级来获取
-      return getLevel(spawnEggItem.getType(itemStack));
+  public static LcLevel getLevel(@NotNull EntityType<?> entity) {
+    if (!ENTITY_TYPE_LEVEL.containsKey(entity)) {
+      ENTITY_TYPE_LEVEL.put(entity, LcLevel.ZAYIN);
+      return LcLevel.ZAYIN;
     }
-    IItemLcLevel capability = itemStack.getCapability(ModCapabilitys.LcLevel.LC_LEVEL_ITEM);
-    return capability == null ? LcLevel.ZAYIN : capability.getLcLevel(itemStack);
+    return ENTITY_TYPE_LEVEL.get(entity);
   }
 
   /**
@@ -128,6 +128,6 @@ public final class LcLevelUtil {
       case HE -> CapabilityRegistry.ITEM_HE.add(deferredItem);
       case WAW -> CapabilityRegistry.ITEM_WAW.add(deferredItem);
       case ALEPH -> CapabilityRegistry.ITEM_ALEPH.add(deferredItem);
-    }
-  }
+		}
+	}
 }

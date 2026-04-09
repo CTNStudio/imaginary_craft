@@ -55,14 +55,14 @@ public final class ModMobEffects {
   public static final Holder<MobEffect> SOUL_ABSORPTION_SHIELD = register("soul_absorption_shield", "灵魂吸收护盾",
     ModMobEffect::new, MobEffectCategory.BENEFICIAL, LcDamageType.SPIRIT.getColourValue());
 
+  private static <T extends MobEffect> DeferredHolder<MobEffect, T> register(String name, String zhCnText, BiFunction<MobEffectCategory, Integer, T> biFunction, MobEffectCategory category, int color) {
+    return register(name, zhCnText, () -> biFunction.apply(category, color));
+  }
+
   private static <T extends MobEffect> DeferredHolder<MobEffect, T> register(String name, String zhCnText, Supplier<T> supplier) {
     DeferredHolder<MobEffect, T> holder = REGISTRY.register(name, supplier);
     ZhCn.addI18nMobEffectText(zhCnText, holder);
     return holder;
-  }
-
-  private static <T extends MobEffect> DeferredHolder<MobEffect, T> register(String name, String zhCnText, BiFunction<MobEffectCategory, Integer, T> biFunction, MobEffectCategory category, int color) {
-    return register(name, zhCnText, () -> biFunction.apply(category, color));
   }
 
   private static <T extends MobEffect> DeferredHolder<MobEffect, T> register(String name, String zhCnText, Supplier<T> supplier, Function<T, MobEffect> function) {

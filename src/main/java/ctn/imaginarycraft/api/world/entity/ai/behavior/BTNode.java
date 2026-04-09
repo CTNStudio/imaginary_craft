@@ -12,7 +12,15 @@ public abstract class BTNode extends Goal {
   protected BehaviorTreeContext context;
   private String description;
 
-  public abstract BTStatus execute();
+  public void tryStart() {
+    if (isReady()) {
+      start();
+    }
+  }
+
+  public boolean isReady() {
+    return canUse() && status == BTStatus.READY;
+  }
 
   @Override
   public boolean canUse() {
@@ -22,25 +30,19 @@ public abstract class BTNode extends Goal {
     return status == BTStatus.RUNNING;
   }
 
-  public boolean isReady() {
-    return canUse() && status == BTStatus.READY;
+  @Override
+  public void start() {
+    this.status = BTStatus.RUNNING;
+    this.context = createContext();
   }
 
-  public void tryStart() {
-    if (isReady()) {
-      start();
-    }
+  protected BehaviorTreeContext createContext() {
+    return new BehaviorTreeContext();
   }
 
   @Override
   public boolean canContinueToUse() {
     return status == BTStatus.RUNNING;
-  }
-
-  @Override
-  public void start() {
-    this.status = BTStatus.RUNNING;
-    this.context = createContext();
   }
 
   @Override
@@ -53,6 +55,8 @@ public abstract class BTNode extends Goal {
     }
   }
 
+  public abstract BTStatus execute();
+
   @Override
   public void stop() {
     cleanup();
@@ -60,21 +64,17 @@ public abstract class BTNode extends Goal {
     context = null;
   }
 
-  protected BehaviorTreeContext createContext() {
-    return new BehaviorTreeContext();
-  }
-
   protected void cleanup() {
     // 子类可重写清理逻辑
+  }
+
+  public @Nullable String getDesc() {
+    return description;
   }
 
   public BTNode setDesc(String desc) {
     this.description = desc;
     return this;
-  }
-
-  public @Nullable String getDesc() {
-    return description;
   }
 
   @Override

@@ -15,21 +15,20 @@ import java.util.function.BiFunction;
  * 物品渲染提供程序
  */
 public class ModGeoItemRenderProvider<T extends Item & GeoItem> implements GeoRenderProvider {
-  private final BiFunction<GeoModel<T>, GeoModel<T>, GeoItemRenderer<T>> rendererFunction;
   protected final GeoModel<T> defaultModel;
   protected final @Nullable GeoModel<T> guiModel;
+  private final BiFunction<GeoModel<T>, GeoModel<T>, GeoItemRenderer<T>> rendererFunction;
   private GeoItemRenderer<T> renderer;
+
+  public ModGeoItemRenderProvider(GeoModel<T> defaultModel, @Nullable GeoModel<T> guiModel) {
+    this(defaultModel, guiModel, ModGeoItemRenderer::new);
+  }
 
   public ModGeoItemRenderProvider(GeoModel<T> defaultModel, @Nullable GeoModel<T> guiModel, BiFunction<GeoModel<T>, GeoModel<T>, GeoItemRenderer<T>> rendererFunction) {
     this.defaultModel = defaultModel;
     this.guiModel = guiModel;
     this.rendererFunction = rendererFunction;
   }
-
-  public ModGeoItemRenderProvider(GeoModel<T> defaultModel, @Nullable GeoModel<T> guiModel) {
-    this(defaultModel, guiModel, ModGeoItemRenderer::new);
-  }
-
 
   @Override
   public BlockEntityWithoutLevelRenderer getGeoItemRenderer() {

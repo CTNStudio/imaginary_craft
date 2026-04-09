@@ -20,17 +20,6 @@ public class SharedFlagController {
   }
 
   /**
-   * 计算状态
-   *
-   * @param index 状态位
-   * @param value 值
-   * @return 计算后的状态
-   */
-  protected int calShareFlag(int data, int index, boolean value) {
-    return value ? (data | (index)) : (data & ~(index));
-  }
-
-  /**
    * 反转状态
    *
    * @param index 状态位
@@ -48,6 +37,17 @@ public class SharedFlagController {
    */
   public void setFlag(SharedFlag flag, boolean value) {
     this.entityData.set(this.DATA_SHARE_FLAG, this.calShareFlag(this.entityData.get(this.DATA_SHARE_FLAG), flag.index, value));
+  }
+
+  /**
+   * 计算状态
+   *
+   * @param index 状态位
+   * @param value 值
+   * @return 计算后的状态
+   */
+  protected int calShareFlag(int data, int index, boolean value) {
+    return value ? (data | (index)) : (data & ~(index));
   }
 
   /**
@@ -82,6 +82,6 @@ public class SharedFlagController {
     @Override
     public @NotNull String toString() {
       return "SharedFlag : " + Integer.numberOfTrailingZeros(index);
-    }
-  }
+		}
+	}
 }

@@ -394,44 +394,6 @@ public final class GuiUtil {
   }
 
   /**
-   * 绘制精灵图
-   *
-   * @param guiGraphics GUI图形上下文
-   * @param sprite      纹理图集精灵
-   * @param x           绘制位置x坐标
-   * @param y           绘制位置y坐标
-   * @param blitOffset  绘制偏移量
-   * @param width       绘制宽度
-   * @param height      绘制高度
-   */
-  public static void blitSprite(
-    GuiGraphics guiGraphics,
-    TextureAtlasSprite sprite,
-    float x,
-    float y,
-    float blitOffset,
-    float width,
-    float height
-  ) {
-    if (width == 0 || height == 0) {
-      return;
-    }
-    innerBlit(
-      guiGraphics,
-      sprite.atlasLocation(),
-      x,
-      x + width,
-      y,
-      y + height,
-      blitOffset,
-      sprite.getU0(),
-      sprite.getU1(),
-      sprite.getV0(),
-      sprite.getV1()
-    );
-  }
-
-  /**
    * 内部绘制方法，执行实际的顶点绘制操作
    *
    * @param guiGraphics   GUI图形上下文
@@ -470,16 +432,50 @@ public final class GuiUtil {
     BufferUploader.drawWithShader(bufferbuilder.buildOrThrow());
   }
 
+  /**
+   * 绘制精灵图
+   *
+   * @param guiGraphics GUI图形上下文
+   * @param sprite      纹理图集精灵
+   * @param x           绘制位置x坐标
+   * @param y           绘制位置y坐标
+   * @param blitOffset  绘制偏移量
+   * @param width       绘制宽度
+   * @param height      绘制高度
+   */
+  public static void blitSprite(
+    GuiGraphics guiGraphics,
+    TextureAtlasSprite sprite,
+    float x,
+    float y,
+    float blitOffset,
+    float width,
+    float height
+  ) {
+    if (width == 0 || height == 0) {
+      return;
+    }
+    innerBlit(
+      guiGraphics,
+      sprite.atlasLocation(),
+      x,
+      x + width,
+      y,
+      y + height,
+      blitOffset,
+      sprite.getU0(),
+      sprite.getU1(),
+      sprite.getV0(),
+      sprite.getV1()
+    );
+  }
+
   public static void fill(@NotNull GuiGraphics guiGraphics, float minX, float minY, float maxX, float maxY, int color) {
     fill(guiGraphics, minX, minY, maxX, maxY, 0, color);
   }
 
   public static void fill(@NotNull GuiGraphics guiGraphics, float minX, float minY, float maxX, float maxY, float z, int color) {
     fill(guiGraphics, RenderType.gui(), minX, minY, maxX, maxY, z, color);
-  }
-
-  public static void fill(@NotNull GuiGraphics guiGraphics, RenderType renderType, float minX, float minY, float maxX, float maxY, int color) {
-    fill(guiGraphics, renderType, minX, minY, maxX, maxY, 0, color);
   }
 
   public static void fill(@NotNull GuiGraphics guiGraphics, RenderType renderType, float minX, float minY, float maxX, float maxY, float z, int color) {
@@ -502,6 +498,10 @@ public final class GuiUtil {
     vertexconsumer.addVertex(matrix4f, maxX, maxY, z).setColor(color);
     vertexconsumer.addVertex(matrix4f, maxX, minY, z).setColor(color);
     guiGraphics.flushIfUnmanaged();
+  }
+
+  public static void fill(@NotNull GuiGraphics guiGraphics, RenderType renderType, float minX, float minY, float maxX, float maxY, int color) {
+    fill(guiGraphics, renderType, minX, minY, maxX, maxY, 0, color);
   }
 
   public static void fillGradient(@NotNull GuiGraphics guiGraphics, float x1, float y1, float x2, float y2, int colorFrom, int colorTo) {
@@ -532,7 +532,7 @@ public final class GuiUtil {
     vertexconsumer.addVertex(matrix4f, x1, y1, z);
     vertexconsumer.addVertex(matrix4f, x1, y2, z);
     vertexconsumer.addVertex(matrix4f, x2, y2, z);
-    vertexconsumer.addVertex(matrix4f, x2, y1, z);
-    guiGraphics.flushIfUnmanaged();
-  }
+		vertexconsumer.addVertex(matrix4f, x2, y1, z);
+		guiGraphics.flushIfUnmanaged();
+	}
 }

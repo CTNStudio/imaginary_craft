@@ -43,5 +43,5 @@ public final class ModDamageTypeTags {
 
   private static @NotNull TagKey<DamageType> createMcTag(String name) {
     return createTag(ResourceLocation.withDefaultNamespace(name));
-  }
+	}
 }

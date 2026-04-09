@@ -14,11 +14,6 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 @Mixin(AnimationTrailParticle.Provider.class)
 public abstract class AnimationTrailParticle$Provider {
-  @Unique
-  private static TrailInfo imaginarycraft$getTrailInfo(RenderItemBase instance, LivingEntityPatch<?> entitypatch) {
-    return IRenderItemBase.of(instance).imaginarycraft$getTrailInfoProvider(entitypatch);
-  }
-
   @WrapOperation(method = "createParticle(Lnet/minecraft/core/particles/SimpleParticleType;Lnet/minecraft/client/multiplayer/ClientLevel;DDDDDD)Lnet/minecraft/client/particle/Particle;", at = @At(value = "INVOKE",
     target = "Lyesman/epicfight/client/renderer/patched/item/RenderItemBase;trailInfo()Lyesman/epicfight/api/client/animation/property/TrailInfo;"))
   private TrailInfo imaginarycraft$begin$trailInfo(
@@ -29,5 +24,10 @@ public abstract class AnimationTrailParticle$Provider {
     TrailInfo imaginarycraft$trailInfoProvider = imaginarycraft$getTrailInfo(instance, entitypatch);
     if (imaginarycraft$trailInfoProvider != null) return imaginarycraft$trailInfoProvider;
     return original.call(instance);
+  }
+
+  @Unique
+  private static TrailInfo imaginarycraft$getTrailInfo(RenderItemBase instance, LivingEntityPatch<?> entitypatch) {
+    return IRenderItemBase.of(instance).imaginarycraft$getTrailInfoProvider(entitypatch);
   }
 }

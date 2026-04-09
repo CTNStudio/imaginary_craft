@@ -34,31 +34,31 @@ public final class VirtueUtil {
     return getJustice(player).getRatingPoints();
   }
 
-  public static int getTemperanceRating(final Player player) {
-    return getTemperance(player).getRatingPoints();
-  }
-
-  public static int getPrudenceRating(final Player player) {
-    return getPrudence(player).getRatingPoints();
-  }
-
-  public static int getFortitudeRating(final Player player) {
-    return getFortitude(player).getRatingPoints();
-  }
-
   public static VirtueJustice getJustice(final Player player) {
     return player.getData(ModAttachments.JUSTICE);
+  }
+
+  public static int getTemperanceRating(final Player player) {
+    return getTemperance(player).getRatingPoints();
   }
 
   public static VirtueTemperance getTemperance(final Player player) {
     return player.getData(ModAttachments.TEMPERANCE);
   }
 
+  public static int getPrudenceRating(final Player player) {
+    return getPrudence(player).getRatingPoints();
+  }
+
   public static VirtuePrudence getPrudence(final Player player) {
     return player.getData(ModAttachments.PRUDENCE);
   }
 
+  public static int getFortitudeRating(final Player player) {
+    return getFortitude(player).getRatingPoints();
+  }
+
   public static VirtueFortitude getFortitude(final Player player) {
     return player.getData(ModAttachments.FORTITUDE);
-  }
+	}
 }

@@ -118,6 +118,58 @@ public final class CapabilityRegistry {
     blockLevel(event, LcLevel.ALEPH, BLOCK_ALEPH);
   }
 
+  private static void itemLevel(RegisterCapabilitiesEvent event, @Nullable LcLevel lcLevel, List<ItemLike> list) {
+    if (list.isEmpty()) {
+      return;
+    }
+    event.registerItem(ModCapabilitys.LcLevel.LC_LEVEL_ITEM, (stack, ctx) ->
+            switch (lcLevel) {
+              case ZAYIN -> ItemLcLevel.ZAYIN;
+              case TETH -> ItemLcLevel.TETH;
+              case HE -> ItemLcLevel.HE;
+              case WAW -> ItemLcLevel.WAW;
+              case ALEPH -> ItemLcLevel.ALEPH;
+              case null -> ItemLcLevel.NULL;
+            }, list.toArray(new ItemLike[0])
+    );
+  }
+
+  private static void blockLevel(RegisterCapabilitiesEvent event, @Nullable LcLevel lcLevel, List<Supplier<Block>> list) {
+    if (list.isEmpty()) {
+      return;
+    }
+    event.registerBlock(ModCapabilitys.LcLevel.LC_LEVEL_BLOCK, (level, blockPos, blockState, blockEntity, c) ->
+            switch (lcLevel) {
+              case ZAYIN -> BlockLcLevel.ZAYIN;
+              case TETH -> BlockLcLevel.TETH;
+              case HE -> BlockLcLevel.HE;
+              case WAW -> BlockLcLevel.WAW;
+              case ALEPH -> BlockLcLevel.ALEPH;
+              case null -> BlockLcLevel.NULL;
+            }, (Block[]) list.stream().map(Supplier::get).toArray()
+    );
+  }
+
+  private static void entityLevel(RegisterCapabilitiesEvent event, @Nullable LcLevel level, List<Supplier<EntityType<?>>> list) {
+    if (list.isEmpty()) {
+      return;
+    }
+    for (Supplier<EntityType<?>> entityTypeSupplier : list) {
+      EntityType<?> entityType = entityTypeSupplier.get();
+      LcLevelUtil.ENTITY_TYPE_LEVEL.put(entityType, level);
+      event.registerEntity(ModCapabilitys.LcLevel.LC_LEVEL_ENTITY, entityType, (stack, ctx) ->
+              switch (level) {
+                case ZAYIN -> EntityLcLevel.ZAYIN;
+                case TETH -> EntityLcLevel.TETH;
+                case HE -> EntityLcLevel.HE;
+                case WAW -> EntityLcLevel.WAW;
+                case ALEPH -> EntityLcLevel.ALEPH;
+                case null -> EntityLcLevel.NULL;
+              }
+      );
+    }
+  }
+
   @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void registerLowest(RegisterCapabilitiesEvent event) {
     for (Item item : BuiltInRegistries.ITEM) {
@@ -140,103 +192,51 @@ public final class CapabilityRegistry {
   }
 
   private static <T, C> void registerItem(
-    RegisterCapabilitiesEvent event,
-    Item item,
-    Class<T> capabilityClass,
-    ItemCapability<T, C> capability
+          RegisterCapabilitiesEvent event,
+          Item item,
+          Class<T> capabilityClass,
+          ItemCapability<T, C> capability
   ) {
     if (!capabilityClass.isInstance(item) || event.isItemRegistered(capability, item)) {
       return;
     }
     event.registerItem(capability, (stack, ctx) ->
-      capabilityClass.cast(item), item);
+            capabilityClass.cast(item), item);
   }
 
   private static <T, C> void registerBlock(
-    RegisterCapabilitiesEvent event,
-    Block block,
-    Class<T> capabilityClass,
-    BlockCapability<T, C> capability
+          RegisterCapabilitiesEvent event,
+          Block block,
+          Class<T> capabilityClass,
+          BlockCapability<T, C> capability
   ) {
     if (!capabilityClass.isInstance(block) || event.isBlockRegistered(capability, block)) {
       return;
     }
     event.registerBlock(capability, (level, blockPos, blockState, blockEntity, c) ->
-      capabilityClass.cast(block), block);
+            capabilityClass.cast(block), block);
   }
 
   private static <T, C> void registerBlockEntity(
-    RegisterCapabilitiesEvent event,
-    BlockEntityType<?> block,
-    Class<T> capabilityClass,
-    BlockCapability<T, C> capability
+          RegisterCapabilitiesEvent event,
+          BlockEntityType<?> block,
+          Class<T> capabilityClass,
+          BlockCapability<T, C> capability
   ) {
     event.registerBlockEntity(capability, block, (blockEntity, c) ->
-      capabilityClass.isInstance(blockEntity) ? capabilityClass.cast(blockEntity) : null);
+            capabilityClass.isInstance(blockEntity) ? capabilityClass.cast(blockEntity) : null);
   }
 
   private static <T, C> void registerEntity(
-    RegisterCapabilitiesEvent event,
-    EntityType<?> entityType,
-    Class<T> capabilityClass,
-    EntityCapability<T, C> capability
+          RegisterCapabilitiesEvent event,
+          EntityType<?> entityType,
+          Class<T> capabilityClass,
+          EntityCapability<T, C> capability
   ) {
     if (event.isEntityRegistered(capability, entityType)) {
       return;
     }
     event.registerEntity(capability, entityType, (entity, ctx) ->
-      capabilityClass.isInstance(entity) ? capabilityClass.cast(entity) : null);
-  }
-
-  private static void itemLevel(RegisterCapabilitiesEvent event, @Nullable LcLevel lcLevel, List<ItemLike> list) {
-    if (list.isEmpty()) {
-      return;
-    }
-    event.registerItem(ModCapabilitys.LcLevel.LC_LEVEL_ITEM, (stack, ctx) ->
-      switch (lcLevel) {
-        case ZAYIN -> ItemLcLevel.ZAYIN;
-        case TETH -> ItemLcLevel.TETH;
-        case HE -> ItemLcLevel.HE;
-        case WAW -> ItemLcLevel.WAW;
-        case ALEPH -> ItemLcLevel.ALEPH;
-        case null -> ItemLcLevel.NULL;
-      }, list.toArray(new ItemLike[0])
-    );
-  }
-
-  private static void blockLevel(RegisterCapabilitiesEvent event, @Nullable LcLevel lcLevel, List<Supplier<Block>> list) {
-    if (list.isEmpty()) {
-      return;
-    }
-    event.registerBlock(ModCapabilitys.LcLevel.LC_LEVEL_BLOCK, (level, blockPos, blockState, blockEntity, c) ->
-      switch (lcLevel) {
-        case ZAYIN -> BlockLcLevel.ZAYIN;
-        case TETH -> BlockLcLevel.TETH;
-        case HE -> BlockLcLevel.HE;
-        case WAW -> BlockLcLevel.WAW;
-        case ALEPH -> BlockLcLevel.ALEPH;
-        case null -> BlockLcLevel.NULL;
-      }, (Block[]) list.stream().map(Supplier::get).toArray()
-    );
-  }
-
-  private static void entityLevel(RegisterCapabilitiesEvent event, @Nullable LcLevel level, List<Supplier<EntityType<?>>> list) {
-    if (list.isEmpty()) {
-      return;
-    }
-    for (Supplier<EntityType<?>> entityTypeSupplier : list) {
-      EntityType<?> entityType = entityTypeSupplier.get();
-      LcLevelUtil.ENTITY_TYPE_LEVEL.put(entityType, level);
-      event.registerEntity(ModCapabilitys.LcLevel.LC_LEVEL_ENTITY, entityType, (stack, ctx) ->
-        switch (level) {
-          case ZAYIN -> EntityLcLevel.ZAYIN;
-          case TETH -> EntityLcLevel.TETH;
-          case HE -> EntityLcLevel.HE;
-          case WAW -> EntityLcLevel.WAW;
-          case ALEPH -> EntityLcLevel.ALEPH;
-          case null -> EntityLcLevel.NULL;
-        }
-      );
-    }
+            capabilityClass.isInstance(entity) ? capabilityClass.cast(entity) : null);
   }
 }

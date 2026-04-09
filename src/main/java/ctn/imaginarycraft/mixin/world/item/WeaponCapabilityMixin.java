@@ -57,39 +57,11 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
     super(builder);
   }
 
-  @Unique
-  private static <T, I> List<I> imaginarycraft$convertToAnimationAccessors(List<Function<T, I>> functionList, T t) {
-    if (functionList == null) {
-      return null;
-    }
-    List<I> list = new ArrayList<>();
-    for (int i = 0, functionListSize = functionList.size(); i < functionListSize; i++) {
-      Function<T, I> function = functionList.get(i);
-      if (function == null) {
-        Function<T, I> tiFunction = (t1) -> null;
-        functionList.set(i, tiFunction);
-        function = tiFunction;
-      }
-      I apply = function.apply(t);
-      list.add(apply);
-    }
-    return list;
-  }
-
   @Shadow
   public abstract boolean availableOnHorse();
 
   @Shadow
-  public abstract List<AnimationManager.AnimationAccessor<? extends AttackAnimation>> getMountAttackMotion();
-
-  @Shadow
   public abstract List<AnimationManager.AnimationAccessor<? extends AttackAnimation>> getAutoAttackMotion(PlayerPatch<?> playerpatch);
-
-  @Shadow
-  public abstract SoundEvent getHitSound();
-
-  @Shadow
-  public abstract HitParticleType getHitParticle();
 
   @Inject(method = "<init>", at = @At("RETURN"))
   private void imaginarycraft$init(
@@ -112,6 +84,9 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
     return imaginarycraft$hitParticleProvider == null ? getHitParticle() : imaginarycraft$hitParticleProvider.apply(entitypatch);
   }
 
+  @Shadow
+  public abstract HitParticleType getHitParticle();
+
   @Override
   public SoundEvent imaginaryCraft$getSmashingSound(LivingEntityPatch<?> entitypatch) {
     return imaginarycraft$smashingSoundProvider == null ? getSmashingSound() : imaginarycraft$smashingSoundProvider.apply(entitypatch);
@@ -122,6 +97,9 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
     return imaginarycraft$hitSoundProvider == null ? getHitSound() : imaginarycraft$hitSoundProvider.apply(entitypatch);
   }
 
+  @Shadow
+  public abstract SoundEvent getHitSound();
+
   @WrapOperation(method = "getAutoAttackMotion", at = @At(value = "INVOKE",
     target = "Ljava/util/Map;getOrDefault(Ljava/lang/Object;Ljava/lang/Object;)Ljava/lang/Object;"))
   public Object getImaginarycraft$autoAttackMotion(Map<?, ?> instance, Object key, Object defaultValue, Operation<List<?>> original, @Local(name = "playerpatch") PlayerPatch<?> playerpatch) {
@@ -131,6 +109,25 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
 
     var animationAccessors = imaginarycraft$convertToAnimationAccessors(imaginaryCraft$getAutoAttackMotionFunction(playerpatch), playerpatch);
     return animationAccessors != null ? animationAccessors : defaultValue;
+  }
+
+  @Unique
+  private static <T, I> List<I> imaginarycraft$convertToAnimationAccessors(List<Function<T, I>> functionList, T t) {
+    if (functionList == null) {
+      return null;
+    }
+    List<I> list = new ArrayList<>();
+    for (int i = 0, functionListSize = functionList.size(); i < functionListSize; i++) {
+      Function<T, I> function = functionList.get(i);
+      if (function == null) {
+        Function<T, I> tiFunction = (t1) -> null;
+        functionList.set(i, tiFunction);
+        function = tiFunction;
+      }
+      I apply = function.apply(t);
+      list.add(apply);
+    }
+    return list;
   }
 
   @Override
@@ -162,6 +159,9 @@ public abstract class WeaponCapabilityMixin extends CapabilityItem implements IW
     }
     return imaginarycraft$convertToAnimationAccessors(imaginaryCraft$getMountAttackMotionFunction(entitypatch), entitypatch);
   }
+
+  @Shadow
+  public abstract List<AnimationManager.AnimationAccessor<? extends AttackAnimation>> getMountAttackMotion();
 
   @Override
   public List<Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>>> imaginaryCraft$getMountAttackMotionFunction(LivingEntityPatch<?> entitypatch) {

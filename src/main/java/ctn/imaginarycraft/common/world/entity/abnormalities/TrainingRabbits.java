@@ -24,8 +24,8 @@ public class TrainingRabbits extends Mob implements GeoEntity {
 
   public static AttributeSupplier.Builder createAttributes() {
     return createMobAttributes()
-      .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0)
-      .add(ModAttributes.EROSION_VULNERABLE, 1.0);
+            .add(ModAttributes.THE_SOUL_VULNERABLE, 1.0)
+            .add(ModAttributes.EROSION_VULNERABLE, 1.0);
   }
 
   @Override

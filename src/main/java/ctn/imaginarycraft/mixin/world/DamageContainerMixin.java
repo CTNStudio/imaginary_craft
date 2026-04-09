@@ -15,14 +15,14 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class DamageContainerMixin implements IDamageContainer {
 
   @Shadow
+  @Final
+  private float originalDamage;
+
+  @Shadow
   public abstract void setPostAttackInvulnerabilityTicks(int ticks);
 
   @Shadow
   public abstract void setNewDamage(final float damage);
-
-  @Shadow
-  @Final
-  private float originalDamage;
 
   @Inject(method = "<init>", at = @At("RETURN"))
   private void imaginaryCraft$DamageContainer(DamageSource source, float originalDamage, CallbackInfo ci) {

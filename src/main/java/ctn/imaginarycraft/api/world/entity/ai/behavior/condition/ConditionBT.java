@@ -10,16 +10,6 @@ import org.jetbrains.annotations.Nullable;
 @FunctionalInterface
 public interface ConditionBT {
 
-  boolean check();
-
-  default @Nullable String getDesc() {
-    return null;
-  }
-
-  default ConditionBT setConDesc(String desc) {
-    return this;
-  }
-
   /**
    * 非
    */
@@ -40,6 +30,16 @@ public interface ConditionBT {
   static OrCondition or(ConditionBT... conditions) {
     return new OrCondition(Lists.newArrayList(conditions));
   }
+
+  boolean check();
+
+  default @Nullable String getDesc() {
+    return null;
+  }
+
+  default ConditionBT setConDesc(String desc) {
+    return this;
+	}
 
 }
 

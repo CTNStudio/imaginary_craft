@@ -29,13 +29,12 @@ public class TextParticle extends Particle {
   protected final Minecraft minecraft;
   protected final Font font;
   protected final Font.DisplayMode displayMode;
-  protected float baseSize;
   protected final TextParticleAlignType alignType;
   protected final boolean isShine;
   protected final TextParticleStrokeType strokeType;
   protected final boolean isTargetingPlayers;
   protected final boolean isThrough;
-
+  protected float baseSize;
   protected List<Component> textComponent;
   protected int strokeColor, strokeColorO;
   protected int fontColor, fontColorO;
@@ -68,6 +67,11 @@ public class TextParticle extends Particle {
     this.fontColorO = options.fontColor();
     this.strokeColor = options.strokeColor();
     this.strokeColorO = options.strokeColor();
+  }
+
+  @Override
+  protected void setSize(float width, float height) {
+    super.setSize(width, height);
   }
 
   @Override
@@ -172,6 +176,14 @@ public class TextParticle extends Particle {
     }
   }
 
+  protected float getXRot(float partialTicks) {
+    return Mth.lerp(partialTicks, this.xRotO, this.xRot);
+  }
+
+  protected float getYRot(float partialTicks) {
+    return Mth.lerp(partialTicks, this.yRotO, this.yRot);
+  }
+
   protected void renderText(Component text, Font font, float textX, float textY, PoseStack poseStack, MultiBufferSource bufferSource, int getLightColor, float partialTicks) {
     poseStack.pushPose();
     if (this.strokeType != TextParticleStrokeType.NONE) {
@@ -209,6 +221,14 @@ public class TextParticle extends Particle {
     font.drawInBatch(text, textX, textY, fontColor, false, matrix, bufferSource, displayMode, 0, getLightColor);
   }
 
+  protected int getStrokeColor(float partialTicks) {
+    return Mth.floor(Mth.lerp(partialTicks, this.strokeColorO, this.strokeColor));
+  }
+
+  protected int getFontColor(float partialTicks) {
+    return Mth.floor(Mth.lerp(partialTicks, this.fontColorO, this.fontColor));
+  }
+
   protected double getX(float partialTicks) {
     return Mth.lerp(partialTicks, this.xo, this.x);
   }
@@ -225,25 +245,9 @@ public class TextParticle extends Particle {
     return Mth.lerp(partialTicks, this.sizeO, this.size);
   }
 
-  protected int getStrokeColor(float partialTicks) {
-    return Mth.floor(Mth.lerp(partialTicks, this.strokeColorO, this.strokeColor));
-  }
-
-  protected int getFontColor(float partialTicks) {
-    return Mth.floor(Mth.lerp(partialTicks, this.fontColorO, this.fontColor));
-  }
-
-  protected float getXRot(float partialTicks) {
-    return Mth.lerp(partialTicks, this.xRotO, this.xRot);
-  }
-
-  protected float getYRot(float partialTicks) {
-    return Mth.lerp(partialTicks, this.yRotO, this.yRot);
-  }
-
   @Override
-  protected void setSize(float width, float height) {
-    super.setSize(width, height);
+  protected int getLightColor(float partialTick) {
+    return this.isShine ? LightTexture.FULL_BRIGHT : super.getLightColor(partialTick);
   }
 
   public void setSize(float size) {
@@ -253,15 +257,10 @@ public class TextParticle extends Particle {
   }
 
   @Override
-  protected int getLightColor(float partialTick) {
-    return this.isShine ? LightTexture.FULL_BRIGHT : super.getLightColor(partialTick);
-  }
-
-  @Override
   public @NotNull ParticleRenderType getRenderType() {
     if (this.isThrough) {
       return ModParticleRenderTypes.TEXT_PARTICLE_THROUGH;
     }
     return ModParticleRenderTypes.TEXT_PARTICLE;
-  }
+	}
 }

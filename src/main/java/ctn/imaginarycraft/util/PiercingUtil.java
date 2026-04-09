@@ -28,19 +28,15 @@ import java.util.function.Predicate;
  */
 public final class PiercingUtil {
 
-  private PiercingUtil() {
-  }
+  /**
+   * 穿透标签名称
+   */
+  public static final String PIERCING_TAG = "imaginarycraft:piercing";
 
   //#region 穿墙效果配置
+  public static final String PIERCING_CONFIG_KEY = "PiercingConfig";
 
-  /**
-   * 为投射物启用穿墙效果
-   * 调用后投射物将无视方块碰撞
-   *
-   * @param projectile 投射物实体
-   */
-  public static void enableWallPassThrough(@NotNull Projectile projectile) {
-    projectile.noPhysics = true;
+  private PiercingUtil() {
   }
 
   /**
@@ -51,6 +47,8 @@ public final class PiercingUtil {
   public static void disableWallPassThrough(@NotNull Projectile projectile) {
     projectile.noPhysics = false;
   }
+  //#endregion
+  //#region 射线检测
 
   /**
    * 检查投射物是否启用了穿墙效果
@@ -61,8 +59,14 @@ public final class PiercingUtil {
   public static boolean isWallPassThroughEnabled(@NotNull Projectile projectile) {
     return projectile.noPhysics;
   }
-  //#endregion
-  //#region 射线检测
+
+  /**
+   * 判断实体是否在射线路径上（使用默认容差0.5格）
+   */
+  public static boolean isOnRayPath(@NotNull Vec3 start, @NotNull Vec3 end,
+                                    @NotNull Entity entity) {
+    return isOnRayPath(start, end, entity, 0.5);
+  }
 
   /**
    * 判断实体是否在射线路径上
@@ -91,11 +95,15 @@ public final class PiercingUtil {
   }
 
   /**
-   * 判断实体是否在射线路径上（使用默认容差0.5格）
+   * 获取射线路径上的所有实体（使用默认容差0.5格）
    */
-  public static boolean isOnRayPath(@NotNull Vec3 start, @NotNull Vec3 end,
-                                    @NotNull Entity entity) {
-    return isOnRayPath(start, end, entity, 0.5);
+  public static @NotNull List<Entity> getPiercedEntities(@NotNull Level level,
+                                                         @Nullable Entity shooter,
+                                                         @NotNull Vec3 start,
+                                                         @NotNull Vec3 direction,
+                                                         double maxDistance,
+                                                         int maxPierce) {
+    return getPiercedEntities(level, shooter, start, direction, maxDistance, maxPierce, 0.5);
   }
 
   /**
@@ -134,17 +142,7 @@ public final class PiercingUtil {
       .toList();
   }
 
-  /**
-   * 获取射线路径上的所有实体（使用默认容差0.5格）
-   */
-  public static @NotNull List<Entity> getPiercedEntities(@NotNull Level level,
-                                                         @Nullable Entity shooter,
-                                                         @NotNull Vec3 start,
-                                                         @NotNull Vec3 direction,
-                                                         double maxDistance,
-                                                         int maxPierce) {
-    return getPiercedEntities(level, shooter, start, direction, maxDistance, maxPierce, 0.5);
-  }
+  // ==================== 条件性穿透 ====================
 
   /**
    * 获取生物视线方向上的穿透实体
@@ -163,8 +161,6 @@ public final class PiercingUtil {
     return getPiercedEntities(shooter.level(), shooter, eyePos, lookVec, maxDistance, maxPierce, tolerance);
   }
 
-  // ==================== 条件性穿透 ====================
-
   /**
    * 检查方块是否可穿透
    *
@@ -180,6 +176,8 @@ public final class PiercingUtil {
         || !state.getFluidState().isEmpty()
         || state.getCollisionShape(level, pos, CollisionContext.empty()).isEmpty();
   }
+  //#endregion
+  //#region 穿透伤害计算
 
   /**
    * 从起点到终点检测第一个不可穿透的方块
@@ -217,8 +215,6 @@ public final class PiercingUtil {
 
     return result;
   }
-  //#endregion
-  //#region 穿透伤害计算
 
   /**
    * 计算穿透伤害（递减模式）
@@ -231,6 +227,8 @@ public final class PiercingUtil {
   public static float calculatePierceDamage(float baseDamage, int hitIndex, float decayRate) {
     return baseDamage * (float) Math.pow(decayRate, hitIndex);
   }
+  //#endregion
+  //#region 投射物穿透辅助
 
   /**
    * 计算穿透伤害（固定递减模式）
@@ -242,80 +240,6 @@ public final class PiercingUtil {
    */
   public static float calculatePierceDamageFixed(float baseDamage, int hitIndex, float damageReduction) {
     return Math.max(0, baseDamage - hitIndex * damageReduction);
-  }
-  //#endregion
-  //#region 投射物穿透辅助
-
-  /**
-   * 投射物穿透数据容器
-   */
-  public static class PierceData {
-    private int currentPierceCount = 0;
-    private int maxPierceCount = -1;  // -1 = 无限
-    private final Set<Integer> hitEntityIds = new HashSet<>();
-    private float damageDecay = 0.75f;
-    private boolean wallPassThrough = true;
-    private float originalDamage = 0;
-
-    public PierceData() {
-    }
-
-    public PierceData(int maxPierce, float damageDecay, boolean wallPassThrough) {
-      this.maxPierceCount = maxPierce;
-      this.damageDecay = damageDecay;
-      this.wallPassThrough = wallPassThrough;
-    }
-
-    public PierceData maxPierce(int count) {
-      this.maxPierceCount = count;
-      return this;
-    }
-
-    public PierceData damageDecay(float rate) {
-      this.damageDecay = rate;
-      return this;
-    }
-
-    public PierceData wallPassThrough(boolean enabled) {
-      this.wallPassThrough = enabled;
-      return this;
-    }
-
-    public PierceData originalDamage(float damage) {
-      this.originalDamage = damage;
-      return this;
-    }
-    //#endregion
-    //#region 状态查询
-
-    public boolean canPierce() {
-      return maxPierceCount < 0 || currentPierceCount < maxPierceCount;
-    }
-
-    public boolean hasHitEntity(int entityId) {
-      return hitEntityIds.contains(entityId);
-    }
-
-    public void recordHit(int entityId) {
-      hitEntityIds.add(entityId);
-      currentPierceCount++;
-    }
-
-    public float getCurrentDamage() {
-      return calculatePierceDamage(originalDamage, currentPierceCount, damageDecay);
-    }
-
-    public int getCurrentPierceCount() {
-      return currentPierceCount;
-    }
-
-    public boolean isWallPassThroughEnabled() {
-      return wallPassThrough;
-    }
-
-    public Set<Integer> getHitEntityIds() {
-      return hitEntityIds;
-    }
   }
 
   /**
@@ -393,36 +317,6 @@ public final class PiercingUtil {
   //#region 标签系统
 
   /**
-   * 穿透标签名称
-   */
-  public static final String PIERCING_TAG = "imaginarycraft:piercing";
-  public static final String PIERCING_CONFIG_KEY = "PiercingConfig";
-
-  /**
-   * 为弹射物添加穿透标签
-   *
-   * @param projectile 弹射物实体
-   * @param config     穿透配置
-   */
-  public static void addPiercingTag(@NotNull Projectile projectile, @NotNull PierceData config) {
-    CompoundTag nbt = projectile.getPersistentData();
-    CompoundTag piercingNbt = new CompoundTag();
-
-    // 保存配置
-    piercingNbt.putInt("MaxPierce", config.maxPierceCount);
-    piercingNbt.putFloat("DamageDecay", config.damageDecay);
-    piercingNbt.putBoolean("WallPassThrough", config.wallPassThrough);
-    piercingNbt.putFloat("OriginalDamage", config.originalDamage);
-
-    nbt.put(PIERCING_CONFIG_KEY, piercingNbt);
-
-    // 立即启用穿墙效果
-    if (config.wallPassThrough) {
-      enableWallPassThrough(projectile);
-    }
-  }
-
-  /**
    * 检查弹射物是否有穿透标签
    *
    * @param projectile 弹射物实体
@@ -430,29 +324,6 @@ public final class PiercingUtil {
    */
   public static boolean hasPiercingTag(@NotNull Projectile projectile) {
     return projectile.getPersistentData().contains(PIERCING_CONFIG_KEY);
-  }
-
-  /**
-   * 从弹射物获取穿透配置
-   *
-   * @param projectile 弹射物实体
-   * @return 穿透配置，如果没有则返回 null
-   */
-  @Nullable
-  public static PierceData getPiercingConfig(@NotNull Projectile projectile) {
-    CompoundTag nbt = projectile.getPersistentData();
-    if (!nbt.contains(PIERCING_CONFIG_KEY)) {
-      return null;
-    }
-
-    CompoundTag piercingNbt = nbt.getCompound(PIERCING_CONFIG_KEY);
-    PierceData config = new PierceData();
-    config.maxPierceCount = piercingNbt.getInt("MaxPierce");
-    config.damageDecay = piercingNbt.getFloat("DamageDecay");
-    config.wallPassThrough = piercingNbt.getBoolean("WallPassThrough");
-    config.originalDamage = piercingNbt.getFloat("OriginalDamage");
-
-    return config;
   }
 
   /**
@@ -510,6 +381,29 @@ public final class PiercingUtil {
   }
 
   /**
+   * 从弹射物获取穿透配置
+   *
+   * @param projectile 弹射物实体
+   * @return 穿透配置，如果没有则返回 null
+   */
+  @Nullable
+  public static PierceData getPiercingConfig(@NotNull Projectile projectile) {
+    CompoundTag nbt = projectile.getPersistentData();
+    if (!nbt.contains(PIERCING_CONFIG_KEY)) {
+      return null;
+    }
+
+    CompoundTag piercingNbt = nbt.getCompound(PIERCING_CONFIG_KEY);
+    PierceData config = new PierceData();
+    config.maxPierceCount = piercingNbt.getInt("MaxPierce");
+    config.damageDecay = piercingNbt.getFloat("DamageDecay");
+    config.wallPassThrough = piercingNbt.getBoolean("WallPassThrough");
+    config.originalDamage = piercingNbt.getFloat("OriginalDamage");
+
+    return config;
+  }
+
+  /**
    * 快速为弹射物设置穿透效果（简化版）
    *
    * @param projectile      弹射物
@@ -524,6 +418,40 @@ public final class PiercingUtil {
   }
 
   /**
+   * 为弹射物添加穿透标签
+   *
+   * @param projectile 弹射物实体
+   * @param config     穿透配置
+   */
+  public static void addPiercingTag(@NotNull Projectile projectile, @NotNull PierceData config) {
+    CompoundTag nbt = projectile.getPersistentData();
+    CompoundTag piercingNbt = new CompoundTag();
+
+    // 保存配置
+    piercingNbt.putInt("MaxPierce", config.maxPierceCount);
+    piercingNbt.putFloat("DamageDecay", config.damageDecay);
+    piercingNbt.putBoolean("WallPassThrough", config.wallPassThrough);
+    piercingNbt.putFloat("OriginalDamage", config.originalDamage);
+
+    nbt.put(PIERCING_CONFIG_KEY, piercingNbt);
+
+    // 立即启用穿墙效果
+    if (config.wallPassThrough) {
+      enableWallPassThrough(projectile);
+    }
+  }
+
+  /**
+   * 为投射物启用穿墙效果
+   * 调用后投射物将无视方块碰撞
+   *
+   * @param projectile 投射物实体
+   */
+  public static void enableWallPassThrough(@NotNull Projectile projectile) {
+    projectile.noPhysics = true;
+  }
+
+  /**
    * 快速设置穿透效果（使用默认值：5次穿透，0.75衰减，穿墙）
    *
    * @param projectile 弹射物
@@ -534,5 +462,77 @@ public final class PiercingUtil {
     config.originalDamage = damage;
     addPiercingTag(projectile, config);
   }
-  //#endregion
+
+  /**
+   * 投射物穿透数据容器
+   */
+  public static class PierceData {
+    private final Set<Integer> hitEntityIds = new HashSet<>();
+    private int currentPierceCount = 0;
+    private int maxPierceCount = -1;  // -1 = 无限
+    private float damageDecay = 0.75f;
+    private boolean wallPassThrough = true;
+    private float originalDamage = 0;
+
+    public PierceData() {
+    }
+
+    public PierceData(int maxPierce, float damageDecay, boolean wallPassThrough) {
+      this.maxPierceCount = maxPierce;
+      this.damageDecay = damageDecay;
+      this.wallPassThrough = wallPassThrough;
+    }
+
+    public PierceData maxPierce(int count) {
+      this.maxPierceCount = count;
+      return this;
+    }
+
+    public PierceData damageDecay(float rate) {
+      this.damageDecay = rate;
+      return this;
+    }
+
+    public PierceData wallPassThrough(boolean enabled) {
+      this.wallPassThrough = enabled;
+      return this;
+    }
+
+    public PierceData originalDamage(float damage) {
+      this.originalDamage = damage;
+      return this;
+    }
+    //#endregion
+    //#region 状态查询
+
+    public boolean canPierce() {
+      return maxPierceCount < 0 || currentPierceCount < maxPierceCount;
+    }
+
+    public boolean hasHitEntity(int entityId) {
+      return hitEntityIds.contains(entityId);
+    }
+
+    public void recordHit(int entityId) {
+      hitEntityIds.add(entityId);
+      currentPierceCount++;
+    }
+
+    public float getCurrentDamage() {
+      return calculatePierceDamage(originalDamage, currentPierceCount, damageDecay);
+    }
+
+    public int getCurrentPierceCount() {
+      return currentPierceCount;
+    }
+
+    public boolean isWallPassThroughEnabled() {
+      return wallPassThrough;
+		}
+
+		public Set<Integer> getHitEntityIds() {
+			return hitEntityIds;
+		}
+	}
+	//#endregion
 }

@@ -22,13 +22,12 @@ import java.util.Set;
  * 正义
  */
 public final class VirtueJustice extends AbstractVirtue {
-  private static final ResourceLocation AMPLITUDE_ID = ImaginaryCraft.modRl("justice_amplitude");
   public static final double MOVEMENT_SPEED = 0.001;
   public static final double ATTACK_SPEED = 0.01;
   public static final double SWIM_SPEED = 0.01;
   public static final double JUSTICE_FLIGHT_SPEED = 0.00013;
   public static final float VANILLA_FLYING_SPEED = 0.05f;
-
+  private static final ResourceLocation AMPLITUDE_ID = ImaginaryCraft.modRl("justice_amplitude");
   private double flightSpeedBonus;
 
   public VirtueJustice(final Player holder) {
@@ -69,36 +68,12 @@ public final class VirtueJustice extends AbstractVirtue {
   }
 
   @Override
-  public void updateTrigger() {
-  }
-
-  @Override
   public void updatePoints(final int newPoints) {
     // TODO 需要提供随机处理
     setAttributeModifier(Attributes.MOVEMENT_SPEED, newPoints * MOVEMENT_SPEED, AttributeModifier.Operation.ADD_VALUE);
     setAttributeModifier(Attributes.ATTACK_SPEED, newPoints * ATTACK_SPEED, AttributeModifier.Operation.ADD_VALUE);
     setAttributeModifier(NeoForgeMod.SWIM_SPEED, newPoints * SWIM_SPEED, AttributeModifier.Operation.ADD_VALUE);
     setFlightSpeedBonus(newPoints);
-  }
-
-  public double getFlightSpeedBonus() {
-    return flightSpeedBonus;
-  }
-
-  public void setFlightSpeedBonus(double flightSpeedBonus) {
-    if (getFlightSpeedBonus() == flightSpeedBonus) {
-      return;
-    }
-    updateFlightSpeedBonus(flightSpeedBonus);
-    this.flightSpeedBonus = flightSpeedBonus;
-    updateTrigger();
-    syncData();
-  }
-
-  // TODO 重构飞行速度加成
-  private void updateFlightSpeedBonus(double newFlightSpeedBonus) {
-//    var abilities = getPlayer().getAbilities();
-//    abilities.setFlyingSpeed(abilities.getFlyingSpeed() + (float) (newFlightSpeedBonus * JUSTICE_FLIGHT_SPEED));
   }
 
   public static class Serialize extends AbstractSerialize<VirtueJustice> {
@@ -123,6 +98,10 @@ public final class VirtueJustice extends AbstractVirtue {
     }
   }
 
+  @Override
+  public void updateTrigger() {
+  }
+
   public static class Sync extends AbstractSync<VirtueJustice> {
     @Override
     public VirtueJustice createAttachment(final IAttachmentHolder holder, final RegistryFriendlyByteBuf buf, @Nullable final VirtueJustice attachment) {
@@ -142,4 +121,27 @@ public final class VirtueJustice extends AbstractVirtue {
       return newAttachment;
     }
   }
+
+
+  public double getFlightSpeedBonus() {
+    return flightSpeedBonus;
+  }
+
+  public void setFlightSpeedBonus(double flightSpeedBonus) {
+    if (getFlightSpeedBonus() == flightSpeedBonus) {
+      return;
+    }
+    updateFlightSpeedBonus(flightSpeedBonus);
+    this.flightSpeedBonus = flightSpeedBonus;
+    updateTrigger();
+    syncData();
+  }
+
+  // TODO 重构飞行速度加成
+  private void updateFlightSpeedBonus(double newFlightSpeedBonus) {
+//    var abilities = getPlayer().getAbilities();
+//    abilities.setFlyingSpeed(abilities.getFlyingSpeed() + (float) (newFlightSpeedBonus * JUSTICE_FLIGHT_SPEED));
+  }
+
+
 }

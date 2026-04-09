@@ -14,11 +14,6 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 @Mixin(StaticAnimation.class)
 public abstract class StaticAnimationMixin {
-  @Unique
-  private static TrailInfo imaginarycraft$getTrailInfo(RenderItemBase instance, LivingEntityPatch<?> entitypatch) {
-    return IRenderItemBase.of(instance).imaginarycraft$getTrailInfoProvider(entitypatch);
-  }
-
   @WrapOperation(method = "lambda$begin$6", at = @At(value = "INVOKE",
     target = "Lyesman/epicfight/client/renderer/patched/item/RenderItemBase;trailInfo()Lyesman/epicfight/api/client/animation/property/TrailInfo;"))
   private TrailInfo imaginarycraft$begin$trailInfo(
@@ -29,5 +24,10 @@ public abstract class StaticAnimationMixin {
     TrailInfo imaginarycraft$trailInfoProvider = imaginarycraft$getTrailInfo(instance, entitypatch);
     if (imaginarycraft$trailInfoProvider != null) return imaginarycraft$trailInfoProvider;
     return original.call(instance);
+  }
+
+  @Unique
+  private static TrailInfo imaginarycraft$getTrailInfo(RenderItemBase instance, LivingEntityPatch<?> entitypatch) {
+    return IRenderItemBase.of(instance).imaginarycraft$getTrailInfoProvider(entitypatch);
   }
 }

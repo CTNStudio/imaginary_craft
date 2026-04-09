@@ -23,6 +23,14 @@ public class DelayTaskHolder {
     this.attachmentHolder = attachmentHolder;
   }
 
+  public static DelayTaskHolder of(AttachmentHolder attachmentHolder) {
+    return attachmentHolder.getData(ModAttachments.DELAY_TASK_HOLDER);
+  }
+
+  public static ITask.Builder createTaskBilder() {
+    return ITask.Builder.create();
+  }
+
   public IAttachmentHolder getAttachmentHolder() {
     return attachmentHolder;
   }
@@ -47,17 +55,6 @@ public class DelayTaskHolder {
     }
   }
 
-  public void addTask(ResourceLocation id, ITask task) {
-    runList.put(id, task);
-  }
-
-  /**
-   * 通过该方法添加的任务会在对应槽位的物品更替时移除
-   */
-  public void addTask(EquipmentSlot slot, ITask task) {
-    addTask(ImaginaryCraft.modRl(slot.getName()), task);
-  }
-
   /**
    * 通过该方法添加的任务会在对应手的物品更替时移除
    */
@@ -68,8 +65,12 @@ public class DelayTaskHolder {
   /**
    * 通过该方法添加的任务会在对应槽位的物品更替时移除
    */
-  public void addTask(EquipmentSlot slot, String name, ITask task) {
-    addTask(ImaginaryCraft.modRl(slot.getName() + "." + name), task);
+  public void addTask(EquipmentSlot slot, ITask task) {
+    addTask(ImaginaryCraft.modRl(slot.getName()), task);
+  }
+
+  public void addTask(ResourceLocation id, ITask task) {
+    runList.put(id, task);
   }
 
   /**
@@ -79,11 +80,18 @@ public class DelayTaskHolder {
     addTask(handUsed == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND, name, task);
   }
 
-  public void removeTask(ResourceLocation id) {
-    if (!containsTask(id)) {
-      return;
-    }
-    runList.remove(id).removed();
+  /**
+   * 通过该方法添加的任务会在对应槽位的物品更替时移除
+   */
+  public void addTask(EquipmentSlot slot, String name, ITask task) {
+    addTask(ImaginaryCraft.modRl(slot.getName() + "." + name), task);
+  }
+
+  /**
+   * 使用此方法会移除对应手的任务包括相关的
+   */
+  public void removeTask(InteractionHand handUsed) {
+    removeTask(handUsed == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
   }
 
   /**
@@ -102,6 +110,17 @@ public class DelayTaskHolder {
     }
   }
 
+  /**
+   * 如果返回的是空集合就表示该槽位没有任务
+   */
+  public Set<ResourceLocation> containsTask(EquipmentSlot slot) {
+    return runList.keySet().stream().filter(key -> key.getPath().startsWith(slot.getName())).collect(Collectors.toSet());
+  }
+
+  public void removeTask(InteractionHand handUsed, String name) {
+    removeTask(handUsed == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND, name);
+  }
+
   public void removeTask(EquipmentSlot slot, String name) {
     if (!containsTask(slot, name)) {
       return;
@@ -109,26 +128,15 @@ public class DelayTaskHolder {
     removeTask(ImaginaryCraft.modRl(slot.getName() + "." + name));
   }
 
-  /**
-   * 使用此方法会移除对应手的任务包括相关的
-   */
-  public void removeTask(InteractionHand handUsed) {
-    removeTask(handUsed == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND);
-  }
-
-  public void removeTask(InteractionHand handUsed, String name) {
-    removeTask(handUsed == InteractionHand.MAIN_HAND ? EquipmentSlot.MAINHAND : EquipmentSlot.OFFHAND, name);
+  public void removeTask(ResourceLocation id) {
+    if (!containsTask(id)) {
+      return;
+    }
+    runList.remove(id).removed();
   }
 
   public boolean containsTask(ResourceLocation id) {
     return runList.containsKey(id);
-  }
-
-  /**
-   * 如果返回的是空集合就表示该槽位没有任务
-   */
-  public Set<ResourceLocation> containsTask(EquipmentSlot slot) {
-    return runList.keySet().stream().filter(key -> key.getPath().startsWith(slot.getName())).collect(Collectors.toSet());
   }
 
   public boolean containsTask(EquipmentSlot slot, String name) {
@@ -150,14 +158,6 @@ public class DelayTaskHolder {
     runList.clear();
   }
 
-  public static DelayTaskHolder of(AttachmentHolder attachmentHolder) {
-    return attachmentHolder.getData(ModAttachments.DELAY_TASK_HOLDER);
-  }
-
-  public static ITask.Builder createTaskBilder() {
-    return ITask.Builder.create();
-  }
-
   public interface ITask {
     void run(DelayTaskHolder delayTaskHolder);
 
@@ -166,15 +166,33 @@ public class DelayTaskHolder {
     boolean isRemoved();
 
     /**
+     * 每一tick执行一次可通过修改返回值来自定义结束的时间之类的逻辑
+     */
+    @FunctionalInterface
+    interface TickRun {
+      int run(int tick, int maxTick);
+    }
+
+    @FunctionalInterface
+    interface ResultRun {
+      void run();
+    }
+
+    @FunctionalInterface
+    interface RemovedRun {
+      void run();
+    }
+
+    /**
      * 运行任务类，isRemoved为true时将在下一刻移除该任务
      */
     class BaseTask implements ITask {
       protected final ResultRun resultRun;
       protected final @Nullable RemovedRun removedRun;
-      protected int tick = 0;
       protected final int maxTick;
-      protected int repeatCount = 0;
       protected final int maxRepeatCount;
+      protected int tick = 0;
+      protected int repeatCount = 0;
       protected boolean isRemoved;
 
       private BaseTask(ResultRun resultRun, @Nullable RemovedRun removedRun, int removedTick, int maxRepeatCount) {
@@ -237,24 +255,6 @@ public class DelayTaskHolder {
       }
     }
 
-    /**
-     * 每一tick执行一次可通过修改返回值来自定义结束的时间之类的逻辑
-     */
-    @FunctionalInterface
-    interface TickRun {
-      int run(int tick, int maxTick);
-    }
-
-    @FunctionalInterface
-    interface ResultRun {
-      void run();
-    }
-
-    @FunctionalInterface
-    interface RemovedRun {
-      void run();
-    }
-
     class Builder {
       private @Nullable TickRun tickRun;
       private @Nullable RemovedRun removedRun;
@@ -300,7 +300,7 @@ public class DelayTaskHolder {
         return tickRun == null ?
           new BaseTask(resultRun, removedRun, removedTick, repeatCount) :
           new TickTask(tickRun, removedRun, resultRun, removedTick, repeatCount);
-      }
-    }
-  }
+			}
+		}
+	}
 }

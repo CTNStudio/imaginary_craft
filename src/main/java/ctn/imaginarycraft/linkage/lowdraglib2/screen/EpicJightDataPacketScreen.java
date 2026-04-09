@@ -18,6 +18,10 @@ public class EpicJightDataPacketScreen extends Screen {
     super(title);
   }
 
+  private static String getText(String text) {
+    return ImaginaryCraft.modRlText(EPIC_JIGHT_DATA_PACKET + ".screen." + text);
+  }
+
   @Override
   public void init() {
     super.init();
@@ -34,9 +38,5 @@ public class EpicJightDataPacketScreen extends Screen {
     ).style(style -> style.background(Sprites.BORDER));
     var ui = UI.of(root);
     return ModularUI.of(ui);
-  }
-
-  private static String getText(String text) {
-    return ImaginaryCraft.modRlText(EPIC_JIGHT_DATA_PACKET + ".screen." + text);
   }
 }

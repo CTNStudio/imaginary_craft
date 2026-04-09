@@ -52,5 +52,5 @@ public final class ModEntityTags {
 
   private static TagKey<EntityType<?>> createMcTag(String name) {
     return createTag(ResourceLocation.withDefaultNamespace(name));
-  }
+	}
 }

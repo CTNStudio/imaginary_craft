@@ -27,18 +27,6 @@ public class HorizontalStatusBar extends AbstractWidget {
     this.lightLayer = lightLayer;
   }
 
-  private void renderLayer(final @NotNull GuiGraphics guiGraphics, final TextureLayer layer, int x, int y) {
-    GuiUtil.blitSprite(guiGraphics, layer.texture, x + layer.xPos, y + layer.yPos, layer.width, layer.height);
-  }
-
-  public float getOldValue() {
-    return this.oldValue;
-  }
-
-  public void setOldValue(float value) {
-    this.oldValue = value;
-  }
-
   public float getValue() {
     return this.value;
   }
@@ -62,24 +50,12 @@ public class HorizontalStatusBar extends AbstractWidget {
     }
   }
 
-  public void setLightWidth(float value) {
-    this.lightWidth = value;
-  }
-
   public float getLightWidth() {
     return this.lightWidth;
   }
 
-  public float getMaxValue() {
-    return maxValue;
-  }
-
-  public void setMaxValue(float maxValue) {
-    this.maxValue = maxValue;
-  }
-
-  public float getClampValue() {
-    return Math.clamp(this.getOldValue(), 0, this.getMaxValue());
+  public void setLightWidth(float value) {
+    this.lightWidth = value;
   }
 
   public void setLight() {
@@ -107,6 +83,10 @@ public class HorizontalStatusBar extends AbstractWidget {
       return;
     }
     this.lightTick -= partialTick;
+  }
+
+  private void renderLayer(final @NotNull GuiGraphics guiGraphics, final TextureLayer layer, int x, int y) {
+    GuiUtil.blitSprite(guiGraphics, layer.texture, x + layer.xPos, y + layer.yPos, layer.width, layer.height);
   }
 
   private void renderInternal(final GuiGraphics guiGraphics, final float partialTick, final int x, final int y) {
@@ -139,6 +119,26 @@ public class HorizontalStatusBar extends AbstractWidget {
 
     GuiUtil.blitSprite(guiGraphics, this.internalLayer.texture, maxWidth, internalHeight,
       0, 0, posX, posY, internalUWidth, internalHeight);
+  }
+
+  public float getClampValue() {
+    return Math.clamp(this.getOldValue(), 0, this.getMaxValue());
+  }
+
+  public float getOldValue() {
+    return this.oldValue;
+  }
+
+  public void setOldValue(float value) {
+    this.oldValue = value;
+  }
+
+  public float getMaxValue() {
+    return maxValue;
+  }
+
+  public void setMaxValue(float maxValue) {
+    this.maxValue = maxValue;
   }
 
   @Override
@@ -176,8 +176,16 @@ public class HorizontalStatusBar extends AbstractWidget {
       return width;
     }
 
+    public void setWidth(int width) {
+      this.width = width;
+    }
+
     public int getHeight() {
       return height;
+    }
+
+    public void setHeight(int height) {
+      this.height = height;
     }
 
     public @NotNull ResourceLocation getTexture() {
@@ -227,14 +235,6 @@ public class HorizontalStatusBar extends AbstractWidget {
 
     public void setYPos(float yPos) {
       this.yPos = yPos;
-    }
-
-    public void setWidth(int width) {
-      this.width = width;
-    }
-
-    public void setHeight(int height) {
-      this.height = height;
     }
   }
 }

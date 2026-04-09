@@ -36,14 +36,6 @@ public final class ModDataComponents {
     return register(name, Codec.BOOL, ByteBufCodecs.BOOL, isCacheEncoding);
   }
 
-  private static Supplier<DataComponentType<String>> recordString(String name, boolean isCacheEncoding) {
-    return register(name, Codec.STRING, ByteBufCodecs.STRING_UTF8, isCacheEncoding);
-  }
-
-  private static <T> Supplier<DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builder) {
-    return register(name, () -> builder.apply(DataComponentType.builder()).build());
-  }
-
   private static <T> Supplier<DataComponentType<T>> register(String name, Codec<T> codec, StreamCodec<? super RegistryFriendlyByteBuf, T> streamCodec, boolean isCacheEncoding) {
     return register(name, builder -> {
       builder.persistent(codec).networkSynchronized(streamCodec);
@@ -54,7 +46,15 @@ public final class ModDataComponents {
     });
   }
 
+  private static <T> Supplier<DataComponentType<T>> register(String name, UnaryOperator<DataComponentType.Builder<T>> builder) {
+    return register(name, () -> builder.apply(DataComponentType.builder()).build());
+  }
+
   private static <B extends DataComponentType<?>> DeferredHolder<DataComponentType<?>, B> register(String name, Supplier<? extends B> builder) {
     return ModDataComponents.REGISTRY.register("data_components." + name, builder);
   }
+
+  private static Supplier<DataComponentType<String>> recordString(String name, boolean isCacheEncoding) {
+    return register(name, Codec.STRING, ByteBufCodecs.STRING_UTF8, isCacheEncoding);
+	}
 }

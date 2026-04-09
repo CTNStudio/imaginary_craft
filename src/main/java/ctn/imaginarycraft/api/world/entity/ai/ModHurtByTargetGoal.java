@@ -224,19 +224,19 @@ public class ModHurtByTargetGoal extends TargetGoal {
       return this;
     }
 
+    public Builder withIgnoreAlertTypes(@NotNull Class<?>... classes) {
+      this.alertSameType = true;
+      return withIgnoreAlert(createClassPredicate(classes));
+    }
+
     public Builder withIgnoreAlert(@NotNull Predicate<Mob> predicate) {
       this.alertSameType = true;
       this.ignoreAlertPredicate = predicate;
       return this;
     }
 
-    public Builder withIgnoreAlertTypes(@NotNull Class<?>... classes) {
-      this.alertSameType = true;
-      return withIgnoreAlert(createClassPredicate(classes));
-    }
-
     public ModHurtByTargetGoal build(Mob mob) {
       return new ModHurtByTargetGoal(mob, this.alertSameType, this.ignoreDamagePredicate, this.nearbyMobFilter, this.ignoreAlertPredicate);
-    }
-  }
+		}
+	}
 }

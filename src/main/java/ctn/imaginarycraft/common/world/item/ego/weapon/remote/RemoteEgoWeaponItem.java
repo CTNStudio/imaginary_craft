@@ -79,6 +79,19 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
     world.addFreshEntity(projectile);
   }
 
+  protected @NotNull Projectile createProjectile(@NotNull Level world, @NotNull LivingEntity shooterEntity, @NotNull ItemStack weaponItem,
+                                                 @Nullable ItemStack ammoItem) {
+    if (this.createProjectile != null) {
+      return this.createProjectile.createProjectile(world, shooterEntity, weaponItem, ammoItem);
+    }
+    ItemStack ammo1 = Items.ARROW.getDefaultInstance();
+    ArrowItem arrowitem = ammo1.getItem() instanceof ArrowItem arrowitem1 ? arrowitem1 : (ArrowItem) Items.ARROW;
+    AbstractArrow abstractarrow = arrowitem.createArrow(world, ammo1, shooterEntity, weaponItem);
+    abstractarrow.setCritArrow(true);
+
+    return customArrow(abstractarrow, ammo1, weaponItem);
+  }
+
   /**
    * 是否可以挖掘方块
    */
@@ -103,19 +116,6 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
     return this.createProjectile != null ?
       this.createProjectile.createProjectile(world, shooterEntity, weaponItem, ammoItem) :
       super.createProjectile(world, shooterEntity, weaponItem, Items.ARROW.getDefaultInstance(), isCrit);
-  }
-
-  protected @NotNull Projectile createProjectile(@NotNull Level world, @NotNull LivingEntity shooterEntity, @NotNull ItemStack weaponItem,
-                                                 @Nullable ItemStack ammoItem) {
-    if (this.createProjectile != null) {
-      return this.createProjectile.createProjectile(world, shooterEntity, weaponItem, ammoItem);
-    }
-    ItemStack ammo1 = Items.ARROW.getDefaultInstance();
-    ArrowItem arrowitem = ammo1.getItem() instanceof ArrowItem arrowitem1 ? arrowitem1 : (ArrowItem) Items.ARROW;
-    AbstractArrow abstractarrow = arrowitem.createArrow(world, ammo1, shooterEntity, weaponItem);
-    abstractarrow.setCritArrow(true);
-
-    return customArrow(abstractarrow, ammo1, weaponItem);
   }
 
   @Override
@@ -153,5 +153,5 @@ public abstract class RemoteEgoWeaponItem extends ProjectileWeaponItem implement
   @Override
   public @NotNull Set<LcDamageType> getCanCauseLcDamageTypes(ItemStack stack) {
     return canCauseLcDamageTypes;
-  }
+	}
 }

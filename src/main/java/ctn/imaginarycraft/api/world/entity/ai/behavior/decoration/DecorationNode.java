@@ -9,14 +9,14 @@ import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
 public abstract class DecorationNode extends BTNode {
   protected final BTNode child;
 
+  public DecorationNode(BTNode child) {
+    this.child = child;
+  }
+
   @Override
   public void start() {
     super.start();
     child.start();
-  }
-
-  public DecorationNode(BTNode child) {
-    this.child = child;
   }
 
   @Override

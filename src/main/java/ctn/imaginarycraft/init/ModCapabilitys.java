@@ -32,5 +32,5 @@ public final class ModCapabilitys {
 
     public static final EntityCapability<IEntityLcLevel, Void> LC_LEVEL_ENTITY =
       EntityCapability.createVoid(ImaginaryCraft.modRl("lobotomy_corporation_level_entity"), IEntityLcLevel.class);
-  }
+	}
 }

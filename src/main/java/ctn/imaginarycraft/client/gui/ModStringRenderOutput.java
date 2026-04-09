@@ -55,14 +55,6 @@ public class ModStringRenderOutput implements FormattedCharSink {
     this.font = font;
   }
 
-  private void addEffect(BakedGlyph.Effect effect) {
-    if (this.effects == null) {
-      this.effects = Lists.newArrayList();
-    }
-
-    this.effects.add(effect);
-  }
-
   @Override
   public boolean accept(final int positionInCurrentSequence, final Style style, final int codePoint) {
     FontSet fontset = font.getFontSet(style.getFont());
@@ -128,6 +120,14 @@ public class ModStringRenderOutput implements FormattedCharSink {
 
     this.x += f6;
     return true;
+  }
+
+  private void addEffect(BakedGlyph.Effect effect) {
+    if (this.effects == null) {
+      this.effects = Lists.newArrayList();
+    }
+
+    this.effects.add(effect);
   }
 
   public float finish(int backgroundColor, float x) {

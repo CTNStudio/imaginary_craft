@@ -171,7 +171,7 @@ public class TextParticleBuilder {
       xRot,
       yRot,
       isTargetingPlayers,
-      isSeeThrough
-    );
-  }
+			isSeeThrough
+		);
+	}
 }

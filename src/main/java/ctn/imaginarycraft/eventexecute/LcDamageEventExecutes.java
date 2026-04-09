@@ -72,6 +72,13 @@ public final class LcDamageEventExecutes {
   }
 
   /**
+   * 本体计算
+   */
+  private static float ontologyLevelCalculate(final LivingEntity entity, @Nullable final LcLevel attackerLevel, final float damage) {
+    return damage * LcLevelUtil.getDamageMultiple(LcLevelUtil.getLevel(entity), attackerLevel);
+  }
+
+  /**
    * 计算易伤属性对最终伤害的加成效果
    */
   public static void vulnerableReduction(LivingEntity entity, DamageContainer damageContainer, DamageSource damageSource) {
@@ -91,13 +98,6 @@ public final class LcDamageEventExecutes {
     }
 
     damageContainer.setNewDamage(newDamage);
-  }
-
-  /**
-   * 本体计算
-   */
-  private static float ontologyLevelCalculate(final LivingEntity entity, @Nullable final LcLevel attackerLevel, final float damage) {
-    return damage * LcLevelUtil.getDamageMultiple(LcLevelUtil.getLevel(entity), attackerLevel);
   }
 
   /**
@@ -164,6 +164,6 @@ public final class LcDamageEventExecutes {
       } else {
         event.setNewDamage(remaining);
       }
-    }
-  }
+		}
+	}
 }

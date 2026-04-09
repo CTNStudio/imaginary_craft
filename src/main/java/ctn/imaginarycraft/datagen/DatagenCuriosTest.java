@@ -76,10 +76,6 @@ public final class DatagenCuriosTest extends CuriosDataProvider {
     createSimpleEntities("player");
   }
 
-  public ISlotData createSlot(String nameID, String icon, ResourceLocation validator) {
-    return createSlot(nameID, validator).icon(ImaginaryCraft.modRl(icon));
-  }
-
   public ISlotData createSlot(String nameId, ResourceLocation validator) {
     return super.createSlot(nameId)
       .dropRule(ICurio.DropRule.ALWAYS_KEEP)
@@ -103,5 +99,9 @@ public final class DatagenCuriosTest extends CuriosDataProvider {
       EGO_CURIOS_GLOVE,
       EGO_CURIOS_RIGHT_BACK,
       EGO_CURIOS_LEFT_BACK);
+  }
+
+  public ISlotData createSlot(String nameID, String icon, ResourceLocation validator) {
+    return createSlot(nameID, validator).icon(ImaginaryCraft.modRl(icon));
   }
 }

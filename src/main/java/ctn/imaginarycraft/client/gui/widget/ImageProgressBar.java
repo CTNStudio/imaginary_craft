@@ -38,20 +38,14 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
   }
 
   /**
-   * 当isVertical为true时：
-   * <br>
-   * 如果是正向绘制（isReverseDirection为false），进度从上往下填充
-   * <br>
-   * 如果是反向绘制（isReverseDirection为true），进度从下往上填充
+   * 渲染垂直方向的进度条
    * <p>
-   * 当isVertical为false时：
+   * 正向绘制：进度从上往下填充
    * <br>
-   * 如果是正向绘制（isReverseDirection为false），进度从左往右填充
-   * <br>
-   * 如果是反向绘制（isReverseDirection为true），进度从右往左填
+   * 反向绘制：进度从下往上填充
    */
-  public static void renderProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int width, int height, float value, float maxValue, boolean isVertical, boolean isReverseDirection) {
-    renderProgressBar(guiGraphics, texture, x, y, 0, 0, width, height, value, maxValue, isVertical, isReverseDirection);
+  public static void renderVerticalProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int uPos, int vPos, int width, int height, float value, float maxValue, boolean isReverseDirection) {
+    renderProgressBar(guiGraphics, texture, x, y, uPos, vPos, width, height, value, maxValue, true, isReverseDirection);
   }
 
   /**
@@ -111,19 +105,25 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
    * <br>
    * 反向绘制：进度从下往上填充
    */
-  public static void renderVerticalProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int uPos, int vPos, int width, int height, float value, float maxValue, boolean isReverseDirection) {
-    renderProgressBar(guiGraphics, texture, x, y, uPos, vPos, width, height, value, maxValue, true, isReverseDirection);
+  public static void renderVerticalProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int width, int height, float value, float maxValue, boolean isReverseDirection) {
+    renderProgressBar(guiGraphics, texture, x, y, width, height, value, maxValue, true, isReverseDirection);
   }
 
   /**
-   * 渲染垂直方向的进度条
-   * <p>
-   * 正向绘制：进度从上往下填充
+   * 当isVertical为true时：
    * <br>
-   * 反向绘制：进度从下往上填充
+   * 如果是正向绘制（isReverseDirection为false），进度从上往下填充
+   * <br>
+   * 如果是反向绘制（isReverseDirection为true），进度从下往上填充
+   * <p>
+   * 当isVertical为false时：
+   * <br>
+   * 如果是正向绘制（isReverseDirection为false），进度从左往右填充
+   * <br>
+   * 如果是反向绘制（isReverseDirection为true），进度从右往左填
    */
-  public static void renderVerticalProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int width, int height, float value, float maxValue, boolean isReverseDirection) {
-    renderProgressBar(guiGraphics, texture, x, y, width, height, value, maxValue, true, isReverseDirection);
+  public static void renderProgressBar(@NotNull GuiGraphics guiGraphics, ResourceLocation texture, int x, int y, int width, int height, float value, float maxValue, boolean isVertical, boolean isReverseDirection) {
+    renderProgressBar(guiGraphics, texture, x, y, 0, 0, width, height, value, maxValue, isVertical, isReverseDirection);
   }
 
   /**
@@ -148,10 +148,6 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
     renderProgressBar(guiGraphics, texture, x, y, uPos, vPos, width, height, value, maxValue, false, isReverseDirection);
   }
 
-  public String getTooltipKey() {
-    return tooltipKey;
-  }
-
   /**
    * 同时设置当前值和最大值。
    *
@@ -161,42 +157,6 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
   public void setValue(double energy, double maxTick) {
     this.setValue(energy);
     this.setMaxValue(maxTick);
-  }
-
-  /**
-   * 获取当前进度值。
-   *
-   * @return 当前进度值
-   */
-  public double getValue() {
-    return this.value;
-  }
-
-  /**
-   * 设置当前进度值。
-   *
-   * @param value 新的进度值
-   */
-  public void setValue(double value) {
-    this.value = value;
-  }
-
-  /**
-   * 获取最大进度值。
-   *
-   * @return 最大进度值
-   */
-  public double getMaxValue() {
-    return maxValue;
-  }
-
-  /**
-   * 设置最大进度值。
-   *
-   * @param maxValue 新的最大进度值
-   */
-  public void setMaxValue(double maxValue) {
-    this.maxValue = maxValue;
   }
 
   /**
@@ -217,16 +177,25 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
     }
   }
 
-  protected abstract void renderTexture(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick);
+  /**
+   * 获取最大进度值。
+   *
+   * @return 最大进度值
+   */
+  public double getMaxValue() {
+    return maxValue;
+  }
 
   /**
-   * 获取要渲染的进度值，确保不小于 0。
+   * 设置最大进度值。
    *
-   * @return 渲染用的进度值
+   * @param maxValue 新的最大进度值
    */
-  public double getRenderValue() {
-    return Math.min(Math.max(0, this.getValue()), this.getMaxValue());
+  public void setMaxValue(double maxValue) {
+    this.maxValue = maxValue;
   }
+
+  protected abstract void renderTexture(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick);
 
   /**
    * 渲染控件的工具提示。
@@ -248,6 +217,37 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
     return Component.translatable(getTooltipKey(), getRenderValue(), getMaxValue());
   }
 
+  public String getTooltipKey() {
+    return tooltipKey;
+  }
+
+  /**
+   * 获取要渲染的进度值，确保不小于 0。
+   *
+   * @return 渲染用的进度值
+   */
+  public double getRenderValue() {
+    return Math.min(Math.max(0, this.getValue()), this.getMaxValue());
+  }
+
+  /**
+   * 获取当前进度值。
+   *
+   * @return 当前进度值
+   */
+  public double getValue() {
+    return this.value;
+  }
+
+  /**
+   * 设置当前进度值。
+   *
+   * @param value 新的进度值
+   */
+  public void setValue(double value) {
+    this.value = value;
+  }
+
   /**
    * 获取纹理资源位置。
    *
@@ -265,6 +265,10 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
   public static class Horizontal extends ImageProgressBar {
     public final boolean isToLeft;
 
+    public Horizontal(int width, int height, ResourceLocation texture, boolean isToLeft) {
+      this(0, 0, width, height, 0, 0, texture, "", isToLeft);
+    }
+
     /**
      * 构造一个新的水平进度条实例。
      *
@@ -281,10 +285,6 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
     public Horizontal(int x, int y, int width, int height, double value, double maxValue, ResourceLocation texture, String tooltipKey, boolean isToLeft) {
       super(x, y, width, height, value, maxValue, texture, tooltipKey);
       this.isToLeft = isToLeft;
-    }
-
-    public Horizontal(int width, int height, ResourceLocation texture, boolean isToLeft) {
-      this(0, 0, width, height, 0, 0, texture, "", isToLeft);
     }
 
     @Override
@@ -309,6 +309,10 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
   public static class Vertical extends ImageProgressBar {
     public final boolean isToTop;
 
+    public Vertical(int width, int height, ResourceLocation texture, boolean isToTop) {
+      this(0, 0, width, height, 0, 0, texture, "", isToTop);
+    }
+
     /**
      * 构造一个新的垂直进度条实例。
      *
@@ -327,10 +331,6 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
       this.isToTop = isToTop;
     }
 
-    public Vertical(int width, int height, ResourceLocation texture, boolean isToTop) {
-      this(0, 0, width, height, 0, 0, texture, "", isToTop);
-    }
-
     @Override
     protected void renderTexture(@NotNull GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
       int uWidth = getWidth();
@@ -341,7 +341,7 @@ public abstract class ImageProgressBar extends ImageWidget.Sprite {
       int x = this.getX() + xPosition;
       int y = isToTop ? this.getY() + yPosition : this.getY();
 
-      guiGraphics.blitSprite(this.sprite, this.getWidth(), this.getHeight(), 0, yPosition, x, y, uWidth, vHeight);
-    }
-  }
+			guiGraphics.blitSprite(this.sprite, this.getWidth(), this.getHeight(), 0, yPosition, x, y, uWidth, vHeight);
+		}
+	}
 }

@@ -15,26 +15,6 @@ public final class TextUtil {
   }
 
   /**
-   * 格式化数字
-   *
-   * @param value         需要格式化的数值
-   * @param decimalLength 小数位数
-   * @return 格式化后的字符串
-   */
-  public static String formatNumber(double value, int decimalLength) {
-    if (decimalLength < 0) {
-      decimalLength = 0;
-    }
-
-    double absValue = Math.abs(value);
-    double fractionalPart = absValue - Math.floor(absValue);
-    if (decimalLength == 0 || fractionalPart == 0 || (absValue > 1 && fractionalPart < 1e-10)) {
-      return String.format("%.0f", value);
-    }
-    return String.format("%." + decimalLength + "f", value).replaceAll("\\.?0+$", "");
-  }
-
-  /**
    * 格式化数字，添加千位分隔符
    *
    * @param number        要格式化的数字
@@ -79,7 +59,6 @@ public final class TextUtil {
     return result;
   }
 
-
   /**
    * 将数字转换为带单位的文本
    *
@@ -101,6 +80,37 @@ public final class TextUtil {
   }
 
   /**
+   * 格式化数字并添加单位
+   *
+   * @param value 需要格式化的数值
+   * @param unit  要添加的单位字符串
+   * @return 格式化后的带单位字符串
+   */
+  public static String formatNumber(double value, String unit) {
+    return formatNumber(value, 2) + " " + unit;
+  }
+
+  /**
+   * 格式化数字
+   *
+   * @param value         需要格式化的数值
+   * @param decimalLength 小数位数
+   * @return 格式化后的字符串
+   */
+  public static String formatNumber(double value, int decimalLength) {
+    if (decimalLength < 0) {
+      decimalLength = 0;
+    }
+
+    double absValue = Math.abs(value);
+    double fractionalPart = absValue - Math.floor(absValue);
+    if (decimalLength == 0 || fractionalPart == 0 || (absValue > 1 && fractionalPart < 1e-10)) {
+      return String.format("%.0f", value);
+    }
+    return String.format("%." + decimalLength + "f", value).replaceAll("\\.?0+$", "");
+  }
+
+  /**
    * 分割数字
    *
    * @param value  数字
@@ -115,17 +125,6 @@ public final class TextUtil {
       text.insert(i, symbol);
     }
     return text.toString();
-  }
-
-  /**
-   * 格式化数字并添加单位
-   *
-   * @param value 需要格式化的数值
-   * @param unit  要添加的单位字符串
-   * @return 格式化后的带单位字符串
-   */
-  public static String formatNumber(double value, String unit) {
-    return formatNumber(value, 2) + " " + unit;
   }
 
   /**
@@ -146,6 +145,6 @@ public final class TextUtil {
       return String.format("%dm %ds", minutes, seconds % 60);
     } else {
       return String.format("%ds", seconds);
-    }
-  }
+		}
+	}
 }

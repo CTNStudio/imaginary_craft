@@ -1254,6 +1254,15 @@ public final class EgoWeaponItems {
       return this;
     }
 
+    public <I extends Item & IRemoteEgoWeaponItem> DeferredItem<I> buildAndRegister() {
+      validateRequiredFields();
+      if (templateType == null) {
+        throw new IllegalStateException("Template type is required when using template");
+      }
+
+      return register(id, zhName, lcLevel, templateType, properties, weaponBuilder, getRemoteItemFactory(templateType));
+    }
+
     private <I extends Item & IRemoteEgoWeaponItem> BiFunction<Item.Properties, IRemoteEgoWeaponItem.Builder, I> getRemoteItemFactory(RemoteTemplateType type) {
       return switch (type) {
         case CANNON -> (p, b) -> (I) new CannonEgoWeaponItem(p, b, modelPath);
@@ -1264,25 +1273,16 @@ public final class EgoWeaponItems {
       };
     }
 
-    public <I extends Item & IRemoteEgoWeaponItem> DeferredItem<I> buildAndRegister() {
-      validateRequiredFields();
-      if (templateType == null) {
-        throw new IllegalStateException("Template type is required when using template");
+    private void validateRequiredFields() {
+      if (id == null || zhName == null || lcLevel == null || properties == null) {
+        throw new IllegalStateException("Missing required fields for remote weapon registration");
       }
-
-      return register(id, zhName, lcLevel, templateType, properties, weaponBuilder, getRemoteItemFactory(templateType));
     }
 
     public <I extends Item & IRemoteEgoWeaponItem> DeferredItem<I> buildAndRegister(BiFunction<Item.Properties, RemoteEgoWeaponItem.Builder, I> itemFactory) {
       this.templateType = null;
       validateRequiredFields();
       return register(id, zhName, lcLevel, SpecialTemplateType.MELEE, properties, weaponBuilder, itemFactory);
-    }
-
-    private void validateRequiredFields() {
-      if (id == null || zhName == null || lcLevel == null || properties == null) {
-        throw new IllegalStateException("Missing required fields for remote weapon registration");
-      }
     }
   }
 
@@ -1301,6 +1301,14 @@ public final class EgoWeaponItems {
     public MeleeEgoWeaponBuilder properties(Function<IMeleeEgoWeaponItem.Builder, IMeleeEgoWeaponItem.Builder> builder) {
       this.weaponBuilder = builder.apply(weaponBuilder);
       return this;
+    }
+
+    public <I extends Item & IMeleeEgoWeaponItem> DeferredItem<I> buildAndRegister() {
+      validateRequiredFields();
+      if (templateType == null) {
+        throw new IllegalStateException("Template type is required when using template");
+      }
+      return register(id, zhName, lcLevel, templateType, properties, weaponBuilder, getMeleeItemFactory());
     }
 
     private <I extends Item & IMeleeEgoWeaponItem> BiFunction<Item.Properties, IMeleeEgoWeaponItem.Builder, I> getMeleeItemFactory() {
@@ -1322,17 +1330,8 @@ public final class EgoWeaponItems {
       };
     }
 
-    public <I extends Item & IMeleeEgoWeaponItem> DeferredItem<I> buildAndRegister() {
-      validateRequiredFields();
-      if (templateType == null) {
-        throw new IllegalStateException("Template type is required when using template");
-      }
-      return register(id, zhName, lcLevel, templateType, properties, weaponBuilder, getMeleeItemFactory());
-    }
-
-    public <I extends Item & IMeleeEgoWeaponItem> DeferredItem<I> buildAndRegister(BiFunction<Item.Properties, IMeleeEgoWeaponItem.Builder, I> itemFactory) {
-      validateRequiredFields();
-      return register(id, zhName, lcLevel, SpecialTemplateType.REMOTE, properties, weaponBuilder, itemFactory);
+    private @NotNull SimpleTier getSimpleTier(IMeleeEgoWeaponItem.Builder b) {
+      return new SimpleTier(getIncorrectBlocksForDrops(), 0, b.attackSpeed, b.weaponDamage, getEnchantmentValue(), Ingredient::of);
     }
 
     private void validateRequiredFields() {
@@ -1341,8 +1340,9 @@ public final class EgoWeaponItems {
       }
     }
 
-    private @NotNull SimpleTier getSimpleTier(IMeleeEgoWeaponItem.Builder b) {
-      return new SimpleTier(getIncorrectBlocksForDrops(), 0, b.attackSpeed, b.weaponDamage, getEnchantmentValue(), Ingredient::of);
-    }
-  }
+    public <I extends Item & IMeleeEgoWeaponItem> DeferredItem<I> buildAndRegister(BiFunction<Item.Properties, IMeleeEgoWeaponItem.Builder, I> itemFactory) {
+      validateRequiredFields();
+      return register(id, zhName, lcLevel, SpecialTemplateType.REMOTE, properties, weaponBuilder, itemFactory);
+		}
+	}
 }

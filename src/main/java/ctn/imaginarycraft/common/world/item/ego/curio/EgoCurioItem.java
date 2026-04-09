@@ -42,18 +42,17 @@ import java.util.function.UnaryOperator;
  * @author Dusttt
  */
 public class EgoCurioItem extends Item implements ICurioItem, GeoItem, IEgoItem {
-  // 请不要使用该变量，这些仅用与生成国际化文本
-  private @Nullable Map<String, String> tooltipsI18nMap = new LinkedHashMap<>();
-  private @Nullable List<Function<String, MutableComponent>> tooltipsComponent;
-  private @Nullable List<String> tooltipsI18n;
-
   private final List<Component> tooltips = new ArrayList<>();
   private final VirtueAttributeModifier virtueAddAttribute;
   private final boolean isEnderMask;
   private final @Nullable GeoCurioModel<EgoCurioItem> model;
+  private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+  // 请不要使用该变量，这些仅用与生成国际化文本
+  private @Nullable Map<String, String> tooltipsI18nMap = new LinkedHashMap<>();
+  private @Nullable List<Function<String, MutableComponent>> tooltipsComponent;
+  private @Nullable List<String> tooltipsI18n;
   private @Nullable BasicCuriosRenderer curiosRenderer;
   private @Nullable Function<EgoCurioItem, BasicCuriosRenderer> curiosRendererFunction;
-  private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
   public EgoCurioItem(Builder egoCurioBuilder) {
     super(egoCurioBuilder.properties.component(ModDataComponents.IS_RESTRAIN, false)
@@ -180,10 +179,10 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem, IEgoItem 
 
   public static class Builder {
     private final VirtueAttributeModifier.Builder virtueAddAttribute = new VirtueAttributeModifier.Builder();
-    private boolean isEnderMask;
-    private Properties properties = new Properties();
     private final List<String> tooltips = new ArrayList<>();
     private final List<Function<String, MutableComponent>> tooltipsComponent = new ArrayList<>();
+    private boolean isEnderMask;
+    private Properties properties = new Properties();
     private @Nullable GeoCurioModel<EgoCurioItem> model;
     private @Nullable Function<EgoCurioItem, BasicCuriosRenderer> curiosRenderer;
 
@@ -276,6 +275,10 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem, IEgoItem 
       return this;
     }
 
+    public Builder model(String modelRl) {
+      return model(new GeoCurioModel<>(modelRl));
+    }
+
     public Builder model(GeoCurioModel<EgoCurioItem> model) {
       if (FMLEnvironment.dist.isDedicatedServer()) {
         return this;
@@ -283,10 +286,6 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem, IEgoItem 
       this.model = model;
       this.curiosRenderer = BasicCuriosRenderer::new;
       return this;
-    }
-
-    public Builder model(String modelRl) {
-      return model(new GeoCurioModel<>(modelRl));
     }
 
     public Builder renderer(Function<EgoCurioItem, BasicCuriosRenderer> curiosRenderer) {
@@ -325,8 +324,8 @@ public class EgoCurioItem extends Item implements ICurioItem, GeoItem, IEgoItem 
       return this;
     }
 
-    public EgoCurioItem build() {
-      return new EgoCurioItem(this);
-    }
-  }
+		public EgoCurioItem build() {
+			return new EgoCurioItem(this);
+		}
+	}
 }

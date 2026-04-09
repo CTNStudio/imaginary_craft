@@ -130,11 +130,11 @@ public final class ZhCn extends DatagenI18n {
     addCurios(DatagenCuriosTest.EGO_CURIOS_RIGHT_BACK, "右背", "E.G.O饰品-右背");
     addCurios(DatagenCuriosTest.EGO_CURIOS_LEFT_BACK, "右背", "E.G.O饰品-右背");
     EgoCurioItems.REGISTRY.getEntries().stream()
-      .map(DeferredHolder::get)
-      .filter(EgoCurioItem.class::isInstance)
-      .map(EgoCurioItem.class::cast)
-      .map(EgoCurioItem::getAndClearTooltipsI18nMap)
-      .forEach(map -> map.forEach(this::add));
+            .map(DeferredHolder::get)
+            .filter(EgoCurioItem.class::isInstance)
+            .map(EgoCurioItem.class::cast)
+            .map(EgoCurioItem::getAndClearTooltipsI18nMap)
+            .forEach(map -> map.forEach(this::add));
     //endregion
 
     //region 伤害类型

@@ -81,6 +81,6 @@ public final class EntityRenderEventExecute {
           playerModel.rightSleeve.visible = false;
         }
       }
-    }
-  }
+		}
+	}
 }

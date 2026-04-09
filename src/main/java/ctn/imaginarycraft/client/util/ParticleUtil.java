@@ -20,6 +20,32 @@ import static ctn.imaginarycraft.api.LcDamageType.PHYSICS;
 
 public final class ParticleUtil {
 
+  public static void randomDamageTextParticles(
+    ServerLevel world,
+    Component component,
+    boolean isRationality,
+    boolean isHeal,
+    double x,
+    double y,
+    double z
+  ) {
+    randomDamageTextParticles(world, component, null, null, isRationality, isHeal, x, y, z);
+  }
+
+  public static void randomDamageTextParticles(
+    ServerLevel world,
+    Component component,
+    @Nullable Holder<DamageType> damageType,
+    @Nullable LcDamageType lcDamageType,
+    boolean isRationality,
+    boolean isHeal,
+    double x,
+    double y,
+    double z
+  ) {
+    createDamageTextParticles(world, component, damageType, lcDamageType, isRationality, isHeal, x, y, z, 0.1, 0.1, 0.1);
+  }
+
   //region 伤害文本粒子
   public static void createDamageTextParticles(
     ServerLevel world,
@@ -117,49 +143,8 @@ public final class ParticleUtil {
       .strokeColor(strokeColor);
   }
 
-  public static void randomDamageTextParticles(
-    ServerLevel world,
-    Component component,
-    @Nullable Holder<DamageType> damageType,
-    @Nullable LcDamageType lcDamageType,
-    boolean isRationality,
-    boolean isHeal,
-    double x,
-    double y,
-    double z
-  ) {
-    createDamageTextParticles(world, component, damageType, lcDamageType, isRationality, isHeal, x, y, z, 0.1, 0.1, 0.1);
-  }
-
-  public static void randomDamageTextParticles(
-    ServerLevel world,
-    Component component,
-    boolean isRationality,
-    boolean isHeal,
-    double x,
-    double y,
-    double z
-  ) {
-    randomDamageTextParticles(world, component, null, null, isRationality, isHeal, x, y, z);
-  }
-
   public static void createDamageTextParticles(LivingEntity entity, Component component, boolean isRationality, boolean isHeal) {
     createDamageTextParticles(entity, component, null, null, isRationality, isHeal);
-  }
-
-  public static void createDamageTextParticles(LivingEntity entity, float value, boolean isRationality, boolean isHeal) {
-    createDamageTextParticles(entity, getText(value, isHeal), null, null, isRationality, isHeal);
-  }
-
-  public static void createDamageTextParticles(
-    LivingEntity entity,
-    @Nullable Holder<DamageType> damageType,
-    @Nullable LcDamageType lcDamageType,
-    float value,
-    boolean isRationality,
-    boolean isHeal
-  ) {
-    createDamageTextParticles(entity, getText(value, isHeal), damageType, lcDamageType, isRationality, isHeal);
   }
 
   public static void createDamageTextParticles(
@@ -185,8 +170,8 @@ public final class ParticleUtil {
       x, y, z, xOffset / 2, yOffset / 2, zOffset / 2);
   }
 
-  public static @NotNull MutableComponent getText(float value) {
-    return getText(value, value > 0);
+  public static void createDamageTextParticles(LivingEntity entity, float value, boolean isRationality, boolean isHeal) {
+    createDamageTextParticles(entity, getText(value, isHeal), null, null, isRationality, isHeal);
   }
 
   // TODO 新增免疫字段
@@ -194,6 +179,21 @@ public final class ParticleUtil {
   // TODO 新增无效字段
   public static @NotNull MutableComponent getText(float value, boolean isHeal) {
     return Component.literal((isHeal ? "+%s" : "-%s").formatted(TextUtil.formatNumberPlaces(Math.abs(value), 2)));
+  }
+
+  public static void createDamageTextParticles(
+    LivingEntity entity,
+    @Nullable Holder<DamageType> damageType,
+    @Nullable LcDamageType lcDamageType,
+    float value,
+    boolean isRationality,
+    boolean isHeal
+  ) {
+    createDamageTextParticles(entity, getText(value, isHeal), damageType, lcDamageType, isRationality, isHeal);
+  }
+
+  public static @NotNull MutableComponent getText(float value) {
+    return getText(value, value > 0);
   }
   //endregion
 }

@@ -42,6 +42,24 @@ public class DamageTextParticle extends TextParticle {
     this.z = this.startZ;
   }
 
+  private void calculateRandomTarget() {
+    float verticalDistance = this.random.nextFloat();
+    float horizontalRadius = 0.5f;
+    float randomAngle = this.random.nextFloat() * 360.0f;
+    float angleRad = randomAngle * Mth.DEG_TO_RAD;
+    float randomRadius = this.random.nextFloat() * horizontalRadius;
+    float horizontalX = Mth.cos(angleRad) * randomRadius;
+    float horizontalZ = Mth.sin(angleRad) * randomRadius;
+    this.targetX = this.startX + horizontalX;
+    this.targetZ = this.startZ + horizontalZ;
+    this.targetY = this.startY + verticalDistance;
+    if (this.isCrit) {
+      this.targetY += 0.5f;
+      this.targetX += (this.random.nextFloat() - 0.5f) * 0.2f;
+      this.targetZ += (this.random.nextFloat() - 0.5f) * 0.2f;
+    }
+  }
+
   @Override
   public void render(@NotNull VertexConsumer vertexConsumer, Camera camera, float partialTicks) {
     Vec3 cameraPosition = camera.getPosition();
@@ -81,22 +99,26 @@ public class DamageTextParticle extends TextParticle {
     super.render(vertexConsumer, camera, partialTicks);
   }
 
-  private void calculateRandomTarget() {
-    float verticalDistance = this.random.nextFloat();
-    float horizontalRadius = 0.5f;
-    float randomAngle = this.random.nextFloat() * 360.0f;
-    float angleRad = randomAngle * Mth.DEG_TO_RAD;
-    float randomRadius = this.random.nextFloat() * horizontalRadius;
-    float horizontalX = Mth.cos(angleRad) * randomRadius;
-    float horizontalZ = Mth.sin(angleRad) * randomRadius;
-    this.targetX = this.startX + horizontalX;
-    this.targetZ = this.startZ + horizontalZ;
-    this.targetY = this.startY + verticalDistance;
-    if (this.isCrit) {
-      this.targetY += 0.5f;
-      this.targetX += (this.random.nextFloat() - 0.5f) * 0.2f;
-      this.targetZ += (this.random.nextFloat() - 0.5f) * 0.2f;
+  private float smoothStep(float t) {
+    return t * t * (3.0f - 2.0f * t);
+  }
+
+  @Override
+  public void tick() {
+    super.tick();
+  }
+
+  @Override
+  protected void tickAge() {
+    if (this.age < this.lifetime) {
+      phaseTimer++;
+      switch (phase) {
+        case 0 -> handleRisePhase();
+        case 1 -> handleHoverPhase();
+        case 2 -> handleFallPhase();
+      }
     }
+    super.tickAge();
   }
 
   private void handleRisePhase() {
@@ -144,31 +166,9 @@ public class DamageTextParticle extends TextParticle {
     }
   }
 
-  private float smoothStep(float t) {
-    return t * t * (3.0f - 2.0f * t);
-  }
-
   private float easeOutCubic(float t) {
     float f = t - 1.0f;
     return f * f * f + 1.0f;
-  }
-
-  @Override
-  public void tick() {
-    super.tick();
-  }
-
-  @Override
-  protected void tickAge() {
-    if (this.age < this.lifetime) {
-      phaseTimer++;
-      switch (phase) {
-        case 0 -> handleRisePhase();
-        case 1 -> handleHoverPhase();
-        case 2 -> handleFallPhase();
-      }
-    }
-    super.tickAge();
   }
 
   public record Options(TextParticleOptions options, boolean isHeal) implements ParticleOptions {

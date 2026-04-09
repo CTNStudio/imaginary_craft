@@ -29,12 +29,6 @@ public abstract class BasicGeoModel<T extends GeoAnimatable> extends GeoModel<T>
     this.animationsPath = animationsPath(name);
   }
 
-  public BasicGeoModel(String modelPath, String textureName, String animationsName) {
-    this.modelPath = modelPath(modelPath);
-    this.texturePath = texturePath(textureName);
-    this.animationsPath = animationsPath(animationsName);
-  }
-
   public static ResourceLocation modelPath(String path) {
     return ImaginaryCraft.modRl("geo/" + path + ".geo.json");
   }
@@ -47,9 +41,20 @@ public abstract class BasicGeoModel<T extends GeoAnimatable> extends GeoModel<T>
     return ImaginaryCraft.modRl("animations/" + path + ".animation.json");
   }
 
+  public BasicGeoModel(String modelPath, String textureName, String animationsName) {
+    this.modelPath = modelPath(modelPath);
+    this.texturePath = texturePath(textureName);
+    this.animationsPath = animationsPath(animationsName);
+  }
+
   @Override
   public ResourceLocation getModelResource(T animatable) {
     return GeckoLibCache.getBakedModels().get(this.modelPath) == null ? getDefaultModelResource() : this.modelPath;
+  }
+
+  @NotNull
+  protected ResourceLocation getDefaultModelResource() {
+    return modelPath("item/default");
   }
 
   @Override
@@ -60,10 +65,5 @@ public abstract class BasicGeoModel<T extends GeoAnimatable> extends GeoModel<T>
   @Override
   public ResourceLocation getAnimationResource(T animatable) {
     return animationsPath;
-  }
-
-  @NotNull
-  protected ResourceLocation getDefaultModelResource() {
-    return modelPath("item/default");
   }
 }

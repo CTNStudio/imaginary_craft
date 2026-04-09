@@ -16,12 +16,11 @@ import java.util.List;
  * 这个球体的半径为1，中心在 (0,0,0)。
  */
 public class ShieldSphereMesh {
-  private final List<MeshVertex> vertices = new ArrayList<>();
-  private final List<Integer> indices = new ArrayList<>();
-
   // 球体的细分程度，数值越高越圆滑，但顶点数也越多
   private static final int STACKS = 16; // 经线数（垂直）
   private static final int SLICES = 16; // 纬线数（水平）
+  private final List<MeshVertex> vertices = new ArrayList<>();
+  private final List<Integer> indices = new ArrayList<>();
 
   public ShieldSphereMesh() {
     generateSphere();
@@ -105,5 +104,5 @@ public class ShieldSphereMesh {
 
   // 简单的内部类存储顶点数据
   private record MeshVertex(Vector3f position, Vector3f normal, float u, float v) {
-  }
+	}
 }

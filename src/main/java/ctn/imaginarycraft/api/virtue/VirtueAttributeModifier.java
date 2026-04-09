@@ -20,6 +20,16 @@ public record VirtueAttributeModifier(
   @Nullable Builder.AttributeModifierBuilder justiceModifier
 ) {
   /**
+   * 添加属性
+   */
+  private static void addAttributeModifier(Multimap<Holder<Attribute>, AttributeModifier> multimap, double value, ResourceLocation id, Holder<Attribute> holder, AttributeModifier.Operation operation) {
+    if (value == 0) {
+      return;
+    }
+    multimap.put(holder, new AttributeModifier(id, value, operation));
+  }
+
+  /**
    * 获取
    */
   public Multimap<Holder<Attribute>, AttributeModifier> getAttributeModifiers(LivingEntity entity, ResourceLocation id, ItemStack stack) {
@@ -42,16 +52,6 @@ public record VirtueAttributeModifier(
   }
 
   /**
-   * 添加属性
-   */
-  private static void addAttributeModifier(Multimap<Holder<Attribute>, AttributeModifier> multimap, double value, ResourceLocation id, Holder<Attribute> holder, AttributeModifier.Operation operation) {
-    if (value == 0) {
-      return;
-    }
-    multimap.put(holder, new AttributeModifier(id, value, operation));
-  }
-
-  /**
    * 应用属性
    */
   public void applyAttributeModifiers(LivingEntity entity, ResourceLocation id, ItemStack stack) {
@@ -62,16 +62,6 @@ public record VirtueAttributeModifier(
   }
 
   /**
-   * 移除属性
-   */
-  public void removeAttributeModifiers(LivingEntity entity, ResourceLocation id, ItemStack stack) {
-    removeAttributeModifier(entity, id, stack, this.fortitudeModifier);
-    removeAttributeModifier(entity, id, stack, this.prudenceModifier);
-    removeAttributeModifier(entity, id, stack, this.temperanceModifier);
-    removeAttributeModifier(entity, id, stack, this.justiceModifier);
-  }
-
-  /**
    * 添加属性
    */
   private static void addAttributeModifier(final LivingEntity entity, final ResourceLocation id, final ItemStack stack, final @Nullable Builder.AttributeModifierBuilder modifierBuilder) {
@@ -79,6 +69,16 @@ public record VirtueAttributeModifier(
       return;
     }
     entity.getAttributes().addTransientAttributeModifiers(modifierBuilder.apply(entity, id, stack));
+  }
+
+  /**
+   * 移除属性
+   */
+  public void removeAttributeModifiers(LivingEntity entity, ResourceLocation id, ItemStack stack) {
+    removeAttributeModifier(entity, id, stack, this.fortitudeModifier);
+    removeAttributeModifier(entity, id, stack, this.prudenceModifier);
+    removeAttributeModifier(entity, id, stack, this.temperanceModifier);
+    removeAttributeModifier(entity, id, stack, this.justiceModifier);
   }
 
   /**
@@ -138,6 +138,16 @@ public record VirtueAttributeModifier(
       return this;
     }
 
+    /**
+     * 自律
+     *
+     * @param blockBreakSpeedBonus 挖掘速度加成
+     * @param attackKnockbackBonus 攻击击退加成
+     * @param workValueBonus       工作成功率和工作速度加成
+     */
+    public Builder temperance(int blockBreakSpeedBonus, int attackKnockbackBonus, int workValueBonus) {
+      return temperance(blockBreakSpeedBonus, attackKnockbackBonus, workValueBonus, workValueBonus);
+    }
 
     /**
      * 自律
@@ -163,20 +173,19 @@ public record VirtueAttributeModifier(
 
     /**
      * 自律
-     *
-     * @param blockBreakSpeedBonus 挖掘速度加成
-     * @param attackKnockbackBonus 攻击击退加成
-     * @param workValueBonus       工作成功率和工作速度加成
-     */
-    public Builder temperance(int blockBreakSpeedBonus, int attackKnockbackBonus, int workValueBonus) {
-      return temperance(blockBreakSpeedBonus, attackKnockbackBonus, workValueBonus, workValueBonus);
-    }
-
-    /**
-     * 自律
      */
     public Builder temperance(int valueBonus) {
       return temperance(valueBonus, valueBonus, valueBonus, valueBonus);
+    }
+
+    /**
+     * 正义
+     *
+     * @param speedBonus       移动速度和游泳速度加成
+     * @param attackSpeedBonus 攻击速度加成
+     */
+    public Builder justice(int speedBonus, int attackSpeedBonus) {
+      return justice(speedBonus, speedBonus, attackSpeedBonus);
     }
 
     /**
@@ -202,16 +211,6 @@ public record VirtueAttributeModifier(
 
     /**
      * 正义
-     *
-     * @param speedBonus       移动速度和游泳速度加成
-     * @param attackSpeedBonus 攻击速度加成
-     */
-    public Builder justice(int speedBonus, int attackSpeedBonus) {
-      return justice(speedBonus, speedBonus, attackSpeedBonus);
-    }
-
-    /**
-     * 正义
      */
     public Builder justice(int valueBonus) {
       return justice(valueBonus, valueBonus, valueBonus);
@@ -219,15 +218,15 @@ public record VirtueAttributeModifier(
 
     @FunctionalInterface
     public interface AttributeModifierBuilder {
-      Multimap<Holder<Attribute>, AttributeModifier> apply(LivingEntity entity, ResourceLocation id, ItemStack stack);
-
       default void applyToEntity(LivingEntity entity, ResourceLocation id, ItemStack stack) {
         entity.getAttributes().addTransientAttributeModifiers(apply(entity, id, stack));
       }
 
+      Multimap<Holder<Attribute>, AttributeModifier> apply(LivingEntity entity, ResourceLocation id, ItemStack stack);
+
       default void removeFromEntity(LivingEntity entity, ResourceLocation id, ItemStack stack) {
         entity.getAttributes().removeAttributeModifiers(apply(entity, id, stack));
-      }
-    }
-  }
+			}
+		}
+	}
 }

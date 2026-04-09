@@ -22,21 +22,16 @@ public final class DateUtils {
   public static final int _18$00 = getDayTime(18, 0);
   public static final int _19$30 = getDayTime(19, 30);
 
+  public static boolean isWithinDayTime(int start, int end, Level level) {
+    return isWithinDayTime(start, end, getDayTime(level));
+  }
+
   public static int getDayTime(Level level) {
     return getDayTime(level.getDayTime());
   }
 
   public static int getDayTime(long dayTime) {
     return (int) (dayTime % 24000L);
-  }
-
-  /// 映射到游戏内的dayTime
-  public static int getDayTime(int hour, int minute) {
-    if (hour < 0 || hour > 23)
-      throw new DateTimeParseException("hour bounds is [0, 23], currently is " + hour, "", 0);
-    if (minute < 0 || minute > 59)
-      throw new DateTimeParseException("minute bounds is [0, 59], currently is " + minute, "", 0);
-    return TIMES[hour * 60 + minute];
   }
 
   /// @param start   开始的dayTime
@@ -50,31 +45,36 @@ public final class DateUtils {
     return dayTime >= start && dayTime <= end;
   }
 
-  public static boolean isWithinDayTime(int start, int end, Level level) {
-    return isWithinDayTime(start, end, getDayTime(level));
+  public static boolean isWithinDayTime(int startHour, int startMinute, int endHour, int endMinute, Level level) {
+    return isWithinDayTime(startHour, startMinute, endHour, endMinute, getDayTime(level));
   }
 
   public static boolean isWithinDayTime(int startHour, int startMinute, int endHour, int endMinute, int dayTime) {
     return isWithinDayTime(getDayTime(startHour, startMinute), getDayTime(endHour, endMinute), dayTime);
   }
 
-  public static boolean isWithinDayTime(int startHour, int startMinute, int endHour, int endMinute, Level level) {
-    return isWithinDayTime(startHour, startMinute, endHour, endMinute, getDayTime(level));
-  }
-
-  public static boolean isDay(int dayTime) {
-    return isWithinDayTime(_04$30, _19$30, dayTime);
+  /// 映射到游戏内的dayTime
+  public static int getDayTime(int hour, int minute) {
+    if (hour < 0 || hour > 23)
+      throw new DateTimeParseException("hour bounds is [0, 23], currently is " + hour, "", 0);
+    if (minute < 0 || minute > 59)
+      throw new DateTimeParseException("minute bounds is [0, 59], currently is " + minute, "", 0);
+    return TIMES[hour * 60 + minute];
   }
 
   public static boolean isDay(Level level) {
     return isDay(getDayTime(level));
   }
 
-  public static boolean isNight(int dayTime) {
-    return isWithinDayTime(_19$30, _04$30, dayTime);
+  public static boolean isDay(int dayTime) {
+    return isWithinDayTime(_04$30, _19$30, dayTime);
   }
 
   public static boolean isNight(Level level) {
     return isNight(getDayTime(level));
   }
+
+  public static boolean isNight(int dayTime) {
+    return isWithinDayTime(_19$30, _04$30, dayTime);
+	}
 }

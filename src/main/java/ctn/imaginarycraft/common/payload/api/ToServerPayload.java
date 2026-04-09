@@ -12,6 +12,8 @@ public interface ToServerPayload extends ToServerAndClientPayload {
     }
   }
 
+  void work(ServerPlayer player);
+
   @Override
   default void toServer(ServerPlayer serverPlayer) {
     work(serverPlayer);
@@ -20,6 +22,4 @@ public interface ToServerPayload extends ToServerAndClientPayload {
   @Override
   default void toClient(AbstractClientPlayer player) {
   }
-
-  void work(ServerPlayer player);
 }

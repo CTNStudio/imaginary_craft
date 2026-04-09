@@ -83,7 +83,7 @@ public final class DatagenItemModel extends ItemModelProvider {
     registry.getEntries().stream().map(DeferredHolder::getId).forEach(itemId -> {
       ItemModelBuilder itemModelBuilder = this.withExistingParent(itemId.getPath(), "item/generated");
       IModelBuilder.of(itemModelBuilder).imaginarycraft$getTexture()
-        .put("layer0", itemId.withPrefix(pathPrefix).toString());
+              .put("layer0", itemId.withPrefix(pathPrefix).toString());
     });
   }
 
@@ -144,8 +144,8 @@ public final class DatagenItemModel extends ItemModelProvider {
     // 如果没有提供父模型，则使用默认的"item/generated"
     ModelFile actualParent = parent != null ? parent : new ModelFile.UncheckedModelFile("item/generated");
     ItemModelBuilder modelBuilder = getBuilder(item.toString())
-      .parent(actualParent)
-      .texture("layer0", fromNamespaceAndPath(itemModId, itemRl));
+            .parent(actualParent)
+            .texture("layer0", fromNamespaceAndPath(itemModId, itemRl));
 
     int index = 0;
     for (Map.Entry<Float, String> entry : textures.entrySet()) {
@@ -153,13 +153,13 @@ public final class DatagenItemModel extends ItemModelProvider {
 
       ResourceLocation overrideModelRl = getItemResourceLocation(item, value).withPrefix("item/");
       modelBuilder.override()
-        .model(new ModelFile.UncheckedModelFile(overrideModelRl))
-        .predicate(predicates[Math.min(index, predicates.length - 1)], entry.getKey())
-        .end();
+              .model(new ModelFile.UncheckedModelFile(overrideModelRl))
+              .predicate(predicates[Math.min(index, predicates.length - 1)], entry.getKey())
+              .end();
 
       getBuilder(overrideModelRl.toString())
-        .parent(actualParent)
-        .texture("layer0", fromNamespaceAndPath(itemModId, itemRl + "_" + value));
+              .parent(actualParent)
+              .texture("layer0", fromNamespaceAndPath(itemModId, itemRl + "_" + value));
       index++;
     }
   }
@@ -190,6 +190,17 @@ public final class DatagenItemModel extends ItemModelProvider {
   }
 
   /**
+   * 获取物品的资源位置
+   *
+   * @param item 物品实例
+   * @param name 名称后缀
+   * @return 资源位置
+   */
+  private @NotNull ResourceLocation getItemResourceLocation(Item item, String name) {
+    return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item)).withSuffix("_" + name);
+  }
+
+  /**
    * 创建特殊物品模型
    *
    * @param item 物品实例
@@ -210,19 +221,8 @@ public final class DatagenItemModel extends ItemModelProvider {
   public ItemModelBuilder createModelItem(Item item, ModelFile parent) {
     ResourceLocation resourceLocation = Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item));
     return getBuilder(item.toString())
-      .parent(parent)
-      .texture("layer0", fromNamespaceAndPath(resourceLocation.getNamespace(), "item/" + resourceLocation.getPath()));
-  }
-
-  /**
-   * 获取物品的资源位置
-   *
-   * @param item 物品实例
-   * @param name 名称后缀
-   * @return 资源位置
-   */
-  private @NotNull ResourceLocation getItemResourceLocation(Item item, String name) {
-    return Objects.requireNonNull(BuiltInRegistries.ITEM.getKey(item)).withSuffix("_" + name);
+            .parent(parent)
+            .texture("layer0", fromNamespaceAndPath(resourceLocation.getNamespace(), "item/" + resourceLocation.getPath()));
   }
 
   /**
@@ -252,8 +252,8 @@ public final class DatagenItemModel extends ItemModelProvider {
    */
   public ItemModelBuilder basicItem(ResourceLocation item, String name) {
     return getBuilder(item.toString())
-      .parent(customModelFile("models/item/" + name))
-      .texture("layer0", fromNamespaceAndPath(item.getNamespace(), "item/" + item.getPath()));
+            .parent(customModelFile("models/item/" + name))
+            .texture("layer0", fromNamespaceAndPath(item.getNamespace(), "item/" + item.getPath()));
   }
 
   /**
@@ -263,6 +263,6 @@ public final class DatagenItemModel extends ItemModelProvider {
    * @return 模型文件
    */
   public ModelFile customModelFile(String name) {
-    return new ModelFile.UncheckedModelFile(ImaginaryCraft.modRl(name));
-  }
+		return new ModelFile.UncheckedModelFile(ImaginaryCraft.modRl(name));
+	}
 }

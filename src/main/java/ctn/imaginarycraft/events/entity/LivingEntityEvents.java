@@ -321,6 +321,11 @@ public final class LivingEntityEvents {
     }
   }
 
+  @SubscribeEvent(priority = EventPriority.LOWEST)
+  public static void onEffectRemoved(MobEffectEvent.Remove event) {
+    clearAmount(event.getEntity(), event.getEffectInstance());
+  }
+
   // 效果移除/过期：清除吸收值
   private static void clearAmount(LivingEntity entity, MobEffectInstance effect) {
     if (entity.level().isClientSide) return;
@@ -333,12 +338,7 @@ public final class LivingEntityEvents {
   }
 
   @SubscribeEvent(priority = EventPriority.LOWEST)
-  public static void onEffectRemoved(MobEffectEvent.Remove event) {
-    clearAmount(event.getEntity(), event.getEffectInstance());
-  }
-
-  @SubscribeEvent(priority = EventPriority.LOWEST)
   public static void onEffectExpired(MobEffectEvent.Expired event) {
     clearAmount(event.getEntity(), event.getEffectInstance());
-  }
+	}
 }

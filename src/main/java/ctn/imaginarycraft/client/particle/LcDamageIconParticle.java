@@ -58,6 +58,32 @@ public class LcDamageIconParticle extends TextureSheetParticle {
     return ModParticleRenderTypes.LOBOTOMY_CORPORATION_DAMAGE_ICON_PARTICLE;
   }
 
+  public enum Type {
+    PHYSICS(0, "damage_type/physics"),
+    SPIRIT(1, "damage_type/spirit"),
+    EROSION(2, "damage_type/erosion"),
+    THE_SOUL(3, "damage_type/the_soul"),
+    RATIONALITY_ADD(4, "damage_type/rationality_add"),
+    RATIONALITY_REDUCE(5, "damage_type/rationality_reduce"),
+    MAGIC(6, "damage_type/magic");
+
+    private final int index;
+    private final @javax.annotation.Nullable String texturePl;
+
+    Type(final int index, @javax.annotation.Nullable final String texturePl) {
+      this.index = index;
+      this.texturePl = texturePl;
+    }
+
+    public @javax.annotation.Nullable String getTexturePl() {
+      return texturePl;
+    }
+
+    public int getIndex() {
+      return index;
+    }
+  }
+
   public record Provider(
     SpriteSet spriteSet) implements ParticleProvider<Options> {
     @Override
@@ -100,32 +126,6 @@ public class LcDamageIconParticle extends TextureSheetParticle {
 
     private TextureAtlasSprite getSprite(Type type) {
       return ((ParticleEngine.MutableSpriteSet) this.spriteSet).sprites.get(type.getIndex());
-    }
-  }
-
-  public enum Type {
-    PHYSICS(0, "damage_type/physics"),
-    SPIRIT(1, "damage_type/spirit"),
-    EROSION(2, "damage_type/erosion"),
-    THE_SOUL(3, "damage_type/the_soul"),
-    RATIONALITY_ADD(4, "damage_type/rationality_add"),
-    RATIONALITY_REDUCE(5, "damage_type/rationality_reduce"),
-    MAGIC(6, "damage_type/magic");
-
-    private final int index;
-    private final @javax.annotation.Nullable String texturePl;
-
-    Type(final int index, @javax.annotation.Nullable final String texturePl) {
-      this.index = index;
-      this.texturePl = texturePl;
-    }
-
-    public @javax.annotation.Nullable String getTexturePl() {
-      return texturePl;
-    }
-
-    public int getIndex() {
-      return index;
     }
   }
 

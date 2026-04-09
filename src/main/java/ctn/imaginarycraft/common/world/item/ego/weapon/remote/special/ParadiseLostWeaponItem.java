@@ -42,12 +42,6 @@ public class ParadiseLostWeaponItem extends RemoteEgoWeaponGeoItem {
     super(itemProperties, egoWeaponBuilder, modPath);
   }
 
-
-  @Override
-  protected void shootProjectile(LivingEntity shooterEntity, Projectile projectileEntity, int projectileIndex, float projectileVelocity, float projectileInaccuracy, float shootingAngle, @Nullable LivingEntity targetEntity) {
-
-  }
-
   /**
    * 召唤一个
    */
@@ -89,37 +83,6 @@ public class ParadiseLostWeaponItem extends RemoteEgoWeaponGeoItem {
       }
     }
     serverLevel.addFreshEntityWithPassengers(ParadiseLostSpikeweed.create(serverLevel, x, y, z, 1, attackingEntity));
-  }
-
-  /**
-   * 召唤多个
-   */
-  public static void chargingAttack(Level world, LivingEntity attackingEntity) {
-    if (!(world instanceof ServerLevel serverLevel)) {
-      return;
-    }
-    double x = attackingEntity.position().x;
-    int y = attackingEntity.blockPosition().getY();
-    double z = attackingEntity.position().z;
-    double v = 8;
-    AABB aabb = new AABB(x - v, y - 3, z - v, x + v, y + 3, z + v);
-    List<LivingEntity> entityList = getAttackableTarget(attackingEntity, serverLevel, aabb);
-    int i = entityList.size();
-    if (i > 0) {
-      for (LivingEntity livingEntity : entityList) {
-        x = livingEntity.position().x;
-        y = livingEntity.blockPosition().getY();
-        z = livingEntity.position().z;
-        while (serverLevel.getBlockState(new BlockPos((int) x, y - 1, (int) z)).isAir()) {
-          y--;
-          if (y < -64) {
-            y = (int) livingEntity.position().y;
-            break;
-          }
-        }
-        serverLevel.addFreshEntityWithPassengers(ParadiseLostSpikeweed.create(serverLevel, x, y, z, i, attackingEntity, livingEntity));
-      }
-    }
   }
 
   /**
@@ -165,6 +128,42 @@ public class ParadiseLostWeaponItem extends RemoteEgoWeaponGeoItem {
     return false;
   }
 
+  /**
+   * 召唤多个
+   */
+  public static void chargingAttack(Level world, LivingEntity attackingEntity) {
+    if (!(world instanceof ServerLevel serverLevel)) {
+      return;
+    }
+    double x = attackingEntity.position().x;
+    int y = attackingEntity.blockPosition().getY();
+    double z = attackingEntity.position().z;
+    double v = 8;
+    AABB aabb = new AABB(x - v, y - 3, z - v, x + v, y + 3, z + v);
+    List<LivingEntity> entityList = getAttackableTarget(attackingEntity, serverLevel, aabb);
+    int i = entityList.size();
+    if (i > 0) {
+      for (LivingEntity livingEntity : entityList) {
+        x = livingEntity.position().x;
+        y = livingEntity.blockPosition().getY();
+        z = livingEntity.position().z;
+        while (serverLevel.getBlockState(new BlockPos((int) x, y - 1, (int) z)).isAir()) {
+          y--;
+          if (y < -64) {
+            y = (int) livingEntity.position().y;
+            break;
+          }
+        }
+        serverLevel.addFreshEntityWithPassengers(ParadiseLostSpikeweed.create(serverLevel, x, y, z, i, attackingEntity, livingEntity));
+      }
+    }
+  }
+
+  @Override
+  protected void shootProjectile(LivingEntity shooterEntity, Projectile projectileEntity, int projectileIndex, float projectileVelocity, float projectileInaccuracy, float shootingAngle, @Nullable LivingEntity targetEntity) {
+
+  }
+
   @Override
   public int getUseDuration(@NotNull ItemStack itemStack, @NotNull LivingEntity usingEntity) {
     return 666;
@@ -193,7 +192,7 @@ public class ParadiseLostWeaponItem extends RemoteEgoWeaponGeoItem {
   @Override
   public void onUseTick(@NotNull Level world, @NotNull LivingEntity usingEntity, @NotNull ItemStack itemStack, int remainingUseDuration) {
     if (!(usingEntity instanceof Player player) || !player.onGround() || isJumpCancellation(world, player)) {
-    }
+		}
 //    PmTool.incrementNbt(player, PLAYER_USE_ITEM_TICK, 1);
 //    PmTool.incrementNbt(player, PLAYER_USE_TICK, 1);
 //    PmTool.incrementNbt(player, ITEM_TICK, 1);
@@ -232,6 +231,12 @@ public class ParadiseLostWeaponItem extends RemoteEgoWeaponGeoItem {
       }
     }
     return false;
+  }
+
+  /**
+   * 強制中断
+   */
+  public void forcedInterruption(Level world, Player playerEntity) {
   }
 
   @Override
@@ -291,11 +296,5 @@ public class ParadiseLostWeaponItem extends RemoteEgoWeaponGeoItem {
 //        nbt.putBoolean(CANNOT_PLAYER_MOVED, false);
 //      }
 //    }
-  }
-
-  /**
-   * 強制中断
-   */
-  public void forcedInterruption(Level world, Player playerEntity) {
-  }
+	}
 }

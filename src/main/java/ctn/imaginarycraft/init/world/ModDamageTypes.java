@@ -58,13 +58,6 @@ public final class ModDamageTypes {
     register(context, "remote", ModDamageTypes.REMOTE, DamageScaling.WHEN_CAUSED_BY_LIVING_NON_PLAYER, 0.0f, DamageEffects.HURT, DeathMessageType.DEFAULT);
   }
 
-  /**
-   * 创建伤害类型
-   */
-  private static @NotNull ResourceKey<DamageType> register(final String name) {
-    return ResourceKey.create(Registries.DAMAGE_TYPE, ImaginaryCraft.modRl(name));
-  }
-
   private static Holder.@NotNull Reference<DamageType> register(
     final BootstrapContext<DamageType> context,
     final String name,
@@ -78,19 +71,26 @@ public final class ModDamageTypes {
   }
 
   private static Holder.@NotNull Reference<DamageType> register(
-    final BootstrapContext<DamageType> context,
-    final String name,
-    final ResourceKey<DamageType> damageType,
-    float exhaustion
-  ) {
-    return register(context, name, damageType, DamageScaling.ALWAYS, exhaustion, DamageEffects.HURT, DeathMessageType.DEFAULT);
-  }
-
-  private static Holder.@NotNull Reference<DamageType> register(
     final @NotNull BootstrapContext<DamageType> context,
     final ResourceKey<DamageType> damageType,
     final DamageType damageType1
   ) {
     return context.register(damageType, damageType1);
   }
+
+  /**
+   * 创建伤害类型
+   */
+  private static @NotNull ResourceKey<DamageType> register(final String name) {
+    return ResourceKey.create(Registries.DAMAGE_TYPE, ImaginaryCraft.modRl(name));
+  }
+
+  private static Holder.@NotNull Reference<DamageType> register(
+    final BootstrapContext<DamageType> context,
+    final String name,
+    final ResourceKey<DamageType> damageType,
+    float exhaustion
+  ) {
+    return register(context, name, damageType, DamageScaling.ALWAYS, exhaustion, DamageEffects.HURT, DeathMessageType.DEFAULT);
+	}
 }

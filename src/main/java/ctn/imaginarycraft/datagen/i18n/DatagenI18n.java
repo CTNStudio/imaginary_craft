@@ -63,8 +63,19 @@ public abstract class DatagenI18n extends LanguageProvider {
     map.forEach((holder, zhName) -> add(holder.get(), zhName));
   }
 
+  /**
+   * 生物属性翻译
+   */
+  protected void add(Attribute attributeHolder, String name) {
+    add(attributeHolder.getDescriptionId(), name);
+  }
+
   protected void addSoundEventList(Map<Supplier<? extends SoundEvent>, String> map) {
     map.forEach((holder, zhName) -> add(holder.get(), zhName));
+  }
+
+  public void add(SoundEvent damageType, String name) {
+    add(DatagenSoundDefinitionsProvider.getSubtitle(damageType), name);
   }
 
   protected void addJadePlugin(ResourceLocation pluginId, String name) {
@@ -76,24 +87,17 @@ public abstract class DatagenI18n extends LanguageProvider {
     add("curios.modifiers." + curiosIdName, modifiersName);
   }
 
-  protected void add(ModConfigSpec.ConfigValue<?> configValue, String value) {
-    add(ConfigUtil.getTranslation(configValue.getPath().toArray(String[]::new)), value);
-  }
-
   protected void add(ModConfigSpec.ConfigValue<?> configValue, String value, String tooltipValue) {
     add(configValue, value);
     add(ConfigUtil.getTranslation(configValue.getPath().toArray(String[]::new)) + ".tooltip", value);
   }
 
-  protected <T> void add(DataComponentType<T> dataComponentType, String name) {
-    add(dataComponentType.toString(), name);
+  protected void add(ModConfigSpec.ConfigValue<?> configValue, String value) {
+    add(ConfigUtil.getTranslation(configValue.getPath().toArray(String[]::new)), value);
   }
 
-  /**
-   * 生物属性翻译
-   */
-  protected void add(Attribute attributeHolder, String name) {
-    add(attributeHolder.getDescriptionId(), name);
+  protected <T> void add(DataComponentType<T> dataComponentType, String name) {
+    add(dataComponentType.toString(), name);
   }
 
   /**
@@ -110,14 +114,10 @@ public abstract class DatagenI18n extends LanguageProvider {
     add(damageType.value(), name);
   }
 
-  public void add(SoundEvent damageType, String name) {
-    add(DatagenSoundDefinitionsProvider.getSubtitle(damageType), name);
-  }
-
   /**
    * 玩家死亡消息翻译
    */
   protected void addPlayerDeathMessage(ResourceKey<DamageType> damageType, String name) {
     add("death.attack." + damageType.location().getPath() + ".player", name);
-  }
+	}
 }

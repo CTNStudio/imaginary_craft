@@ -73,5 +73,5 @@ public final class ColorUtil {
    */
   public static float colorValue(int colorValue) {
     return Math.max(0.0f, (Math.min(1.0f, colorValue / 255.0f)));
-  }
+	}
 }

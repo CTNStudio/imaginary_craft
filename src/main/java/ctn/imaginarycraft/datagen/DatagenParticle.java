@@ -19,10 +19,6 @@ public final class DatagenParticle extends ParticleDescriptionProvider {
     super(output, fileHelper);
   }
 
-  private static @NotNull ResourceLocation getPath(String name) {
-    return ResourceLocation.fromNamespaceAndPath(ImaginaryCraft.ID, name);
-  }
-
   @Override
   protected void addDescriptions() {
     sprite(ModParticleTypes.LC_DAMAGE_ICON, Arrays.stream(LcDamageIconParticle.Type.values())
@@ -42,5 +38,9 @@ public final class DatagenParticle extends ParticleDescriptionProvider {
     spriteSet(type.get(), Arrays.stream(names)
       .map(DatagenParticle::getPath)
       .collect(Collectors.toList()));
+  }
+
+  private static @NotNull ResourceLocation getPath(String name) {
+    return ResourceLocation.fromNamespaceAndPath(ImaginaryCraft.ID, name);
   }
 }

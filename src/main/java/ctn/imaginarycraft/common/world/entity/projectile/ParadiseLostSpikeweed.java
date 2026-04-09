@@ -63,17 +63,17 @@ public class ParadiseLostSpikeweed extends Entity implements TraceableEntity, Ge
     super(entityType, level);
   }
 
+  public static @NotNull ParadiseLostSpikeweed create(Level level, double x, double y, double z, int targetNumber, LivingEntity owner, LivingEntity targetEntity) {
+    ParadiseLostSpikeweed entity = create(level, x, y, z, targetNumber, owner);
+    entity.targetEntity = targetEntity;
+    return entity;
+  }
+
   public static @NotNull ParadiseLostSpikeweed create(Level level, double x, double y, double z, int targetNumber, LivingEntity owner) {
     ParadiseLostSpikeweed entity = new ParadiseLostSpikeweed(ProjectileEntityTypes.PARADISE_LOST_SPIKEWEED.get(), level);
     entity.targetNumber = targetNumber == 0 ? 1 : targetNumber;
     entity.setPos(x, y, z);
     entity.setOwner(owner);
-    return entity;
-  }
-
-  public static @NotNull ParadiseLostSpikeweed create(Level level, double x, double y, double z, int targetNumber, LivingEntity owner, LivingEntity targetEntity) {
-    ParadiseLostSpikeweed entity = create(level, x, y, z, targetNumber, owner);
-    entity.targetEntity = targetEntity;
     return entity;
   }
 
@@ -166,6 +166,60 @@ public class ParadiseLostSpikeweed extends Entity implements TraceableEntity, Ge
     return source;
   }
 
+  public float getDamage() {
+    return damageCalculation(this.damage, this.damage1, this.damage2);
+  }
+
+  /**
+   * 伤害计算
+   */
+  private float damageCalculation(float damage, float damage1, float damage2) {
+    int number = this.targetNumber;
+    if (number == 1) {
+      return damage;
+    }
+    if (number >= 2) {
+      damage = damage1;
+    }
+    if (number >= 6) {
+      damage = damage2;
+    }
+    return damage;
+  }
+
+  /**
+   * 是否可攻击
+   */
+  private boolean targetJudgment(Entity entity) {
+    if (entity instanceof ItemEntity ||
+      entity instanceof ExperienceOrb ||
+      entity instanceof ParadiseLostSpikeweed ||
+      entity instanceof Projectile) {
+      return false;
+    }
+    LivingEntity owner = getOwner();
+    return owner != null && !entity.getUUID().equals(owner.getUUID());
+  }
+
+  @Override
+  @Nullable
+  public LivingEntity getOwner() {
+    if (this.owner != null ||
+      this.ownerUUID == null ||
+      !(level() instanceof ServerLevel serverLevel) ||
+      !(serverLevel.getEntity(this.ownerUUID) instanceof LivingEntity entity)) {
+      return owner;
+    }
+
+    this.owner = entity;
+    return owner;
+  }
+
+  public void setOwner(@Nullable LivingEntity owner) {
+    this.owner = owner;
+    this.ownerUUID = owner == null ? null : owner.getUUID();
+  }
+
   @Override
   @Nullable
   public ItemStack getWeaponItem() {
@@ -199,25 +253,6 @@ public class ParadiseLostSpikeweed extends Entity implements TraceableEntity, Ge
   }
 
   @Override
-  @Nullable
-  public LivingEntity getOwner() {
-    if (this.owner != null ||
-      this.ownerUUID == null ||
-      !(level() instanceof ServerLevel serverLevel) ||
-      !(serverLevel.getEntity(this.ownerUUID) instanceof LivingEntity entity)) {
-      return owner;
-    }
-
-    this.owner = entity;
-    return owner;
-  }
-
-  public void setOwner(@Nullable LivingEntity owner) {
-    this.owner = owner;
-    this.ownerUUID = owner == null ? null : owner.getUUID();
-  }
-
-  @Override
   public void handleEntityEvent(byte id) {
     super.handleEntityEvent(id);
     if (id != 4) {
@@ -247,47 +282,12 @@ public class ParadiseLostSpikeweed extends Entity implements TraceableEntity, Ge
     return targetNumber;
   }
 
-  public float getDamage() {
-    return damageCalculation(this.damage, this.damage1, this.damage2);
-  }
-
-  /**
-   * 伤害计算
-   */
-  private float damageCalculation(float damage, float damage1, float damage2) {
-    int number = this.targetNumber;
-    if (number == 1) {
-      return damage;
-    }
-    if (number >= 2) {
-      damage = damage1;
-    }
-    if (number >= 6) {
-      damage = damage2;
-    }
-    return damage;
-  }
-
   public float getAnimationProgress(float partialTicks) {
     if (!clientSideAttackStarted) {
       return 0.0F;
     }
     int i = lifeTicks - 2;
     return i <= 0 ? 1.0F : 1.0F - ((float) i - partialTicks) / 20.0F;
-  }
-
-  /**
-   * 是否可攻击
-   */
-  private boolean targetJudgment(Entity entity) {
-    if (entity instanceof ItemEntity ||
-      entity instanceof ExperienceOrb ||
-      entity instanceof ParadiseLostSpikeweed ||
-      entity instanceof Projectile) {
-      return false;
-    }
-    LivingEntity owner = getOwner();
-    return owner != null && !entity.getUUID().equals(owner.getUUID());
   }
 
   public static class TrainingRabbitsRenderer extends GeoEntityRenderer<ParadiseLostSpikeweed> {
@@ -299,5 +299,5 @@ public class ParadiseLostSpikeweed extends Entity implements TraceableEntity, Ge
     public @NotNull ResourceLocation getTextureLocation(@NotNull ParadiseLostSpikeweed animatable) {
       return ModGeoEntityModel.texturePath("paradise_lost_spikeweed");
     }
-  }
+	}
 }

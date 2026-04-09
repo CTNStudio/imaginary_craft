@@ -21,18 +21,18 @@ import java.util.function.Consumer;
  * 这玩意就是原版的剑
  */
 public class SwordsEgoWeaponGeoItem extends SwordsEgoWeaponItem implements GeoItem {
-  private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
   protected final GeoModel<MeleeEgoWeaponGeoItem> model;
   protected final @Nullable GeoModel<MeleeEgoWeaponGeoItem> guiModel;
+  private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+  public SwordsEgoWeaponGeoItem(Tier tier, Properties itemProperties, IMeleeEgoWeaponItem.Builder egoWeaponBuilder, String modPath) {
+    this(tier, itemProperties, egoWeaponBuilder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
+  }
 
   public SwordsEgoWeaponGeoItem(Tier tier, Properties itemProperties, IMeleeEgoWeaponItem.Builder egoWeaponBuilder, GeoModel<MeleeEgoWeaponGeoItem> geoModel, GeoModel<MeleeEgoWeaponGeoItem> guiModel) {
     super(tier, itemProperties, egoWeaponBuilder);
     this.model = geoModel;
     this.guiModel = guiModel;
-  }
-
-  public SwordsEgoWeaponGeoItem(Tier tier, Properties itemProperties, IMeleeEgoWeaponItem.Builder egoWeaponBuilder, String modPath) {
-    this(tier, itemProperties, egoWeaponBuilder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
   }
 
   @Override

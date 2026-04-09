@@ -33,25 +33,6 @@ public class RationalityScreenFilterLayer extends BasicHudLayer {
     };
   }
 
-  private void rationalityChange(float value) {
-    if (value >= 0) {
-      for (Filter filter : this.rationalityFilters) {
-        filter.setAlpha(0);
-      }
-      return;
-    }
-    float v = value / this.minValue;
-
-    // 第一个滤镜: 在 0.0-0.5 范围内从 0 升到 1 再降到 0
-    this.rationalityFilters[0].setAlpha(Math.max(0, Math.min(1, 1 - Math.abs(v - 0.25f) * 4)));
-
-    // 第二个滤镜: 在 0.333-1.0 范围内从 0 升到 1 再降到 0
-    this.rationalityFilters[1].setAlpha(Math.max(0, Math.min(1, 1 - Math.abs(v - 0.666f) * 1.5f)));
-
-    // 第三个滤镜: 在 0.666-1.0 范围内从 0 升到 1
-    this.rationalityFilters[2].setAlpha(Math.max(0, Math.min(1, (v - 0.666f) * 3)));
-  }
-
   @Override
   public int getWidth() {
     return getScreenWidth();
@@ -105,6 +86,25 @@ public class RationalityScreenFilterLayer extends BasicHudLayer {
     }
   }
 
+  private void rationalityChange(float value) {
+    if (value >= 0) {
+      for (Filter filter : this.rationalityFilters) {
+        filter.setAlpha(0);
+      }
+      return;
+    }
+    float v = value / this.minValue;
+
+    // 第一个滤镜: 在 0.0-0.5 范围内从 0 升到 1 再降到 0
+    this.rationalityFilters[0].setAlpha(Math.max(0, Math.min(1, 1 - Math.abs(v - 0.25f) * 4)));
+
+    // 第二个滤镜: 在 0.333-1.0 范围内从 0 升到 1 再降到 0
+    this.rationalityFilters[1].setAlpha(Math.max(0, Math.min(1, 1 - Math.abs(v - 0.666f) * 1.5f)));
+
+    // 第三个滤镜: 在 0.666-1.0 范围内从 0 升到 1
+    this.rationalityFilters[2].setAlpha(Math.max(0, Math.min(1, (v - 0.666f) * 3)));
+  }
+
   public static class Filter extends AbstractWidget {
     private final ResourceLocation texture;
     private float alpha;
@@ -124,13 +124,6 @@ public class RationalityScreenFilterLayer extends BasicHudLayer {
       pose.popPose();
     }
 
-    public void setAlpha(float alpha) {
-      if (alpha == this.alpha) {
-        return;
-      }
-      this.alpha = Math.max(0, alpha);
-    }
-
     @Override
     protected void updateWidgetNarration(NarrationElementOutput narrationElementOutput) {
 
@@ -138,6 +131,13 @@ public class RationalityScreenFilterLayer extends BasicHudLayer {
 
     public float getAlpha() {
       return alpha;
+    }
+
+    public void setAlpha(float alpha) {
+      if (alpha == this.alpha) {
+        return;
+      }
+      this.alpha = Math.max(0, alpha);
     }
   }
 }

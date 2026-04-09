@@ -16,18 +16,18 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 import java.util.function.Consumer;
 
 public abstract class MeleeEgoWeaponGeoItem extends MeleeEgoWeaponItem implements GeoItem {
-  private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
   protected final GeoModel<MeleeEgoWeaponGeoItem> model;
   protected final @Nullable GeoModel<MeleeEgoWeaponGeoItem> guiModel;
+  private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+  public MeleeEgoWeaponGeoItem(Properties itemProperties, IMeleeEgoWeaponItem.Builder egoWeaponBuilder, String modPath) {
+    this(itemProperties, egoWeaponBuilder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
+  }
 
   public MeleeEgoWeaponGeoItem(Properties itemProperties, IMeleeEgoWeaponItem.Builder egoWeaponBuilder, GeoModel<MeleeEgoWeaponGeoItem> geoModel, @Nullable GeoModel<MeleeEgoWeaponGeoItem> guiModel) {
     super(itemProperties, egoWeaponBuilder);
     this.model = geoModel;
     this.guiModel = guiModel;
-  }
-
-  public MeleeEgoWeaponGeoItem(Properties itemProperties, IMeleeEgoWeaponItem.Builder egoWeaponBuilder, String modPath) {
-    this(itemProperties, egoWeaponBuilder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
   }
 
   @Override

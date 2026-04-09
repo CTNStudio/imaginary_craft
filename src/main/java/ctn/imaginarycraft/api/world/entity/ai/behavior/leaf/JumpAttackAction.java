@@ -13,14 +13,14 @@ public class JumpAttackAction extends BTNode {
   final float horizonPower;
   final float jumpAdditionSpeed;
 
+  public JumpAttackAction(Mob mob, float horizonPower) {
+    this(mob, horizonPower, 0);
+  }
+
   public JumpAttackAction(Mob mob, float horizonPower, float jumpAdditionSpeed) {
     this.mob = mob;
     this.horizonPower = horizonPower;
     this.jumpAdditionSpeed = jumpAdditionSpeed;
-  }
-
-  public JumpAttackAction(Mob mob, float horizonPower) {
-    this(mob, horizonPower, 0);
   }
 
   @Override

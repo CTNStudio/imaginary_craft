@@ -10,10 +10,10 @@ import net.minecraft.world.entity.Mob;
  */
 public class ParallelMoveAction extends BTNode {
   final Mob mob;
-  float dist;
   final DashComponent component;
   final float speed;
   final float offsetY;
+  float dist;
 
   public ParallelMoveAction(Mob mob, float dist, float speed, float offsetY) {
     this.mob = mob;

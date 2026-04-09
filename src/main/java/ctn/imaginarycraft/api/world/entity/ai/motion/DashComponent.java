@@ -10,10 +10,9 @@ import net.minecraft.world.phys.Vec3;
  * <p>支持悬停、加速、匀速移动、预判等运动控制</p>
  */
 public class DashComponent {
-  Vec3 direction;
   public Vec3 targetPos;
-
   public Entity owner;
+  Vec3 direction;
 
   public DashComponent(Entity owner) {
     this.owner = owner;
@@ -21,21 +20,20 @@ public class DashComponent {
     this.targetPos = owner.position();
   }
 
+  public Vec3 getDirection() {
+    return direction;
+  }
 
   public void setDirection(Vec3 direction) {
     this.direction = direction;
   }
 
-  public void setTargetPos(Vec3 targetPos) {
-    this.targetPos = targetPos;
-  }
-
-  public Vec3 getDirection() {
-    return direction;
-  }
-
   public Vec3 getTargetPos() {
     return targetPos;
+  }
+
+  public void setTargetPos(Vec3 targetPos) {
+    this.targetPos = targetPos;
   }
 
   /**
@@ -55,6 +53,17 @@ public class DashComponent {
         owner.setDeltaMovement(owner.getDeltaMovement().scale(0.95f));
       }
     }
+  }
+
+  /**
+   * 获取目标相对直线位置
+   *
+   * @param target   目标实体
+   * @param distance xz距离
+   * @param height   高度
+   */
+  public Vec3 setNearestTargetPos(Entity target, float distance, float height) {
+    return targetPos = owner.position().subtract(target.position()).multiply(1, 0, 1).normalize().scale(distance).add(0, height, 0).add(target.position());
   }
 
   /**
@@ -93,19 +102,7 @@ public class DashComponent {
     direction = target.position().add(0, 1, 0).add(target.getKnownMovement().scale(10)).subtract(owner.position());
   }
 
-
-  /**
-   * 获取目标相对直线位置
-   *
-   * @param target   目标实体
-   * @param distance xz距离
-   * @param height   高度
-   */
-  public Vec3 setNearestTargetPos(Entity target, float distance, float height) {
-    return targetPos = owner.position().subtract(target.position()).multiply(1, 0, 1).normalize().scale(distance).add(0, height, 0).add(target.position());
-  }
-
   public void lookAtDirection() {
     owner.lookAt(EntityAnchorArgument.Anchor.EYES, direction.add(owner.position()));
-  }
+	}
 }

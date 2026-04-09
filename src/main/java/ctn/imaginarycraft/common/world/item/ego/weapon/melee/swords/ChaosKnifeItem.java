@@ -53,12 +53,12 @@ public class ChaosKnifeItem extends SwordsEgoWeaponItem implements IItemLcDamage
     return getComponent(stack).lcDamageType();
   }
 
+  private static LcDamageType.Component getComponent(ItemStack stack) {
+    return stack.getOrDefault(ModDataComponents.LC_DAMAGE_TYPE, DEFAULT_COMPONENT);
+  }
+
   @Override
   public @NotNull Set<LcDamageType> getCanCauseLcDamageTypes(ItemStack stack) {
     return getComponent(stack).canCauseLcDamageTypes();
-  }
-
-  private static LcDamageType.Component getComponent(ItemStack stack) {
-    return stack.getOrDefault(ModDataComponents.LC_DAMAGE_TYPE, DEFAULT_COMPONENT);
   }
 }

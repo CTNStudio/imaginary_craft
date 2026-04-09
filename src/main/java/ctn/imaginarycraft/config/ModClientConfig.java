@@ -24,5 +24,5 @@ public final class ModClientConfig extends ConfigUtil {
       builder, true, "enable_low_rationality_filter", "玩家低理智滤镜");
     enableLcColorDamageFilter = define(
       builder, true, "enable_lobotomy_corporation_damage_filter", "玩家遭受脑叶伤害滤镜");
-  }
+	}
 }

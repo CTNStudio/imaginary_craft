@@ -37,26 +37,6 @@ public final class EpicFightRegistry {
     event.enqueueWork(EpicFightRegistry::registerEntityTypeArmatures);
   }
 
-  @SubscribeEvent
-  public static void registerAnimations(AnimationManager.AnimationRegistryEvent event) {
-    event.newBuilder(ImaginaryCraft.ID, ModAnimations::build);
-  }
-
-  public static void registerPatchedEntityRenderers() {
-    if (!FMLEnvironment.dist.isClient()) {
-      return;
-    }
-    EpicFightClientEventHooks.Registry.ADD_PATCHED_ENTITY.registerEvent(event -> {
-      event.addPatchedEntityRenderer(OrdealsEntityTypes.GRANT_US_LOVE.get(), entityType -> new GrantUsLovePatchRenderer(event.getContext()));
-    });
-  }
-
-  public static void registerEntityPatch() {
-    EpicFightEventHooks.Registry.ENTITY_PATCH.registerEvent(event -> {
-      event.registerEntityPatch(OrdealsEntityTypes.GRANT_US_LOVE.get(), GrantUsLovePatch::new);
-    });
-  }
-
   private static void registerEntityTypeArmatures() {
     Armatures.registerEntityTypeArmature(OrdealsEntityTypes.GRANT_US_LOVE.get(), ModArmatures.GRANT_US_LOVE);
   }
@@ -68,6 +48,10 @@ public final class EpicFightRegistry {
     register(ImaginaryCraft.modRl("gun"), ModWeaponCapabilityPresets.GUN);
     register(ImaginaryCraft.modRl("pistol"), ModWeaponCapabilityPresets.PISTOL);
     register(ImaginaryCraft.modRl("rifle"), ModWeaponCapabilityPresets.RIFLE);
+  }
+
+  private static <T extends CapabilityItem.Builder<?>> void register(ResourceLocation rl, Function<Item, T> builder) {
+    WeaponTypeReloadListenerAccessorMixin.imaginarycraft$getPresets().put(rl, builder);
   }
 
   private static void registerWeaponTypesByClass() {
@@ -103,7 +87,23 @@ public final class EpicFightRegistry {
     }
   }
 
-  private static <T extends CapabilityItem.Builder<?>> void register(ResourceLocation rl, Function<Item, T> builder) {
-    WeaponTypeReloadListenerAccessorMixin.imaginarycraft$getPresets().put(rl, builder);
+  @SubscribeEvent
+  public static void registerAnimations(AnimationManager.AnimationRegistryEvent event) {
+    event.newBuilder(ImaginaryCraft.ID, ModAnimations::build);
+  }
+
+  public static void registerPatchedEntityRenderers() {
+    if (!FMLEnvironment.dist.isClient()) {
+      return;
+    }
+    EpicFightClientEventHooks.Registry.ADD_PATCHED_ENTITY.registerEvent(event -> {
+      event.addPatchedEntityRenderer(OrdealsEntityTypes.GRANT_US_LOVE.get(), entityType -> new GrantUsLovePatchRenderer(event.getContext()));
+    });
+  }
+
+  public static void registerEntityPatch() {
+    EpicFightEventHooks.Registry.ENTITY_PATCH.registerEvent(event -> {
+      event.registerEntityPatch(OrdealsEntityTypes.GRANT_US_LOVE.get(), GrantUsLovePatch::new);
+    });
   }
 }

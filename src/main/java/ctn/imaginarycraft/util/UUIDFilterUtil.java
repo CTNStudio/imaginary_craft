@@ -146,10 +146,6 @@ public final class UUIDFilterUtil {
     return copy;
   }
 
-  public <T extends EntityAccess> boolean filter(T entity) {
-    return filter(entity.getUUID());
-  }
-
   public <T extends EntityAccess> Set<T> filter(Iterable<T> entitys) {
     Set<T> entityHashSet = new HashSet<>();
     for (T entity : entitys) {
@@ -160,12 +156,8 @@ public final class UUIDFilterUtil {
     return entityHashSet;
   }
 
-  public <T extends EntityAccess> Set<T> filter(Collection<T> entitys) {
-    return entitys.stream().filter(this::filter).collect(Collectors.toSet());
-  }
-
-  public Set<Player> filterPlayers(Level level) {
-    return level.players().stream().filter(this::filter).collect(Collectors.toSet());
+  public <T extends EntityAccess> boolean filter(T entity) {
+    return filter(entity.getUUID());
   }
 
   /**
@@ -181,5 +173,13 @@ public final class UUIDFilterUtil {
       return true;
     }
     return whitelist.contains(uuid) || !blacklist.contains(uuid);
+  }
+
+  public <T extends EntityAccess> Set<T> filter(Collection<T> entitys) {
+    return entitys.stream().filter(this::filter).collect(Collectors.toSet());
+  }
+
+  public Set<Player> filterPlayers(Level level) {
+    return level.players().stream().filter(this::filter).collect(Collectors.toSet());
   }
 }

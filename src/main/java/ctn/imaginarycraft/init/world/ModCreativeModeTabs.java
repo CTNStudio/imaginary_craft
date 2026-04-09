@@ -57,44 +57,44 @@ public final class ModCreativeModeTabs {
                           ModSpawnEggItems.GRANT_US_LOVE_SPAWN_EGG.get().getDefaultInstance()));
 
   private static DeferredHolder<CreativeModeTab, CreativeModeTab> register(
-    String name,
-    String zhCn,
-    BiFunction<String, String, CreativeModeTab.Builder> builder
+          String name,
+          String zhCn,
+          BiFunction<String, String, CreativeModeTab.Builder> builder
   ) {
     return ModCreativeModeTabs.REGISTRY.register(name, builder.apply(name, zhCn)::build);
   }
 
   private static CreativeModeTab.Builder createCreativeModeTab(
-    String name,
-    String zhCn,
-    CreativeModeTab.DisplayItemsGenerator displayItemsGenerator,
-    Supplier<ItemStack> icon,
-    ResourceKey<CreativeModeTab> withTabsBefore
+          String name,
+          String zhCn,
+          CreativeModeTab.DisplayItemsGenerator displayItemsGenerator,
+          Supplier<ItemStack> icon,
+          ResourceKey<CreativeModeTab> withTabsBefore
   ) {
     return createCreativeModeTab(name, zhCn, displayItemsGenerator, icon)
-      .withTabsBefore(withTabsBefore);
+            .withTabsBefore(withTabsBefore);
   }
 
   private static CreativeModeTab.Builder createCreativeModeTab(
-    String name,
-    String zhCn,
-    CreativeModeTab.DisplayItemsGenerator displayItemsGenerator,
-    Supplier<ItemStack> icon
+          String name,
+          String zhCn,
+          CreativeModeTab.DisplayItemsGenerator displayItemsGenerator,
+          Supplier<ItemStack> icon
   ) {
     return createCreativeModeTab(name, zhCn, displayItemsGenerator)
-      .icon(icon);
+            .icon(icon);
   }
 
   private static CreativeModeTab.Builder createCreativeModeTab(
-    String name,
-    String zhCn,
-    CreativeModeTab.DisplayItemsGenerator displayItemsGenerator
+          String name,
+          String zhCn,
+          CreativeModeTab.DisplayItemsGenerator displayItemsGenerator
   ) {
     String key = "itemGroup." + ImaginaryCraft.ID + "." + name;
     ZhCn.addI18nText(zhCn, key);
     return CreativeModeTab.builder()
-      .title(Component.translatable(key))
-      .displayItems(displayItemsGenerator);
+            .title(Component.translatable(key))
+            .displayItems(displayItemsGenerator);
   }
 
   private static void addRegistryItem(DeferredRegister.Items registry, CreativeModeTab.Output output) {

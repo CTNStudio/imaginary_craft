@@ -18,10 +18,9 @@ import java.util.function.BooleanSupplier;
  * 组合层
  */
 public abstract class CompositeHudLayer extends IHudLayer {
+  private final Map<IHudLayer, BooleanSupplier> layers = new LinkedHashMap<>();
   protected int screenWidth;
   protected int screenHeight;
-
-  private final Map<IHudLayer, BooleanSupplier> layers = new LinkedHashMap<>();
 
   public CompositeHudLayer() {
     this.minecraft = Minecraft.getInstance();
@@ -86,6 +85,10 @@ public abstract class CompositeHudLayer extends IHudLayer {
   public void playerChange(final LocalPlayer newPlayer) {
     this.player = newPlayer;
     updateSubLayerPlayer(newPlayer);
+  }
+
+  protected void updateSubLayerPlayer(final LocalPlayer newPlayer) {
+    this.layers.keySet().forEach((layer) -> layer.playerChange(newPlayer));
   }
 
   protected final void sizeChange(final boolean isWidthChange, final boolean isHeightChange, final int newScreenWidth, final int newScreenHeight) {
@@ -153,9 +156,5 @@ public abstract class CompositeHudLayer extends IHudLayer {
       return 0;
     }
     return count - 1 + height;
-  }
-
-  protected void updateSubLayerPlayer(final LocalPlayer newPlayer) {
-    this.layers.keySet().forEach((layer) -> layer.playerChange(newPlayer));
   }
 }

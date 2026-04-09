@@ -17,9 +17,6 @@ import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 @Mixin(PatchedEntityRenderer.class)
 public abstract class PatchedEntityRendererMixin {
-  @Shadow
-  public abstract AssetAccessor<? extends SkinnedMesh> getDefaultMesh();
-
   @WrapMethod(method = "render")
   private <E extends LivingEntity, T extends LivingEntityPatch<E>, R extends EntityRenderer<E>> void render(
     E entity,
@@ -48,4 +45,7 @@ public abstract class PatchedEntityRendererMixin {
     original.call(entity, entitypatch, renderer, buffer, poseStack, packedLight, partialTick);
     NeoForge.EVENT_BUS.post(new PatchedEntityRendererEvent.Post<E, T, R, SkinnedMesh>(entity, entitypatch, renderer, defaultMesh, buffer, poseStack, packedLight, partialTick));
   }
+
+  @Shadow
+  public abstract AssetAccessor<? extends SkinnedMesh> getDefaultMesh();
 }

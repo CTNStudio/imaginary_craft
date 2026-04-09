@@ -32,6 +32,16 @@ public enum VirtueRating implements StringRepresentable {
   }
 
   /**
+   * 获取给定数值对应的评级值
+   *
+   * @param value 数值
+   * @return 对应的评级值
+   */
+  public static int getRatingValue(int value) {
+    return getRating(value).getRating();
+  }
+
+  /**
    * 获取给定数值对应的评级
    *
    * @param value 数值
@@ -47,16 +57,6 @@ public enum VirtueRating implements StringRepresentable {
     return I;
   }
 
-  /**
-   * 获取给定数值对应的评级值
-   *
-   * @param value 数值
-   * @return 对应的评级值
-   */
-  public static int getRatingValue(int value) {
-    return getRating(value).getRating();
-  }
-
   public int getRating() {
     return rating;
   }
@@ -65,13 +65,13 @@ public enum VirtueRating implements StringRepresentable {
     return minValue;
   }
 
-  public String getName() {
-    return name;
-  }
-
   @Contract(pure = true)
   @Override
   public @NotNull String getSerializedName() {
     return ImaginaryCraft.ID + "." + getName().toLowerCase();
   }
+
+  public String getName() {
+    return name;
+	}
 }

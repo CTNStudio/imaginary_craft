@@ -53,5 +53,5 @@ public abstract class RationalityModifyEvent extends RationalityEvent {
     public float getNewValue() {
       return newValue;
     }
-  }
+	}
 }

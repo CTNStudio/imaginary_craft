@@ -17,8 +17,8 @@ public class RandomStrollAction extends BTNode {
 
   protected final PathfinderMob mob;
   protected final double speedModifier;
-  protected int interval;
   protected final int _interval;
+  protected int interval;
 
   public RandomStrollAction(PathfinderMob mob, double speedModifier, int interval) {
     this.mob = mob;
@@ -39,12 +39,6 @@ public class RandomStrollAction extends BTNode {
     return BTStatus.RUNNING;
   }
 
-  @Nullable
-  protected Vec3 getPosition() {
-    return AirRandomPos.getPosTowards(mob, 10, 5, 1, mob.blockPosition().getBottomCenter(), Mth.PI * 0.1f);
-  }
-
-
   @Override
   public void start() {
     super.start();
@@ -53,6 +47,11 @@ public class RandomStrollAction extends BTNode {
     if (vec3 != null) {
       this.mob.getNavigation().moveTo(vec3.x, vec3.y, vec3.z, this.speedModifier);
     }
+  }
+
+  @Nullable
+  protected Vec3 getPosition() {
+    return AirRandomPos.getPosTowards(mob, 10, 5, 1, mob.blockPosition().getBottomCenter(), Mth.PI * 0.1f);
   }
 
   @Override

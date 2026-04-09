@@ -14,20 +14,14 @@ public abstract class BTRoot<T extends Mob> extends BTNode {
     this.mob = mob;
   }
 
-  /**
-   * 延迟构造行为树
-   */
-  @NotNull
-  protected abstract BTNode createBehaviorTree();
+  @Override
+  public boolean canContinueToUse() {
+    return this.canUse();
+  }
 
   @Override
   public boolean canUse() {
     return true;
-  }
-
-  @Override
-  public boolean canContinueToUse() {
-    return this.canUse();
   }
 
   @Override
@@ -38,6 +32,12 @@ public abstract class BTRoot<T extends Mob> extends BTNode {
     }
     child.start();
   }
+
+  /**
+   * 延迟构造行为树
+   */
+  @NotNull
+  protected abstract BTNode createBehaviorTree();
 
   @Override
   public void tick() {

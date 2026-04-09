@@ -124,5 +124,5 @@ public final class ModItemTags {
 
   private static TagKey<Item> createMcTag(String name) {
     return createTag(ResourceLocation.withDefaultNamespace(name));
-  }
+	}
 }

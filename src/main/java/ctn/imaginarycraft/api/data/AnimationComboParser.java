@@ -27,6 +27,37 @@ public final class AnimationComboParser {
   private static final Logger LOGGER = ImaginaryCraft.LOGGER;
 
   /**
+   * 解析连招动画列表
+   *
+   * @param resourceLocation   资源位置
+   * @param extraEntryProvider 额外条目提供者
+   * @param styleListTag       样式列表标签
+   * @return 动画提供者函数列表
+   */
+  @Unique
+  public static List<Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>>> parseComboAnimations(ResourceLocation resourceLocation, @SuppressWarnings("removal") ExtraEntryProvider extraEntryProvider, ListTag styleListTag) {
+    return styleListTag.stream().map(styleTag -> parseComboAnimation(resourceLocation, extraEntryProvider, styleTag)).collect(Collectors.toList());
+  }
+
+  /**
+   * 解析单个连招动画（支持条件化配置）
+   *
+   * @param resourceLocation   资源位置
+   * @param extraEntryProvider 额外条目提供者
+   * @param styleTag           样式标签
+   * @return 条件化动画提供者函数
+   */
+  @Unique
+  @SuppressWarnings("unchecked")
+  public static Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>> parseComboAnimation(ResourceLocation resourceLocation, @SuppressWarnings("removal") ExtraEntryProvider extraEntryProvider, Tag styleTag) {
+    if (!(styleTag instanceof CompoundTag styleCompoundTag)) {
+      var defaultAnim = AnimationComboParser.<AttackAnimation>getAnimationAccessor(resourceLocation, extraEntryProvider, styleTag.getAsString());
+      return entitypatch -> defaultAnim;
+    }
+    return ConditionalProviderFactory.getProvider(AnimationComboParser.<AttackAnimation>getAnimationAccessor(resourceLocation, extraEntryProvider, styleCompoundTag.getString(ConditionalEntryParser.DEFAULT)), ConditionalEntryParser.parseCases(styleCompoundTag, valueString -> (AnimationManager.AnimationAccessor<? extends AttackAnimation>) AnimationComboParser.getAnimationAccessor(resourceLocation, extraEntryProvider, valueString), (accessor, string) -> accessor != null));
+  }
+
+  /**
    * 获取动画访问器
    *
    * @param resourceLocation   资源位置
@@ -50,36 +81,5 @@ public final class AnimationComboParser {
     }
 
     return animation;
-  }
-
-  /**
-   * 解析单个连招动画（支持条件化配置）
-   *
-   * @param resourceLocation   资源位置
-   * @param extraEntryProvider 额外条目提供者
-   * @param styleTag           样式标签
-   * @return 条件化动画提供者函数
-   */
-  @Unique
-  @SuppressWarnings("unchecked")
-  public static Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>> parseComboAnimation(ResourceLocation resourceLocation, @SuppressWarnings("removal") ExtraEntryProvider extraEntryProvider, Tag styleTag) {
-    if (!(styleTag instanceof CompoundTag styleCompoundTag)) {
-      var defaultAnim = AnimationComboParser.<AttackAnimation>getAnimationAccessor(resourceLocation, extraEntryProvider, styleTag.getAsString());
-      return entitypatch -> defaultAnim;
-    }
-    return ConditionalProviderFactory.getProvider(AnimationComboParser.<AttackAnimation>getAnimationAccessor(resourceLocation, extraEntryProvider, styleCompoundTag.getString(ConditionalEntryParser.DEFAULT)), ConditionalEntryParser.parseCases(styleCompoundTag, valueString -> (AnimationManager.AnimationAccessor<? extends AttackAnimation>) AnimationComboParser.getAnimationAccessor(resourceLocation, extraEntryProvider, valueString), (accessor, string) -> accessor != null));
-  }
-
-  /**
-   * 解析连招动画列表
-   *
-   * @param resourceLocation   资源位置
-   * @param extraEntryProvider 额外条目提供者
-   * @param styleListTag       样式列表标签
-   * @return 动画提供者函数列表
-   */
-  @Unique
-  public static List<Function<LivingEntityPatch<?>, AnimationManager.AnimationAccessor<? extends AttackAnimation>>> parseComboAnimations(ResourceLocation resourceLocation, @SuppressWarnings("removal") ExtraEntryProvider extraEntryProvider, ListTag styleListTag) {
-    return styleListTag.stream().map(styleTag -> parseComboAnimation(resourceLocation, extraEntryProvider, styleTag)).collect(Collectors.toList());
-  }
+	}
 }

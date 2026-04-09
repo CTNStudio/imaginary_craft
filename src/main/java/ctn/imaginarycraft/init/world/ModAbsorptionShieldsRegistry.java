@@ -25,47 +25,7 @@ import java.util.function.Supplier;
  * 2026/3/18 尘昨暄
  */
 public final class ModAbsorptionShieldsRegistry {
-  public record ShieldEntry(
-    Holder<MobEffect> effect,
-    ResourceLocation damageTypeTag,
-    Supplier<AttachmentType<Float>> attachment,
-    BiFunction<Integer, Float, Float> initialAmount,
-    SoundEvent shieldBreakSound,
-    boolean shieldConflict
-  ) {
-    public void playShieldBreakSound(Player player) {
-      if (shieldBreakSound != null) {
-        player.playSound(shieldBreakSound);
-      }
-    }
-
-    public boolean isShieldConflict() {
-      return shieldConflict;
-    }
-  }
-
   private static final List<ShieldEntry> SHIELDS = new ArrayList<>();
-
-  private static void register(
-    Holder<MobEffect> effect,
-    ResourceLocation damageTypeTag,
-    Supplier<AttachmentType<Float>> attachment,
-    BiFunction<Integer, Float, Float> initialAmount,
-    SoundEvent shieldBreakSound,
-    boolean shieldConflict
-  ) {
-    SHIELDS.add(new ShieldEntry(effect, damageTypeTag, attachment, initialAmount, shieldBreakSound, shieldConflict));
-  }
-
-  private static void register(
-    Holder<MobEffect> effect,
-    ResourceLocation damageTypeTag,
-    Supplier<AttachmentType<Float>> attachment,
-    BiFunction<Integer, Float, Float> initialAmount,
-    SoundEvent shieldBreakSound
-  ) {
-    register(effect, damageTypeTag, attachment, initialAmount, shieldBreakSound, true);
-  }
 
   public static List<ShieldEntry> getAll() {
     return SHIELDS;
@@ -100,5 +60,45 @@ public final class ModAbsorptionShieldsRegistry {
       (amp, old) -> (float) ((amp + 1) * ModConfig.SERVER.shieldAdditionalValuePerLevel.get()),
       null
     );
+  }
+
+  private static void register(
+    Holder<MobEffect> effect,
+    ResourceLocation damageTypeTag,
+    Supplier<AttachmentType<Float>> attachment,
+    BiFunction<Integer, Float, Float> initialAmount,
+    SoundEvent shieldBreakSound
+  ) {
+    register(effect, damageTypeTag, attachment, initialAmount, shieldBreakSound, true);
+  }
+
+  private static void register(
+    Holder<MobEffect> effect,
+    ResourceLocation damageTypeTag,
+    Supplier<AttachmentType<Float>> attachment,
+    BiFunction<Integer, Float, Float> initialAmount,
+    SoundEvent shieldBreakSound,
+    boolean shieldConflict
+  ) {
+    SHIELDS.add(new ShieldEntry(effect, damageTypeTag, attachment, initialAmount, shieldBreakSound, shieldConflict));
+  }
+
+  public record ShieldEntry(
+    Holder<MobEffect> effect,
+    ResourceLocation damageTypeTag,
+    Supplier<AttachmentType<Float>> attachment,
+    BiFunction<Integer, Float, Float> initialAmount,
+    SoundEvent shieldBreakSound,
+    boolean shieldConflict
+  ) {
+    public void playShieldBreakSound(Player player) {
+      if (shieldBreakSound != null) {
+        player.playSound(shieldBreakSound);
+      }
+    }
+
+    public boolean isShieldConflict() {
+      return shieldConflict;
+    }
   }
 }

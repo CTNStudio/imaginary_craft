@@ -104,5 +104,5 @@ public enum VirtueType implements ColourText, StringRepresentable {
 
   public String getTooltipName() {
     return tooltipName;
-  }
+	}
 }

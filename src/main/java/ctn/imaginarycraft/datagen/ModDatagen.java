@@ -35,8 +35,8 @@ public final class ModDatagen {
     ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
     // 服务端数据生成
     buildServer(event, generator, new DatagenDatapackBuiltinEntries(output, new RegistrySetBuilder()
-      .add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap),
-      completableFuture));
+            .add(Registries.DAMAGE_TYPE, ModDamageTypes::bootstrap),
+            completableFuture));
     DatagenBlockTag blockTag = new DatagenBlockTag(output, completableFuture, existingFileHelper);
     buildServer(event, generator, blockTag);
     buildServer(event, generator, new DatagenItemTag(output, completableFuture, blockTag.contentsGetter(), existingFileHelper));

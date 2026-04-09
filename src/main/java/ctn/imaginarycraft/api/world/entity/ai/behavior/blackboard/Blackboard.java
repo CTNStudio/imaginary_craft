@@ -26,6 +26,48 @@ public class Blackboard {
   }
 
   /**
+   * 不存在键的条件
+   */
+  public static <V> ConditionBT notContainsKey(IBlackboardHolder holder, KeyType<V> key) {
+    return ConditionBT.not(containsKey(holder, key));
+  }
+
+  /**
+   * 存在键的条件
+   */
+  public static <V> ConditionBT containsKey(IBlackboardHolder holder, KeyType<V> key) {
+    return new ContainsKey(holder, key);
+  }
+
+  /**
+   * 不存在值的条件
+   */
+  public static <V> ConditionBT notContainsValue(IBlackboardHolder holder, KeyType<V> key, Predicate<V> valuePredicate) {
+    return ConditionBT.not(containsValue(holder, key, valuePredicate));
+  }
+
+  /**
+   * 存在值的条件
+   */
+  public static <V> ConditionBT containsValue(IBlackboardHolder holder, KeyType<V> key, Predicate<V> valuePredicate) {
+    return new ContainsValue<>(holder, key, valuePredicate);
+  }
+
+  /**
+   * 设置值的行为节点
+   */
+  public static <V> BTNode setValue(IBlackboardHolder holder, KeyType<V> key, Supplier<V> valueSupplier) {
+    return new SetValue<>(holder, key, valueSupplier);
+  }
+
+  /**
+   * 移除值的行为节点
+   */
+  public static <V> BTNode removeValue(IBlackboardHolder holder, KeyType<V> key) {
+    return new RemoveValue<>(holder, key);
+  }
+
+  /**
    * 设置值
    */
   public <V> void put(KeyType<V> key, V value) {
@@ -37,13 +79,6 @@ public class Blackboard {
    */
   public void remove(KeyType<?> key) {
     this.data.remove(key);
-  }
-
-  /**
-   * 获取值
-   */
-  public <V> V get(KeyType<V> key) {
-    return (V) this.data.get(key);
   }
 
   /**
@@ -62,47 +97,11 @@ public class Blackboard {
   }
 
   /**
-   * 存在键的条件
+   * 获取值
    */
-  public static <V> ConditionBT containsKey(IBlackboardHolder holder, KeyType<V> key) {
-    return new ContainsKey(holder, key);
+  public <V> V get(KeyType<V> key) {
+    return (V) this.data.get(key);
   }
-
-  /**
-   * 不存在键的条件
-   */
-  public static <V> ConditionBT notContainsKey(IBlackboardHolder holder, KeyType<V> key) {
-    return ConditionBT.not(containsKey(holder, key));
-  }
-
-  /**
-   * 存在值的条件
-   */
-  public static <V> ConditionBT containsValue(IBlackboardHolder holder, KeyType<V> key, Predicate<V> valuePredicate) {
-    return new ContainsValue<>(holder, key, valuePredicate);
-  }
-
-  /**
-   * 不存在值的条件
-   */
-  public static <V> ConditionBT notContainsValue(IBlackboardHolder holder, KeyType<V> key, Predicate<V> valuePredicate) {
-    return ConditionBT.not(containsValue(holder, key, valuePredicate));
-  }
-
-  /**
-   * 设置值的行为节点
-   */
-  public static <V> BTNode setValue(IBlackboardHolder holder, KeyType<V> key, Supplier<V> valueSupplier) {
-    return new SetValue<>(holder, key, valueSupplier);
-  }
-
-  /**
-   * 移除值的行为节点
-   */
-  public static <V> BTNode removeValue(IBlackboardHolder holder, KeyType<V> key) {
-    return new RemoveValue<>(holder, key);
-  }
-
 
   public record ContainsKey(IBlackboardHolder holder, KeyType<?> key) implements ConditionBT {
     @Override
@@ -150,6 +149,6 @@ public class Blackboard {
     public BTStatus execute() {
       holder.getBlackboard().remove(key);
       return BTStatus.SUCCESS;
-    }
-  }
+		}
+	}
 }

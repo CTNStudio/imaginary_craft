@@ -89,5 +89,5 @@ public class CompositeStreamCodecBuilder<B, C> {
   }
 
   private record Entry<T, B, C>(StreamCodec<? super B, T> codec, Function<C, T> getter) {
-  }
+	}
 }

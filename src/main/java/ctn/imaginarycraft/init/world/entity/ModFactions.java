@@ -65,5 +65,5 @@ public enum ModFactions implements Faction {
   @Override
   public int universalOrdinal() {
     return id;
-  }
+	}
 }

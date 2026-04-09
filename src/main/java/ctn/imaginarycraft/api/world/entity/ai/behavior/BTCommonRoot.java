@@ -15,6 +15,21 @@ public abstract class BTCommonRoot<T extends PathfinderMob> extends BTRoot<T> {
     super(mob);
   }
 
+  @Override
+  protected @NotNull BTNode createBehaviorTree() {
+    return BTFactory.parallel(ParallelNode.Policy.REQUIRE_ALL, ParallelNode.Policy.REQUIRE_ALL)
+      // 阶段触发器
+      .addChild(BTFactory.infinite(this.createStageTrigger().setDesc("阶段触发器")))
+      // AI
+      .addChild(BTFactory.infinite(BTFactory.selector()
+        // 游走
+        .addWithCondition(ConditionBT.not(new TargetExistCondition(mob)), BTFactory.infinite(this.createWonderBehavior()))
+        // 攻击
+        .addWithCondition(new TargetExistCondition(mob), this.createAttackBehavior())
+        .setDesc("AI")
+      ));
+  }
+
   /**
    * 创建阶段触发器
    * <p>一般用于阶段切换，也可以用做默认的并行行为</p>
@@ -29,21 +44,6 @@ public abstract class BTCommonRoot<T extends PathfinderMob> extends BTRoot<T> {
   protected BTNode createWonderBehavior() {
     return BTFactory.sequence()
       .addChild(new RandomStrollAction(mob, 2.0f, 70));
-  }
-
-  @Override
-  protected @NotNull BTNode createBehaviorTree() {
-    return BTFactory.parallel(ParallelNode.Policy.REQUIRE_ALL, ParallelNode.Policy.REQUIRE_ALL)
-      // 阶段触发器
-      .addChild(BTFactory.infinite(this.createStageTrigger().setDesc("阶段触发器")))
-      // AI
-      .addChild(BTFactory.infinite(BTFactory.selector()
-        // 游走
-        .addWithCondition(ConditionBT.not(new TargetExistCondition(mob)), BTFactory.infinite(this.createWonderBehavior()))
-        // 攻击
-        .addWithCondition(new TargetExistCondition(mob), this.createAttackBehavior())
-        .setDesc("AI")
-      ));
   }
 
   @Override

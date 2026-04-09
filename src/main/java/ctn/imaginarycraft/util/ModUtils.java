@@ -31,5 +31,5 @@ public final class ModUtils {
    */
   public static float mapSinToRange(float min, float max, float sinValue) {
     return min + (1 + sinValue) * (max - min) / 2;
-  }
+	}
 }

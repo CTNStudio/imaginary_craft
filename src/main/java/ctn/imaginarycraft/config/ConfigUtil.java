@@ -16,6 +16,18 @@ public abstract class ConfigUtil {
       .defineInRange(key, defaultValue, min, max);
   }
 
+  public static @NotNull String getTranslation(String @NotNull ... keys) {
+    if (keys.length == 0) {
+      return ImaginaryCraft.ID + ".config";
+    }
+    var builder = new StringBuilder();
+    for (String key : keys) {
+      builder.append(".");
+      builder.append(key);
+    }
+    return ImaginaryCraft.ID + ".config" + builder;
+  }
+
   protected static ModConfigSpec.@NotNull IntValue define(ModConfigSpec.@NotNull Builder builder,
                                                           int defaultValue, int min, int max,
                                                           String key, String... comment) {
@@ -30,18 +42,6 @@ public abstract class ConfigUtil {
     return builder.comment(comment)
       .translation(getTranslation(key))
       .define(key, defaultValue);
-  }
-
-  public static @NotNull String getTranslation(String @NotNull ... keys) {
-    if (keys.length == 0) {
-      return ImaginaryCraft.ID + ".config";
-    }
-    var builder = new StringBuilder();
-    for (String key : keys) {
-      builder.append(".");
-      builder.append(key);
-    }
-    return ImaginaryCraft.ID + ".config" + builder;
   }
 
   protected static <T> @NotNull Pair<T, ModConfigSpec> configure(Function<ModConfigSpec.Builder, T> consumer) {

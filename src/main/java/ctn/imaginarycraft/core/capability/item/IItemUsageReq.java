@@ -45,5 +45,5 @@ public interface IItemUsageReq {
    */
   default void equipmentImpede(ItemStack itemStack, Level level, LivingEntity entity) {
 
-  }
+	}
 }

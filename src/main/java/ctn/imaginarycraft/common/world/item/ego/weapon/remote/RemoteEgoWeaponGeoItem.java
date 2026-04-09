@@ -22,14 +22,14 @@ public abstract class RemoteEgoWeaponGeoItem extends RemoteEgoWeaponItem impleme
   private final GeoModel<RemoteEgoWeaponGeoItem> model;
   private final @Nullable GeoModel<RemoteEgoWeaponGeoItem> guiModel;
 
+  public RemoteEgoWeaponGeoItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
+    this(itemProperties, egoWeaponBuilder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
+  }
+
   public RemoteEgoWeaponGeoItem(Properties itemProperties, Builder egoWeaponBuilder, GeoModel<RemoteEgoWeaponGeoItem> geoModel, GeoModel<RemoteEgoWeaponGeoItem> guiModel) {
     super(itemProperties, egoWeaponBuilder);
     this.model = geoModel;
     this.guiModel = guiModel;
-  }
-
-  public RemoteEgoWeaponGeoItem(Properties itemProperties, Builder egoWeaponBuilder, String modPath) {
-    this(itemProperties, egoWeaponBuilder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
   }
 
   @Override

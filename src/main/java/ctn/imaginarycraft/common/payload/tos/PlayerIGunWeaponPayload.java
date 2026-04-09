@@ -32,6 +32,18 @@ public record PlayerIGunWeaponPayload(
     this((setHand(hand) | setSim(sim) | setShoot(shoot)));
   }
 
+  private static int setHand(InteractionHand hand) {
+    return hand == InteractionHand.MAIN_HAND ? 0b1 : 0b0;
+  }
+
+  private static int setShoot(boolean shoot) {
+    return (shoot ? 0b100 : 0b0);
+  }
+
+  private static int setSim(boolean sim) {
+    return (sim ? 0b10 : 0b0);
+  }
+
   /**
    * @param isMainHand 0b1:主手 0b0:副手
    * @param sim        0b1:瞄准 0b0:不瞄准
@@ -45,41 +57,11 @@ public record PlayerIGunWeaponPayload(
     PayloadUtil.sendToServer(new PlayerIGunWeaponPayload(usedItemHand, sim, shoot));
   }
 
-  private static int setHand(InteractionHand hand) {
-    return hand == InteractionHand.MAIN_HAND ? 0b1 : 0b0;
-  }
-
-  private static int setShoot(boolean shoot) {
-    return (shoot ? 0b100 : 0b0);
-  }
-
-  private static int setSim(boolean sim) {
-    return (sim ? 0b10 : 0b0);
-  }
-
-  public InteractionHand getHand() {
-    return (operation & 0b1) == 1 ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
-  }
-
   /**
    * 瞄准
    */
   public boolean isSim() {
     return (operation & 0b10) >> 1 == 0b1;
-  }
-
-  /**
-   * 射击
-   */
-  public boolean isShoot() {
-    return (operation & 0b100) >> 2 == 0b1;
-  }
-
-  /**
-   * 瞄准射击
-   */
-  public boolean isAimShoot() {
-    return (operation & 0b110) >> 1 == 0b11;
   }
 
   /**
@@ -101,9 +83,27 @@ public record PlayerIGunWeaponPayload(
     }
   }
 
+  public InteractionHand getHand() {
+    return (operation & 0b1) == 1 ? InteractionHand.MAIN_HAND : InteractionHand.OFF_HAND;
+  }
+
+  /**
+   * 射击
+   */
+  public boolean isShoot() {
+    return (operation & 0b100) >> 2 == 0b1;
+  }
+
+  /**
+   * 瞄准射击
+   */
+  public boolean isAimShoot() {
+    return (operation & 0b110) >> 1 == 0b11;
+  }
+
   @Override
   public @NotNull CustomPacketPayload.Type<? extends CustomPacketPayload> type() {
     return TYPE;
-  }
+	}
 }
 

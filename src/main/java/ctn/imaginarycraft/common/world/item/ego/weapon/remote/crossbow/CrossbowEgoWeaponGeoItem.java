@@ -24,14 +24,14 @@ public class CrossbowEgoWeaponGeoItem extends CrossbowEgoWeaponItem implements G
   private final GeoModel<RemoteEgoWeaponGeoItem> model;
   private final @Nullable GeoModel<RemoteEgoWeaponGeoItem> guiModel;
 
+  public CrossbowEgoWeaponGeoItem(Properties itemProperties, IRemoteEgoWeaponItem.Builder egoWeaponBuilder, String modPath) {
+    this(itemProperties, egoWeaponBuilder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
+  }
+
   public CrossbowEgoWeaponGeoItem(Properties itemProperties, IRemoteEgoWeaponItem.Builder egoWeaponBuilder, GeoModel<RemoteEgoWeaponGeoItem> geoModel, GeoModel<RemoteEgoWeaponGeoItem> guiModel) {
     super(itemProperties, egoWeaponBuilder);
     this.model = geoModel;
     this.guiModel = guiModel;
-  }
-
-  public CrossbowEgoWeaponGeoItem(Properties itemProperties, IRemoteEgoWeaponItem.Builder egoWeaponBuilder, String modPath) {
-    this(itemProperties, egoWeaponBuilder, new ModGeoItemModel<>(modPath), new GuiItemModel<>(modPath));
   }
 
   @Override

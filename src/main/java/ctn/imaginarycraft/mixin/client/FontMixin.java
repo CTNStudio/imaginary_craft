@@ -26,21 +26,6 @@ public abstract class FontMixin implements IFontExtension, IFont {
   @Shadow
   @Final
   private static Vector3f SHADOW_OFFSET;
-
-  @Shadow
-  public abstract boolean isBidirectional();
-
-  @Shadow
-  private static int adjustColor(final int color) {
-    return 0;
-  }
-
-  @Shadow
-  public abstract String bidirectionalShaping(final String text);
-
-  @Shadow
-  public abstract FontSet getFontSet(final ResourceLocation fontLocation);
-
   @Shadow
   @Final
   public boolean filterFishyGlyphs;
@@ -62,6 +47,9 @@ public abstract class FontMixin implements IFontExtension, IFont {
     return this.imaginarycraft$drawInBatch(text, x, y, color, dropShadow, matrix, vertexConsumer, backgroundColor, packedLightCoords, isBidirectional());
   }
 
+  @Shadow
+  public abstract boolean isBidirectional();
+
   @Unique
   @Override
   public int imaginarycraft$drawInBatch(
@@ -77,6 +65,67 @@ public abstract class FontMixin implements IFontExtension, IFont {
     boolean bidirectional
   ) {
     return this.imaginarycraft$drawInternal(text, x, y, color, dropShadow, matrix, vertexConsumer, backgroundColor, packedLightCoords, bidirectional);
+  }
+
+  @Unique
+  @Override
+  public int imaginarycraft$drawInternal(
+    String text,
+    float x,
+    float y,
+    int color,
+    boolean dropShadow,
+    Matrix4f matrix,
+    VertexConsumer vertexConsumer,
+    int backgroundColor,
+    int packedLightCoords,
+    boolean bidirectional
+  ) {
+    if (bidirectional) {
+      text = bidirectionalShaping(text);
+    }
+
+    color = adjustColor(color);
+    Matrix4f matrix4f = new Matrix4f(matrix);
+    if (dropShadow) {
+      imaginarycraft$renderText(text, x, y, color, true, matrix, vertexConsumer, backgroundColor, packedLightCoords);
+      matrix4f.translate(SHADOW_OFFSET);
+    }
+
+    x = imaginarycraft$renderText(text, x, y, color, false, matrix4f, vertexConsumer, backgroundColor, packedLightCoords);
+    return (int) x + (dropShadow ? 1 : adjustColor(0));
+  }
+
+  @Shadow
+  private static int adjustColor(final int color) {
+    return 0;
+  }
+
+  @Shadow
+  public abstract String bidirectionalShaping(final String text);
+
+  @Unique
+  @Override
+  public float imaginarycraft$renderText(
+    String text,
+    float x,
+    float y,
+    int color,
+    boolean dropShadow,
+    Matrix4f matrix,
+    VertexConsumer vertexConsumer,
+    int backgroundColor,
+    int packedLightCoords
+  ) {
+    ModStringRenderOutput modStringRenderOutput = new ModStringRenderOutput(
+      imaginarycraft$getFont(), vertexConsumer, x, y, color, dropShadow, matrix, packedLightCoords);
+    StringDecomposer.iterateFormatted(text, Style.EMPTY, modStringRenderOutput);
+    return modStringRenderOutput.finish(backgroundColor, x);
+  }
+
+  @Unique
+  private @NotNull Font imaginarycraft$getFont() {
+    return (Font) (Object) this;
   }
 
   @Unique
@@ -109,6 +158,49 @@ public abstract class FontMixin implements IFontExtension, IFont {
     int packedLightCoords
   ) {
     return this.imaginarycraft$drawInternal(text, x, y, color, dropShadow, matrix, vertexConsumer, backgroundColor, packedLightCoords);
+  }
+
+  @Unique
+  @Override
+  public int imaginarycraft$drawInternal(
+    FormattedCharSequence text,
+    float x,
+    float y,
+    int color,
+    boolean dropShadow,
+    Matrix4f matrix,
+    VertexConsumer vertexConsumer,
+    int backgroundColor,
+    int packedLightCoords
+  ) {
+    color = adjustColor(color);
+    Matrix4f matrix4f = new Matrix4f(matrix);
+    if (dropShadow) {
+      this.imaginarycraft$renderText(text, x, y, color, true, matrix, vertexConsumer, backgroundColor, packedLightCoords);
+      matrix4f.translate(SHADOW_OFFSET);
+    }
+
+    x = this.imaginarycraft$renderText(text, x, y, color, false, matrix4f, vertexConsumer, backgroundColor, packedLightCoords);
+    return (int) x + (dropShadow ? 1 : adjustColor(0));
+  }
+
+  @Unique
+  @Override
+  public float imaginarycraft$renderText(
+    @NotNull FormattedCharSequence text,
+    float x,
+    float y,
+    int color,
+    boolean dropShadow,
+    Matrix4f matrix,
+    VertexConsumer vertexConsumer,
+    int backgroundColor,
+    int packedLightCoords
+  ) {
+    ModStringRenderOutput modStringRenderOutput = new ModStringRenderOutput(
+      imaginarycraft$getFont(), vertexConsumer, x, y, color, dropShadow, matrix, packedLightCoords);
+    text.accept(modStringRenderOutput);
+    return modStringRenderOutput.finish(backgroundColor, x);
   }
 
   @Unique
@@ -153,99 +245,6 @@ public abstract class FontMixin implements IFontExtension, IFont {
     modStringRenderOutput1.finish(adjustColor(0), x);
   }
 
-  @Unique
-  private @NotNull Font imaginarycraft$getFont() {
-    return (Font) (Object) this;
-  }
-
-  @Unique
-  @Override
-  public int imaginarycraft$drawInternal(
-    FormattedCharSequence text,
-    float x,
-    float y,
-    int color,
-    boolean dropShadow,
-    Matrix4f matrix,
-    VertexConsumer vertexConsumer,
-    int backgroundColor,
-    int packedLightCoords
-  ) {
-    color = adjustColor(color);
-    Matrix4f matrix4f = new Matrix4f(matrix);
-    if (dropShadow) {
-      this.imaginarycraft$renderText(text, x, y, color, true, matrix, vertexConsumer, backgroundColor, packedLightCoords);
-      matrix4f.translate(SHADOW_OFFSET);
-    }
-
-    x = this.imaginarycraft$renderText(text, x, y, color, false, matrix4f, vertexConsumer, backgroundColor, packedLightCoords);
-    return (int) x + (dropShadow ? 1 : adjustColor(0));
-  }
-
-  @Unique
-  @Override
-  public float imaginarycraft$renderText(
-    String text,
-    float x,
-    float y,
-    int color,
-    boolean dropShadow,
-    Matrix4f matrix,
-    VertexConsumer vertexConsumer,
-    int backgroundColor,
-    int packedLightCoords
-  ) {
-    ModStringRenderOutput modStringRenderOutput = new ModStringRenderOutput(
-      imaginarycraft$getFont(), vertexConsumer, x, y, color, dropShadow, matrix, packedLightCoords);
-    StringDecomposer.iterateFormatted(text, Style.EMPTY, modStringRenderOutput);
-    return modStringRenderOutput.finish(backgroundColor, x);
-  }
-
-  @Unique
-  @Override
-  public float imaginarycraft$renderText(
-    @NotNull FormattedCharSequence text,
-    float x,
-    float y,
-    int color,
-    boolean dropShadow,
-    Matrix4f matrix,
-    VertexConsumer vertexConsumer,
-    int backgroundColor,
-    int packedLightCoords
-  ) {
-    ModStringRenderOutput modStringRenderOutput = new ModStringRenderOutput(
-      imaginarycraft$getFont(), vertexConsumer, x, y, color, dropShadow, matrix, packedLightCoords);
-    text.accept(modStringRenderOutput);
-    return modStringRenderOutput.finish(backgroundColor, x);
-  }
-
-  @Unique
-  @Override
-  public int imaginarycraft$drawInternal(
-    String text,
-    float x,
-    float y,
-    int color,
-    boolean dropShadow,
-    Matrix4f matrix,
-    VertexConsumer vertexConsumer,
-    int backgroundColor,
-    int packedLightCoords,
-    boolean bidirectional
-  ) {
-    if (bidirectional) {
-      text = bidirectionalShaping(text);
-    }
-
-    color = adjustColor(color);
-    Matrix4f matrix4f = new Matrix4f(matrix);
-    if (dropShadow) {
-      imaginarycraft$renderText(text, x, y, color, true, matrix, vertexConsumer, backgroundColor, packedLightCoords);
-      matrix4f.translate(SHADOW_OFFSET);
-    }
-
-    x = imaginarycraft$renderText(text, x, y, color, false, matrix4f, vertexConsumer, backgroundColor, packedLightCoords);
-    return (int) x + (dropShadow ? 1 : adjustColor(0));
-  }
+  @Shadow
+  public abstract FontSet getFontSet(final ResourceLocation fontLocation);
 }

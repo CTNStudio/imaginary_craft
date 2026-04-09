@@ -39,17 +39,6 @@ public final class BTFactory {
   }
 
   /**
-   * 创建一个并行行为树
-   *
-   * @param successPolicy 成功策略
-   * @param failurePolicy 失败策略
-   * @return 一个并行行为树
-   */
-  public static ParallelNode parallel(ParallelNode.Policy successPolicy, ParallelNode.Policy failurePolicy) {
-    return new ParallelNode(successPolicy, failurePolicy);
-  }
-
-  /**
    * 创建一个反转行为树
    *
    * @param child 子行为树
@@ -92,13 +81,14 @@ public final class BTFactory {
   }
 
   /**
-   * 创建一个等待行为树
+   * 创建一个随机等待行为树
    *
-   * @param ticks 等待时间
-   * @return 一个等待行为树
+   * @param minInclusive 最小等待时间（包含）
+   * @param maxInclusive 最大等待时间（包含）
+   * @return 一个随机等待行为树
    */
-  public static BTNode wait(int ticks) {
-    return new WaitAction(ticks);
+  public static BTNode waitRandom(int minInclusive, int maxInclusive) {
+    return waitRandom(minInclusive, maxInclusive, RandomSource.create());
   }
 
   /**
@@ -111,17 +101,6 @@ public final class BTFactory {
    */
   public static BTNode waitRandom(int minInclusive, int maxInclusive, RandomSource random) {
     return new RandomWaitAction(minInclusive, maxInclusive, random);
-  }
-
-  /**
-   * 创建一个随机等待行为树
-   *
-   * @param minInclusive 最小等待时间（包含）
-   * @param maxInclusive 最大等待时间（包含）
-   * @return 一个随机等待行为树
-   */
-  public static BTNode waitRandom(int minInclusive, int maxInclusive) {
-    return waitRandom(minInclusive, maxInclusive, RandomSource.create());
   }
 
   /**
@@ -168,6 +147,27 @@ public final class BTFactory {
   }
 
   /**
+   * 创建一个并行行为树
+   *
+   * @param successPolicy 成功策略
+   * @param failurePolicy 失败策略
+   * @return 一个并行行为树
+   */
+  public static ParallelNode parallel(ParallelNode.Policy successPolicy, ParallelNode.Policy failurePolicy) {
+    return new ParallelNode(successPolicy, failurePolicy);
+  }
+
+  /**
+   * 创建一个等待行为树
+   *
+   * @param ticks 等待时间
+   * @return 一个等待行为树
+   */
+  public static BTNode wait(int ticks) {
+    return new WaitAction(ticks);
+  }
+
+  /**
    * 创建一个带计时器的并行行为树
    *
    * @param duration 计时器时长
@@ -185,6 +185,6 @@ public final class BTFactory {
    * @return 一个目标行为树
    */
   public static GoalWrapper goal(Goal goal) {
-    return new GoalWrapper(goal);
-  }
+		return new GoalWrapper(goal);
+	}
 }

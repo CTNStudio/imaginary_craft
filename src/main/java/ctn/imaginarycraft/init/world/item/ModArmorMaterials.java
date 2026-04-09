@@ -135,6 +135,6 @@ public final class ModArmorMaterials {
       enummap.put(armoritem$type, defense.get(armoritem$type));
     }
     return ModArmorMaterials.REGISTRY.register(id, () -> new ArmorMaterial(enummap, enchantmentValue, equipSound, repairIngridient, layers, toughness,
-      knockbackResistance));
-  }
+			knockbackResistance));
+	}
 }

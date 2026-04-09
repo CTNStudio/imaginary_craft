@@ -174,6 +174,6 @@ public interface IFont {
    * @return 渲染后的X坐标
    */
   default float imaginarycraft$renderText(FormattedCharSequence text, float x, float y, int color, boolean dropShadow, Matrix4f matrix, VertexConsumer vertexConsumer, int backgroundColor, int packedLightCoords) {
-    throw new NoMixinException();
-  }
+		throw new NoMixinException();
+	}
 }

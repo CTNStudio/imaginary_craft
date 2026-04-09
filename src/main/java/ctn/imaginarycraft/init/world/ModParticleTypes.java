@@ -54,12 +54,12 @@ public final class ModParticleTypes {
       id, () -> new SpecialParticleType<>(overrideLimiter, mapCodec, streamCodec));
   }
 
-  private static DeferredHolder<ParticleType<?>, SimpleParticleType> registerSimpleParticle(String id, boolean overrideLimiter) {
-    return register(id, () -> new SimpleParticleType(overrideLimiter));
-  }
-
   private static <O extends ParticleType<?>> DeferredHolder<ParticleType<?>, O> register(String id, Supplier<O> particleType) {
     return ModParticleTypes.REGISTRY.register(id, particleType);
+  }
+
+  private static DeferredHolder<ParticleType<?>, SimpleParticleType> registerSimpleParticle(String id, boolean overrideLimiter) {
+    return register(id, () -> new SimpleParticleType(overrideLimiter));
   }
 
   private static class SpecialParticleType<T extends ParticleOptions> extends ParticleType<T> {

@@ -32,10 +32,6 @@ public abstract class RenderItemBaseMixin implements IRenderItemBase {
   @Shadow
   @Final
   private TrailInfo trailInfo;
-
-  @Shadow
-  public abstract TrailInfo trailInfo();
-
   @Unique
   private Function<LivingEntityPatch<?>, TrailInfo> imaginarycraft$trailInfoProvider;
 
@@ -77,4 +73,7 @@ public abstract class RenderItemBaseMixin implements IRenderItemBase {
   public TrailInfo imaginarycraft$getTrailInfoProvider(LivingEntityPatch<?> livingEntityPatch) {
     return imaginarycraft$trailInfoProvider != null ? imaginarycraft$trailInfoProvider.apply(livingEntityPatch) : trailInfo();
   }
+
+  @Shadow
+  public abstract TrailInfo trailInfo();
 }

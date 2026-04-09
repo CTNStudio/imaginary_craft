@@ -78,13 +78,13 @@ public class EgoArmorItem extends ArmorItem implements GeoItem, IItemUsageReq, I
       return attributeBuilder.build();
     }
 
+    private static @NotNull ResourceLocation getArmorModifierId(final Type armorType) {
+      return ResourceLocation.withDefaultNamespace("armor." + armorType.getName());
+    }
+
     public Builder virtueUsageReqBuilder(ItemVirtueUsageReq.Builder virtueRequirementBuilder) {
       this.virtueUsageReqBuilder = virtueRequirementBuilder;
       return this;
-    }
-
-    private static @NotNull ResourceLocation getArmorModifierId(final Type armorType) {
-      return ResourceLocation.withDefaultNamespace("armor." + armorType.getName());
     }
 
     /**

@@ -571,53 +571,6 @@ public final class EgoArmorItems {
       builder, properties, renderProvider, physics, spirit, erosion, theSoul, EgoArmorItem::new);
   }
 
-  public static Holder<ArmorMaterial> getArmorMaterialHolder(LcLevel lcLevel) {
-    return switch (lcLevel) {
-      case ZAYIN -> ModArmorMaterials.ZAYIN;
-      case TETH -> ModArmorMaterials.TETH;
-      case HE -> ModArmorMaterials.HE;
-      case WAW -> ModArmorMaterials.WAW;
-      case ALEPH -> ModArmorMaterials.ALEPH;
-    };
-  }
-
-  private static EgoArmor registerSuit(
-    String id,
-    String zhName,
-    LcLevel lcLevel,
-    Holder<ArmorMaterial> material,
-    ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
-    EgoArmorItem.Builder builder,
-    Item.Properties properties,
-    GeoRenderProvider renderProvider,
-    double physics,
-    double spirit,
-    double erosion,
-    double theSoul
-  ) {
-    return registerSuit(id, zhName, lcLevel, material, virtueUsageReqBuilder,
-      builder, properties, renderProvider, physics, spirit, erosion, theSoul, EgoArmorItem::new);
-  }
-
-  private static <C extends EgoArmorItem> EgoArmor registerSuit(
-    String id,
-    String zhName,
-    LcLevel lcLevel,
-    Holder<ArmorMaterial> material,
-    ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
-    EgoArmorItem.Builder builder,
-    Item.Properties properties,
-    GeoRenderProvider renderProvider,
-    double physics,
-    double spirit,
-    double erosion,
-    double theSoul,
-    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoRenderProvider, ? extends C> function
-  ) {
-    return registerSuit(id, zhName, lcLevel, material, virtueUsageReqBuilder, builder, properties,
-      renderProvider, physics, spirit, erosion, theSoul, function, function, function);
-  }
-
   private static <C extends EgoArmorItem> EgoArmor registerSuit(
     String id,
     String zhName,
@@ -634,6 +587,16 @@ public final class EgoArmorItems {
   ) {
     return registerSuit(id, zhName, lcLevel, getArmorMaterialHolder(lcLevel), virtueUsageReqBuilder,
       builder, properties, renderProvider, physics, spirit, erosion, theSoul, function, function, function);
+  }
+
+  public static Holder<ArmorMaterial> getArmorMaterialHolder(LcLevel lcLevel) {
+    return switch (lcLevel) {
+      case ZAYIN -> ModArmorMaterials.ZAYIN;
+      case TETH -> ModArmorMaterials.TETH;
+      case HE -> ModArmorMaterials.HE;
+      case WAW -> ModArmorMaterials.WAW;
+      case ALEPH -> ModArmorMaterials.ALEPH;
+    };
   }
 
   private static <C extends EgoArmorItem, L extends EgoArmorItem, B extends EgoArmorItem> EgoArmor registerSuit(
@@ -711,6 +674,54 @@ public final class EgoArmorItems {
   }
 
   /**
+   * 拆分数值为不等的三份（无无限循环小数，优先整数）
+   *
+   * @param n 待拆分数值（整数/小数均可）
+   * @return 三个不等的数（数组顺序：小、中、大）
+   */
+  private static double[] splitIntoThreeUnequalParts(double n) {
+    double avg = n / 3.0;
+    return new double[]{avg - 0.01, avg, avg + 0.01};
+  }
+
+  private static EgoArmor registerSuit(
+    String id,
+    String zhName,
+    LcLevel lcLevel,
+    Holder<ArmorMaterial> material,
+    ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
+    EgoArmorItem.Builder builder,
+    Item.Properties properties,
+    GeoRenderProvider renderProvider,
+    double physics,
+    double spirit,
+    double erosion,
+    double theSoul
+  ) {
+    return registerSuit(id, zhName, lcLevel, material, virtueUsageReqBuilder,
+      builder, properties, renderProvider, physics, spirit, erosion, theSoul, EgoArmorItem::new);
+  }
+
+  private static <C extends EgoArmorItem> EgoArmor registerSuit(
+    String id,
+    String zhName,
+    LcLevel lcLevel,
+    Holder<ArmorMaterial> material,
+    ItemVirtueUsageReq.Builder virtueUsageReqBuilder,
+    EgoArmorItem.Builder builder,
+    Item.Properties properties,
+    GeoRenderProvider renderProvider,
+    double physics,
+    double spirit,
+    double erosion,
+    double theSoul,
+    Function5<Holder<ArmorMaterial>, ArmorItem.Type, Item.Properties, EgoArmorItem.Builder, GeoRenderProvider, ? extends C> function
+  ) {
+    return registerSuit(id, zhName, lcLevel, material, virtueUsageReqBuilder, builder, properties,
+      renderProvider, physics, spirit, erosion, theSoul, function, function, function);
+  }
+
+  /**
    *
    * @param chestplate 胸
    * @param leggings   腿
@@ -735,18 +746,7 @@ public final class EgoArmorItems {
         EquipmentSlot.CHEST, this.chestplate,
         EquipmentSlot.LEGS, this.leggings,
         EquipmentSlot.FEET, this.boots
-      );
-    }
-  }
-
-  /**
-   * 拆分数值为不等的三份（无无限循环小数，优先整数）
-   *
-   * @param n 待拆分数值（整数/小数均可）
-   * @return 三个不等的数（数组顺序：小、中、大）
-   */
-  private static double[] splitIntoThreeUnequalParts(double n) {
-    double avg = n / 3.0;
-    return new double[]{avg - 0.01, avg, avg + 0.01};
-  }
+			);
+		}
+	}
 }

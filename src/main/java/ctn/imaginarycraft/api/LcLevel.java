@@ -57,10 +57,6 @@ public enum LcLevel implements ColourText, StringRepresentable {
     return LC_LEVEL_MAP.getOrDefault(level, ZAYIN);
   }
 
-  public String getName() {
-    return name;
-  }
-
   public int getLevelValue() {
     return levelValue;
   }
@@ -84,6 +80,10 @@ public enum LcLevel implements ColourText, StringRepresentable {
   @Override
   public @NotNull String getSerializedName() {
     return ImaginaryCraft.modRlText(getName());
+  }
+
+  public String getName() {
+    return name;
   }
 
   public int getId() {

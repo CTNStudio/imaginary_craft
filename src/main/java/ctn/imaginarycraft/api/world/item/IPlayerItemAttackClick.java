@@ -22,5 +22,5 @@ public interface IPlayerItemAttackClick {
    */
   default void onAttackClickRelease(Player player, InteractionHand hand) {
 
-  }
+	}
 }

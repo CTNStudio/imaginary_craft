@@ -8,19 +8,19 @@ import net.minecraft.world.entity.Entity;
  */
 public interface IStateChangeableMob {
 
-  EntityDataAccessor<Integer> get_DATA_STATUS_STATUS();
-
   /**
    * 当受伤或生成时触发
    */
   void changeState();
 
-  private Entity getSelf() {
-    return (Entity) this;
-  }
-
   default int getStage() {
     return getSelf().getEntityData().get(get_DATA_STATUS_STATUS());
+  }
+
+  EntityDataAccessor<Integer> get_DATA_STATUS_STATUS();
+
+  private Entity getSelf() {
+    return (Entity) this;
   }
 
   default void setStage(int stage) {

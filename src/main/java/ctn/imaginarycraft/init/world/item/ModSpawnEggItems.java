@@ -25,15 +25,12 @@ public class ModSpawnEggItems {
     REGISTRY.register(bus);
   }
 
-  private static <I extends SpawnEggItem> DeferredItem<I> register(
+  private static DeferredItem<SpawnEggItem> register(
     String id,
     String zhName,
-    Function<Item.Properties, ? extends I> item,
-    Item.Properties properties
+    Supplier<? extends EntityType<? extends Mob>> entityType
   ) {
-    DeferredItem<I> deferredItem = REGISTRY.registerItem(id, item, properties);
-    ZhCn.addI18nItemText(zhName, deferredItem);
-    return deferredItem;
+    return register(id, zhName, entityType, new Item.Properties());
   }
 
   private static DeferredItem<SpawnEggItem> register(
@@ -45,11 +42,14 @@ public class ModSpawnEggItems {
     return register(id, zhName, itemProperties -> new ModEggItem(entityType, properties), properties);
   }
 
-  private static DeferredItem<SpawnEggItem> register(
+  private static <I extends SpawnEggItem> DeferredItem<I> register(
     String id,
     String zhName,
-    Supplier<? extends EntityType<? extends Mob>> entityType
+    Function<Item.Properties, ? extends I> item,
+    Item.Properties properties
   ) {
-    return register(id, zhName, entityType, new Item.Properties());
+    DeferredItem<I> deferredItem = REGISTRY.registerItem(id, item, properties);
+    ZhCn.addI18nItemText(zhName, deferredItem);
+    return deferredItem;
   }
 }

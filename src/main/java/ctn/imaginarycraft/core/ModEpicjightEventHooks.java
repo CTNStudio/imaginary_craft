@@ -4,14 +4,14 @@ import ctn.imaginarycraft.common.world.item.ego.weapon.melee.special.RedEyesTach
 
 public final class ModEpicjightEventHooks {
 
+  private ModEpicjightEventHooks() {
+  }
+
   static void listenerRegister() {
     skill();
   }
 
   private static void skill() {
     RedEyesTachiItem.phaseSwitch();
-  }
-
-  private ModEpicjightEventHooks() {
   }
 }

@@ -83,6 +83,6 @@ public interface IRemoteEgoWeaponItem extends IEgoWeaponItem {
       ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.ATTACK_SPEED_MAIN_HAND, Item.BASE_ATTACK_SPEED_ID, this.attackIntervalMainHand, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.MAINHAND);
       ItemBuilderUtil.addAttributeModifier(builder, ModAttributes.ATTACK_SPEED_OFF_HAND, Item.BASE_ATTACK_SPEED_ID, this.attackIntervalOffHand, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.OFFHAND);
       return builder.build();
-    }
-  }
+		}
+	}
 }

@@ -22,6 +22,24 @@ public abstract class LivingEntityPatchMixin {
     return imaginarycraft$get(instance, original, IWeaponCapability::imaginaryCraft$getHitParticle);
   }
 
+  @Unique
+  private <T> T imaginarycraft$get(CapabilityItem instance, Operation<T> original, BiFunction<IWeaponCapability, LivingEntityPatch<?>, T> function) {
+    if (!(instance instanceof IWeaponCapability iWeaponCapability)) {
+      return original.call(instance);
+    }
+
+    T t = function.apply(iWeaponCapability, imaginarycraft$getThis());
+    if (t != null) {
+      return t;
+    }
+    return original.call(instance);
+  }
+
+  @Unique
+  private LivingEntityPatch<?> imaginarycraft$getThis() {
+    return (LivingEntityPatch<?>) (Object) this;
+  }
+
   @WrapOperation(method = "getSwingSound", at = @At(value = "INVOKE",
     target = "Lyesman/epicfight/world/capabilities/item/CapabilityItem;getSmashingSound()Lnet/minecraft/sounds/SoundEvent;"))
   public SoundEvent imaginarycraft$getSwingSound(CapabilityItem instance, Operation<SoundEvent> original) {
@@ -41,23 +59,5 @@ public abstract class LivingEntityPatchMixin {
     Operation<Collider> original
   ) {
     return imaginarycraft$get(instance, original, IWeaponCapability::imaginaryCraft$getWeaponCollider);
-  }
-
-  @Unique
-  private <T> T imaginarycraft$get(CapabilityItem instance, Operation<T> original, BiFunction<IWeaponCapability, LivingEntityPatch<?>, T> function) {
-    if (!(instance instanceof IWeaponCapability iWeaponCapability)) {
-      return original.call(instance);
-    }
-
-    T t = function.apply(iWeaponCapability, imaginarycraft$getThis());
-    if (t != null) {
-      return t;
-    }
-    return original.call(instance);
-  }
-
-  @Unique
-  private LivingEntityPatch<?> imaginarycraft$getThis() {
-    return (LivingEntityPatch<?>) (Object) this;
   }
 }

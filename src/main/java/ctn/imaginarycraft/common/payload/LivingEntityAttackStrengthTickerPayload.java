@@ -29,12 +29,12 @@ public record LivingEntityAttackStrengthTickerPayload(
     to(serverPlayer);
   }
 
+  public void to(Player player) {
+    ((LivingEntityAccessorMixin) player).imaginarycraft$setAttackStrengthTicker(attackStrengthTicker());
+  }
+
   @Override
   public void toClient(AbstractClientPlayer clientPlayer) {
     to(clientPlayer);
-  }
-
-  public void to(Player player) {
-    ((LivingEntityAccessorMixin) player).imaginarycraft$setAttackStrengthTicker(attackStrengthTicker());
   }
 }

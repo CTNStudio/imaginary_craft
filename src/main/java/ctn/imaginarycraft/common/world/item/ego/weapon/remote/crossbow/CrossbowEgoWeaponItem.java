@@ -52,6 +52,13 @@ public class CrossbowEgoWeaponItem extends CrossbowItem implements IRemoteEgoWea
       super.createProjectile(world, shooterEntity, weaponItem, Items.ARROW.getDefaultInstance(), isCrit);
   }
 
+  protected void notConsumingShoot(ServerLevel world, LivingEntity shooterEntity, InteractionHand handUsed, ItemStack weaponItem,
+                                   float projectileVelocity, float projectileInaccuracy, @Nullable LivingEntity targetEntity) {
+    Projectile projectile = this.createProjectile(world, shooterEntity, weaponItem, null);
+    this.shootProjectile(shooterEntity, projectile, 0, projectileVelocity, projectileInaccuracy, 0, targetEntity);
+    world.addFreshEntity(projectile);
+  }
+
   protected @NotNull Projectile createProjectile(@NotNull Level world, @NotNull LivingEntity shooterEntity, @NotNull ItemStack weaponItem,
                                                  @Nullable ItemStack ammoItem) {
     if (this.createProjectile != null) {
@@ -65,15 +72,8 @@ public class CrossbowEgoWeaponItem extends CrossbowItem implements IRemoteEgoWea
     return customArrow(abstractarrow, ammo1, weaponItem);
   }
 
-  protected void notConsumingShoot(ServerLevel world, LivingEntity shooterEntity, InteractionHand handUsed, ItemStack weaponItem,
-                                   float projectileVelocity, float projectileInaccuracy, @Nullable LivingEntity targetEntity) {
-    Projectile projectile = this.createProjectile(world, shooterEntity, weaponItem, null);
-    this.shootProjectile(shooterEntity, projectile, 0, projectileVelocity, projectileInaccuracy, 0, targetEntity);
-    world.addFreshEntity(projectile);
-  }
-
   @Override
   public @Nullable LcDamageType getLcDamageType(ItemStack stack) {
     return null;
-  }
+	}
 }

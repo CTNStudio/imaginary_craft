@@ -6,14 +6,14 @@ import ctn.imaginarycraft.init.tag.ModEntityTags;
 import net.minecraft.world.entity.Entity;
 
 public interface IOrdealsVioletEntity extends IOrdealsEntity {
-  @Override
-  default boolean isCamp(Entity entity) {
-    return IOrdealsEntity.super.isCamp(entity) || getMob().getType().is(ModEntityTags.ORDEALS_VIOLET);
-  }
+	@Override
+	default boolean isCamp(Entity entity) {
+		return IOrdealsEntity.super.isCamp(entity) || getMob().getType().is(ModEntityTags.ORDEALS_VIOLET);
+	}
 
-  @Override
-  default void registerGoals() {
-    IOrdealsEntity.super.registerGoals();
-    getTargetSelector().addGoal(1, new CampHurtByTargetGoal(getMob(), IOrdealsVioletEntity.class));
-  }
+	@Override
+	default void registerGoals() {
+		IOrdealsEntity.super.registerGoals();
+		getTargetSelector().addGoal(1, new CampHurtByTargetGoal(getMob(), IOrdealsVioletEntity.class));
+	}
 }

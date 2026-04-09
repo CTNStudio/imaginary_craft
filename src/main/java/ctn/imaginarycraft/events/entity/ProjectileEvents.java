@@ -98,5 +98,5 @@ public final class ProjectileEvents {
 
     // 这里可以添加命中特效
     // spawnHitParticles(livingTarget);
-  }
+	}
 }

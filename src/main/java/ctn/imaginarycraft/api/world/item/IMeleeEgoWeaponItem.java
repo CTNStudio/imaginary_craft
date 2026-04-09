@@ -48,6 +48,6 @@ public interface IMeleeEgoWeaponItem extends IEgoWeaponItem {
       // TODO 近战的替换成史诗战斗的实际攻击范围
 //      ItemBuilderUtil.addAttributeModifier(attributeBuilder, Attributes.ENTITY_INTERACTION_RANGE, ENTITY_RANGE, this.attackDistance, AttributeModifier.Operation.ADD_VALUE, EquipmentSlotGroup.HAND);
       return attributeBuilder.build();
-    }
-  }
+		}
+	}
 }

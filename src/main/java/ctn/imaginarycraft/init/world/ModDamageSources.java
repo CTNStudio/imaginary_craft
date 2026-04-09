@@ -43,6 +43,18 @@ public final class ModDamageSources extends DamageSources {
     return createDamage(ModDamageTypes.MELEE, causer);
   }
 
+  public static @NotNull DamageSource createDamage(ResourceKey<DamageType> damageTypes, Entity causingEntity) {
+    return createDamage(damageTypes, causingEntity, causingEntity, null);
+  }
+
+  public static @NotNull DamageSource createDamage(ResourceKey<DamageType> damageTypes, @Nullable Entity directEntity, @NotNull Entity causingEntity, Vec3 damageSourcePosition) {
+    return createDamage(causingEntity.level().registryAccess(), damageTypes, directEntity, causingEntity, damageSourcePosition);
+  }
+
+  public static @NotNull DamageSource createDamage(RegistryAccess registryAccess, ResourceKey<DamageType> damageTypes, @Nullable Entity directEntity, @Nullable Entity causingEntity, Vec3 damageSourcePosition) {
+    return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(damageTypes), directEntity, causingEntity, damageSourcePosition);
+  }
+
   public static @NotNull DamageSource remoteDamage(Entity causer) {
     return createDamage(ModDamageTypes.REMOTE, causer);
   }
@@ -77,20 +89,8 @@ public final class ModDamageSources extends DamageSources {
     return createDamage(ModDamageTypes.EGO, causer);
   }
 
-  public static @NotNull DamageSource createDamage(ResourceKey<DamageType> damageTypes, Entity causingEntity) {
-    return createDamage(damageTypes, causingEntity, causingEntity, null);
-  }
-
   public static @NotNull DamageSource createDamage(ResourceKey<DamageType> damageTypes, @Nullable Entity directEntity, @NotNull Entity causingEntity) {
     return createDamage(damageTypes, directEntity, causingEntity, null);
-  }
-
-  public static @NotNull DamageSource createDamage(ResourceKey<DamageType> damageTypes, @Nullable Entity directEntity, @NotNull Entity causingEntity, Vec3 damageSourcePosition) {
-    return createDamage(causingEntity.level().registryAccess(), damageTypes, directEntity, causingEntity, damageSourcePosition);
-  }
-
-  public static @NotNull DamageSource createDamage(RegistryAccess registryAccess, ResourceKey<DamageType> damageTypes, @Nullable Entity directEntity, @Nullable Entity causingEntity, Vec3 damageSourcePosition) {
-    return new DamageSource(registryAccess.registryOrThrow(Registries.DAMAGE_TYPE).getHolderOrThrow(damageTypes), directEntity, causingEntity, damageSourcePosition);
   }
 
   public DamageSource physics() {

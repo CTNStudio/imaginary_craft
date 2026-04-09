@@ -45,5 +45,5 @@ public enum TextParticleAlignType implements StringRepresentable {
   @Override
   public @NotNull String getSerializedName() {
     return name;
-  }
+	}
 }

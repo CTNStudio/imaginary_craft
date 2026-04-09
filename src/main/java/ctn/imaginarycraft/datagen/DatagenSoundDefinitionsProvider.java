@@ -15,6 +15,14 @@ public class DatagenSoundDefinitionsProvider extends SoundDefinitionsProvider {
     super(output, ImaginaryCraft.ID, existingFileHelper);
   }
 
+  public static @NotNull String getSubtitle(SoundEvent soundEvent) {
+    return getSubtitle(soundEvent.getLocation());
+  }
+
+  public static @NotNull String getSubtitle(ResourceLocation location) {
+    return "sound." + location.toLanguageKey();
+  }
+
   @Override
   public void registerSounds() {
     add(ModSoundEvents.SOLEMN_LAMENT_WEAPON_ATTACK_BLACK.value(), 0.5f, 0.5f, 1, 8);
@@ -47,13 +55,5 @@ public class DatagenSoundDefinitionsProvider extends SoundDefinitionsProvider {
       .subtitle(getSubtitle(location))
       .replace(true)
     );
-  }
-
-  public static @NotNull String getSubtitle(ResourceLocation location) {
-    return "sound." + location.toLanguageKey();
-  }
-
-  public static @NotNull String getSubtitle(SoundEvent soundEvent) {
-    return getSubtitle(soundEvent.getLocation());
   }
 }

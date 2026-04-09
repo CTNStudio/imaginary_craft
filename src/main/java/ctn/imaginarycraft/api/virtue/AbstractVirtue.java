@@ -31,16 +31,11 @@ public abstract class AbstractVirtue implements IVirtue {
   }
 
   @Override
-  public Player getPlayer() {
-    return player;
-  }
-
-  @Override
-  public void setPoints(final int points) {
-    if (getPoints() == points) {
+  public void modifyPoints(final int points) {
+    if (points == 0) {
       return;
     }
-    setPoints(points, getAmplitudeId());
+    setPoints(getPoints() + points, getAmplitudeId());
   }
 
   @Override
@@ -58,31 +53,8 @@ public abstract class AbstractVirtue implements IVirtue {
   }
 
   @Override
-  public void modifyPoints(final int points) {
-    if (points == 0) {
-      return;
-    }
-    setPoints(getPoints() + points, getAmplitudeId());
-  }
-
-  @Override
-  public void modifyPoints(final int points, final ResourceLocation modifierId) {
-    if (points == 0) {
-      return;
-    }
-    setPoints(getPoints() + points, modifierId);
-  }
-
-  @Override
-  public int getRatingPoints() {
-    return (int) getCorrelationAttributesHolder().entrySet().stream()
-      .flatMapToDouble(entry -> DoubleStream.of(entry.getValue() * entry.getKey().getBaseValue()))
-      .sum();
-  }
-
-  @Override
-  public VirtueRating getRating() {
-    return VirtueRating.getRating(getRatingPoints());
+  public Player getPlayer() {
+    return player;
   }
 
   @Override
@@ -98,6 +70,34 @@ public abstract class AbstractVirtue implements IVirtue {
     return (int) getPointsAttributeInstance().getValue();
   }
 
+  @Override
+  public void setPoints(final int points) {
+    if (getPoints() == points) {
+      return;
+    }
+    setPoints(points, getAmplitudeId());
+  }
+
+  @Override
+  public void modifyPoints(final int points, final ResourceLocation modifierId) {
+    if (points == 0) {
+      return;
+    }
+    setPoints(getPoints() + points, modifierId);
+  }
+
+  @Override
+  public VirtueRating getRating() {
+    return VirtueRating.getRating(getRatingPoints());
+  }
+
+  @Override
+  public int getRatingPoints() {
+    return (int) getCorrelationAttributesHolder().entrySet().stream()
+      .flatMapToDouble(entry -> DoubleStream.of(entry.getValue() * entry.getKey().getBaseValue()))
+      .sum();
+  }
+
   /**
    * 获取属性值
    *
@@ -106,16 +106,6 @@ public abstract class AbstractVirtue implements IVirtue {
    */
   protected double getAttributeValue(Holder<Attribute> attributeHolder) {
     return getPlayer().getAttributeValue(attributeHolder);
-  }
-
-  /**
-   * 获取属性
-   *
-   * @param attributeHolder 属性
-   * @return 属性
-   */
-  protected AttributeInstance getAttribute(Holder<Attribute> attributeHolder) {
-    return getPlayer().getAttribute(attributeHolder);
   }
 
   /**
@@ -139,8 +129,22 @@ public abstract class AbstractVirtue implements IVirtue {
     return getAttribute(attributeHolder).getModifier(modifierId);
   }
 
+  /**
+   * 获取属性
+   *
+   * @param attributeHolder 属性
+   * @return 属性
+   */
+  protected AttributeInstance getAttribute(Holder<Attribute> attributeHolder) {
+    return getPlayer().getAttribute(attributeHolder);
+  }
+
   protected Map.Entry<AttributeInstance, Float> getAttributeAndValue(Holder<Attribute> attributeHolder, Float value) {
     return Map.entry(getAttribute(attributeHolder), value);
+  }
+
+  protected Map.Entry<AttributeInstance, Set<AttributeModifier>> getAttributeAndModifiers(Holder<Attribute> attributeHolder) {
+    return getAttributeAndModifiers(attributeHolder, getAmplitudeId());
   }
 
   /**
@@ -158,8 +162,11 @@ public abstract class AbstractVirtue implements IVirtue {
       .collect(Collectors.toCollection(ObjectArraySet::ofUnchecked)));
   }
 
-  protected Map.Entry<AttributeInstance, Set<AttributeModifier>> getAttributeAndModifiers(Holder<Attribute> attributeHolder) {
-    return getAttributeAndModifiers(attributeHolder, getAmplitudeId());
+  /**
+   * 在原来的基础上修改属性修改器
+   */
+  protected void addModifyAttributeModifier(Holder<Attribute> attribute, double value) {
+    addModifyAttributeModifier(getAmplitudeId(), attribute, value);
   }
 
   /**
@@ -168,13 +175,6 @@ public abstract class AbstractVirtue implements IVirtue {
   protected void addModifyAttributeModifier(ResourceLocation amplitudeId, Holder<Attribute> attribute, double value) {
     var modifier = getAttribute(attribute).getModifier(amplitudeId);
     setAttributeModifier(amplitudeId, attribute, modifier == null ? value : modifier.amount() + value, AttributeModifier.Operation.ADD_VALUE);
-  }
-
-  /**
-   * 在原来的基础上修改属性修改器
-   */
-  protected void addModifyAttributeModifier(Holder<Attribute> attribute, double value) {
-    addModifyAttributeModifier(getAmplitudeId(), attribute, value);
   }
 
   protected void setAttributeModifier(ResourceLocation amplitudeId, Holder<Attribute> attribute, double value, AttributeModifier.Operation operation) {
@@ -187,12 +187,12 @@ public abstract class AbstractVirtue implements IVirtue {
 
   public static abstract class AbstractSerialize<T extends AbstractVirtue> implements IAttachmentSerializer<CompoundTag, T> {
 
-    public abstract T createAttachment(final IAttachmentHolder holder, final CompoundTag nbt, final HolderLookup.Provider provider);
-
     @Override
     public @NotNull T read(final @NotNull IAttachmentHolder holder, final @NotNull CompoundTag nbt, final HolderLookup.@NotNull Provider provider) {
       return createAttachment(holder, nbt, provider);
     }
+
+    public abstract T createAttachment(final IAttachmentHolder holder, final CompoundTag nbt, final HolderLookup.Provider provider);
 
     @Override
     @NotNull
@@ -203,8 +203,6 @@ public abstract class AbstractVirtue implements IVirtue {
 
   public static abstract class AbstractSync<T extends AbstractVirtue> implements AttachmentSyncHandler<T> {
 
-    public abstract T createAttachment(final IAttachmentHolder holder, final RegistryFriendlyByteBuf buf, @Nullable T attachment);
-
     @Override
     public void write(final @NotNull RegistryFriendlyByteBuf buf, final @NotNull T attachment, final boolean initialSync) {
     }
@@ -214,5 +212,9 @@ public abstract class AbstractVirtue implements IVirtue {
     public T read(final @NotNull IAttachmentHolder holder, final @NotNull RegistryFriendlyByteBuf buf, @Nullable T attachment) {
       return createAttachment(holder, buf, attachment);
     }
-  }
+
+    public abstract T createAttachment(final IAttachmentHolder holder, final RegistryFriendlyByteBuf buf, @Nullable T attachment);
+	}
+
+
 }

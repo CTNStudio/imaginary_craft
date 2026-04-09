@@ -21,15 +21,13 @@ import javax.annotation.Nonnull;
 import java.util.Objects;
 
 public class MagicBulletEntity extends ModBulletEntity {
+  private static final int MAX_FLIGHT_TICK = 100;
   @CheckForSigned
   private float damage;
-
   @CheckForNull
   private LivingEntity target;
-
   @CheckForNull
   private int Flying_Ticks = 0;
-  private static final int MAX_FLIGHT_TICK = 100;
 
   public MagicBulletEntity(EntityType<? extends ModBulletEntity> entityType, Level level) {
     super(entityType, level);
@@ -52,6 +50,15 @@ public class MagicBulletEntity extends ModBulletEntity {
     entity.setTarget(target);
 
     return entity;
+  }
+
+  /**
+   * 创建默认穿透效果的魔法子弹
+   * 默认配置：穿透所有目标，0.75衰减，穿墙
+   */
+  public static MagicBulletEntity createWithDefaultPiercing(@Nonnull Level level, @Nonnull LivingEntity shooter,
+                                                            @Nonnegative float damage, @Nonnull LivingEntity target) {
+    return createWithPiercing(level, shooter, damage, target, -1, 0.75f, true);
   }
 
   /**
@@ -86,25 +93,12 @@ public class MagicBulletEntity extends ModBulletEntity {
     return entity;
   }
 
-  /**
-   * 创建默认穿透效果的魔法子弹
-   * 默认配置：穿透所有目标，0.75衰减，穿墙
-   */
-  public static MagicBulletEntity createWithDefaultPiercing(@Nonnull Level level, @Nonnull LivingEntity shooter,
-                                                            @Nonnegative float damage, @Nonnull LivingEntity target) {
-    return createWithPiercing(level, shooter, damage, target, -1, 0.75f, true);
-  }
-
-  public void setDamage(float damage) {
-    this.damage = damage;
-  }
-
   public float getDamage() {
     return damage;
   }
 
-  public void setTarget(@Nonnull LivingEntity target) {
-    this.target = target;
+  public void setDamage(float damage) {
+    this.damage = damage;
   }
 
   @CheckForNull
@@ -112,25 +106,8 @@ public class MagicBulletEntity extends ModBulletEntity {
     return target;
   }
 
-  /**
-   * 轨迹修正。
-   */
-  protected void correctTrajectory() {
-    if (Objects.isNull(this.target)) {
-      this.setDead();
-      return;
-    }
-
-    final Vec3 vec = this.getViewVector(1).reverse();
-    final Vec3 pos = this.target.getPosition(1).add(vec.scale(3));
-
-    this.setPos(pos);
-
-    // TODO - 新增特效。
-  }
-
-  protected void setDead() {
-    this.discard();
+  public void setTarget(@Nonnull LivingEntity target) {
+    this.target = target;
   }
 
   @Override
@@ -160,6 +137,27 @@ public class MagicBulletEntity extends ModBulletEntity {
         this.correctTrajectory();
       }
     }
+  }
+
+  /**
+   * 轨迹修正。
+   */
+  protected void correctTrajectory() {
+    if (Objects.isNull(this.target)) {
+      this.setDead();
+      return;
+    }
+
+    final Vec3 vec = this.getViewVector(1).reverse();
+    final Vec3 pos = this.target.getPosition(1).add(vec.scale(3));
+
+    this.setPos(pos);
+
+    // TODO - 新增特效。
+  }
+
+  protected void setDead() {
+    this.discard();
   }
 
   @Override
@@ -202,5 +200,5 @@ public class MagicBulletEntity extends ModBulletEntity {
   @Override
   protected void defineSynchedData(SynchedEntityData.Builder builder) {
     super.defineSynchedData(builder);
-  }
+	}
 }

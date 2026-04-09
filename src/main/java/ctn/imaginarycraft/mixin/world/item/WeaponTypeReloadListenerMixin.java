@@ -413,6 +413,6 @@ public abstract class WeaponTypeReloadListenerMixin {
     IWeaponCapability$Builder.of(builder).imaginarycraft$livingMotionModifier(style, livingmotion, animation, ConditionalEntryParser.parseCases(
       motionCompoundTag, (animId) -> AnimationComboParser.getAnimationAccessor(resourceLocation, extraEntryProvider, animId),
       (a, b) -> false));
-  }
-  //endregion
+	}
+	//endregion
 }

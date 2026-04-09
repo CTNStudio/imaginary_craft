@@ -9,10 +9,10 @@ import net.minecraft.world.entity.PathfinderMob;
  * <p>支持设置触发距离和寻路间隔，当与目标距离小于等于触发距离时返回成功</p>
  */
 public class MoveToTargetAction extends BTNode {
-  PathfinderMob mob;
   final int triggerDistance;
-  int findInterval;
   final int _findInterval;
+  PathfinderMob mob;
+  int findInterval;
 
   public MoveToTargetAction(PathfinderMob mob, int triggerDistance, int findInterval) {
     this.mob = mob;
@@ -49,5 +49,5 @@ public class MoveToTargetAction extends BTNode {
       return BTStatus.SUCCESS;
     }
     return BTStatus.RUNNING;
-  }
+	}
 }

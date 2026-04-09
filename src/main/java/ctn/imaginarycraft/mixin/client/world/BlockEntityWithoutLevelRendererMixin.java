@@ -16,9 +16,6 @@ import software.bernie.geckolib.animatable.client.GeoRenderProvider;
 
 @Mixin(value = BlockEntityWithoutLevelRenderer.class, priority = 10000)
 public abstract class BlockEntityWithoutLevelRendererMixin implements IBlockEntityWithoutLevelRenderer {
-  @Shadow
-  public abstract void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay);
-
   @Unique
   private @Nullable LivingEntity imaginarycraft$sourceLivingEntity;
 
@@ -41,6 +38,9 @@ public abstract class BlockEntityWithoutLevelRendererMixin implements IBlockEnti
 
     imaginarycraft$sourceLivingEntity = null;
   }
+
+  @Shadow
+  public abstract void renderByItem(ItemStack stack, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay);
 
   @Override
   public @Nullable LivingEntity imaginarycraft$getSourceLivingEntity() {

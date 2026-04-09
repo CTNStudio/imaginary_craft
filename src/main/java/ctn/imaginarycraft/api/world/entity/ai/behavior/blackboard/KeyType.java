@@ -17,11 +17,10 @@ import java.util.Objects;
  * @param <V>   值类型
  */
 public record KeyType<V>(String key, @Nullable Codec<V> codec) {
-  private static final Map<String, KeyType<?>> ALL_KEYS = new HashMap<>();
-
   public static final KeyType<Integer> STAGE = KeyType.of("stage", Codec.INT);
   public static final KeyType<Integer> TIME = KeyType.of("time", Codec.INT);
   public static final KeyType<Boolean> IS_RUNNING = KeyType.of("is_running", Codec.BOOL);
+  private static final Map<String, KeyType<?>> ALL_KEYS = new HashMap<>();
 
 
   public KeyType(String key, Codec<V> codec) {

@@ -67,7 +67,7 @@ public class ModEggItem extends DeferredSpawnEggItem {
 
     EntityType<?> entityType = this.getType(stack);
     Entity entity = entityType.spawn(serverLevel, stack, context.getPlayer(), spawnPos,
-      MobSpawnType.SPAWN_EGG, true, !Objects.equals(pos, spawnPos) && direction == Direction.UP);
+            MobSpawnType.SPAWN_EGG, true, !Objects.equals(pos, spawnPos) && direction == Direction.UP);
     if (entity != null) {
       if (entity instanceof ISpawnByEgg abnormalities) {
         abnormalities.onSpawnByEgg();

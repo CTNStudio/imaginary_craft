@@ -14,11 +14,11 @@ import org.jetbrains.annotations.NotNull;
  * 状态条层
  */
 public abstract class StatusBarLayer extends IHudLayer {
+  protected final HorizontalStatusBar statusBar;
   protected float currentValue;
   protected float renderedValue;
   protected float previousValue;
   protected float maxValue;
-  protected final HorizontalStatusBar statusBar;
 
   protected StatusBarLayer(HorizontalStatusBar statusBar) {
     this.statusBar = statusBar;
@@ -71,6 +71,8 @@ public abstract class StatusBarLayer extends IHudLayer {
     this.statusBar.setMaxValue(Math.abs(newMaxValue));
   }
 
+  protected abstract float getMaxValueFromSource();
+
   protected void updateValue(@NotNull DeltaTracker deltaTracker) {
     float deltaTime = deltaTracker.getRealtimeDeltaTicks();
     float newCurrentValue = getCurrentValueFromSource();
@@ -101,8 +103,6 @@ public abstract class StatusBarLayer extends IHudLayer {
   }
 
   protected abstract float getCurrentValueFromSource();
-
-  protected abstract float getMaxValueFromSource();
 
   protected abstract void updateStatusBarAppearance();
 

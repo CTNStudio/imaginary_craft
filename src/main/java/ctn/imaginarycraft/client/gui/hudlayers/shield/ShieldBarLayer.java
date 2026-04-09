@@ -48,16 +48,6 @@ public abstract class ShieldBarLayer extends StatusBarLayer {
   }
 
   @Override
-  protected float getCurrentValueFromSource() {
-    float shieldAmount = 0.0f;
-    for (var entry : ModAbsorptionShieldsRegistry.getAll()) {
-      if (entry.effect().equals(absorptionEffect))
-        shieldAmount = player.getData(entry.attachment().get());
-    }
-    return shieldAmount;
-  }
-
-  @Override
   protected void updateStatusBarAppearance() {
 
   }
@@ -66,5 +56,15 @@ public abstract class ShieldBarLayer extends StatusBarLayer {
   public void renderStatusBar(GuiGraphics guiGraphics, @NotNull DeltaTracker deltaTracker) {
     if (getCurrentValueFromSource() != 0)
       super.renderStatusBar(guiGraphics, deltaTracker);
+  }
+
+  @Override
+  protected float getCurrentValueFromSource() {
+    float shieldAmount = 0.0f;
+    for (var entry : ModAbsorptionShieldsRegistry.getAll()) {
+      if (entry.effect().equals(absorptionEffect))
+        shieldAmount = player.getData(entry.attachment().get());
+    }
+    return shieldAmount;
   }
 }
