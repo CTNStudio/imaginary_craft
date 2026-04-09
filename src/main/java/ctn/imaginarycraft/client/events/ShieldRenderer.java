@@ -42,7 +42,7 @@ public class ShieldRenderer {
     final var livingEffects = entity.getActiveEffectsMap().keySet();
 
     list.parallelStream()
-      .filter( it -> livingEffects.contains(it.effect()))
+      .filter(it -> livingEffects.contains(it.effect()))
       .findFirst()
       .ifPresent(it -> renderShield(entity, poseStack, buffer, packedLight, it));
   }

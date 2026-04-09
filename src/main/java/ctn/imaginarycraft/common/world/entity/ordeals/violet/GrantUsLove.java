@@ -1,8 +1,7 @@
 package ctn.imaginarycraft.common.world.entity.ordeals.violet;
 
-import ctn.imaginarycraft.api.world.entity.IAbnormalitiesEntity;
 import ctn.imaginarycraft.api.world.entity.IBehaviorTreeMob;
-import ctn.imaginarycraft.api.world.entity.ai.ModHurtByTargetGoal;
+import ctn.imaginarycraft.api.world.entity.ISpawnByEgg;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTFactory;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTNode;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.BTRoot;
@@ -27,7 +26,6 @@ import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
@@ -47,7 +45,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Predicate;
 
 // TODO 技能或大招剩余时间要持久化
 // TODO 需要免疫中毒，细雪，火焰，漂浮
@@ -63,7 +60,7 @@ import java.util.function.Predicate;
  * <p>
  * 2025/12/22 尘昨喧
  */
-public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorTreeMob<GrantUsLove>, Enemy {
+public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEgg, IBehaviorTreeMob<GrantUsLove>, Enemy {
   // 普通攻击冷却时间 (tick)
   public static final int NORMAL_ATK_CD = 20 * 3;
   // 大招冷却时间 (tick)
@@ -97,7 +94,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
   // 大招伤害
   public static final float CRASH_ATK_DMG = 200.0F;
   // 大招读条状态
-  protected static final EntityDataAccessor<Boolean> CRASH_ATK_READING = SynchedEntityData.defineId(GrantUsLove.class, EntityDataSerializers.BOOLEAN);
+  protected static final EntityDataAccessor<Boolean> CRASH_ATK_READING_DATA = SynchedEntityData.defineId(GrantUsLove.class, EntityDataSerializers.BOOLEAN);
   private final List<LivingEntity> attackers = new ArrayList<>();
   private final Map<LivingEntity, Integer> lastAtkTimeMap = new HashMap<>();
   private final Vec3 portalPos = null; // 大招 Portal 位置
@@ -109,9 +106,9 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
   private int portalOpenTime = 1; // 大招 Portal 开启时间
   private int idleSoundCd = 0; // 闲置音效间隔
 
-  public GrantUsLove(EntityType<? extends Mob> entityType, Level level) {
+  public GrantUsLove(EntityType<? extends GrantUsLove> entityType, Level level) {
     super(entityType, level);
-    entityData.set(CRASH_ATK_READING, false);
+    entityData.set(CRASH_ATK_READING_DATA, false);
   }
 
   public static AttributeSupplier.Builder createAttributes() {
@@ -130,6 +127,12 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
       .add(EpicFightAttributes.MAX_STRIKES, 8);
   }
 
+  @Override
+  public void registerGoals() {
+    super.registerGoals();
+    IOrdealsVioletEntity.super.registerGoals();
+  }
+
   /**
    * 快速规范化角度到 [-180, 180] 范围
    */
@@ -145,11 +148,8 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
   }
 
   @Override
-  protected void registerGoals() {
-    Predicate<LivingEntity> predicate = entity -> canTarget(entity) && entity.distanceTo(entity) <= 2.5;
-    this.targetSelector.addGoal(0, new NearestAttackableTargetGoal<>(this, Player.class, true, predicate));
-    this.targetSelector.addGoal(1, new NearestAttackableTargetGoal<>(this, Mob.class, true, predicate));
-    this.targetSelector.addGoal(2, new ModHurtByTargetGoal(this).setAlertOthers(GrantUsLove.class)); // TODO 以及其他考验等
+  public boolean canTarget(Entity entity) {
+    return IOrdealsVioletEntity.super.canTarget(entity) && entity.distanceTo(entity) <= 2.;
   }
 
   @Override
@@ -208,7 +208,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
   @Override
   protected void defineSynchedData(SynchedEntityData.Builder builder) {
     super.defineSynchedData(builder);
-    builder.define(CRASH_ATK_READING, false);
+    builder.define(CRASH_ATK_READING_DATA, false);
   }
 
   @Override
@@ -252,7 +252,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
     List<LivingEntity> targets = this.level().getEntitiesOfClass(
       LivingEntity.class,
       aoeBox,
-      entity -> entity != this && entity.isAlive() && this.isTarget(entity));
+      entity -> entity != this && entity.isAlive() && this.isValidTarget(entity));
 
     DamageSource damageSource = ModDamageSources.erosionDamage(this);
 
@@ -329,25 +329,6 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
       0, 0, radius * 2);
   }
 
-  private boolean isTarget(Entity entity) {
-    if (entity == this) return false;
-
-    if (entity instanceof Player player) {
-      return !player.isCreative() && !player.isSpectator();
-    }
-    return !isEtHnicGroup(entity);
-  }
-
-  @Override
-  public boolean isEtHnicGroup(Entity entity) {
-    // TODO 后续采用tag的形式处理
-    return IAbnormalitiesEntity.super.isEtHnicGroup(entity) || entity instanceof GrantUsLove;
-  }
-
-  protected boolean canTarget(Entity entity) {
-    return entity.isAlive() && entity.isAttackable() && this.isTarget(entity);
-  }
-
   /**
    * 生成传送门
    */
@@ -387,7 +368,7 @@ public class GrantUsLove extends Mob implements IAbnormalitiesEntity, IBehaviorT
     float bestScore = -1;
 
     for (LivingEntity attacker : attackers) {
-      if (!attacker.isAlive() || !this.isTarget(attacker)) continue;
+      if (!attacker.isAlive() || !this.isValidTarget(attacker)) continue;
 
       float score = this.calcTargetScore(attacker);
 

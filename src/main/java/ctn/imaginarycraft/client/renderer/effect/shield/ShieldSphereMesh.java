@@ -75,9 +75,10 @@ public class ShieldSphereMesh {
 
   /**
    * 将球体网格渲染到给定的 VertexConsumer 中。
+   *
    * @param consumer VertexConsumer
-   * @param pose 变换矩阵（包含位置、旋转、缩放）
-   * @param light 光照值
+   * @param pose     变换矩阵（包含位置、旋转、缩放）
+   * @param light    光照值
    */
   public void render(VertexConsumer consumer, PoseStack.Pose pose, float r, float g, float b, float a, int light) {
     Matrix4f matrix = pose.pose();
@@ -103,5 +104,6 @@ public class ShieldSphereMesh {
   }
 
   // 简单的内部类存储顶点数据
-  private static record MeshVertex(Vector3f position, Vector3f normal, float u, float v) {}
+  private record MeshVertex(Vector3f position, Vector3f normal, float u, float v) {
+  }
 }

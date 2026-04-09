@@ -20,9 +20,8 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
+@SuppressWarnings("unchecked")
 public final class DatagenItemTag extends ItemTagsProvider {
-
-
   public DatagenItemTag(final PackOutput output, final CompletableFuture<HolderLookup.Provider> lookupProvider, final CompletableFuture<TagLookup<Block>> blockTags, final ExistingFileHelper existingFileHelper) {
     super(output, lookupProvider, blockTags, ImaginaryCraft.ID, existingFileHelper);
   }

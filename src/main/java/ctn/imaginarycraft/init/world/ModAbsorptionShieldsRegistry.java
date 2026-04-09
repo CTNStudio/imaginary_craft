@@ -21,7 +21,7 @@ import java.util.function.Supplier;
  * 2.注册ModAttachments
  * 3.在此注册即可
  *
- * <P>
+ * <p>
  * 2026/3/18 尘昨暄
  */
 public final class ModAbsorptionShieldsRegistry {
@@ -38,7 +38,8 @@ public final class ModAbsorptionShieldsRegistry {
         player.playSound(shieldBreakSound);
       }
     }
-    public boolean isShieldConflict(){
+
+    public boolean isShieldConflict() {
       return shieldConflict;
     }
   }
@@ -53,7 +54,7 @@ public final class ModAbsorptionShieldsRegistry {
     SoundEvent shieldBreakSound,
     boolean shieldConflict
   ) {
-    SHIELDS.add(new ShieldEntry(effect, damageTypeTag, attachment, initialAmount, shieldBreakSound,shieldConflict));
+    SHIELDS.add(new ShieldEntry(effect, damageTypeTag, attachment, initialAmount, shieldBreakSound, shieldConflict));
   }
 
   private static void register(

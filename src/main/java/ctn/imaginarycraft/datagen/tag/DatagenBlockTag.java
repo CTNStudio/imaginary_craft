@@ -9,8 +9,8 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.concurrent.CompletableFuture;
 
+@SuppressWarnings("unchecked")
 public final class DatagenBlockTag extends BlockTagsProvider {
-
   public DatagenBlockTag(final PackOutput output, final CompletableFuture<HolderLookup.Provider> lookupProvider, @Nullable final ExistingFileHelper existingFileHelper) {
     super(output, lookupProvider, ImaginaryCraft.ID, existingFileHelper);
   }

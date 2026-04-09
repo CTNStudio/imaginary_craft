@@ -4,6 +4,7 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.i18n.DatagenI18n;
 import ctn.imaginarycraft.datagen.tag.DatagenBlockTag;
 import ctn.imaginarycraft.datagen.tag.DatagenDamageTypeTag;
+import ctn.imaginarycraft.datagen.tag.DatagenEntityTag;
 import ctn.imaginarycraft.datagen.tag.DatagenItemTag;
 import ctn.imaginarycraft.init.world.ModDamageTypes;
 import net.minecraft.core.HolderLookup;
@@ -40,6 +41,7 @@ public final class ModDatagen {
     buildServer(event, generator, blockTag);
     buildServer(event, generator, new DatagenItemTag(output, completableFuture, blockTag.contentsGetter(), existingFileHelper));
     buildServer(event, generator, new DatagenDamageTypeTag(output, completableFuture, existingFileHelper));
+    buildServer(event, generator, new DatagenEntityTag(output, completableFuture, existingFileHelper));
     buildServer(event, generator, new DatagenCuriosTest(output, existingFileHelper, completableFuture));
 
     // 客户端数据生成

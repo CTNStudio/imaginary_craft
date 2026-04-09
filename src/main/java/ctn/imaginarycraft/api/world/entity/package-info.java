@@ -4,7 +4,7 @@
  *
  * <h2>主要组件：</h2>
  * <ul>
- *   <li>{@link ctn.imaginarycraft.api.world.entity.IAbnormalitiesEntity} - 异常生物实体接口</li>
+ *   <li>{@link ctn.imaginarycraft.api.world.entity.ISpawnByEgg} - 异常生物实体接口</li>
  *   <li>{@link ctn.imaginarycraft.api.world.entity.ISharedFlagControllerHolder} - 共享标志持有者接口</li>
  *   <li>{@link ctn.imaginarycraft.api.world.entity.SharedFlagController} - 共享标志控制器</li>
  *   <li>{@link ctn.imaginarycraft.api.world.entity.IStateChangeableMob} - 状态可变生物接口</li>

@@ -15,6 +15,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.concurrent.CompletableFuture;
 
+@SuppressWarnings("unchecked")
 public final class DatagenDamageTypeTag extends DamageTypeTagsProvider {
   public DatagenDamageTypeTag(final PackOutput output, final CompletableFuture<HolderLookup.Provider> lookupProvider, final ExistingFileHelper existingFileHelper) {
     super(output, lookupProvider, ImaginaryCraft.ID, existingFileHelper);

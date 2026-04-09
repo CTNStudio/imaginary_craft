@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.common.world.entity.abnormalities;
 
-import ctn.imaginarycraft.api.world.entity.IAbnormalitiesEntity;
 import ctn.imaginarycraft.client.model.entity.ModGeoEntityModel;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
@@ -16,7 +15,7 @@ import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.renderer.GeoEntityRenderer;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
-public class TrainingRabbits extends Mob implements IAbnormalitiesEntity, GeoEntity {
+public class TrainingRabbits extends Mob implements GeoEntity {
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
   public TrainingRabbits(EntityType<? extends Mob> entityType, Level level) {

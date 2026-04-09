@@ -2,6 +2,7 @@ package ctn.imaginarycraft.init.world.entity;
 
 import ctn.imaginarycraft.api.LcLevel;
 import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLove;
+import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLoveTentacle;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.datagen.i18n.ZhCn;
 import net.minecraft.core.registries.BuiltInRegistries;
@@ -25,6 +26,14 @@ public final class OrdealsEntityTypes {
     EntityType.Builder.of(GrantUsLove::new, MobCategory.MISC)
       .sized(2.0F, 5F)
       .eyeHeight(2.5F)
+      .clientTrackingRange(8)
+      .updateInterval(2));
+  public static final DeferredHolder<EntityType<?>, EntityType<GrantUsLoveTentacle>> GRANT_US_LOVE_TENTACLE = register(
+    "grant_us_love_tentacle",
+    "“请给我们爱”触手",
+    LcLevel.HE,
+    EntityType.Builder.<GrantUsLoveTentacle>of(GrantUsLoveTentacle::new, MobCategory.MISC)
+      .sized(0.7F, 0.7F)
       .clientTrackingRange(8)
       .updateInterval(2));
   //endregion

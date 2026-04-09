@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.world.item;
 
-import ctn.imaginarycraft.api.world.entity.IAbnormalitiesEntity;
+import ctn.imaginarycraft.api.world.entity.ISpawnByEgg;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -69,7 +69,7 @@ public class ModEggItem extends DeferredSpawnEggItem {
     Entity entity = entityType.spawn(serverLevel, stack, context.getPlayer(), spawnPos,
       MobSpawnType.SPAWN_EGG, true, !Objects.equals(pos, spawnPos) && direction == Direction.UP);
     if (entity != null) {
-      if (entity instanceof IAbnormalitiesEntity abnormalities) {
+      if (entity instanceof ISpawnByEgg abnormalities) {
         abnormalities.onSpawnByEgg();
       }
 
@@ -108,7 +108,7 @@ public class ModEggItem extends DeferredSpawnEggItem {
       return InteractionResultHolder.pass(stack);
     }
 
-    if (entity instanceof IAbnormalitiesEntity abnormalities) {
+    if (entity instanceof ISpawnByEgg abnormalities) {
       abnormalities.onSpawnByEgg();
     }
 

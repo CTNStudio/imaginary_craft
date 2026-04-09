@@ -40,7 +40,7 @@ public abstract class ShieldBarLayer extends StatusBarLayer {
   protected float getMaxValueFromSource() {
     final MobEffectInstance effect = this.player.getEffect(absorptionEffect);
     final float level = ModConfig.SERVER.shieldAdditionalValuePerLevel.get().floatValue();
-    if(Objects.isNull(effect)){
+    if (Objects.isNull(effect)) {
       return 0;
     }
 
@@ -51,7 +51,7 @@ public abstract class ShieldBarLayer extends StatusBarLayer {
   protected float getCurrentValueFromSource() {
     float shieldAmount = 0.0f;
     for (var entry : ModAbsorptionShieldsRegistry.getAll()) {
-      if(entry.effect().equals(absorptionEffect))
+      if (entry.effect().equals(absorptionEffect))
         shieldAmount = player.getData(entry.attachment().get());
     }
     return shieldAmount;
@@ -64,7 +64,7 @@ public abstract class ShieldBarLayer extends StatusBarLayer {
 
   @Override
   public void renderStatusBar(GuiGraphics guiGraphics, @NotNull DeltaTracker deltaTracker) {
-    if(getCurrentValueFromSource()!=0)
+    if (getCurrentValueFromSource() != 0)
       super.renderStatusBar(guiGraphics, deltaTracker);
   }
 }

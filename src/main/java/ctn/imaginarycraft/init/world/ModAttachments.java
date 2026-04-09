@@ -113,7 +113,7 @@ public final class ModAttachments {
       .copyOnDeath());
 
   /**
-   *四色护盾量
+   * 四色护盾量
    */
   public static final DeferredHolder<AttachmentType<?>, AttachmentType<Float>> PHYSIC_DAMAGE_ABSORPTION_AMOUNT = registerEntity(
     "physic_damage_absorption_amount",

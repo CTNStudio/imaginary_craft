@@ -27,6 +27,6 @@ public final class ModServerConfig extends ConfigUtil {
     enableShieldDamageImmunity = define(
       builder, false, "enable_shield_damage_immunity", "护盾破盾免伤");
     shieldAdditionalValuePerLevel = define(
-      builder, 10.0D,0D,1000D, "shield_additional_value_per_level", "护盾每级增加的护盾值");
+      builder, 10.0D, 0D, 1000D, "shield_additional_value_per_level", "护盾每级增加的护盾值");
   }
 }

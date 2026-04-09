@@ -31,28 +31,28 @@ public class LeftBarLayer extends CompositeHudLayer {
         this.player != null &&
         !player.isSpectator());
     addLayer(this.physicShieldLayer,
-      ()-> !this.minecraft.options.hideGui &&
-        this.player != null&&
+      () -> !this.minecraft.options.hideGui &&
+        this.player != null &&
         !player.isSpectator() &&
-        !player.isCreative()&&
+        !player.isCreative() &&
         player.hasEffect(ModMobEffects.PHYSIC_ABSORPTION_SHIELD));
     addLayer(this.spiritShieldLayer,
-      ()-> !this.minecraft.options.hideGui &&
-        this.player != null&&
+      () -> !this.minecraft.options.hideGui &&
+        this.player != null &&
         !player.isSpectator() &&
-        !player.isCreative()&&
+        !player.isCreative() &&
         player.hasEffect(ModMobEffects.SPIRIT_ABSORPTION_SHIELD));
     addLayer(this.erosionShieldLayer,
-      ()-> !this.minecraft.options.hideGui &&
-        this.player != null&&
+      () -> !this.minecraft.options.hideGui &&
+        this.player != null &&
         !player.isSpectator() &&
-        !player.isCreative()&&
+        !player.isCreative() &&
         player.hasEffect(ModMobEffects.EROSION_ABSORPTION_SHIELD));
     addLayer(this.soulShieldLayer,
-      ()-> !this.minecraft.options.hideGui &&
-        this.player != null&&
+      () -> !this.minecraft.options.hideGui &&
+        this.player != null &&
         !player.isSpectator() &&
-        !player.isCreative()&&
+        !player.isCreative() &&
         player.hasEffect(ModMobEffects.SOUL_ABSORPTION_SHIELD));
   }
 
