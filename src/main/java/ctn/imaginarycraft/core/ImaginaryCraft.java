@@ -2,11 +2,13 @@ package ctn.imaginarycraft.core;
 
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.core.registry.CurioRegistry;
-import ctn.imaginarycraft.core.registry.EpicFightRegistry;
+import ctn.imaginarycraft.core.registry.epicfight.EntityTypeRegistry;
 import ctn.imaginarycraft.init.ModSoundEvents;
-import ctn.imaginarycraft.init.animmodels.ModArmatures;
-import ctn.imaginarycraft.init.animmodels.ModMeshes;
+import ctn.imaginarycraft.init.epicfight.ModEntieyConditions;
+import ctn.imaginarycraft.init.epicfight.animmodels.ModArmatures;
+import ctn.imaginarycraft.init.epicfight.animmodels.ModMeshes;
 import ctn.imaginarycraft.init.world.*;
+import ctn.imaginarycraft.init.world.entity.ModEntityDataSerializers;
 import ctn.imaginarycraft.init.world.entity.ModEntityTypes;
 import ctn.imaginarycraft.init.world.item.ModArmorMaterials;
 import ctn.imaginarycraft.init.world.item.ModItems;
@@ -29,12 +31,14 @@ public final class ImaginaryCraft {
   public static final Logger LOGGER = LogManager.getLogger(ID);
 
   public ImaginaryCraft(IEventBus eventBus, ModContainer container) {
-    ModArmatures.init();
-    ModMeshes.init();
-    ModColliders.init();
+	  ModEpicjightEventHooks.listenerRegister();
+	  ModConfig.init(container);
 
-    ModEpicjightEventHooks.listenerRegister();
-    ModConfig.init(container);
+	  ModArmatures.init();
+	  ModMeshes.init();
+	  ModColliders.init();
+
+	  ModEntityDataSerializers.REGISTRY.register(eventBus);
     ModSoundEvents.REGISTRY.register(eventBus);
     ModMobEffects.REGISTRY.register(eventBus);
     ModAttributes.REGISTRY.register(eventBus);
@@ -49,8 +53,7 @@ public final class ImaginaryCraft {
 
     ModCreativeModeTabs.REGISTRY.register(eventBus);
     CurioRegistry.registry();
-    EpicFightRegistry.registerEntityPatch();
-    EpicFightRegistry.registerPatchedEntityRenderers();
+	  EntityTypeRegistry.register();
   }
 
   @Contract("_ -> new")

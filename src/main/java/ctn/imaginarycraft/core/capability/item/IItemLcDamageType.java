@@ -12,7 +12,7 @@ import java.util.Set;
 /**
  * 该类主要针对物品的近战攻击
  * <p>
- * 如果你可以直接返回{@link DamageSource}请使用{@link IDamageSource#setImaginaryCraft$LcDamageType(LcDamageType)}
+ * 如果你可以直接返回{@link DamageSource}请使用{@link IDamageSource#imaginarycraft$setLcDamageType(LcDamageType)}
  */
 public interface IItemLcDamageType {
   /**

@@ -8,10 +8,6 @@ public final class ModEpicjightEventHooks {
   }
 
   static void listenerRegister() {
-    skill();
-  }
-
-  private static void skill() {
-    RedEyesTachiItem.phaseSwitch();
+	  RedEyesTachiItem.phaseSwitch();
   }
 }

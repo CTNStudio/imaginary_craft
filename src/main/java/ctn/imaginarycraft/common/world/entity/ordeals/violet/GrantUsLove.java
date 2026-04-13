@@ -9,9 +9,12 @@ import ctn.imaginarycraft.api.world.entity.ai.behavior.composite.ParallelNode;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.ConditionBT;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.DistanceLowerThanCondition;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.TargetExistCondition;
+import ctn.imaginarycraft.api.world.entity.jointpart.MultiJointPartMob;
+import ctn.imaginarycraft.client.animmodels.armature.GrantUsLoveArmature;
 import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
 import ctn.imaginarycraft.init.ModSoundEvents;
-import ctn.imaginarycraft.init.animmodels.ModAnimations;
+import ctn.imaginarycraft.init.epicfight.animmodels.ModAnimations;
+import ctn.imaginarycraft.init.epicfight.animmodels.ModArmatures;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import ctn.imaginarycraft.init.world.ModDamageSources;
 import net.minecraft.commands.arguments.EntityAnchorArgument;
@@ -23,7 +26,6 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Enemy;
@@ -46,55 +48,95 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-// TODO 技能或大招剩余时间要持久化
-// TODO 需要免疫中毒，细雪，火焰，漂浮
-
 /**
- * 英文编号：ordeals--violet noon
+ * 英文编号:ordeals--violet noon
  * <p>
- * 中文编号：考验--紫罗兰色正午
+ * 中文编号:考验--紫罗兰色正午
  * <p>
- * 英文名：Grant Us Love
+ * 英文名:Grant Us Love
  * <p>
- * 中文名： 请给我们爱
+ * 中文名: 请给我们爱
  * <p>
  * 2025/12/22 尘昨喧
+ *
+ * <h2>TODO 待办事项:</h2>
+ * <ul>
+ *   <li>技能或大招剩余时间要持久化</li>
+ *   <li>需要免疫中毒,细雪,火焰,漂浮</li>
+ * </ul>
  */
-public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEgg, IBehaviorTreeMob<GrantUsLove>, Enemy {
-	// 普通攻击冷却时间 (tick)
+public class GrantUsLove extends MultiJointPartMob<GrantUsLoveTentacle> implements IOrdealsVioletEntity, ISpawnByEgg, IBehaviorTreeMob<GrantUsLove>, Enemy {
+	/**
+	 * 大招读条状态
+	 */
+	public static final EntityDataAccessor<Boolean> CRASH_ATK_READING_DATA = SynchedEntityData.defineId(
+		GrantUsLove.class, EntityDataSerializers.BOOLEAN);
+
+	/**
+	 * 普通攻击冷却时间 (tick)
+	 */
 	public static final int NORMAL_ATK_CD = 20 * 3;
-	// 大招冷却时间 (tick)
+	/**
+	 * 大招冷却时间 (tick)
+	 */
 	public static final int CRASH_ATK_CD = 600;
-	// 大招 Portal 开启持续时间 (tick)
+	/**
+	 * 大招 Portal 开启持续时间 (tick)
+	 */
 	public static final int CRASH_PORTAL_OPEN_TIME = 100;
-	// 目标锁定攻击半径
+	/**
+	 * 目标锁定攻击半径
+	 */
 	public static final float TARGET_ATK_RADIUS = 50.0F;
-	// 目标锁定持续时间 (tick)
+	/**
+	 * 目标锁定持续时间 (tick)
+	 */
 	public static final int TARGET_LOCK_TIME = 600;
-	// 攻击者记忆时间 (tick)
+	/**
+	 * 攻击者记忆时间 (tick)
+	 */
 	public static final int ATTACKER_MEM_TIME = 500;
-	// 玩家目标优先级基础分
+	/**
+	 * 玩家目标优先级基础分
+	 */
 	public static final float PLAYER_PRIORITY = 10.0F;
-	// 普通攻击伤害
+	/**
+	 * 普通攻击伤害
+	 */
 	public static final float NORMAL_ATK_DMG = 1.0F;
-	// 普通攻击 AOE 半径
+	/**
+	 * 普通攻击 AOE 半径
+	 */
 	public static final float NORMAL_ATK_AOE_RADIUS = 4.0F;
-	// 普通攻击 AOE 高度
+	/**
+	 * 普通攻击 AOE 高度
+	 */
 	public static final float NORMAL_ATK_AOE_HEIGHT = 4.0F;
-	// 普通攻击击退强度
+	/**
+	 * 普通攻击击退强度
+	 */
 	public static final float NORMAL_ATK_KNOCKBACK = 0.0F;
-	// 大招生成 Portal 时的高度偏移
+	/**
+	 * 大招生成 Portal 时的高度偏移
+	 */
 	public static final int CRASH_PORTAL_HEIGHT_OFFSET = 20;
-	// 大招落地检测后的冷却时间 (tick)
+	/**
+	 * 大招落地检测后的冷却时间 (tick)
+	 */
 	public static final int CRASH_ATTACK_LANDING_DELAY = 60;
-	// 闲置音效最小间隔 (tick)
+	/**
+	 * 闲置音效最小间隔 (tick)
+	 */
 	public static final int IDLE_SOUND_MIN_INTERVAL = 2;
-	// 大招 AOE 半径
+	/**
+	 * 大招 AOE 半径
+	 */
 	public static final float CRASH_ATK_AOE_RADIUS = 10.0F;
-	// 大招伤害
+	/**
+	 * 大招伤害
+	 */
 	public static final float CRASH_ATK_DMG = 200.0F;
-	// 大招读条状态
-	protected static final EntityDataAccessor<Boolean> CRASH_ATK_READING_DATA = SynchedEntityData.defineId(GrantUsLove.class, EntityDataSerializers.BOOLEAN);
+
 	private final List<LivingEntity> attackers = new ArrayList<>();
 	private final Map<LivingEntity, Integer> lastAtkTimeMap = new HashMap<>();
 	/**
@@ -105,9 +147,8 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 	 * 触手集合
 	 */
 	private final GrantUsLoveTentacle[] tentacles = new GrantUsLoveTentacle[6];
-	// TODO 后面替换成触手的独立处理
 	/**
-	 * 普通攻击冷却时间
+	 * 普通攻击冷却时间 TODO 后面替换成触手的独立处理
 	 */
 	private int normalAtkCd = NORMAL_ATK_CD;
 	/**
@@ -129,7 +170,7 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 	private int idleSoundCd = 0;
 
 	public GrantUsLove(EntityType<? extends GrantUsLove> entityType, Level level) {
-		super(entityType, level);
+		super(entityType, level, 6, false);
 		entityData.set(CRASH_ATK_READING_DATA, false);
 	}
 
@@ -147,6 +188,19 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 			.add(ModAttributes.THE_SOUL_VULNERABLE, 1)
 			.add(EpicFightAttributes.IMPACT, 8)
 			.add(EpicFightAttributes.MAX_STRIKES, 8);
+	}
+
+	@Override
+	public void firstSpawn() {
+		super.firstSpawn();
+		GrantUsLoveArmature armature = ModArmatures.GRANT_US_LOVE.get();
+		Level level = level();
+		addJointPart(new GrantUsLoveTentacle(level, this, "l1", armature.tentacle1_0_L, armature.tentacle1_1_L, armature.tentacle1_2_L, armature.tentacle1_3_L));
+		addJointPart(new GrantUsLoveTentacle(level, this, "l2", armature.tentacle2_0_L, armature.tentacle2_1_L, armature.tentacle2_2_L, armature.tentacle2_3_L));
+		addJointPart(new GrantUsLoveTentacle(level, this, "l3", armature.tentacle3_0_L, armature.tentacle3_1_L, armature.tentacle3_2_L, armature.tentacle3_3_L));
+		addJointPart(new GrantUsLoveTentacle(level, this, "r1", armature.tentacle1_0_R, armature.tentacle1_1_R, armature.tentacle1_2_R, armature.tentacle1_3_R));
+		addJointPart(new GrantUsLoveTentacle(level, this, "r2", armature.tentacle2_0_R, armature.tentacle2_1_R, armature.tentacle2_2_R, armature.tentacle2_3_R));
+		addJointPart(new GrantUsLoveTentacle(level, this, "r3", armature.tentacle3_0_R, armature.tentacle3_1_R, armature.tentacle3_2_R, armature.tentacle3_3_R));
 	}
 
 	/**
@@ -234,11 +288,6 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 	}
 
 	@Override
-	public void onSyncedDataUpdated(List<SynchedEntityData.DataValue<?>> dataValues) {
-		super.onSyncedDataUpdated(dataValues);
-	}
-
-	@Override
 	public float getYRot() {
 		return Math.round(super.getYRot() / 90.0F) * 90.0F;
 	}
@@ -257,8 +306,6 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 		this.crashAtkReady = false;
 		this.crashAtkCd = CRASH_ATK_CD;
 		this.portalOpenTime = CRASH_PORTAL_OPEN_TIME;
-		// TODO 调试用：缩短大招冷却时间
-//    this.crashAtkCd = 20 * 2; // 2 秒后释放大招
 	}
 
 	private void aoeAttack() {
@@ -619,7 +666,7 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 		protected @NotNull BTNode createBehaviorTree() {
 			return BTFactory.parallel(ParallelNode.Policy.REQUIRE_ALL, ParallelNode.Policy.REQUIRE_ALL)
 				.addChild(BTFactory.infinite(BTFactory.selector()
-//          .addWithCondition(, )
+//        .addWithCondition(, )
 					// 目标不存在
 					.addWithCondition(ConditionBT.not(new TargetExistCondition(this.mob)), BTFactory.sequence())
 					// 目标存在
@@ -632,7 +679,7 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 							// 等待5秒
 							.addChild(BTFactory.sequence()
 									.addChild(BTFactory.wait(100))
-//                  .addWithCondition(,)
+//                .addWithCondition(,)
 							))))))
 				// 其他处理例如：技能冷却
 				.addChild(BTFactory.infinite(BTFactory.success(() -> {

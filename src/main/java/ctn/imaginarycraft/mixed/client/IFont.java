@@ -11,8 +11,8 @@ import org.joml.Matrix4f;
  * 字体渲染扩展接口，提供额外的字体绘制功能
  */
 public interface IFont {
-  static IFont of(Font font) {
-    return font;
+	static IFont of(Font obj) {
+		return obj;
   }
 
   /**

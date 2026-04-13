@@ -11,7 +11,6 @@ import ctn.imaginarycraft.core.capability.item.IItemLcLevel;
 import ctn.imaginarycraft.core.capability.item.IItemUsageReq;
 import ctn.imaginarycraft.core.capability.item.ItemLcLevel;
 import ctn.imaginarycraft.init.ModCapabilitys;
-import ctn.imaginarycraft.init.world.entity.OrdealsEntityTypes;
 import ctn.imaginarycraft.util.LcLevelUtil;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.EntityType;
@@ -95,8 +94,6 @@ public final class CapabilityRegistry {
     ENTITY_TETH.add(() -> EntityType.BOGGED);
     ENTITY_TETH.add(() -> EntityType.BLAZE);
     ENTITY_TETH.add(() -> EntityType.SLIME);
-
-    ENTITY_HE.add(OrdealsEntityTypes.GRANT_US_LOVE::get);
   }
 
   @SubscribeEvent(priority = EventPriority.HIGHEST)

@@ -3,28 +3,30 @@
   "package": "ctn.imaginarycraft.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "LivingDamageEvent$PostMixin",
-    "StaticAnimationMixin",
     "client.ModelBuilderMixin",
     "client.ModelFileAccessorMixin",
-    "client.PatchedEntityRendererMixin",
     "client.world.LocalPlayerPatchMixin",
-    "client.world.RenderItemBaseMixin",
+    "epicfight.BattojutsuSkillMixin",
+    "epicfight.ComboAttacksMixin",
+    "epicfight.ConditionalWeaponInnateSkillAccessorMixin",
+    "epicfight.LivingEntityPatchMixin",
+    "epicfight.MoveSet$MoveSetBuilderMixin",
+    "epicfight.MoveSetMixin",
+    "epicfight.StaticAnimationMixin",
+    "epicfight.WeaponCapability$BuilderMixin",
+    "epicfight.WeaponCapabilityMixin",
+    "epicfight.WeaponTypeReloadListenerAccessorMixin",
+    "epicfight.WeaponTypeReloadListenerMixin",
+    "epicfight.client.PatchedEntityRendererMixin",
+    "epicfight.client.RenderItemBaseMixin",
     "world.CombatRulesMixin",
     "world.DamageContainerMixin",
     "world.DamageSourceMixin",
+    "world.entity.LivingDamageEvent$PostMixin",
     "world.entity.LivingEntityAccessorMixin",
     "world.entity.LivingEntityMixin",
-    "world.entity.LivingEntityPatchMixin",
     "world.entity.PlayerMixin",
-    "world.item.ItemStackMixin",
-    "world.item.WeaponCapability$BuilderMixin",
-    "world.item.WeaponCapabilityMixin",
-    "world.item.WeaponTypeReloadListenerAccessorMixin",
-    "world.item.WeaponTypeReloadListenerMixin",
-    "world.skill.BattojutsuSkillMixin",
-    "world.skill.ComboAttacksMixin",
-    "world.skill.ConditionalWeaponInnateSkillAccessorMixin"
+    "world.item.ItemStackMixin"
   ],
   "injectors": {
     "defaultRequire": 1
@@ -36,11 +38,11 @@
     "client.FontMixin",
     "client.GuiMixin",
     "client.KeyMappingMixin",
-    "client.world.AbstractTrailParticleMixin",
-    "client.world.AnimationTrailParticle$Provider",
     "client.world.BlockEntityWithoutLevelRendererMixin",
     "client.world.ItemRendererMixin",
-    "client.world.ItemsPreferenceScreenMixin"
+    "epicfight.client.AbstractTrailParticleMixin",
+    "epicfight.client.AnimationTrailParticle$Provider",
+    "epicfight.client.ItemsPreferenceScreenMixin"
   ],
   "mixinextras": {
     "minVersion": "0.5.0"

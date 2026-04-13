@@ -10,8 +10,8 @@ import net.minecraft.world.item.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
 public interface IBlockEntityWithoutLevelRenderer {
-  static IBlockEntityWithoutLevelRenderer of(BlockEntityWithoutLevelRenderer renderer) {
-    return renderer;
+	static IBlockEntityWithoutLevelRenderer of(BlockEntityWithoutLevelRenderer obj) {
+		return obj;
   }
 
   default void imaginarycraft$renderByItem(LivingEntity sourceLivingEntity, ItemStack stack, ItemDisplayContext displayContext, PoseStack poseStack, MultiBufferSource buffer, int packedLight, int packedOverlay) {

@@ -101,13 +101,11 @@ public class DelayTaskHolder {
     if (containsTask(slot).isEmpty()) {
       return;
     }
-    Iterator<ResourceLocation> iterator = runList.keySet().iterator();
-    while (iterator.hasNext()) {
-      ResourceLocation key = iterator.next();
-      if (key.getPath().startsWith(slot.getName())) {
-        runList.remove(key).removed();
-      }
-    }
+	  for (ResourceLocation key : runList.keySet()) {
+		  if (key.getPath().startsWith(slot.getName())) {
+			  runList.remove(key).removed();
+		  }
+	  }
   }
 
   /**

@@ -18,14 +18,15 @@ import java.util.List;
 
 import static net.minecraft.world.entity.Mob.createMobAttributes;
 
+// TODO 目前可能重世界加载的时候无法获取父实体，需要排除和修复
 public class GrantUsLoveTentacle extends JointPartLivingEntity<GrantUsLove> implements IOrdealsVioletEntity {
 
 	public GrantUsLoveTentacle(EntityType<? extends GrantUsLoveTentacle> entityType, Level level) {
 		super(entityType, level);
 	}
 
-	public GrantUsLoveTentacle(Level level, GrantUsLove parent, Joint... joints) {
-		super(OrdealsEntityTypes.GRANT_US_LOVE_TENTACLE.get(), level, parent, joints);
+	public GrantUsLoveTentacle(Level level, GrantUsLove parent, @NotNull String partName, Joint... joints) {
+		super(OrdealsEntityTypes.GRANT_US_LOVE_TENTACLE.get(), level, parent, partName, joints);
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -86,6 +87,6 @@ public class GrantUsLoveTentacle extends JointPartLivingEntity<GrantUsLove> impl
 
 	@Override
 	public @NotNull HumanoidArm getMainArm() {
-		return HumanoidArm.LEFT;
+		return HumanoidArm.RIGHT;
 	}
 }

@@ -6,8 +6,8 @@ import yesman.epicfight.client.renderer.patched.item.RenderItemBase;
 import yesman.epicfight.world.capabilities.entitypatch.LivingEntityPatch;
 
 public interface IRenderItemBase {
-  static IRenderItemBase of(RenderItemBase renderItemBase) {
-    return (IRenderItemBase) renderItemBase;
+	static IRenderItemBase of(RenderItemBase obj) {
+		return (IRenderItemBase) obj;
   }
 
   default TrailInfo imaginarycraft$getTrailInfoProvider(LivingEntityPatch<?> livingEntityPatch) {

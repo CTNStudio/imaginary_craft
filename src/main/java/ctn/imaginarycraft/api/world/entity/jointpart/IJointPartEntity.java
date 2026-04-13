@@ -2,19 +2,25 @@ package ctn.imaginarycraft.api.world.entity.jointpart;
 
 
 import net.minecraft.world.entity.LivingEntity;
-import yesman.epicfight.api.animation.Joint;
 
-public interface IJointPartEntity<T extends LivingEntity> {
+import java.util.List;
+
+public interface IJointPartEntity<T extends LivingEntity & IMultiJointPartEntity<?>> {
 
 	/**
-	 * 主体实体
+	 * 获取主体实体
 	 */
 	T getParent();
 
 	/**
+	 * 获取名称
+	 */
+	String getPartName();
+
+	/**
 	 * 获取包含的关节
 	 */
-	Joint[] getJoints();
+	List<String> getJointsNames();
 
 	/**
 	 * 是否可从破坏状态恢复

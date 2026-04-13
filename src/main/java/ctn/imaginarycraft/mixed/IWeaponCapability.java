@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.function.Function;
 
 public interface IWeaponCapability {
-  static IWeaponCapability of(WeaponCapability builder) {
-    return (IWeaponCapability) builder;
+	static IWeaponCapability of(WeaponCapability obj) {
+		return (IWeaponCapability) obj;
   }
 
   default HitParticleType imaginaryCraft$getHitParticle(LivingEntityPatch<?> entitypatch) {

@@ -28,7 +28,12 @@ public class GlowmaskModelRenderPatchedLayer<E extends LivingEntity, T extends L
     this.glowmaskValue = glowmaskValue;
   }
 
-  @Override
+	@Override
+	public void renderLayer(E entityliving, T entitypatch, RenderLayer<E, M> vanillaLayer, PoseStack poseStack, MultiBufferSource buffer, int packedLight, OpenMatrix4f[] poses, float bob, float yRot, float xRot, float partialTicks) {
+		this.renderLayer(entitypatch, entityliving, this.castLayer(vanillaLayer), poseStack, buffer, packedLight, poses, bob, yRot, xRot, partialTicks);
+	}
+
+	@Override
   protected void renderLayer(T entitypatch, E entityliving, @Nullable R vanillaLayer, PoseStack poseStack, MultiBufferSource buffer, int packedLight, OpenMatrix4f[] poses, float bob, float yRot, float xRot, float partialTicks) {
     float glowmaskValue = getGlowmaskValue();
     RenderSystem.setShaderColor(glowmaskValue, glowmaskValue, glowmaskValue, 1);

@@ -9,8 +9,8 @@ import net.minecraft.world.item.ItemStack;
 import javax.annotation.Nullable;
 
 public interface IDamageSource {
-  static IDamageSource of(DamageSource source) {
-    return source;
+	static IDamageSource of(DamageSource obj) {
+		return obj;
   }
 
   default void imaginaryCraft$setWeaponItem(ItemStack itemStack) {
