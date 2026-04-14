@@ -3,9 +3,6 @@
   "package": "ctn.imaginarycraft.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
-    "client.ModelBuilderMixin",
-    "client.ModelFileAccessorMixin",
-    "client.world.LocalPlayerPatchMixin",
     "epicfight.BattojutsuSkillMixin",
     "epicfight.ComboAttacksMixin",
     "epicfight.ConditionalWeaponInnateSkillAccessorMixin",
@@ -17,8 +14,6 @@
     "epicfight.WeaponCapabilityMixin",
     "epicfight.WeaponTypeReloadListenerAccessorMixin",
     "epicfight.WeaponTypeReloadListenerMixin",
-    "epicfight.client.PatchedEntityRendererMixin",
-    "epicfight.client.RenderItemBaseMixin",
     "world.CombatRulesMixin",
     "world.DamageContainerMixin",
     "world.DamageSourceMixin",
@@ -38,11 +33,17 @@
     "client.FontMixin",
     "client.GuiMixin",
     "client.KeyMappingMixin",
+    "client.ModelBuilderMixin",
+    "client.ModelFileAccessorMixin",
     "client.world.BlockEntityWithoutLevelRendererMixin",
     "client.world.ItemRendererMixin",
+    "client.world.LocalPlayerPatchMixin",
     "epicfight.client.AbstractTrailParticleMixin",
     "epicfight.client.AnimationTrailParticle$Provider",
-    "epicfight.client.ItemsPreferenceScreenMixin"
+    "epicfight.client.ItemsPreferenceScreenMixin",
+    "epicfight.client.PatchedEntityRendererMixin",
+    "epicfight.client.RenderEngineMixin",
+    "epicfight.client.RenderItemBaseMixin"
   ],
   "mixinextras": {
     "minVersion": "0.5.0"

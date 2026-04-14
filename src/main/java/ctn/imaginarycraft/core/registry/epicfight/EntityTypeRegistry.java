@@ -2,7 +2,6 @@ package ctn.imaginarycraft.core.registry.epicfight;
 
 import ctn.imaginarycraft.client.renderer.entity.GrantUsLovePatchRenderer;
 import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLovePatch;
-import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLoveTentaclePatch;
 import ctn.imaginarycraft.init.epicfight.animmodels.ModArmatures;
 import ctn.imaginarycraft.init.world.entity.OrdealsEntityTypes;
 import net.neoforged.fml.loading.FMLEnvironment;
@@ -20,7 +19,6 @@ public final class EntityTypeRegistry {
 	 */
 	static void registerEntityTypeArmatures() {
 		Armatures.registerEntityTypeArmature(OrdealsEntityTypes.GRANT_US_LOVE.get(), ModArmatures.GRANT_US_LOVE);
-		Armatures.registerEntityTypeArmature(OrdealsEntityTypes.GRANT_US_LOVE_TENTACLE.get(), ModArmatures.GRANT_US_LOVE);
 	}
 
 	public static void register() {
@@ -40,7 +38,6 @@ public final class EntityTypeRegistry {
 	private static void registerPatchedEntityRenderers() {
 		EpicFightClientEventHooks.Registry.ADD_PATCHED_ENTITY.registerEvent(event -> {
 			event.addPatchedEntityRenderer(OrdealsEntityTypes.GRANT_US_LOVE.get(), entityType -> new GrantUsLovePatchRenderer(event.getContext()));
-			event.addPatchedEntityRenderer(OrdealsEntityTypes.GRANT_US_LOVE_TENTACLE.get(), entityType -> new GrantUsLovePatchRenderer.GrantUsLovePatchTentacleRenderer(event.getContext()));
 		});
 	}
 
@@ -53,7 +50,6 @@ public final class EntityTypeRegistry {
 	private static void registerEntityPatch() {
 		EpicFightEventHooks.Registry.ENTITY_PATCH.registerEvent(event -> {
 			event.registerEntityPatch(OrdealsEntityTypes.GRANT_US_LOVE.get(), GrantUsLovePatch::new);
-			event.registerEntityPatch(OrdealsEntityTypes.GRANT_US_LOVE_TENTACLE.get(), GrantUsLoveTentaclePatch::new);
 		});
 	}
 }

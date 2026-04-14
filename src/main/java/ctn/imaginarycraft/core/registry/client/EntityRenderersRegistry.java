@@ -21,7 +21,6 @@ public final class EntityRenderersRegistry {
   @SubscribeEvent
   public static void registry(EntityRenderersEvent.RegisterRenderers event) {
 	  registerEmptyMobRenderer(event, OrdealsEntityTypes.GRANT_US_LOVE.get(), 2f, ModGeoEntityModel.getTexturePath("grant_us_love"));
-	  registerEmptyLivingEntityRenderer(event, OrdealsEntityTypes.GRANT_US_LOVE_TENTACLE.get(), 0f, ModGeoEntityModel.getTexturePath("grant_us_love"));
     event.registerEntityRenderer(ProjectileEntityTypes.MAGIC_BULLET_ENTITY.get(), MagicBulletRenderer::new);
   }
 

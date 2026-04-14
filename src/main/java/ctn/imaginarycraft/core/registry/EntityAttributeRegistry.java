@@ -3,7 +3,6 @@ package ctn.imaginarycraft.core.registry;
 import ctn.imaginarycraft.api.LcLevel;
 import ctn.imaginarycraft.common.world.entity.abnormalities.TrainingRabbits;
 import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLove;
-import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLoveTentacle;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import ctn.imaginarycraft.init.world.entity.AbnormalitiesEntityTypes;
@@ -88,7 +87,6 @@ public final class EntityAttributeRegistry {
   @SubscribeEvent
   public static void registry(EntityAttributeCreationEvent event) {
     event.put(OrdealsEntityTypes.GRANT_US_LOVE.get(), GrantUsLove.createAttributes().build());
-    event.put(OrdealsEntityTypes.GRANT_US_LOVE_TENTACLE.get(), GrantUsLoveTentacle.createAttributes().build());
     event.put(AbnormalitiesEntityTypes.TRAINING_RABBITS.get(), TrainingRabbits.createAttributes().build());
   }
 

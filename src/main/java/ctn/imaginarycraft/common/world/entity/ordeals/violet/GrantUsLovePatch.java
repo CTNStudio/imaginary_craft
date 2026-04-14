@@ -1,7 +1,6 @@
 package ctn.imaginarycraft.common.world.entity.ordeals.violet;
 
 import ctn.imaginarycraft.api.world.entity.ai.ModMeleeAttackGoal;
-import ctn.imaginarycraft.api.world.entity.jointpart.MultiJointPartMobPatch;
 import ctn.imaginarycraft.init.epicfight.ModFactions;
 import ctn.imaginarycraft.init.epicfight.animmodels.ModAnimations;
 import org.jetbrains.annotations.Nullable;
@@ -9,12 +8,12 @@ import yesman.epicfight.api.animation.Animator;
 import yesman.epicfight.api.animation.LivingMotions;
 import yesman.epicfight.api.animation.types.StaticAnimation;
 import yesman.epicfight.api.asset.AssetAccessor;
+import yesman.epicfight.world.capabilities.entitypatch.MobPatch;
 import yesman.epicfight.world.damagesource.StunType;
 import yesman.epicfight.world.entity.ai.goal.AnimatedAttackGoal;
 import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
 
-public class GrantUsLovePatch extends MultiJointPartMobPatch<GrantUsLoveTentaclePatch, GrantUsLove> {
-	//  public static final CombatBehaviors.Builder<GrantUsLovePatch> TENTACLE_GOAL =
+public class GrantUsLovePatch extends MobPatch<GrantUsLove> {
 	public GrantUsLovePatch(GrantUsLove entity) {
 		super(entity, ModFactions.ORDEALS_VIOLET);
 	}

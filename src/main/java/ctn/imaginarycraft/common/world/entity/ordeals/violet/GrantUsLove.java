@@ -9,15 +9,11 @@ import ctn.imaginarycraft.api.world.entity.ai.behavior.composite.ParallelNode;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.ConditionBT;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.DistanceLowerThanCondition;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.TargetExistCondition;
-import ctn.imaginarycraft.api.world.entity.jointpart.MultiJointPartMob;
-import ctn.imaginarycraft.client.animmodels.armature.GrantUsLoveArmature;
 import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
 import ctn.imaginarycraft.init.ModSoundEvents;
 import ctn.imaginarycraft.init.epicfight.animmodels.ModAnimations;
-import ctn.imaginarycraft.init.epicfight.animmodels.ModArmatures;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import ctn.imaginarycraft.init.world.ModDamageSources;
-import net.minecraft.commands.arguments.EntityAnchorArgument;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -26,6 +22,7 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.monster.Enemy;
@@ -65,7 +62,7 @@ import java.util.Map;
  *   <li>需要免疫中毒,细雪,火焰,漂浮</li>
  * </ul>
  */
-public class GrantUsLove extends MultiJointPartMob<GrantUsLoveTentacle> implements IOrdealsVioletEntity, ISpawnByEgg, IBehaviorTreeMob<GrantUsLove>, Enemy {
+public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEgg, IBehaviorTreeMob<GrantUsLove>, Enemy {
 	/**
 	 * 大招读条状态
 	 */
@@ -144,10 +141,6 @@ public class GrantUsLove extends MultiJointPartMob<GrantUsLoveTentacle> implemen
 	 */
 	private final Vec3 portalPos = null;
 	/**
-	 * 触手集合
-	 */
-	private final GrantUsLoveTentacle[] tentacles = new GrantUsLoveTentacle[6];
-	/**
 	 * 普通攻击冷却时间 TODO 后面替换成触手的独立处理
 	 */
 	private int normalAtkCd = NORMAL_ATK_CD;
@@ -170,7 +163,7 @@ public class GrantUsLove extends MultiJointPartMob<GrantUsLoveTentacle> implemen
 	private int idleSoundCd = 0;
 
 	public GrantUsLove(EntityType<? extends GrantUsLove> entityType, Level level) {
-		super(entityType, level, 6, false);
+		super(entityType, level);
 		entityData.set(CRASH_ATK_READING_DATA, false);
 	}
 
@@ -188,33 +181,6 @@ public class GrantUsLove extends MultiJointPartMob<GrantUsLoveTentacle> implemen
 			.add(ModAttributes.THE_SOUL_VULNERABLE, 1)
 			.add(EpicFightAttributes.IMPACT, 8)
 			.add(EpicFightAttributes.MAX_STRIKES, 8);
-	}
-
-	@Override
-	public void firstSpawn() {
-		super.firstSpawn();
-		GrantUsLoveArmature armature = ModArmatures.GRANT_US_LOVE.get();
-		Level level = level();
-		addJointPart(new GrantUsLoveTentacle(level, this, "l1", armature.tentacle1_0_L, armature.tentacle1_1_L, armature.tentacle1_2_L, armature.tentacle1_3_L));
-		addJointPart(new GrantUsLoveTentacle(level, this, "l2", armature.tentacle2_0_L, armature.tentacle2_1_L, armature.tentacle2_2_L, armature.tentacle2_3_L));
-		addJointPart(new GrantUsLoveTentacle(level, this, "l3", armature.tentacle3_0_L, armature.tentacle3_1_L, armature.tentacle3_2_L, armature.tentacle3_3_L));
-		addJointPart(new GrantUsLoveTentacle(level, this, "r1", armature.tentacle1_0_R, armature.tentacle1_1_R, armature.tentacle1_2_R, armature.tentacle1_3_R));
-		addJointPart(new GrantUsLoveTentacle(level, this, "r2", armature.tentacle2_0_R, armature.tentacle2_1_R, armature.tentacle2_2_R, armature.tentacle2_3_R));
-		addJointPart(new GrantUsLoveTentacle(level, this, "r3", armature.tentacle3_0_R, armature.tentacle3_1_R, armature.tentacle3_2_R, armature.tentacle3_3_R));
-	}
-
-	/**
-	 * 快速规范化角度到 [-180, 180] 范围
-	 */
-	private static double normalizeAngle(double angle) {
-		// 使用取模运算代替循环，性能更优
-		angle = angle % 360;
-		if (angle > 180) {
-			angle -= 360;
-		} else if (angle < -180) {
-			angle += 360;
-		}
-		return angle;
 	}
 
 	@Override
@@ -285,20 +251,6 @@ public class GrantUsLove extends MultiJointPartMob<GrantUsLoveTentacle> implemen
 	@Override
 	public void onSyncedDataUpdated(EntityDataAccessor<?> key) {
 		super.onSyncedDataUpdated(key);
-	}
-
-	@Override
-	public float getYRot() {
-		return Math.round(super.getYRot() / 90.0F) * 90.0F;
-	}
-
-	@Override
-	public void setYRot(float xRot) {
-		super.setYRot(rot(xRot));
-	}
-
-	private float rot(float rot) {
-		return (float) Math.floor(rot / 90.0) * 90.0F;
 	}
 
 	@Override
@@ -515,6 +467,17 @@ public class GrantUsLove extends MultiJointPartMob<GrantUsLoveTentacle> implemen
 	}
 
 	@Override
+	public void setDeltaMovement(Vec3 deltaMovement) {
+		if (onGround()) {
+			return;
+		}
+		if (deltaMovement.y > 0) {
+			return;
+		}
+		super.setDeltaMovement(new Vec3(0, deltaMovement.y, 0));
+	}
+
+	@Override
 	public boolean isPushable() {
 		return false;
 	}
@@ -530,17 +493,6 @@ public class GrantUsLove extends MultiJointPartMob<GrantUsLoveTentacle> implemen
 	}
 
 	@Override
-	public void setDeltaMovement(Vec3 deltaMovement) {
-		if (onGround()) {
-			return;
-		}
-		if (deltaMovement.y > 0) {
-			return;
-		}
-		super.setDeltaMovement(new Vec3(0, deltaMovement.y, 0));
-	}
-
-	@Override
 	protected boolean isImmobile() {
 		return false;
 	}
@@ -553,14 +505,6 @@ public class GrantUsLove extends MultiJointPartMob<GrantUsLoveTentacle> implemen
 	@Override
 	public boolean isInWater() {
 		return false;
-	}
-
-	@Override
-	public void lookAt(EntityAnchorArgument.Anchor anchor, Vec3 target) {
-	}
-
-	@Override
-	public void lookAt(Entity entity, float maxYRotIncrease, float maxXRotIncrease) {
 	}
 
 	@Override

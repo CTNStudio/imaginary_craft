@@ -22,14 +22,13 @@ public abstract class ModPatchedLivingEntityRenderer<
 	AM extends SkinnedMesh>
 	extends PatchedLivingEntityRenderer<E, T, M, A, AM> {
   private final AssetAccessor<AM> mesh;
-	protected String jointPartsEntityName = "";
 
   public ModPatchedLivingEntityRenderer(EntityRendererProvider.Context context, EntityType<?> entityType, AssetAccessor<AM> mesh) {
     super(context, entityType);
     this.mesh = mesh;
   }
 
-  public void addCustomLayer(Function<AssetAccessor<AM>, PatchedLayer<E, T, M, ? extends RenderLayer<E, M>>> patchedLayer) {
+	public void addCustomLayer(Function<AssetAccessor<AM>, PatchedLayer<E, T, M, ? extends RenderLayer<E, M>>> patchedLayer) {
     this.customLayers.add(patchedLayer.apply(this.getDefaultMesh()));
   }
 
