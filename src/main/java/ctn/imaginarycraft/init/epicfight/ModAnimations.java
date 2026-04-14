@@ -46,7 +46,7 @@ public final class ModAnimations {
     GRANT_US_LOVE_DEATH = builder.nextAccessor("entity/grant_us_love/death", (accessor) -> new LongHitAnimation(0.15F, accessor, ModArmatures.GRANT_US_LOVE));
 
     GRANT_US_LOVE_SLASH = builder.nextAccessor("entity/grant_us_love/slash", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
-	    0.1F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.4f, 0.4f, 0.1f, 6.65f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
+	    0.1F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.65f, 0.65f, 0.1f, 6.65f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().root, ModColliders.GRANT_US_LOVE_TENTACLE_SLASH)))
       .addProperty(AnimationProperty.AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.FINISHER))
       .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(32))
