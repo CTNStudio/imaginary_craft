@@ -12,6 +12,7 @@
 
 ## 开发人员(不分顺序)
 
+[//]: # (TODO 需要补充更多人)
 | 名称                                                        | 负责部分   |
 |-----------------------------------------------------------|--------|
 | [哈基尽](https://space.bilibili.com/1082533225)              | 主程序、策划 |
@@ -44,13 +45,11 @@
 <p>
 这些MOD链接都是github的但大部分在MCMOD百科或者其他MOD发布平台也有（搜名称）
 
-| 前置链接及名称                                                                        | 功能     |
-|--------------------------------------------------------------------------------|--------|
-| [GeckoLib](https://github.com/bernie-g/geckolib)                               | 基岩版模型库 |
-| [Curios](https://github.com/TheIllusiveC4/Curios)                              | 饰品     |
-| [PlayerAnimationLibNeo](https://github.com/ZigyTheBird/PlayerAnimationLibrary) | 玩家动画库  |
-
-注：已内置[CTN api](https://github.com/CTNStudio/Ctn-Api)(就是一个工具库)
+| 前置链接及名称                                                       | 功能     |
+|---------------------------------------------------------------|--------|
+| [GeckoLib](https://github.com/bernie-g/geckolib)              | 基岩版模型库 |
+| [Curios](https://github.com/TheIllusiveC4/Curios)             | 饰品     |
+| [EpicFight](https://github.com/Antikythera-Studios/epicfight) | 史诗战斗   |
 
 <hr>
 
