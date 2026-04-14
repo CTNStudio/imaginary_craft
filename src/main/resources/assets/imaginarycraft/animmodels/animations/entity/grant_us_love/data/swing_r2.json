@@ -4,15 +4,7 @@
   "masks": [
     {
       "livingmotion": "ALL",
-      "type": "imaginarycraft:tentacle_r2"
-    }
-  ],
-  "trail_effects": [
-    {
-      "start_time": 0.467,
-      "end_time": 4.2,
-      "joint": "Tentacle2_2.R",
-      "item_skin_hand": "main_hand"
+      "type": "imaginarycraft:grant_us_love_tentacle_r2"
     }
   ]
 }
