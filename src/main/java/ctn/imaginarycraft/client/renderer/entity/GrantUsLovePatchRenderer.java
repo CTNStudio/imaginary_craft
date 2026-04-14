@@ -9,7 +9,7 @@ import ctn.imaginarycraft.client.model.entity.ModGeoEntityModel;
 import ctn.imaginarycraft.client.renderer.renderlayer.GlowmaskModelRenderPatchedLayer;
 import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLove;
 import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLovePatch;
-import ctn.imaginarycraft.init.epicfight.animmodels.ModMeshes;
+import ctn.imaginarycraft.init.epicfight.ModMeshes;
 import ctn.imaginarycraft.init.world.entity.OrdealsEntityTypes;
 import ctn.imaginarycraft.util.ModUtils;
 import net.minecraft.client.renderer.MultiBufferSource;

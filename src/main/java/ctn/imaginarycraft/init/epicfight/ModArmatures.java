@@ -1,4 +1,4 @@
-package ctn.imaginarycraft.init.epicfight.animmodels;
+package ctn.imaginarycraft.init.epicfight;
 
 import ctn.imaginarycraft.client.animmodels.armature.GrantUsLoveArmature;
 import ctn.imaginarycraft.core.ImaginaryCraft;

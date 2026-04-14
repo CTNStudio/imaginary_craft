@@ -10,7 +10,6 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.eventexecute.LcDamageEventExecutes;
 import ctn.imaginarycraft.init.world.ModAbsorptionShieldsRegistry;
 import ctn.imaginarycraft.init.world.ModAttachments;
-import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.util.GunWeaponUtil;
 import ctn.imaginarycraft.util.LcLevelUtil;
 import ctn.imaginarycraft.util.RationalityUtil;
@@ -233,7 +232,7 @@ public final class LivingEntityEvents {
       return;
     }
 
-    DamageSource source = event.getSource();
+	  DamageSource damageSource = event.getSource();
     float newDamage = event.getNewDamage();
     // 设置理智恢复计时
     if (entity instanceof Player player) {
@@ -241,7 +240,7 @@ public final class LivingEntityEvents {
     }
 
     // 低抗缓慢
-    @Nullable LcDamageType lcDamageType = IDamageSource.of(source).imaginaryCraft$getLcDamageType();
+	  @Nullable LcDamageType lcDamageType = damageSource.imaginaryCraft$getLcDamageType();
     if (lcDamageType != null) {
       AttributeInstance attributeInstance = entity.getAttribute(lcDamageType.getVulnerable());
       if (attributeInstance != null && attributeInstance.getValue() > LcDamageEventExecutes.VULNERABILITY_DECELERATE_THRESHOLD) {
@@ -251,7 +250,7 @@ public final class LivingEntityEvents {
     }
 
     // 生成粒子
-    Holder<DamageType> damageType = source.typeHolder();
+	  Holder<DamageType> damageType = damageSource.typeHolder();
     ParticleUtil.createDamageTextParticles(entity, damageType, lcDamageType, newDamage, false, false);
 
     // TODO 速度快的子弹无法正常显示位置

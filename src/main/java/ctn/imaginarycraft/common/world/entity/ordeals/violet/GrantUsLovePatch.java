@@ -1,8 +1,8 @@
 package ctn.imaginarycraft.common.world.entity.ordeals.violet;
 
 import ctn.imaginarycraft.api.world.entity.ai.ModMeleeAttackGoal;
+import ctn.imaginarycraft.init.epicfight.ModAnimations;
 import ctn.imaginarycraft.init.epicfight.ModFactions;
-import ctn.imaginarycraft.init.epicfight.animmodels.ModAnimations;
 import org.jetbrains.annotations.Nullable;
 import yesman.epicfight.api.animation.Animator;
 import yesman.epicfight.api.animation.LivingMotions;
@@ -23,7 +23,7 @@ public class GrantUsLovePatch extends MobPatch<GrantUsLove> {
 		super.initAI();
 
 		this.original.goalSelector.addGoal(0, new AnimatedAttackGoal<>(this, CombatBehaviors.<GrantUsLovePatch>builder()
-			.newBehaviorSeries(CombatBehaviors.BehaviorSeries.<GrantUsLovePatch>builder().weight(50.0F).canBeInterrupted(true).looping(false)
+			.newBehaviorSeries(CombatBehaviors.BehaviorSeries.<GrantUsLovePatch>builder().weight(80.0F).canBeInterrupted(true).looping(false)
 				.nextBehavior(CombatBehaviors.Behavior.<GrantUsLovePatch>builder().animationBehavior(ModAnimations.GRANT_US_LOVE_SLASH)))
 			.newBehaviorSeries(CombatBehaviors.BehaviorSeries.<GrantUsLovePatch>builder().weight(50.0F).canBeInterrupted(false).looping(false)
 				.nextBehavior(CombatBehaviors.Behavior.<GrantUsLovePatch>builder().animationBehavior(ModAnimations.GRANT_US_LOVE_STAB_L1)))

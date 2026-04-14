@@ -1,6 +1,7 @@
-package ctn.imaginarycraft.init.epicfight.animmodels;
+package ctn.imaginarycraft.init.epicfight;
 
 import ctn.imaginarycraft.client.animmodels.animations.grantuslove.GrantUsLoveTentacleAttackAnimation;
+import ctn.imaginarycraft.init.ModSoundEvents;
 import ctn.imaginarycraft.init.world.ModColliders;
 import net.minecraft.world.InteractionHand;
 import yesman.epicfight.api.animation.AnimationManager;
@@ -45,61 +46,69 @@ public final class ModAnimations {
     GRANT_US_LOVE_DEATH = builder.nextAccessor("entity/grant_us_love/death", (accessor) -> new LongHitAnimation(0.15F, accessor, ModArmatures.GRANT_US_LOVE));
 
     GRANT_US_LOVE_SLASH = builder.nextAccessor("entity/grant_us_love/slash", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
-      0.3F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.37f, 0.37f, 0.1f, 5.65f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
+	    0.1F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.4f, 0.4f, 0.1f, 6.65f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().root, ModColliders.GRANT_US_LOVE_TENTACLE_SLASH)))
       .addProperty(AnimationProperty.AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.FINISHER))
       .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(32))
       .addProperty(AnimationProperty.AttackPhaseProperty.DAMAGE_MODIFIER, ValueModifier.multiplier(4.0F))
       .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.KNOCKDOWN)
+	    .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get())
       .addEvents(AnimationEvent.InTimeEvent.create(0.33f, Animations.ReusableSources.FRACTURE_GROUND_SIMPLE, AnimationEvent.Side.CLIENT)
         .params(new Vec3f(0, -0.2F, 0), ModArmatures.GRANT_US_LOVE.get().root, 4D, 0.3F)));
 
-    //region stab
+	  //region stab 戳刺
     GRANT_US_LOVE_STAB_L1 = builder.nextAccessor("entity/grant_us_love/stab_l1", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
-      0.2F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.333f, 0.333f, 0.7f, 4.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
+	    0.05F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.333f, 0.333f, 0.7f, 4.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle1_2_L, ModColliders.TENTACLE)))
       .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
-      .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8)));
+	    .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8))
+	    .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get()));
 
     GRANT_US_LOVE_STAB_L2 = builder.nextAccessor("entity/grant_us_love/stab_l2", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
-      0.2F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.333f, 0.333f, 0.7f, 4.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
+	    0.05F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.333f, 0.333f, 0.7f, 4.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle2_2_L, ModColliders.TENTACLE)))
       .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
-      .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8)));
+	    .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8))
+	    .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get()));
 
     GRANT_US_LOVE_STAB_L3 = builder.nextAccessor("entity/grant_us_love/stab_l3", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
-      0.2F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.333f, 0.333f, 0.7f, 4.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
+	    0.05F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.333f, 0.333f, 0.7f, 4.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle3_2_L, ModColliders.TENTACLE)))
       .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
-      .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8)));
+	    .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8))
+	    .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get()));
 
     GRANT_US_LOVE_STAB_R1 = builder.nextAccessor("entity/grant_us_love/stab_r1", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
-      0.2F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.333f, 0.333f, 0.7f, 4.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
+	    0.05F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.333f, 0.333f, 0.7f, 4.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle1_2_R, ModColliders.TENTACLE)))
       .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
-      .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8)));
+	    .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8))
+	    .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get()));
 
     GRANT_US_LOVE_STAB_R2 = builder.nextAccessor("entity/grant_us_love/stab_r2", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
-      0.2F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.333f, 0.333f, 0.7f, 2.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
+	    0.05F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.333f, 0.333f, 0.7f, 2.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle2_2_R, ModColliders.TENTACLE)))
       .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
-      .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8)));
+	    .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8))
+	    .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get()));
 
     GRANT_US_LOVE_STAB_R3 = builder.nextAccessor("entity/grant_us_love/stab_r3", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
-      0.2F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.333f, 0.333f, 0.7f, 2.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
+	    00.05F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.333f, 0.333f, 0.7f, 2.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle3_2_R, ModColliders.TENTACLE)))
       .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
-      .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8)));
+	    .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8))
+	    .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get()));
     //endregion
 
-    //region swing
+	  //region swing 鞭打
     GRANT_US_LOVE_SWING_L1 = builder.nextAccessor("entity/grant_us_love/swing_l1", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
       0.2F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.467f, 0.467f, 0.7f, 4.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle1_0_L, ModColliders.TENTACLE),
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle1_1_L, ModColliders.TENTACLE),
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle1_2_L, ModColliders.TENTACLE)))
       .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
-      .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8)));
+	    .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8))
+	    .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get()));
 
     GRANT_US_LOVE_SWING_L2 = builder.nextAccessor("entity/grant_us_love/swing_l2", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
       0.2F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.467f, 0.467f, 0.7f, 4.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
@@ -107,7 +116,8 @@ public final class ModAnimations {
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle2_1_L, ModColliders.TENTACLE),
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle2_2_L, ModColliders.TENTACLE)))
       .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
-      .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8)));
+	    .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8))
+	    .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get()));
 
     GRANT_US_LOVE_SWING_L3 = builder.nextAccessor("entity/grant_us_love/swing_l3", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
       0.2F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.467f, 0.467f, 0.7f, 4.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
@@ -115,7 +125,8 @@ public final class ModAnimations {
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle3_1_L, ModColliders.TENTACLE),
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle3_2_L, ModColliders.TENTACLE)))
       .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
-      .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8)));
+	    .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8))
+	    .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get()));
 
     GRANT_US_LOVE_SWING_R1 = builder.nextAccessor("entity/grant_us_love/swing_r1", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
       0.2F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.467f, 0.467f, 0.7f, 4.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
@@ -123,7 +134,8 @@ public final class ModAnimations {
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle1_1_R, ModColliders.TENTACLE),
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle1_2_R, ModColliders.TENTACLE)))
       .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
-      .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8)));
+	    .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8))
+	    .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get()));
 
     GRANT_US_LOVE_SWING_R2 = builder.nextAccessor("entity/grant_us_love/swing_r2", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
       0.2F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.467f, 0.467f, 0.7f, 2.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
@@ -131,7 +143,8 @@ public final class ModAnimations {
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle2_1_R, ModColliders.TENTACLE),
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle2_2_R, ModColliders.TENTACLE)))
       .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
-      .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8)));
+	    .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8))
+	    .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get()));
 
     GRANT_US_LOVE_SWING_R3 = builder.nextAccessor("entity/grant_us_love/swing_r3", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
       0.2F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.467f, 0.467f, 0.7f, 2.2f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
@@ -139,7 +152,8 @@ public final class ModAnimations {
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle3_1_R, ModColliders.TENTACLE),
       AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().tentacle3_2_R, ModColliders.TENTACLE)))
       .addProperty(AnimationProperty.AttackPhaseProperty.STUN_TYPE, StunType.SHORT)
-      .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8)));
+	    .addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.setter(8))
+	    .addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get()));
     //endregion
     //endregion
   }

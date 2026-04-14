@@ -11,9 +11,10 @@ import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.DistanceLowerTh
 import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.TargetExistCondition;
 import ctn.imaginarycraft.client.particle.magicbullet.MagicBulletMagicCircleParticle;
 import ctn.imaginarycraft.init.ModSoundEvents;
-import ctn.imaginarycraft.init.epicfight.animmodels.ModAnimations;
+import ctn.imaginarycraft.init.epicfight.ModAnimations;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import ctn.imaginarycraft.init.world.ModDamageSources;
+import ctn.imaginarycraft.util.WorldUtil;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -323,7 +324,7 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 	private void crashAttack() {
 		this.spawnParticle(CRASH_ATK_AOE_RADIUS + 1);
 		this.crashAtkSound();
-		ctn.imaginarycraft.util.LevelUtil.playCrashAttackSoundHurt(this, this.level(), position().subtract(0, 1, 0),
+		WorldUtil.playCrashAttackSoundHurt(this, this.level(), position().subtract(0, 1, 0),
 			CRASH_ATK_AOE_RADIUS + 1,
 			CRASH_ATK_DMG,
 			true,

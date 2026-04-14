@@ -2,7 +2,7 @@ package ctn.imaginarycraft.core.registry.epicfight;
 
 import ctn.imaginarycraft.client.renderer.entity.GrantUsLovePatchRenderer;
 import ctn.imaginarycraft.common.world.entity.ordeals.violet.GrantUsLovePatch;
-import ctn.imaginarycraft.init.epicfight.animmodels.ModArmatures;
+import ctn.imaginarycraft.init.epicfight.ModArmatures;
 import ctn.imaginarycraft.init.world.entity.OrdealsEntityTypes;
 import net.neoforged.fml.loading.FMLEnvironment;
 import yesman.epicfight.api.client.event.EpicFightClientEventHooks;

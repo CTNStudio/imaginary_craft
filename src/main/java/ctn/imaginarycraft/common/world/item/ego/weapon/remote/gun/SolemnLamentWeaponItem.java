@@ -6,7 +6,6 @@ import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModSoundEvents;
 import ctn.imaginarycraft.init.world.ModDamageSources;
 import ctn.imaginarycraft.init.world.ModParticleTypes;
-import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.util.LcDamageTypeUtil;
 import ctn.imaginarycraft.util.LcLevelUtil;
 import net.minecraft.core.particles.SimpleParticleType;
@@ -80,10 +79,9 @@ public class SolemnLamentWeaponItem extends GunEgoWeaponItem {
       Entity entity = entityHitResult.getEntity();
       DamageSource damageSources = ModDamageSources.remoteDamage(shooterEntity);
       // 一般来说使用物品攻击时这些会自动添加，但是因为原版的机制导致副手攻击物品时可能无法正确识别，所以这里手动添加
-      IDamageSource iDamageSource = IDamageSource.of(damageSources);
-      iDamageSource.imaginaryCraft$setWeaponItem(weaponItem);
-      iDamageSource.imaginaryCraft$setDamageLevel(LcLevelUtil.getLevel(weaponItem));
-      iDamageSource.imaginaryCraft$setLcDamageType(lcDamageColorDamageType);
+	    damageSources.imaginaryCraft$setWeaponItem(weaponItem);
+	    damageSources.imaginaryCraft$setDamageLevel(LcLevelUtil.getLevel(weaponItem));
+	    damageSources.imaginaryCraft$setLcDamageType(lcDamageColorDamageType);
       entity.hurt(damageSources, getDamage(shooterEntity, weaponItem, handUsed));
     }
 

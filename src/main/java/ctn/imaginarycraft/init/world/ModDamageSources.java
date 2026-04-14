@@ -15,6 +15,8 @@ import javax.annotation.Nullable;
 
 /**
  * 伤害来源
+ * <p>
+ * 关于四色伤害的使用推荐直接使用{@link ctn.imaginarycraft.mixed.IDamageSource} 中的方法
  */
 public final class ModDamageSources extends DamageSources {
   private final DamageSource physics;

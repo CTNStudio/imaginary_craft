@@ -4,7 +4,6 @@ import ctn.imaginarycraft.api.LcDamageType;
 import ctn.imaginarycraft.api.LcLevel;
 import ctn.imaginarycraft.config.ModConfig;
 import ctn.imaginarycraft.init.world.ModAbsorptionShieldsRegistry;
-import ctn.imaginarycraft.mixed.IDamageSource;
 import ctn.imaginarycraft.util.LcLevelUtil;
 import net.minecraft.core.Holder;
 import net.minecraft.world.damagesource.DamageSource;
@@ -18,8 +17,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
 import net.neoforged.neoforge.event.entity.living.LivingDamageEvent;
-
-import javax.annotation.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 // TODO 精神伤害之类的不能被原版防御处理
 public final class LcDamageEventExecutes {
@@ -103,11 +101,11 @@ public final class LcDamageEventExecutes {
   /**
    * 灵魂伤害计算
    */
-  public static float theSoulDamage(float damage, LivingEntity attackedEntity, @org.jetbrains.annotations.Nullable Entity sourceEntity, DamageSource damageSource) {
+  public static float theSoulDamage(float damage, LivingEntity attackedEntity, @Nullable Entity sourceEntity, DamageSource damageSource) {
     damage /= 100;
     float maxHealth = 0;
-    @org.jetbrains.annotations.Nullable LcLevel attackedLevel = LcLevelUtil.getLevel(attackedEntity);
-    @org.jetbrains.annotations.Nullable LcLevel attackerLevel = IDamageSource.of(damageSource).imaginaryCraft$getLcDamageLevel();
+	  @Nullable LcLevel attackedLevel = LcLevelUtil.getLevel(attackedEntity);
+	  @Nullable LcLevel attackerLevel = damageSource.imaginaryCraft$getLcDamageLevel();
     if (sourceEntity instanceof LivingEntity living) {
       maxHealth = (float) living.getAttributeValue(Attributes.MAX_HEALTH);
     }

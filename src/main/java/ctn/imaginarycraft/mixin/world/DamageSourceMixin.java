@@ -35,12 +35,6 @@ public abstract class DamageSourceMixin implements IDamageSource {
   private LcLevel imaginaryCraft$lcDamageLevel;
 
   @Unique
-  private boolean imaginaryCraft$isLcLevelNull;
-
-  @Unique
-  private boolean imaginaryCraft$isLcDamageTypeNull;
-
-  @Unique
   private ItemStack imaginaryCraft$attackItemStack;
 
   @Inject(method = "<init>(Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)V", at = @At("RETURN"))
@@ -113,26 +107,6 @@ public abstract class DamageSourceMixin implements IDamageSource {
   @Override
   public void imaginaryCraft$setDamageLevel(@Nullable LcLevel level) {
     this.imaginaryCraft$lcDamageLevel = level;
-  }
-
-  @Override
-  public boolean imaginaryCraft$isLcLevelNull() {
-    return imaginaryCraft$isLcLevelNull;
-  }
-
-  @Override
-  public void imaginaryCraft$setLcLevelNull(final boolean lcLevelNull) {
-    imaginaryCraft$isLcLevelNull = lcLevelNull;
-  }
-
-  @Override
-  public boolean imaginaryCraft$isLcDamageTypeNull() {
-    return imaginaryCraft$isLcDamageTypeNull;
-  }
-
-  @Override
-  public void imaginaryCraft$setLcDamageTypeNull(final boolean lcDamageTypeNull) {
-    imaginaryCraft$isLcDamageTypeNull = lcDamageTypeNull;
   }
 
   @WrapMethod(method = "getWeaponItem")
