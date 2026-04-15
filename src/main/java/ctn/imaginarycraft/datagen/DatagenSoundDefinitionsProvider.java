@@ -33,6 +33,9 @@ public class DatagenSoundDefinitionsProvider extends SoundDefinitionsProvider {
     add(ModSoundEvents.VIOLET_NOON_ATK.value(), 0.5f, 0.5f, 1, 8);
     add(ModSoundEvents.VIOLET_NOON_idle.value(), 0.5f, 0.5f, 1, 8);
     add(ModSoundEvents.VIOLET_NOON_DEATH.value(), 0.5f, 0.5f, 1, 8);
+    add(ModSoundEvents.VIOLET_DAWN_WALK.value(), 0.5f, 0.5f, 1, 8);
+    add(ModSoundEvents.VIOLET_DAWN_SUICIDE.value(), 0.5f, 0.5f, 1, 8);
+    add(ModSoundEvents.VIOLET_DAWN_DEAD.value(), 0.5f, 0.5f, 1, 8);
   }
 
   private void add(SoundEvent soundEvent, float volume, float pitch, int weight, int attenuationDistance) {

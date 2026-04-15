@@ -20,6 +20,8 @@ public class ModSpawnEggItems {
 
   public static final DeferredItem<SpawnEggItem> GRANT_US_LOVE_SPAWN_EGG = register(
     "grant_us_love_spawn_egg", "“请给我们爱”刷怪蛋", OrdealsEntityTypes.GRANT_US_LOVE);
+  public static final DeferredItem<SpawnEggItem> FRUIT_OF_UNDERSTANDING_EGG = register(
+    "fruit_of_understanding_spawn_egg", "“理解的果实”刷怪蛋", OrdealsEntityTypes.FRUIT_OF_UNDERSTANDING);
 
   static void init(IEventBus bus) {
     REGISTRY.register(bus);

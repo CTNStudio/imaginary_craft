@@ -44,7 +44,7 @@ public abstract class ShieldBarLayer extends StatusBarLayer {
       return 0;
     }
 
-    return level * effect.getAmplifier() + 1;
+    return level * (effect.getAmplifier() + 1);
   }
 
   @Override

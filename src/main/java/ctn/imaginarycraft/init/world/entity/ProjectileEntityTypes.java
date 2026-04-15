@@ -1,6 +1,7 @@
 package ctn.imaginarycraft.init.world.entity;
 
 import ctn.imaginarycraft.api.LcLevel;
+import ctn.imaginarycraft.common.world.entity.ordeals.violet.FruitOfUnderstandingBullet;
 import ctn.imaginarycraft.common.world.entity.projectile.MagicBulletEntity;
 import ctn.imaginarycraft.common.world.entity.projectile.ParadiseLostSpikeweed;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -36,6 +37,14 @@ public final class ProjectileEntityTypes {
       .clientTrackingRange(6)
       .updateInterval(1));
 
+  public static final DeferredHolder<EntityType<?>, EntityType<FruitOfUnderstandingBullet>> FRUIT_OF_UNDERSTANDING_BULLET = register(
+    "fruit_of_understanding_bullet",
+    "理解之果子弹",
+    LcLevel.TETH,
+    EntityType.Builder.<FruitOfUnderstandingBullet>of(FruitOfUnderstandingBullet::new, MobCategory.MISC)
+      .sized(0.2F, 0.2F)
+      .clientTrackingRange(4)
+      .updateInterval(10));
   static void init(IEventBus bus) {
     REGISTRY.register(bus);
   }
