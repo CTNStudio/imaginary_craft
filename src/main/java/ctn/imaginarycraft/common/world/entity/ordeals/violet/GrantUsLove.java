@@ -70,7 +70,19 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
-		return createMobAttributes().add(Attributes.KNOCKBACK_RESISTANCE, 1).add(Attributes.MAX_HEALTH, 350).add(Attributes.ATTACK_DAMAGE, 7).add(Attributes.MOVEMENT_SPEED, 0).add(Attributes.ATTACK_KNOCKBACK, 1).add(Attributes.GRAVITY, 0.1).add(ModAttributes.PHYSICS_VULNERABLE, 0.8).add(ModAttributes.SPIRIT_VULNERABLE, 2.0).add(ModAttributes.EROSION_VULNERABLE, 0.8).add(ModAttributes.THE_SOUL_VULNERABLE, 1).add(EpicFightAttributes.IMPACT, 8).add(EpicFightAttributes.MAX_STRIKES, 8);
+		return createMobAttributes()
+			.add(Attributes.KNOCKBACK_RESISTANCE, 1)
+			.add(Attributes.MAX_HEALTH, 350)
+			.add(Attributes.ATTACK_DAMAGE, 7)
+			.add(Attributes.MOVEMENT_SPEED, 0)
+			.add(Attributes.ATTACK_KNOCKBACK, 1)
+			.add(Attributes.GRAVITY, 0.1)
+			.add(ModAttributes.PHYSICS_VULNERABLE, 0.8)
+			.add(ModAttributes.SPIRIT_VULNERABLE, 2.0)
+			.add(ModAttributes.EROSION_VULNERABLE, 0.8)
+			.add(ModAttributes.THE_SOUL_VULNERABLE, 1)
+			.add(EpicFightAttributes.IMPACT, 8)
+			.add(EpicFightAttributes.MAX_STRIKES, 8);
 	}
 
 	@Override
@@ -203,7 +215,8 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 
 		@Override
 		protected @NotNull BTNode createBehaviorTree() {
-			return BTFactory.parallel(ParallelNode.Policy.REQUIRE_ALL, ParallelNode.Policy.REQUIRE_ALL).addChild(BTFactory.infinite(BTFactory.selector()
+			return BTFactory.parallel(ParallelNode.Policy.REQUIRE_ALL, ParallelNode.Policy.REQUIRE_ALL)
+				.addChild(BTFactory.infinite(BTFactory.selector()
 //        .addWithCondition(, )
 						// 目标不存在
 						.addWithCondition(ConditionBT.not(new TargetExistCondition(this.mob)), BTFactory.sequence())
