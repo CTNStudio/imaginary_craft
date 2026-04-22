@@ -21,17 +21,22 @@ import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
 import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
+import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
-import software.bernie.geckolib.animation.*;
+import software.bernie.geckolib.animation.AnimatableManager;
+import software.bernie.geckolib.animation.AnimationController;
+import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
 
 import static ctn.imaginarycraft.common.world.entity.ordeals.violet.FruitOfUnderstandingBullet.BULLET_SPEED;
 
-public class FruitOfUnderstanding extends PathfinderMob implements ISpawnByEgg, GeoEntity {
+// TODO 优化渲染
+// TODO 优化弹幕渲染，方向，和发射位置
+public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsVioletEntity, ISpawnByEgg, GeoEntity, Enemy {
   protected static final EntityDataAccessor<Boolean> SELF_DESTRUCT_CHARGING = SynchedEntityData.defineId(FruitOfUnderstanding.class, EntityDataSerializers.BOOLEAN);
   protected static final EntityDataAccessor<Float> CHARGE_DAMAGE_TAKEN = SynchedEntityData.defineId(FruitOfUnderstanding.class, EntityDataSerializers.FLOAT);
 
@@ -111,7 +116,9 @@ public class FruitOfUnderstanding extends PathfinderMob implements ISpawnByEgg, 
   }
 
   @Override
-  protected void registerGoals() {
+  public void registerGoals() {
+	  super.registerGoals();
+	  IOrdealsVioletEntity.super.registerGoals();
     this.goalSelector.addGoal(0, new FloatGoal(this));
 
     this.goalSelector.addGoal(3, new FruitOfUnderstandingMeleeAttackGoal());
@@ -235,7 +242,10 @@ public class FruitOfUnderstanding extends PathfinderMob implements ISpawnByEgg, 
       !isAlly(target);
   }
 
-
+	@Override
+	public boolean canTarget(Entity entity) {
+		return IOrdealsVioletEntity.super.canTarget(entity);
+	}
 
   private void tryReduceSelfDestructCounter() {
     if (!this.isCharging && this.selfDestructCounter > 0) {

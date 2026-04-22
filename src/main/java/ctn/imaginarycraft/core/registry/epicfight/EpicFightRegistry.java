@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.core.registry.epicfight;
 
 import ctn.imaginarycraft.core.ImaginaryCraft;
-import ctn.imaginarycraft.init.epicfight.ModAnimations;
+import ctn.imaginarycraft.init.epicfight.animations.ModAnimations;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.event.lifecycle.FMLCommonSetupEvent;
