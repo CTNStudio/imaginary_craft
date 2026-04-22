@@ -39,10 +39,10 @@ public final class ProjectileEntityTypes {
 
   public static final DeferredHolder<EntityType<?>, EntityType<FruitOfUnderstandingBullet>> FRUIT_OF_UNDERSTANDING_BULLET = register(
     "fruit_of_understanding_bullet",
-    "理解之果子弹",
+    "理解的果实子弹",
     LcLevel.TETH,
     EntityType.Builder.<FruitOfUnderstandingBullet>of(FruitOfUnderstandingBullet::new, MobCategory.MISC)
-      .sized(0.2F, 0.2F)
+      .sized(0.3F, 0.3F)
       .clientTrackingRange(4)
       .updateInterval(10));
   static void init(IEventBus bus) {

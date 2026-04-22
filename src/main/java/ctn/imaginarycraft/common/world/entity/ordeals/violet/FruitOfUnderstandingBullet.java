@@ -45,17 +45,6 @@ public class FruitOfUnderstandingBullet extends ThrowableProjectile implements G
   public void tick() {
     super.tick();
 
-    if (this.level().isClientSide) {
-      Vec3 movement = this.getDeltaMovement();
-      if (movement.length() > 0) {
-        this.setRot(
-          (float)(Math.atan2(movement.z, movement.x) * 180.0 / Math.PI) - 90.0f,
-          (float)(Math.atan2(movement.y, movement.horizontalDistance()) * 180.0 / Math.PI)
-        );
-      }
-      return;
-    }
-
     Vec3 movement = this.getDeltaMovement();
 
     if (movement.length() > 0) {
@@ -64,6 +53,10 @@ public class FruitOfUnderstandingBullet extends ThrowableProjectile implements G
         (float)(Math.atan2(movement.y, movement.horizontalDistance()) * 180.0 / Math.PI)
       );
     }
+
+//    if (this.level().isClientSide) {
+//      return;
+//    }
 
     Vec3 newMovement = movement.add(0, -GRAVITY, 0);
     this.setDeltaMovement(newMovement.scale(0.98));

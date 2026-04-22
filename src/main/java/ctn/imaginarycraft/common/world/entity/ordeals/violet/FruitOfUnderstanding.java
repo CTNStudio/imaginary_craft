@@ -1,6 +1,6 @@
 package ctn.imaginarycraft.common.world.entity.ordeals.violet;
 
-import ctn.imaginarycraft.api.world.entity.IAbnormalitiesEntity;
+import ctn.imaginarycraft.api.world.entity.ISpawnByEgg;
 import ctn.imaginarycraft.client.model.entity.ModGeoEntityModel;
 import ctn.imaginarycraft.init.ModSoundEvents;
 import ctn.imaginarycraft.init.world.ModAttributes;
@@ -31,7 +31,7 @@ import software.bernie.geckolib.util.GeckoLibUtil;
 
 import static ctn.imaginarycraft.common.world.entity.ordeals.violet.FruitOfUnderstandingBullet.BULLET_SPEED;
 
-public class FruitOfUnderstanding extends PathfinderMob implements IAbnormalitiesEntity, GeoEntity {
+public class FruitOfUnderstanding extends PathfinderMob implements ISpawnByEgg, GeoEntity {
   protected static final EntityDataAccessor<Boolean> SELF_DESTRUCT_CHARGING = SynchedEntityData.defineId(FruitOfUnderstanding.class, EntityDataSerializers.BOOLEAN);
   protected static final EntityDataAccessor<Float> CHARGE_DAMAGE_TAKEN = SynchedEntityData.defineId(FruitOfUnderstanding.class, EntityDataSerializers.FLOAT);
 
@@ -108,7 +108,6 @@ public class FruitOfUnderstanding extends PathfinderMob implements IAbnormalitie
   }
 
   public void onSpawnByEgg() {
-    this.selfDestructCounter = SELF_DESTRUCT_ATTACK_COUNT;
   }
 
   @Override
@@ -236,18 +235,7 @@ public class FruitOfUnderstanding extends PathfinderMob implements IAbnormalitie
       !isAlly(target);
   }
 
-  private void normalAttack() {
-    LivingEntity target = this.getTarget();
 
-    if (target != null && target.isAlive() && this.distanceToSqr(target) <= NORMAL_ATK_RANGE * NORMAL_ATK_RANGE && !isAlly(target)) {
-      DamageSource damageSource = ModDamageSources.erosionDamage(this);
-      if (target.hurt(damageSource, NORMAL_ATK_DMG)) {
-        atkEffect();
-
-        tryReduceSelfDestructCounter();
-      }
-    }
-  }
 
   private void tryReduceSelfDestructCounter() {
     if (!this.isCharging && this.selfDestructCounter > 0) {
@@ -317,15 +305,9 @@ public class FruitOfUnderstanding extends PathfinderMob implements IAbnormalitie
     }
   }
 
-  @Override
-  public boolean isEtHnicGroup(Entity entity) {
-    return IAbnormalitiesEntity.super.isEtHnicGroup(entity)
-      || entity instanceof FruitOfUnderstanding
-      || entity instanceof GrantUsLove;
-  }
-
   public boolean isAlly(Entity entity) {
-    return isEtHnicGroup(entity);
+    return entity instanceof FruitOfUnderstanding
+      || entity instanceof GrantUsLove;
   }
 
   @Override
