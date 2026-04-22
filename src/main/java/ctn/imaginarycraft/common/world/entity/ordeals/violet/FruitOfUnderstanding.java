@@ -62,7 +62,6 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
   public static final int BULLET_ATTACK_COOLDOWN = 60;
   public static final int BULLET_ATTACK_Windup= 40;
 
-
   private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
 
   private int selfDestructCounter = SELF_DESTRUCT_ATTACK_COUNT;

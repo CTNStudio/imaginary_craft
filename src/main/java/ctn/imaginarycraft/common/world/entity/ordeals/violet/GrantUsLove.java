@@ -77,7 +77,7 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 	public void registerGoals() {
 		super.registerGoals();
 		IOrdealsVioletEntity.super.registerGoals();
-		getTargetSelector().addGoal(2, createBehaviorTree());
+		targetSelector.addGoal(2, createBehaviorTree());
 	}
 
 	@Override
