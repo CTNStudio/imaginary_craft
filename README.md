@@ -23,7 +23,10 @@
 | [小希 Xiris/是Xiris哦](https://space.bilibili.com/1215603253) | 生物模型                                  |
 | [星零大队长](https://space.bilibili.com/489185984)             | 部分物品纹理                                |
 | [原木Log_ym](https://space.bilibili.com/138986403)          | 武器/盔甲/饰品模型                            |
-| “ant res”?                                                | 武器/盔甲/饰品模型                            |
+| “老资历/人体派 学徒”?                                             | gui                                   |
+| [天南野人](https://space.bilibili.com/2145067798)             | 武器/盔甲                                 |
+| [Dashcode](https://space.bilibili.com/51204057)           | 动画                                    |
+| "Macedonia"?                                              | 粒子                                    |
 
 ## 贡献者
 
@@ -36,7 +39,6 @@
 | [Gstbnnnnnn/几点了啊啊](https://space.bilibili.com/3494357850130895) | 部分饰品/物品纹理提供 |
 | [AmarokIce](https://space.bilibili.com/171428397)               | 程序          |
 | “菜鸽子接动作动画”?                                                     | 玩家动画定制      |
-| “老资历”?                                                          | “请给我们爱”生命条  |
 | “宇宙之光”?                                                         | 程序          |
 
 [//]: # (| “wdd”?                                                          | 程序 |)
