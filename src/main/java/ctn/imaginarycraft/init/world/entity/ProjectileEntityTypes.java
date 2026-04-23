@@ -1,7 +1,7 @@
 package ctn.imaginarycraft.init.world.entity;
 
 import ctn.imaginarycraft.api.LcLevel;
-import ctn.imaginarycraft.common.world.entity.ordeals.violet.FruitOfUnderstandingBullet;
+import ctn.imaginarycraft.common.world.entity.ordeals.violet.FruitOfUnderstanding;
 import ctn.imaginarycraft.common.world.entity.projectile.MagicBulletEntity;
 import ctn.imaginarycraft.common.world.entity.projectile.ParadiseLostSpikeweed;
 import ctn.imaginarycraft.core.ImaginaryCraft;
@@ -37,11 +37,11 @@ public final class ProjectileEntityTypes {
       .clientTrackingRange(6)
       .updateInterval(1));
 
-  public static final DeferredHolder<EntityType<?>, EntityType<FruitOfUnderstandingBullet>> FRUIT_OF_UNDERSTANDING_BULLET = register(
-    "fruit_of_understanding_bullet",
-    "理解的果实子弹",
+	public static final DeferredHolder<EntityType<?>, EntityType<FruitOfUnderstanding.FruitBullet>> FRUIT_OF_UNDERSTANDING_BULLET = register(
+		"fruit_bullet",
+		"“理解”",
     LcLevel.TETH,
-    EntityType.Builder.<FruitOfUnderstandingBullet>of(FruitOfUnderstandingBullet::new, MobCategory.MISC)
+		EntityType.Builder.<FruitOfUnderstanding.FruitBullet>of(FruitOfUnderstanding.FruitBullet::new, MobCategory.MISC)
       .sized(0.3F, 0.3F)
       .clientTrackingRange(4)
       .updateInterval(10));
@@ -49,15 +49,15 @@ public final class ProjectileEntityTypes {
     REGISTRY.register(bus);
   }
 
-  private static <I extends Entity> DeferredHolder<EntityType<?>, EntityType<I>> register(String name, String zhName,
-                                                                                          LcLevel lcLevel,
-                                                                                          EntityType.Builder<I> sup) {
+	private static <I extends Entity> DeferredHolder<EntityType<?>, EntityType<I>> register(
+		String name, String zhName, LcLevel lcLevel, EntityType.Builder<I> sup
+	) {
     return register(name, zhName, lcLevel, () -> sup.build(name));
   }
 
-  private static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> register(String name, String zhName,
-                                                                                          LcLevel lcLevel,
-                                                                                          Supplier<EntityType<T>> sup) {
+	private static <T extends Entity> DeferredHolder<EntityType<?>, EntityType<T>> register(
+		String name, String zhName, LcLevel lcLevel, Supplier<EntityType<T>> sup
+	) {
     DeferredHolder<EntityType<?>, EntityType<T>> holder = REGISTRY.register(name, sup);
     ModEntityTypes.lcLevel(lcLevel, holder);
     ZhCn.addI18nEntityTypeText(zhName, holder);

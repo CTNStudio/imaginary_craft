@@ -5,6 +5,7 @@ import com.mojang.blaze3d.platform.GlStateManager;
 import com.mojang.blaze3d.systems.RenderSystem;
 import com.mojang.blaze3d.vertex.VertexConsumer;
 import ctn.imaginarycraft.mixed.client.IAbstractTrailParticle;
+import ctn.imaginarycraft.util.ModUtils;
 import net.minecraft.client.Camera;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
@@ -50,8 +51,7 @@ public abstract class AbstractTrailParticleMixin extends TextureSheetParticle im
 
   @Unique
   private void imaginarycraft$init(TrailInfo trailInfo) {
-    String path = trailInfo.texturePath().toString();
-    ResourceLocation textureLight = ResourceLocation.parse(path.substring(0, path.lastIndexOf(".png")) + "_glowmask.png");
+	  ResourceLocation textureLight = ModUtils.getTextureLight(trailInfo.texturePath());
     Minecraft minecraft = Minecraft.getInstance();
     if (minecraft.getResourceManager().getResource(textureLight).isPresent()) {
       TextureManager texturemanager = Minecraft.getInstance().getTextureManager();
@@ -61,7 +61,7 @@ public abstract class AbstractTrailParticleMixin extends TextureSheetParticle im
     }
   }
 
-  @Inject(method = "<init>(Lnet/minecraft/client/multiplayer/ClientLevel;Lyesman/epicfight/world/capabilities/entitypatch/EntityPatch;Lyesman/epicfight/api/client/animation/property/TrailInfo;)V", at = @At("RETURN"))
+	@Inject(method = "<init>(Lnet/minecraft/client/multiplayer/ClientLevel;Lyesman/epicfight/world/capabilities/entitypatch/EntityPatch;Lyesman/epicfight/api/client/animation/property/TrailInfo;)V", at = @At("RETURN"))
   private void imaginarycraft$init(ClientLevel level, EntityPatch<?> entitypatch, TrailInfo trailInfo, CallbackInfo ci) {
     imaginarycraft$init(trailInfo);
   }

@@ -7,7 +7,6 @@ import net.minecraft.Util;
 import net.minecraft.client.renderer.RenderStateShard;
 import net.minecraft.client.renderer.RenderType;
 import net.minecraft.resources.ResourceLocation;
-import yesman.epicfight.client.renderer.EpicFightRenderTypes;
 
 import java.util.function.BiFunction;
 
@@ -24,7 +23,7 @@ public final class ModRenderTypes {
 
   public static final BiFunction<ResourceLocation, Float[], RenderType> GLOWMASK = Util.memoize((glowmaskTexture, value) ->
     RenderType.create("imaginarycraft:glowmask", DefaultVertexFormat.NEW_ENTITY, VertexFormat.Mode.QUADS, 1536, false, true,
-      EpicFightRenderTypes.MutableCompositeState.mutableStateBuilder()
+	    RenderType.CompositeState.builder()
         .setColorLogicState(new RenderStateShard.ColorLogicStateShard("imaginarycraft:glowmask_color",
           () -> {
             RenderSystem.disableColorLogicOp();

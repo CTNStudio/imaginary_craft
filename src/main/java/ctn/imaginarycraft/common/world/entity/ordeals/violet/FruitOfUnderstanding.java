@@ -1,10 +1,13 @@
 package ctn.imaginarycraft.common.world.entity.ordeals.violet;
 
 import ctn.imaginarycraft.api.world.entity.ISpawnByEgg;
-import ctn.imaginarycraft.client.model.entity.ModGeoEntityModel;
+import ctn.imaginarycraft.common.world.entity.ordeals.IOrdealsEntity;
 import ctn.imaginarycraft.init.ModSoundEvents;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import ctn.imaginarycraft.init.world.ModDamageSources;
+import ctn.imaginarycraft.init.world.ModDamageTypes;
+import ctn.imaginarycraft.init.world.entity.ProjectileEntityTypes;
+import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.EntityDataSerializers;
 import net.minecraft.network.syncher.SynchedEntityData;
@@ -23,16 +26,19 @@ import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
 import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.phys.BlockHitResult;
+import net.minecraft.world.phys.EntityHitResult;
+import net.minecraft.world.phys.HitResult;
 import net.minecraft.world.phys.Vec3;
+import org.jetbrains.annotations.Nullable;
 import software.bernie.geckolib.animatable.GeoEntity;
 import software.bernie.geckolib.animatable.instance.AnimatableInstanceCache;
 import software.bernie.geckolib.animation.AnimatableManager;
 import software.bernie.geckolib.animation.AnimationController;
 import software.bernie.geckolib.animation.RawAnimation;
 import software.bernie.geckolib.util.GeckoLibUtil;
-
-import static ctn.imaginarycraft.common.world.entity.ordeals.violet.FruitOfUnderstandingBullet.BULLET_SPEED;
 
 // TODO 优化渲染
 // TODO 优化弹幕渲染，方向，和发射位置
@@ -138,14 +144,14 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 			@Override
 			public boolean canContinueToUse() {
 				LivingEntity target = this.mob.getTarget();
-				return target != null && !isAlly(target) && super.canContinueToUse();
+				return target != null && !isCamp(target) && super.canContinueToUse();
 			}
 		});
 		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true, false) {
 			@Override
 			public boolean canUse() {
 				LivingEntity target = this.mob.getTarget();
-				if (target != null && isAlly(target)) {
+				if (target != null && isCamp(target)) {
 					return false;
 				}
 				return !isCharging && super.canUse();
@@ -160,7 +166,7 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 			!this.isBulletAttacking &&
 			target != null &&
 			target.isAlive() &&
-			!isAlly(target);
+			!isCamp(target);
 	}
 
 	@Override
@@ -200,7 +206,7 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 		for (LivingEntity livingEntity : this.level().getEntitiesOfClass(
 			LivingEntity.class,
 			this.getBoundingBox().inflate(SELF_DESTRUCT_AOE_RADIUS),
-			entity -> entity != this && entity.isAlive() && !isAlly(entity))) {
+			entity -> entity != this && entity.isAlive() && !isCamp(entity))) {
 
 			livingEntity.hurt(ModDamageSources.erosionDamage(this), SELF_DESTRUCT_DMG);
 		}
@@ -236,11 +242,6 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 		}
 	}
 
-	public boolean isAlly(Entity entity) {
-		return entity instanceof FruitOfUnderstanding
-			|| entity instanceof GrantUsLove;
-	}
-
 	@Override
 	public void tick() {
 		super.tick();
@@ -267,7 +268,7 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 		}
 
 		LivingEntity target = this.getTarget();
-		if (target != null && target.isAlive() && !isAlly(target) && !this.isCharging) {
+		if (target != null && target.isAlive() && !isCamp(target) && !this.isCharging) {
 			tryStartBulletAttack();
 		}
 
@@ -309,7 +310,7 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 		}
 
 		LivingEntity target = this.getTarget();
-		if (target == null || !target.isAlive() || isAlly(target)) {
+		if (target == null || !target.isAlive() || isCamp(target)) {
 			return;
 		}
 
@@ -364,12 +365,12 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 				(lookVec.x * sinYaw + lookVec.z * cosYaw) * cosPitch
 			);
 
-			bulletVec = bulletVec.normalize().scale(BULLET_SPEED);
+			bulletVec = bulletVec.normalize().scale(FruitBullet.BULLET_SPEED);
 
-			FruitOfUnderstandingBullet bullet = new FruitOfUnderstandingBullet(this.level(), this, startPos.x, startPos.y, startPos.z);
-			bullet.setDeltaMovement(bulletVec);
+			FruitBullet fruitBullet = new FruitBullet(this.level(), this, startPos.x, startPos.y, startPos.z);
+			fruitBullet.setDeltaMovement(bulletVec);
 
-			this.level().addFreshEntity(bullet);
+			this.level().addFreshEntity(fruitBullet);
 		}
 	}
 
@@ -427,10 +428,6 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 		return cache;
 	}
 
-	public static ModGeoEntityModel<FruitOfUnderstanding> getModel() {
-		return new ModGeoEntityModel<>("fruit_of_understanding");
-	}
-
 	protected class FruitOfUnderstandingMeleeAttackGoal extends MeleeAttackGoal {
 		private int attackCooldown = 0;
 		private boolean isWindingUp = false;
@@ -484,7 +481,7 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 
 			if (target != null && target.isAlive() &&
 				FruitOfUnderstanding.this.distanceToSqr(target) <= NORMAL_ATK_RANGE * NORMAL_ATK_RANGE &&
-				!isAlly(target)) {
+				!isCamp(target)) {
 
 				DamageSource damageSource = ModDamageSources.erosionDamage(FruitOfUnderstanding.this);
 				if (target.hurt(damageSource, NORMAL_ATK_DMG)) {
@@ -505,6 +502,111 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 			super.stop();
 			isWindingUp = false;
 			attackCooldown = 0;
+		}
+	}
+
+	public static class FruitBullet extends ThrowableProjectile implements GeoEntity {
+
+		public static final float BULLET_DAMAGE = 8.0F;
+		public static final float BULLET_SPEED = 0.6F;
+		public static final float GRAVITY = 0.0005F;
+
+		private final AnimatableInstanceCache cache = GeckoLibUtil.createInstanceCache(this);
+
+		public FruitBullet(EntityType<? extends ThrowableProjectile> entityType, Level level) {
+			super(entityType, level);
+		}
+
+		public FruitBullet(Level level, LivingEntity shooter, double x, double y, double z) {
+			super(ProjectileEntityTypes.FRUIT_OF_UNDERSTANDING_BULLET.get(), shooter, level);
+			this.setPos(x, y, z);
+		}
+
+		@Override
+		protected void defineSynchedData(SynchedEntityData.Builder builder) {
+		}
+
+		@Override
+		public void tick() {
+			super.tick();
+
+			Vec3 movement = this.getDeltaMovement();
+
+			if (movement.length() > 0) {
+				this.setRot(
+					(float) (Math.atan2(movement.z, movement.x) * 180.0 / Math.PI) - 90.0f,
+					(float) (Math.atan2(movement.y, movement.horizontalDistance()) * 180.0 / Math.PI)
+				);
+			}
+
+//    if (this.level().isClientSide) {
+//      return;
+//    }
+
+			Vec3 newMovement = movement.add(0, -GRAVITY, 0);
+			this.setDeltaMovement(newMovement.scale(0.98));
+		}
+
+		@Override
+		protected void onHit(HitResult result) {
+			super.onHit(result);
+
+			if (!this.level().isClientSide) {
+				this.discard();
+			}
+		}
+
+		@Override
+		protected void onHitEntity(EntityHitResult result) {
+			super.onHitEntity(result);
+
+			@Nullable Entity target = result.getEntity();
+			Entity shooter = this.getOwner();
+
+			//noinspection ConstantValue
+			if (shooter instanceof IOrdealsEntity fruit && target != null && !fruit.isCamp(target)) {
+				target.hurt(ModDamageSources.createDamage(ModDamageTypes.EROSION, this, shooter), BULLET_DAMAGE);
+			}
+
+			discardBullet();
+		}
+
+		@Override
+		protected void onHitBlock(BlockHitResult result) {
+			super.onHitBlock(result);
+			discardBullet();
+		}
+
+		public void discardBullet() {
+			if (!this.level().isClientSide) {
+				this.discard();
+			} else {
+				// TODO 添加子弹消失效果，例如粒子，音效
+			}
+		}
+
+		@Override
+		public void addAdditionalSaveData(CompoundTag compound) {
+			super.addAdditionalSaveData(compound);
+		}
+
+		@Override
+		public void readAdditionalSaveData(CompoundTag compound) {
+			super.readAdditionalSaveData(compound);
+		}
+
+		@Override
+		public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
+			var mainController = new AnimationController<>(this, "controller", 0, state -> {
+				return state.setAndContinue(RawAnimation.begin().thenLoop("bullet_idle"));
+			});
+
+			controllers.add(mainController);
+		}
+
+		@Override
+		public AnimatableInstanceCache getAnimatableInstanceCache() {
+			return cache;
 		}
 	}
 }
