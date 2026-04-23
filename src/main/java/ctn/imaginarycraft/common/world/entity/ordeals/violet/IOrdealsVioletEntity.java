@@ -8,7 +8,7 @@ import net.minecraft.world.entity.Entity;
 public interface IOrdealsVioletEntity extends IOrdealsEntity {
 	@Override
 	default boolean isCamp(Entity entity) {
-		return IOrdealsEntity.super.isCamp(entity) || getMob().getType().is(ModEntityTags.ORDEALS_VIOLET);
+		return IOrdealsEntity.super.isCamp(entity) || entity.getType().is(ModEntityTags.ORDEALS_VIOLET);
 	}
 
 	@Override

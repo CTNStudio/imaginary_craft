@@ -11,7 +11,7 @@ import yesman.epicfight.api.model.Armature;
 
 public class GrantUsLoveTentacleAttackAnimation extends AttackAnimation {
 
-  public static final AnimationProperty.PoseModifier COMBO_ATTACK_DIRECTION_MODIFIER = (self, pose, entitypatch, time, partialTicks) -> {
+	public static final AnimationProperty.PoseModifier COMBO_ATTACK_DIRECTION_MODIFIER = (self, pose, entitypatch, time, partialTicks) -> {
 //    if (!self.isStaticAnimation() || entitypatch instanceof PlayerPatch<?> playerpatch && playerpatch.isFirstPerson()) {
 //      return;
 //    }
@@ -28,13 +28,15 @@ public class GrantUsLoveTentacleAttackAnimation extends AttackAnimation {
 //
 //      pose.orElseEmpty("Head").frontResult(JointTransform.fromMatrix(headRotation), OpenMatrix4f::mul);
 //    }
-  };
+	};
 
-  public GrantUsLoveTentacleAttackAnimation(float transitionTime, AnimationManager.AnimationAccessor<? extends AttackAnimation> accessor, AssetAccessor<? extends Armature> armature, Phase... phases) {
-    super(transitionTime, accessor, armature, phases);
-  }
+	public GrantUsLoveTentacleAttackAnimation(float transitionTime, AnimationManager.AnimationAccessor<? extends AttackAnimation> accessor, AssetAccessor<? extends Armature> armature, Phase... phases) {
+		super(transitionTime, accessor, armature, phases);
+		addProperty(AnimationProperty.StaticAnimationProperty.FIXED_HEAD_ROTATION, true);
+	}
 
-  public GrantUsLoveTentacleAttackAnimation(float transitionTime, float antic, float preDelay, float contact, float recovery, @Nullable Collider collider, Joint colliderJoint, AnimationManager.AnimationAccessor<? extends AttackAnimation> accessor, AssetAccessor<? extends Armature> armature) {
-    super(transitionTime, antic, preDelay, contact, recovery, collider, colliderJoint, accessor, armature);
-  }
+	public GrantUsLoveTentacleAttackAnimation(float transitionTime, float antic, float preDelay, float contact, float recovery, @Nullable Collider collider, Joint colliderJoint, AnimationManager.AnimationAccessor<? extends AttackAnimation> accessor, AssetAccessor<? extends Armature> armature) {
+		super(transitionTime, antic, preDelay, contact, recovery, collider, colliderJoint, accessor, armature);
+		addProperty(AnimationProperty.StaticAnimationProperty.FIXED_HEAD_ROTATION, true);
+	}
 }

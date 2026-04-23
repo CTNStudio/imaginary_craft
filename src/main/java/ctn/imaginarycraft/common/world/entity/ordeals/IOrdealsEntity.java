@@ -8,8 +8,8 @@ import net.minecraft.world.entity.player.Player;
 
 public interface IOrdealsEntity {
 	default void registerGoals() {
-		getTargetSelector().addGoal(0, new NearestAttackableTargetGoal<>(getMob(), Player.class, 10, true, true, this::canTarget));
-		getTargetSelector().addGoal(2, new NearestAttackableTargetGoal<>(getMob(), Mob.class, 10, true, true, this::canTarget));
+		getTargetSelector().addGoal(0, new NearestAttackableTargetGoal<>(getMob(), Player.class, true, this::canTarget));
+		getTargetSelector().addGoal(2, new NearestAttackableTargetGoal<>(getMob(), Mob.class, true, this::canTarget));
 	}
 
 	/**

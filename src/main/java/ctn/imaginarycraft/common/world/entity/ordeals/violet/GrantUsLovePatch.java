@@ -22,7 +22,7 @@ public class GrantUsLovePatch extends MobPatch<GrantUsLove> {
 	protected void initAI() {
 		super.initAI();
 
-		this.original.goalSelector.addGoal(0, new AnimatedAttackGoal<>(this, CombatBehaviors.<GrantUsLovePatch>builder()
+		this.original.goalSelector.addGoal(3, new AnimatedAttackGoal<>(this, CombatBehaviors.<GrantUsLovePatch>builder()
 			.newBehaviorSeries(CombatBehaviors.BehaviorSeries.<GrantUsLovePatch>builder().weight(80.0F).canBeInterrupted(true).looping(false)
 				.nextBehavior(CombatBehaviors.Behavior.<GrantUsLovePatch>builder().animationBehavior(GrantUsLoveAnimations.SLASH)))
 			.newBehaviorSeries(CombatBehaviors.BehaviorSeries.<GrantUsLovePatch>builder().weight(50.0F).canBeInterrupted(false).looping(false)
