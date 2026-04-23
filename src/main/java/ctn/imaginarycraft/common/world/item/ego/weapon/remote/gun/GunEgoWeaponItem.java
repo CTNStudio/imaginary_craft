@@ -264,10 +264,6 @@ public abstract class GunEgoWeaponItem extends RemoteEgoWeaponGeoItem implements
    * 创建弹射物的工厂方法
    * 子类可重写此方法以返回自定义弹射物实体
    *
-   * @param level     服务器世界
-   * @param shooter   射击者
-   * @param itemStack 使用的物品栈
-   * @param handUsed  使用的手
    * @return 创建的弹射物实体，默认返回null表示使用父类默认逻辑
    */
   @Nullable
@@ -290,11 +286,11 @@ public abstract class GunEgoWeaponItem extends RemoteEgoWeaponGeoItem implements
 
     if (playerEntity.level() instanceof ServerLevel serverLevel) {
       int gunShootExecuteTick = gunShootExecuteTick(playerEntity, itemStack, handUsed);
-      DelayTaskHolder.of(playerEntity).addTask(handUsed, DelayTaskHolder.createTaskBilder()
-        .tickRun((tick, maxTick) -> gunShootTickRun(tick, gunShootExecuteTick, maxTick, playerEntity, itemStack, handUsed))
-        .resultRun(() -> gunShootExecute(playerEntity, itemStack, handUsed, serverLevel))
-        .removedTick(gunShootExecuteTick)
-        .build());
+	    DelayTaskHolder.of(playerEntity).addTask(handUsed, DelayTaskHolder.createTaskBilder()
+		    .tickRun((tick, maxTick, iTask) -> gunShootTickRun(tick, gunShootExecuteTick, maxTick, playerEntity, itemStack, handUsed))
+		    .resultRun(() -> gunShootExecute(playerEntity, itemStack, handUsed, serverLevel))
+		    .removedTick(gunShootExecuteTick)
+		    .build());
     }
 
     GunWeaponUtil.setIsAttack(playerEntity, false, handUsed);

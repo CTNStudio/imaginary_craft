@@ -7,49 +7,49 @@ import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.player.Player;
 
 public interface IOrdealsEntity {
-  default void registerGoals() {
-    getTargetSelector().addGoal(0, new NearestAttackableTargetGoal<>(getMob(), Player.class, true, this::canTarget));
-    getTargetSelector().addGoal(2, new NearestAttackableTargetGoal<>(getMob(), Mob.class, true, this::canTarget));
-  }
+	default void registerGoals() {
+		getTargetSelector().addGoal(0, new NearestAttackableTargetGoal<>(getMob(), Player.class, 10, true, true, this::canTarget));
+		getTargetSelector().addGoal(2, new NearestAttackableTargetGoal<>(getMob(), Mob.class, 10, true, true, this::canTarget));
+	}
 
-  /**
-   * 目标选择
-   */
-  default boolean canTarget(Entity entity) {
-    return this.isValidTarget(entity);
-  }
+	/**
+	 * 目标选择
+	 */
+	default boolean canTarget(Entity entity) {
+		return this.isValidTarget(entity);
+	}
 
-  /**
-   * 判断是否是可以攻击目标
-   * TODO 还需要处理以便支持斗蛐蛐
-   */
-  default boolean isValidTarget(Entity entity) {
-    if (entity == this) return false;
+	/**
+	 * 判断是否是可以攻击目标
+	 * TODO 还需要处理以便支持斗蛐蛐
+	 */
+	default boolean isValidTarget(Entity entity) {
+		if (entity == this) return false;
 
-    if (!entity.isAlive() || !entity.isAttackable()) {
-      return false;
-    }
+		if (!entity.isAlive() || !entity.isAttackable()) {
+			return false;
+		}
 
-    if (entity instanceof Player player) {
-      return !player.isCreative() && !player.isSpectator();
-    }
+		if (entity instanceof Player player) {
+			return !player.isCreative() && !player.isSpectator();
+		}
 
-    return !isCamp(entity);
-  }
+		return !isCamp(entity);
+	}
 
-  /**
-   * 判断是否是同阵营
-   * TODO 还需要处理以便支持斗蛐蛐
-   */
-  default boolean isCamp(Entity entity) {
-    return getMob().getType().equals(entity.getType());
-  }
+	/**
+	 * 判断是否是同阵营
+	 * TODO 还需要处理以便支持斗蛐蛐
+	 */
+	default boolean isCamp(Entity entity) {
+		return getMob().getType().equals(entity.getType());
+	}
 
-  default GoalSelector getTargetSelector() {
-    return getMob().targetSelector;
-  }
+	default GoalSelector getTargetSelector() {
+		return getMob().targetSelector;
+	}
 
-  default Mob getMob() {
-    return (Mob) this;
+	default Mob getMob() {
+		return (Mob) this;
 	}
 }

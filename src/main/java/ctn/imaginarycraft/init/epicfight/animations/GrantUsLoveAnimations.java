@@ -17,6 +17,7 @@ import yesman.epicfight.gameasset.Animations;
 import yesman.epicfight.world.damagesource.EpicFightDamageTypeTags;
 import yesman.epicfight.world.damagesource.StunType;
 
+import java.util.List;
 import java.util.Set;
 
 public final class GrantUsLoveAnimations {
@@ -24,6 +25,7 @@ public final class GrantUsLoveAnimations {
 	public static AnimationManager.AnimationAccessor<StaticAnimation> EXTEND;
 	public static AnimationManager.AnimationAccessor<StaticAnimation> IDLE;
 	public static AnimationManager.AnimationAccessor<StaticAnimation> NO_TENTACLES;
+	public static AnimationManager.AnimationAccessor<StaticAnimation> ULTIMATE_SKILL;
 	public static AnimationManager.AnimationAccessor<StaticAnimation> SHRINK;
 	public static AnimationManager.AnimationAccessor<AttackAnimation> SLASH;
 	public static AnimationManager.AnimationAccessor<AttackAnimation> STAB_L1;
@@ -46,8 +48,15 @@ public final class GrantUsLoveAnimations {
 		SHRINK = builder.nextAccessor("entity/grant_us_love/shrink", (accessor) -> new StaticAnimation(false, accessor, ModArmatures.GRANT_US_LOVE));
 		NO_TENTACLES = builder.nextAccessor("entity/grant_us_love/no_tentacles", (accessor) -> new StaticAnimation(true, accessor, ModArmatures.GRANT_US_LOVE));
 
+		ULTIMATE_SKILL = builder.nextAccessor("entity/grant_us_love/ultimate_skill", (accessor) -> new StaticAnimation(
+			0.3F, false, SHRINK.registryName().getPath(), ModArmatures.GRANT_US_LOVE)
+			.addProperty(AnimationProperty.StaticAnimationProperty.ON_END_EVENTS, List.of(AnimationEvent.SimpleEvent.create((AnimationEvent.E0) (a, b, c) -> {
+				a.playAnimationInstantly(NO_TENTACLES);
+			}, AnimationEvent.Side.BOTH))));
+
 		SLASH = builder.nextAccessor("entity/grant_us_love/slash", (accessor) -> new GrantUsLoveTentacleAttackAnimation(
-			0.1F, accessor, ModArmatures.GRANT_US_LOVE, new AttackAnimation.Phase(0.0f, 0.65f, 0.65f, 0.1f, 6.65f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
+			0.1F, accessor, ModArmatures.GRANT_US_LOVE,
+			new AttackAnimation.Phase(0.0f, 0.667f, 0.667f, 0.1f, 1.5f, Float.MAX_VALUE, InteractionHand.MAIN_HAND,
 			AttackAnimation.JointColliderPair.of(ModArmatures.GRANT_US_LOVE.get().root, ModColliders.GRANT_US_LOVE_TENTACLE_SLASH)))
 			.addProperty(AnimationProperty.AttackPhaseProperty.SOURCE_TAG, Set.of(EpicFightDamageTypeTags.FINISHER))
 			.addProperty(AnimationProperty.AttackPhaseProperty.MAX_STRIKES_MODIFIER, ValueModifier.adder(32))

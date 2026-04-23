@@ -4,9 +4,9 @@ import net.minecraft.nbt.CompoundTag;
 
 public interface ISkillExpand {
 
-	void readData(CompoundTag compound);
+	void readSkillsData(CompoundTag compound);
 
-	void addData(CompoundTag compound);
+	void addSkillsData(CompoundTag compound);
 
 	void tick();
 }

@@ -1,10 +1,6 @@
 package ctn.imaginarycraft.datagen.tag;
 
 import ctn.imaginarycraft.common.world.entity.ordeals.IOrdealsEntity;
-import ctn.imaginarycraft.common.world.entity.ordeals.amber.IOrdealsAmberEntity;
-import ctn.imaginarycraft.common.world.entity.ordeals.crimson.IOrdealsCrimsonEntity;
-import ctn.imaginarycraft.common.world.entity.ordeals.green.IOrdealsGreenEntity;
-import ctn.imaginarycraft.common.world.entity.ordeals.violet.IOrdealsVioletEntity;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.tag.ModEntityTags;
 import ctn.imaginarycraft.init.world.entity.OrdealsEntityTypes;
@@ -27,11 +23,12 @@ public final class DatagenEntityTag extends EntityTypeTagsProvider {
 
   @Override
   protected void addTags(final HolderLookup.Provider provider) {
-    var entries = OrdealsEntityTypes.REGISTRY.getEntries();
-    tag(ModEntityTags.ORDEALS_VIOLET).add(getArray(entries, IOrdealsVioletEntity.class));
-    tag(ModEntityTags.ORDEALS_AMBER).add(getArray(entries, IOrdealsAmberEntity.class));
-    tag(ModEntityTags.ORDEALS_GREEN).add(getArray(entries, IOrdealsGreenEntity.class));
-    tag(ModEntityTags.ORDEALS_CRIMSON).add(getArray(entries, IOrdealsCrimsonEntity.class));
+	  tag(ModEntityTags.ORDEALS_VIOLET).add(
+		  OrdealsEntityTypes.GRANT_US_LOVE.get(),
+		  OrdealsEntityTypes.FRUIT_OF_UNDERSTANDING.get());
+	  tag(ModEntityTags.ORDEALS_AMBER)/*.add()*/;
+	  tag(ModEntityTags.ORDEALS_GREEN)/*.add()*/;
+	  tag(ModEntityTags.ORDEALS_CRIMSON)/*.add()*/;
     tag(ModEntityTags.ORDEALS).addTags(ModEntityTags.ORDEALS_VIOLET, ModEntityTags.ORDEALS_AMBER, ModEntityTags.ORDEALS_GREEN, ModEntityTags.ORDEALS_CRIMSON);
   }
 

@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.common.world.entity.ordeals.violet;
 
+import ctn.imaginarycraft.api.DelayTaskHolder;
 import ctn.imaginarycraft.api.world.entity.IBehaviorTreeMob;
 import ctn.imaginarycraft.api.world.entity.IPatch;
 import ctn.imaginarycraft.api.world.entity.ISkillExpand;
@@ -11,15 +12,18 @@ import ctn.imaginarycraft.api.world.entity.ai.behavior.composite.ParallelNode;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.ConditionBT;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.TargetExistCondition;
 import ctn.imaginarycraft.api.world.entity.skill.MobSkill;
+import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModSoundEvents;
 import ctn.imaginarycraft.init.epicfight.animations.GrantUsLoveAnimations;
 import ctn.imaginarycraft.init.world.ModAttributes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.syncher.EntityDataAccessor;
 import net.minecraft.network.syncher.SynchedEntityData;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
@@ -28,8 +32,11 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.fluids.FluidType;
 import org.jetbrains.annotations.NotNull;
+import yesman.epicfight.api.event.EpicFightEventHooks;
 import yesman.epicfight.registry.entries.EpicFightAttributes;
 import yesman.epicfight.world.capabilities.EpicFightCapabilities;
+
+import java.util.concurrent.atomic.AtomicReference;
 
 /**
  * 英文编号:ordeals--violet noon
@@ -49,10 +56,11 @@ import yesman.epicfight.world.capabilities.EpicFightCapabilities;
  * </ul>
  */
 public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEgg, IBehaviorTreeMob<GrantUsLove>, Enemy, IPatch<GrantUsLovePatch>, ISkillExpand {
-
+	public static final @NotNull ResourceLocation ULTIMATE_SKILL = ImaginaryCraft.modRl("ultimate_skill");
 	private GrantUsLovePatch patch;
 
-	private final MobSkill ultimateSkill = new MobSkill("ultimate", 100) {
+	private final MobSkill ultimateSkill = new MobSkill(ULTIMATE_SKILL, 20 * 10) {
+		public static final float INTERRUPT_DAMAGE_PERCENTAGE = 0.2F; // 传送中断所需伤害百分比（0.2F即为20%的血量最大值）
 
 		@Override
 		public void cdEnd() {
@@ -61,7 +69,36 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 
 		@Override
 		public void launch() {
-//			getPatch().playAnimationSynchronized();
+			// TODO 生成传送门
+			var grantUsLovePatch = getPatch();
+			var entityEventListener = grantUsLovePatch.getEventListener();
+			var atomicReference = new AtomicReference<>(0.0F);
+			var delayTaskHolder = DelayTaskHolder.of(GrantUsLove.this);
+
+			delayTaskHolder.addTask(ULTIMATE_SKILL,
+				DelayTaskHolder.createTaskBilder()
+					.tickRun((tick, maxTick, iTask) -> tick)
+					.removedRun((tick) -> {
+						// TODO 然后触发新的技能
+						entityEventListener.removeListenersBelongTo(this);
+						grantUsLovePatch.playAnimationSynchronized(GrantUsLoveAnimations.EXTEND, 0.03f);
+					})
+					.resultRun(() -> {
+						LivingEntity target = getTarget();
+						if (target == null) {
+							return;
+						}
+						grantUsLovePatch.playAnimationSynchronized(GrantUsLoveAnimations.ULTIMATE_SKILL, 0.03f);
+					})
+					.removedTick(20 * 2) // 到时间后
+					.build());
+
+			entityEventListener.registerEvent(EpicFightEventHooks.Entity.TAKE_DAMAGE_POST, event -> {
+				atomicReference.updateAndGet(v -> v + event.getDamage());
+				if (atomicReference.get() >= INTERRUPT_DAMAGE_PERCENTAGE * getMaxHealth()) {
+					delayTaskHolder.removeTask(ULTIMATE_SKILL);
+				}
+			}, this, 10);
 		}
 	};
 
@@ -115,7 +152,7 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 
 	@Override
 	public void onSpawnByEgg() {
-		getPatch().playAnimationSynchronized(GrantUsLoveAnimations.EXTEND, 0);
+		getPatch().playAnimationInstantly(GrantUsLoveAnimations.EXTEND);
 	}
 
 	@Override
@@ -188,22 +225,22 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
 		super.readAdditionalSaveData(compound);
-		readData(compound);
+		readSkillsData(compound);
 	}
 
 	@Override
 	public void addAdditionalSaveData(CompoundTag compound) {
 		super.addAdditionalSaveData(compound);
-		addData(compound);
+		addSkillsData(compound);
 	}
 
 	@Override
-	public void readData(CompoundTag compound) {
+	public void readSkillsData(CompoundTag compound) {
 		ultimateSkill.readData(compound);
 	}
 
 	@Override
-	public void addData(CompoundTag compound) {
+	public void addSkillsData(CompoundTag compound) {
 		ultimateSkill.addData(compound);
 	}
 

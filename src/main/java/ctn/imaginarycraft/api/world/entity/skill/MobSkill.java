@@ -1,30 +1,39 @@
 package ctn.imaginarycraft.api.world.entity.skill;
 
 import net.minecraft.nbt.CompoundTag;
+import net.minecraft.resources.ResourceLocation;
+import yesman.epicfight.api.event.IdentifierProvider;
 
-public abstract class MobSkill {
-	private final String name;
+public abstract class MobSkill implements IdentifierProvider {
+	private final ResourceLocation id;
 	private final int defaultCd;
 	private final int maxCd;
 	private int cd;
 	private boolean isTriggerCdEnd = false;
 
-	public MobSkill(String name, int maxCd) {
-		this.name = name;
-		this.maxCd = maxCd;
-		this.defaultCd = maxCd;
+	public MobSkill(ResourceLocation id, int maxCd) {
+		this(id, 0, maxCd);
 	}
 
-	public String getName() {
-		return name;
+	public MobSkill(ResourceLocation id, int defaultCd, int maxCd) {
+		this.id = id;
+		this.defaultCd = defaultCd;
+		this.maxCd = maxCd;
 	}
 
 	public int getCd() {
 		return cd;
 	}
 
+	public boolean isTriggerCdEnd() {
+		return isTriggerCdEnd;
+	}
+
 	public void setCd(int cd) {
 		this.cd = cd;
+		if (cd > 0) {
+			isTriggerCdEnd = false;
+		}
 	}
 
 	public int getMaxCd() {
@@ -39,22 +48,28 @@ public abstract class MobSkill {
 	 * 技能重置冷却
 	 */
 	public void resetCd() {
-		this.cd = this.defaultCd;
+		cd = defaultCd;
+		if (cd > 0) {
+			isTriggerCdEnd = false;
+		}
 	}
 
 	/**
 	 * 技能进入冷却
 	 */
 	public void enterCd() {
-		this.cd = this.maxCd;
+		cd = maxCd;
+		if (cd > 0) {
+			isTriggerCdEnd = false;
+		}
 	}
 
 	public void tick() {
-		if (this.cd > 0) {
-			this.cd--;
+		if (cd > 0) {
+			cd--;
 		} else if (!isTriggerCdEnd) {
-			this.cdEnd();
 			isTriggerCdEnd = true;
+			cdEnd();
 		}
 	}
 
@@ -72,13 +87,18 @@ public abstract class MobSkill {
 	 * 读取数据
 	 */
 	public void readData(CompoundTag compound) {
-		this.cd = compound.contains("Cd") ? compound.getInt("Cd") : defaultCd;
+		cd = compound.contains("Cd") ? compound.getInt("Cd") : defaultCd;
 	}
 
 	/**
 	 * 写入数据
 	 */
 	public void addData(CompoundTag compound) {
-		compound.putInt("Cd", this.cd);
+		compound.putInt("Cd", cd);
+	}
+
+	@Override
+	public ResourceLocation getId() {
+		return id;
 	}
 }

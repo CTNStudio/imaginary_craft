@@ -79,14 +79,12 @@ public final class LivingEntityEvents {
   @SubscribeEvent(priority = EventPriority.HIGHEST)
   public static void tickPre(EntityTickEvent.Pre event) {
     Entity entity = event.getEntity();
-    if (entity instanceof LivingEntity livingEntity) {
-      if (livingEntity.isAlive()) {
-        DelayTaskHolder timingRun = livingEntity.getExistingDataOrNull(ModAttachments.DELAY_TASK_HOLDER);
-        if (timingRun != null) {
-          timingRun.tick();
-        }
-      }
-    }
+	  if (entity.isAlive()) {
+		  DelayTaskHolder timingRun = entity.getExistingDataOrNull(ModAttachments.DELAY_TASK_HOLDER);
+		  if (timingRun != null) {
+			  timingRun.tick();
+		  }
+	  }
   }
 
   @SubscribeEvent(priority = EventPriority.HIGHEST)
