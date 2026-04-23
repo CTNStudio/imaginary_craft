@@ -18,7 +18,7 @@
 |-----------------------------------------------------------|---------------------------------------|
 | [哈基尽](https://space.bilibili.com/1082533225)              | 所有者/主程序/策划/动画/纹理<br/>（除了程序以外都不是主要进行的） |
 | [尘昨喧](https://space.bilibili.com/161342683)               | 程序                                    |
-| “艾达”?                                                     | 程序                                    |
+| [ariwdxau](https://space.bilibili.com/3546886078204705)   | 程序                                    |
 | [小史龙吖Slime_Dragon](https://space.bilibili.com/569400746)  | 主美                                    |
 | [小希 Xiris/是Xiris哦](https://space.bilibili.com/1215603253) | 生物模型                                  |
 | [星零大队长](https://space.bilibili.com/489185984)             | 部分物品纹理                                |
