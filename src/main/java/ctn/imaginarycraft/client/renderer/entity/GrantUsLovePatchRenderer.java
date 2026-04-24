@@ -15,6 +15,7 @@ import ctn.imaginarycraft.util.ModUtils;
 import net.minecraft.client.renderer.MultiBufferSource;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
 import net.minecraft.resources.ResourceLocation;
+import yesman.epicfight.api.model.Armature;
 
 // TODO 死亡之后光芒变暗
 public class GrantUsLovePatchRenderer extends ModPatchedLivingEntityRenderer<GrantUsLove, GrantUsLovePatch, EmptyEntityModel<GrantUsLove>, EmptyMobRenderer<GrantUsLove>, GrantUsLoveMesh> {
@@ -30,5 +31,10 @@ public class GrantUsLovePatchRenderer extends ModPatchedLivingEntityRenderer<Gra
 	public void render(GrantUsLove entity, GrantUsLovePatch entitypatch, EmptyMobRenderer<GrantUsLove> renderer, MultiBufferSource buffer, PoseStack poseStack, int packedLight, float partialTicks) {
 		this.glowmaskValue[0] = ModUtils.calculateSineCycle(0.9f, 2f, 4.0f);
 		super.render(entity, entitypatch, renderer, buffer, poseStack, packedLight, partialTicks);
+	}
+
+	@Override
+	public void mulPoseStack(PoseStack poseStack, Armature armature, GrantUsLove entity, GrantUsLovePatch entitypatch, float partialTicks) {
+		super.mulPoseStack(poseStack, armature, entity, entitypatch, partialTicks);
 	}
 }

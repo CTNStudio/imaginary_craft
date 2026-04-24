@@ -14,6 +14,6 @@ public interface IOrdealsVioletEntity extends IOrdealsEntity {
 	@Override
 	default void registerGoals() {
 		IOrdealsEntity.super.registerGoals();
-		getTargetSelector().addGoal(1, new CampHurtByTargetGoal(getMob(), IOrdealsVioletEntity.class));
+		getTargetSelector().addGoal(2, new CampHurtByTargetGoal(getMob(), IOrdealsVioletEntity.class));
 	}
 }

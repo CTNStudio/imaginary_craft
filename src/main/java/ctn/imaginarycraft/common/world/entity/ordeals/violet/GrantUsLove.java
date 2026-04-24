@@ -11,6 +11,7 @@ import ctn.imaginarycraft.api.world.entity.ai.behavior.BTRoot;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.composite.ParallelNode;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.ConditionBT;
 import ctn.imaginarycraft.api.world.entity.ai.behavior.condition.TargetExistCondition;
+import ctn.imaginarycraft.api.world.entity.ai.behavior.leaf.LookAtTargetAction;
 import ctn.imaginarycraft.api.world.entity.skill.MobSkill;
 import ctn.imaginarycraft.core.ImaginaryCraft;
 import ctn.imaginarycraft.init.ModSoundEvents;
@@ -24,9 +25,10 @@ import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
+import net.minecraft.world.entity.ai.control.LookControl;
+import net.minecraft.world.entity.animal.AbstractGolem;
 import net.minecraft.world.entity.monster.Enemy;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
@@ -52,10 +54,10 @@ import java.util.concurrent.atomic.AtomicReference;
  * <h2>TODO 待办事项:</h2>
  * <ul>
  *   <li>技能或大招剩余时间要持久化</li>
- *   <li>需要免疫中毒,细雪,火焰,漂浮</li>
+ *   <li>需要免疫中毒,漂浮</li>
  * </ul>
  */
-public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEgg, IBehaviorTreeMob<GrantUsLove>, Enemy, IPatch<GrantUsLovePatch>, ISkillExpand {
+public class GrantUsLove extends AbstractGolem implements IOrdealsVioletEntity, ISpawnByEgg, IBehaviorTreeMob<GrantUsLove>, Enemy, IPatch<GrantUsLovePatch>, ISkillExpand {
 	public static final @NotNull ResourceLocation ULTIMATE_SKILL = ImaginaryCraft.modRl("ultimate_skill");
 	private GrantUsLovePatch patch;
 
@@ -104,6 +106,17 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 
 	public GrantUsLove(EntityType<? extends GrantUsLove> entityType, Level level) {
 		super(entityType, level);
+		lookControl = new LookControl(this) {
+			@Override
+			public void tick() {
+				if (getPatch().getEntityState().turningLocked()) {
+					return;
+				}
+
+				this.getYRotD().ifPresent(p_287447_ -> this.mob.yHeadRot = this.rotateTowards(this.mob.yHeadRot, p_287447_, this.yMaxRotSpeed));
+				this.getXRotD().ifPresent(p_352768_ -> this.mob.setXRot(this.rotateTowards(this.mob.getXRot(), p_352768_, this.xMaxRotAngle)));
+			}
+		};
 	}
 
 	public static AttributeSupplier.Builder createAttributes() {
@@ -111,7 +124,6 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 			.add(Attributes.KNOCKBACK_RESISTANCE, 1)
 			.add(Attributes.MAX_HEALTH, 350)
 			.add(Attributes.ATTACK_DAMAGE, 7)
-			.add(Attributes.MOVEMENT_SPEED, 0)
 			.add(Attributes.ATTACK_KNOCKBACK, 1)
 			.add(Attributes.GRAVITY, 0.1)
 			.add(ModAttributes.PHYSICS_VULNERABLE, 0.8)
@@ -126,7 +138,15 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 	public void registerGoals() {
 		super.registerGoals();
 		IOrdealsVioletEntity.super.registerGoals();
-		targetSelector.addGoal(2, createBehaviorTree());
+		targetSelector.addGoal(3, createBehaviorTree());
+	}
+
+	@Override
+	public void tick() {
+		super.tick();
+		ultimateSkill.tick();
+		yBodyRot = yHeadRot;
+		setYRot(yBodyRot);
 	}
 
 	@Override
@@ -161,11 +181,6 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 	}
 
 	@Override
-	public BTRoot<GrantUsLove> createBehaviorTree() {
-		return new GrantUsLoveBT(this);
-	}
-
-	@Override
 	protected void actuallyHurt(DamageSource source, float damageAmount) {
 		super.actuallyHurt(source, damageAmount);
 	}
@@ -174,9 +189,19 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 	private void crashAtkSound() {
 		playSound(ModSoundEvents.VIOLET_NOON_DOWN.value(), 2.0F, 1.0F);
 	}
-	//endregion
 
+	//endregion
 	//region 基本属性方法
+	@Override
+	public BTRoot<GrantUsLove> createBehaviorTree() {
+		return new GrantUsLoveBT(this);
+	}
+
+	@Override
+	protected Entity.MovementEmission getMovementEmission() {
+		return Entity.MovementEmission.NONE;
+	}
+
 	@Override
 	public boolean isPushable() {
 		return false;
@@ -214,13 +239,8 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 		}
 		return patch;
 	}
-	//endregion
 
-	@Override
-	public void tick() {
-		super.tick();
-		ultimateSkill.tick();
-	}
+	//endregion
 
 	@Override
 	public void readAdditionalSaveData(CompoundTag compound) {
@@ -244,6 +264,16 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 		ultimateSkill.addData(compound);
 	}
 
+	@Override
+	public int getHeadRotSpeed() {
+		return 3;
+	}
+
+	@Override
+	public int getMaxHeadYRot() {
+		return 10;
+	}
+
 	public static class GrantUsLoveBT extends BTRoot<GrantUsLove> {
 
 		public GrantUsLoveBT(GrantUsLove mob) {
@@ -254,30 +284,15 @@ public class GrantUsLove extends Mob implements IOrdealsVioletEntity, ISpawnByEg
 		protected @NotNull BTNode createBehaviorTree() {
 			return BTFactory.parallel(ParallelNode.Policy.REQUIRE_ALL, ParallelNode.Policy.REQUIRE_ALL)
 				.addChild(BTFactory.infinite(BTFactory.selector()
-//        .addWithCondition(, )
-						// 目标不存在
-						.addWithCondition(ConditionBT.not(new TargetExistCondition(this.mob)), BTFactory.sequence())
-						// 目标存在
-						.addChild(BTFactory.infinite(BTFactory.selector()
-//						// 释放大招
-//						.addWithCondition(ConditionBT.and(new DistanceLowerThanCondition(this.mob, TARGET_ATK_RADIUS)), BTFactory.sequence()
-//							// 设置基本
-//							.addChild(BTFactory.success(() -> {
-//							}))
-//							// 等待5秒
-//							.addChild(BTFactory.sequence().addChild(BTFactory.wait(100))
-////                .addWithCondition(,)
-//							))
-						)))
-				)
+					// 目标不存在
+					.addWithCondition(ConditionBT.not(new TargetExistCondition(this.mob)), BTFactory.sequence())
+					// 目标存在
+					.addChild(BTFactory.infinite(BTFactory.sequence()
+						.addChild(new LookAtTargetAction(mob))
+						.addChild(BTFactory.selector())
+					))))
 				// 其他处理例如：技能冷却
 				.addChild(BTFactory.infinite(BTFactory.success(() -> {
-//					if (mob.normalAtkCd != 0) {
-//						mob.normalAtkCd--;
-//					}
-//					if (mob.crashAtkCd != 0) {
-//						mob.crashAtkCd--;
-//					}
 				})));
 		}
 	}

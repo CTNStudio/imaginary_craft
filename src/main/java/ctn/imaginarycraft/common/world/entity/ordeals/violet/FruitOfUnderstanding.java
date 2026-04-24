@@ -22,10 +22,7 @@ import net.minecraft.world.entity.ai.goal.FloatGoal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
 import net.minecraft.world.entity.ai.goal.RandomLookAroundGoal;
 import net.minecraft.world.entity.ai.goal.RandomStrollGoal;
-import net.minecraft.world.entity.ai.goal.target.HurtByTargetGoal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
 import net.minecraft.world.entity.monster.Enemy;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.ThrowableProjectile;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.BlockHitResult;
@@ -103,6 +100,11 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 	}
 
 	@Override
+	public boolean removeWhenFarAway(double distanceToClosestPlayer) {
+		return false;
+	}
+
+	@Override
 	protected void defineSynchedData(SynchedEntityData.Builder builder) {
 		super.defineSynchedData(builder);
 		builder.define(SELF_DESTRUCT_CHARGING, false);
@@ -139,26 +141,7 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 				return !isCharging && !isBulletAttacking && super.canUse();
 			}
 		});
-
-		this.targetSelector.addGoal(1, new HurtByTargetGoal(this) {
-			@Override
-			public boolean canContinueToUse() {
-				LivingEntity target = this.mob.getTarget();
-				return target != null && !isCamp(target) && super.canContinueToUse();
-			}
-		});
-		this.targetSelector.addGoal(2, new NearestAttackableTargetGoal<>(this, Player.class, true, false) {
-			@Override
-			public boolean canUse() {
-				LivingEntity target = this.mob.getTarget();
-				if (target != null && isCamp(target)) {
-					return false;
-				}
-				return !isCharging && super.canUse();
-			}
-		});
 	}
-
 
 	private boolean canPerformNormalAttack() {
 		LivingEntity target = this.getTarget();
@@ -175,13 +158,16 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 	}
 
 	private void tryReduceSelfDestructCounter() {
-		if (!this.isCharging && this.selfDestructCounter > 0) {
-			if (this.random.nextFloat() < ATK_REDUCE_CHANCE) {
-				this.selfDestructCounter--;
-				if (this.selfDestructCounter <= 0) {
-					startSelfDestructCharge();
-				}
-			}
+		if (this.isCharging || this.selfDestructCounter <= 0) {
+			return;
+		}
+		if (!(this.random.nextFloat() < ATK_REDUCE_CHANCE)) {
+			return;
+		}
+
+		this.selfDestructCounter--;
+		if (this.selfDestructCounter <= 0) {
+			startSelfDestructCharge();
 		}
 	}
 
@@ -388,15 +374,21 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 	@Override
 	protected void actuallyHurt(DamageSource source, float damageAmount) {
 		super.actuallyHurt(source, damageAmount);
-		if (!this.level().isClientSide && source.getEntity() instanceof LivingEntity attacker && attacker.isAttackable()) {
-			if (this.isCharging) {
-				this.chargeDamageTaken += damageAmount;
+		if (this.level().isClientSide ||
+			!(source.getEntity() instanceof LivingEntity attacker) ||
+			!attacker.isAttackable()) {
+			return;
+		}
 
-				float interruptThreshold = this.getMaxHealth() * INTERRUPT_DAMAGE_PERCENTAGE;
-				if (this.chargeDamageTaken >= interruptThreshold) {
-					interruptSelfDestruct();
-				}
-			}
+		if (!this.isCharging) {
+			return;
+		}
+
+		this.chargeDamageTaken += damageAmount;
+
+		float interruptThreshold = this.getMaxHealth() * INTERRUPT_DAMAGE_PERCENTAGE;
+		if (this.chargeDamageTaken >= interruptThreshold) {
+			interruptSelfDestruct();
 		}
 	}
 
@@ -440,27 +432,31 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 		public void tick() {
 			super.tick();
 
-			if (isWindingUp) {
-				attackCooldown--;
-
-				if (attackCooldown <= 0) {
-					executeAttack();
-					isWindingUp = false;
-					attackCooldown = getAttackInterval();
+			if (!isWindingUp) {
+				if (attackCooldown > 0) {
+					attackCooldown--;
 				}
-			} else if (attackCooldown > 0) {
-				attackCooldown--;
+				return;
+			}
+
+			attackCooldown--;
+
+			if (attackCooldown <= 0) {
+				executeAttack();
+				isWindingUp = false;
+				attackCooldown = getAttackInterval();
 			}
 		}
 
 		@Override
 		protected void checkAndPerformAttack(LivingEntity target) {
-			if (attackCooldown <= 0 &&
-				!isWindingUp &&
-				canPerformNormalAttack() &&
-				this.canPerformAttack(target)) {
-				startAttackWindup();
+			if (attackCooldown > 0 ||
+				isWindingUp ||
+				!canPerformNormalAttack() ||
+				!this.canPerformAttack(target)) {
+				return;
 			}
+			startAttackWindup();
 		}
 
 		@Override
@@ -479,17 +475,20 @@ public class FruitOfUnderstanding extends PathfinderMob implements IOrdealsViole
 		private void executeAttack() {
 			LivingEntity target = FruitOfUnderstanding.this.getTarget();
 
-			if (target != null && target.isAlive() &&
-				FruitOfUnderstanding.this.distanceToSqr(target) <= NORMAL_ATK_RANGE * NORMAL_ATK_RANGE &&
-				!isCamp(target)) {
-
-				DamageSource damageSource = ModDamageSources.erosionDamage(FruitOfUnderstanding.this);
-				if (target.hurt(damageSource, NORMAL_ATK_DMG)) {
-					atkEffect();
-
-					tryReduceSelfDestructCounter();
-				}
+			if (target == null || !target.isAlive() ||
+				!(FruitOfUnderstanding.this.distanceToSqr(target) <= NORMAL_ATK_RANGE * NORMAL_ATK_RANGE) ||
+				isCamp(target)) {
+				return;
 			}
+
+			DamageSource damageSource = ModDamageSources.erosionDamage(FruitOfUnderstanding.this);
+			if (!target.hurt(damageSource, NORMAL_ATK_DMG)) {
+				return;
+			}
+
+			atkEffect();
+
+			tryReduceSelfDestructCounter();
 		}
 
 		@Override

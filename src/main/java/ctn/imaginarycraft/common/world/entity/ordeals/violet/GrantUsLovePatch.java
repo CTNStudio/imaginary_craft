@@ -1,6 +1,5 @@
 package ctn.imaginarycraft.common.world.entity.ordeals.violet;
 
-import ctn.imaginarycraft.api.world.entity.ai.ModMeleeAttackGoal;
 import ctn.imaginarycraft.init.epicfight.ModFactions;
 import ctn.imaginarycraft.init.epicfight.animations.GrantUsLoveAnimations;
 import org.jetbrains.annotations.Nullable;
@@ -12,6 +11,7 @@ import yesman.epicfight.world.capabilities.entitypatch.MobPatch;
 import yesman.epicfight.world.damagesource.StunType;
 import yesman.epicfight.world.entity.ai.goal.AnimatedAttackGoal;
 import yesman.epicfight.world.entity.ai.goal.CombatBehaviors;
+import yesman.epicfight.world.entity.ai.goal.TargetChasingGoal;
 
 public class GrantUsLovePatch extends MobPatch<GrantUsLove> {
 	public GrantUsLovePatch(GrantUsLove entity) {
@@ -21,9 +21,10 @@ public class GrantUsLovePatch extends MobPatch<GrantUsLove> {
 	@Override
 	protected void initAI() {
 		super.initAI();
+		this.original.goalSelector.addGoal(1, new TargetChasingGoal(this, this.original, 1.0D, false));
 
-		this.original.goalSelector.addGoal(3, new AnimatedAttackGoal<>(this, CombatBehaviors.<GrantUsLovePatch>builder()
-			.newBehaviorSeries(CombatBehaviors.BehaviorSeries.<GrantUsLovePatch>builder().weight(80.0F).canBeInterrupted(true).looping(false)
+		this.original.goalSelector.addGoal(5, new AnimatedAttackGoal<>(this, CombatBehaviors.<GrantUsLovePatch>builder()
+			.newBehaviorSeries(CombatBehaviors.BehaviorSeries.<GrantUsLovePatch>builder().weight(8000.0F).canBeInterrupted(true).looping(false)
 				.nextBehavior(CombatBehaviors.Behavior.<GrantUsLovePatch>builder().animationBehavior(GrantUsLoveAnimations.SLASH)))
 			.newBehaviorSeries(CombatBehaviors.BehaviorSeries.<GrantUsLovePatch>builder().weight(50.0F).canBeInterrupted(false).looping(false)
 				.nextBehavior(CombatBehaviors.Behavior.<GrantUsLovePatch>builder().animationBehavior(GrantUsLoveAnimations.STAB_L1)))
@@ -50,16 +51,14 @@ public class GrantUsLovePatch extends MobPatch<GrantUsLove> {
 			.newBehaviorSeries(CombatBehaviors.BehaviorSeries.<GrantUsLovePatch>builder().weight(50.0F).canBeInterrupted(false).looping(false)
 				.nextBehavior(CombatBehaviors.Behavior.<GrantUsLovePatch>builder().animationBehavior(GrantUsLoveAnimations.SWING_R3)))
 			.build(this)));
-		this.original.goalSelector.addGoal(1, new ModMeleeAttackGoal(this.original, 1, false));
 	}
 
 	@Override
 	public void initAnimator(Animator animator) {
 		super.initAnimator(animator);
-		// 待机
-		animator.addLivingAnimation(LivingMotions.IDLE, GrantUsLoveAnimations.IDLE);
-		// 死亡
-		animator.addLivingAnimation(LivingMotions.DEATH, GrantUsLoveAnimations.DEATH);
+
+		animator.addLivingAnimation(LivingMotions.IDLE, GrantUsLoveAnimations.IDLE); // 待机
+		animator.addLivingAnimation(LivingMotions.DEATH, GrantUsLoveAnimations.DEATH); // 死亡
 	}
 
 	@Override
@@ -69,7 +68,19 @@ public class GrantUsLovePatch extends MobPatch<GrantUsLove> {
 	}
 
 	@Override
-	public void updateMotion(boolean b) {
-//    super.commonMobUpdateMotion(b);
+	public void updateMotion(boolean considerInaction) {
+		if (this.original.getHealth() <= 0.0F) {
+			currentLivingMotion = LivingMotions.DEATH;
+		} else if (this.state.inaction() && considerInaction) {
+			currentLivingMotion = LivingMotions.INACTION;
+		} else {
+			currentLivingMotion = LivingMotions.IDLE;
+		}
+		this.currentCompositeMotion = this.currentLivingMotion;
+	}
+
+	@Override
+	public void postTick() {
+		super.postTick();
 	}
 }

@@ -1,5 +1,6 @@
 package ctn.imaginarycraft.client.animmodels.animations.grantuslove;
 
+import ctn.imaginarycraft.init.ModSoundEvents;
 import org.jetbrains.annotations.Nullable;
 import yesman.epicfight.api.animation.AnimationManager;
 import yesman.epicfight.api.animation.Joint;
@@ -33,10 +34,12 @@ public class GrantUsLoveTentacleAttackAnimation extends AttackAnimation {
 	public GrantUsLoveTentacleAttackAnimation(float transitionTime, AnimationManager.AnimationAccessor<? extends AttackAnimation> accessor, AssetAccessor<? extends Armature> armature, Phase... phases) {
 		super(transitionTime, accessor, armature, phases);
 		addProperty(AnimationProperty.StaticAnimationProperty.FIXED_HEAD_ROTATION, true);
+		addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get());
 	}
 
 	public GrantUsLoveTentacleAttackAnimation(float transitionTime, float antic, float preDelay, float contact, float recovery, @Nullable Collider collider, Joint colliderJoint, AnimationManager.AnimationAccessor<? extends AttackAnimation> accessor, AssetAccessor<? extends Armature> armature) {
 		super(transitionTime, antic, preDelay, contact, recovery, collider, colliderJoint, accessor, armature);
 		addProperty(AnimationProperty.StaticAnimationProperty.FIXED_HEAD_ROTATION, true);
+		addProperty(AnimationProperty.AttackPhaseProperty.SWING_SOUND, ModSoundEvents.VIOLET_NOON_ATK.get());
 	}
 }

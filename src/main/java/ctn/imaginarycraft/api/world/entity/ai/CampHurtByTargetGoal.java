@@ -10,7 +10,7 @@ import java.util.function.Predicate;
  * 阵营受伤反击目标选择器
  * <p>
  * 扩展自 ModHurtByTargetGoal，增加了等级比较机制。
- * 低等级生物不会召唤高等级生物来协助战斗，避免战力失衡。
+ * 低等级生物不会召唤高等级生物来协助战斗
  * </p>
  */
 public class CampHurtByTargetGoal extends ModHurtByTargetGoal {

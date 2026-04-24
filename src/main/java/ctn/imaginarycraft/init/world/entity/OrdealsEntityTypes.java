@@ -9,6 +9,7 @@ import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.MobCategory;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -24,6 +25,9 @@ public final class OrdealsEntityTypes {
     "“请给我们爱”",
     LcLevel.HE,
     EntityType.Builder.of(GrantUsLove::new, MobCategory.MISC)
+	    .fireImmune()
+	    .immuneTo(Blocks.POWDER_SNOW)
+	    .canSpawnFarFromPlayer()
       .sized(2.0F, 5F)
       .eyeHeight(2.5F)
       .clientTrackingRange(8)
@@ -36,7 +40,7 @@ public final class OrdealsEntityTypes {
       .sized(1.7F, 1.7F)
       .eyeHeight(1.0F)
       .clientTrackingRange(8)
-      .updateInterval(2));
+	    .updateInterval(3));
   //endregion
 
 	static void init(IEventBus bus) {
