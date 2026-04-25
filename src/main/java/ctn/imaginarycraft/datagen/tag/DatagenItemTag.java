@@ -42,8 +42,7 @@ public final class DatagenItemTag extends ItemTagsProvider {
     addSet(ModItemTags.EGO_CURIOS_BROOCH, ImaginaryCraftConstants.EGO_CURIOS_BROOCH);
     addSet(ModItemTags.EGO_CURIOS_HAND, ImaginaryCraftConstants.EGO_CURIOS_HAND);
     addSet(ModItemTags.EGO_CURIOS_GLOVE, ImaginaryCraftConstants.EGO_CURIOS_GLOVE);
-    addSet(ModItemTags.EGO_CURIOS_RIGHT_BACK, ImaginaryCraftConstants.EGO_CURIOS_RIGHT_BACK);
-    addSet(ModItemTags.EGO_CURIOS_LEFT_BACK, ImaginaryCraftConstants.EGO_CURIOS_LEFT_BACK);
+	  addSet(ModItemTags.EGO_CURIOS_BACK, ImaginaryCraftConstants.EGO_CURIOS_BACK);
     tag(ModItemTags.EGO_CURIOS).addTags(
       ModItemTags.EGO_CURIOS_HEADWEAR,
       ModItemTags.EGO_CURIOS_CHEEK,
@@ -57,8 +56,7 @@ public final class DatagenItemTag extends ItemTagsProvider {
       ModItemTags.EGO_CURIOS_BROOCH,
       ModItemTags.EGO_CURIOS_HAND,
       ModItemTags.EGO_CURIOS_GLOVE,
-      ModItemTags.EGO_CURIOS_RIGHT_BACK,
-      ModItemTags.EGO_CURIOS_LEFT_BACK);
+	    ModItemTags.EGO_CURIOS_BACK);
     //endregion
 
     addSet(ModItemTags.EGO_ARMOUR, ImaginaryCraftConstants.EGO_ARMOUR);

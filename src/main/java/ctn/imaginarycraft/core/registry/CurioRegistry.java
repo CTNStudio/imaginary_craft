@@ -26,8 +26,7 @@ public final class CurioRegistry {
     createValidators(DatagenCuriosTest.EGO_CURIOS_BROOCH_VALIDATOR, ModItemTags.EGO_CURIOS_BROOCH);
     createValidators(DatagenCuriosTest.EGO_CURIOS_HAND_VALIDATOR, ModItemTags.EGO_CURIOS_HAND);
     createValidators(DatagenCuriosTest.EGO_CURIOS_GLOVE_VALIDATOR, ModItemTags.EGO_CURIOS_GLOVE);
-    createValidators(DatagenCuriosTest.EGO_CURIOS_RIGHT_BACK_VALIDATOR, ModItemTags.EGO_CURIOS_RIGHT_BACK);
-    createValidators(DatagenCuriosTest.EGO_CURIOS_LEFT_BACK_VALIDATOR, ModItemTags.EGO_CURIOS_LEFT_BACK);
+	  createValidators(DatagenCuriosTest.EGO_CURIOS_BACK_VALIDATOR, ModItemTags.EGO_CURIOS_BACK);
   }
 
   private static void createValidators(ResourceLocation name, TagKey<Item> tagKey) {

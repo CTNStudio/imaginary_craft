@@ -19,8 +19,7 @@ public final class ImaginaryCraftConstants {
   public static final Set<DeferredItem<? extends Item>> EGO_CURIOS_BROOCH = new HashSet<>();
   public static final Set<DeferredItem<? extends Item>> EGO_CURIOS_HAND = new HashSet<>();
   public static final Set<DeferredItem<? extends Item>> EGO_CURIOS_GLOVE = new HashSet<>();
-  public static final Set<DeferredItem<? extends Item>> EGO_CURIOS_RIGHT_BACK = new HashSet<>();
-  public static final Set<DeferredItem<? extends Item>> EGO_CURIOS_LEFT_BACK = new HashSet<>();
+	public static final Set<DeferredItem<? extends Item>> EGO_CURIOS_BACK = new HashSet<>();
   public static final Set<DeferredItem<? extends Item>> EGO_ARMOUR = new HashSet<>();
   public static final Set<DeferredItem<? extends Item>> EGO_WEAPON = new HashSet<>();
   public static final Set<DeferredItem<? extends Item>> EGO_TOOL = new HashSet<>();

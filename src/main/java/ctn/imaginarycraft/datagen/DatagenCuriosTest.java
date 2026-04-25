@@ -25,8 +25,7 @@ public final class DatagenCuriosTest extends CuriosDataProvider {
   public static final String EGO_CURIOS_BROOCH = "ego_curios_brooch";
   public static final String EGO_CURIOS_HAND = "ego_curios_hand";
   public static final String EGO_CURIOS_GLOVE = "ego_curios_glove";
-  public static final String EGO_CURIOS_RIGHT_BACK = "ego_curios_right_back";
-  public static final String EGO_CURIOS_LEFT_BACK = "ego_curios_left_back";
+	public static final String EGO_CURIOS_BACK = "ego_curios_back";
 
   public static final ResourceLocation EGO_CURIOS_VALIDATOR = createTagId("ego_curios");
   public static final ResourceLocation EGO_CURIOS_HEADWEAR_VALIDATOR = createTagId("ego_curios_headwear");
@@ -41,8 +40,7 @@ public final class DatagenCuriosTest extends CuriosDataProvider {
   public static final ResourceLocation EGO_CURIOS_BROOCH_VALIDATOR = createTagId("ego_curios_brooch");
   public static final ResourceLocation EGO_CURIOS_HAND_VALIDATOR = createTagId("ego_curios_hand");
   public static final ResourceLocation EGO_CURIOS_GLOVE_VALIDATOR = createTagId("ego_curios_glove");
-  public static final ResourceLocation EGO_CURIOS_RIGHT_BACK_VALIDATOR = createTagId("ego_curios_right_back");
-  public static final ResourceLocation EGO_CURIOS_LEFT_BACK_VALIDATOR = createTagId("ego_curios_left_back");
+	public static final ResourceLocation EGO_CURIOS_BACK_VALIDATOR = createTagId("ego_curios_back");
 
   public DatagenCuriosTest(PackOutput output, ExistingFileHelper fileHelper, CompletableFuture<HolderLookup.Provider> registries) {
     super(ImaginaryCraft.ID, output, fileHelper, registries);
@@ -70,8 +68,7 @@ public final class DatagenCuriosTest extends CuriosDataProvider {
     createSlot(EGO_CURIOS_BROOCH, EGO_CURIOS_BROOCH_VALIDATOR);
     createSlot(EGO_CURIOS_HAND, EGO_CURIOS_HAND_VALIDATOR);
     createSlot(EGO_CURIOS_GLOVE, EGO_CURIOS_GLOVE_VALIDATOR);
-    createSlot(EGO_CURIOS_RIGHT_BACK, EGO_CURIOS_RIGHT_BACK_VALIDATOR);
-    createSlot(EGO_CURIOS_LEFT_BACK, EGO_CURIOS_LEFT_BACK_VALIDATOR);
+	  createSlot(EGO_CURIOS_BACK, EGO_CURIOS_BACK_VALIDATOR);
 
     createSimpleEntities("player");
   }
@@ -97,8 +94,7 @@ public final class DatagenCuriosTest extends CuriosDataProvider {
       EGO_CURIOS_BROOCH,
       EGO_CURIOS_HAND,
       EGO_CURIOS_GLOVE,
-      EGO_CURIOS_RIGHT_BACK,
-      EGO_CURIOS_LEFT_BACK);
+	    EGO_CURIOS_BACK);
   }
 
   public ISlotData createSlot(String nameID, String icon, ResourceLocation validator) {

@@ -127,8 +127,7 @@ public final class ZhCn extends DatagenI18n {
     addCurios(DatagenCuriosTest.EGO_CURIOS_BROOCH, "胸针", "E.G.O饰品-胸针");
     addCurios(DatagenCuriosTest.EGO_CURIOS_HAND, "手部", "E.G.O饰品-手部");
     addCurios(DatagenCuriosTest.EGO_CURIOS_GLOVE, "手套", "E.G.O饰品-手套");
-    addCurios(DatagenCuriosTest.EGO_CURIOS_RIGHT_BACK, "右背", "E.G.O饰品-右背");
-    addCurios(DatagenCuriosTest.EGO_CURIOS_LEFT_BACK, "右背", "E.G.O饰品-右背");
+	  addCurios(DatagenCuriosTest.EGO_CURIOS_BACK, "背后", "E.G.O饰品-背后");
     EgoCurioItems.REGISTRY.getEntries().stream()
             .map(DeferredHolder::get)
             .filter(EgoCurioItem.class::isInstance)
@@ -154,7 +153,7 @@ public final class ZhCn extends DatagenI18n {
     addDeathMessage(ModDamageTypes.REMOTE, "%s死于远程伤害");
     //endregion
 
-    //region 标签
+	  //region tag标签
     add(ModItemTags.EGO, "E.G.O");
     add(ModItemTags.EGO_ARMOUR, "E.G.O盔甲");
     add(ModItemTags.EGO_WEAPON, "E.G.O武器");
@@ -172,8 +171,7 @@ public final class ZhCn extends DatagenI18n {
     add(ModItemTags.EGO_CURIOS_BROOCH, "E.G.O饰品-胸针");
     add(ModItemTags.EGO_CURIOS_HAND, "E.G.O饰品-手部");
     add(ModItemTags.EGO_CURIOS_GLOVE, "E.G.O饰品-手套");
-    add(ModItemTags.EGO_CURIOS_RIGHT_BACK, "E.G.O饰品-右背");
-    add(ModItemTags.EGO_CURIOS_LEFT_BACK, "E.G.O饰品-左背");
+	  add(ModItemTags.EGO_CURIOS_BACK, "E.G.O饰品-背后");
     //endregion
 
     //region tooltip

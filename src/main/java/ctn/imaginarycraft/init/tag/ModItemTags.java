@@ -81,11 +81,7 @@ public final class ModItemTags {
   /**
    * E.G.O饰品 右背
    */
-  public static final TagKey<Item> EGO_CURIOS_RIGHT_BACK = createTag("ego/curios/right_back");
-  /**
-   * E.G.左背
-   */
-  public static final TagKey<Item> EGO_CURIOS_LEFT_BACK = createTag("ego/curios/left_back");
+  public static final TagKey<Item> EGO_CURIOS_BACK = createTag("ego/curios/back");
   //endregion
 
   //region 武器类型
