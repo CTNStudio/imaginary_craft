@@ -271,7 +271,7 @@ public final class EgoCurioItems {
 	// TODO 实装效果
 	// TODO 缺少模型
 	public static final DeferredItem<EgoCurioItem> COMPREHENSION_EYE = register(
-		"comprehension_eye", "理解", CuriosType.EYE,
+		"comprehension_eye_curios", "理解", CuriosType.EYE,
 		EgoCurioItem::new,
 		new EgoCurioItem.Builder()
 			.fortitude(2)
@@ -651,9 +651,10 @@ public final class EgoCurioItems {
 	// TODO 理解 的数值需要调整
 	// TODO 实装效果
 	public static final DeferredItem<EgoCurioItem> COMPREHENSION_BACK = register(
-		"comprehension_back", "理解", CuriosType.BACK,
+		"comprehension_back_curios", "理解", CuriosType.BACK,
 		EgoCurioItem::new,
 		new EgoCurioItem.Builder()
+			.model("comprehension_back")
 			.fortitude(2)
 			.prudence(2)
 			.temperance(2)

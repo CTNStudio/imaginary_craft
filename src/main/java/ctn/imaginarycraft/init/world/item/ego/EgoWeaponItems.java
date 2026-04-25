@@ -99,6 +99,7 @@ public final class EgoWeaponItems {
 		  .damage(6)
 		  .meleeLcDamageType(LcDamageType.EROSION)
 		  .virtueUsageReq(null, null, null, null, null))
+	  .modelPath("weapon/comprehension_teth")
 	  .buildAndRegister();
 	// TODO 理解 的数值需要调整
 	// TODO 实装效果
@@ -112,6 +113,7 @@ public final class EgoWeaponItems {
 			.damage(6)
 			.meleeLcDamageType(LcDamageType.EROSION)
 			.virtueUsageReq(null, null, null, null, null))
+		.modelPath("weapon/comprehension_he")
 		.buildAndRegister();
   public static final DeferredItem<?> FOURTH_MATCH_FLAME = onRemote()
     .id("fourth_match_flame_weapon")

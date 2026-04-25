@@ -80,11 +80,10 @@ public final class DatagenItemModel extends ItemModelProvider {
    * @param pathPrefix 模型路径前缀
    */
   private void withExistingParent(DeferredRegister.Items registry, String pathPrefix) {
-    registry.getEntries().stream().map(DeferredHolder::getId).forEach(itemId -> {
-      ItemModelBuilder itemModelBuilder = this.withExistingParent(itemId.getPath(), "item/generated");
-      IModelBuilder.of(itemModelBuilder).imaginarycraft$getTexture()
-              .put("layer0", itemId.withPrefix(pathPrefix).toString());
-    });
+	  registry.getEntries().stream().map(DeferredHolder::getId).forEach(itemId ->
+		  IModelBuilder.of(this.withExistingParent(itemId.getPath(), "item/generated"))
+			  .imaginarycraft$getTexture()
+			  .put("layer0", itemId.withPrefix(pathPrefix).toString()));
   }
 
   /**
