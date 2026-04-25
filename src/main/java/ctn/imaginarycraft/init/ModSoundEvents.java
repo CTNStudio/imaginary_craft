@@ -29,19 +29,19 @@ public final class ModSoundEvents {
 	public static final DeferredHolder<SoundEvent, SoundEvent> SOLEMN_LAMENT_WEAPON_STONGATTACK_WHITE = registerForHolder(
 		"solemn_lament_weapon_stongattack_white", "圣宣-白：特殊射击", "item.solemn_lament_weapon.stongattack.white");
 	public static final DeferredHolder<SoundEvent, SoundEvent> VIOLET_NOON_DOWN = registerForHolder(
-		"violet_noon_down", "“请给我们爱”-下砸", "entity.violet.grant_us_love.down");
+		"violet_noon_down", "“请给我们爱！！！”：下砸", "entity.violet.grant_us_love.down");
 	public static final DeferredHolder<SoundEvent, SoundEvent> VIOLET_NOON_ATK = registerForHolder(
-		"violet_noon_atk", "“请给我们爱”-攻击", "entity.violet.grant_us_love.atk");
+		"violet_noon_atk", "“请给我们爱！！！”：攻击", "entity.violet.grant_us_love.atk");
 	public static final DeferredHolder<SoundEvent, SoundEvent> VIOLET_NOON_idle = registerForHolder(
-		"violet_noon_idle", "“请给我们爱”-触手蠕动", "entity.violet.grant_us_love.idle");
+		"violet_noon_idle", "“请给我们爱！！！”：触手蠕动", "entity.violet.grant_us_love.idle");
 	public static final DeferredHolder<SoundEvent, SoundEvent> VIOLET_NOON_DEATH = registerForHolder(
-		"violet_noon_death", "“请给我们爱”-死亡", "entity.violet.grant_us_love.death");
+		"violet_noon_death", "“请给我们爱！！！”：死亡", "entity.violet.grant_us_love.death");
   public static final DeferredHolder<SoundEvent, SoundEvent> VIOLET_DAWN_WALK = registerForHolder(
-	  "violet_dawn_walk", "“紫罗兰黎明”-行走", "entity.violet.fruit_of_understanding.walk");
+	  "violet_dawn_walk", "“紫罗兰黎明”：蠕动", "entity.violet.fruit_of_understanding.walk");
   public static final DeferredHolder<SoundEvent, SoundEvent> VIOLET_DAWN_SUICIDE = registerForHolder(
-	  "violet_dawn_suicide", "“紫罗兰黎明”-自爆", "entity.violet.fruit_of_understanding.suicide");
+	  "violet_dawn_suicide", "“紫罗兰黎明”：自爆", "entity.violet.fruit_of_understanding.suicide");
   public static final DeferredHolder<SoundEvent, SoundEvent> VIOLET_DAWN_DEAD = registerForHolder(
-	  "violet_dawn_dead", "“紫罗兰黎明”-死亡", "entity.violet.fruit_of_understanding.dead");
+	  "violet_dawn_dead", "“紫罗兰黎明”：死亡", "entity.violet.fruit_of_understanding.dead");
 
 	private static DeferredHolder<SoundEvent, SoundEvent> registerForHolder(String id, String zhName, String location) {
 		DeferredHolder<SoundEvent, SoundEvent> register = ModSoundEvents.REGISTRY.register(id, () -> SoundEvent.createVariableRangeEvent(ImaginaryCraft.modRl(location)));

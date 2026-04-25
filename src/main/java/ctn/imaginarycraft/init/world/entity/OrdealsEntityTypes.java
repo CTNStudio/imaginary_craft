@@ -22,7 +22,7 @@ public final class OrdealsEntityTypes {
   //region 紫罗兰
   public static final DeferredHolder<EntityType<?>, EntityType<GrantUsLove>> GRANT_US_LOVE = register(
     "grant_us_love",
-    "“请给我们爱”",
+	  "“请给我们爱！！！”",
     LcLevel.HE,
     EntityType.Builder.of(GrantUsLove::new, MobCategory.MISC)
 	    .fireImmune()
