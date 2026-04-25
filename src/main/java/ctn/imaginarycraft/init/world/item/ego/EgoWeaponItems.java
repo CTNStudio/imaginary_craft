@@ -87,6 +87,32 @@ public final class EgoWeaponItems {
   //endregion
 
   //region TETH
+  // TODO 理解 的数值需要调整
+  // TODO 实装效果
+  public static final DeferredItem<?> COMPREHENSION_TETH = onMelee()
+	  .id("comprehension_teth_weapon")
+	  .zhName("理解")
+	  .lcLevelType(LcLevel.TETH)
+	  .type(MeleeTemplateType.SWORDS)
+	  .properties(new Item.Properties())
+	  .properties(b -> b
+		  .damage(6)
+		  .meleeLcDamageType(LcDamageType.EROSION)
+		  .virtueUsageReq(null, null, null, null, null))
+	  .buildAndRegister();
+	// TODO 理解 的数值需要调整
+	// TODO 实装效果
+	public static final DeferredItem<?> COMPREHENSION_HE = onMelee()
+		.id("comprehension_he_weapon")
+		.zhName("理解")
+		.lcLevelType(LcLevel.HE)
+		.type(MeleeTemplateType.SWORDS)
+		.properties(new Item.Properties())
+		.properties(b -> b
+			.damage(6)
+			.meleeLcDamageType(LcDamageType.EROSION)
+			.virtueUsageReq(null, null, null, null, null))
+		.buildAndRegister();
   public static final DeferredItem<?> FOURTH_MATCH_FLAME = onRemote()
     .id("fourth_match_flame_weapon")
     .zhName("终末火柴之光")
@@ -151,7 +177,6 @@ public final class EgoWeaponItems {
       .damage(3)
       .meleeLcDamageType(LcDamageType.SPIRIT)
       .virtueUsageReq(null, null, null, null, null)) // TODO 光头（
-    .modelPath("tough")
     .buildAndRegister();
 
   // TODO 这把武器一次攻击动画会造成三次伤害。

@@ -15,6 +15,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import java.util.Set;
 import java.util.function.Function;
 
+// TODO 可能需要给饰品添加等级
 public final class EgoCurioItems {
 	public static final DeferredRegister.Items REGISTRY = DeferredRegister.createItems(ImaginaryCraft.ID);
 
@@ -266,6 +267,17 @@ public final class EgoCurioItems {
 	//endregion
 
 	//region 眼
+	// TODO 理解 的数值需要调整
+	// TODO 实装效果
+	// TODO 缺少模型
+	public static final DeferredItem<EgoCurioItem> COMPREHENSION_EYE = register(
+		"comprehension_eye", "理解", CuriosType.EYE,
+		EgoCurioItem::new,
+		new EgoCurioItem.Builder()
+			.fortitude(2)
+			.prudence(2)
+			.temperance(2)
+			.justice(2));
 	public static final DeferredItem<EgoCurioItem> SOLITUDE = register(
 		"solitude_curios", "孤独", CuriosType.EYE,
 		EgoCurioItem::new,
@@ -635,6 +647,17 @@ public final class EgoCurioItems {
 	//endregion
 
 	//region 背
+	// TODO ALEPH等级的版本要区分效果
+	// TODO 理解 的数值需要调整
+	// TODO 实装效果
+	public static final DeferredItem<EgoCurioItem> COMPREHENSION_BACK = register(
+		"comprehension_back", "理解", CuriosType.BACK,
+		EgoCurioItem::new,
+		new EgoCurioItem.Builder()
+			.fortitude(2)
+			.prudence(2)
+			.temperance(2)
+			.justice(2));
 	public static final DeferredItem<EgoCurioItem> SOLEMN_LAMENT = register(
 		"solemn_lament_curios", "圣宣", CuriosType.BACK,
 		EgoCurioItem::new,

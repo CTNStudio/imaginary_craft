@@ -20,7 +20,16 @@ public final class OrdealsEntityTypes {
 	public static final DeferredRegister<EntityType<?>> REGISTRY = ImaginaryCraft.modRegister(BuiltInRegistries.ENTITY_TYPE);
 
   //region 紫罗兰
-  public static final DeferredHolder<EntityType<?>, EntityType<GrantUsLove>> GRANT_US_LOVE = register(
+  public static final DeferredHolder<EntityType<?>, EntityType<FruitOfUnderstanding>> FRUIT_OF_UNDERSTANDING = register(
+	  "fruit_of_understanding",
+	  "“理解的果实”",
+	  LcLevel.TETH,
+	  EntityType.Builder.of(FruitOfUnderstanding::new, MobCategory.MISC)
+		  .sized(1.7F, 1.7F)
+		  .eyeHeight(1.0F)
+		  .clientTrackingRange(8)
+		  .updateInterval(3));
+	public static final DeferredHolder<EntityType<?>, EntityType<GrantUsLove>> GRANT_US_LOVE = register(
     "grant_us_love",
 	  "“请给我们爱！！！”",
     LcLevel.HE,
@@ -32,15 +41,6 @@ public final class OrdealsEntityTypes {
       .eyeHeight(2.5F)
       .clientTrackingRange(8)
       .updateInterval(2));
-  public static final DeferredHolder<EntityType<?>, EntityType<FruitOfUnderstanding>> FRUIT_OF_UNDERSTANDING = register(
-    "fruit_of_understanding",
-    "“理解的果实”",
-    LcLevel.TETH,
-    EntityType.Builder.of(FruitOfUnderstanding::new, MobCategory.MISC)
-      .sized(1.7F, 1.7F)
-      .eyeHeight(1.0F)
-      .clientTrackingRange(8)
-	    .updateInterval(3));
   //endregion
 
 	static void init(IEventBus bus) {

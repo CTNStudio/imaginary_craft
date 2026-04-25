@@ -159,7 +159,10 @@ public final class ItemRegistry {
 		register(ImaginaryCraftConstants.AXE, Builders.AXE);
 		register(ImaginaryCraftConstants.MACE, MobBuilderEntrys.MACE);
 		register(ImaginaryCraftConstants.SWORDS, Builders.SWORD);
-		register(EgoWeaponItems.RED_EYES_TACHI.get(), (item) -> WeaponCapabilityPresets.exCapRegistration(BuilderManager.getEntry(Builders.TACHI.id()), item));
+		register(EgoWeaponItems.RED_EYES_TACHI, Builders.TACHI);
+		register(EgoWeaponItems.LIFE_FOR_A_DAREDEVIL, Builders.TACHI);
+		register(EgoWeaponItems.COMPREHENSION_TETH, Builders.GREATSWORD);
+		register(EgoWeaponItems.COMPREHENSION_HE, Builders.GREATSWORD);
 	}
 
 	/**
@@ -176,50 +179,24 @@ public final class ItemRegistry {
 	}
 
 
-	/**
-	 * 注册物品集的武器能力（使用预定义的构建器条目）
-	 * <p>
-	 * 这是一个重载方法，将物品集与指定的构建器条目关联，
-	 * 内部会转换为函数式接口后调用另一个register方法。
-	 * </p>
-	 *
-	 * @param items        待注册的物品集合，通常为同类型武器
-	 * @param builderEntry 构建器条目，定义了武器的基本能力和行为
-	 */
 	private static void register(Set<DeferredItem<? extends Item>> items, BuilderEntry builderEntry) {
 		register(items, (item) -> WeaponCapabilityPresets.exCapRegistration(BuilderManager.getEntry(builderEntry.id()), item));
 	}
 
-	/**
-	 * 注册物品集的武器能力（使用自定义构建器函数）
-	 * <p>
-	 * 遍历物品集合，将每个物品转换为Item对象后逐个注册其武器能力。
-	 * </p>
-	 *
-	 * @param items   延迟加载的物品集合
-	 * @param builder 构建器函数，接收Item对象并返回对应的CapabilityItem.Builder实例
-	 */
 	private static void register(Set<DeferredItem<? extends Item>> items, Function<Item, ? extends CapabilityItem.Builder<?>> builder) {
 		for (DeferredItem<? extends Item> item : items) {
-			Item item1 = item.asItem();
-			register(item1, builder);
+			register(item, builder);
 		}
 	}
 
-	/**
-	 * 注册单个物品的武器能力
-	 * <p>
-	 * 这是武器能力注册的核心方法，负责：
-	 * </p>
-	 * <ol>
-	 *   <li>使用构建器函数创建武器能力实例</li>
-	 *   <li>验证能力实例是否成功创建，失败则记录警告日志并跳过</li>
-	 *   <li>将成功创建的能力注册到Epic Fight的物品能力提供者映射中</li>
-	 * </ol>
-	 *
-	 * @param item1   要注册能力的物品对象
-	 * @param builder 构建器函数，用于创建该物品的武器能力
-	 */
+	private static void register(DeferredItem<? extends Item> item, Function<Item, ? extends CapabilityItem.Builder<?>> builder) {
+		register(item.get(), builder);
+	}
+
+	private static void register(DeferredItem<? extends Item> item, BuilderEntry builderEntry) {
+		register(item.get(), (item1) -> WeaponCapabilityPresets.exCapRegistration(BuilderManager.getEntry(builderEntry.id()), item1));
+	}
+
 	private static void register(Item item1, Function<Item, ? extends CapabilityItem.Builder<?>> builder) {
 		CapabilityItem capability = builder.apply(item1).build();
 		if (capability == null) {

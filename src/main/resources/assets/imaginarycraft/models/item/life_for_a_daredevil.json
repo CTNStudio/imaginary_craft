@@ -1,0 +1,50 @@
+{
+  "parent": "builtin/entity",
+  "texture_size": [
+    64,
+    64
+  ],
+  "display": {
+    "thirdperson_righthand": {
+      "translation": [
+        0,
+        -5.75,
+        1.25
+      ],
+      "scale": [
+        0.31,
+        0.31,
+        0.31
+      ]
+    },
+    "thirdperson_lefthand": {
+      "translation": [
+        0,
+        -7,
+        1.25
+      ],
+      "scale": [
+        0.39,
+        0.39,
+        0.39
+      ]
+    },
+    "ground": {
+      "rotation": [
+        -45,
+        0,
+        0
+      ],
+      "translation": [
+        0,
+        0,
+        4.25
+      ],
+      "scale": [
+        0.17,
+        0.17,
+        0.17
+      ]
+    }
+  }
+}
