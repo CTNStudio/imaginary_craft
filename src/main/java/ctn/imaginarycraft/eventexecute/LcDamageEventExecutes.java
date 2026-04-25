@@ -12,7 +12,6 @@ import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
-import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.neoforged.neoforge.common.damagesource.DamageContainer;
@@ -102,21 +101,25 @@ public final class LcDamageEventExecutes {
    * 灵魂伤害计算
    */
   public static float theSoulDamage(float damage, LivingEntity attackedEntity, @Nullable Entity sourceEntity, DamageSource damageSource) {
-    damage /= 100;
-    float maxHealth = 0;
-	  @Nullable LcLevel attackedLevel = LcLevelUtil.getLevel(attackedEntity);
-	  @Nullable LcLevel attackerLevel = damageSource.imaginaryCraft$getLcDamageLevel();
-    if (sourceEntity instanceof LivingEntity living) {
-      maxHealth = (float) living.getAttributeValue(Attributes.MAX_HEALTH);
-    }
-
-    // 如果未获取到最大生命值，则使用默认值20
-    if (maxHealth == 0) {
-      maxHealth = 20;
-    }
-    // TODO 重新调整灵魂伤害算法
-    // 根据伤害等级差异计算最终伤害
-    return damage * (maxHealth / 5) * LcLevelUtil.getDamageMultiple(attackedLevel, attackerLevel);
+//    damage /= 100;
+//    float maxHealth = 0;
+//	  @Nullable LcLevel attackedLevel = LcLevelUtil.getLevel(attackedEntity);
+//	  @Nullable LcLevel attackerLevel = damageSource.imaginaryCraft$getLcDamageLevel();
+//    if (sourceEntity instanceof LivingEntity living) {
+//      maxHealth = (float) living.getAttributeValue(Attributes.MAX_HEALTH);
+//    }
+//
+//    // 如果未获取到最大生命值，则使用默认值20
+//    if (maxHealth == 0) {
+//      maxHealth = 20;
+//    }
+//    // TODO 重新调整灵魂伤害算法
+//    // 根据伤害等级差异计算最终伤害
+//    return damage * (maxHealth / 5) * LcLevelUtil.getDamageMultiple(attackedLevel, attackerLevel);
+	  if (attackedEntity instanceof Player) {
+		  return damage * attackedEntity.getMaxHealth();
+	  }
+	  return damage;
   }
 
   /**

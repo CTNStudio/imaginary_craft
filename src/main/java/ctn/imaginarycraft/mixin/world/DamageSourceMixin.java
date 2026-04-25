@@ -11,6 +11,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.damagesource.DamageType;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.phys.Vec3;
 import org.spongepowered.asm.mixin.Mixin;
@@ -26,91 +27,94 @@ import javax.annotation.Nullable;
  */
 @Mixin(DamageSource.class)
 public abstract class DamageSourceMixin implements IDamageSource {
-  @Unique
-  @Nullable
-  private LcDamageType imaginaryCraft$lcDamageType;
+	@Unique
+	@Nullable
+	private LcDamageType imaginaryCraft$lcDamageType;
 
-  @Unique
-  @Nullable
-  private LcLevel imaginaryCraft$lcDamageLevel;
+	@Unique
+	@Nullable
+	private LcLevel imaginaryCraft$lcDamageLevel;
 
-  @Unique
-  private ItemStack imaginaryCraft$attackItemStack;
+	@Unique
+	private ItemStack imaginaryCraft$attackItemStack;
 
-  @Inject(method = "<init>(Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)V", at = @At("RETURN"))
-  private void imaginaryCraft$DamageSource(
-    Holder<DamageType> type,
-    Entity directEntity,
-    Entity causingEntity,
-    Vec3 damageSourcePosition,
-    CallbackInfo ci
-  ) {
-    DamageSource damageSource = (DamageSource) (Object) this;
-    ItemStack itemStack = LcDamageTypeUtil.getDamageItemStack(damageSource);
-    this.imaginaryCraft$attackItemStack = itemStack;
+	@Inject(method = "<init>(Lnet/minecraft/core/Holder;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/entity/Entity;Lnet/minecraft/world/phys/Vec3;)V", at = @At("RETURN"))
+	private void imaginaryCraft$DamageSource(
+		Holder<DamageType> type,
+		Entity directEntity,
+		Entity causingEntity,
+		Vec3 damageSourcePosition,
+		CallbackInfo ci
+	) {
+		DamageSource damageSource = (DamageSource) (Object) this;
+		ItemStack itemStack = LcDamageTypeUtil.getDamageItemStack(damageSource);
+		this.imaginaryCraft$attackItemStack = itemStack;
 
-    // 初始化默认值
-    LcDamageType lcDamageType = null;
-    LcLevel lcDamageLevel = null;
+		@Nullable LcDamageType itemLcDamageType = null;
+		@Nullable LcDamageType damageLcDamageType = LcDamageType.byDamageType(type);
 
-    // 从物品获取信息
-    if (itemStack != null) {
-      if (itemStack.isEmpty()) {
-        lcDamageType = LcDamageType.byDamageType(type);
-        if (lcDamageType == null) {
-          lcDamageType = LcDamageTypeUtil.getLcDamageType(itemStack);
-        }
-      } else {
-        lcDamageType = LcDamageTypeUtil.getLcDamageType(itemStack);
-      }
 
-      if (lcDamageLevel == null) {
-        lcDamageLevel = LcLevelUtil.getLevel(itemStack);
-      }
-    }
+		// 从物品获取信息
+		if (itemStack != null) {
+			if (itemStack.isEmpty()) {
+				itemLcDamageType = LcDamageType.byDamageType(type);
+				if (itemLcDamageType == null) {
+					itemLcDamageType = LcDamageTypeUtil.getLcDamageType(itemStack);
+				}
+			} else {
+				itemLcDamageType = LcDamageTypeUtil.getLcDamageType(itemStack);
+			}
+		}
 
-    if (lcDamageLevel == null && directEntity != null) {
-      lcDamageLevel = LcLevelUtil.getLevel(directEntity);
-    }
+		if (directEntity != null || causingEntity != null) {
+			Entity entity = directEntity == null ? causingEntity : directEntity;
+			var level = LcLevelUtil.getLevel(entity);
+			if (level == LcLevel.ZAYIN || entity instanceof Player) {
+				@Nullable LcLevel itemLcDamageLevel = null;
+				if (itemStack != null) {
+					if (itemLcDamageLevel == null) {
+						itemLcDamageLevel = LcLevelUtil.getLevel(itemStack);
+					}
+				}
 
-    if (lcDamageLevel == null && causingEntity != null) {
-      lcDamageLevel = LcLevelUtil.getLevel(causingEntity);
-    }
+				level = itemLcDamageLevel;
+			}
 
-    // 应用最终值
-    this.imaginaryCraft$lcDamageLevel = lcDamageLevel;
-    this.imaginaryCraft$lcDamageType = lcDamageType == null ? LcDamageType.byDamageType(type) : lcDamageType;
-  }
+			this.imaginaryCraft$lcDamageLevel = level;
+		}
 
-  @Override
-  public void imaginaryCraft$setWeaponItem(ItemStack itemStack) {
-    imaginaryCraft$attackItemStack = itemStack;
-  }
+		this.imaginaryCraft$lcDamageType = itemLcDamageType == null ? damageLcDamageType : itemLcDamageType;
+	}
 
-  @Nullable
-  @Override
-  public LcDamageType imaginaryCraft$getLcDamageType() {
-    return imaginaryCraft$lcDamageType;
-  }
+	@Override
+	public void imaginaryCraft$setWeaponItem(ItemStack itemStack) {
+		imaginaryCraft$attackItemStack = itemStack;
+	}
 
-  @Override
-  public void imaginaryCraft$setLcDamageType(LcDamageType type) {
-    this.imaginaryCraft$lcDamageType = type;
-  }
+	@Nullable
+	@Override
+	public LcDamageType imaginaryCraft$getLcDamageType() {
+		return imaginaryCraft$lcDamageType;
+	}
 
-  @Nullable
-  @Override
-  public LcLevel imaginaryCraft$getLcDamageLevel() {
-    return imaginaryCraft$lcDamageLevel;
-  }
+	@Override
+	public void imaginaryCraft$setLcDamageType(LcDamageType type) {
+		this.imaginaryCraft$lcDamageType = type;
+	}
 
-  @Override
-  public void imaginaryCraft$setDamageLevel(@Nullable LcLevel level) {
-    this.imaginaryCraft$lcDamageLevel = level;
-  }
+	@Nullable
+	@Override
+	public LcLevel imaginaryCraft$getLcDamageLevel() {
+		return imaginaryCraft$lcDamageLevel;
+	}
 
-  @WrapMethod(method = "getWeaponItem")
-  private ItemStack imaginaryCraft$getWeaponItem(Operation<ItemStack> original) {
-    return imaginaryCraft$attackItemStack == null ? original.call() : imaginaryCraft$attackItemStack;
-  }
+	@Override
+	public void imaginaryCraft$setDamageLevel(@Nullable LcLevel level) {
+		this.imaginaryCraft$lcDamageLevel = level;
+	}
+
+	@WrapMethod(method = "getWeaponItem")
+	private ItemStack imaginaryCraft$getWeaponItem(Operation<ItemStack> original) {
+		return imaginaryCraft$attackItemStack == null ? original.call() : imaginaryCraft$attackItemStack;
+	}
 }
