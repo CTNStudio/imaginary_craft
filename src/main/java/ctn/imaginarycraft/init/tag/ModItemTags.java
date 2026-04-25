@@ -79,7 +79,7 @@ public final class ModItemTags {
    */
   public static final TagKey<Item> EGO_CURIOS_GLOVE = createTag("ego/curios/glove");
   /**
-   * E.G.O饰品 右背
+   * E.G.O饰品 背后
    */
   public static final TagKey<Item> EGO_CURIOS_BACK = createTag("ego/curios/back");
   //endregion

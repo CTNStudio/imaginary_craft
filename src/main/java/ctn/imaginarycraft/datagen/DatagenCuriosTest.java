@@ -13,6 +13,7 @@ import top.theillusivec4.curios.api.type.data.ISlotData;
 import java.util.concurrent.CompletableFuture;
 
 public final class DatagenCuriosTest extends CuriosDataProvider {
+	public static final String EGO_CURIOS = "ego_curios";
   public static final String EGO_CURIOS_HEADWEAR = "ego_curios_headwear";
   public static final String EGO_CURIOS_HEAD = "ego_curios_head";
   public static final String EGO_CURIOS_HINDBRAIN = "ego_curios_hindbrain";
@@ -25,22 +26,24 @@ public final class DatagenCuriosTest extends CuriosDataProvider {
   public static final String EGO_CURIOS_BROOCH = "ego_curios_brooch";
   public static final String EGO_CURIOS_HAND = "ego_curios_hand";
   public static final String EGO_CURIOS_GLOVE = "ego_curios_glove";
-	public static final String EGO_CURIOS_BACK = "ego_curios_back";
+	public static final String EGO_CURIOS_LEFT_BACK = "ego_curios_left_back";
+	public static final String EGO_CURIOS_RIGHT_BACK = "ego_curios_right_back";
 
-  public static final ResourceLocation EGO_CURIOS_VALIDATOR = createTagId("ego_curios");
-  public static final ResourceLocation EGO_CURIOS_HEADWEAR_VALIDATOR = createTagId("ego_curios_headwear");
-  public static final ResourceLocation EGO_CURIOS_HEAD_VALIDATOR = createTagId("ego_curios_head");
-  public static final ResourceLocation EGO_CURIOS_HINDBRAIN_VALIDATOR = createTagId("ego_curios_hindbrain");
-  public static final ResourceLocation EGO_CURIOS_EYE_VALIDATOR = createTagId("ego_curios_eye");
-  public static final ResourceLocation EGO_CURIOS_FACE_VALIDATOR = createTagId("ego_curios_face");
-  public static final ResourceLocation EGO_CURIOS_CHEEK_VALIDATOR = createTagId("ego_curios_cheek");
-  public static final ResourceLocation EGO_CURIOS_MASK_VALIDATOR = createTagId("ego_curios_mask");
-  public static final ResourceLocation EGO_CURIOS_MOUTH_VALIDATOR = createTagId("ego_curios_mouth");
-  public static final ResourceLocation EGO_CURIOS_NECK_VALIDATOR = createTagId("ego_curios_neck");
-  public static final ResourceLocation EGO_CURIOS_BROOCH_VALIDATOR = createTagId("ego_curios_brooch");
-  public static final ResourceLocation EGO_CURIOS_HAND_VALIDATOR = createTagId("ego_curios_hand");
-  public static final ResourceLocation EGO_CURIOS_GLOVE_VALIDATOR = createTagId("ego_curios_glove");
-	public static final ResourceLocation EGO_CURIOS_BACK_VALIDATOR = createTagId("ego_curios_back");
+	public static final ResourceLocation EGO_CURIOS_VALIDATOR = createTagId(EGO_CURIOS);
+	public static final ResourceLocation EGO_CURIOS_HEADWEAR_VALIDATOR = createTagId(EGO_CURIOS_HEADWEAR);
+	public static final ResourceLocation EGO_CURIOS_HEAD_VALIDATOR = createTagId(EGO_CURIOS_HEAD);
+	public static final ResourceLocation EGO_CURIOS_HINDBRAIN_VALIDATOR = createTagId(EGO_CURIOS_HINDBRAIN);
+	public static final ResourceLocation EGO_CURIOS_EYE_VALIDATOR = createTagId(EGO_CURIOS_EYE);
+	public static final ResourceLocation EGO_CURIOS_FACE_VALIDATOR = createTagId(EGO_CURIOS_FACE);
+	public static final ResourceLocation EGO_CURIOS_CHEEK_VALIDATOR = createTagId(EGO_CURIOS_CHEEK);
+	public static final ResourceLocation EGO_CURIOS_MASK_VALIDATOR = createTagId(EGO_CURIOS_MASK);
+	public static final ResourceLocation EGO_CURIOS_MOUTH_VALIDATOR = createTagId(EGO_CURIOS_MOUTH);
+	public static final ResourceLocation EGO_CURIOS_NECK_VALIDATOR = createTagId(EGO_CURIOS_NECK);
+	public static final ResourceLocation EGO_CURIOS_BROOCH_VALIDATOR = createTagId(EGO_CURIOS_BROOCH);
+	public static final ResourceLocation EGO_CURIOS_HAND_VALIDATOR = createTagId(EGO_CURIOS_HAND);
+	public static final ResourceLocation EGO_CURIOS_GLOVE_VALIDATOR = createTagId(EGO_CURIOS_GLOVE);
+	public static final ResourceLocation EGO_CURIOS_LEFT_BACK_VALIDATOR = createTagId(EGO_CURIOS_LEFT_BACK);
+	public static final ResourceLocation EGO_CURIOS_RIGHT_BACK_VALIDATOR = createTagId(EGO_CURIOS_RIGHT_BACK);
 
   public DatagenCuriosTest(PackOutput output, ExistingFileHelper fileHelper, CompletableFuture<HolderLookup.Provider> registries) {
     super(ImaginaryCraft.ID, output, fileHelper, registries);
@@ -56,6 +59,7 @@ public final class DatagenCuriosTest extends CuriosDataProvider {
 
   @Override
   public void generate(HolderLookup.Provider registries, ExistingFileHelper fileHelper) {
+	  createSlot(EGO_CURIOS, EGO_CURIOS_VALIDATOR);
     createSlot(EGO_CURIOS_HEADWEAR, EGO_CURIOS_HEADWEAR_VALIDATOR);
     createSlot(EGO_CURIOS_HEAD, EGO_CURIOS_HEAD_VALIDATOR);
     createSlot(EGO_CURIOS_HINDBRAIN, EGO_CURIOS_HINDBRAIN_VALIDATOR);
@@ -68,7 +72,8 @@ public final class DatagenCuriosTest extends CuriosDataProvider {
     createSlot(EGO_CURIOS_BROOCH, EGO_CURIOS_BROOCH_VALIDATOR);
     createSlot(EGO_CURIOS_HAND, EGO_CURIOS_HAND_VALIDATOR);
     createSlot(EGO_CURIOS_GLOVE, EGO_CURIOS_GLOVE_VALIDATOR);
-	  createSlot(EGO_CURIOS_BACK, EGO_CURIOS_BACK_VALIDATOR);
+	  createSlot(EGO_CURIOS_LEFT_BACK, EGO_CURIOS_LEFT_BACK_VALIDATOR);
+	  createSlot(EGO_CURIOS_RIGHT_BACK, EGO_CURIOS_RIGHT_BACK_VALIDATOR);
 
     createSimpleEntities("player");
   }
@@ -94,7 +99,8 @@ public final class DatagenCuriosTest extends CuriosDataProvider {
       EGO_CURIOS_BROOCH,
       EGO_CURIOS_HAND,
       EGO_CURIOS_GLOVE,
-	    EGO_CURIOS_BACK);
+	    EGO_CURIOS_LEFT_BACK,
+	    EGO_CURIOS_RIGHT_BACK);
   }
 
   public ISlotData createSlot(String nameID, String icon, ResourceLocation validator) {

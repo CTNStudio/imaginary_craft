@@ -67,8 +67,8 @@ public class BasicCuriosRenderer implements ICurioRenderer {
            DatagenCuriosTest.EGO_CURIOS_HINDBRAIN, DatagenCuriosTest.EGO_CURIOS_EYE,
            DatagenCuriosTest.EGO_CURIOS_FACE, DatagenCuriosTest.EGO_CURIOS_CHEEK,
            DatagenCuriosTest.EGO_CURIOS_MASK, DatagenCuriosTest.EGO_CURIOS_MOUTH -> EquipmentSlot.HEAD;
-      case DatagenCuriosTest.EGO_CURIOS_NECK, DatagenCuriosTest.EGO_CURIOS_BROOCH,
-           DatagenCuriosTest.EGO_CURIOS_BACK -> EquipmentSlot.CHEST;
+	    case DatagenCuriosTest.EGO_CURIOS_NECK, ctn.imaginarycraft.datagen.DatagenCuriosTest.EGO_CURIOS_BROOCH,
+	         DatagenCuriosTest.EGO_CURIOS_LEFT_BACK, DatagenCuriosTest.EGO_CURIOS_RIGHT_BACK -> EquipmentSlot.CHEST;
       case DatagenCuriosTest.EGO_CURIOS_HAND, DatagenCuriosTest.EGO_CURIOS_GLOVE -> EquipmentSlot.MAINHAND;
       default -> EquipmentSlot.BODY;
     };

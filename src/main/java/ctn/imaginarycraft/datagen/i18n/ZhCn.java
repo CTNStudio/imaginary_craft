@@ -127,7 +127,8 @@ public final class ZhCn extends DatagenI18n {
     addCurios(DatagenCuriosTest.EGO_CURIOS_BROOCH, "胸针", "E.G.O饰品-胸针");
     addCurios(DatagenCuriosTest.EGO_CURIOS_HAND, "手部", "E.G.O饰品-手部");
     addCurios(DatagenCuriosTest.EGO_CURIOS_GLOVE, "手套", "E.G.O饰品-手套");
-	  addCurios(DatagenCuriosTest.EGO_CURIOS_BACK, "背后", "E.G.O饰品-背后");
+	  addCurios(DatagenCuriosTest.EGO_CURIOS_LEFT_BACK, "左背", "E.G.O饰品-左背");
+	  addCurios(DatagenCuriosTest.EGO_CURIOS_RIGHT_BACK, "右背", "E.G.O饰品-右背");
     EgoCurioItems.REGISTRY.getEntries().stream()
             .map(DeferredHolder::get)
             .filter(EgoCurioItem.class::isInstance)
